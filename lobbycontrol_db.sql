@@ -3,18 +3,24 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 23. Sep 2013 um 20:29
--- Server Version: 5.5.28
--- PHP-Version: 5.2.17
+-- Erstellungszeit: 26. Sep 2013 um 21:13
+-- Server Version: 5.6.12
+-- PHP-Version: 5.5.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
 --
--- Datenbank: `usr_web369_4`
+-- Datenbank: `lobby_parlament`
 --
-CREATE DATABASE IF NOT EXISTS `usr_web369_4` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `usr_web369_4`;
+CREATE DATABASE IF NOT EXISTS `lobby_parlament` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `lobby_parlament`;
 
 -- --------------------------------------------------------
 
@@ -26,12 +32,24 @@ CREATE TABLE IF NOT EXISTS `interessenbindungen` (
   `id_interessen` int(11) NOT NULL AUTO_INCREMENT,
   `ib_description` varchar(255) NOT NULL,
   `ib_status` enum('d','n','g') NOT NULL DEFAULT 'd' COMMENT 'd=deklariert, n=nicht-deklariert,g=zutrittsberechtigung',
-  `id_parlam` int(8) DEFAULT NULL COMMENT 'FK parlamentarier',
-  `id_lobbytyp` int(8) DEFAULT NULL COMMENT 'FK lobbytypen',
+  `id_parlam` int(11) DEFAULT NULL COMMENT 'FK parlamentarier',
+  `id_lobbytyp` int(11) DEFAULT NULL COMMENT 'FK lobbytypen',
   `id_lobbygroup` int(11) DEFAULT NULL COMMENT 'FK lobbygruppen',
-  `id_lobbyorg` int(8) DEFAULT NULL COMMENT 'FK lobbyorganisationen',
+  `id_lobbyorg` int(11) DEFAULT NULL COMMENT 'FK lobbyorganisationen',
   PRIMARY KEY (`id_interessen`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Eidgenössisches Parlament. Deklarierte Interessenbindungen' AUTO_INCREMENT=337 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Eidgenössisches Parlament. Deklarierte Interessenbindungen' AUTO_INCREMENT=337 ;
+
+--
+-- RELATIONEN DER TABELLE `interessenbindungen`:
+--   `id_lobbygroup`
+--       `lobbygruppen` -> `id_lobbygroup`
+--   `id_lobbyorg`
+--       `lobbyorganisationen` -> `id_lobbyorg`
+--   `id_lobbytyp`
+--       `lobbytypen` -> `id_lobbytyp`
+--   `id_parlam`
+--       `parlamentarier` -> `id_parlam`
+--
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `interessenbindungen`
@@ -242,8 +260,8 @@ INSERT INTO `interessenbindungen` (`id_interessen`, `ib_description`, `ib_status
 (200, 'Gönnervereinigung Speranza Ve. V M', 'd', 26, 7, NULL, 212),
 (201, 'Hauseigentümerverband (HEV) Sektion Baden/Brugg/Zurzach Ve. V M', 'd', 26, 9, NULL, 213),
 (202, 'IG Musikinitiative Ve. - P', 'd', 26, 7, NULL, 214),
-(205, 'Skilift Oberegg-St. Anton, Oberegg AG  VR M', 'd', 27, 12, NULL, 215),
 (204, 'Schweizer Feuilleton-Dienst Ve. - M', 'd', 27, 18, NULL, 216),
+(205, 'Skilift Oberegg-St. Anton, Oberegg AG  VR M', 'd', 27, 12, NULL, 215),
 (206, 'Pro Innerrhoden, Appenzell Stift. Sr. M', 'd', 27, 7, NULL, 217),
 (207, 'Schweizer Jugend forscht Stift. Sr. M', 'd', 27, 6, NULL, 218),
 (208, 'Stiftung Internat Gymnasium Appenzell (Aufsichtsrat) Stift. Sr. M', 'd', 27, 7, NULL, 219),
@@ -287,7 +305,6 @@ INSERT INTO `interessenbindungen` (`id_interessen`, `ib_description`, `ib_status
 (247, 'The Jerusalem Foundation, Zürich Stift.  Sr. P', 'd', 32, 8, NULL, 253),
 (248, 'Krebsliga des Kantons Zürich Ve. V M', 'd', 32, 1, 3, 254),
 (249, 'Arbeitsgruppe Gesundheitswesen, VIPS(Pharmafirmen)  - - M', 'd', 32, 1, 3, 255),
-(326, 'ASGA Pensionskasse, St. Gallen Gen. VR  M', 'd', 33, 9, NULL, NULL),
 (251, 'St. Galler Stiftung für internationale Studien, St. Gallen SR M', 'd', 33, 7, NULL, 257),
 (253, 'Pulita Putzteam GmbH, Reichenburg GmbH V P', 'd', 34, 9, NULL, 259),
 (254, 'Schweizerische Stiftung für Klinische Krebsforschung Stift. Sr. M', 'd', 34, 1, 3, 98),
@@ -317,8 +334,6 @@ INSERT INTO `interessenbindungen` (`id_interessen`, `ib_description`, `ib_status
 (278, 'Tour de Suisse, Biel Ve. V P', 'd', 38, 17, NULL, 280),
 (279, 'Verein PPP (Public Private Partnership) Schweiz, Zürich Ve. V M', 'd', 38, 9, NULL, 281),
 (281, 'Schweizerische Wettbewerbsvereinigung, Zürich Ve. V VP', 'n', 1, 9, NULL, 300),
-(325, 'NZZ-Mediengruppe AG, Zürich AG VR  M', 'd', 33, 18, NULL, 333),
-(323, 'Adimosa  AG VR M', 'd', 33, 9, NULL, 332),
 (283, 'Aktion für vernünftige Energieplitik Schweiz (AVES)    - V M', 'n', 2, 3, NULL, 94),
 (284, 'Aktion für vernünftige Energieplitik Schweiz (AVES)    - V M', 'n', 3, 3, NULL, 94),
 (286, 'Schweizerische Akademie der medizinischen Wissenschaften (SAMW), Basel Stift. M ', 'n', 5, 1, 4, 302),
@@ -356,6 +371,9 @@ INSERT INTO `interessenbindungen` (`id_interessen`, `ib_description`, `ib_status
 (320, 'Aktion für vernünftige Energieplitik Schweiz (AVES) Ve. M', 'n', 32, 3, NULL, 94),
 (321, 'Stiftung Walter Honegger zur Förderung der Krebsforschung, Zürich Stift. SR M', 'n', 32, 1, 4, 330),
 (322, 'Verein "Forum Zürcher Gespräche", Zürich Ve. V M', 'n', 32, 7, NULL, 331),
+(323, 'Adimosa  AG VR M', 'd', 33, 9, NULL, 332),
+(325, 'NZZ-Mediengruppe AG, Zürich AG VR  M', 'd', 33, 18, NULL, 333),
+(326, 'ASGA Pensionskasse, St. Gallen Gen. VR  M', 'd', 33, 9, NULL, NULL),
 (327, 'Pensimo Anlagestiftung Stift. Sr. P', 'd', 33, 9, NULL, 335),
 (328, 'Schweizerischer Arbeitgeberverband   Ve. V M', 'd', 33, 9, NULL, 336),
 (329, 'Swiss Retail Federation Ve. V M', 'd', 33, 9, NULL, 337),
@@ -375,11 +393,11 @@ INSERT INTO `interessenbindungen` (`id_interessen`, `ib_description`, `ib_status
 
 CREATE TABLE IF NOT EXISTS `kommissionen` (
   `id_komm` int(11) NOT NULL AUTO_INCREMENT,
-  `komm_kurz` varchar(15) COLLATE latin1_general_ci NOT NULL,
-  `komm_lang` varchar(120) COLLATE latin1_general_ci NOT NULL,
-  `komm_descript` text COLLATE latin1_general_ci NOT NULL,
+  `komm_kurz` varchar(15) NOT NULL,
+  `komm_lang` varchar(120) NOT NULL,
+  `komm_descript` text NOT NULL,
   PRIMARY KEY (`id_komm`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci COMMENT='Liste der Legislativkommissionen' AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Legislativkommissionen' AUTO_INCREMENT=19 ;
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `kommissionen`
@@ -422,7 +440,7 @@ CREATE TABLE IF NOT EXISTS `lobbygruppen` (
   `lg_description` text NOT NULL,
   `id_lobbytyp` int(11) NOT NULL,
   PRIMARY KEY (`id_lobbygroup`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `lobbygruppen`
@@ -461,7 +479,15 @@ CREATE TABLE IF NOT EXISTS `lobbyorganisationen` (
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL,
   `parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL,
   PRIMARY KEY (`id_lobbyorg`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Lobbyorganisationen: Beschreibung' AUTO_INCREMENT=349 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Lobbyorganisationen: Beschreibung' AUTO_INCREMENT=349 ;
+
+--
+-- RELATIONEN DER TABELLE `lobbyorganisationen`:
+--   `id_lobbygroup`
+--       `lobbygruppen` -> `id_lobbygroup`
+--   `id_lobbytyp`
+--       `lobbytypen` -> `id_lobbytyp`
+--
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `lobbyorganisationen`
@@ -473,9 +499,9 @@ TRUNCATE TABLE `lobbyorganisationen`;
 --
 
 INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription`, `lobbyorgtyp`, `weblink`, `id_lobbytyp`, `id_lobbygroup`, `vernehmlassung`, `parlam_verbindung`) VALUES
-(4, 'Schweizer Musikinsel Rheinau, Männedorf Stift.', 'Die Stiftung bezweckt: a) die Förderung des musikalischen Schaffens von Jugendlichen und Erwachsenen; b) die Mithilfe bei der Entwicklung der musikalischen und künstlerischen Fähigkeiten; c) die Bereitstellung geeigneter Infrastruktur als Übungsplattform für Konzertvorbereitungen, musikalische Wettbewerbe, künstlerischen Unterricht, Symposien und Seminarien. Zur Umsetzung des Stiftungszweckes betreibt die Stiftung insbesondere ein Zentrum auf der Insel des ehemaligen Klosters Rheinau mit Übungsräumlichkeiten, Unterkünften und Verpflegungsangeboten. Die Stiftung verfolgt keine Erwerbszwecke. Sie ist politisch und konfessionell neutral. Ihre Leistungen sind gemeinnützig.', 'EinzelOrganisation', 'http://www.moneyhouse.ch/u/schweizer_musikinsel_rheinau_CH-020.7.001.632-3.htm', 8, NULL, 'nie', 'einzel,exekutiv'),
 (2, 'Robinvest AG, Männedorf ', 'Die Gesellschaft bezweckt Beratung, Erbringen von Dienstleistungen im Bereiche Unternehmensführung und Durchführung von Finanzgeschäften. Sie kann sämtliche Geschäfte tätigen, welche mit dem Gesellschaftszweck direkt oder indirekt in Zusammenhang stehen und sich auch an anderen Unternehmen beteiligen. Die Gesellschaft kann überdies Liegenschaften erwerben, verwalten und veräussern.', 'EinzelOrganisation', 'http://www.monetas.ch/htm/647/de/Firmendaten-ROBINVEST-AG.htm?subj=2050309', 9, NULL, 'nie', 'einzel,exekutiv'),
 (3, 'Bächtold Stiftung, Wilchingen', 'Mithilfe bei der Finanzierung der Neuauflagen vergriffener Albert-Bächthold-Bücher        \r\n', 'EinzelOrganisation', 'http://www.moneyhouse.ch/fr/u/albert_bachtold_stiftung_CH-290.7.001.147-0.htm', 8, NULL, 'nie', 'einzel,exekutiv'),
+(4, 'Schweizer Musikinsel Rheinau, Männedorf Stift.', 'Die Stiftung bezweckt: a) die Förderung des musikalischen Schaffens von Jugendlichen und Erwachsenen; b) die Mithilfe bei der Entwicklung der musikalischen und künstlerischen Fähigkeiten; c) die Bereitstellung geeigneter Infrastruktur als Übungsplattform für Konzertvorbereitungen, musikalische Wettbewerbe, künstlerischen Unterricht, Symposien und Seminarien. Zur Umsetzung des Stiftungszweckes betreibt die Stiftung insbesondere ein Zentrum auf der Insel des ehemaligen Klosters Rheinau mit Übungsräumlichkeiten, Unterkünften und Verpflegungsangeboten. Die Stiftung verfolgt keine Erwerbszwecke. Sie ist politisch und konfessionell neutral. Ihre Leistungen sind gemeinnützig.', 'EinzelOrganisation', 'http://www.moneyhouse.ch/u/schweizer_musikinsel_rheinau_CH-020.7.001.632-3.htm', 8, NULL, 'nie', 'einzel,exekutiv'),
 (5, 'Fun & Business AG, Egerkingen ', 'Betrieb, Vermietung und Verpachtung jeglicher Art von Betrieben der Freizeitbranche wie Hotels, Restaurants, Bars, Dancings und Discos sowie Betrieb, Verwaltung und Vermietung von Konferenz- und Businessräumen. Kann im In- und Ausland andere Unternehmungen gründen, übernehmen oder sich daran beteiligen, Grundeigentum erwerben, verwalten, vermitteln und veräussern, Zweigniederlassungen errichten sowie alle Geschäfte tätigen und Verträge abschliessen, die geeignet sind, den Zweck der Gesellschaft zu fördern.', 'EinzelOrganisation', 'http://www.moneyhouse.ch/fr/u/fun_business_ag_CH-240.3.000.561-8.htm', 12, NULL, 'nie', 'einzel,exekutiv'),
 (6, 'Bosec Consulting GmbH, Kestenholz', 'Unternehmensberatung sowie Handel mit und Vermittlung von Waren und Dienstleistungen aller Art; kann sich an andern Unternehmen beteiligen oder sich mit diesen zusammenschliessen sowie Grundstücke erwerben, verwalten und veräussern.', 'EinzelOrganisation', 'http://www.moneyhouse.ch/u/bosec_consulting_gmbh_CH-240.4.001.850-9.htm', 9, NULL, 'nie', 'einzel,exekutiv'),
 (7, 'Neu Bechburg, Oensingen ', 'Bis 1975 war die Bechburg in Privatbesitz. Mit der Übergabe des Schlosses an eine Stiftung leitet seither ein Stiftungsrat die Geschicke der Burg.\r\nDieser ist vornehmlich aus Vertretern der Einwohner- und Bürgergemeinde Oensingen, dem Kanton Solothurn und dem Bund zusammen-gesetzt.\r\nDie Beschaffung der finanziellen Mittel für Renovation und Organisation der Vermietung sind seine Hauptaufgaben.', 'EinzelOrganisation', 'http://www.neu-bechburg.ch/start.asp', 7, NULL, 'nie', 'einzel,exekutiv'),
@@ -517,8 +543,6 @@ INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription
 (43, 'Schweizerischer Gemeindeverband', 'Der Schweizerische Gemeindeverband (SGV) ist seit 1953 der politische Vertreter der Gemeinden auf Bundesebene. 70% aller Gemeinden sind Mitglied. Der SGV wird von einem 15-köpfigen Vorstand geführt, der sich aus Mitgliedern kommunaler Exekutiven und der eidgenössischen Räte zusammensetzt. Der Verband arbeitet eng mit den kantonalen Gemeindeorganisationen zusammen. Er ist Partner der Fachorganisation Kommunale Infrastruktur und der Schweizerischen Konferenz der Stadt- und Gemeindeschreiber. ', 'DachOrganisation,dezidierteLobby', 'http://www.chgemeinden.ch/de/1-verband/1-Portrait.php?navid=1', 14, NULL, 'immer', ''),
 (44, 'Schweizerischer Städteverband (SSV)', 'Der Schweizerische Städteverband ist der Dienstleistungs- und Interessenverband, der die Interessen der Städte und städtischen Gemeinden in der Schweiz vertritt. Damit ist der Städteverband die Stimme der urbanen Schweiz, in der rund drei Viertel der Schweizer Bevölkerung wohnen und 84 % der Wirtschaftsleistung unseres Landes erbracht werden. Der Städteverband wurde 1897 gegründet und zählt heute 125 Mitglieder.', 'DachOrganisation,dezidierteLobby', 'http://staedteverband.ch/de/Info/Stadteverband', 14, NULL, 'immer', 'mehrere,exekutiv'),
 (45, 'Schweizerische Arbeitsgemeinschaft für die Berggebiete (SAB)', 'Die SAB ist ein Verein und wurde 1943 gegründet. Mitglieder sind alle Bergkantone, Berggemeinden, landwirtschaftliche und Selbsthilfeorganisationen, Berggebietsregionen (IHG-Regionen) und weitere Körperschaften im Berggebiet sowie zahlreiche Einzelpersonen.\r\n\r\nUnsere wichtigsten Tätigkeiten sind:\r\n\r\n    Politische Interessevertretung für die Berggebiete und ländlichen Räume\r\n    Dienstleistungen für die Berggebiete und ländlichen Räume\r\n    Information der Öffentlichkeit über die Anliegen der Berggebiete und ländlichen Räume', 'DachOrganisation,dezidierteLobby', 'http://www.sab.ch/UEber-Uns.674.0.html', 9, NULL, 'immer', 'mehrere,exekutiv'),
-(296, 'Die Schweizerische Post', '', 'EinzelOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.post.ch/', 14, NULL, 'punktuell', 'einzel,exekutiv'),
-(297, 'Textilverband Schweiz (TVS)', 'Rund 200 Unternehmen der Textil- und Bekleidungsindustrie bündeln ihre Interessen im TVS Textilverband Schweiz. Der Verband engagiert sich für die übergeordneten Interessen der Mitgliedunternehmen, die auf Grund der historisch gewachsenen Strukturen unterschiedlichen Bereichen angehören. Allen gemeinsam ist das Anliegen, ihre hochwertigen Produkte und Dienstleistungen von einem starken Brand im nationalen sowie internationalen Markt verankert zu wissen. Swiss Textiles, diese Marke steht für innovative, hochwertige Produkte sowie Dienstleistungen und wird als Gütesiegel in der ganzen Welt geschätzt.', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.swisstextiles.ch/cms/front_content.php?idcat=2&lang=1', 9, NULL, 'nie', 'einzel,exekutiv'),
 (47, 'Schweiz. Bauernverband (SBV)', '60''000 Bauernfamilien\r\n25 Kantonale Bauernverbände,\r\n60 Dach-, Fachorganisationen\r\nLandwirtschaftskammer (100 Mitglieder)', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.sbv-usp.ch/de/wer-wir-sind/organisation/', 15, NULL, 'immer', 'mehrere,exekutiv'),
 (48, 'Schweizerische Bankiervereinigung (SBV)', 'Die Schweizerische Bankiervereinigung (SBVg) ist der Spitzenverband des Schweizer Finanzplatzes. Hauptzielsetzung der SBVg ist die Beibehaltung und Förderung optimaler Rahmenbedingungen im In- und Ausland für den Finanzplatz Schweiz.', 'DachOrganisation,dezidierteLobby', 'http://www.swissbanking.org/home/aboutus-link/portrait.htm', 9, NULL, 'punktuell', ''),
 (49, 'Kaufmännischer Verband Schweiz (KV Schweiz)', 'Der KV Schweiz ist die grösste schweizerische Berufsorganisation der Angestellten in Büro und Verkauf sowie verwandter Berufe. Auf nationaler Ebene vertritt er die Interessen von rund 55''000 Mitgliedern in 45 Sektionen.\r\n', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.kvschweiz.ch/Verband', 9, NULL, 'immer', 'einzel,exekutiv'),
@@ -563,7 +587,8 @@ INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription
 (88, 'Vereinigung Solothurnischer Musikschulen, Solothurn ', 'Die Vereinigung Solothurner Musikschulen umfasst möglichst alle öffentlichen Musikschulen im Kanton Solothurn.\r\nWir streben einen hohen Mitgliederanteil an. ', 'EinzelOrganisation,dezidierteLobby', 'http://www.solothurnermusikschulen.ch/cms/component/option,com_frontpage/Itemid,1/', 8, NULL, 'nie', 'einzel,mitglied'),
 (89, 'Stoll, Hess und Partner AG, Bern ', 'Kommunikation, Public Relations', 'LeistungsErbringer', 'http://www.stpag.ch/frameset.html', 9, NULL, 'nie', 'einzel,exekutiv'),
 (90, 'Gewa, Stiftung für berufliche Integration, Zollikofen    ', 'Die GEWA Stiftung für berufliche Integration ist ein sozialwirtschaftliches Unternehmen mit dem Ziel, Menschen, die aus psychischen Gründen besonders herausgefordert sind, beruflich zu integrieren. Unser Kernanliegen ist es, Menschen zu befähigen, ihren Platz in der Arbeitswelt zu finden. Um diesen Auftrag wahrzunehmen, vereint die GEWA unter ihrem Dach elf Betriebe verschiedener Branchen.', 'DachOrganisation', 'http://www.gewa.ch/', 2, NULL, 'nie', 'einzel,exekutiv'),
-(91, 'Stiftung Wildstation Landshut', 'Wir kümmern uns um die Aufzucht oder die Genesung von schweizer Wildtieren. Die Stiftung Wildstation Landshut in Utzenstorf, Kanton Bern, liegt auf einem 16.000 qm2 grossen Gelände neben dem idyllischen Schloss Landshut.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.wildstation.ch/', 4, NULL, 'nie', 'einzel,exekutiv'),
+(91, 'Stiftung Wildstation Landshut', 'Wir kümmern uns um die Aufzucht oder die Genesung von schweizer Wildtieren. Die Stiftung Wildstation Landshut in Utzenstorf, Kanton Bern, liegt auf einem 16.000 qm2 grossen Gelände neben dem idyllischen Schloss Landshut.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.wildstation.ch/', 4, NULL, 'nie', 'einzel,exekutiv');
+INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription`, `lobbyorgtyp`, `weblink`, `id_lobbytyp`, `id_lobbygroup`, `vernehmlassung`, `parlam_verbindung`) VALUES
 (92, 'Berner Jägerverband (BEJV)', 'zur Erhaltung und Förderung der bernischen Patentjagd und einer weidgerechten Jagdausübung. Der Berner Jägerverband verurteilt jegliche Form von Wilderei;\r\nfür eine nachhaltige Bejagung der Wildbestände nach wildbiologischen Gesichtspunkten;\r\nzur Hege der jagdbaren, nichtjagdbaren und gefährdeten freilebenden Tierarten sowie zur Erhaltung und Wiederherstellung deren Lebensräume;', 'EinzelOrganisation,dezidierteLobby', 'http://www.bernerjagd.ch/willkommen-beim-bejv.html', 4, NULL, 'nie', 'einzel,exekutiv'),
 (93, 'Verband Bernischer Gemeinden ', '', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.begem.ch/index.php', 14, NULL, 'nie', 'einzel,exekutiv'),
 (94, 'Aktion für vernünftige Energieplitik Schweiz (AVES) ', 'Die Ziele der AVES sind klar. Die AVES engagiert sich für eine sichere, ausreichende und volkswirtschaftlich optimale Energieversorgung der Schweiz, die gleichzeitig den Schutz von Mensch und Umwelt beachtet. Wir kämpfen für die Versorgungssicherheit in der Schweiz sowohl beim Strom wie bei den übrigen Energieträgern. Mit Nachdruck setzen wir uns dafür ein, dass unsere Gewerbebetriebe und Industrie auch weiterhin kostengünstig mit Energie versorgt werden können, da Hunderttausende von Arbeitsplätzen davon abhängig sind.\r\n\r\nExperimente lehnen wir ab. Den so genannten „Atomausstieg“ betrachten wir als wohlfeile Konzession an eine einseitig informierte Öffentlichkeit. Die ökologischen, wirtschaftlichen und sozialen Folgen wurden weder von der Mehrheit des Bundesrates noch des Parlamentes genügend bedacht. ', 'EinzelOrganisation,dezidierteLobby', 'http://www.aves.ch/ziele.htm', 3, NULL, 'punktuell', 'mehrere,exekutiv'),
@@ -677,7 +702,8 @@ INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription
 (202, 'Ballenberg - Schweizerisches Freilichtmuseum für ländliche Kultur, Brienz ', 'Freilichtmuseum für bäuerliche Kultur(Stiftung)', 'EinzelOrganisation,LeistungsErbringer', 'http://ballenberg.ch/de/Info/Portrait', 8, NULL, 'nie', 'einzel,exekutiv'),
 (203, 'REHA Rheinfelden', 'Rehabilitationsklinik', 'EinzelOrganisation,MitgliedsOrganisation,LeistungsErbringer', 'http://www.reha-rheinfelden.ch/', 1, 5, 'nie', 'einzel,exekutiv,kommission'),
 (204, 'Schweizerische Stiftung für eine verantwortungsvolle Gentechnik (GEN SUISSE), Bern', 'Seit 20 Jahren unterstützt die Stiftung Gen Suisse den Dialog zwischen Forschung, Politik, Öffentlichkeit und Schulen. Gegründet 1991 in Zeiten hitziger Diskussionen rund um die Gentechnik, hat Gen Suisse mittlerweile 20 Jahre Forschung und Forschungspolitik im Bereich der Life Sciences begleitet. Die Errungenschaften und Entdeckungen der Forschung brachten Diskussionen zu möglichen Risiken und ethischen Aspekten mit sich. Die Politik hielt Schritt, um den neuen Möglichkeiten der Forschung zu rechtlichen Grundlagen zu verhelfen.', 'EinzelOrganisation,dezidierteLobby', '', 1, 3, 'punktuell', 'mehrere,exekutiv,kommission'),
-(205, 'Stiftung 3 R  ', 'Die Stiftung Forschung 3R bezweckt, die Forschung auf dem Gebiet der Alternativmethoden zu Tierversuchen durch Finanzierung von Forschungsprojekten zu fördern, und setzt sich für die Umsetzung und Verbreitung der 3R-Grundsätze ein. Sie unterstützt vordringlich Projekte zur Erforschung neuer Methoden oder zur Weiterentwicklung bekannter Methoden (Validierung von Methoden), welche im Sinne der 3 R (Reduce, Refine, Replace / Vermindern, Verbessern, Vermeiden) gegenüber der heutigen Tierversuchspraxis Verbesserungen versprechen. Die Forschungsprojekte werden nach periodisch festgesetzten Schwerpunkten für die Unterstützung ausgewählt.\r\nTräger der Stiftung\r\n\r\nDie Stiftung ist ein Gemeinschaftswerk der parlamentarischen Gruppe für Tierversuchsfragen (Öffentlichkeit), der Interpharma (Verband der forschenden pharmazeutischen Firmen der Schweiz mit den heutigen Mitgliedern Actelion Ltd., Merck Serono International SA, Novartis Pharma AG, F. Hoffmann-La Roche AG und den assoziierten Mitgliedern Bayer Schweiz AG, Cilag AG und Vifor AG) und des Fonds für versuchstierfreie Forschung – heute Stiftung Animalfree Research (Tierschutz). Sie besteht seit 1987 und steht unter der Aufsicht des Eidgenössischen Departements des Innern.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.forschung3r.ch/de/information/index.html', 4, NULL, 'punktuell', 'mehrere,exekutiv'),
+(205, 'Stiftung 3 R  ', 'Die Stiftung Forschung 3R bezweckt, die Forschung auf dem Gebiet der Alternativmethoden zu Tierversuchen durch Finanzierung von Forschungsprojekten zu fördern, und setzt sich für die Umsetzung und Verbreitung der 3R-Grundsätze ein. Sie unterstützt vordringlich Projekte zur Erforschung neuer Methoden oder zur Weiterentwicklung bekannter Methoden (Validierung von Methoden), welche im Sinne der 3 R (Reduce, Refine, Replace / Vermindern, Verbessern, Vermeiden) gegenüber der heutigen Tierversuchspraxis Verbesserungen versprechen. Die Forschungsprojekte werden nach periodisch festgesetzten Schwerpunkten für die Unterstützung ausgewählt.\r\nTräger der Stiftung\r\n\r\nDie Stiftung ist ein Gemeinschaftswerk der parlamentarischen Gruppe für Tierversuchsfragen (Öffentlichkeit), der Interpharma (Verband der forschenden pharmazeutischen Firmen der Schweiz mit den heutigen Mitgliedern Actelion Ltd., Merck Serono International SA, Novartis Pharma AG, F. Hoffmann-La Roche AG und den assoziierten Mitgliedern Bayer Schweiz AG, Cilag AG und Vifor AG) und des Fonds für versuchstierfreie Forschung – heute Stiftung Animalfree Research (Tierschutz). Sie besteht seit 1987 und steht unter der Aufsicht des Eidgenössischen Departements des Innern.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.forschung3r.ch/de/information/index.html', 4, NULL, 'punktuell', 'mehrere,exekutiv');
+INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription`, `lobbyorgtyp`, `weblink`, `id_lobbytyp`, `id_lobbygroup`, `vernehmlassung`, `parlam_verbindung`) VALUES
 (206, 'Stiftung Öffentlichkeit und Gesellschaft    ', 'Die gemeinnützige «Stiftung Öffentlichkeit und Gesellschaft» setzt sich für mehr Qualitätsbewusstsein und für höhere Qualitätsansprüche in der medienvermittelten Kommunikation auf Seiten des Publikums wie auf Seiten der Medien ein. Die Stiftung fördert die vergleichende Analyse der medienvermittelten Kommunikation und die Bereitstellung der Ergebnisse für die interessierte Öffentlichkeit und für Schulen.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.oeffentlichkeit.ch/index.html', 18, NULL, 'nie', 'einzel,exekutiv'),
 (207, 'Stiftung Regionales Blutspende-Zentrum ', '', 'EinzelOrganisation', 'http://www.moneyhouse.ch/u/stiftung_regionales_blutspendezentrum_srk_aarau_CH-400.7.017.990-7.htm', 1, 3, 'nie', 'einzel,exekutiv,kommission'),
 (208, 'Stiftung Vindonissapark    ', 'Die Stiftung fördert die Vermittlung von Archäologie, Geschichte und Kunstgeschichte im historischen Raum Vindonissa sowie der Zusammenhänge zwischen den Kulturgütern und den landschaftlichen Voraussetzungen im "Wasserschloss", wo Aare, Limmat und Reuss zusammenfliessen.\r\n\r\nSie bündelt und koordiniert die privaten und öffentlichen Kräfte, die sich ideell und finanziell für diesen Zweck einsetzen. Die Stiftung kann Dritte, die sich diesem Zweck widmen, unterstützen oder die Vermittlung selber betreiben, insbesondere auch entsprechende Institutionen führen', '', 'http://www.vindonissapark.ch/', 8, NULL, 'nie', 'einzel,exekutiv'),
@@ -767,11 +793,11 @@ INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription
 (292, 'Schweizerischer Versicherungsverband ', 'Der Schweizerische Versicherungsverband (SVV) ist die Dachorganisation der privaten Versicherungswirtschaft. Dem SVV sind kleine und grosse, national und international tätige Erst- und Rückversicherer angeschlossen.', 'DachOrganisation,dezidierteLobby', 'http://www.svv.ch/de/der-svv/portraet', 9, NULL, 'punktuell', 'einzel,exekutiv'),
 (293, 'Schweizerisches Arbeitershilfswerk (SOLIDAR SUISSE)', 'Solidar Suisse setzt sich für eine sozial, politisch und ökonomisch gerechtere Gesellschaft ein: Mit über 50 Projekten in 12 Ländern und mit Kampagnen in der Schweiz. ', 'DachOrganisation,LeistungsErbringer', 'http://www.solidar.ch/portrait-solidar-suisse.html', 13, NULL, 'punktuell', 'mehrere,exekutiv'),
 (294, 'Schweizerischer Fussballverband (SFV)', '', 'DachOrganisation,LeistungsErbringer', 'http://www.football.ch/de/start.aspx', 17, NULL, 'punktuell', 'einzel,exekutiv'),
-(300, 'Schweizerische Wettbewerbsvereinigung, Zürich ', 'Bezweckt die Beratung und die Stellungnahme in Wettbewerbsfragen im privaten, gemischtwirtschaftlichen und öffentlichen Bereich, insbesondere inbezug auf das Kartellrecht und befasst sich weiter mit den Fragen der Arbeitgeber- und Arbeitnehmer-Koalitionen.', 'EinzelOrganisation', 'http://www.monetas.ch/htm/647/de/Firmendaten-Schweizerische-Wettbewerbsvereinigung.htm?subj=1734332', 9, NULL, 'nie', 'einzel,exekutiv'),
-(347, 'Schweizerischer Mieterinnen- und Mieterverband', 'Dachorganisationen sämtlicher kantonalen und regionalen MieterInnen-Verbände', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.smv-asloca-asi.ch/', 9, NULL, 'punktuell', 'mehrere,exekutiv'),
-(348, 'Associazione Scigué', 'Entwicklungshilfe-Organisation im Bildungsbereich. Der Name ist Sptzname des verstorbenen Gründers, Moreno Fibbioli.', '', 'NN', 13, NULL, 'nie', 'einzel,exekutiv'),
+(296, 'Die Schweizerische Post', '', 'EinzelOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.post.ch/', 14, NULL, 'punktuell', 'einzel,exekutiv'),
+(297, 'Textilverband Schweiz (TVS)', 'Rund 200 Unternehmen der Textil- und Bekleidungsindustrie bündeln ihre Interessen im TVS Textilverband Schweiz. Der Verband engagiert sich für die übergeordneten Interessen der Mitgliedunternehmen, die auf Grund der historisch gewachsenen Strukturen unterschiedlichen Bereichen angehören. Allen gemeinsam ist das Anliegen, ihre hochwertigen Produkte und Dienstleistungen von einem starken Brand im nationalen sowie internationalen Markt verankert zu wissen. Swiss Textiles, diese Marke steht für innovative, hochwertige Produkte sowie Dienstleistungen und wird als Gütesiegel in der ganzen Welt geschätzt.', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.swisstextiles.ch/cms/front_content.php?idcat=2&lang=1', 9, NULL, 'nie', 'einzel,exekutiv'),
 (298, 'Gewerkschaft Unia', '', 'DachOrganisation,MitgliedsOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.unia.ch/', 9, NULL, 'punktuell', 'einzel,exekutiv'),
 (299, 'Perron Campaigns', 'Public Relations und Kampagnen-Agentur', 'EinzelOrganisation,LeistungsErbringer', 'http://perroncampaigns.ch/about.php', 9, NULL, 'nie', ''),
+(300, 'Schweizerische Wettbewerbsvereinigung, Zürich ', 'Bezweckt die Beratung und die Stellungnahme in Wettbewerbsfragen im privaten, gemischtwirtschaftlichen und öffentlichen Bereich, insbesondere inbezug auf das Kartellrecht und befasst sich weiter mit den Fragen der Arbeitgeber- und Arbeitnehmer-Koalitionen.', 'EinzelOrganisation', 'http://www.monetas.ch/htm/647/de/Firmendaten-Schweizerische-Wettbewerbsvereinigung.htm?subj=1734332', 9, NULL, 'nie', 'einzel,exekutiv'),
 (302, 'Schweizerische Akademie der medizinischen Wissenschaften (SAMW), Basel', 'Die SAMW unterstützt eine hohe Qualität der Medizin in all ihren Facetten. Sie setzt sich ein für die Stärkung der Forschung und für den Transfer des Wissens in Aus-, Weiter- und Fortbildung und nimmt eine führende Rolle wahr in der umfassenden Reflexion über die Zukunft der Medizin. Im Sinne der Früherkennung antizipiert sie mögliche Entwicklungen und deren Auswirkungen auf Individuen, Gesellschaft und Medizin. Sie engagiert sich bei der Klärung ethischer Fragen im Zusammenhang mit neuen medizinischen Erkenntnissen, stellt ethische Richtlinien auf und setzt sich für deren Umsetzung ein. Die SAMW steht im Dialog mit der Gesellschaft: Sie nimmt Anliegen, Hinweise und Ängste aus der Bevölkerung auf, bemüht sich aktiv um Informationsvermittlung und steht für Experten- und Beratungstätigkeit zuhanden von Politik und Behörden zur Verfügung. Im Rahmen der Akademien der Wissenschaften Schweiz engagiert sich die SAMW in der Hochschul-, Wissenschafts- und Bildungspolitik; durch aktive Mitarbeit und Mitgliedschaft in verschiedenen internationalen Organisationen pflegt sie auch den internationalen Informations- und Erfahrungsaustausch.', 'MitgliedsOrganisation,LeistungsErbringer', 'http://www.samw.ch/de/Aktuell/News.html', 1, 4, 'punktuell', 'einzel,mitglied,kommission'),
 (303, 'Ricovero Malcantonese Fondazione Giovanni e Giuseppina Rossi, Croglio', 'Creare e gerire un ricovero per i vecchi maschi e femmine dei circoli di Sessa, Magliasina, Breno, con preferenza per i domiciliati nei comuni dei tre circoli, poi gli attinenti di tali comuni domiciliati fuori dei tre circoli ed infine altre persone domiciliate nei comuni del Malcantone.   ', 'EinzelOrganisation,LeistungsErbringer', 'http://www.moneyhouse.ch/it/u/ricovero_malcantonese_fondazione_giovanni_e_giuseppina_rossi_CH-514.7.009.781-1.htm', 2, NULL, 'nie', 'einzel,exekutiv'),
 (304, 'Ospedale Malcantonese Fondazione Giuseppe Rossi, Croglio', 'Privatklinik', 'EinzelOrganisation,MitgliedsOrganisation,LeistungsErbringer', 'http://www.oscam.ch/', 1, 5, 'nie', 'einzel,exekutiv,kommission'),
@@ -789,7 +815,8 @@ INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription
 (316, 'Stiftung Schweizer Volkskultur, Bubikon', 'Die Stiftung unterstützt Projekte zur Erhaltung und Förderung der schweizerischen Volkskultur im Sinne der Statuten der Schweizerischen Trachtenvereinigung. Die Stiftung hat gemeinnützigen Charakter und verfolgt keinerlei Erwerbszweck.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.ssvk.ch/', 8, NULL, 'nie', 'einzel,exekutiv'),
 (317, 'Stiftung MyHandicap, Wil (SG)', 'Die Stiftung bezweckt die gemeinnützige Förderung bzw. Unterstützung von Menschen mit Behinderung; insbesondere bezweckt die Stiftung die gesellschaftliche Integration von, Massnahmen zur Erleichterung des Alltages von und den Informationsaustausch mit nicht-behinderten Menschen und unter behinderten Menschen und ihren Angehörigen in der Schweiz und in Europa.  ', 'EinzelOrganisation,LeistungsErbringer', 'http://www.myhandicap.ch/', 1, 3, 'nie', 'einzel,exekutiv,kommission'),
 (318, 'HRS Holding AG, Frauenfeld', 'Halten und Verwaltung von Beteiligungen. Die Gesellschaft kann Zweigniederlassungen oder Betriebsstätten im In- und Ausland errichten, sich an anderen Firmen und Institutionen direkt oder indirekt beteiligen, Finanzdienstleistungen erbringen sowie Grundstücke und Immaterialgüterrechte erwerben, verwalten und veräussern.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.hrs.ch/fileadmin/Dokumente/Organisation/HRS_Gruppe_D.pdf', 9, NULL, 'nie', 'einzel,exekutiv'),
-(319, 'SCHMOLZ+BICKENBACH AG, Emmen', 'Erwerb, Verwaltung und Veräusserung von Beteiligungen in allen Rechtsformen, insbesondere im Stahlbereich; Beteiligungen an Handels-, Industrie- und Dienstleistungsunternehmen sowie an Holdinggesellschaften im In- und Ausland; Erwerb, Belastung und Veräusserung von Grundeigentum.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.moneyhouse.ch/u/schmolzbickenbach_ag_CH-100.3.010.656-7.htm', 9, NULL, 'nie', 'einzel,exekutiv'),
+(319, 'SCHMOLZ+BICKENBACH AG, Emmen', 'Erwerb, Verwaltung und Veräusserung von Beteiligungen in allen Rechtsformen, insbesondere im Stahlbereich; Beteiligungen an Handels-, Industrie- und Dienstleistungsunternehmen sowie an Holdinggesellschaften im In- und Ausland; Erwerb, Belastung und Veräusserung von Grundeigentum.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.moneyhouse.ch/u/schmolzbickenbach_ag_CH-100.3.010.656-7.htm', 9, NULL, 'nie', 'einzel,exekutiv');
+INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription`, `lobbyorgtyp`, `weblink`, `id_lobbytyp`, `id_lobbygroup`, `vernehmlassung`, `parlam_verbindung`) VALUES
 (320, 'Spital Thurgau AG, Frauenfeld', 'Kantonsspital und Kliniken', '', 'http://www.stgag.ch/spital-thurgau-ag/ueber-uns/verwaltungsrat.html?Fsize=0.html.html.html', 1, 5, 'nie', 'einzel,exekutiv,kommission'),
 (321, 'Roland Eberle Mercanda Consulting, Frauenfeld', 'Einzelfirma Unternehmensberatung', 'EinzelOrganisation,LeistungsErbringer', 'http://www.moneyhouse.ch/u/roland_eberle_mercanda_consulting_CH-440.1.025.762-3.htm', 9, NULL, 'nie', 'einzel,exekutiv'),
 (322, 'Careum Stiftung, Zürich', '1882 als Stiftung Schwesternschule und Krankenhaus vom Roten Kreuz Zürich Fluntern gegründet, versteht sich die Careum Stiftung heute als Organisation, die durch gezielte Veranstaltungen den Dialog zwischen den verschiedenen Akteuren des Gesundheitswesens fördert und in Nachwuchstalente investiert, die die Gesundheitswelt der Zukunft denken. Der Stiftungszweck gemäss Statuten lautet: «Die Stiftung fördert die Bildung im Gesundheitswesen durch Innovation und Entwicklung.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.careum.ch/web/guest/home', 1, 3, 'nie', 'einzel,exekutiv,kommission'),
@@ -816,7 +843,9 @@ INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription
 (343, 'Intergenerika', 'Wir wollen den qualitativ hochstehenden Generika-Markt in der Schweiz ausbauen und damit den Sparbeitrag an die Medikamentenkosten erhöhen.\r\n ', 'DachOrganisation,dezidierteLobby', 'http://www.intergenerika.ch/strategie/', 1, 1, 'punktuell', 'einzel,exekutiv,kommission'),
 (344, 'Schweizerischer Gewerbeverband (sgv, usam)', 'Der Schweizerische Gewerbeverband sgv vertritt die Interessen der kleinen und mittleren Unternehmen KMU in der Schweiz. Mitglieder des sgv sind die kantonalen Gewerbeverbände, Berufs- und Branchenverbände sowie die Organisationen der Gewerbeförderung.', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.sgv-usam.ch/verband.html', 9, NULL, 'punktuell', 'mehrere,exekutiv'),
 (345, 'Hauseigentümerverband Kt. BL', 'Mitgliedsorganisation HEV Schweiz', 'MitgliedsOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.hev-bl.ch/', 9, NULL, 'nie', 'einzel'),
-(346, 'H+ Spitäler der Schweiz', 'H+ ist die Spitzenorganisation der öffentlichen und privaten Schweizer Spitäler, Kliniken und Pflegeinstitutionen. Seit über 80 Jahren gestaltet H+ das schweizerische Gesundheitswesen aktiv mit. Als nationaler Verband nimmt H+ die Interessen der Mitglieder als Leistungserbringer und Arbeitgeber wahr. ', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.hplus.ch/', 1, 5, 'punktuell', 'einzel,mitglied,kommission');
+(346, 'H+ Spitäler der Schweiz', 'H+ ist die Spitzenorganisation der öffentlichen und privaten Schweizer Spitäler, Kliniken und Pflegeinstitutionen. Seit über 80 Jahren gestaltet H+ das schweizerische Gesundheitswesen aktiv mit. Als nationaler Verband nimmt H+ die Interessen der Mitglieder als Leistungserbringer und Arbeitgeber wahr. ', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.hplus.ch/', 1, 5, 'punktuell', 'einzel,mitglied,kommission'),
+(347, 'Schweizerischer Mieterinnen- und Mieterverband', 'Dachorganisationen sämtlicher kantonalen und regionalen MieterInnen-Verbände', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.smv-asloca-asi.ch/', 9, NULL, 'punktuell', 'mehrere,exekutiv'),
+(348, 'Associazione Scigué', 'Entwicklungshilfe-Organisation im Bildungsbereich. Der Name ist Sptzname des verstorbenen Gründers, Moreno Fibbioli.', '', 'NN', 13, NULL, 'nie', 'einzel,exekutiv');
 
 -- --------------------------------------------------------
 
@@ -831,7 +860,7 @@ CREATE TABLE IF NOT EXISTS `lobbytypen` (
   `factsheet` text NOT NULL,
   `lt_kommission` varchar(255) NOT NULL,
   PRIMARY KEY (`id_lobbytyp`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Lobbytypen und ständige Kommissionen' AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Lobbytypen und ständige Kommissionen' AUTO_INCREMENT=19 ;
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `lobbytypen`
@@ -882,7 +911,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `kleinbild` varchar(80) NOT NULL,
   `sitzplatz` int(11) NOT NULL,
   PRIMARY KEY (`id_parlam`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Eidgenössisches Parlament: Parlamentarier' AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Eidgenössisches Parlament: Parlamentarier' AUTO_INCREMENT=39 ;
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `parlamentarier`
@@ -949,7 +978,19 @@ CREATE TABLE IF NOT EXISTS `zugangsberechtigungen` (
   `id_lobbygroup` int(11) DEFAULT NULL,
   `id_lobbyorg` int(11) DEFAULT NULL COMMENT 'FK lobbyorg',
   PRIMARY KEY (`id_zugang`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='Eidgenössisches Parlament: Zugangsberechtigungen' AUTO_INCREMENT=63 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Eidgenössisches Parlament: Zugangsberechtigungen' AUTO_INCREMENT=63 ;
+
+--
+-- RELATIONEN DER TABELLE `zugangsberechtigungen`:
+--   `id_lobbygroup`
+--       `lobbygruppen` -> `id_lobbygroup`
+--   `id_lobbyorg`
+--       `lobbyorganisationen` -> `id_lobbyorg`
+--   `id_lobbytyp`
+--       `lobbytypen` -> `id_lobbytyp`
+--   `id_parlam`
+--       `parlamentarier` -> `id_parlam`
+--
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `zugangsberechtigungen`
@@ -1023,3 +1064,7 @@ INSERT INTO `zugangsberechtigungen` (`id_zugang`, `id_parlam`, `berech_name`, `b
 (60, 23, 'Merkli', 'Christoph', 'Pro Velo Schweiz', 5, NULL, 179),
 (61, 23, 'Ziltener', 'Erika', 'Dachverband Schweizerischer Patientenstellen', 1, NULL, 172),
 (62, 4, 'Töngi', 'Michael', 'Schweizerischer Mieter- und Mieterinnenverband', 9, NULL, 347);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
