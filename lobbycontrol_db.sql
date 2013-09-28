@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 26. Sep 2013 um 21:13
+-- Erstellungszeit: 28. Sep 2013 um 08:52
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -36,7 +36,11 @@ CREATE TABLE IF NOT EXISTS `interessenbindungen` (
   `id_lobbytyp` int(11) DEFAULT NULL COMMENT 'FK lobbytypen',
   `id_lobbygroup` int(11) DEFAULT NULL COMMENT 'FK lobbygruppen',
   `id_lobbyorg` int(11) DEFAULT NULL COMMENT 'FK lobbyorganisationen',
-  PRIMARY KEY (`id_interessen`)
+  PRIMARY KEY (`id_interessen`),
+  KEY `idx_parlam` (`id_parlam`),
+  KEY `idx_lobbytyp` (`id_lobbytyp`),
+  KEY `idx_lobbygroup` (`id_lobbygroup`),
+  KEY `idx_lobbyorg` (`id_lobbyorg`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Eidgenössisches Parlament. Deklarierte Interessenbindungen' AUTO_INCREMENT=337 ;
 
 --
@@ -439,8 +443,15 @@ CREATE TABLE IF NOT EXISTS `lobbygruppen` (
   `lg_bezeichnung` varchar(255) NOT NULL,
   `lg_description` text NOT NULL,
   `id_lobbytyp` int(11) NOT NULL,
-  PRIMARY KEY (`id_lobbygroup`)
+  PRIMARY KEY (`id_lobbygroup`),
+  KEY `idx_lobbytyp` (`id_lobbytyp`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+
+--
+-- RELATIONEN DER TABELLE `lobbygruppen`:
+--   `id_lobbytyp`
+--       `lobbytypen` -> `id_lobbytyp`
+--
 
 --
 -- TRUNCATE Tabelle vor dem Einfügen `lobbygruppen`
@@ -474,11 +485,13 @@ CREATE TABLE IF NOT EXISTS `lobbyorganisationen` (
   `lobbydescription` text NOT NULL,
   `lobbyorgtyp` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL,
   `weblink` varchar(255) NOT NULL,
-  `id_lobbytyp` int(11) NOT NULL COMMENT 'FK lobbytyp',
+  `id_lobbytyp` int(11) DEFAULT NULL COMMENT 'FK lobbytyp',
   `id_lobbygroup` int(11) DEFAULT NULL COMMENT 'FK von lobbygruppen',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL,
   `parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL,
-  PRIMARY KEY (`id_lobbyorg`)
+  PRIMARY KEY (`id_lobbyorg`),
+  KEY `idx_lobbytyp` (`id_lobbytyp`),
+  KEY `idx_lobbygroup` (`id_lobbygroup`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Lobbyorganisationen: Beschreibung' AUTO_INCREMENT=349 ;
 
 --
@@ -559,7 +572,7 @@ INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription
 (60, 'adoro consulting sa, Basel ', 'Die Gesellschaft bezweckt die Erbringung von Dienstleistungen im Bereich Unternehmensberatung, Treuhand, Steuern, Rechnungswesen und Buchführung, Revision sowie damit zusammenhängende Tätigkeiten. Sie kann Liegenschaften, Beteiligungen und Immaterialgüter erwerben, halten und veräussern sowie alle anderen Geschäfte tätigen, welche geeignet sind, die Entwicklung der Unternehmung zu fördern oder zu erleichtern. Sie kann Finanzierungen für sich und Dritte vornehmen, Darlehen gewähren, sowie Garantien und andere Sicherheiten stellen.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.moneyhouse.ch/u/adoro_consulting_sa_CH-270.3.014.405-3.htm', 9, NULL, 'nie', 'einzel,exekutiv'),
 (61, 'aspero AG, Basel ', 'Versicherungen sind unser Metier. Als neutraler und unabhängiger Versicherungsbroker stellen wir uns voll in den Dienst unserer Kunden.\r\n\r\nWir beraten Sie neutral und auf Ihre persönlichen Bedürfnisse zugeschnitten in den Bereichen Krankenversicherungen, Sachversicherungen (wie z.B. Hausrat- und Privathaftpflicht- und Motorfahrzeugversicherungen etc.), Lebensversicherungen, Rechtsschutzversicherungen, Geschäftsversicherungen (wie z.B. Krankentaggeld, Unfallversicherungen etc.). Zudem bieten wir Ihnen auch persönlich zugeschnittene Vorsorgelösungen und Finanzierungen an', 'EinzelOrganisation,LeistungsErbringer', 'http://aspero.ch/', 9, NULL, 'nie', 'einzel,exekutiv'),
 (62, 'Sebastian Frehner  Consulting AG', 'Erbringung von Dienstleistungen im Bereich Unternehmensberatung und ', 'EinzelOrganisation,LeistungsErbringer', 'http://www.moneyhouse.ch/u/dr_sebastian_frehner_consulting_CH-270.1.015.557-5.htm', 9, NULL, 'nie', 'einzel,exekutiv'),
-(63, 'pro rabais.-, Basel ', '?????????', 'EinzelOrganisation', '', 0, NULL, '', 'einzel'),
+(63, 'pro rabais.-, Basel ', '?????????', 'EinzelOrganisation', '', NULL, NULL, '', 'einzel'),
 (64, 'xundart AG, Wil ', 'xundart steht für eine neue und optimierte Form der Zusammenarbeit zwischen Ärzteschaft, Krankenkassen und Patienten. Und für Qualität, Effizienz und Kostenbewusstsein. Die Beteiligten arbeiten partnerschaftlich und teilen die Verantwortung.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.xundart.ch/', 1, 3, 'nie', 'einzel,exekutiv,kommission'),
 (65, 'Patientenschutz, Zürich (SPO)', 'Die Stiftung SPO Patientenschutz schützt und fördert die Patientenrechte im Gesundheitswesen wie etwa gegenüber Ärzten, Zahnärzten, Krankenkassen.\r\nSie setzt sich ein für Information und Beratung und ermöglicht den Patienten eine aktive, verantwortungsvolle Mitwirkung.', 'LeistungsErbringer,dezidierteLobby', 'http://www.spo.ch/index.php?option=com_frontpage&Itemid=1', 1, 6, 'punktuell', 'einzel,exekutiv,kommission'),
 (66, 'Stiftung sexuelle Gesundheit Schweiz    ', '', 'DachOrganisation,LeistungsErbringer', 'http://www.plan-s.ch/spip.php?page=sommaire-de', 1, 3, 'punktuell', 'einzel,exekutiv,kommission'),
@@ -793,6 +806,7 @@ INSERT INTO `lobbyorganisationen` (`id_lobbyorg`, `lobbyname`, `lobbydescription
 (292, 'Schweizerischer Versicherungsverband ', 'Der Schweizerische Versicherungsverband (SVV) ist die Dachorganisation der privaten Versicherungswirtschaft. Dem SVV sind kleine und grosse, national und international tätige Erst- und Rückversicherer angeschlossen.', 'DachOrganisation,dezidierteLobby', 'http://www.svv.ch/de/der-svv/portraet', 9, NULL, 'punktuell', 'einzel,exekutiv'),
 (293, 'Schweizerisches Arbeitershilfswerk (SOLIDAR SUISSE)', 'Solidar Suisse setzt sich für eine sozial, politisch und ökonomisch gerechtere Gesellschaft ein: Mit über 50 Projekten in 12 Ländern und mit Kampagnen in der Schweiz. ', 'DachOrganisation,LeistungsErbringer', 'http://www.solidar.ch/portrait-solidar-suisse.html', 13, NULL, 'punktuell', 'mehrere,exekutiv'),
 (294, 'Schweizerischer Fussballverband (SFV)', '', 'DachOrganisation,LeistungsErbringer', 'http://www.football.ch/de/start.aspx', 17, NULL, 'punktuell', 'einzel,exekutiv'),
+(295, 'Médecins de famille Suisse', '', 'EinzelOrganisation', '', 1, 4, 'punktuell', 'einzel'),
 (296, 'Die Schweizerische Post', '', 'EinzelOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.post.ch/', 14, NULL, 'punktuell', 'einzel,exekutiv'),
 (297, 'Textilverband Schweiz (TVS)', 'Rund 200 Unternehmen der Textil- und Bekleidungsindustrie bündeln ihre Interessen im TVS Textilverband Schweiz. Der Verband engagiert sich für die übergeordneten Interessen der Mitgliedunternehmen, die auf Grund der historisch gewachsenen Strukturen unterschiedlichen Bereichen angehören. Allen gemeinsam ist das Anliegen, ihre hochwertigen Produkte und Dienstleistungen von einem starken Brand im nationalen sowie internationalen Markt verankert zu wissen. Swiss Textiles, diese Marke steht für innovative, hochwertige Produkte sowie Dienstleistungen und wird als Gütesiegel in der ganzen Welt geschätzt.', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.swisstextiles.ch/cms/front_content.php?idcat=2&lang=1', 9, NULL, 'nie', 'einzel,exekutiv'),
 (298, 'Gewerkschaft Unia', '', 'DachOrganisation,MitgliedsOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.unia.ch/', 9, NULL, 'punktuell', 'einzel,exekutiv'),
@@ -977,7 +991,11 @@ CREATE TABLE IF NOT EXISTS `zugangsberechtigungen` (
   `id_lobbytyp` int(11) DEFAULT NULL COMMENT 'FK lobbytyp',
   `id_lobbygroup` int(11) DEFAULT NULL,
   `id_lobbyorg` int(11) DEFAULT NULL COMMENT 'FK lobbyorg',
-  PRIMARY KEY (`id_zugang`)
+  PRIMARY KEY (`id_zugang`),
+  KEY `idx_parlam` (`id_parlam`),
+  KEY `idx_lobbytyp` (`id_lobbytyp`),
+  KEY `idx_lobbygroup` (`id_lobbygroup`),
+  KEY `idx_lobbyorg` (`id_lobbyorg`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Eidgenössisches Parlament: Zugangsberechtigungen' AUTO_INCREMENT=63 ;
 
 --
@@ -1064,6 +1082,41 @@ INSERT INTO `zugangsberechtigungen` (`id_zugang`, `id_parlam`, `berech_name`, `b
 (60, 23, 'Merkli', 'Christoph', 'Pro Velo Schweiz', 5, NULL, 179),
 (61, 23, 'Ziltener', 'Erika', 'Dachverband Schweizerischer Patientenstellen', 1, NULL, 172),
 (62, 4, 'Töngi', 'Michael', 'Schweizerischer Mieter- und Mieterinnenverband', 9, NULL, 347);
+
+--
+-- Constraints der exportierten Tabellen
+--
+
+--
+-- Constraints der Tabelle `interessenbindungen`
+--
+ALTER TABLE `interessenbindungen`
+  ADD CONSTRAINT `fk_ib_lobbyorg` FOREIGN KEY (`id_lobbyorg`) REFERENCES `lobbyorganisationen` (`id_lobbyorg`),
+  ADD CONSTRAINT `fk_ib_lobbygroup` FOREIGN KEY (`id_lobbygroup`) REFERENCES `lobbygruppen` (`id_lobbygroup`),
+  ADD CONSTRAINT `fk_ib_lobbytyp` FOREIGN KEY (`id_lobbytyp`) REFERENCES `lobbytypen` (`id_lobbytyp`),
+  ADD CONSTRAINT `fk_ib_parlam` FOREIGN KEY (`id_parlam`) REFERENCES `parlamentarier` (`id_parlam`);
+
+--
+-- Constraints der Tabelle `lobbygruppen`
+--
+ALTER TABLE `lobbygruppen`
+  ADD CONSTRAINT `fk_lg_lt` FOREIGN KEY (`id_lobbytyp`) REFERENCES `lobbytypen` (`id_lobbytyp`);
+
+--
+-- Constraints der Tabelle `lobbyorganisationen`
+--
+ALTER TABLE `lobbyorganisationen`
+  ADD CONSTRAINT `fk_lo_lt` FOREIGN KEY (`id_lobbytyp`) REFERENCES `lobbytypen` (`id_lobbytyp`),
+  ADD CONSTRAINT `fk_lo_lg` FOREIGN KEY (`id_lobbygroup`) REFERENCES `lobbygruppen` (`id_lobbygroup`);
+
+--
+-- Constraints der Tabelle `zugangsberechtigungen`
+--
+ALTER TABLE `zugangsberechtigungen`
+  ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY (`id_lobbyorg`) REFERENCES `lobbyorganisationen` (`id_lobbyorg`),
+  ADD CONSTRAINT `fk_zb_lg` FOREIGN KEY (`id_lobbygroup`) REFERENCES `lobbygruppen` (`id_lobbygroup`),
+  ADD CONSTRAINT `fk_zb_lt` FOREIGN KEY (`id_lobbytyp`) REFERENCES `lobbytypen` (`id_lobbytyp`),
+  ADD CONSTRAINT `fk_zb_parlam` FOREIGN KEY (`id_parlam`) REFERENCES `parlamentarier` (`id_parlam`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
