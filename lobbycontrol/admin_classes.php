@@ -8,12 +8,13 @@
  * /*
  * /****************************************************************************************************************************************************************
  */
-header ( 'Content-type: text/html; charset=ISO-8859-15' ); // ISO-8859-1
+header ( 'Content-type: text/html; charset=UTF-8' );
 $optionen = array (
-    PDO::ATTR_PERSISTENT => true 
+    PDO::ATTR_PERSISTENT => true
 );
-//$db = new PDO('mysql:host=localhost;dbname=lobby','root','',$optionen);//usr_web369_4 web369,politnet || lobby root
-$db = new PDO('mysql:host=localhost;dbname=lobby_parlament','web369','D-UaQ1EDGjwwvBv7oB2X',$optionen);//usr_web369_4 web369,politnet || lobby root
+// $db = new PDO('mysql:host=localhost;dbname=lobby','root','',$optionen);//usr_web369_4 web369,politnet || lobby root
+// $db = new PDO ( 'mysql:host=localhost;dbname=usr_web369_4', 'web369', 'politnet', $optionen ); // usr_web369_4 web369,politnet || lobby root
+$db = new PDO ( 'mysql:host=localhost;dbname=lobby_parlament', 'web369', 'D-UaQ1EDGjwwvBv7oB2X', $optionen ); // usr_web369_4 web369,politnet || lobby root
 /* Schnellsuche auf lobbyorg.htm */
 class LobbyOrgSuche {
   var $db = NULL;
@@ -56,7 +57,7 @@ class LobbyOrgSuche {
       return "Keine Interessenbindungen zu dieser Organisation";
     }
   }
-  
+
   // EinzelParlamentarier Kurzinfos Lobbyorg
   function lobbyOrgEinzel($id) {
     $sql = "SELECT lobbyname,lobbyorgtyp,vernehmlassung,parlam_verbindung,weblink FROM lobbyorganisationen WHERE id_lobbyorg='$id'";
@@ -114,13 +115,13 @@ class LobbyOrgSuche {
       // hoch/1/1/0 //Mit Lobbygroup
       $sql = "SELECT a.id_lobbyorg,a.lobbyname,a.lobbydescription,a.lobbyorgtyp,a.weblink,a.vernehmlassung,a.parlam_verbindung, b.lt_kategorie,c.lg_bezeichnung FROM lobbyorganisationen a,lobbytypen b , lobbygruppen c WHERE a.id_lobbytyp=b.id_lobbytyp  AND a.id_lobbygroup=c.id_lobbygroup AND a.lobbyorgtyp LIKE '%dezidierteLobby' AND (a.vernehmlassung='immer' OR a.vernehmlassung='punktuell') AND (a.parlam_verbindung LIKE '%exekutiv%' OR a.parlam_verbindung='') AND a.id_lobbytyp='$lobbytyp' AND a.id_lobbygroup ='$lobbygroup' ORDER BY a.lobbyname,a.vernehmlassung";
     }
-    
+
     /*
-     * mysql> SELECT * FROM tbl_name WHERE FIND_IN_SET('value',set_col)>0; mysql> SELECT * FROM tbl_name WHERE set_col LIKE '%value%'; Die erste Anweisung findet Datens�tze, bei denen set_col den Mitgliedswert value enth�lt. Die zweite ist �hnlich, aber nicht identisch: Sie findet Datens�tze, bei denen set_col value an beliebiger Stelle (auch als Teil-String eines anderen Mitglieds) enth�lt. Die folgenden Anweisungen sind ebenfalls zul�ssig: mysql> SELECT * FROM tbl_name WHERE set_col & 1; mysql> SELECT * FROM tbl_name WHERE set_col = 'val1,val2';
+     * mysql> SELECT * FROM tbl_name WHERE FIND_IN_SET('value',set_col)>0; mysql> SELECT * FROM tbl_name WHERE set_col LIKE '%value%'; Die erste Anweisung findet Datensätze, bei denen set_col den Mitgliedswert value enthält. Die zweite ist ähnlich, aber nicht identisch: Sie findet Datensätze, bei denen set_col value an beliebiger Stelle (auch als Teil-String eines anderen Mitglieds) enthält. Die folgenden Anweisungen sind ebenfalls zulässig: mysql> SELECT * FROM tbl_name WHERE set_col & 1; mysql> SELECT * FROM tbl_name WHERE set_col = 'val1,val2';
      */
-    
+
     // Vernehmlassung immer,punktuell,nie lobbyorgtyp:EinzelorganisationDachorganisation,dezidierteLobby
-    
+
     $lobbygroup = $this->db->query ( $sql );
     $erg = $lobbygroup->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
@@ -162,7 +163,7 @@ class Parlamentarier {
   }
   // Einzelparmanebtarier und Interessenbindungen (alle nach Lobbytyp)nach Name
   function einzelParlamentarier($name) {
-    
+
     /* $sql="SELECT a.id_parlam,a.name,a.vorname,a.beruf,a.ratstyp,a.kanton,a.partei,a.parteifunktion,a.im_rat_seit,a.kommission,a.kleinbild,b.ib_description,b.id_lobbyorg, b.ib_status,c.lt_kategorie FROM parlamentarier a ,interessenbindungen b ,lobbytypen c WHERE a.id_parlam=b.id_parlam AND b.id_lobbytyp=c.id_lobbytyp AND a.name LIKE '$name%' ORDER BY c.lt_kategorie"; */
     $sql = "SELECT a.id_parlam,a.name,a.vorname,a.beruf,a.ratstyp,a.kanton,a.partei,a.parteifunktion,a.im_rat_seit,a.kommission,a.kleinbild FROM parlamentarier a WHERE a.name LIKE '$name%' ORDER BY a.name";
     $einzelParlam = $this->db->query ( $sql );
@@ -174,7 +175,7 @@ class Parlamentarier {
       return "Kein Datensatz mit dem Namen $name";
     }
   }
-  
+
   // Interessenbindungen nach id des Parlamentariers finden
   function ibEinzelparlamentarier($idparl) {
     $sql = "SELECT a.ib_description,a.id_lobbyorg,a.ib_status,b.lt_kategorie FROM interessenbindungen a, lobbytypen b WHERE a.id_lobbytyp=b.id_lobbytyp AND a.id_parlam='$idparl' ORDER BY  b.lt_kategorie";
@@ -187,7 +188,7 @@ class Parlamentarier {
       return "Kein Datensatz mit vorhanden";
     }
   }
-  
+
   // Einzelparlamentarier nach Sitzplatznummer und Ratstyp f&uuml;r Sitzplatzfenster
   function sitzplatz($ratstyp, $sitzplatz) {
     $sql = "SELECT id_parlam,name,vorname,beruf,ratstyp,kanton,partei,parteifunktion,im_rat_seit,kommission,kleinbild FROM parlamentarier WHERE ratstyp='$ratstyp' AND sitzplatz='$sitzplatz'";
@@ -200,13 +201,13 @@ class Parlamentarier {
       return "Kein Ratsmitglied gefunden";
     }
   }
-  
+
   // Untermengen Parlamentarier-Suche
   function gruppenParlamentarier($partei, $kanton, $ratstyp, $komm) {
     // 100
     if ($partei != 'alleparteien' and $kanton == 'allekantone' and $ratstyp == 'alleraete') {
       $sql = "SELECT a.id_parlam,a.name,a.vorname,a.beruf,a.ratstyp,a.kanton,a.partei,a.parteifunktion,a.im_rat_seit,a.kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a WHERE a.partei = '$partei' ORDER BY  a.name";
-      
+
       // 010
     } else if ($partei == 'alleparteien' and $kanton != 'allekantone' and $ratstyp == 'alleraete') {
       $sql = "SELECT a.id_parlam,a.name,a.vorname,a.beruf,a.ratstyp,a.kanton,a.partei,a.parteifunktion,a.im_rat_seit,a.kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a  WHERE a.kanton = '$kanton' ORDER BY  a.partei,a.name";
@@ -229,7 +230,7 @@ class Parlamentarier {
     } else if ($partei == 'alleparteien' and $kanton == 'allekantone' and $ratstyp == 'alleraete') {
       $sql = "SELECT a.id_parlam,a.name,a.vorname,a.beruf,a.ratstyp,a.kanton,a.partei,a.parteifunktion,a.im_rat_seit,a.kommission,a.kleinbild,a.sitzplatz  FROM parlamentarier a ORDER BY a.ratstyp,a.name";
     }
-    
+
     $gruppe = $this->db->query ( $sql );
     $erg = $gruppe->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
@@ -349,9 +350,9 @@ class Statistik {
   }
   function ungewichtetEinzelLobbygruppen($id, $lobbytyp = '1') {
     // Komplex->Gruppen werden &uuml;ber lobbyorganisationen ermittelt
-    $sql = "SELECT d.name, b.lt_kategorie, c.lg_bezeichnung, count( 'c.lg_bezeichnung' ) AS Anzahl FROM interessenbindungen a, lobbytypen b, lobbygruppen c, parlamentarier d, lobbyorganisationen e WHERE a.id_lobbytyp = b.id_lobbytyp AND e.id_lobbygroup = c.id_lobbygroup 
-AND a.id_parlam = d.id_parlam 
-AND a.id_lobbyorg = e.id_lobbyorg 
+    $sql = "SELECT d.name, b.lt_kategorie, c.lg_bezeichnung, count( 'c.lg_bezeichnung' ) AS Anzahl FROM interessenbindungen a, lobbytypen b, lobbygruppen c, parlamentarier d, lobbyorganisationen e WHERE a.id_lobbytyp = b.id_lobbytyp AND e.id_lobbygroup = c.id_lobbygroup
+AND a.id_parlam = d.id_parlam
+AND a.id_lobbyorg = e.id_lobbyorg
 AND a.id_lobbytyp = '$lobbytyp'
 AND a.id_parlam = '$id'
 GROUP BY c.lg_bezeichnung
@@ -386,7 +387,7 @@ ORDER BY Anzahl DESC ";
     $gew = array (
         $hoch,
         $mittel,
-        $gering 
+        $gering
     );
     return $gew;
   }
@@ -443,7 +444,7 @@ class Kommission {
       return "Noch keine Typen definiert";
     }
   }
-  
+
   // Lobbytypen und Lobbygruppen je Kommission
   function LobbytypenLobbygruppen($komm) {
     $sql = "SELECT a.lt_kategorie,b.lg_bezeichnung,b.lg_description FROM lobbytypen a, lobbygruppen b WHERE b.id_lobbytyp=a.id_lobbytyp AND a.lt_kommission='$komm'
@@ -460,7 +461,7 @@ class Kommission {
   // Gruppierte Lobbybeziehungen nach Typ und Gruppe (Statistisch)
   function gruppierteLobbyGruppen($komm, $lobbytyp) {
     $sql = "SELECT b.lt_kategorie, c.lg_bezeichnung, count( 'c.lg_bezeichnung' ) AS Anzahl FROM lobbyorganisationen a, lobbytypen b, lobbygruppen c WHERE a.id_lobbytyp = b.id_lobbytyp AND a.id_lobbygroup = c.id_lobbygroup AND b.lt_kategorie = '$lobbytyp' AND b.lt_kommission = '$komm' GROUP BY c.lg_bezeichnung ORDER BY Anzahl DESC";
-    
+
     $gruppiert = $this->db->query ( $sql );
     $erg = $gruppiert->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
@@ -471,14 +472,14 @@ class Kommission {
     }
   }
 } // end Class
-  
+
 // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /* Ausf&uuml;hrung von fortschreitende Suche nach Lobbyorganisationen (Nur f&uuml;r Teste zur Dateneingabe */
  /*Das ist nur f&uuml;r den Test, ob die Lobby schon existiert: In lobbyorg.php ->standalone*/
  if ($_REQUEST ['term'] != '') {
   // htmlentities(utf8_decode($_POST['parlamname']));
   $name = utf8_decode ( $_REQUEST ['term'] );
-  
+
   $abfrage = new LobbyOrgSuche ( $db );
   $erg = $abfrage->lobbyorgFinden ( $name );
   $html = "<table border='1'><tr>";
@@ -491,22 +492,22 @@ class Kommission {
 if ($_REQUEST ['fragment'] != '') {
   // htmlentities(utf8_decode($_POST['parlamname']));
   $name = utf8_decode ( $_REQUEST ['fragment'] );
-  
+
   $abfrage = new LobbyOrgSuche ( $db );
   $erg = $abfrage->quickSearchLobbys ( $name );
   $html = "<table id='quicksearch'><tr>";
-  
+
   foreach ( $erg as $wert ) {
     // viele
     if (count ( $erg ) > 1) {
-      
+
       $html .= "<td style='width:400px' data-lobbyorg='$wert[id_lobbyorg]'><div  ><b style='cursor:pointer'><img style='cursor:pointer' src='./icons/mouseclick_mini.jpg' />$wert[lobbyname]</b><p style='margin:0;width:400px;height:100px;overflow:auto' class='description'>$wert[lobbydescription]</p></div></td><td style='width:200px'>Bereich: $wert[lt_kategorie]<br> $wert[lobbyorgtyp]<br>Vernehmlassung: $wert[vernehmlassung]<br>Verbindung: $wert[parlam_verbindung]<br><a href='$wert[weblink]'>Weblink</a></td></tr><tr>";
     } else if (count ( $erg ) == 1) {
       $kaskad = new LobbyOrgSuche ( $db );
       $ibv = $kaskad->verbindungen ( $wert ['id_lobbyorg'] );
       // Zugangsberechtigungen hier ebenfalls ber&uuml;cksichtigen
       $zgb = $kaskad->lobbyOrgParlamentZugang ( $wert ['id_lobbyorg'] );
-      
+
       $html .= "<td style='width:400px' data-lobbyorg='$wert[id_lobbyorg]'><div ><b style='cursor:pointer'><img src='./icons/mouseclick_mini.jpg' />$wert[lobbyname]</b><p style='margin:0;width:400px;height:100px;overflow:auto' class='description'>$wert[lobbydescription]</p></div></td><td style='width:200px'>Bereich: $wert[lt_kategorie]<br> $wert[lobbyorgtyp]<br>Vernehmlassung: $wert[vernehmlassung]<br>Verbindung: $wert[parlam_verbindung]<br><a href='$wert[weblink]'>Weblink</a></td><td id='parlambild' style='width:auto'>";
       if (is_string ( $ibv ) and is_string ( $zgb )) {
         $html .= $ibv; // Fehlermeldung
@@ -523,14 +524,14 @@ if ($_REQUEST ['fragment'] != '') {
           $html .= "<img style='cursor:pointer' data-parlname='$verb[name]' title='" . $verb [name] . " " . $verb [vorname] . "\n" . $verb [partei] . " " . $verb [ratstyp] . " " . $verb [kanton] . "\nZutrittsberechtigung' src='./parlamentarierBilder/" . $verb ['kleinbild'] . "' />";
           // }
         }
-        
+
         $html .= "</td>";
       }
     }
   }
-  
+
   $html .= "</tr></table><div id='parlameximg'></div>";
-  
+
   print $html;
 }
 
@@ -553,14 +554,14 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'parlam') {
   $html .= "<li><label for=partei>Partei</label><br> <select name='partei' id='partei' size='1' >";
   $html .= "<option value='alleparteien'>Alle</option>";
   foreach ( $erg1 as $wert ) {
-    
+
     $html .= "<option value={$wert['partei']}>{$wert['partei']} </option>";
   }
   $html .= "</select></li>";
   $html .= "<li><label for='kanton'>Kanton </label><br> <select name='kanton' id='kanton' size='1' >";
   $html .= "<option value='allekantone'>Alle</option>";
   foreach ( $erg as $wert ) {
-    
+
     $html .= "<option value={$wert['kanton']}>{$wert['kanton']}</option>";
   }
   $html .= "</select></li>";
@@ -569,7 +570,7 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'parlam') {
   $html .= "<option value='NR'>NR</option>";
   $html .= "<option value='SR'>SR</option>";
   $html .= "</select><li>";
-  
+
   $html .= "<li><label for='kommission'>Kommission</label><br><select name='komm' id='komm' size='1'>";
   $html .= "<option value='SGK'>Kommission f&uuml;r soziale Sicherheit und Gesundheit (SGK)</option>";
   $html .= "</select></li>";
@@ -589,12 +590,12 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'parlam') {
 if ((isset ( $_POST ['parlamname'] ) and strlen ( utf8_decode ( $_POST ['parlamname'] ) ) >= 2) or isset ( $_POST ['parlam'] )) {
   // $variable = htmlentities( utf8_decode($_POST['variable']) ); // right
   if ($_POST ['parlamname']) {
-    
+
     $name = utf8_decode ( $_POST ['parlamname'] );
   } else {
     $name = utf8_decode ( $_POST ['parlam'] );
   }
-  // print($name);//OK � und � funtionieren hier
+  // print($name);//OK ö und ä funtionieren hier
   $einzelparlam = new Parlamentarier ( $db );
   $erg = $einzelparlam->einzelParlamentarier ( $name );
   // $zutritte=$einzelparlam->zugangsberechtigungen($name);
@@ -614,14 +615,14 @@ if ((isset ( $_POST ['parlamname'] ) and strlen ( utf8_decode ( $_POST ['parlamn
       $ibs = new Parlamentarier ( $db );
       $erg = $ibs->ibEinzelparlamentarier ( $idp );
       $zutritte = $ibs->zugangsberechtigungen ( $idp );
-      
+
       $html = "<div  class='static' data-id={$wert['id_parlam']} >";
       $html .= "<img src='./parlamentarierBilder/" . $wert ['kleinbild'] . "' title='$wert[name]' />";
       $html .= "<span>{$wert['name']} {$wert['vorname']}<br> {$wert['ratstyp']}, {$wert['kanton']}, {$wert['partei']}, {$wert['parteifunktion']}<br>{$wert['kommission']}  </span></div>";
     }
-    
+
     $html .= "<h4 title='Rechtsformen: Stiftung (Stift), AG, Verein(Ve), GmbH\nSitiftungsrat (Sr), Verwaltungsrat(VR), Vorstand (V)\nM: (Mitglied), P: (Pr&auml;sident), VP (Vizepr&auml;sident '>Deklarierte Interessenbindungen </h4><ol class='interessenbindungen'>";
-    
+
     foreach ( $erg as $wert ) {
       // deklariert
       if ($wert ['ib_status'] == 'd') {
@@ -636,20 +637,20 @@ if ((isset ( $_POST ['parlamname'] ) and strlen ( utf8_decode ( $_POST ['parlamn
     // print_r($ib);//OK
     // deklarierte ib
     for($i = 0; $i < count ( $ib ); $i ++) {
-      
+
       $html .= "<li id='$lorgnr[$i]' style='cursor:pointer'>$ib[$i]</li>";
     }
     // nicht-deklarierte
     if (count ( $ibn ) > 0) {
       $html .= "</ol><h4 title='Rechtsformen: Stiftung (Stift), AG, Verein(Ve), GmbH\nSitiftungsrat (Sr), Verwaltungsrat(VR), Vorstand (V)\nM: (Mitglied), P: (Pr&auml;sident), VP (Vizepr&auml;sident '>Weitere Interessenbindungen (Teledata u.a. Quellen)</h4><ol class='interessenbindungen'>";
       for($i = 0; $i < count ( $ibn ); $i ++) {
-        
+
         $html .= "<li id='$lorgnrn[$i]' style='cursor:pointer'>$ibn[$i]</li>";
       }
     }
-    
+
     if (is_array ( $zutritte )) {
-      
+
       foreach ( $zutritte as $wert ) {
         $kat = $wert ['lt_kategorie'] != '' ? "Bereich: $wert[lt_kategorie]" : '';
         $zt [] = $wert ['berech_name'] . ' ' . $wert ['berech_vorname'] . ', ' . $wert ['berech_organisation'] . ' ' . $kat;
@@ -721,9 +722,9 @@ if (isset ( $_POST ['partei'] )) {
   $darstellung = $_POST ['darstellung'];
   $gruppen = new Parlamentarier ( $db );
   $gruppe = $gruppen->gruppenParlamentarier ( $partei, $kanton, $ratstyp, $komm );
-  
+
   if (is_string ( $gruppe )) { // Keine daten in dieser Abfrage
-                               
+
     // print_r($gruppe);
     $html = "<h3>Abfrage nach Partei: $partei Kanton: $kanton Ratstyp: $ratstyp, Kommission: $komm<br>$gruppe</h3>";
   } else if (is_array ( $gruppe ) and $darstellung == 'tabelle') {
@@ -734,10 +735,10 @@ if (isset ( $_POST ['partei'] )) {
     $width = 200;
     $height = 200;
     $counter = 0;
-    
+
     foreach ( $gruppe as $wert ) {
       // $posleft +=$width;
-      
+
       $ar [] = "<div class='static' data-id='" . $wert ['id_parlam'] . "' style='border:1px dotted grey;height:200px;width:200px;position:absolute;left:{$posleft}px;top:{$postop}px;' ><img src='./parlamentarierBilder/" . $wert ['kleinbild'] . "' title=\'{$wert['name']}\' /><span>{$wert['name']}  {$wert['vorname']}<br> {$wert['ratstyp']}, {$wert['kanton']}, {$wert['partei']}, {$wert['parteifunktion']}<br>{$wert['kommission']}  </span><h4 style='cursor:pointer' id='ibaccord' data-id='" . $wert ['id_parlam'] . "' title='Rechtsformen: Stiftung (Stift), AG, Verein(Ve), GmbH\nSitiftungsrat (Sr), Verwaltungsrat(VR), Vorstand (V)\nM: (Mitglied), P: (Pr&auml;sident), VP (Vizepr&auml;sident '>Interessenbindungen <img src='./icons/mouseclick_mini.jpg' /></h4><ol style='display:none' class='interessenbindungen'></ol><h4 id='zugangaccord' style='cursor:pointer' data-id='" . $wert ['id_parlam'] . "'>Zugangsberechtigungen  <img src='./icons/mouseclick_mini.jpg' /></h4><ul style='display:none' class='zugangsberechtigungen'</ul></div>";
       $posleft += $width;
       $counter ++;
@@ -749,11 +750,11 @@ if (isset ( $_POST ['partei'] )) {
     }
     // print_r($ar);
     foreach ( $ar as $w ) {
-      
+
       $html .= $w;
     }
     $html .= "</div>";
-    
+
     print $html;
     //
     // Darstellug der Sitzordnung bei Gruppensuche im Suchpanel Parlamentarier
@@ -832,7 +833,7 @@ if (isset ( $_GET ['platznr'] )) {
       $html .= "<span style='width:150px'>{$wert['name']} {$wert['vorname']}<br> {$wert['ratstyp']}, {$wert['kanton']}, {$wert['partei']}, {$wert['parteifunktion']}<br>{$wert['kommission']}  </span></div>";
     }
     $html .= "<h4 style='clear:both;text-align:center' title='Rechtsformen: Stiftung (Stift), AG, Verein(Ve), GmbH\nSitiftungsrat (Sr), Verwaltungsrat(VR), Vorstand (V)\nM: (Mitglied), P: (Pr&auml;sident), VP (Vizepr&auml;sident '>Deklarierte Interessenbindungen </h4><ol class='interessenbindungensitz'>";
-    
+
     foreach ( $erg as $wert ) {
       // deklariert
       if ($wert ['ib_status'] == 'd') {
@@ -845,19 +846,19 @@ if (isset ( $_GET ['platznr'] )) {
       }
     }
     for($i = 0; $i < count ( $ib ); $i ++) {
-      
+
       $html .= "<li id='$lorgnr[$i]' style='cursor:pointer'>$ib[$i]</li>";
     }
     // nicht-deklarierte
     if (count ( $ibn ) > 0) {
       $html .= "</ol><h4 style='text-align:center' title='Rechtsformen: Stiftung (Stift), AG, Verein(Ve), GmbH\nSitiftungsrat (Sr), Verwaltungsrat(VR), Vorstand (V)\nM: (Mitglied), P: (Pr&auml;sident), VP (Vizepr&auml;sident '>Weitere Interessenbindungen (Teledata u.a. Quellen)</h4><ol class='interessenbindungensitz'>";
       for($i = 0; $i < count ( $ibn ); $i ++) {
-        
+
         $html .= "<li id='$lorgnrn[$i]' style='cursor:pointer'>$ibn[$i]</li>";
       }
     }
     if (is_array ( $zutritte )) {
-      
+
       foreach ( $zutritte as $wert ) {
         $kat = $wert ['lt_kategorie'] != '' ? "Bereich: $wert[lt_kategorie]" : '';
         $zt [] = $wert ['berech_name'] . ' ' . $wert ['berech_vorname'] . ', ' . $wert ['berech_organisation'] . ' ' . $kat;
@@ -893,11 +894,11 @@ if (isset ( $_GET ['platznr'] )) {
     }
     $html .= "</ul></div>";
   }
-  
+
   /*
    * foreach($sitz as $wert){ $html .="<img id='".$wert['id_parlam']."' src='./parlamentarierBilder/".$wert['kleinbild']."' style='text-align:center' /><br>"; $html .="{$wert['name']} {$wert['vorname']} <br>{$wert['partei']} {$wert['kanton']}<br>"; $html .="Lobbyfaktor: xyz <br>"; } } $html .="</div>";
    */
-  
+
   print $html;
 }
 
@@ -945,7 +946,7 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'lobbyorg') {
   // print_r ($lt);
   // $lobbygroup=$abfr->lobbygruppen();
   // print_r ($lg);
-  
+
   $html = "<div id='lobbyorgsuche'><h3>Suchpanel Lobbyorganisationen</h3>";
   $html .= "<form name='lobbysuche' id='lobbysuche'>";
   $html .= "<ul>";
@@ -967,7 +968,7 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'lobbyorg') {
   $html .= "</select></li>";
   $html .= "<li><label for='gruppierung'>Gruppierung</label><br><input type='radio' id='gruppierung' name='gruppierung' value='gruppe' /> Gruppe ";
   $html .= "<input type='radio'  id='gruppierung' name='gruppierung' checked value='einzel' /> Einzel </li>";
-  
+
   $html .= "<li><label for='darstellung'>Darstellung</label><br><input type='radio' id='darstellung' name='darstellung' value='tabelle' /> Tabelle ";
   $html .= "<input type='radio'  id='darstellung' name='darstellung' checked value='sitzordnung' /> Sitzordnung </li><br>";
   /*
@@ -1008,7 +1009,7 @@ if (isset ( $_POST ['bedeutung'] )) {
   } else {
     $logruppe = $lobbygroup;
   }
-  
+
   // Lobbyorgtyp besser Darstellen
   function lobbyorgtyp($orgtyp) {
     $orgar = explode ( ',', $orgtyp );
@@ -1018,14 +1019,14 @@ if (isset ( $_POST ['bedeutung'] )) {
     }
     return $orgstr;
   }
-  
+
   // print_r($erg);
   if (is_string ( $erg )) { // Keine daten in dieser Abfrage
-                            
+
     // print_r($gruppe);
     $html = "<h3> $erg</h3>";
   } else if (is_array ( $erg ) and $darstellung == 'tabelle') { // in der Tabellendarstellung wird die Gruppierung nicht ber&uuml;cksichtigt
-    
+
     switch ($bedeutung) {
       case '1' :
         $bedeutung = 'hoch';
@@ -1039,7 +1040,7 @@ if (isset ( $_POST ['bedeutung'] )) {
       default :
         $bedeutung = 'alle';
     }
-    
+
     $html = "<h3>Darstellung: einzel, Tabelle. Abfrage nach Bedeutung: $bedeutung Lobbytyp: $lobtyp Lobbygruppe: $logruppe  Anzahl: $anz </h3>";
     $html .= "<div id='lobbygruppen' >";
     $html .= "<table id='lobbyabfrage'><tr>";
@@ -1048,12 +1049,12 @@ if (isset ( $_POST ['bedeutung'] )) {
       $html .= "<td style='width:100px' id='{$val['id_lobbyorg']}'>{$val['lobbyname']}</td><td  ><p style='margin:0;width:400px;height:100px;overflow:auto'>{$val['lobbydescription']}</p></td>";
       // function lobbyorgtyp() einsetzen
       $lot = lobbyorgtyp ( $val ['lobbyorgtyp'] );
-      
+
       // $lobbygruppe=$lobbygroup=='alle'?"Alle Lobbygruppen":"{$val['lg_bezeichnung']}";
       $html .= "<td style='width:150px'>$lot</td><td width='150'>{$val['lt_kategorie']}<br>Lobbygruppe: $logruppe</td><td width='100'>{$val['vernehmlassung']}</td><td width='50'><a href='{$val['weblink']}'>Weblink</a></td><td id='{$val['id_lobbyorg']}' data-darstellung='$darstellung' style='width:130px;cursor:pointer' class='parlamlink' >{$val['parlam_verbindung']} <img src='./icons/mouseclick_mini.jpg' /></td></tr><tr>";
     }
     $html .= "</tr><table></div>";
-    
+
     print $html;
   } else if (is_array ( $erg ) and $gruppierung == 'einzel' and $darstellung == 'sitzordnung') {
     switch ($bedeutung) {
@@ -1071,14 +1072,14 @@ if (isset ( $_POST ['bedeutung'] )) {
     }
     $html = "<h3>Darstellung: $gruppierung, Sitzplan. Abfrage nach Bedeutung: $bedeutung Lobbytyp: $lobtyp Lobbygruppe: $logruppe  Anzahl: $anz </h3>";
     if (is_string ( $erg )) { // Keine daten in dieser Abfrage
-      
+
       $html = "<h3>$erg</h3>";
     } else {
       $html .= "<div style='margin-bottom:30px'><form id='lobbys' name='lobbys' >";
       $html .= "<select id='einzellobbys' name='einzellobbys' >";
       $html .= "<option>Auswahl</option>";
       foreach ( $erg as $val ) {
-        
+
         $html .= "<option value='{$val['id_lobbyorg']}'>{$val['lobbyname']}</option>";
       }
       $html .= "</select></form></div>";
@@ -1101,7 +1102,7 @@ if (isset ( $_POST ['bedeutung'] )) {
     }
     $html = "<h3>Darstellung: $gruppierung, Sitzplan. Abfrage nach Bedeutung: $bedeutung Lobbytyp: $lobtyp Lobbygruppe: $logruppe  Anzahl: $anz </h3>";
     if (is_string ( $erg )) { // Keine daten in dieser Abfrage
-      
+
       $html = "<h3>$erg</h3>";
     } else {
       foreach ( $erg as $val ) {
@@ -1110,7 +1111,7 @@ if (isset ( $_POST ['bedeutung'] )) {
       // print_r($orgid);OK
       // Datenbank nach Parlamentarieren abfragen
       $parlambindungen = new LobbyOrgSuche ( $db );
-      
+
       foreach ( $orgid as $id ) {
         $parl [] = $parlambindungen->lobbyOrgParlam ( $id );
       }
@@ -1124,7 +1125,7 @@ if (isset ( $_POST ['bedeutung'] )) {
         error_reporting ( 0 );
         foreach ( $parl as $v ) {
           foreach ( $v as $w ) {
-            
+
             if ($w ['ratstyp'] == 'NR') {
               $testreihe [] = $w ['sitzplatz'];
               $testreihe = array_unique ( $testreihe );
@@ -1139,7 +1140,7 @@ if (isset ( $_POST ['bedeutung'] )) {
         error_reporting ( 0 );
         foreach ( $zber as $v ) {
           foreach ( $v as $w ) {
-            
+
             if ($w ['ratstyp'] == 'NR') {
               $testreihe [] = $w ['sitzplatz'];
               $testreihe = array_unique ( $testreihe );
@@ -1191,12 +1192,12 @@ if (isset ( $_POST ['lobbyId'] )) {
   // print_r($zugang);
   $anzahlbind = count ( $erg );
   $anzahlberech = count ( $zugang );
-  
+
   $html = "<div id='parlambindungen'>";
   if (is_string ( $erg )) {
     $html .= "<div>$erg</div>";
   } else {
-    
+
     $html .= "Anzahl <b>Bindungen</b> zu dieser Organisation: $anzahlbind <br>";
     foreach ( $erg as $val ) {
       $html .= "<b>{$val['name']} {$val['vorname']}</b> {$val['partei']} {$val['ratstyp']} {$val['kanton']} <br>";
@@ -1214,7 +1215,7 @@ if (isset ( $_POST ['lobbyId'] )) {
     }
   }
   print $html;
-  
+
   $html .= "</div>";
 }
 // Label:IB_Sitzordnung Sitzordnung von Organisationen: Parlamentarier f&uuml;r die Sitzordnung Einzelorganisationen
@@ -1230,9 +1231,9 @@ if (isset ( $_GET ['lobby'] )) {
   // ein logischer Fehler
   if (count ( $parl ) > 0) {
     error_reporting ( 0 );
-    
+
     foreach ( $parl as $rat ) {
-      
+
       if ($rat ['ratstyp'] == 'NR') {
         $testreihe [] = $rat ['sitzplatz'];
         $testreihe = array_unique ( $testreihe );
@@ -1244,7 +1245,7 @@ if (isset ( $_GET ['lobby'] )) {
   }
   // Zugangsberechtigungen
   if (count ( $zutritt ) > 0) {
-    
+
     error_reporting ( 0 );
     foreach ( $zutritt as $verb ) {
       if ($verb ['ratstyp'] == 'NR') {
@@ -1291,7 +1292,7 @@ if (isset ( $_GET ['optionen'] ) and $_GET ['optionen'] != 'alle') {
   // print_r($opts);
   $html = '';
   if ($opts != '') {
-    
+
     foreach ( $opts as $val ) {
       $html .= "<option value={$val['id_lobbygroup']}>{$val['lg_bezeichnung']}</option>";
     }
@@ -1310,11 +1311,11 @@ if (isset ( $_GET ['optionen'] ) and $_GET ['optionen'] != 'alle') {
  * *******************************************************************************************
  */
 if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'statistik') {
-  
+
   // Parlamentarier in select-Optionen
   $allep = new Parlamentarier ( $db );
   $erg = $allep->alleParlamentarier ();
-  
+
   $html = "<div id='statistikpanel'><h3>Statistikpanel Einzelparlamentarier und Gruppen</h3>";
   $html .= "<form name='statistik' id='statistik'>";
   $html .= "<ul>";
@@ -1325,7 +1326,7 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'statistik') {
     $html .= "<option value='{$val['id_parlam']}'>{$val['name']} {$val['vorname']}</option>";
   }
   $html .= "</li></select>";
-  
+
   $html .= "<li><label for='statistiktyp'>Statistiktyp<br><input type='checkbox' name='einzelparlamentarier[0]' class='einzelparlamentarier1' value='ungewichtet' checked > Ungewichtet absolut <input type='checkbox' name='einzelparlamentarier[1]' class='einzelparlamentarier2' value='gewichtet' checked>Gewichtet nach Typ Gesundheit </li><br>";
   $html .= "<li><input type='submit' value='Suchen' /></li>";
   $html .= "</ul></form> </div>";
@@ -1342,7 +1343,7 @@ if (isset ( $_POST ['pname'] ) and $_POST ['pname'] != 'alle') {
     $piedaten = $pieabfrage->ungewichtetEinzel ( $id );
     // $pieabfrage1=new Statistik($db);
     $piedaten1 = $pieabfrage->gewichtetEinzelParlamTypen ( $id ); // Array nach hoch-mittel-gering
-                                                                  
+
     // print_r($piedaten);
                                                                   // print_r($piedaten1);
     foreach ( $piedaten as $anz ) {
@@ -1366,7 +1367,7 @@ if (isset ( $_POST ['pname'] ) and $_POST ['pname'] != 'alle') {
         return 0;
       }
     }
-    
+
     $faktor = lobbyfaktor ( $piedaten1 );
     if ($faktor >= 6) { // hoch
       $class = 'background:#E15A16';
@@ -1402,7 +1403,7 @@ if (isset ( $_POST ['pname'] ) and $_POST ['pname'] != 'alle') {
     $html .= ";var fps =30; ";
     $html .= "var animationSpeed =100; ";
     $html .= "var radius =70;";
-    
+
     // var colors = ["#bed6c7","#adc0b4","#8a7e66","#a79b83","#bbb2a1"]
     $html .= "var colors=['red','blue','green','lightblue','yellow','magenta','lightgreen','silver','lightblue'];";
     $html .= "var wdh = 0; ";
@@ -1458,7 +1459,7 @@ else if ($_POST ['pname'] == 'alle') {
     $fakt = $faktor > 0.00 ? "<img style='cursor:pointer' src='./icons/mouseclick_mini.jpg' />" : '';
     $html .= "<td class='pid' data-pid='{$werte['id_parlam']}'>$fakt </td></tr><tr>";
   }
-  
+
   $html .= "</tr></table>";
   print $html;
 }
@@ -1498,7 +1499,7 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'kommiss') {
    */
   $html .= "<div style='width:1300px'>";
   foreach ( $erg as $val ) {
-    
+
     if ($val ['id_komm'] % 2 > 0) {
       // Geht auf dem Server von Hoststar nicht
       $ausg = strstr ( $val ['komm_kurz'], '-', true ); // geht nur in PHP 5.3.0
@@ -1508,7 +1509,7 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'kommiss') {
     }
   }
   $html .= "</div></div>";
-  
+
   print $html;
 }
 // Abfrage des Kommissionspanels
@@ -1531,14 +1532,14 @@ if (isset ( $_GET ['beidekomm'] )) {
   // print_r($gruppen);
   $typen = $kommission->lobbytypen ( $beide );
   // print_r($typen);
-  
+
   // Aufgabenbeschreibung auseinendernehmen
   $aufgaben = $kommnr [0] ['komm_descript']; // String
   $aufgaben = explode ( ';', $aufgaben ); // array
   $anzahlnr = count ( $mitgliedernr );
   $anzahlsr = count ( $mitgliedersr );
   // print_r($aufgaben);
-  
+
   $html = "<div class='kommission'>";
   foreach ( $kommnr as $val ) {
     $html .= "<h4>{$val['komm_lang']} ($beide)</h4>";
@@ -1552,26 +1553,26 @@ if (isset ( $_GET ['beidekomm'] )) {
   $html .= "<ul> ";
   if ($anzahlnr > 0) {
     foreach ( $mitgliedernr as $val ) {
-      
+
       $html .= "<li style='width:230px;list-style:none;float:left;'><img src='./parlamentarierBilder/{$val['kleinbild']}' style='vertical-align:top;margin-right:3px;display:block;float:left' title='{$val['name']} {$val['vorname']}' ><span>{$val['name']} {$val['vorname']}<br>{$val['partei']}, {$val['kanton']}  </span></li>";
     }
   } else if ($anzahlnr == 0) {
     $html .= "Noch keine Daten vorhanden";
   }
-  
+
   $html .= "</ul>";
   // Mitglieder SR
   $html .= "<h4 class='accord' style='clear:both;padding-top:20px;cursor:pointer'>Mitglieder St&auml;nderat ($sr) Anzahl:13  (bisher erfasst): $anzahlsr <img src='icons/mouseclick_mini.jpg' /></h4>";
   $html .= "<ul> ";
   if ($anzahlsr > 0) {
     foreach ( $mitgliedersr as $val ) {
-      
+
       $html .= "<li style='width:230px;list-style:none;float:left;'><img src='./parlamentarierBilder/{$val['kleinbild']}' style='vertical-align:top;margin-right:3px;display:block;float:left' title='{$val['name']} {$val['vorname']}' ><span>{$val['name']} {$val['vorname']}<br>{$val['partei']}, {$val['kanton']}  </span></li>";
     }
   } else if ($anzahlsr == 0) {
     $html .= "Noch keine Daten vorhanden";
   }
-  
+
   $html .= "</ul>";
   $html .= "<h4 class='accord' style='clear:both;padding-top:20px;cursor:pointer'>Lobbytypen und Lobbygruppen <img src='icons/mouseclick_mini.jpg' /></h4>";
   $html .= "<ul>";
@@ -1586,9 +1587,9 @@ if (isset ( $_GET ['beidekomm'] )) {
   // print_r($typus);
   for($i = 0; $i < count ( $typenar ); $i ++) {
     $html .= "<li style='list-style:none' ><b>Lobbytyp: {$typenar[$i]}<br>Lobbygruppen:</b></li>";
-    
+
     if (in_array ( $typenar [$i], $typus )) { // Gruppe definiert?
-      
+
       foreach ( $gruppen as $val ) {
         $html .= "<li><b>{$val['lg_bezeichnung']}:</b> {$val['lg_description']}</li>";
       }
@@ -1597,16 +1598,16 @@ if (isset ( $_GET ['beidekomm'] )) {
     }
   } // for
   $html .= "</ul>";
-  
+
   $html .= "<h4 class='accord' style='clear:both;padding-top:20px;cursor:pointer'>Lobbybeziehungen <img src='icons/mouseclick_mini.jpg' /></h4>";
   // Gruppierte Darstellung
   $html .= "<div>";
-  
+
   foreach ( $typenar as $val ) {
     // gruppierteLobbyGruppen($komm,$lobbytyp)
-    
+
     $gewichtet = $kommission->gruppierteLobbyGruppen ( $beide, $val );
-    
+
     if (is_array ( $gewichtet )) {
       $html .= "<table border='1' >";
       $html .= "<caption><b>$val</b></caption>";
@@ -1619,7 +1620,7 @@ if (isset ( $_GET ['beidekomm'] )) {
       $html .= "<b>$val:</b> $gewichtet <br>";
     }
   }
-  
+
   $html .= "</tr></table></div></div>";
   print $html;
 }
@@ -1638,7 +1639,7 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'konzept') {
   /*
    * $html .="<h3>AdressatInnen dieser Website</h3>"; $html .="Diese Website richtet sich an Journalisten und Journalistinnen, PolitologInnen, Organisationen und Einzelpersonen, welche sich mit der Wirkung von <b>Lobbyorganisationen auf die politische Meinungsbildung</b> befassen.<br>"; $html .="<h3>Datengrundlagen und -Quellen</h3>"; $html .="Das politische System der Schweiz beruht, wie alle andern auch auf einer Delegation von Machtbefugnissen.<br>"; $html .="Die gew&auml;hlten Parlamentsmitglieder repr&auml;sentieren in erster Linie das <b>Interessenspektrum</b> ihrer Partei."; $html .=" Hinzu kommen die individuellen Interessenbindungen an Organisationen, welche jedes Parlamentsmitglied nach Parlamentsgesetz transparent (&ouml;ffentlich) machen muss."; $html .=" In dieser Selbstdeklaration sind <b>Funktion</b> und <b>Status </b> in der jeweiligen Organisation anzugeben. Dieser Verpflichtung kommen jedoch nicht alle Parlamentarier gleichermassen nach. Deshalb ist die Liste der <b>deklarierten Interessenbindungen </b> von unterschiedlicher Qualit&auml;t.<br>"; $html .="Interessant sind also auch die <b>nicht-deklarierten Interessenbindungen.</b>"; $html .=" Sie sind schwierig zu erheben und verlangen weitergehende Recherchen. Der gr&ouml;sste Teil davon sind im <b>Handelsregister</b> zu finden (z.B. teledata.ch), allerdings nur, wenn ein Handelsregistereintrag existiert. Verschiedene Organisationen (vor allem Vereine, Einzelfirmen etc.) haben keinen Handelsregistereintrag.<br>"; $html .="Eine weitere Datenquelle erschliesst sich aus dem <b>Zulassungssystem</b>, bestehend aus einer Liste von Personen, welche <b>Zutritt ins Parlamentsgeb&auml;ude</b> haben. Jeder Parlamentarier kann zwei Personen das Recht dazu geben. Das im Volksmund ('G&ouml;tti'-System) genannte Zulassungsverfahren wird jeden Monat neu erstellt."; $html .="Aus dieser Liste ergeben sich ebenfalls aufschlussreiche Informationen, wer sich in der 'Lobby' des Parlaments frei bewegen kann.<br>Eine N&auml;here Analyse zeigt, dass das 'G&ouml;ttisystem' auch dazu verwendet wird, einzelnen Organisationsvertretern einen <b>Mehrfachstatus</b> an Zutritten zu verschaffen, welche mit den Interessenbindungen der einzelnen Ratsmitgliedern nichts zu tun haben.<br>"; $html .="Eine weitere interessante Datenquelle ist die Organisation selbst, welche in den meisten F&auml;llen eine Webadresse hat. Auch diese Datenquelle wird von LobbyControl ausgewertet."; $html .="<h3>Von der Interessenbindung zur Lobbyorganisation</h3>"; $html .="Die Interessenbindung eines Ratsmitglieds zu einer bestimmten Organisation bedeutet f&uuml;r diese Organisation noch lange nicht, dass sie in der &ouml;ffentlichen Meinungsbildung einen <b>besonders bedeutsamen</b> Status erh&auml;lt. H&auml;ufig sind solche Interessenbindungen rein individuelle Vorlieben einzelner Parlamentarier, ohne jegliche Absicht, damit die Schweiz nachhaltig zu ver&auml;ndern.<br> Viele Interessenbindungen sind also eher 'diffuse' Solidarit&auml;tsbekundungen von Parlamentariern, welche damit die Aufmerksamkeit f&uuml;r die vertretene Organisation etwas erh&ouml;hen<br>"; $html .="LobbyControl beurteilt jede Interessenverbindung nach einem transparenten, nachvollziehbaren Schema:"; $html .="<ol><li>Der M&auml;chtigkeit im Meinungsbildungsprozess</li><li>Der Beziehungsdichte im Parlament</li></ol>"; $html .="Daraus ergibt sich die <b>Bedeutung</b> der jeweiligen Organisation.";
    */
-  
+
   print $html;
 }
 ?>
