@@ -12,8 +12,8 @@ header ( 'Content-type: text/html; charset=ISO-8859-15' ); // ISO-8859-1
 $optionen = array (
     PDO::ATTR_PERSISTENT => true 
 );
-// $db = new PDO('mysql:host=localhost;dbname=lobby','root','',$optionen);//usr_web369_4 web369,politnet || lobby root
-$db = new PDO ( 'mysql:host=localhost;dbname=usr_web369_4', 'web369', 'politnet', $optionen ); // usr_web369_4 web369,politnet || lobby root
+//$db = new PDO('mysql:host=localhost;dbname=lobby','root','',$optionen);//usr_web369_4 web369,politnet || lobby root
+$db = new PDO('mysql:host=localhost;dbname=lobby_parlament','web369','D-UaQ1EDGjwwvBv7oB2X',$optionen);//usr_web369_4 web369,politnet || lobby root
 /* Schnellsuche auf lobbyorg.htm */
 class LobbyOrgSuche {
   var $db = NULL;
