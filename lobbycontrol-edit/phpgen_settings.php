@@ -1,4 +1,5 @@
 <?php
+// Processed by afterburner.sh
 
 //  define('SHOW_VARIABLES', 1);
 //  define('DEBUG_LEVEL', 1);
@@ -102,3 +103,4 @@ function GetEnableLessFilesRunTimeCompilation()
 
 
 ?>
+

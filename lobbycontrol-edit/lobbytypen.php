@@ -1,4 +1,5 @@
 <?php
+// Processed by afterburner.sh
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                   ATTENTION!
  * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
@@ -580,7 +581,7 @@
             if ($this->GetSecurityInfo()->HasDeleteGrant())
                $result->SetAllowDeleteSelected(true);
             else
-               $result->SetAllowDeleteSelected(false);   
+               $result->SetAllowDeleteSelected(true);   
             
             ApplyCommonPageSettings($this, $result);
             
@@ -604,16 +605,16 @@
     
             $this->SetShowPageList(true);
             $this->SetHidePageListByDefault(false);
-            $this->SetExportToExcelAvailable(false);
-            $this->SetExportToWordAvailable(false);
-            $this->SetExportToXmlAvailable(false);
-            $this->SetExportToCsvAvailable(false);
+            $this->SetExportToExcelAvailable(true);
+            $this->SetExportToWordAvailable(true);
+            $this->SetExportToXmlAvailable(true);
+            $this->SetExportToCsvAvailable(true);
             $this->SetExportToPdfAvailable(false);
-            $this->SetPrinterFriendlyAvailable(false);
+            $this->SetPrinterFriendlyAvailable(true);
             $this->SetSimpleSearchAvailable(true);
-            $this->SetAdvancedSearchAvailable(false);
-            $this->SetFilterRowAvailable(false);
-            $this->SetVisualEffectsEnabled(false);
+            $this->SetAdvancedSearchAvailable(true);
+            $this->SetFilterRowAvailable(true);
+            $this->SetVisualEffectsEnabled(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
     
@@ -806,3 +807,5 @@
         ShowErrorPage($e->getMessage());
     }
 	
+
+

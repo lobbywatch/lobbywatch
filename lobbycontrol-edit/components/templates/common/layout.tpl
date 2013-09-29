@@ -12,7 +12,6 @@
         <title>Error</title>
     {/if}
 
-    <link rel="shortcut icon" href="favicon.png" type="image/png" />
     <link rel="stylesheet" type="text/css" href="components/css/main.css" />
     <link rel="stylesheet" type="text/css" href="components/css/user.css" />
 
@@ -30,6 +29,7 @@
     <script>{$App.ValidationScripts}</script>
     {/if}
     <script>{$Scripts}</script>
+    <link rel="shortcut icon" href="favicon.png" type="image/png" />
 </head>
 <body>
 
@@ -175,3 +175,4 @@
 
 </body>
 </html>
+
