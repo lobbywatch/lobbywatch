@@ -216,7 +216,9 @@
             //
             // Edit column for name field
             //
-            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editor = new TextEdit('name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -228,7 +230,9 @@
             //
             // Edit column for name field
             //
-            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editor = new TextEdit('name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -251,7 +255,9 @@
             //
             // Edit column for vorname field
             //
-            $editor = new TextAreaEdit('vorname_edit', 50, 8);
+            $editor = new TextEdit('vorname_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -263,7 +269,9 @@
             //
             // Edit column for vorname field
             //
-            $editor = new TextAreaEdit('vorname_edit', 50, 8);
+            $editor = new TextEdit('vorname_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -286,7 +294,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -298,7 +308,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -447,6 +459,7 @@
             $editor = new TextAreaEdit('parteifunktion_edit', 50, 8);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('Mitglied'));
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -558,12 +571,13 @@
             $editor->SetSize(80);
             $editor->SetMaxLength(80);
             $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
+            $editColumn->SetInsertDefaultValue($this->RenderText('leer.png'));
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription($this->RenderText('Dateiname Bild (44x62 px), muss auf Server vorhanden sein oder leer.png'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -705,7 +719,9 @@
             //
             // Edit column for name field
             //
-            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editor = new TextEdit('name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -715,7 +731,9 @@
             //
             // Edit column for vorname field
             //
-            $editor = new TextAreaEdit('vorname_edit', 50, 8);
+            $editor = new TextEdit('vorname_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -725,7 +743,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -828,7 +848,9 @@
             //
             // Edit column for name field
             //
-            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editor = new TextEdit('name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -838,7 +860,9 @@
             //
             // Edit column for vorname field
             //
-            $editor = new TextAreaEdit('vorname_edit', 50, 8);
+            $editor = new TextEdit('vorname_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -848,7 +872,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -897,6 +923,7 @@
             $editor = new TextAreaEdit('parteifunktion_edit', 50, 8);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('Mitglied'));
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -931,6 +958,7 @@
             $editor->SetSize(80);
             $editor->SetMaxLength(80);
             $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
+            $editColumn->SetInsertDefaultValue($this->RenderText('leer.png'));
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1226,7 +1254,9 @@
             //
             // Edit column for name field
             //
-            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editor = new TextEdit('name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1238,7 +1268,9 @@
             //
             // Edit column for name field
             //
-            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editor = new TextEdit('name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1257,7 +1289,9 @@
             //
             // Edit column for vorname field
             //
-            $editor = new TextAreaEdit('vorname_edit', 50, 8);
+            $editor = new TextEdit('vorname_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1269,7 +1303,9 @@
             //
             // Edit column for vorname field
             //
-            $editor = new TextAreaEdit('vorname_edit', 50, 8);
+            $editor = new TextEdit('vorname_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1288,7 +1324,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1300,7 +1338,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1334,6 +1374,7 @@
             $editor = new TextAreaEdit('parteifunktion_edit', 50, 8);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('Mitglied'));
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1400,6 +1441,7 @@
             $editor->SetSize(80);
             $editor->SetMaxLength(80);
             $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
+            $editColumn->SetInsertDefaultValue($this->RenderText('leer.png'));
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
