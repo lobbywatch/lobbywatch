@@ -14,10 +14,7 @@ $usersIds = array('otto' => -1, 'rkurmann' => -1, 'admin' => -1);
 
 $dataSourceRecordPermissions = array();
 
-$grants = array('guest' => 
-        array()
-    ,
-    'defaultUser' => 
+$grants = array('defaultUser' => 
         array('interessenbindungen' => new DataSourceSecurityInfo(false, false, false, false),
         'zugangsberechtigungen' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
@@ -44,6 +41,15 @@ $grants = array('guest' =>
         'lobbytypen' => new DataSourceSecurityInfo(false, false, false, false),
         'kommissionen' => new DataSourceSecurityInfo(false, false, false, false))
     ,
+    'guest' => 
+        array('interessenbindungen' => new DataSourceSecurityInfo(false, false, false, false),
+        'zugangsberechtigungen' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'lobbyorganisationen' => new DataSourceSecurityInfo(false, false, false, false),
+        'lobbygruppen' => new DataSourceSecurityInfo(false, false, false, false),
+        'lobbytypen' => new DataSourceSecurityInfo(false, false, false, false),
+        'kommissionen' => new DataSourceSecurityInfo(false, false, false, false))
+    ,
     'admin' => 
         array('interessenbindungen' => new DataSourceSecurityInfo(false, false, false, false),
         'zugangsberechtigungen' => new DataSourceSecurityInfo(false, false, false, false),
@@ -54,10 +60,10 @@ $grants = array('guest' =>
         'kommissionen' => new DataSourceSecurityInfo(false, false, false, false))
     );
 
-$appGrants = array('guest' => new DataSourceSecurityInfo(false, false, false, false),
-    'defaultUser' => new DataSourceSecurityInfo(true, false, false, false),
+$appGrants = array('defaultUser' => new DataSourceSecurityInfo(true, false, false, false),
     'otto' => new DataSourceSecurityInfo(true, true, true, true),
     'rkurmann' => new DataSourceSecurityInfo(true, true, true, true),
+    'guest' => new DataSourceSecurityInfo(true, false, false, false),
     'admin' => new AdminDataSourceSecurityInfo());
 
 $tableCaptions = array('interessenbindungen' => 'Interessenbindungen',

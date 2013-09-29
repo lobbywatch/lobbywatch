@@ -63,7 +63,7 @@
 
         public function GetLastUserName() { return $this->lastUserName; }
         public function GetLastSaveidentity() { return $this->lastSaveidentity; }
-        public function CanLoginAsGuest() { return false; }
+        public function CanLoginAsGuest() { return true; }
         
         public function GetLoginAsGuestLink() 
         { 
