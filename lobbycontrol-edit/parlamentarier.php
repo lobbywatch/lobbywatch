@@ -444,7 +444,9 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new TextAreaEdit('parteifunktion_edit', 50, 8);
+            $editor = new TextEdit('parteifunktion_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -456,7 +458,9 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new TextAreaEdit('parteifunktion_edit', 50, 8);
+            $editor = new TextEdit('parteifunktion_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
             $editColumn->SetInsertDefaultValue($this->RenderText('Mitglied'));
@@ -518,7 +522,9 @@
             //
             // Edit column for kommission field
             //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
+            $editor = new TextEdit('kommission_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -530,7 +536,9 @@
             //
             // Edit column for kommission field
             //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
+            $editor = new TextEdit('kommission_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -791,7 +799,9 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new TextAreaEdit('parteifunktion_edit', 50, 8);
+            $editor = new TextEdit('parteifunktion_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -813,7 +823,9 @@
             //
             // Edit column for kommission field
             //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
+            $editor = new TextEdit('kommission_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -920,7 +932,9 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new TextAreaEdit('parteifunktion_edit', 50, 8);
+            $editor = new TextEdit('parteifunktion_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
             $editColumn->SetInsertDefaultValue($this->RenderText('Mitglied'));
@@ -944,7 +958,9 @@
             //
             // Edit column for kommission field
             //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
+            $editor = new TextEdit('kommission_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1359,7 +1375,9 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new TextAreaEdit('parteifunktion_edit', 50, 8);
+            $editor = new TextEdit('parteifunktion_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1371,7 +1389,9 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new TextAreaEdit('parteifunktion_edit', 50, 8);
+            $editor = new TextEdit('parteifunktion_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
             $editColumn->SetInsertDefaultValue($this->RenderText('Mitglied'));
@@ -1392,7 +1412,9 @@
             //
             // Edit column for kommission field
             //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
+            $editor = new TextEdit('kommission_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1404,7 +1426,9 @@
             //
             // Edit column for kommission field
             //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
+            $editor = new TextEdit('kommission_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
