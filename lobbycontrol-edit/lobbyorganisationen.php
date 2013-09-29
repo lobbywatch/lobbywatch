@@ -75,7 +75,7 @@
             $result = new CompositePageNavigator($this);
             
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
-            $partitionNavigator->SetRowsPerPage(20);
+            $partitionNavigator->SetRowsPerPage(100);
             $result->AddPageNavigator($partitionNavigator);
             
             return $result;
@@ -193,7 +193,10 @@
             }
             if ($this->GetSecurityInfo()->HasEditGrant())
             {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Edit'), OPERATION_EDIT, $this->dataset);
+                $column = new ModalDialogEditRowColumn(
+                    $this->GetLocalizerCaptions()->GetMessageString('Edit'), $this->dataset,
+                    $this->GetLocalizerCaptions()->GetMessageString('Edit'),
+                    $this->GetModalGridEditingHandler());
                 $grid->AddViewColumn($column, $actionsBandName);
                 $column->OnShow->AddListener('ShowEditButtonHandler', $this);
             }
@@ -207,7 +210,10 @@
             }
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Copy'), OPERATION_COPY, $this->dataset);
+                $column = new ModalDialogCopyRowColumn(
+                    $this->GetLocalizerCaptions()->GetMessageString('Copy'), $this->dataset,
+                    $this->GetLocalizerCaptions()->GetMessageString('Copy'),
+                    $this->GetModalGridCopyHandler());
                 $grid->AddViewColumn($column, $actionsBandName);
             }
         }
@@ -1113,7 +1119,7 @@
     
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
-            $column->SetShowSetToNullCheckBox(false);
+            $column->SetShowSetToNullCheckBox(true);
     		$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
     
@@ -1126,6 +1132,8 @@
         {
             return ;
         }
+        public function GetModalGridEditingHandler() { return 'lobbyorganisationen_inline_edit'; }
+        protected function GetEnableModalGridEditing() { return true; }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -1139,12 +1147,15 @@
         
         public function GetModalGridDeleteHandler() { return 'lobbyorganisationen_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
+        
+        public function GetModalGridCopyHandler() { return 'lobbyorganisationen_inline_edit'; }
+        protected function GetEnableModalGridCopy() { return true; }
     
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'lobbyorganisationenGrid');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
-               $result->SetAllowDeleteSelected(false);
+               $result->SetAllowDeleteSelected(true);
             else
                $result->SetAllowDeleteSelected(false);   
             
@@ -1154,6 +1165,7 @@
             $result->SetUseFixedHeader(false);
             
             $result->SetShowLineNumbers(false);
+            $result->SetUseModalInserting(true);
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
