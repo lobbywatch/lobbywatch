@@ -15,6 +15,7 @@
         <title>Error</title>
     <?php endif; ?>
 
+    <link rel="shortcut icon" href="favicon.png" type="image/png" />
     <link rel="stylesheet" type="text/css" href="components/css/main.css" />
     <link rel="stylesheet" type="text/css" href="components/css/user.css" />
 
@@ -196,4 +197,4 @@ unset($_smarty_tpl_vars);
 <script type="text/javascript" src="components/js/pgui.self_change_password.js"></script>
 
 </body>
-</html>
+</html>
