@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 29. Sep 2013 um 15:56
+-- Erstellungszeit: 29. Sep 2013 um 16:54
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -922,7 +922,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `parteifunktion` varchar(255) NOT NULL DEFAULT 'Mitglied',
   `im_rat_seit` varchar(4) NOT NULL,
   `kommission` varchar(255) NOT NULL,
-  `kleinbild` varchar(80) NOT NULL,
+  `kleinbild` varchar(80) NOT NULL DEFAULT 'leer.png' COMMENT 'Dateiname Bild (44x62 px), muss auf Server vorhanden sein oder leer.png',
   `sitzplatz` int(11) NOT NULL,
   PRIMARY KEY (`id_parlam`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Eidgenössisches Parlament: Parlamentarier' AUTO_INCREMENT=39 ;
