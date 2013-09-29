@@ -1,12 +1,12 @@
-<Project localizationFileName="C:\Program Files\SQL Maestro Group\PHP Generator for MySQL\lang.de.php" phpDriver="0" outputPath="Z:\home\rkurmann\dev\web\lobbycontrol\lobbydev\lobbycontrol-edit" outputFilesExtension="php" colorSchemeName="Default">
-  <ConnectionOptions host="localhost" port="3306" login="web369" password="W+7-^&lt;FIW=S?\N_O[MKNK_?:JL`~" database="lobbycontrol_db" client_encoding="">
+<Project localizationFileName="C:\Program Files\SQL Maestro Group\PHP Generator for MySQL\lang.en.php" phpDriver="0" outputPath="Z:\home\rkurmann\dev\web\lobbycontrol\lobbydev\lobbycontrol-edit" outputFilesExtension="php" colorSchemeName="Default">
+  <ConnectionOptions host="localhost" port="3306" login="web369" password="W+7-^&lt;FIW=S?\N_O[MKNK_?:JL`~" database="usr_web369_5" client_encoding="">
     <ssh_secure secure="false" port="22" authentication_mode="0"/>
     <http_tunnel tunneling="false" url="">
       <http_proxy_server use_proxy="false" port="8080"/>
       <http_authentication/>
     </http_tunnel>
   </ConnectionOptions>
-  <ScriptConnectionOptions host="localhost" port="3306" login="web369" password="W+7-^&lt;FIW=S?\N_O[MKNK_?:JL`~" database="lobbycontrol_db" client_encoding="">
+  <ScriptConnectionOptions host="localhost" port="3306" login="web369" password="W+7-^&lt;FIW=S?\N_O[MKNK_?:JL`~" database="usr_web369_5" client_encoding="">
     <ssh_secure secure="false" port="22" authentication_mode="0"/>
     <http_tunnel tunneling="false" url="">
       <http_proxy_server use_proxy="false" port="8080"/>
@@ -17,7 +17,7 @@
   <FieldContainers/>
   <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
-      <Page type="table" tableName="interessenbindungen" fileName="interessenbindungen" caption="Interessenbindungen" shortCaption="Interessenbindungen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="interessenbindungen" fileName="interessenbindungen" caption="Interessenbindungen" shortCaption="Interessenbindungen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -1282,7 +1282,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="zugangsberechtigungen" fileName="zugangsberechtigungen" caption="Zugangsberechtigungen" shortCaption="Zugangsberechtigungen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="zugangsberechtigungen" fileName="zugangsberechtigungen" caption="Zugangsberechtigungen" shortCaption="Zugangsberechtigungen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -2653,7 +2653,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="name" caption="Name">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="50" maxLength="150"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2667,7 +2667,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="name" caption="Name" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="50" maxLength="150"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2686,7 +2686,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="vorname" caption="Vorname">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="50" maxLength="150"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2700,7 +2700,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="vorname" caption="Vorname" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="50" maxLength="150"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2719,7 +2719,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="beruf" caption="Beruf">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="70" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2733,7 +2733,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="beruf" caption="Beruf" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="70" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2863,7 +2863,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="parteifunktion" caption="Parteifunktion">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="70" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2876,8 +2876,8 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="parteifunktion" caption="Parteifunktion" canSetServerDefault="true" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+              <InlineInsertColumn fieldName="parteifunktion" caption="Parteifunktion" canSetServerDefault="true" defaultInsertValue="Mitglied">
+                <EditProperties type="textBox" size="70" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2929,7 +2929,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="kommission" caption="Kommission">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="70" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2943,7 +2943,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="kommission" caption="Kommission" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="70" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2957,7 +2957,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kleinbild" caption="Kleinbild" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="kleinbild" caption="Kleinbild" headerHint="Dateiname Bild (44x62 px), muss auf Server vorhanden sein oder leer.png" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -2975,7 +2975,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="kleinbild" caption="Kleinbild" defaultInsertValue="">
+              <InlineInsertColumn fieldName="kleinbild" caption="Kleinbild" defaultInsertValue="leer.png">
                 <EditProperties type="textBox" size="80" maxLength="80"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -3035,7 +3035,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="name" caption="Name">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="50" maxLength="150"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3049,7 +3049,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="name" caption="Name" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="50" maxLength="150"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3068,7 +3068,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="vorname" caption="Vorname">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="50" maxLength="150"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3082,7 +3082,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="vorname" caption="Vorname" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="50" maxLength="150"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3101,7 +3101,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="beruf" caption="Beruf">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="100" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3115,7 +3115,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="beruf" caption="Beruf" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="100" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3245,7 +3245,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="parteifunktion" caption="Parteifunktion">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="100" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3258,8 +3258,8 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="parteifunktion" caption="Parteifunktion" canSetServerDefault="true" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+              <InlineInsertColumn fieldName="parteifunktion" caption="Parteifunktion" canSetServerDefault="true" defaultInsertValue="Mitglied">
+                <EditProperties type="textBox" size="100" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3311,7 +3311,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="kommission" caption="Kommission">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="100" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3325,7 +3325,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="kommission" caption="Kommission" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <EditProperties type="textBox" size="100" maxLength="255"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3339,7 +3339,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kleinbild" caption="Kleinbild" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="kleinbild" caption="Kleinbild" headerHint="Dateiname Bild (44x62 px), muss auf Server vorhanden sein oder leer.png" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -3357,7 +3357,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="kleinbild" caption="Kleinbild" defaultInsertValue="">
+              <InlineInsertColumn fieldName="kleinbild" caption="Kleinbild" defaultInsertValue="leer.png">
                 <EditProperties type="textBox" size="80" maxLength="80"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -3408,7 +3408,7 @@
           </SingleRecordViewColumns>
           <EditColumns>
             <Column fieldName="name" caption="Name">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+              <EditProperties type="textBox" size="50" maxLength="150"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3422,7 +3422,7 @@
               </Validators>
             </Column>
             <Column fieldName="vorname" caption="Vorname">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+              <EditProperties type="textBox" size="50" maxLength="150"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3436,7 +3436,7 @@
               </Validators>
             </Column>
             <Column fieldName="beruf" caption="Beruf">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+              <EditProperties type="textBox" size="70" maxLength="255"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3498,7 +3498,7 @@
               </Validators>
             </Column>
             <Column fieldName="parteifunktion" caption="Parteifunktion">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+              <EditProperties type="textBox" size="70" maxLength="255"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3526,7 +3526,7 @@
               </Validators>
             </Column>
             <Column fieldName="kommission" caption="Kommission">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+              <EditProperties type="textBox" size="70" maxLength="255"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3570,7 +3570,7 @@
           </EditColumns>
           <InsertColumns>
             <Column fieldName="name" caption="Name" defaultInsertValue="">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+              <EditProperties type="textBox" size="50" maxLength="150"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3584,7 +3584,7 @@
               </Validators>
             </Column>
             <Column fieldName="vorname" caption="Vorname" defaultInsertValue="">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+              <EditProperties type="textBox" size="50" maxLength="150"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3598,7 +3598,7 @@
               </Validators>
             </Column>
             <Column fieldName="beruf" caption="Beruf" defaultInsertValue="">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+              <EditProperties type="textBox" size="70" maxLength="255"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3659,8 +3659,8 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="parteifunktion" caption="Parteifunktion" canSetServerDefault="true" defaultInsertValue="">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+            <Column fieldName="parteifunktion" caption="Parteifunktion" canSetServerDefault="true" defaultInsertValue="Mitglied">
+              <EditProperties type="textBox" size="70" maxLength="255"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3688,7 +3688,7 @@
               </Validators>
             </Column>
             <Column fieldName="kommission" caption="Kommission" defaultInsertValue="">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+              <EditProperties type="textBox" size="70" maxLength="255"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3701,7 +3701,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="kleinbild" caption="Kleinbild" defaultInsertValue="">
+            <Column fieldName="kleinbild" caption="Kleinbild" defaultInsertValue="leer.png">
               <EditProperties type="textBox" size="80" maxLength="80"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -4552,7 +4552,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="lobbyorganisationen" fileName="lobbyorganisationen" caption="Lobbyorganisationen" shortCaption="Lobbyorganisationen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="lobbyorganisationen" fileName="lobbyorganisationen" caption="Lobbyorganisationen" shortCaption="Lobbyorganisationen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -6225,7 +6225,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="lobbygruppen" fileName="lobbygruppen" caption="Lobbygruppen" shortCaption="Lobbygruppen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="lobbygruppen" fileName="lobbygruppen" caption="Lobbygruppen" shortCaption="Lobbygruppen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -6820,7 +6820,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="lobbytypen" fileName="lobbytypen" caption="Lobbytypen" shortCaption="Lobbytypen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="lobbytypen" fileName="lobbytypen" caption="Lobbytypen" shortCaption="Lobbytypen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -7539,7 +7539,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="kommissionen" fileName="kommissionen" caption="Kommissionen" shortCaption="Kommissionen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="kommissionen" fileName="kommissionen" caption="Kommissionen" shortCaption="Kommissionen" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="3" editAbilityMode="3" deleteAbilityMode="3" copyAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -8104,10 +8104,11 @@
         <User name="admin" password="KAumo$14"/>
       </Users>
     </UserAuthorization>
-    <UserGrants enableGuestAccess="false">
+    <UserGrants enableGuestAccess="true">
       <UserGrant userName="defaultUser" select="1"/>
       <UserGrant userName="otto" select="1" insert="1" update="1" delete="1"/>
       <UserGrant userName="rkurmann" select="1" insert="1" update="1" delete="1"/>
+      <UserGrant userName="guest" select="1"/>
       <UserGrant userName="admin" select="1" insert="1" update="1" delete="1" admin="1"/>
       <UserPageGrants>
         <PageGrants userName="defaultUser">
@@ -8137,6 +8138,15 @@
           <PageGrant pageName="lobbytypen"/>
           <PageGrant pageName="kommissionen"/>
         </PageGrants>
+        <PageGrants userName="guest">
+          <PageGrant pageName="interessenbindungen"/>
+          <PageGrant pageName="zugangsberechtigungen"/>
+          <PageGrant pageName="parlamentarier"/>
+          <PageGrant pageName="lobbyorganisationen"/>
+          <PageGrant pageName="lobbygruppen"/>
+          <PageGrant pageName="lobbytypen"/>
+          <PageGrant pageName="kommissionen"/>
+        </PageGrants>
         <PageGrants userName="admin">
           <PageGrant pageName="interessenbindungen"/>
           <PageGrant pageName="zugangsberechtigungen"/>
@@ -8155,9 +8165,9 @@
       <BeforeUpdateRecord enabled="true"/>
     </EventHandlers>
     <Header>
-Lobbycontrol Datenbearbeitung    </Header>
+&lt;h1&gt;Lobbycontrol Datenbearbeitung&lt;/h1&gt;    </Header>
     <Footer>
-&lt;a href=&quot;/lobbycontrol&quot;&gt;Lobbycontrol&lt;/a&gt;    </Footer>
+Administrationsseiten von &lt;a href=&quot;/lobbycontrol&quot;&gt;Lobbycontrol&lt;/a&gt;.    </Footer>
   </Presentation>
   <UserCSS/>
   <ExcludedPaths/>
