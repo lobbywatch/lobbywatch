@@ -295,7 +295,7 @@
             // Edit column for beruf field
             //
             $editor = new TextEdit('beruf_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -309,7 +309,7 @@
             // Edit column for beruf field
             //
             $editor = new TextEdit('beruf_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -445,7 +445,7 @@
             // Edit column for parteifunktion field
             //
             $editor = new TextEdit('parteifunktion_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -459,7 +459,7 @@
             // Edit column for parteifunktion field
             //
             $editor = new TextEdit('parteifunktion_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
@@ -523,7 +523,7 @@
             // Edit column for kommission field
             //
             $editor = new TextEdit('kommission_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -537,7 +537,7 @@
             // Edit column for kommission field
             //
             $editor = new TextEdit('kommission_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -752,7 +752,7 @@
             // Edit column for beruf field
             //
             $editor = new TextEdit('beruf_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -800,7 +800,7 @@
             // Edit column for parteifunktion field
             //
             $editor = new TextEdit('parteifunktion_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -824,7 +824,7 @@
             // Edit column for kommission field
             //
             $editor = new TextEdit('kommission_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -885,7 +885,7 @@
             // Edit column for beruf field
             //
             $editor = new TextEdit('beruf_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -933,7 +933,7 @@
             // Edit column for parteifunktion field
             //
             $editor = new TextEdit('parteifunktion_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
@@ -959,7 +959,7 @@
             // Edit column for kommission field
             //
             $editor = new TextEdit('kommission_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1341,7 +1341,7 @@
             // Edit column for beruf field
             //
             $editor = new TextEdit('beruf_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1355,7 +1355,7 @@
             // Edit column for beruf field
             //
             $editor = new TextEdit('beruf_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1376,7 +1376,7 @@
             // Edit column for parteifunktion field
             //
             $editor = new TextEdit('parteifunktion_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1390,7 +1390,7 @@
             // Edit column for parteifunktion field
             //
             $editor = new TextEdit('parteifunktion_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
@@ -1413,7 +1413,7 @@
             // Edit column for kommission field
             //
             $editor = new TextEdit('kommission_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1427,7 +1427,7 @@
             // Edit column for kommission field
             //
             $editor = new TextEdit('kommission_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(70);
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
