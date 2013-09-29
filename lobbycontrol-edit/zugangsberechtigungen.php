@@ -17,7 +17,7 @@
     include_once dirname(__FILE__) . '/' . 'phpgen_settings.php';
     include_once dirname(__FILE__) . '/' . 'database_engine/mysql_engine.php';
     include_once dirname(__FILE__) . '/' . 'components/page.php';
-
+    include_once dirname(__FILE__) . '/' . 'authorization.php';
 
     function GetConnectionOptions()
     {
@@ -1551,7 +1551,7 @@
         }
     }
 
-
+    SetUpUserAuthorization(GetApplication());
 
     try
     {

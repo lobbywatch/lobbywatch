@@ -47,18 +47,18 @@ function GetPageInfos()
 function GetPagesHeader()
 {
     return
-    '';
+    'Lobbycontrol Datenbearbeitung';
 }
 
 function GetPagesFooter()
 {
     return
-        ''; 
+        '<a href="/lobbycontrol">Lobbycontrol</a>'; 
     }
 
 function ApplyCommonPageSettings($page, $grid)
 {
-    $page->SetShowUserAuthBar(false);
+    $page->SetShowUserAuthBar(true);
     $grid->BeforeUpdateRecord->AddListener('Global_BeforeUpdateHandler');
     $grid->BeforeDeleteRecord->AddListener('Global_BeforeDeleteHandler');
     $grid->BeforeInsertRecord->AddListener('Global_BeforeInsertHandler');
