@@ -1,0 +1,4 @@
+*-error_log
+*-access_log
+
+lobbycontrol-edit/templates_c/*
