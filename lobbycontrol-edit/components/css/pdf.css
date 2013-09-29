@@ -1,0 +1,22 @@
+table
+{
+    border-collapse: collapse
+}
+
+table tr th
+{
+    padding: 4px;
+    font-weight: bold;
+    background-color: #b0d2e9;
+}
+
+table tr td
+{
+    padding: 4px;
+    text-align: center;
+}
+
+table tr.odd td
+{
+    background-color: #f2f2f2;
+}

@@ -1,0 +1,130 @@
+@import "theme.less";
+@import "bootstrap-utils.less";
+@import "layout.less";
+@import "pg-icons.less";
+@import "grid.less";
+@import "page-list.less";
+@import "login-control.less";
+@import 'edit-form.less';
+@import 'jscal2.less';
+
+// Fix for displaying 16x16 icons in bootstrap buttons
+.btn i {
+  margin-top: -1px;
+  margin-bottom: -2px;
+}
+
+// Fix displayin code blocks inside grid
+pre {
+  margin-bottom: 0;
+  font-size: 11px;
+}
+
+.page-header {
+  margin-top: 0;
+  h1 {
+    display: inline-block;
+  }
+
+  div.export-button {
+    display: inline-block;
+    margin-left: 20px;
+    position: relative;
+    top: 4px;
+  }
+
+}
+
+.pagination > ul {
+  li.pagination-spacer {
+    a {
+      background-color: inherit;
+      cursor: default;
+      border-bottom: 0;
+      border-top: 0;
+      border-right: 0;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+  li.pagination-spacer + li {
+    //border-left: 1px solid red;
+    a {
+      border-left-width: 1px;
+    }
+
+  }
+}
+
+.pagination > ul > li.caption {
+  a {
+    color: @textColor;
+    &:hover {
+      color: @textColor;
+    }
+
+  }
+}
+
+.pgui-overlay {
+
+  width: 200px;
+  text-align: center;
+  border: 1px solid;
+  background-color: #fff;
+  height: 100px;
+
+  .border-radius(6px);
+  .comment {
+    position: relative;
+    top: 45px;
+    font-size: larger;
+    font-weight: bold;
+  }
+}
+
+.feature-list {
+  .label {
+    font-size: .55em;
+    position: relative;
+    top: -4px;
+  }
+}
+
+// fix for no wrapping pagination
+.pgui-pagination {
+  >.pagination {
+    >ul {
+      white-space: nowrap;
+      >li {
+        display: inline-block;
+      }
+    }
+  }
+}
+
+*:first-child+html {
+  .pgui-pagination {
+    >.pagination {
+      >ul {
+        >li {
+          display: inline;
+        }
+      }
+    }
+  }
+}
+
+.pgui-datetime-editor {
+  white-space: nowrap;
+}
+
+.modal-big-length {
+  position: absolute;
+  max-height: none;
+}
+
+.control-label {
+  word-wrap: break-word;
+}
