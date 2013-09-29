@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 29. Sep 2013 um 11:36
+-- Erstellungszeit: 29. Sep 2013 um 15:51
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Datenbank: `lobby_parlament`
+-- Datenbank: `lobbycontrol_db`
 --
-CREATE DATABASE IF NOT EXISTS `lobby_parlament` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `lobby_parlament`;
+CREATE DATABASE IF NOT EXISTS `lobbycontrol_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `lobbycontrol_db`;
 
 -- --------------------------------------------------------
 
@@ -55,6 +55,11 @@ CREATE TABLE IF NOT EXISTS `interessenbindungen` (
 --       `parlamentarier` -> `id_parlam`
 --
 
+--
+-- TRUNCATE Tabelle vor dem Einfügen `interessenbindungen`
+--
+
+TRUNCATE TABLE `interessenbindungen`;
 --
 -- Daten für Tabelle `interessenbindungen`
 --
@@ -399,6 +404,11 @@ CREATE TABLE IF NOT EXISTS `kommissionen` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Legislativkommissionen' AUTO_INCREMENT=19 ;
 
 --
+-- TRUNCATE Tabelle vor dem Einfügen `kommissionen`
+--
+
+TRUNCATE TABLE `kommissionen`;
+--
 -- Daten für Tabelle `kommissionen`
 --
 
@@ -444,6 +454,11 @@ CREATE TABLE IF NOT EXISTS `lobbygruppen` (
 --
 
 --
+-- TRUNCATE Tabelle vor dem Einfügen `lobbygruppen`
+--
+
+TRUNCATE TABLE `lobbygruppen`;
+--
 -- Daten für Tabelle `lobbygruppen`
 --
 
@@ -487,6 +502,11 @@ CREATE TABLE IF NOT EXISTS `lobbyorganisationen` (
 --       `lobbytypen` -> `id_lobbytyp`
 --
 
+--
+-- TRUNCATE Tabelle vor dem Einfügen `lobbyorganisationen`
+--
+
+TRUNCATE TABLE `lobbyorganisationen`;
 --
 -- Daten für Tabelle `lobbyorganisationen`
 --
@@ -857,6 +877,11 @@ CREATE TABLE IF NOT EXISTS `lobbytypen` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Lobbytypen und ständige Kommissionen' AUTO_INCREMENT=19 ;
 
 --
+-- TRUNCATE Tabelle vor dem Einfügen `lobbytypen`
+--
+
+TRUNCATE TABLE `lobbytypen`;
+--
 -- Daten für Tabelle `lobbytypen`
 --
 
@@ -902,6 +927,11 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   PRIMARY KEY (`id_parlam`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Eidgenössisches Parlament: Parlamentarier' AUTO_INCREMENT=39 ;
 
+--
+-- TRUNCATE Tabelle vor dem Einfügen `parlamentarier`
+--
+
+TRUNCATE TABLE `parlamentarier`;
 --
 -- Daten für Tabelle `parlamentarier`
 --
@@ -981,6 +1011,11 @@ CREATE TABLE IF NOT EXISTS `zugangsberechtigungen` (
 --
 
 --
+-- TRUNCATE Tabelle vor dem Einfügen `zugangsberechtigungen`
+--
+
+TRUNCATE TABLE `zugangsberechtigungen`;
+--
 -- Daten für Tabelle `zugangsberechtigungen`
 --
 
@@ -1056,8 +1091,8 @@ INSERT INTO `zugangsberechtigungen` (`id_zugang`, `id_parlam`, `berech_name`, `b
 -- Constraints der Tabelle `interessenbindungen`
 --
 ALTER TABLE `interessenbindungen`
-  ADD CONSTRAINT `fk_ib_lobbyorg` FOREIGN KEY (`id_lobbyorg`) REFERENCES `lobbyorganisationen` (`id_lobbyorg`),
   ADD CONSTRAINT `fk_ib_lobbygroup` FOREIGN KEY (`id_lobbygroup`) REFERENCES `lobbygruppen` (`id_lobbygroup`),
+  ADD CONSTRAINT `fk_ib_lobbyorg` FOREIGN KEY (`id_lobbyorg`) REFERENCES `lobbyorganisationen` (`id_lobbyorg`),
   ADD CONSTRAINT `fk_ib_lobbytyp` FOREIGN KEY (`id_lobbytyp`) REFERENCES `lobbytypen` (`id_lobbytyp`),
   ADD CONSTRAINT `fk_ib_parlam` FOREIGN KEY (`id_parlam`) REFERENCES `parlamentarier` (`id_parlam`);
 
@@ -1071,15 +1106,15 @@ ALTER TABLE `lobbygruppen`
 -- Constraints der Tabelle `lobbyorganisationen`
 --
 ALTER TABLE `lobbyorganisationen`
-  ADD CONSTRAINT `fk_lo_lt` FOREIGN KEY (`id_lobbytyp`) REFERENCES `lobbytypen` (`id_lobbytyp`),
-  ADD CONSTRAINT `fk_lo_lg` FOREIGN KEY (`id_lobbygroup`) REFERENCES `lobbygruppen` (`id_lobbygroup`);
+  ADD CONSTRAINT `fk_lo_lg` FOREIGN KEY (`id_lobbygroup`) REFERENCES `lobbygruppen` (`id_lobbygroup`),
+  ADD CONSTRAINT `fk_lo_lt` FOREIGN KEY (`id_lobbytyp`) REFERENCES `lobbytypen` (`id_lobbytyp`);
 
 --
 -- Constraints der Tabelle `zugangsberechtigungen`
 --
 ALTER TABLE `zugangsberechtigungen`
-  ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY (`id_lobbyorg`) REFERENCES `lobbyorganisationen` (`id_lobbyorg`),
   ADD CONSTRAINT `fk_zb_lg` FOREIGN KEY (`id_lobbygroup`) REFERENCES `lobbygruppen` (`id_lobbygroup`),
+  ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY (`id_lobbyorg`) REFERENCES `lobbyorganisationen` (`id_lobbyorg`),
   ADD CONSTRAINT `fk_zb_lt` FOREIGN KEY (`id_lobbytyp`) REFERENCES `lobbytypen` (`id_lobbytyp`),
   ADD CONSTRAINT `fk_zb_parlam` FOREIGN KEY (`id_parlam`) REFERENCES `parlamentarier` (`id_parlam`);
 
