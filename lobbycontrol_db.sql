@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 29. Sep 2013 um 15:51
+-- Erstellungszeit: 29. Sep 2013 um 15:56
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Datenbank: `lobbycontrol_db`
+-- Datenbank: `usr_web369_5`
 --
-CREATE DATABASE IF NOT EXISTS `lobbycontrol_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `lobbycontrol_db`;
+CREATE DATABASE IF NOT EXISTS `usr_web369_5` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `usr_web369_5`;
 
 -- --------------------------------------------------------
 

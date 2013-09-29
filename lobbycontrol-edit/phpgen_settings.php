@@ -22,7 +22,7 @@ function GetGlobalConnectionOptions()
   'port' => '3306',
   'username' => 'web369',
   'password' => 'D-UaQ1EDGjwwvBv7oB2X',
-  'database' => 'lobbycontrol_db'
+  'database' => 'usr_web369_5'
 );
 }
 
