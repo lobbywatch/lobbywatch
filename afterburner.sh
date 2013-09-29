@@ -10,7 +10,7 @@ do
   | perl -p -e"s/\$this->Set(VisualEffects)Enabled\(false\);/$this->Set\1Enabled(true);/g" \
   | perl -p -e"s/\$result->SetAllowDeleteSelected\(false\);/$result->SetAllowDeleteSelected(true);/g" \
   | perl -p -e"s/(<\?php)/\1\n\/\/ Processed by afterburner.sh/" \
-  > $file;
+  > "$file";
 done
 
 for file in lobbycontrol-edit/components/templates/common/layout.tpl
@@ -19,7 +19,7 @@ do
   mv "$file" "$file.bak";
   (cat "$file.bak"; echo -e "\n") \
   | perl -p -e"s/(<\/head>)/    <link rel=\"shortcut icon\" href=\"favicon.png\" type=\"image\/png\" \/>\n\1/g" \
-  > $file;
+  > "$file";
 done
 
 # Sed: http://www.grymoire.com/Unix/Sed.html
