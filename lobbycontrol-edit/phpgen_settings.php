@@ -47,13 +47,13 @@ function GetPageInfos()
 function GetPagesHeader()
 {
     return
-    'Lobbycontrol Datenbearbeitung';
+    '<h1>Lobbycontrol Datenbearbeitung</h1>';
 }
 
 function GetPagesFooter()
 {
     return
-        '<a href="/lobbycontrol">Lobbycontrol</a>'; 
+        'Administrationsseiten von <a href="/lobbycontrol">Lobbycontrol</a>.'; 
     }
 
 function ApplyCommonPageSettings($page, $grid)
