@@ -26,6 +26,7 @@ do
   (cat "$file.bak"; echo -e "\n") \
   | perl -p -e's/\$this->Set(ExportToExcel|ExportToWord|ExportToXml|ExportToCsv|PrinterFriendly|AdvancedSearch|FilterRow)Available\(false\);/\$this->Set\1Available(true);/g' \
   | perl -p -e's/\$this->Set(VisualEffects)Enabled\(false\);/\$this->Set\1Enabled(true);/g' \
+  | perl -p -e's/(?<=\$result->SetUseImagesForActions\()false/true/g' \
   | perl -p -e's/\$result->SetAllowDeleteSelected\(false\);/\$result->SetAllowDeleteSelected(true);/g' \
   | perl -0 -p -e's/(\s*\?>\s*)$//s' \
   | perl -p -e's/MyConnectionFactory(?=\(\))/MyPDOConnectionFactory/g' \

@@ -907,7 +907,7 @@
             
             ApplyCommonPageSettings($this, $result);
             
-            $result->SetUseImagesForActions(false);
+            $result->SetUseImagesForActions(true);
             $result->SetUseFixedHeader(false);
             
             $result->SetShowLineNumbers(false);
