@@ -14,7 +14,7 @@ Options -Indexes
 Options +FollowSymLinks
 
 # Make Drupal handle any 404 errors.
-ErrorDocument 404 /index.php
+# ErrorDocument 404 /index.php
 
 # Set the default handler.
 DirectoryIndex index.php index.html index.htm

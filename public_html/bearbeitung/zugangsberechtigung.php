@@ -1,5 +1,7 @@
 <?php
 // Processed by afterburner.sh
+
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                   ATTENTION!
  * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
@@ -115,9 +117,8 @@
             return $result;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -347,7 +348,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Technischer der Zugangsberechtigung'));
+            $column->SetDescription($this->RenderText('Technischer Schluessel der Zugangsberechtigung'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -498,7 +499,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Fremdschlüssel zu Parlamentarier'));
+            $column->SetDescription($this->RenderText('Fremdschluessel zu Parlamentarier'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -700,7 +701,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Fremschlüssel zu Branche'));
+            $column->SetDescription($this->RenderText('Fremschluessel zu Branche'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -793,7 +794,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Fremschlüssel zur Interessengruppe'));
+            $column->SetDescription($this->RenderText('Fremschluessel zur Interessengruppe'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -912,7 +913,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Fremschlüssel zur Lobbyorganisation'));
+            $column->SetDescription($this->RenderText('Fremschluessel zur Lobbyorganisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             

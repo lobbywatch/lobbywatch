@@ -1,6 +1,8 @@
 <?php
 // Processed by afterburner.sh
 
+
+
 require_once 'components/page.php';
 require_once 'components/security/datasource_security_info.php';
 require_once 'components/security/security_info.php';
@@ -134,7 +136,4 @@ function GetIdentityCheckStrategy()
     global $users;
     return new SimpleIdentityCheckStrategy($users, 'md5');
 }
-
-
-
 

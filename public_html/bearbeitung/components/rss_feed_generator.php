@@ -1,4 +1,7 @@
 <?php
+// Processed by afterburner.sh
+
+
 
 require_once 'components/common.php';
 require_once 'components/common_utils.php';
@@ -61,14 +64,14 @@ class RssChannel
         $result = '';
         AddStr($result, '<item>');
         
-        AddStr($result, RssUtils::CreateTag('title', StringUtils::EscapeXmlString($rssItem->GetTitle())));
-        AddStr($result, RssUtils::CreateTag('link', StringUtils::EscapeXmlString($rssItem->GetLink())));
+        AddStr($result, RssUtils::CreateTag('title', htmlspecialchars($rssItem->GetTitle())));
+        AddStr($result, RssUtils::CreateTag('link', htmlspecialchars($rssItem->GetLink())));
         AddStr($result, RssUtils::CreateTag('description', $rssItem->GetDescription(), true));
         if ($rssItem->GetPublicationDate() != null)
             AddStr($result,
                 RssUtils::CreateTag(
                         'pubDate',
-                        StringUtils::EscapeXmlString($rssItem->GetPublicationDate()->ToRfc822String())
+                        htmlspecialchars($rssItem->GetPublicationDate()->ToRfc822String())
                         )
                     );
         
@@ -83,8 +86,8 @@ class RssChannel
         AddStr($result, '<rss version="2.0">');
         AddStr($result, '<channel>');
         
-        AddStr($result, RssUtils::CreateTag('title', StringUtils::EscapeXmlString($this->GetTitle())));
-        AddStr($result, RssUtils::CreateTag('link', StringUtils::EscapeXmlString($this->GetLink())));
+        AddStr($result, RssUtils::CreateTag('title', htmlspecialchars($this->GetTitle())));
+        AddStr($result, RssUtils::CreateTag('link', htmlspecialchars($this->GetLink())));
         AddStr($result, RssUtils::CreateTag('description', $this->GetDescription()));
 
         foreach($this->GetItems() as $item)
@@ -133,3 +136,5 @@ class RssItem
 }
 
 ?>
+
+

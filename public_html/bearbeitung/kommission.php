@@ -1,5 +1,7 @@
 <?php
 // Processed by afterburner.sh
+
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                   ATTENTION!
  * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
@@ -103,9 +105,8 @@
             return $result;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -179,7 +180,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel der Kommission'));
+            $column->SetDescription($this->RenderText('Technischer Schluessel der Kommission'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -391,7 +392,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Abgeändert von'));
+            $column->SetDescription($this->RenderText('Abgeaendert von'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -426,7 +427,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Abgeändert am'));
+            $column->SetDescription($this->RenderText('Abgeaendert am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }

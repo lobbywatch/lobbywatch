@@ -1,15 +1,17 @@
 <?php
 // Processed by afterburner.sh
 
-require_once "../common/settings.php";
-require_once "custom/custom.php";
+require_once dirname(__FILE__) . "/../common/settings.php";
+require_once dirname(__FILE__) . "/custom/custom.php";
 // Processed by afterburner.sh
+
+
 
 //  define('SHOW_VARIABLES', 1);
 //  define('DEBUG_LEVEL', 1);
 
-//  error_reporting(E_ALL ^ E_NOTICE);
-//  ini_set('display_errors', 'On');
+error_reporting(E_ALL ^ E_NOTICE);
+ini_set('display_errors', 'On');
 
 set_include_path('.' . PATH_SEPARATOR . get_include_path());
 
@@ -20,7 +22,7 @@ require_once 'components/utils/system_utils.php';
 
 SystemUtils::SetTimeZoneIfNeed('Europe/Belgrade');
 
-function GetGlobalConnectionOptions() {
+function GetGlobalConnectionOptions(){
     // Custom modification: Use $db_connection from settings.php
     global $db_connection;
     return $db_connection;
@@ -99,9 +101,4 @@ function GetEnableLessFilesRunTimeCompilation()
 {
     return false;
 }
-
-
-
-
-
 

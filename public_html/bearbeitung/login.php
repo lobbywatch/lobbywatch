@@ -1,5 +1,7 @@
 <?php
 // Processed by afterburner.sh
+
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                   ATTENTION!
  * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
@@ -235,5 +237,3 @@
     $loginPage->BeginRender();
     $loginPage->BeginRender();
     $loginPage->EndRender();
-
-

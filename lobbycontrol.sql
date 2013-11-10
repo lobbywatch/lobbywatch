@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 10. Nov 2013 um 15:29
+-- Erstellungszeit: 10. Nov 2013 um 23:07
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -30,15 +30,15 @@ USE `lobbycontrol`;
 
 DROP TABLE IF EXISTS `branche`;
 CREATE TABLE IF NOT EXISTS `branche` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Branche',
   `name` varchar(255) NOT NULL COMMENT 'Name der Branche, z.B. Gesundheit, Energie',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
   `angaben` text NOT NULL COMMENT 'Angaben zur Branche',
   `kommission` varchar(255) NOT NULL COMMENT 'Kommission im Parlament (Kommissionsabkürzung)',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen und Parlam. Kommissionen' AUTO_INCREMENT=19 ;
 
@@ -74,17 +74,17 @@ INSERT INTO `branche` (`id`, `name`, `beschreibung`, `angaben`, `kommission`, `c
 
 DROP TABLE IF EXISTS `interessenbindung`;
 CREATE TABLE IF NOT EXISTS `interessenbindung` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessenbindung',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Interessenbindung',
   `beschreibung` varchar(255) NOT NULL COMMENT 'Bezeichung der Interessenbindung',
   `status` enum('deklariert','nicht-deklariert','zutrittsberechtigung') NOT NULL DEFAULT 'deklariert' COMMENT 'Deklariert oder nicht deklariert?',
-  `parlamentarier_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Parlamentarier',
-  `branche_id` int(11) DEFAULT NULL COMMENT 'FK lobbytypen',
-  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe',
-  `lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Lobbyorganisation',
+  `parlamentarier_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Parlamentarier',
+  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Branche',
+  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Interessengruppe',
+  `lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Lobbyorganisation',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
   PRIMARY KEY (`id`),
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbytyp` (`branche_id`),
@@ -429,14 +429,14 @@ INSERT INTO `interessenbindung` (`id`, `beschreibung`, `status`, `parlamentarier
 
 DROP TABLE IF EXISTS `interessengruppe`;
 CREATE TABLE IF NOT EXISTS `interessengruppe` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessengruppe',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Interessengruppe',
   `bezeichnung` varchar(255) NOT NULL COMMENT 'Bezeichnung der Interessengruppe',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung zur Interessengruppe',
-  `branche_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Branche',
+  `branche_id` int(11) NOT NULL COMMENT 'Fremdschluessel Branche',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
   PRIMARY KEY (`id`),
   KEY `idx_lobbytyp` (`branche_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=10 ;
@@ -464,14 +464,14 @@ INSERT INTO `interessengruppe` (`id`, `bezeichnung`, `beschreibung`, `branche_id
 
 DROP TABLE IF EXISTS `kommission`;
 CREATE TABLE IF NOT EXISTS `kommission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Kommission',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Kommission',
   `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
   `name` varchar(120) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Kommission',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=19 ;
 
@@ -507,19 +507,19 @@ INSERT INTO `kommission` (`id`, `abkuerzung`, `name`, `beschreibung`, `created_v
 
 DROP TABLE IF EXISTS `lobbyorganisation`;
 CREATE TABLE IF NOT EXISTS `lobbyorganisation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Lobbyorganisation',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Lobbyorganisation',
   `name` varchar(255) NOT NULL COMMENT 'Name der Lobbyorganisation',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Lobbyorganisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Lobbyorganisation',
   `url` varchar(255) NOT NULL COMMENT 'Link zur Webseite',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL,
   `parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL,
-  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
-  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe',
+  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Branche',
+  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Interessengruppe',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
   PRIMARY KEY (`id`),
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `idx_lobbygroup` (`interessengruppe_id`)
@@ -606,8 +606,7 @@ INSERT INTO `lobbyorganisation` (`id`, `name`, `beschreibung`, `typ`, `url`, `ve
 (76, 'Interessengemeinschaft öffentliche Arbeitsplätze (IGöffA), Olten    ', 'Der Verein setzt sich für einen attraktiven Service publique bei öffentlichen\r\nDienstleistungen ein, für flächendeckende Erbringung von Dienstleistungen für alle zu\r\nfairen Preisen und Arbeitsbedingungen.\r\nDer Verein fördert innovative Ideen zum Ausbau des Service publique\r\nDer Verein fördert die Bewusstseinsbildung über die Bedeutung der Arbeitsplätze\r\nin öffentlichen Dienstleistungen für die Region Olten und mobilisiert die Region zum\r\nErhalt und Ausbau dieser Arbeitsplätze.', 'EinzelOrganisation,dezidierteLobby', 'http://www.peterschafer.ch/db/daten/igoeffa_mitglieder.pdf', 'nie', 'einzel,exekutiv', 14, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (77, 'Komitee Pro Eppenberg ', 'Pro Eppenberg Tunnel', 'EinzelOrganisation,dezidierteLobby', 'http://eppenbergtunnel.ch/', 'nie', 'einzel,exekutiv', 5, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (78, 'Lehrerinnen- und Lehrerverband Kanton Solothurn (LSO)', 'Lehrerinnen und Lehrer Kt. Solothurn', 'MitgliedsOrganisation', 'http://www.lso.ch/cms/front_content.php?idcat=67&idart=174&lang=1', 'nie', 'einzel,exekutiv', 7, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
-(79, 'Neue Europäische Bewegung Schweiz (nebs)', 'Unser Ziel: das europäische Stimmrecht erhalten\r\nDie Globalisierung stellt für alle Menschen eine Herausforderung dar. Die Europäerinnen und Europäer begegnen ihr in der Europäischen Union gemeinsam. Damit die Schweiz bei den Entscheidungen, die sie betreffen, mitbestimmen kann, muss sie das europäische Stimmrecht erhalten.\r\n\r\nUnsere Aufgabe: den Beitritt zu möglichst günstigen Bedingungen herbeiführen\r\nUm das europäische Stimmrecht zu erhalten, müssen wir Mitglied der Europäischen Union werden. Die Aufgabe der Nebs besteht darin, die Schweiz so vorzubereiten, dass sie zu optimalen wirtschaftlichen, sozialen und institutionellen Bedingungen Aktivmitglied der EU werden kann. Dieser Prozess muss heute eingeleitet werden. Die Nebs begleitet ihn aktiv.', 'EinzelOrganisation,dezidierteLobby', 'http://www.europa.ch/index.asp?Language=DE&page=page121', 'punktuell', 'einzel,exekutiv', 13, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52');
-INSERT INTO `lobbyorganisation` (`id`, `name`, `beschreibung`, `typ`, `url`, `vernehmlassung`, `parlam_verbindung`, `branche_id`, `interessengruppe_id`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES
+(79, 'Neue Europäische Bewegung Schweiz (nebs)', 'Unser Ziel: das europäische Stimmrecht erhalten\r\nDie Globalisierung stellt für alle Menschen eine Herausforderung dar. Die Europäerinnen und Europäer begegnen ihr in der Europäischen Union gemeinsam. Damit die Schweiz bei den Entscheidungen, die sie betreffen, mitbestimmen kann, muss sie das europäische Stimmrecht erhalten.\r\n\r\nUnsere Aufgabe: den Beitritt zu möglichst günstigen Bedingungen herbeiführen\r\nUm das europäische Stimmrecht zu erhalten, müssen wir Mitglied der Europäischen Union werden. Die Aufgabe der Nebs besteht darin, die Schweiz so vorzubereiten, dass sie zu optimalen wirtschaftlichen, sozialen und institutionellen Bedingungen Aktivmitglied der EU werden kann. Dieser Prozess muss heute eingeleitet werden. Die Nebs begleitet ihn aktiv.', 'EinzelOrganisation,dezidierteLobby', 'http://www.europa.ch/index.asp?Language=DE&page=page121', 'punktuell', 'einzel,exekutiv', 13, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (80, 'Palliative Care Netzwerk Kanton Solothurn', 'Das Netzwerk bezweckt die Vernetzung sowie den Informations- und Erfahrungs-\r\n   \r\naustausch zwischen Personen und Institutionen, die sich im Kanton Solothurn\r\n   \r\nfür Palliative Care “als umfassende ärztliche, pflegerische, soziale, psychologische\r\n    \r\nund spirituelle Begleitung der Kranken und ihrer Angehörigen einsetzen.\r\n   \r\n    \r\n- die Information der Öffentlichkeit, der Fachwelt und der Politik über die\r\n   \r\nAnliegen von Palliative Care.\r\n   \r\n- die Förderung der Weiter- und Fortbildung auf dem Gebiet von Palliative Care.\r\n- die Förderung und Koordination eines bedarfsgerechten Leistungsangebotes.', 'EinzelOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.palliativecare-so.ch/', 'nie', 'einzel,exekutiv,kommission', 1, 4, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (81, 'Pro Natura Schweiz und Solothurn', 'Pro Natura ist die führende Organisation für Naturschutz in der Schweiz. Als Anwältin und Meinungsmacherin für Naturschutz verteidigt sie engagiert und kompetent die Interessen der Natur und setzt sich für die Förderung und den Erhalt der einheimischen Tier- und Pflanzenwelt ein. Zu den Pioniertaten der 1909 gegründeten Organisation gehört die Schaffung des Schweizerischen Nationalparks. Heute betreut Pro Natura über 600 Naturschutzgebiete und ein Dutzend Naturschutzzentren in der ganzen Schweiz. Mit ihren Sektionen ist Pro Natura in allen Kantonen der Schweiz aktiv.', 'MitgliedsOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.pronatura-so.ch/', 'nie', 'einzel,mitglied', 4, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (82, 'Pro Vebo / Pro Insos ', 'Der Zweck der VEBO Genossenschaft ist die Förderung der Eingliederung von Menschen mit Behinderung in unsere Gesellschaft». Die VEBO nimmt ihre vielfältigen sozialen Aufgaben in den folgenden fünf Produktbereichen wahr: Integrationsmassnahmen, Berufliche Massnahmen, Geschützte Arbeitsplätze, Wohnen, Tagesstätten', 'EinzelOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.vebo.ch/de/foerderung-eingliederung.html', 'nie', 'einzel,exekutiv', 2, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
@@ -707,8 +706,7 @@ INSERT INTO `lobbyorganisation` (`id`, `name`, `beschreibung`, `typ`, `url`, `ve
 (176, 'Nationale Informationsstelle für Kulturgüter-Erhaltung ', 'Anlaufstelle und Informations-Drehscheibe: Die Nationale Informationsstelle für Kulturgüter-Erhaltung NIKE setzt sich für den Erhalt materieller Kulturgüter in der Schweiz ein.\r\nDie Tätigkeit der NIKE gründet auf den Schwerpunkten «Sensibilisierung», «Koordination» und «politische Arbeit».\r\n35 Fachverbände und Publikumsorganisationen bilden den Trägerverein der engagierten Non-Profit-Organisation.', 'DachOrganisation,dezidierteLobby', 'http://www.nike-kultur.ch/de/oeffentlichkeitsarbeit.html', 'punktuell', 'einzel,exekutiv', 8, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (177, 'OUESTRAIL', 'Ehemaliges Lötschbergkomitee, heute Lobbyorganisation für den Westschweizer Bahnlinienverkehr', 'EinzelOrganisation,dezidierteLobby', 'http://www.ouestrail.ch/ouestrail/historique.html', 'punktuell', 'einzel,exekutiv', 5, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (178, 'Patientenstelle Freiburg-Westschweiz, Freiburg ', '', 'MitgliedsOrganisation,LeistungsErbringer', 'http://www.federationdespatients.ch/', 'nie', 'einzel,exekutiv,kommission', 1, 6, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
-(179, 'Pro Velo Schweiz ', 'Pro Velo Schweiz ist der nationale Dachverband der lokalen und regionalen Verbände für die Interessen der Velofahrenden ', 'LeistungsErbringer,dezidierteLobby', '', 'punktuell', 'einzel,exekutiv', 5, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52');
-INSERT INTO `lobbyorganisation` (`id`, `name`, `beschreibung`, `typ`, `url`, `vernehmlassung`, `parlam_verbindung`, `branche_id`, `interessengruppe_id`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES
+(179, 'Pro Velo Schweiz ', 'Pro Velo Schweiz ist der nationale Dachverband der lokalen und regionalen Verbände für die Interessen der Velofahrenden ', 'LeistungsErbringer,dezidierteLobby', '', 'punktuell', 'einzel,exekutiv', 5, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (180, 'Schweizerische Alzheimervereinigung    ', 'Die Schweizerische Alzheimervereinigung ist eine unabhängige, konfessionell und politisch neutrale, gemeinnützige Organisation. Sie setzt sich ein für eine Gesellschaft, in der die Menschen gleichwertig und gleich geschätzt miteinander leben. Sie ergreift Partei für Menschen, die an einer Demenzerkrankung leiden. Bei Demenzerkrankungen (Alzheimer oder andere Formen) treten Verluste des Erinnerungsvermögens zusammen mit anderen Funktionsstörungen des Gehirns auf. Dies führt zum Verlust der Selbständigkeit und hat schwerwiegende Folgen für die Betroffenen und ihr Umfeld.', 'DachOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.alz.ch/index.php/home.html', 'punktuell', 'einzel,exekutiv,kommission', 1, 6, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (181, 'Schweizerische Gesellschaft für Gesundheitspolitik (SGGP)   ', 'Die SGGP\r\nwurde 1976 gegründet und hat sich seither als wichtigstes unabhängiges Forum in der schweizerischen Gesundheitspolitik etabliert. Die SGGP stellt allen gesundheitspolitisch interessierten Fachpersonen eine Plattform zur Verfügung. Sie dient als Netzwerk für Gesundheitsprofis, die über ihren Gartenzaun hinaus blicken und sich interdisziplinär austauschen möchten. Sie ist ein Think Tank und entwickelt laufend Ideen und Projekte zur Verbesserung des Gesundheitswesens.\r\n\r\nUnabhängig\r\nDie SGGP ist ein Verein und lebt von ihren rund 1100 Einzel- und Kollektivmitgliedern - finanziell wie auch inhaltlich. Sie bezieht keine Subventionen. Eventuelle Sponsoring-Partnerschaften bei Veranstaltungen und Publikationen erfolgen nach transparenten Kriterien. ', 'DachOrganisation,dezidierteLobby', 'http://www.sggp.ch/index-de.php?frameset=7', 'punktuell', 'einzel,exekutiv,kommission', 1, 3, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (182, 'Schweizerische Vereinigung Hochspannung unter den Boden (HSUB) ', 'Das Ziel des Vereins ist es, darauf hinzuwirken dass für den Transport elektrischer Energie, speziell Hochspannungsleitungen eine möglichst moderne und umweltschonende Technik angewendet wird, wie z.B. die Verkabelung der Leitungen unter den Boden oder durchs Wasser.\r\n\r\nDer Verein bezweckt insbesondere\r\na) die Lebensqualität und die Gesundheit der Bevölkerung zu schützen\r\nb) die Qualität der Landschaft und Umwelt zu erhalten\r\nc) Gesundheitliche und psychische Schäden, die aus elektromagnetischer Strahlung resultieren auf ein Minimum zu reduzieren', 'EinzelOrganisation,LeistungsErbringer,dezidierteLobby', 'http://www.htst.ch/', 'punktuell', 'einzel,exekutiv', 3, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
@@ -806,8 +804,7 @@ INSERT INTO `lobbyorganisation` (`id`, `name`, `beschreibung`, `typ`, `url`, `ve
 (274, 'Amis de la Fille-Dieu, Romont ', 'Renovation der Klosterkirche', 'EinzelOrganisation', 'http://www.fille-dieu.ch/index.php/fr/les-amis-de-la-fille-dieu-11/', 'nie', 'einzel,exekutiv', 8, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (275, 'Cemsuisse, Verband der Schweizerischen Cementindustrie ', 'cemsuisse, der Verband der Schweizerischen Cementindustrie, ist ein Partner des Parlaments, der eidgenössischen und kantonalen Behörden und Verwaltungen sowie der Wirtschaft und Wissenschaft. cemsuisse informiert über das Engagement der Industrie zugunsten einer nachhaltigen Zementproduktion und setzt sich ein für die Erhaltung des Produktionsstandortes Schweiz.\r\n\r\n', 'DachOrganisation,dezidierteLobby', 'http://www.cemsuisse.ch/cemsuisse/ueberuns/index.html?lang=de', 'nie', 'einzel,exekutiv', 9, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (276, 'Stiftung Comdays (Bieler Kommunikationstage), Biel    ', 'Seit 2010 keine Wirkung mehr. Wirs aber im Stade de Bienne neu überlegt.', 'EinzelOrganisation,LeistungsErbringer', 'http://www.comdays.ch/de/actu.php', 'nie', 'einzel,exekutiv', 9, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
-(277, 'Eidgenössisches Turnfest Biel/Magglingen ', 'Vorbereitung Eidg.Turnfest im Juni 2013', 'LeistungsErbringer', 'http://www.etf-ffg2013.ch/', 'nie', 'exekutiv', 17, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52');
-INSERT INTO `lobbyorganisation` (`id`, `name`, `beschreibung`, `typ`, `url`, `vernehmlassung`, `parlam_verbindung`, `branche_id`, `interessengruppe_id`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES
+(277, 'Eidgenössisches Turnfest Biel/Magglingen ', 'Vorbereitung Eidg.Turnfest im Juni 2013', 'LeistungsErbringer', 'http://www.etf-ffg2013.ch/', 'nie', 'exekutiv', 17, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (278, 'Jura & Drei-Seen-Land', 'Tourismusförderung', 'EinzelOrganisation', 'http://www.juradreiseenland.ch/', 'nie', 'einzel,exekutiv', 12, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (279, 'Neue Helvetische Gesellschaft ', 'Die Neue Helvetische Gesellschaft-Treffpunkt Schweiz (nachstehend NHG-TS) will den Zusammenhalt des Landes stärken, indem sie die Verständigung fördert, identitätsstiftende Ziele formuliert und beiträgt zur Beanwortung von wichtigen Fragen, die sich landesintern oder in der Beziehung zum Ausland stellen. Dieses Ziel will sie erreichen, indem sie namentlich: ', 'EinzelOrganisation,dezidierteLobby', 'http://www.dialoguesuisse.ch/index.php?option=com_content&view=article&id=35&Itemid=71&lang=de', 'punktuell', 'einzel,exekutiv', 14, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
 (280, 'Tour de Suisse, Biel ', '', 'EinzelOrganisation', '', 'nie', 'einzel,exekutiv', 17, NULL, 'import', '2013-11-10 13:18:51', 'import', '2013-11-10 13:23:52'),
@@ -887,14 +884,14 @@ INSERT INTO `lobbyorganisation` (`id`, `name`, `beschreibung`, `typ`, `url`, `ve
 
 DROP TABLE IF EXISTS `parlamentarier`;
 CREATE TABLE IF NOT EXISTS `parlamentarier` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Parlamentariers',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel des Parlamentariers',
   `nachname` varchar(150) NOT NULL COMMENT 'Nachname des Parlamentariers',
   `vorname` varchar(150) NOT NULL COMMENT 'Vornahme des Parlamentariers',
   `beruf` varchar(255) NOT NULL COMMENT 'Beruf des Parlamentariers',
-  `beruf_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche für den Beruf des Parlamentariers',
+  `beruf_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Branche für den Beruf des Parlamentariers',
   `ratstyp` enum('NR','SR') NOT NULL COMMENT 'National- oder Ständerat?',
   `kanton` varchar(2) NOT NULL,
-  `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei',
+  `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Partei',
   `partei` varchar(20) NOT NULL COMMENT 'Partei als Text',
   `parteifunktion` varchar(255) NOT NULL DEFAULT 'Mitglied' COMMENT 'Parteiamt als Freitext',
   `im_rat_seit` varchar(4) NOT NULL,
@@ -903,8 +900,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `sitzplatz` int(11) NOT NULL,
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
   PRIMARY KEY (`id`),
   KEY `idx_partei` (`partei_id`),
   KEY `beruf_branche_id` (`beruf_branche_id`)
@@ -962,19 +959,19 @@ INSERT INTO `parlamentarier` (`id`, `nachname`, `vorname`, `beruf`, `beruf_branc
 
 DROP TABLE IF EXISTS `partei`;
 CREATE TABLE IF NOT EXISTS `partei` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Partei',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Partei',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Parteiabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
   `bemerkung` text COMMENT 'Bemerkung zur Partei',
-  `gruendung` date DEFAULT NULL COMMENT 'Gründungsjahr der Partei',
+  `gruendung` date DEFAULT NULL COMMENT 'Gruendungsjahr der Partei',
   `position` enum('links','rechts','mitte','') DEFAULT NULL COMMENT 'Politische Position der Partei',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `pt_name` (`abkuerzung`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=1 ;
 
 --
 -- Daten für Tabelle `partei`
@@ -991,14 +988,14 @@ INSERT INTO `partei` (`id`, `abkuerzung`, `name`, `bemerkung`, `gruendung`, `pos
 
 DROP TABLE IF EXISTS `zugangsberechtigung`;
 CREATE TABLE IF NOT EXISTS `zugangsberechtigung` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer der Zugangsberechtigung',
-  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel zu Parlamentarier',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Zugangsberechtigung',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschluessel zu Parlamentarier',
   `nachname` varchar(160) NOT NULL COMMENT 'Nachname des berechtigten Persion',
   `vorname` varchar(160) NOT NULL COMMENT 'Vorname der berechtigten Person',
   `funktion` varchar(255) DEFAULT NULL COMMENT 'Angegebene Funktion bei der Zugangsberechtigung',
-  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zu Branche',
-  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Interessengruppe',
-  `lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Lobbyorganisation',
+  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremschluessel zu Branche',
+  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremschluessel zur Interessengruppe',
+  `lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Fremschluessel zur Lobbyorganisation',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
