@@ -2,6 +2,8 @@
 
 dir=public_html/bearbeitung
 
+MyPDOConnectionFactory
+
 for file in $dir/*.php
 do
   echo "Process $file";
@@ -11,7 +13,8 @@ do
   | perl -p -e's/\$this->Set(ExportToExcel|ExportToWord|ExportToXml|ExportToCsv|PrinterFriendly|AdvancedSearch|FilterRow)Available\(false\);/\$this->Set\1Available(true);/g' \
   | perl -p -e's/\$this->Set(VisualEffects)Enabled\(false\);/\$this->Set\1Enabled(true);/g' \
   | perl -p -e's/\$result->SetAllowDeleteSelected\(false\);/\$result->SetAllowDeleteSelected(true);/g' \
-  | perl -p -e's/(\s*\?>\s*)//m' \
+  | perl -p -e's/(\s*\?>\s*)//' \
+  | perl -p -e's/MyConnectionFactory(?=\(\))/MyPDOConnectionFactory/g' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh/' \
   > "$file";
 done

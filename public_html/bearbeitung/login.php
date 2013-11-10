@@ -108,7 +108,7 @@
 
         private function DoOnAfterLogin($userName)
         {
-            $connectionFactory = new MyConnectionFactory();
+            $connectionFactory = new MyPDOConnectionFactory();
             $connection = $connectionFactory->CreateConnection(GetConnectionOptions());
             try {
                 $connection->Connect();

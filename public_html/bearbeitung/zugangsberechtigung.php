@@ -39,7 +39,7 @@
         protected function DoBeforeCreate()
         {
             $this->dataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`zugangsberechtigung`');
             $field = new IntegerField('id', null, null, true);
@@ -147,7 +147,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`parlamentarier`');
             $field = new IntegerField('id', null, null, true);
@@ -206,7 +206,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
             
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`branche`');
             $field = new IntegerField('id', null, null, true);
@@ -237,7 +237,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche Id'), $lookupDataset, 'id', 'name', false));
             
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`interessengruppe`');
             $field = new IntegerField('id', null, null, true);
@@ -265,7 +265,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe_id', $this->RenderText('Interessengruppe Id'), $lookupDataset, 'id', 'bezeichnung', false));
             
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`lobbyorganisation`');
             $field = new IntegerField('id', null, null, true);
@@ -363,7 +363,7 @@
             //
             $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`parlamentarier`');
             $field = new IntegerField('id', null, null, true);
@@ -434,7 +434,7 @@
             //
             $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`parlamentarier`');
             $field = new IntegerField('id', null, null, true);
@@ -617,7 +617,7 @@
             //
             $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`branche`');
             $field = new IntegerField('id', null, null, true);
@@ -662,7 +662,7 @@
             //
             $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`branche`');
             $field = new IntegerField('id', null, null, true);
@@ -716,7 +716,7 @@
             //
             $editor = new ComboBox('interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`interessengruppe`');
             $field = new IntegerField('id', null, null, true);
@@ -758,7 +758,7 @@
             //
             $editor = new ComboBox('interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`interessengruppe`');
             $field = new IntegerField('id', null, null, true);
@@ -809,7 +809,7 @@
             //
             $editor = new ComboBox('lobbyorganisation_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`lobbyorganisation`');
             $field = new IntegerField('id', null, null, true);
@@ -864,7 +864,7 @@
             //
             $editor = new ComboBox('lobbyorganisation_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`lobbyorganisation`');
             $field = new IntegerField('id', null, null, true);
@@ -1159,7 +1159,7 @@
             //
             $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`parlamentarier`');
             $field = new IntegerField('id', null, null, true);
@@ -1257,7 +1257,7 @@
             //
             $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`branche`');
             $field = new IntegerField('id', null, null, true);
@@ -1300,7 +1300,7 @@
             //
             $editor = new ComboBox('interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`interessengruppe`');
             $field = new IntegerField('id', null, null, true);
@@ -1340,7 +1340,7 @@
             //
             $editor = new ComboBox('lobbyorganisation_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`lobbyorganisation`');
             $field = new IntegerField('id', null, null, true);
@@ -1438,7 +1438,7 @@
             //
             $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`parlamentarier`');
             $field = new IntegerField('id', null, null, true);
@@ -1536,7 +1536,7 @@
             //
             $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`branche`');
             $field = new IntegerField('id', null, null, true);
@@ -1579,7 +1579,7 @@
             //
             $editor = new ComboBox('interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`interessengruppe`');
             $field = new IntegerField('id', null, null, true);
@@ -1619,7 +1619,7 @@
             //
             $editor = new ComboBox('lobbyorganisation_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`lobbyorganisation`');
             $field = new IntegerField('id', null, null, true);

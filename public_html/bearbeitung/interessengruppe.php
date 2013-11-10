@@ -39,7 +39,7 @@
         protected function DoBeforeCreate()
         {
             $this->dataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`interessengruppe`');
             $field = new IntegerField('id', null, null, true);
@@ -138,7 +138,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`branche`');
             $field = new IntegerField('id', null, null, true);
@@ -296,7 +296,7 @@
             //
             $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`branche`');
             $field = new IntegerField('id', null, null, true);
@@ -342,7 +342,7 @@
             //
             $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`branche`');
             $field = new IntegerField('id', null, null, true);
@@ -618,7 +618,7 @@
             //
             $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`branche`');
             $field = new IntegerField('id', null, null, true);
@@ -727,7 +727,7 @@
             //
             $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`branche`');
             $field = new IntegerField('id', null, null, true);

@@ -39,7 +39,7 @@
         protected function DoBeforeCreate()
         {
             $this->dataset = new TableDataset(
-                new MyConnectionFactory(),
+                new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`kommission`');
             $field = new IntegerField('id', null, null, true);
