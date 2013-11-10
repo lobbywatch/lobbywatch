@@ -8,9 +8,9 @@
 </head>
 <body>
   <h1>Lobbycontrol</h1>
-  <a href="auswertung">Auswertung</a>
+  <a href="/auswertung">Auswertung</a>
   <br>
-  <a href="bearbeitung">Bearbeitung</a>
+  <a href="/bearbeitung">Bearbeitung</a>
   <br>
 </body>
 </html>

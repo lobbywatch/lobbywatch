@@ -83,22 +83,22 @@
         {
             $currentPageCaption = $this->GetShortCaption();
             $result = new PageList($this);
-            if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Parlamentarier'), 'parlamentarier.php', $this->RenderText('Parlamentarier'), $currentPageCaption == $this->RenderText('Parlamentarier')));
-            if (GetCurrentUserGrantForDataSource('branche')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Branche'), 'branche.php', $this->RenderText('Branche'), $currentPageCaption == $this->RenderText('Branche')));
-            if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Interessenbindung'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('Interessenbindung')));
-            if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Interessengruppe'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('Interessengruppe')));
-            if (GetCurrentUserGrantForDataSource('kommission')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Kommission'), 'kommission.php', $this->RenderText('Kommission'), $currentPageCaption == $this->RenderText('Kommission')));
             if (GetCurrentUserGrantForDataSource('lobbyorganisation')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Lobbyorganisation'), 'lobbyorganisation.php', $this->RenderText('Lobbyorganisation'), $currentPageCaption == $this->RenderText('Lobbyorganisation')));
+            if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Parlamentarier'), 'parlamentarier.php', $this->RenderText('Parlamentarier'), $currentPageCaption == $this->RenderText('Parlamentarier')));
+            if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Interessengruppe'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('Interessengruppe')));
+            if (GetCurrentUserGrantForDataSource('branche')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Branche'), 'branche.php', $this->RenderText('Branche'), $currentPageCaption == $this->RenderText('Branche')));
+            if (GetCurrentUserGrantForDataSource('kommission')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Kommission'), 'kommission.php', $this->RenderText('Kommission'), $currentPageCaption == $this->RenderText('Kommission')));
             if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Partei'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('Partei')));
             if (GetCurrentUserGrantForDataSource('zugangsberechtigung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Zugangsberechtigung'), 'zugangsberechtigung.php', $this->RenderText('Zugangsberechtigung'), $currentPageCaption == $this->RenderText('Zugangsberechtigung')));
+            if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Interessenbindung'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('Interessenbindung')));
             
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() )
               $result->AddPage(new PageLink($this->GetLocalizerCaptions()->GetMessageString('AdminPage'), 'phpgen_admin.php', $this->GetLocalizerCaptions()->GetMessageString('AdminPage'), false, true));
@@ -157,10 +157,7 @@
             }
             if ($this->GetSecurityInfo()->HasEditGrant())
             {
-                $column = new ModalDialogEditRowColumn(
-                    $this->GetLocalizerCaptions()->GetMessageString('Edit'), $this->dataset,
-                    $this->GetLocalizerCaptions()->GetMessageString('Edit'),
-                    $this->GetModalGridEditingHandler());
+                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Edit'), OPERATION_EDIT, $this->dataset);
                 $grid->AddViewColumn($column, $actionsBandName);
                 $column->OnShow->AddListener('ShowEditButtonHandler', $this);
             }
@@ -174,10 +171,7 @@
             }
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
-                $column = new ModalDialogCopyRowColumn(
-                    $this->GetLocalizerCaptions()->GetMessageString('Copy'), $this->dataset,
-                    $this->GetLocalizerCaptions()->GetMessageString('Copy'),
-                    $this->GetModalGridCopyHandler());
+                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Copy'), OPERATION_COPY, $this->dataset);
                 $grid->AddViewColumn($column, $actionsBandName);
             }
         }
@@ -974,8 +968,6 @@
         {
             return ;
         }
-        public function GetModalGridEditingHandler() { return 'partei_inline_edit'; }
-        protected function GetEnableModalGridEditing() { return true; }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -989,9 +981,6 @@
         
         public function GetModalGridDeleteHandler() { return 'partei_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
-        
-        public function GetModalGridCopyHandler() { return 'partei_inline_edit'; }
-        protected function GetEnableModalGridCopy() { return true; }
     
         protected function CreateGrid()
         {
@@ -1007,7 +996,6 @@
             $result->SetUseFixedHeader(false);
             
             $result->SetShowLineNumbers(false);
-            $result->SetUseModalInserting(true);
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');

@@ -8,14 +8,14 @@ $db_connection = array (
     'port' => '3306',
     'username' => '',
     'password' => '',
-    'database' => '' 
+    'database' => '', 
 );
 
 $users = array (
     'otto' => '',
-    'rkurmann' => '',
+    'roland' => '',
     'rebecca' => '',
     'thomas' => '',
     'bane' => '',
-    'admin' => '' 
+    'admin' => '', 
 );

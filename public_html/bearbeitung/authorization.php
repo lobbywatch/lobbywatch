@@ -9,7 +9,7 @@ require_once 'components/security/user_grants_manager.php';
 
 // Custom modification: Use $users form settings.php
 
-$usersIds = array('otto' => -1, 'rkurmann' => -1, 'rebecca' => -1, 'thomas' => -1, 'bane' => -1, 'admin' => -1);
+$usersIds = array('otto' => -1, 'roland' => -1, 'rebecca' => -1, 'thomas' => -1, 'bane' => -1, 'admin' => -1);
 
 $dataSourceRecordPermissions = array();
 
@@ -17,74 +17,84 @@ $grants = array('guest' =>
         array()
     ,
     'defaultUser' => 
-        array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
+        array('lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
+        'branche' => new DataSourceSecurityInfo(false, false, false, false),
         'kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
         'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'otto' => 
-        array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
+        array('lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
+        'branche' => new DataSourceSecurityInfo(false, false, false, false),
         'kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
         'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'rkurmann' => 
-        array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
+        array('lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
+        'branche' => new DataSourceSecurityInfo(false, false, false, false),
         'kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
         'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'rebecca' => 
-        array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
+        array('lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
+        'branche' => new DataSourceSecurityInfo(false, false, false, false),
         'kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
         'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'thomas' => 
-        array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
+        array('lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
+        'branche' => new DataSourceSecurityInfo(false, false, false, false),
         'kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
         'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'bane' => 
-        array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
+        array('lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
+        'branche' => new DataSourceSecurityInfo(false, false, false, false),
         'kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
         'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false))
+    ,
+    'roland' => 
+        array('lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
+        'branche' => new DataSourceSecurityInfo(false, false, false, false),
+        'kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'partei' => new DataSourceSecurityInfo(false, false, false, false),
+        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'admin' => 
-        array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
+        array('lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
+        'branche' => new DataSourceSecurityInfo(false, false, false, false),
         'kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'lobbyorganisation' => new DataSourceSecurityInfo(false, false, false, false),
         'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false))
     );
 
 $appGrants = array('guest' => new DataSourceSecurityInfo(false, false, false, false),
@@ -94,16 +104,17 @@ $appGrants = array('guest' => new DataSourceSecurityInfo(false, false, false, fa
     'rebecca' => new DataSourceSecurityInfo(true, true, true, true),
     'thomas' => new DataSourceSecurityInfo(true, true, true, true),
     'bane' => new AdminDataSourceSecurityInfo(),
+    'roland' => new DataSourceSecurityInfo(true, true, true, true),
     'admin' => new AdminDataSourceSecurityInfo());
 
-$tableCaptions = array('parlamentarier' => 'Parlamentarier',
-'branche' => 'Branche',
-'interessenbindung' => 'Interessenbindung',
+$tableCaptions = array('lobbyorganisation' => 'Lobbyorganisation',
+'parlamentarier' => 'Parlamentarier',
 'interessengruppe' => 'Interessengruppe',
+'branche' => 'Branche',
 'kommission' => 'Kommission',
-'lobbyorganisation' => 'Lobbyorganisation',
 'partei' => 'Partei',
-'zugangsberechtigung' => 'Zugangsberechtigung');
+'zugangsberechtigung' => 'Zugangsberechtigung',
+'interessenbindung' => 'Interessenbindung');
 
 function SetUpUserAuthorization()
 {

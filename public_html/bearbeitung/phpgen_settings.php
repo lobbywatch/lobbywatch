@@ -34,14 +34,14 @@ function HasAdminPage()
 function GetPageInfos()
 {
     $result = array();
-    $result[] = array('caption' => 'Parlamentarier', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier');
-    $result[] = array('caption' => 'Branche', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche');
-    $result[] = array('caption' => 'Interessenbindung', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung');
-    $result[] = array('caption' => 'Interessengruppe', 'short_caption' => 'Interessengruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe');
-    $result[] = array('caption' => 'Kommission', 'short_caption' => 'Kommission', 'filename' => 'kommission.php', 'name' => 'kommission');
     $result[] = array('caption' => 'Lobbyorganisation', 'short_caption' => 'Lobbyorganisation', 'filename' => 'lobbyorganisation.php', 'name' => 'lobbyorganisation');
+    $result[] = array('caption' => 'Parlamentarier', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier');
+    $result[] = array('caption' => 'Interessengruppe', 'short_caption' => 'Interessengruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe');
+    $result[] = array('caption' => 'Branche', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche');
+    $result[] = array('caption' => 'Kommission', 'short_caption' => 'Kommission', 'filename' => 'kommission.php', 'name' => 'kommission');
     $result[] = array('caption' => 'Partei', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei');
     $result[] = array('caption' => 'Zugangsberechtigung', 'short_caption' => 'Zugangsberechtigung', 'filename' => 'zugangsberechtigung.php', 'name' => 'zugangsberechtigung');
+    $result[] = array('caption' => 'Interessenbindung', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung');
     return $result;
 }
 
