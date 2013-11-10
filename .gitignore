@@ -1,0 +1,7 @@
+*-error_log
+*-access_log
+
+lobbycontrol-edit/templates_c/*
+/settings.php
+/lobbycontrol_bearbeitung.pgtm
+/logs

@@ -1,0 +1,74 @@
+
+.nav.nav-list.navpage-options {
+    box-shadow:
+        0 4px 6px -6px #666 inset,
+            0 -4px 6px -6px #666 inset;
+    padding-left: 30px;
+    padding-bottom: 4px;
+    margin: 0 -14px 0 -15px;
+    background-color: lighten(@bodyBackground, 5%);
+}
+
+
+.pg-page-list {
+    > li {
+        >a {
+            >.page-list-icon {
+                .pg-icon-mixin;
+                .pg-icon-page-list-page;
+            }
+        }
+        &.active {
+            >a {
+                >.page-list-icon {
+                    .pg-icon-mixin;
+                    .pg-icon-page-list-active-page;
+                }
+            }
+        }
+    }
+
+    a.export-excel {
+        > .option-icon {
+            .pg-icon-mixin;
+            .pg-icon-export-excel;
+        }
+    }
+
+    a.export-pdf {
+        > .option-icon {
+            .pg-icon-mixin;
+            .pg-icon-export-pdf;
+        }
+    }
+    a.export-csv {
+        > .option-icon {
+            .pg-icon-mixin;
+            .pg-icon-export-csv;
+        }
+    }
+    a.export-xml {
+        > .option-icon {
+            .pg-icon-mixin;
+            .pg-icon-export-xml;
+        }
+    }
+    a.export-word {
+        > .option-icon {
+            .pg-icon-mixin;
+            .pg-icon-export-word;
+        }
+    }
+    a.print-all-pages {
+        > .option-icon {
+            .pg-icon-mixin;
+            .pg-icon-print-page;
+        }
+    }
+    a.print-current-page {
+        > .option-icon {
+            .pg-icon-mixin;
+            .pg-icon-print-page;
+        }
+    }
+}

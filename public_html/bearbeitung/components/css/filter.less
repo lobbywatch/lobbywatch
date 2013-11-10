@@ -1,0 +1,227 @@
+@import "bootstrap/mixins.less";
+
+.raised() {
+    position:relative;
+    padding:1em;
+    margin: 0 0 10px 0;
+
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+
+    -webkit-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 0, 0, 0.1) inset;
+
+    &:before,
+    &:after {
+        content:"";
+        position:absolute;
+        z-index:-2;
+    }
+}
+
+.operator-menu {
+    [class^="pg-icon"], [class*=" pg-icon"] {
+        position: relative;
+        top: 1px;
+    }
+}
+
+.operator-dropdown {
+    [class^="pg-icon"], [class*=" pg-icon"] {
+        position: relative;
+        top: 3px;
+    }
+}
+
+.group-menu {
+    min-width: 10em;
+    background-color: #f8f8f8;
+    border: 1px solid #aaa;
+    box-shadow: 2px 2px 2px #888;
+    position: absolute;
+    display: none;
+    z-index: 2001;
+
+    >.separator {
+        height: 1px;
+        background-color: #ddd;
+        margin: 2px;
+    }
+
+    >.action {
+        cursor: default;
+        padding: 2px;
+        margin: 0 2px;
+        border: 1px solid #f8f8f8;
+        border-radius: 2px;
+
+        &:hover {
+            background-color: #ddd;
+            border-color: #ccc;
+        }
+    }
+}
+
+.filter-image {
+    width: 13px;
+    height: 13px;
+    display: inline-block;
+    background-image: url('img/filter-builder.png');
+    background-repeat: no-repeat;
+    position: relative;
+    top: 1px;
+    margin: 0 4px 0 0;
+
+    &.operator-and-image {
+        background-position: -84px -74px;
+    }
+    &.operator-or-image{
+        background-position: -168px -74px;
+    }
+    &.operator-xor-image{
+        background-position: -105px -74px;
+    }
+    &.action-add-group-image{
+        background-position: -147px -53px;
+    }
+    &.action-add-condition-image{
+        background-position: -168px -53px;
+    }
+    &.action-remove-image{
+        background-position: -126px -74px;
+    }
+
+    &.operator-equals-image{
+        background-position: 0 -116px;
+    }
+
+    &.operator-does-not-equal-image{
+        background-position: -168px -95px;
+    }
+
+    &.operator-is-greater-than-image{
+        background-position: -21px -116px;
+    }
+    &.operator-is-greater-than-or-equal-to-image{
+        background-position: -42px -116px;
+    }
+    &.operator-is-less-than-image{
+        background-position: -63px -116px;
+    }
+    &.operator-is-less-than-or-equal-to-image{
+        background-position: -84px -116px;
+    }
+    &.operator-is-between-image{
+        background-position: -147px -95px;
+    }
+    &.operator-is-not-between-image{
+        background-position: -147px -95px;
+    }
+    &.operator-contains-image{
+        background-position: -105px -116px;
+    }
+    &.operator-does-not-contain-image{
+        background-position: -147px -116px;
+    }
+    &.operator-begins-with-image{
+        background-position: -42px -95px;
+    }
+    &.operator-ends-with-image{
+        background-position: -63px -95px;
+    }
+    &.operator-is-like-image{
+        background-position: -126px -116px;
+    }
+    &.operator-is-not-like-image{
+        background-position: -168px -116px;
+    }
+    &.operator-is-any-of-image{
+        background-position: 0 -95px;
+    }
+    &.operator-is-none-of-image{
+        background-position: -21px -95px;
+    }
+
+    &.operator-is-blank-image{
+        background-position: -126px -95px;
+    }
+
+}
+
+.pgui-filter-builder {
+
+    .group {
+
+        .raised();
+
+        //background-color: #f5f5f5;
+        //border: 1px solid #ccc;
+        padding: 4px;
+
+        //.box-shadow(~"inset 2px 2px 6px -3px #ddd, 3px 3px 6px -2px #ddd");
+
+        >.group-title {
+
+            >.group-operator {
+                color: #f00;
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+        }
+        >.group-content {
+            margin-left: 20px;
+        }
+    }
+
+    .condition {
+        >span {
+            padding: 0 4px 0 0;
+        }
+
+        .field-name {
+            cursor: pointer;
+            color: 	#00f;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+        .operator {
+            cursor: pointer;
+            color: 	#008000;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+
+        .value {
+            position: relative;
+            top: 4px;
+            input[type=text] {
+                padding: 2px;
+            }
+        }
+
+        .remove-condition {
+            position: relative;
+            top: 1px;
+
+            width: 13px;
+            height: 13px;
+            display: inline-block;
+            background-image: url('img/filter-builder.png');
+            background-position: -42px -74px;
+
+            &:hover {
+                background-position: -63px -74px;
+            }
+
+            border: 0;
+        }
+    }
+}

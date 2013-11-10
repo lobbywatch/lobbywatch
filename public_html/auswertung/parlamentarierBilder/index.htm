@@ -1,0 +1,171 @@
+<!DOCTYPE html >
+<html>
+  <head>
+    <title>LobbyControl</title>
+    <meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+    <link href='http://fonts.googleapis.com/css?family=Amethysta' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Cabin:400,400italic,500,500italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link type="text/css" href="./jquery/jquery-ui-1.8.2.custom.css" rel="stylesheet" />	
+    <script type="text/javascript" src="./jquery/jquery-ui-1.8.11.custom.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    
+  <script type='text/javascript' >
+  $(document).ready(function() {
+  $('#horiz_menu li').click(function() {
+    var param=$(this).data('typ');
+    $.get('admin_classes.php',{'datatyp':param},function(data) {
+      $('#controlpanel').html(data);
+      $('#parlamentarier').empty();
+      $('#dialog').hide();
+    });
+    return false;
+  });
+    $('#parlamname:input').live('focus',function(){
+      $('#ratstyp,#kanton,#partei,#komm').attr('disabled','disabled');
+      });
+    $('#parlamname:input').live('blur',function(){
+      if($(this).val()!=''){
+        $('#ratstyp,#kanton,#partei,#komm').attr('disabled','disabled');
+        }else{
+        $('#ratstyp,#kanton,#partei,#komm').removeAttr('disabled');
+       };
+       });
+     $('#parlamsuche').live('keyup',function() {
+     
+     $.post('admin_classes.php', $(this).serialize(), function(data) {
+      $('#parlamentarier').html(data);
+      $('#dialog').hide();
+      });
+    return false;
+  });
+    //Abfrage Suchpanel Parlamentarier:Gruppen
+    $('#parlamsuche').live('submit',function(){
+      $.post('admin_classes.php', $(this).serialize(), function(data) {
+      $('#parlamentarier').html(data);
+    });
+      return false;
+   });
+    //Abfrage f&uuml;r das Infopanel 'Interessenbindungen'bei Einzelparlamentariern
+    $('.interessenbindungen li').live('click',function(event){
+      var pos=$(this).offset();
+      var width=$(this).width();
+      var posleft=700+pos.left
+      //alert($(this).attr('id'));
+      var id_lobbyorg=$(this).attr('id');
+       $(this).css('background','lightblue');
+       $.post('admin_classes.php', {'loId':id_lobbyorg}, function(data) {
+      
+      $('#dialog').html(data).css({'top':pos.top,'left':posleft}).show('slow')
+      
+      .prepend("<div class='title'>"+$('#dialog').attr('title')+"<span>X</span></div>");
+      });
+      
+      return false;
+      });
+      $('#dialog div span').live('click',function(){
+         $('#dialog').hide('slow');
+         $('.interessenbindungen li').css('background','#fff');
+         });
+      //Suchpanel Lobbyorganisation disable, enable
+      $('#lobbyname:input').live('focus',function(){
+      $('#bedeutung,#lobbytyp,#lobbygroup,#thema').attr('disabled','disabled');
+      });
+    $('#lobbyname:input').live('blur',function(){
+      if($(this).val()!=''){
+        $('#bedeutung,#lobbytyp,#lobbygroup,#thema').attr('disabled','disabled');
+        }else{
+        $('#bedeutung,#lobbytyp,#lobbygroup,#thema').removeAttr('disabled');
+       }
+       });
+     //Fortschreitende Suche Lobbyorganisation
+     $('#lobbyname').live('keyup',function() {
+    $.get('admin_classes.php', {'fragment':$(this).val()}, function(data) {
+      $('#parlamentarier').html(data);
+    });
+    return false;
+  });
+    
+      
+ });
+    
+ 
+  </script>
+    <style type='text/css'>
+    body{margin:0 auto;padding:0;width:1100px;}
+    div,ul{margin:0,padding:0;}
+    
+    #logo{width:1100px;margin-top:5px;}
+    .titel{
+    font: 30px Amethysta;float:left;margin-top:10px;width:350px;padding:0 5px ;border:1px solid darkblue;
+     -webkit-border-radius:  15px;  
+     -moz-border-radius:  15px;  
+     
+     -webkit-box-shadow:hsla(180,100%,10%,0.8) 8px 8px 15px; 
+     box-shadow:8px 8px 15px hsla(180,100%,10%,0.8);
+     border-radius:  15px; 
+     }
+    
+    
+    #logo p.logobild{float:right;width:710px;margin-top:10px;}
+    #logo .logobild img{
+    width:700px;height:300px;
+    -webkit-box-shadow:hsla(180,100%,10%,0.8) 8px 6px 8px; 
+    box-shadow: 8px 4px 8px hsla(0 0 0 0.8);
+    }
+    
+    #horiz_menu{margin-left:-39px}
+    #horiz_menu li{display:inline;list-style:none ; margin-right:20px;font:bold 20px Cabin}
+    #horiz_menu li a{text-decoration:none;color:darkblue}
+    #controlpanel{font: bold 15px Cabin}
+    #controlpanel #konzept{font:18px Cabin}
+    #parlamsuche form ul li {display:block;float:left;margin-right:10px}
+    h3{font: 18px Cabin}
+    #lobbyorgsuche form ul li {display:block;float:left;margin-right:10px}
+    h3{font: 18px Cabin}
+    
+    #quicksearch{width:1200px}
+    #quicksearch tr{vertical-align:top}
+    #quicksearch tr td{border:1px solid darkgreen}
+    #quicksearch tr td.click {cursor:pointer}
+    
+    #parlamentarier{width:900px;font: 15px Cabin;margin-top:40px}
+    #parlamentarier .static img{margin-right:5px;vertical-align:top;display:block;float:left}
+    /*Dialogfenster f&uuml;r Lobbyorg-Infos*/
+    #dialog{
+    position:absolute;width:auto;height:auto;left:1000px;
+    -webkit-border-radius:15px;  
+     -moz-border-radius:15px;  
+     border-radius:15px;
+     -webkit-box-shadow:hsla(180,100%,10%,0.8) 8px 8px 15px; 
+     box-shadow:hsla(180,100%,10%,0.8) 8px 8px 15px; 
+     background:lightblue;display:none;
+     }
+     #dialog .title{padding:0 4px ;background:darkblue;font:bold 12px Cabin;color:#fff;height:20px}
+     #dialog .title span{font:bold 18px Cabin;float:right;cursor:pointer;}
+     #lobbykurzinfo{font:14px Cabin;color:darkblue;clear:both;padding:0 5px}
+    </style>
+  </head>
+  <body>
+  <div id='head'>
+  <div id='logo'><p class='titel'>Interessenbindungen eidgen&ouml;ssischer  Parlamentsmitglieder <br />LobbyControl
+  </p>
+  <p class='logobild'><img src='lobbybilder/lobbyismus.png' /></p>
+  </div>
+  <div style='clear:both'>
+  
+  <ul id='horiz_menu'>
+  <li data-typ='parlam'><a href='#'>Parlamentarier</a></li>
+  <li data-typ='lobbyorg'><a href='#'>Lobbyorganisationen</a></li>
+  <li data-typ='themen'><a href='#'>Themensuche</a></li>
+  <li data-typ='kommiss'><a href='#'>Kommissionen</a></li>
+  <li data-typ='statistik'><a href='#'>Statistik</a></li>
+  <li data-typ='konzept'><a href='#'>Lobbycontrol</a></li>  
+  </ul>
+  
+  </div>
+  
+  <div id='controlpanel'></div>
+  <div id='dialog' title='Kurzinfo LobbyOrganisation'></div>
+  <div id='parlamentarier' style='clear:both'></div>
+  </body>
+</html>

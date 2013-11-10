@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <style type="text/css">
+        body
+        {
+            background: none repeat scroll 0 0 #eee;
+            color: black;
+            padding: 3ex;
+            text-align: center;
+            
+            text-align: center;
+            font-family: Tahoma, sans-serif;
+            font-size: .8em;
+        }
+
+        div.error-box
+        {
+            text-align: left;
+            width: 700px;
+            clear: both;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #aaa;
+            clear: both;
+            margin: 0 auto;
+            text-align: left;
+
+            -moz-border-radius: 15px;
+            -webkit-border-radius: 15px;
+            border-radius: 15px;
+        }
+
+        div.error-box div.error-header
+        {
+            font-size: 180%;
+            background: url('images/error.png') no-repeat left top;
+            padding: 4px 0 4px 55px;
+            margin: 10px 0 20px 0;
+        }
+
+        div.error-box div.error-header div.hint
+        {
+            font-size: 50%;
+            color: #666;
+        }
+
+        div.error-box div.error-details
+        {
+            margin: 0 0 20px 50px;
+        }
+    </style>
+<body>
+    <div class="error-box">
+        <div class="error-header">
+            You are using unsupported PHP version
+            <div class="hint">Current PHP version: <strong>{PHP_VERSION}</strong></div>
+        </div>
+        <div class="error-details">
+            The code produced by PHP Generator requires <strong>PHP 5 or higher</strong>.
+            Please make sure that you have installed the correct PHP version on your webserver.
+        </div>
+    </div>
+</body>
+</html>
