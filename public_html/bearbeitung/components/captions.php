@@ -89,5 +89,3 @@ function GetCaptions($encoding = null)
         return $captionsMap[$encoding];
     }
 }
-
-?>

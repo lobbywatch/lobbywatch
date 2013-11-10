@@ -166,5 +166,3 @@ class Path
         return $result;
     }
 }
-
-?>

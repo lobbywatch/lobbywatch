@@ -447,5 +447,3 @@ class PageHttpHandler extends HTTPHandler
         $this->page->EndRender();
     }
 }
-
-?>

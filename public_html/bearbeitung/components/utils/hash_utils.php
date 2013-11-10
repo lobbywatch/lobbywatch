@@ -167,3 +167,5 @@ class PHPassStringHasher extends StringHasher {
     }
 }
 
+
+

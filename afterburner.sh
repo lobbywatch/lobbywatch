@@ -5,7 +5,7 @@ dir=public_html/bearbeitung
 rm -rf $dir/templates_c/*
 
 all_files=`find $dir -name "*.php"`;
-all_files='';
+#all_files='';
 
 for file in $all_files
 do

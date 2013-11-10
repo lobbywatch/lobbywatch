@@ -46,3 +46,4 @@ interface IUserManager
      */
     public function RemoveUser($id);
 }
+

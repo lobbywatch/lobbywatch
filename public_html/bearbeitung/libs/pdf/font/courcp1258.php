@@ -21,4 +21,3 @@ $enc='cp1258';
 $diff='138 /.notdef 142 /.notdef 154 /.notdef 158 /.notdef 195 /Abreve 204 /combininggraveaccent 208 /Dslash 210 /combininghookabove 213 /Ohorn 221 /Uhorn /combiningtildeaccent 227 /abreve 236 /combiningacuteaccent 240 /dmacron 242 /combiningdotbelow 245 /ohorn 253 /uhorn /dongsign';
 $file='cour.z';
 $originalsize=349644;
-?>

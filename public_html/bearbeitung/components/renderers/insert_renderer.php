@@ -28,5 +28,3 @@ class InsertRenderer extends EditRenderer
         );
     }
 }
-
-?>

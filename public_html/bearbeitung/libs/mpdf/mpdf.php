@@ -33669,8 +33669,3 @@ function _putform_tx( $form, $hPt ) {
 
 
 }//end of Class
-
-
-
-
-?>

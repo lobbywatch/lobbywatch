@@ -86,4 +86,3 @@ class PrintRenderer extends Renderer
         return false; 
     }
 }
-?>

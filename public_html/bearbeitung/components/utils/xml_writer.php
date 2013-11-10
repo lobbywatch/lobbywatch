@@ -101,5 +101,3 @@ class XMLWriterFactory
             return new PGXMLWriter();
     }
 }
-
-?>

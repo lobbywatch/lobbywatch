@@ -632,3 +632,4 @@ class FilterBuilderControl {
         return $this->filter->IsEmpty();
     }
 }
+

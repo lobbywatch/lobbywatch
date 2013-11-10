@@ -19,3 +19,5 @@ SetUpUserAuthorization();
 UserManagementRequestHandler::HandleRequest($_GET, CreateTableBasedGrantsManager(), GetIdentityCheckStrategy());
 
 
+
+

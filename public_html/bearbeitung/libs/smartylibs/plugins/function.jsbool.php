@@ -6,5 +6,3 @@ function smarty_function_jsbool($params, &$smarty)
 
     return $value ? 'true' : 'false';
 }
-
-?>

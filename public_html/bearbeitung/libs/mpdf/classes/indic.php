@@ -410,5 +410,3 @@ function substituteIndic($earr, $lang, $font) {
 
 
 }
-
-?>

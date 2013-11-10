@@ -69,3 +69,5 @@ class NullUserManager implements IUserManager
         throw new NotImplementedException();
     }
 }
+
+

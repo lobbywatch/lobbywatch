@@ -16,6 +16,3 @@ $cw=array(
 $desc=array('FontBBox'=>'[-180 -293 1090 1010]');
 $up=-100;
 $ut=50;
-
-
-?>

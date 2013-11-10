@@ -197,5 +197,3 @@ class DeleteRenderer extends Renderer
         ));
     }
 }
-
-?>

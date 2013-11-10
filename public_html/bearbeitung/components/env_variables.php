@@ -123,5 +123,3 @@ class EnvVariablesUtils
         return $result;
     }
 }
-
-?>

@@ -97,4 +97,3 @@ class ExcelRenderer extends Renderer
         return false; 
     }    
 }
-?>

@@ -6,4 +6,3 @@
         $result = str_replace("\n", "\n" . str_repeat('    ', $value), $text);
         return str_replace("\n\r", "\n\r" . str_repeat('    ', $value), $result);
     }
-?>

@@ -334,5 +334,3 @@ class BindableDelegate implements IDelegate
         return new BindableDelegate($this, $rules);
     }
 }
-
-?>

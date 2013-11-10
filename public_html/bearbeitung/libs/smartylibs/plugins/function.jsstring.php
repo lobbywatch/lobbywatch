@@ -28,5 +28,3 @@ function smarty_function_jsstring($params, &$smarty)
 {
     return htmlspecialchars(JSStringLiteral($params['value']));
 }
-
-?>

@@ -7,3 +7,4 @@ class NotImplementedException extends LogicException
         parent::__construct('Not implemented');
     }
 }
+

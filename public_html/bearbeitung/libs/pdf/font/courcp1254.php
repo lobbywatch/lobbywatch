@@ -21,4 +21,3 @@ $enc='cp1254';
 $diff='142 /.notdef 158 /.notdef 208 /Gbreve 221 /Idot /Scedilla 240 /gbreve 253 /dotlessi /scedilla';
 $file='cour.z';
 $originalsize=349644;
-?>

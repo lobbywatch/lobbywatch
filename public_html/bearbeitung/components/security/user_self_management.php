@@ -65,3 +65,5 @@ class UserSelfManagement
               $newPassword);
     }
 }
+
+

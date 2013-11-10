@@ -200,5 +200,3 @@ class HintedTextBox extends Component
         $renderer->RenderHintedTextBox($this);
     }
 }
-
-?>

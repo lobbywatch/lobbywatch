@@ -1315,5 +1315,3 @@ class DetailColumn extends CustomViewColumn
         return $result;
     }
 }
-
-?>

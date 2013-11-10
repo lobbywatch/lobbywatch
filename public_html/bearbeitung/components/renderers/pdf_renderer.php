@@ -287,4 +287,3 @@ class PdfRenderer extends Renderer
         return false;
     }    
 }
-?>

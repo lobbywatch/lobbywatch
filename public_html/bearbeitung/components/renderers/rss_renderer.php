@@ -19,6 +19,4 @@ class RssRenderer extends Renderer
     { }
 }
 
-?>
-
 

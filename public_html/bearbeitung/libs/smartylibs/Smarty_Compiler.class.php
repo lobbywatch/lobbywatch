@@ -2374,5 +2374,3 @@ function _smarty_sort_length($a, $b)
 
 
 /* vim: set et: */
-
-?>

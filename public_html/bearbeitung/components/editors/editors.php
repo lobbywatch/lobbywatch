@@ -1148,3 +1148,4 @@ class HtmlWysiwygEditor extends CustomEditor {
     }
 
 }
+

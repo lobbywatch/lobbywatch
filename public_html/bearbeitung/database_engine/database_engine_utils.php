@@ -58,3 +58,4 @@ class SMVersion
         return $this->major . '.' . $this->minor; 
     }
 }
+

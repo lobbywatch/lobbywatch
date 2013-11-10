@@ -173,3 +173,5 @@ class TableBasedIdentityCheckStrategy extends IdentityCheckStrategy {
         $this->dataset->AddField($field, false);
     }
 }
+
+

@@ -560,7 +560,3 @@ $this->inlinetags = array('SPAN','TT','I','B','BIG','SMALL','EM','STRONG','DFN',
 $this->listtags = array('UL','OL','LI');
 $this->tabletags = array('TABLE','THEAD','TFOOT','TBODY','TFOOT','TR','TH','TD');
 $this->formtags = array('TEXTAREA','INPUT','SELECT');
-
-
-
-?>

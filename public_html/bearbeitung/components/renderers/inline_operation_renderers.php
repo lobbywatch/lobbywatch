@@ -261,5 +261,3 @@ class CommitInlineInsertRenderer extends Renderer
         return true;
     }
 }
-
-?>

@@ -298,5 +298,3 @@ $this->serif_fonts = array('dejavuserifcondensed','dejavuserif','freeserif','lib
 $this->mono_fonts = array('dejavusansmono','freemono','liberationmono','courier', 'mono','monospace','ocrb','ocr-b','lucidaconsole',
 				'couriernew','monotypecorsiva'
 );
-
-?>

@@ -81,5 +81,3 @@ function smarty_function_math($params, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

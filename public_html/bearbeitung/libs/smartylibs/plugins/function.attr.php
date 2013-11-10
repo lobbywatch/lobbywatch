@@ -9,5 +9,3 @@ function smarty_function_attr($params, &$smarty)
         return sprintf("%s=\"%s\"", $name, $value);
     return '';
 }
-
-?>

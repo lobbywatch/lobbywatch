@@ -296,5 +296,3 @@ class MultiLevelSelectionHandler extends HTTPHandler
             return $value;
     }
 }
-
-?>

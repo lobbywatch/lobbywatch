@@ -234,3 +234,4 @@ $cAdminPage = 'Admin page';
 $cApplication = 'Application';
 $cDownload = 'download';
 $cPasswordChanged = 'Password changed';
+

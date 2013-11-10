@@ -133,6 +133,3 @@ class VerticalGrid
 
     public function GetGrid() { return $this->grid; }
 }
-
-
-?>

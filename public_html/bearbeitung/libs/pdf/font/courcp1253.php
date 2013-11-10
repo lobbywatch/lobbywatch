@@ -21,4 +21,3 @@ $enc='cp1253';
 $diff='136 /.notdef 138 /.notdef 140 /.notdef 142 /.notdef 152 /.notdef 154 /.notdef 156 /.notdef 158 /.notdef /.notdef 161 /dieresistonos /Alphatonos 170 /.notdef 175 /afii00208 180 /tonos 184 /Epsilontonos /Etatonos /Iotatonos 188 /Omicrontonos 190 /Upsilontonos /Omegatonos /iotadieresistonos /Alpha /Beta /Gamma /Delta /Epsilon /Zeta /Eta /Theta /Iota /Kappa /Lambda /Mu /Nu /Xi /Omicron /Pi /Rho /.notdef /Sigma /Tau /Upsilon /Phi /Chi /Psi /Omega /Iotadieresis /Upsilondieresis /alphatonos /epsilontonos /etatonos /iotatonos /upsilondieresistonos /alpha /beta /gamma /delta /epsilon /zeta /eta /theta /iota /kappa /lambda /mu /nu /xi /omicron /pi /rho /sigma1 /sigma /tau /upsilon /phi /chi /psi /omega /iotadieresis /upsilondieresis /omicrontonos /upsilontonos /omegatonos /.notdef';
 $file='cour.z';
 $originalsize=349644;
-?>

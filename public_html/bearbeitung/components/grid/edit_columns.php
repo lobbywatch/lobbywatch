@@ -900,5 +900,3 @@ class UploadFileToFolderColumn extends CustomEditColumn
         $this->replaceUploadedFileIfExist = $replaceUploadedFileIfExist;
     }
 }
-
-?>

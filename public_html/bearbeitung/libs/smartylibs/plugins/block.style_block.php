@@ -13,5 +13,3 @@ function smarty_block_style_block($params, $content, &$smarty)
         return '';
     }
 }
-
-?>

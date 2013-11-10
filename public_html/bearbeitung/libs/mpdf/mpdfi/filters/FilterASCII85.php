@@ -96,3 +96,4 @@ class FilterASCII85 {
         $this->error("ASCII85 encoding not implemented.");
     }
 }
+

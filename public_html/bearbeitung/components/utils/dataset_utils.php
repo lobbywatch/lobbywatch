@@ -46,5 +46,3 @@ class DatasetUtils
         return $result;
     }
 }
-
-?>

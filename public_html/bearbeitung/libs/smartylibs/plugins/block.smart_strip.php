@@ -18,5 +18,3 @@ function smarty_block_smart_strip($params, $content, &$smarty)
         return $result;
     }
 }
-
-?>

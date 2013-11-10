@@ -101,7 +101,3 @@ class Lambda implements ISMCallable
         return call_user_func_array($this->function, array_merge($closureArgs, $this->outParams));
     }
 }
-
-
-
-?>

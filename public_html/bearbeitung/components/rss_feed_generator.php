@@ -135,6 +135,4 @@ class RssItem
     { return $this->publicationDate; }
 }
 
-?>
-
 

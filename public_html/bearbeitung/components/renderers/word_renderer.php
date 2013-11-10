@@ -85,4 +85,3 @@ class WordRenderer extends Renderer
         return false; 
     }        
 }
-?>

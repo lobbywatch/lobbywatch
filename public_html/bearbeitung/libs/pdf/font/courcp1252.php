@@ -21,4 +21,3 @@ $enc='cp1252';
 $diff='';
 $file='cour.z';
 $originalsize=349644;
-?>

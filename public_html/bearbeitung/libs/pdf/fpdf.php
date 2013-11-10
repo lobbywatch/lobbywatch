@@ -2119,6 +2119,3 @@ function fread_mem($file,&$ptr,$count)
 		$ptr=strlen($file);
 	return $ret;
 }
-
-
-?>

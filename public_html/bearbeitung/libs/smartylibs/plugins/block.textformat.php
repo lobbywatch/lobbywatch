@@ -99,5 +99,3 @@ function smarty_block_textformat($params, $content, &$smarty)
 }
 
 /* vim: set expandtab: */
-
-?>

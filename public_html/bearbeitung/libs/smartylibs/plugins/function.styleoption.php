@@ -8,4 +8,3 @@ function smarty_function_styleoption($params, &$smarty)
     else
         return '';
 }
-?>

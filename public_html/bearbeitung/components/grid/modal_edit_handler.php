@@ -107,5 +107,3 @@ class ModalDeleteHandler extends HTTPHandler
 
     }
 }
-
-?>

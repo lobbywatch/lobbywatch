@@ -92,8 +92,3 @@ if(!function_exists('codeHex2utf')){
 	return code2utf($num,$lo);
   }
 }
-
-
-
-
-?>

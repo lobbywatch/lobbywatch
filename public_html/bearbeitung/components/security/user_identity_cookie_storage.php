@@ -106,3 +106,4 @@ class UserIdentityCookieStorage
         setcookie($cookie, '', time() - 3600);
     }
 }
+

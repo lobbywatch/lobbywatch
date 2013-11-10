@@ -152,3 +152,4 @@ class FilterLZW {
         $this->error("LZW encoding not implemented.");
     }
 }
+

@@ -806,5 +806,3 @@ class SingleAdvancedSearchRenderer extends Renderer
 
     }
 }
-
-?>

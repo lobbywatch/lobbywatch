@@ -83,4 +83,3 @@ class XmlRenderer extends Renderer
         return false;
     }
 }
-?>

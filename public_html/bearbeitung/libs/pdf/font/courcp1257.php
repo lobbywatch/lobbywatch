@@ -21,4 +21,3 @@ $enc='cp1257';
 $diff='131 /.notdef 136 /.notdef 138 /.notdef 140 /.notdef /dieresis /caron /cedilla 152 /.notdef 154 /.notdef 156 /.notdef /macron /ogonek /.notdef 161 /.notdef 165 /.notdef 168 /Oslash 170 /Rcedilla 175 /AE 184 /oslash 186 /rcedilla 191 /ae /Aogonek /Iogonek /Amacron /Cacute 198 /Eogonek /Emacron /Ccaron 202 /Zacute /Edot /Gcedilla /Kcedilla /Imacron /Lcedilla /Scaron /Nacute /Ncedilla 212 /Omacron 216 /Uogonek /Lslash /Sacute /Umacron 221 /Zdot /Zcaron 224 /aogonek /iogonek /amacron /cacute 230 /eogonek /emacron /ccaron 234 /zacute /edot /gcedilla /kcedilla /imacron /lcedilla /scaron /nacute /ncedilla 244 /omacron 248 /uogonek /lslash /sacute /umacron 253 /zdot /zcaron /dotaccent';
 $file='cour.z';
 $originalsize=349644;
-?>

@@ -299,5 +299,3 @@ class ValidatorCollection
         return $result;
     }
 }
-
-?>

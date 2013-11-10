@@ -22,4 +22,3 @@ $BMPselected=true;
 $fontkey='dejavuserifcondensed';
 $panose='0 0 2 6 6 6 5 6 5 2 2 4';
 $haskerninfo=false;
-?>

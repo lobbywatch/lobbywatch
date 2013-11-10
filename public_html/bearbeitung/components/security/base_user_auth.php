@@ -84,3 +84,5 @@ abstract class IdentityCheckStrategy
 
     public abstract function GetEncryptedPassword($plainPassword);
 }
+
+

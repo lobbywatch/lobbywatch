@@ -30,3 +30,5 @@ class RecordCardView
         $renderer->RenderRecordCardView($this);
     }
 }
+
+

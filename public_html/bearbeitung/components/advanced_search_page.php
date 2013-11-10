@@ -1135,4 +1135,3 @@ class AdvancedSearchControl {
 
     #endregion
 }
-?>
