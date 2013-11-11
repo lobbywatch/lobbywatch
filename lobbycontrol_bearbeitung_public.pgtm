@@ -9147,7 +9147,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="gruendung" caption="Gruendung" headerHint="Gründungsjahr der Partei" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="gruendung" caption="Gruendung" canSetNull="true">
@@ -9467,7 +9467,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="gruendung" caption="Gruendung" headerHint="Gründungsjahr der Partei" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="gruendung" caption="Gruendung" canSetNull="true">
@@ -10083,7 +10083,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="gruendung" caption="Gruendung" headerHint="Gründungsjahr der Partei" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="gruendung" caption="Gruendung" canSetNull="true">
@@ -10403,7 +10403,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="gruendung" caption="Gruendung" headerHint="Gründungsjahr der Partei" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="gruendung" caption="Gruendung" canSetNull="true">
