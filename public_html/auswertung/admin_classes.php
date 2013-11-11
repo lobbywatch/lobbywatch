@@ -3,6 +3,8 @@
 require_once "../common/settings.php";
 
 function dc($msg) {
+  if ($debug !== true)
+    return;
   if (is_array($msg)) {
     $msg = print_r($msg, true);
   }

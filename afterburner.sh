@@ -96,9 +96,9 @@ do
   | perl -0 -p -e's/(?<=GetGlobalConnectionOptions\(\)).*?(?=\})/\{\n    \/\/ Custom modification: Use \$db_connection from settings.php\n    global \$db_connection;\n    return \$db_connection;\n/s' \
   | perl -0 -p -e's/(?<=GetPagesFooter\(\)).*?\{/\{\n    global \$build_date;\n/s' \
   | perl -p -e's/(\/\/\s*?)(?=defineXXX)//' \
-  | perl -p -e's/(\/\/\s*?)(?=error_reporting)//' \
+  | perl -p -e's/(\/\/\s*?)(?=error_reportingXXX)//' \
+  | perl -p -e's/(\/\/\s*?)(?=ini_setXXX)//' \
   | perl -p -e's/\$build_date:\$/'\'' \. "\$build_date" \. '\''/' \
-  | perl -p -e's/(\/\/\s*?)(?=ini_set)//' \
   > "$file";
 done
 
