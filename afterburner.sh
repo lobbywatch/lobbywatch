@@ -30,12 +30,11 @@ do
   | perl -p -e's/\$result->SetAllowDeleteSelected\(false\);/\$result->SetAllowDeleteSelected(true);/g' \
   | perl -0 -p -e's/(\s*\?>\s*)$//s' \
   | perl -p -e's/MyConnectionFactory(?=\(\))/MyPDOConnectionFactory/g' \
+  | perl -p -e's/^(\s*)(GetApplication\(\)->SetMainPage\(\$Page\);)/\1\2\n\1before_render\(\$Page\);/' \
   | perl -0 -p -e's/(?<=CreateRssGenerator\(\)).*?(?=\})/ \{\n            return setupRSS\(\$this, \$this->dataset\);\n        /s' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
 done
-
-# require_once "components\/dataset_rss_generator.php";
 
 for file in $dir/components/page.php
 do
@@ -68,16 +67,6 @@ do
   (cat "$file.bak"; echo -e "\n") \
   | perl -p -e's/(?<=GetRssGenerator\(\);)/\n        header\("Content-Type: application\/rss+xml;charset= utf-8 "\);/' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
-  > "$file";
-done
-
-
-for file in $dir/components/templates/common/layout.tpl
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  (cat "$file.bak"; echo -e "\n") \
-  | perl -p -e's/(<\/head>)/    <link rel="shortcut icon" href="\/favicon.png" type="image\/png" \/>\n\1/g' \
   > "$file";
 done
 

@@ -1760,6 +1760,7 @@
         GetApplication()->SetCanUserChangeOwnPassword(
             !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
+        before_render($Page);
         GetApplication()->Run();
     }
     catch(Exception $e)
