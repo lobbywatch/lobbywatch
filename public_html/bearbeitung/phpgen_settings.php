@@ -3,6 +3,7 @@
 
 require_once dirname(__FILE__) . "/../common/settings.php";
 require_once dirname(__FILE__) . "/custom/custom.php";
+require_once dirname(__FILE__) . "/../common/build_date.php";
 // Processed by afterburner.sh
 
 
@@ -53,10 +54,12 @@ function GetPagesHeader()
     '<h1>Lobbycontrol Datenbearbeitung</h1>';
 }
 
-function GetPagesFooter()
-{
+function GetPagesFooter(){
+    global $build_date;
+
     return
-        'Bearbeitungsseiten von <a href="/">Lobbycontrol</a>.'; 
+        'Bearbeitungsseiten von <a href="/">Lobbycontrol</a>.<br>
+Build date: ' . "$build_date" . ''; 
     }
 
 function ApplyCommonPageSettings($page, $grid)

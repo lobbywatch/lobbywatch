@@ -1,3 +1,6 @@
+<?php
+include_once '../common/build_date.php';
+?>
 <!DOCTYPE html >
 <html>
 <head>
@@ -932,5 +935,9 @@ table td {
     <button id='reload'>Neue Abfrage</button>
   </div>
   <!--<div id="footer">&copy;LobbyControl Otto Hostettler, Andreas Lutz 2012</div>-->
+  <footer>
+  <p>Auswertungsseite von <a href="/">Lobbycontrol</a>.</p>
+  <p>Build date: <?php print $build_date;?></p>
+  </footer>
 </body>
 </html>

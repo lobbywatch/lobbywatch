@@ -1,3 +1,6 @@
+<?php
+include_once 'common/build_date.php';
+?>
 <!DOCTYPE html >
 <html>
 <head>
@@ -17,9 +20,13 @@
 </head>
 <body>
   <h1>Lobbycontrol</h1>
-  <a href="/auswertung">Auswertung</a>
-  <br>
-  <a href="/bearbeitung">Bearbeitung</a>
-  <br>
-</body>
+  <p>
+    <a href="/auswertung">Auswertung</a>
+    <br>
+    <a href="/bearbeitung/interessenbindung.php">Bearbeitung</a>
+    <br>
+    <a href="/oldauswertung">Alte Auswertung (zur Kontrolle)</a>
+  </p>
+  <footer><p>Build date: <?php print $build_date;?></p></footer>
+  </body>
 </html>

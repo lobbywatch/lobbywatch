@@ -14677,7 +14677,8 @@
     <Header>
 &lt;h1&gt;Lobbycontrol Datenbearbeitung&lt;/h1&gt;    </Header>
     <Footer>
-Bearbeitungsseiten von &lt;a href=&quot;/&quot;&gt;Lobbycontrol&lt;/a&gt;.    </Footer>
+Bearbeitungsseiten von &lt;a href=&quot;/&quot;&gt;Lobbycontrol&lt;/a&gt;.&lt;br&gt;
+Build date: $build_date:$    </Footer>
   </Presentation>
   <UserCSS/>
   <ExcludedPaths/>
