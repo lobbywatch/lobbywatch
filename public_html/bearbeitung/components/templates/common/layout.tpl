@@ -29,7 +29,7 @@
     <script>{$App.ValidationScripts}</script>
     {/if}
     <script>{$Scripts}</script>
-    <link rel="shortcut icon" href="favicon.png" type="image/png" />
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
 </head>
 <body>
 

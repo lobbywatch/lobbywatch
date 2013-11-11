@@ -77,7 +77,7 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   (cat "$file.bak"; echo -e "\n") \
-  | perl -p -e's/(<\/head>)/    <link rel="shortcut icon" href="favicon.png" type="image\/png" \/>\n\1/g' \
+  | perl -p -e's/(<\/head>)/    <link rel="shortcut icon" href="\/favicon.png" type="image\/png" \/>\n\1/g' \
   > "$file";
 done
 

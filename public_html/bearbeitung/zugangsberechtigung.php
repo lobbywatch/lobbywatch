@@ -348,7 +348,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Technischer Schluessel der Zugangsberechtigung'));
+            $column->SetDescription($this->RenderText('Technischer Schlüssel der Zugangsberechtigung'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -499,7 +499,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Fremdschluessel zu Parlamentarier'));
+            $column->SetDescription($this->RenderText('Fremdschlüssel zu Parlamentarier'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -701,7 +701,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Fremschluessel zu Branche'));
+            $column->SetDescription($this->RenderText('Fremschlüssel zu Branche'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -794,7 +794,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Fremschluessel zur Interessengruppe'));
+            $column->SetDescription($this->RenderText('Fremschlüssel zur Interessengruppe'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -913,7 +913,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Fremschluessel zur Lobbyorganisation'));
+            $column->SetDescription($this->RenderText('Fremschlüssel zur Lobbyorganisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
