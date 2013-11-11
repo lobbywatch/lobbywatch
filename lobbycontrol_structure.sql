@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 10. Nov 2013 um 23:08
+-- Erstellungszeit: 11. Nov 2013 um 07:43
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -30,15 +30,15 @@ USE `lobbycontrol`;
 
 DROP TABLE IF EXISTS `branche`;
 CREATE TABLE IF NOT EXISTS `branche` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Branche',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Branche',
   `name` varchar(255) NOT NULL COMMENT 'Name der Branche, z.B. Gesundheit, Energie',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
   `angaben` text NOT NULL COMMENT 'Angaben zur Branche',
   `kommission` varchar(255) NOT NULL COMMENT 'Kommission im Parlament (Kommissionsabkürzung)',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen und Parlam. Kommissionen' AUTO_INCREMENT=19 ;
 
@@ -50,17 +50,17 @@ CREATE TABLE IF NOT EXISTS `branche` (
 
 DROP TABLE IF EXISTS `interessenbindung`;
 CREATE TABLE IF NOT EXISTS `interessenbindung` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Interessenbindung',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessenbindung',
   `beschreibung` varchar(255) NOT NULL COMMENT 'Bezeichung der Interessenbindung',
   `status` enum('deklariert','nicht-deklariert','zutrittsberechtigung') NOT NULL DEFAULT 'deklariert' COMMENT 'Deklariert oder nicht deklariert?',
-  `parlamentarier_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Parlamentarier',
-  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Branche',
-  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Interessengruppe',
-  `lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Lobbyorganisation',
+  `parlamentarier_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Parlamentarier',
+  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
+  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe',
+  `lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Lobbyorganisation',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbytyp` (`branche_id`),
@@ -76,14 +76,14 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
 
 DROP TABLE IF EXISTS `interessengruppe`;
 CREATE TABLE IF NOT EXISTS `interessengruppe` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Interessengruppe',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessengruppe',
   `bezeichnung` varchar(255) NOT NULL COMMENT 'Bezeichnung der Interessengruppe',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung zur Interessengruppe',
-  `branche_id` int(11) NOT NULL COMMENT 'Fremdschluessel Branche',
+  `branche_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Branche',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   KEY `idx_lobbytyp` (`branche_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=10 ;
@@ -96,14 +96,14 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
 
 DROP TABLE IF EXISTS `kommission`;
 CREATE TABLE IF NOT EXISTS `kommission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Kommission',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Kommission',
   `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
   `name` varchar(120) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Kommission',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=19 ;
 
@@ -115,19 +115,19 @@ CREATE TABLE IF NOT EXISTS `kommission` (
 
 DROP TABLE IF EXISTS `lobbyorganisation`;
 CREATE TABLE IF NOT EXISTS `lobbyorganisation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Lobbyorganisation',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Lobbyorganisation',
   `name` varchar(255) NOT NULL COMMENT 'Name der Lobbyorganisation',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Lobbyorganisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Lobbyorganisation',
   `url` varchar(255) NOT NULL COMMENT 'Link zur Webseite',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL,
   `parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL,
-  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Branche',
-  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Interessengruppe',
+  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
+  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `idx_lobbygroup` (`interessengruppe_id`)
@@ -141,14 +141,14 @@ CREATE TABLE IF NOT EXISTS `lobbyorganisation` (
 
 DROP TABLE IF EXISTS `parlamentarier`;
 CREATE TABLE IF NOT EXISTS `parlamentarier` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel des Parlamentariers',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Parlamentariers',
   `nachname` varchar(150) NOT NULL COMMENT 'Nachname des Parlamentariers',
   `vorname` varchar(150) NOT NULL COMMENT 'Vornahme des Parlamentariers',
   `beruf` varchar(255) NOT NULL COMMENT 'Beruf des Parlamentariers',
-  `beruf_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Branche für den Beruf des Parlamentariers',
+  `beruf_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche für den Beruf des Parlamentariers',
   `ratstyp` enum('NR','SR') NOT NULL COMMENT 'National- oder Ständerat?',
   `kanton` varchar(2) NOT NULL,
-  `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschluessel Partei',
+  `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei',
   `partei` varchar(20) NOT NULL COMMENT 'Partei als Text',
   `parteifunktion` varchar(255) NOT NULL DEFAULT 'Mitglied' COMMENT 'Parteiamt als Freitext',
   `im_rat_seit` varchar(4) NOT NULL,
@@ -157,8 +157,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `sitzplatz` int(11) NOT NULL,
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   KEY `idx_partei` (`partei_id`),
   KEY `beruf_branche_id` (`beruf_branche_id`)
@@ -172,16 +172,16 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 
 DROP TABLE IF EXISTS `partei`;
 CREATE TABLE IF NOT EXISTS `partei` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Partei',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Partei',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Parteiabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
   `bemerkung` text COMMENT 'Bemerkung zur Partei',
-  `gruendung` date DEFAULT NULL COMMENT 'Gruendungsjahr der Partei',
+  `gruendung` date DEFAULT NULL COMMENT 'Gründungsjahr der Partei',
   `position` enum('links','rechts','mitte','') DEFAULT NULL COMMENT 'Politische Position der Partei',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeaendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeaendert am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `pt_name` (`abkuerzung`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=1 ;
@@ -194,14 +194,14 @@ CREATE TABLE IF NOT EXISTS `partei` (
 
 DROP TABLE IF EXISTS `zugangsberechtigung`;
 CREATE TABLE IF NOT EXISTS `zugangsberechtigung` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schluessel der Zugangsberechtigung',
-  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschluessel zu Parlamentarier',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Zugangsberechtigung',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel zu Parlamentarier',
   `nachname` varchar(160) NOT NULL COMMENT 'Nachname des berechtigten Persion',
   `vorname` varchar(160) NOT NULL COMMENT 'Vorname der berechtigten Person',
   `funktion` varchar(255) DEFAULT NULL COMMENT 'Angegebene Funktion bei der Zugangsberechtigung',
-  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremschluessel zu Branche',
-  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremschluessel zur Interessengruppe',
-  `lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Fremschluessel zur Lobbyorganisation',
+  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zu Branche',
+  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Interessengruppe',
+  `lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Lobbyorganisation',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
