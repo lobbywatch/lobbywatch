@@ -131,6 +131,8 @@ do
   > "lobbycontrol_bearbeitung_public.pgtm";
 done
 
+git st
+
 # Sed: http://www.grymoire.com/Unix/Sed.html
 # Perl: http://petdance.com/perl/command-line-options.pdf
 

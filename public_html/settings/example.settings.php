@@ -3,12 +3,14 @@
 // Copy example.settings.php to settings.php and
 // configure your settings.
 
+$debug = false;
+
 $db_connection = array (
     'server' => 'localhost',
     'port' => '3306',
     'username' => '',
     'password' => '',
-    'database' => '', 
+    'database' => '',
 );
 
 $users = array (
@@ -17,5 +19,5 @@ $users = array (
     'rebecca' => '',
     'thomas' => '',
     'bane' => '',
-    'admin' => '', 
+    'admin' => '',
 );
