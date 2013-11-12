@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 12. Nov 2013 um 22:20
+-- Erstellungszeit: 12. Nov 2013 um 23:03
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `kommission` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 12. Nov 2013 um 18:33
+-- Erzeugt am: 12. Nov 2013 um 22:02
 --
 
 DROP TABLE IF EXISTS `mandat`;
@@ -157,7 +157,11 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   `beschreibung` varchar(255) NOT NULL COMMENT 'Umschreibung des Mandates',
   `zugangsberechtigung_id` int(11) NOT NULL COMMENT 'Fremschlüssel Zugangsberechtigung',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Lobbyorganisation',
-  `funktion` enum('mitglied','geschäftsführend','vorstand','mitarbeiter','mandat') DEFAULT NULL COMMENT 'Funktion des Mandatsträgers innerhalb der Organisation',
+  `funktion` enum('mitglied','geschäftsführend','vorstand','exekutiv') DEFAULT NULL COMMENT 'Funktion des Mandatsträgers innerhalb der Organisation',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   KEY `zugangsberechtigung_id` (`zugangsberechtigung_id`),
   KEY `organisations_id` (`organisation_id`)
