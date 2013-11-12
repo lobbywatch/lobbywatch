@@ -679,5 +679,3 @@ class CompositePageNavigator extends BasePageNavigator {
         }
     }
 }
-
-

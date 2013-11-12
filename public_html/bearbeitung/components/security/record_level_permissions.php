@@ -240,6 +240,3 @@ class DataSourceRecordPermission
     }
 
 }
-
-
-

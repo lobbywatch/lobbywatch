@@ -77,5 +77,3 @@ class SimpleIdentityCheckStrategy extends IdentityCheckStrategy {
         return $this->passwordHasher->GetHash($plainPassword);
     }
 }
-
-

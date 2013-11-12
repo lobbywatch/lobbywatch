@@ -103,5 +103,3 @@ class ServerSideIdentityCheckStrategy extends IdentityCheckStrategy
         }
     }
 }
-
-

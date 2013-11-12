@@ -21,6 +21,7 @@ do
   (cat "$file.bak"; echo -e "\n") \
   | dos2unix \
   | perl -0 -p -e's/(\s*\?>\s*)$/\n/s' \
+  | perl -0 -p -e's/\s*$/\n/s' \
   > "$file";
 done
 

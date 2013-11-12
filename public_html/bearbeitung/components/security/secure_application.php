@@ -62,6 +62,3 @@ class SecureApplication
         return $this->userManager;
     }
 }
-
-
-

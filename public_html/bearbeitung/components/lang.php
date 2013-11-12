@@ -222,5 +222,3 @@ $cConfirmPassword='Confirm password';
 $cConfirmedPasswordError="Passwords do not match. Please try again.";
 $cChangeYourPassword  = 'Change your password';
 $cCurrentPassword = 'Current password';
-
-

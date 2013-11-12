@@ -245,6 +245,3 @@ class ErrorStateRenderer extends ViewAllRenderer
         );
     }
 }
-
-
-

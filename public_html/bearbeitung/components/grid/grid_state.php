@@ -110,6 +110,3 @@ abstract class GridState {
         }
     }
 }
-
-
-

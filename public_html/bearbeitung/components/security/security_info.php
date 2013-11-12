@@ -60,6 +60,3 @@ function GetCurrentUserRecordPermissionsForDataSource($dataSourceName)
 }
 
 #endregion
-
-
-

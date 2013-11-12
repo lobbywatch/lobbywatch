@@ -20,5 +20,3 @@ function autoCompileLess($inputFile, $outputFile) {
         file_put_contents($outputFile, $newCache['compiled']);
     }
 }
-
-

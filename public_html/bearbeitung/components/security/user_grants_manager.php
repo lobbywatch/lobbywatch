@@ -151,5 +151,3 @@ class HardCodedUserGrantsManager extends UserGrantsManager
         return $result;
     }
 }
-
-

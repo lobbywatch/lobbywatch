@@ -166,6 +166,3 @@ class PHPassStringHasher extends StringHasher {
         return $this->hasher->HashPassword($string);
     }
 }
-
-
-

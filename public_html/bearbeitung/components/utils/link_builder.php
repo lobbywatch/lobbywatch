@@ -57,5 +57,3 @@ class LinkBuilder {
         return $result;
     }
 }
-
-

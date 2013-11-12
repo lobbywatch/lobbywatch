@@ -224,6 +224,3 @@ class InsertCommand extends EngCommand
         $this->GetCommandImp()->ExecuteInsertCommand($connection, $this);
     }
 }
-
-
-

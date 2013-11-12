@@ -186,5 +186,3 @@ class DeleteCommand extends EngCommand
         $this->GetCommandImp()->ExecuteDeleteCommand($connection, $this);
     }
 }
-
-

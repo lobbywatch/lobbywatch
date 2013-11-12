@@ -165,5 +165,3 @@ class SuperGlobals
 
     #endregion
 }
-
-

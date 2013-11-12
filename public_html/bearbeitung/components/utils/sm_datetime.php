@@ -87,5 +87,3 @@ class SMDateTime {
             return @date($format, $this->timestamp);
     }
 }
-
-

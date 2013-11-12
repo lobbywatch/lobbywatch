@@ -185,5 +185,3 @@ class UserManagementRequestHandler
         echo $instance->router->HandleRequest($parameters);
     }
 }
-
-

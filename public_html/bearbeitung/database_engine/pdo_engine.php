@@ -228,5 +228,3 @@ class PDODataReader extends EngDataReader
     public function First(){}
     public function Last(){}
 }
-
-

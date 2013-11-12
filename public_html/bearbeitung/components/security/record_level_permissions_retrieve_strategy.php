@@ -45,5 +45,3 @@ class NullDataSourceRecordPermissionRetrieveStrategy extends HardCodedDataSource
         parent::__construct(array());
     }
 }
-
-

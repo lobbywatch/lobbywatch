@@ -128,6 +128,4 @@ class TableDataset extends Dataset
             $lookUpTableAlias
         );
     }
-}    
-
-
+}

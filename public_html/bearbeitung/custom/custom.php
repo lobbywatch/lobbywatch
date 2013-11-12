@@ -69,5 +69,3 @@ $result .= <<<EOD
 EOD;
 
 }
-
-

@@ -46,5 +46,3 @@ function CheckIconvExtension() {
         exit;
     }
 }
-
-

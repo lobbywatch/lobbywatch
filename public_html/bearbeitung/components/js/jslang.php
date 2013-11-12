@@ -86,4 +86,3 @@ BuildLocalizationString($captions, 'Save', true);
 ?>};
 
 });
-

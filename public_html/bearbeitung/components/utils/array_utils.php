@@ -21,6 +21,3 @@ class ArrayUtils
         return isset($array[$key]) ? $array[$key] : $defaultValue;
     }
 }
-
-
-

@@ -418,6 +418,3 @@ class AggregationValuesQuery {
         return $this->engCommandImp->ExecuteReader($connection, $this->GetSQL());
     }
 }
-
-
-

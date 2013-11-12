@@ -491,5 +491,3 @@ class MyPDOConnection extends PDOConnection {
         }
     }
 }
-
-

@@ -2252,6 +2252,3 @@ class Grid {
         return $result;
     }
 }
-
-
-

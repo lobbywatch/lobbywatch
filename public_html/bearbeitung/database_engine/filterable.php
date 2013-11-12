@@ -12,5 +12,3 @@ interface IFilterable
 
     function ClearFieldFilters();
 }
-
-

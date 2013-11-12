@@ -82,4 +82,3 @@ class HtmlUtils {
         return htmlspecialchars($url);
     }
 }
-
