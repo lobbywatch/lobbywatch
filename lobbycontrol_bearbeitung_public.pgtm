@@ -15543,5 +15543,3 @@ Build date: $build_date:$    </Footer>
   <DefaultPageProperties recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true"/>
   <DefaultDataFormats numberAfterDecimal="4" DecimalSeparator="." ThousandSeparator="'" DateTimeFormat="d.m.Y H:i:s" DateFormat="d.m.Y" firstDayOfWeek="1"/>
 </Project>
-
-
