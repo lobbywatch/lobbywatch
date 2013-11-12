@@ -976,5 +976,3 @@
     {
         ShowErrorPage($e->getMessage());
     }
-
-

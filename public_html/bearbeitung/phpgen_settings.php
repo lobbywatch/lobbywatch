@@ -1,8 +1,8 @@
 <?php
 // Processed by afterburner.sh
 
-require_once dirname(__FILE__) . "/../common/settings.php";
-require_once dirname(__FILE__) . "/custom/custom.php";
+require_once dirname(__FILE__) . "/../settings/settings.php";
+require_once dirname(__FILE__) . "/../custom/custom.php";
 require_once dirname(__FILE__) . "/../common/build_date.php";
 // Processed by afterburner.sh
 
@@ -105,7 +105,3 @@ function GetEnableLessFilesRunTimeCompilation()
 {
     return false;
 }
-
-
-
-

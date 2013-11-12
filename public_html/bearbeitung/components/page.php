@@ -1416,5 +1416,3 @@ class CustomLoginPage implements IPage
         return ConvertTextToEncoding($text, GetAnsiEncoding(), $this->GetContentEncoding());
     }
 }
-
-

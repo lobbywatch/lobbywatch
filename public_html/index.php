@@ -20,6 +20,8 @@ include_once 'common/build_date.php';
 </head>
 <body>
   <h1>Lobbycontrol</h1>
+  <p><b>Webseite und Datenmodell sind noch in der Entwicklung. Alle Daten werden regelmässig überschrieben.</b></p>
+  <p><b>Deshalb noch keine dauerhaften Änderungen vornehmen.</b></p>
   <p>
     <a href="/auswertung">Auswertung</a>
     <br>

@@ -1108,5 +1108,3 @@
     {
         ShowErrorPage($e->getMessage());
     }
-
-

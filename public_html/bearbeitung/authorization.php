@@ -145,7 +145,3 @@ function GetIdentityCheckStrategy()
     global $users;
     return new SimpleIdentityCheckStrategy($users, 'md5');
 }
-
-
-
-

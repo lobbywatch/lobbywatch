@@ -30,7 +30,7 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   # Read file, process regex and write file
-  (cat "$file.bak"; echo -e "\n") \
+  cat "$file.bak" \
   | perl -p -e's/\$this->Set(ExportToExcel|ExportToWord|ExportToXml|ExportToCsv|PrinterFriendly|AdvancedSearch|FilterRow)Available\(false\);/\$this->Set\1Available(true);/g' \
   | perl -p -e's/\$this->Set(VisualEffects)Enabled\(false\);/\$this->Set\1Enabled(true);/g' \
   | perl -p -e's/(?<=\$result->SetUseImagesForActions\()false/true/g' \
@@ -59,7 +59,7 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   # Read file, process regex and write file
-  (cat "$file.bak"; echo -e "\n") \
+  cat "$file.bak" \
   | perl -0 -p -e's/(abstract class Page implements IPage, IVariableContainer)\s*?{/\1\n\{\n    public function getRawCaption\(\) \{dcXXX\("Get " . \$this->raw_caption\);return \$this->raw_caption;\}\n    protected \$raw_caption;/s' \
   | perl -p -e's/(?<=\$this->caption = \$value;)/\n        \$this->raw_caption = \$value;dcXXX\("Set " . \$this->raw_caption\);/' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
@@ -71,7 +71,7 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   # Read file, process regex and write file
-  (cat "$file.bak"; echo -e "\n") \
+  cat "$file.bak" \
   | perl -p -e's/StringUtils::EscapeXmlString/htmlspecialchars/' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
@@ -82,7 +82,7 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   # Read file, process regex and write file
-  (cat "$file.bak"; echo -e "\n") \
+  cat "$file.bak" \
   | perl -p -e's/(?<=GetRssGenerator\(\);)/\n        header\("Content-Type: application\/rss+xml;charset= utf-8 "\);/' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
@@ -92,8 +92,8 @@ for file in $dir/phpgen_settings.php
 do
   echo "Process $file";
   mv "$file" "$file.bak";
-  (cat "$file.bak"; echo -e "\n") \
-  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\nrequire_once dirname(__FILE__) . "\/..\/common\/settings.php";\nrequire_once dirname(__FILE__) . "\/custom\/custom.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/build_date.php";/' \
+  cat "$file.bak" \
+  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\nrequire_once dirname(__FILE__) . "\/..\/settings\/settings.php";\nrequire_once dirname(__FILE__) . "\/\.\.\/custom\/custom.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/build_date.php";/' \
   | perl -0 -p -e's/(?<=GetGlobalConnectionOptions\(\)).*?(?=\})/\{\n    \/\/ Custom modification: Use \$db_connection from settings.php\n    global \$db_connection;\n    return \$db_connection;\n/s' \
   | perl -0 -p -e's/(?<=GetPagesFooter\(\)).*?\{/\{\n    global \$build_date;\n/s' \
   | perl -p -e's/(\/\/\s*?)(?=defineXXX)//' \
@@ -107,7 +107,7 @@ for file in $dir/authorization.php
 do
   echo "Process $file";
   mv "$file" "$file.bak";
-  (cat "$file.bak"; echo -e "\n") \
+  cat "$file.bak" \
   | perl -0 -p -e's/\$users = array.*?;/\/\/ Custom modification: Use \$users form settings.php/s' \
   > "$file";
 done
@@ -116,15 +116,15 @@ for file in *.pgtm
 do
   echo "Process $file";
   mv "$file" "$file.bak";
-  (cat "$file.bak"; echo -e "\n") \
-  | perl -p -e's/^(<Project)/<?xml version="1.0" encoding="ISO-8859-1"?>\n\1/is' \
+  cat "$file.bak" \
+  | perl -0 -p -e's/^(<Project)/<?xml version="1.0" encoding="ISO-8859-1"?>\n\1/is' \
   > "$file";
 done
 
 for file in lobbycontrol_bearbeitung.pgtm
 do
   echo "Process $file";
-  (cat "$file"; echo -e "\n") \
+  cat "$file" \
   | perl -p -e's/(login\s*=\s*)".*?"/\1""/ig' \
   | perl -p -e's/(password\s*=\s*)".*?"/\1"hidden"/ig' \
   | perl -p -e's/(database\s*=\s*)".*?"/\1""/ig' \

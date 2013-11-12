@@ -134,5 +134,3 @@ class RssItem
     public function GetPublicationDate()
     { return $this->publicationDate; }
 }
-
-

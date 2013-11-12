@@ -1,6 +1,6 @@
 <?php
 
-require_once "../common/settings.php";
+require_once "../settings/settings.php";
 
 function dc($msg) {
   if ($debug !== true)

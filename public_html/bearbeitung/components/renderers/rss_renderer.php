@@ -18,5 +18,3 @@ class RssRenderer extends Renderer
     public function RenderGrid(Grid $Grid)
     { }
 }
-
-

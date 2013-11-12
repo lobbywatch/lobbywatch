@@ -237,5 +237,3 @@
     $loginPage->BeginRender();
     $loginPage->BeginRender();
     $loginPage->EndRender();
-
-
