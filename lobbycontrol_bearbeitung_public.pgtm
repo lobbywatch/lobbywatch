@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <Project localizationFileName="C:\Program Files\SQL Maestro Group\PHP Generator for MySQL\lang.en.php" phpDriver="0" outputPath="Z:\home\rkurmann\dev\web\lobbycontrol\lobbydev\public_html\bearbeitung" outputFilesExtension="php" colorSchemeName="Default">
   <ConnectionOptions host="localhost" port="3306" login="" password="hidden" database="" client_encoding="">
     <ssh_secure secure="false" port="22" authentication_mode="0"/>
