@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 12. Nov 2013 um 21:57
+-- Erstellungszeit: 12. Nov 2013 um 22:20
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -212,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 12. Nov 2013 um 18:35
+-- Erzeugt am: 12. Nov 2013 um 21:05
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -254,15 +254,15 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier`:
---   `5_kommission_id`
+--   `2_kommission_id`
 --       `kommission` -> `id`
 --   `1_kommission_id`
 --       `kommission` -> `id`
---   `2_kommission_id`
---       `mandat` -> `id`
 --   `3_kommission_id`
 --       `kommission` -> `id`
 --   `4_kommission_id`
+--       `kommission` -> `id`
+--   `5_kommission_id`
 --       `kommission` -> `id`
 --   `beruf_interessengruppe_id`
 --       `branche` -> `id`
@@ -379,11 +379,11 @@ ALTER TABLE `organisation`
 -- Constraints der Tabelle `parlamentarier`
 --
 ALTER TABLE `parlamentarier`
-  ADD CONSTRAINT `fk_5_kommission_id` FOREIGN KEY (`5_kommission_id`) REFERENCES `kommission` (`id`),
+  ADD CONSTRAINT `fk_2_kommission_id` FOREIGN KEY (`2_kommission_id`) REFERENCES `kommission` (`id`),
   ADD CONSTRAINT `fk_1_kommission_id` FOREIGN KEY (`1_kommission_id`) REFERENCES `kommission` (`id`),
-  ADD CONSTRAINT `fk_2_kommission_id` FOREIGN KEY (`2_kommission_id`) REFERENCES `mandat` (`id`),
   ADD CONSTRAINT `fk_3_kommission_id` FOREIGN KEY (`3_kommission_id`) REFERENCES `kommission` (`id`),
   ADD CONSTRAINT `fk_4_kommission_id` FOREIGN KEY (`4_kommission_id`) REFERENCES `kommission` (`id`),
+  ADD CONSTRAINT `fk_5_kommission_id` FOREIGN KEY (`5_kommission_id`) REFERENCES `kommission` (`id`),
   ADD CONSTRAINT `fk_beruf_branche_id` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `branche` (`id`),
   ADD CONSTRAINT `fk_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`);
 

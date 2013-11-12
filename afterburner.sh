@@ -4,7 +4,7 @@ root_dir=public_html
 dir=$root_dir/bearbeitung
 auswertung=$root_dir/auswertung
 
-NOW=$(date +"%m.%d.%Y %H:%M");
+NOW=$(date +"%d.%m.%Y %H:%M");
 
 echo -e "<?php\n\$build_date = '$NOW';" > $root_dir/common/build_date.php;
 
