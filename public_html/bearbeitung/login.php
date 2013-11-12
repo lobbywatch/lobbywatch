@@ -227,7 +227,7 @@
     $loginPage = new LoginPage(
         new LoginControl(
             GetIdentityCheckStrategy(),
-            'lobbyorganisation.php',
+            'parlamentarier.php',
             GetCaptions('UTF-8')));
 
     SetUpUserAuthorization();

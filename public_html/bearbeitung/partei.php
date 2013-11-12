@@ -85,8 +85,6 @@
         {
             $currentPageCaption = $this->GetShortCaption();
             $result = new PageList($this);
-            if (GetCurrentUserGrantForDataSource('lobbyorganisation')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Lobbyorganisation'), 'lobbyorganisation.php', $this->RenderText('Lobbyorganisation'), $currentPageCaption == $this->RenderText('Lobbyorganisation')));
             if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Parlamentarier'), 'parlamentarier.php', $this->RenderText('Parlamentarier'), $currentPageCaption == $this->RenderText('Parlamentarier')));
             if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
@@ -101,6 +99,10 @@
                 $result->AddPage(new PageLink($this->RenderText('Zugangsberechtigung'), 'zugangsberechtigung.php', $this->RenderText('Zugangsberechtigung'), $currentPageCaption == $this->RenderText('Zugangsberechtigung')));
             if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessenbindung'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('Interessenbindung')));
+            if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Mandat'), 'mandat.php', $this->RenderText('Mandat'), $currentPageCaption == $this->RenderText('Mandat')));
+            if (GetCurrentUserGrantForDataSource('organisation')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Organisation'), 'organisation.php', $this->RenderText('Organisation'), $currentPageCaption == $this->RenderText('Organisation')));
             
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() )
               $result->AddPage(new PageLink($this->GetLocalizerCaptions()->GetMessageString('AdminPage'), 'phpgen_admin.php', $this->GetLocalizerCaptions()->GetMessageString('AdminPage'), false, true));

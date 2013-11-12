@@ -36,14 +36,14 @@
     
     
     
-    class branchePage extends Page
+    class organisationPage extends Page
     {
         protected function DoBeforeCreate()
         {
             $this->dataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`branche`');
+                '`organisation`');
             $field = new IntegerField('id', null, null, true);
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -53,13 +53,21 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new StringField('angaben');
+            $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('OLD_kommission');
+            $field = new StringField('url');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('vernehmlassung');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('bisherige_parlam_verbindung');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('OLD_branche_id');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
             $this->dataset->AddField($field, false);
@@ -71,6 +79,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $this->dataset->AddLookupField('OLD_branche_id', 'branche', new IntegerField('id', null, null, true), new StringField('name', 'OLD_branche_id_name', 'OLD_branche_id_name_branche'), 'OLD_branche_id_name_branche');
+            $this->dataset->AddLookupField('interessengruppe_id', 'interessengruppe', new IntegerField('id', null, null, true), new StringField('bezeichnung', 'interessengruppe_id_bezeichnung', 'interessengruppe_id_bezeichnung_interessengruppe'), 'interessengruppe_id_bezeichnung_interessengruppe');
         }
     
         protected function CreatePageNavigator()
@@ -119,9 +129,9 @@
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
-            $grid->SearchControl = new SimpleSearch('branchessearch', $this->dataset,
-                array('id', 'name', 'beschreibung', 'angaben', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Beschreibung'), $this->RenderText('Angaben'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+            $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
+                array('id', 'name', 'beschreibung', 'typ', 'url', 'vernehmlassung', 'bisherige_parlam_verbindung', 'OLD_branche_id_name', 'interessengruppe_id_bezeichnung', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Beschreibung'), $this->RenderText('Typ'), $this->RenderText('Url'), $this->RenderText('Vernehmlassung'), $this->RenderText('Bisherige Parlam Verbindung'), $this->RenderText('OLD Branche Id'), $this->RenderText('Interessengruppe Id'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -139,11 +149,75 @@
     
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
-            $this->AdvancedSearchControl = new AdvancedSearchControl('brancheasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
+            $this->AdvancedSearchControl = new AdvancedSearchControl('organisationasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('angaben', $this->RenderText('Angaben')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('typ', $this->RenderText('Typ')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('url', $this->RenderText('Url')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vernehmlassung', $this->RenderText('Vernehmlassung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('bisherige_parlam_verbindung', $this->RenderText('Bisherige Parlam Verbindung')));
+            
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`branche`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('angaben');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('OLD_kommission');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('OLD_branche_id', $this->RenderText('OLD Branche Id'), $lookupDataset, 'id', 'name', false));
+            
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`interessengruppe`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('bezeichnung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('branche_id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe_id', $this->RenderText('Interessengruppe Id'), $lookupDataset, 'id', 'bezeichnung', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
@@ -187,7 +261,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel der Branche'));
+            $column->SetDescription($this->RenderText('Technischer Schlüssel der Lobbyorganisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -222,7 +296,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Name der Branche, z.B. Gesundheit, Energie'));
+            $column->SetDescription($this->RenderText('Name der Lobbyorganisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -257,24 +331,28 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Beschreibung der Branche'));
+            $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for angaben field
+            // View column for typ field
             //
-            $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column = new TextViewColumn('typ', 'Typ', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('angaben_handler');
             
             /* <inline edit column> */
             //
-            // Edit column for angaben field
+            // Edit column for typ field
             //
-            $editor = new TextAreaEdit('angaben_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Angaben', 'angaben', $editor, $this->dataset);
+            $editor = new CheckBoxGroup('typ_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->AddValue('EinzelOrganisation', $this->RenderText('EinzelOrganisation'));
+            $editor->AddValue('DachOrganisation', $this->RenderText('DachOrganisation'));
+            $editor->AddValue('MitgliedsOrganisation', $this->RenderText('MitgliedsOrganisation'));
+            $editor->AddValue('LeistungsErbringer', $this->RenderText('LeistungsErbringer'));
+            $editor->AddValue('dezidierteLobby', $this->RenderText('dezidierteLobby'));
+            $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -283,16 +361,337 @@
             
             /* <inline insert column> */
             //
-            // Edit column for angaben field
+            // Edit column for typ field
             //
-            $editor = new TextAreaEdit('angaben_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Angaben', 'angaben', $editor, $this->dataset);
+            $editor = new CheckBoxGroup('typ_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->AddValue('EinzelOrganisation', $this->RenderText('EinzelOrganisation'));
+            $editor->AddValue('DachOrganisation', $this->RenderText('DachOrganisation'));
+            $editor->AddValue('MitgliedsOrganisation', $this->RenderText('MitgliedsOrganisation'));
+            $editor->AddValue('LeistungsErbringer', $this->RenderText('LeistungsErbringer'));
+            $editor->AddValue('dezidierteLobby', $this->RenderText('dezidierteLobby'));
+            $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Angaben zur Branche'));
+            $column->SetDescription($this->RenderText('Typ der Lobbyorganisation'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for url field
+            //
+            $column = new TextViewColumn('url', 'Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('url_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for url field
+            //
+            $editor = new TextAreaEdit('url_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for url field
+            //
+            $editor = new TextAreaEdit('url_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Link zur Webseite'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for vernehmlassung field
+            //
+            $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for vernehmlassung field
+            //
+            $editor = new ComboBox('vernehmlassung_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('immer', $this->RenderText('immer'));
+            $editor->AddValue('punktuell', $this->RenderText('punktuell'));
+            $editor->AddValue('nie', $this->RenderText('nie'));
+            $editColumn = new CustomEditColumn('Vernehmlassung', 'vernehmlassung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for vernehmlassung field
+            //
+            $editor = new ComboBox('vernehmlassung_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('immer', $this->RenderText('immer'));
+            $editor->AddValue('punktuell', $this->RenderText('punktuell'));
+            $editor->AddValue('nie', $this->RenderText('nie'));
+            $editColumn = new CustomEditColumn('Vernehmlassung', 'vernehmlassung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Häufigkeit der Teilnahme an Vernehmlassungen'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for bisherige_parlam_verbindung field
+            //
+            $column = new TextViewColumn('bisherige_parlam_verbindung', 'Bisherige Parlam Verbindung', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for bisherige_parlam_verbindung field
+            //
+            $editor = new CheckBoxGroup('bisherige_parlam_verbindung_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->AddValue('einzel', $this->RenderText('einzel'));
+            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
+            $editor->AddValue('kommission', $this->RenderText('kommission'));
+            $editColumn = new CustomEditColumn('Bisherige Parlam Verbindung', 'bisherige_parlam_verbindung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for bisherige_parlam_verbindung field
+            //
+            $editor = new CheckBoxGroup('bisherige_parlam_verbindung_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->AddValue('einzel', $this->RenderText('einzel'));
+            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
+            $editor->AddValue('kommission', $this->RenderText('kommission'));
+            $editColumn = new CustomEditColumn('Bisherige Parlam Verbindung', 'bisherige_parlam_verbindung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('OLD_branche_id_name', 'OLD Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for OLD_branche_id field
+            //
+            $editor = new ComboBox('old_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`branche`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('angaben');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('OLD_kommission');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'OLD Branche Id', 
+                'OLD_branche_id', 
+                $editor, 
+                $this->dataset, 'id', 'name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for OLD_branche_id field
+            //
+            $editor = new ComboBox('old_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`branche`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('angaben');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('OLD_kommission');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'OLD Branche Id', 
+                'OLD_branche_id', 
+                $editor, 
+                $this->dataset, 'id', 'name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Fremdschlüssel Branche'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for bezeichnung field
+            //
+            $column = new TextViewColumn('interessengruppe_id_bezeichnung', 'Interessengruppe Id', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for interessengruppe_id field
+            //
+            $editor = new ComboBox('interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`interessengruppe`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('bezeichnung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('branche_id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('bezeichnung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Interessengruppe Id', 
+                'interessengruppe_id', 
+                $editor, 
+                $this->dataset, 'id', 'bezeichnung', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for interessengruppe_id field
+            //
+            $editor = new ComboBox('interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`interessengruppe`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('bezeichnung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('branche_id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('bezeichnung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Interessengruppe Id', 
+                'interessengruppe_id', 
+                $editor, 
+                $this->dataset, 'id', 'bezeichnung', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Fremdschlüssel Interessengruppe'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -465,12 +864,47 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for angaben field
+            // View column for typ field
             //
-            $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column = new TextViewColumn('typ', 'Typ', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for url field
+            //
+            $column = new TextViewColumn('url', 'Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('angaben_handler');
+            $column->SetFullTextWindowHandlerName('url_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for vernehmlassung field
+            //
+            $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for bisherige_parlam_verbindung field
+            //
+            $column = new TextViewColumn('bisherige_parlam_verbindung', 'Bisherige Parlam Verbindung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('OLD_branche_id_name', 'OLD Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for bezeichnung field
+            //
+            $column = new TextViewColumn('interessengruppe_id_bezeichnung', 'Interessengruppe Id', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -527,12 +961,142 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for angaben field
+            // Edit column for typ field
             //
-            $editor = new TextAreaEdit('angaben_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Angaben', 'angaben', $editor, $this->dataset);
+            $editor = new CheckBoxGroup('typ_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->AddValue('EinzelOrganisation', $this->RenderText('EinzelOrganisation'));
+            $editor->AddValue('DachOrganisation', $this->RenderText('DachOrganisation'));
+            $editor->AddValue('MitgliedsOrganisation', $this->RenderText('MitgliedsOrganisation'));
+            $editor->AddValue('LeistungsErbringer', $this->RenderText('LeistungsErbringer'));
+            $editor->AddValue('dezidierteLobby', $this->RenderText('dezidierteLobby'));
+            $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for url field
+            //
+            $editor = new TextAreaEdit('url_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for vernehmlassung field
+            //
+            $editor = new ComboBox('vernehmlassung_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('immer', $this->RenderText('immer'));
+            $editor->AddValue('punktuell', $this->RenderText('punktuell'));
+            $editor->AddValue('nie', $this->RenderText('nie'));
+            $editColumn = new CustomEditColumn('Vernehmlassung', 'vernehmlassung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for bisherige_parlam_verbindung field
+            //
+            $editor = new CheckBoxGroup('bisherige_parlam_verbindung_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->AddValue('einzel', $this->RenderText('einzel'));
+            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
+            $editor->AddValue('kommission', $this->RenderText('kommission'));
+            $editColumn = new CustomEditColumn('Bisherige Parlam Verbindung', 'bisherige_parlam_verbindung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for OLD_branche_id field
+            //
+            $editor = new ComboBox('old_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`branche`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('angaben');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('OLD_kommission');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'OLD Branche Id', 
+                'OLD_branche_id', 
+                $editor, 
+                $this->dataset, 'id', 'name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe_id field
+            //
+            $editor = new ComboBox('interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`interessengruppe`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('bezeichnung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('branche_id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('bezeichnung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Interessengruppe Id', 
+                'interessengruppe_id', 
+                $editor, 
+                $this->dataset, 'id', 'bezeichnung', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -602,12 +1166,142 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for angaben field
+            // Edit column for typ field
             //
-            $editor = new TextAreaEdit('angaben_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Angaben', 'angaben', $editor, $this->dataset);
+            $editor = new CheckBoxGroup('typ_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->AddValue('EinzelOrganisation', $this->RenderText('EinzelOrganisation'));
+            $editor->AddValue('DachOrganisation', $this->RenderText('DachOrganisation'));
+            $editor->AddValue('MitgliedsOrganisation', $this->RenderText('MitgliedsOrganisation'));
+            $editor->AddValue('LeistungsErbringer', $this->RenderText('LeistungsErbringer'));
+            $editor->AddValue('dezidierteLobby', $this->RenderText('dezidierteLobby'));
+            $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for url field
+            //
+            $editor = new TextAreaEdit('url_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for vernehmlassung field
+            //
+            $editor = new ComboBox('vernehmlassung_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('immer', $this->RenderText('immer'));
+            $editor->AddValue('punktuell', $this->RenderText('punktuell'));
+            $editor->AddValue('nie', $this->RenderText('nie'));
+            $editColumn = new CustomEditColumn('Vernehmlassung', 'vernehmlassung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for bisherige_parlam_verbindung field
+            //
+            $editor = new CheckBoxGroup('bisherige_parlam_verbindung_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->AddValue('einzel', $this->RenderText('einzel'));
+            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
+            $editor->AddValue('kommission', $this->RenderText('kommission'));
+            $editColumn = new CustomEditColumn('Bisherige Parlam Verbindung', 'bisherige_parlam_verbindung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for OLD_branche_id field
+            //
+            $editor = new ComboBox('old_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`branche`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('angaben');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('OLD_kommission');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'OLD Branche Id', 
+                'OLD_branche_id', 
+                $editor, 
+                $this->dataset, 'id', 'name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for interessengruppe_id field
+            //
+            $editor = new ComboBox('interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`interessengruppe`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, true);
+            $field = new StringField('bezeichnung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('branche_id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('bezeichnung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Interessengruppe Id', 
+                'interessengruppe_id', 
+                $editor, 
+                $this->dataset, 'id', 'bezeichnung', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -690,9 +1384,44 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for angaben field
+            // View column for typ field
             //
-            $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column = new TextViewColumn('typ', 'Typ', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for url field
+            //
+            $column = new TextViewColumn('url', 'Url', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for vernehmlassung field
+            //
+            $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for bisherige_parlam_verbindung field
+            //
+            $column = new TextViewColumn('bisherige_parlam_verbindung', 'Bisherige Parlam Verbindung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('OLD_branche_id_name', 'OLD Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for bezeichnung field
+            //
+            $column = new TextViewColumn('interessengruppe_id_bezeichnung', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -751,9 +1480,44 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for angaben field
+            // View column for typ field
             //
-            $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column = new TextViewColumn('typ', 'Typ', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for url field
+            //
+            $column = new TextViewColumn('url', 'Url', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for vernehmlassung field
+            //
+            $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for bisherige_parlam_verbindung field
+            //
+            $column = new TextViewColumn('bisherige_parlam_verbindung', 'Bisherige Parlam Verbindung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('OLD_branche_id_name', 'OLD Branche Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for bezeichnung field
+            //
+            $column = new TextViewColumn('interessengruppe_id_bezeichnung', 'Interessengruppe Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -819,12 +1583,12 @@
                 $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
         }
         
-        public function GetModalGridDeleteHandler() { return 'branche_modal_delete'; }
+        public function GetModalGridDeleteHandler() { return 'organisation_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
         {
-            $result = new Grid($this, $this->dataset, 'brancheGrid');
+            $result = new Grid($this, $this->dataset, 'organisationGrid');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
                $result->SetAllowDeleteSelected(true);
             else
@@ -930,17 +1694,17 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for angaben field
+            // View column for url field
             //
-            $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column = new TextViewColumn('url', 'Url', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for angaben field
+            // Edit column for url field
             //
-            $editor = new TextAreaEdit('angaben_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Angaben', 'angaben', $editor, $this->dataset);
+            $editor = new TextAreaEdit('url_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -949,16 +1713,16 @@
             
             /* <inline insert column> */
             //
-            // Edit column for angaben field
+            // Edit column for url field
             //
-            $editor = new TextAreaEdit('angaben_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Angaben', 'angaben', $editor, $this->dataset);
+            $editor = new TextAreaEdit('url_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'angaben_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'url_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for name field
             //
@@ -974,11 +1738,11 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for angaben field
+            // View column for url field
             //
-            $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column = new TextViewColumn('url', 'Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'angaben_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'url_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -998,12 +1762,12 @@
 
     try
     {
-        $Page = new branchePage("branche.php", "branche", GetCurrentUserGrantForDataSource("branche"), 'UTF-8');
-        $Page->SetShortCaption('Branche');
+        $Page = new organisationPage("organisation.php", "organisation", GetCurrentUserGrantForDataSource("organisation"), 'UTF-8');
+        $Page->SetShortCaption('Organisation');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
-        $Page->SetCaption('Branche');
-        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("branche"));
+        $Page->SetCaption('Organisation');
+        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("organisation"));
         GetApplication()->SetEnableLessRunTimeCompile(GetEnableLessFilesRunTimeCompilation());
         GetApplication()->SetCanUserChangeOwnPassword(
             !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());

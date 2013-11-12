@@ -112,6 +112,15 @@ do
   > "$file";
 done
 
+for file in *.pgtm
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  (cat "$file.bak"; echo -e "\n") \
+  | perl -p -e's/^(<Project)/<?xml version="1.0" encoding="ISO-8859-1"?>\n\1/is' \
+  > "$file";
+done
+
 for file in lobbycontrol_bearbeitung.pgtm
 do
   echo "Process $file";

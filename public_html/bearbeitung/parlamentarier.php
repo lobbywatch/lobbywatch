@@ -56,7 +56,7 @@
             $field = new StringField('beruf');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('beruf_branche_id');
+            $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('ratstyp');
             $field->SetIsNotNull(true);
@@ -72,10 +72,25 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('ALT_parteifunktion');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
             $field = new StringField('im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new StringField('kommission');
+            $field = new DateField('Geburtstag');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('1_kommission_id');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('2_kommission_id');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('3_kommission_id');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('4_kommission_id');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('5_kommission_id');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('ALT_kommission');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('kleinbild');
@@ -111,8 +126,6 @@
         {
             $currentPageCaption = $this->GetShortCaption();
             $result = new PageList($this);
-            if (GetCurrentUserGrantForDataSource('lobbyorganisation')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Lobbyorganisation'), 'lobbyorganisation.php', $this->RenderText('Lobbyorganisation'), $currentPageCaption == $this->RenderText('Lobbyorganisation')));
             if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Parlamentarier'), 'parlamentarier.php', $this->RenderText('Parlamentarier'), $currentPageCaption == $this->RenderText('Parlamentarier')));
             if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
@@ -127,6 +140,10 @@
                 $result->AddPage(new PageLink($this->RenderText('Zugangsberechtigung'), 'zugangsberechtigung.php', $this->RenderText('Zugangsberechtigung'), $currentPageCaption == $this->RenderText('Zugangsberechtigung')));
             if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessenbindung'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('Interessenbindung')));
+            if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Mandat'), 'mandat.php', $this->RenderText('Mandat'), $currentPageCaption == $this->RenderText('Mandat')));
+            if (GetCurrentUserGrantForDataSource('organisation')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Organisation'), 'organisation.php', $this->RenderText('Organisation'), $currentPageCaption == $this->RenderText('Organisation')));
             
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() )
               $result->AddPage(new PageLink($this->GetLocalizerCaptions()->GetMessageString('AdminPage'), 'phpgen_admin.php', $this->GetLocalizerCaptions()->GetMessageString('AdminPage'), false, true));
@@ -141,8 +158,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'beruf', 'beruf_branche_id', 'ratstyp', 'kanton', 'partei_id', 'partei', 'parteifunktion', 'im_rat_seit', 'kommission', 'kleinbild', 'sitzplatz', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Beruf'), $this->RenderText('Beruf Branche Id'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Kommission'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'nachname', 'vorname', 'beruf', 'ratstyp', 'kanton', 'partei_id', 'partei', 'parteifunktion', 'im_rat_seit', 'kleinbild', 'sitzplatz', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Beruf'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -165,14 +182,12 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('nachname', $this->RenderText('Nachname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vorname', $this->RenderText('Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf', $this->RenderText('Beruf')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf_branche_id', $this->RenderText('Beruf Branche Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ratstyp', $this->RenderText('Ratstyp')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kanton', $this->RenderText('Kanton')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('partei_id', $this->RenderText('Partei Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('partei', $this->RenderText('Partei')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parteifunktion', $this->RenderText('Parteifunktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kommission', $this->RenderText('Kommission')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kleinbild', $this->RenderText('Kleinbild')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
@@ -324,37 +339,6 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for beruf_branche_id field
-            //
-            $column = new TextViewColumn('beruf_branche_id', 'Beruf Branche Id', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for beruf_branche_id field
-            //
-            $editor = new TextEdit('beruf_branche_id_edit');
-            $editColumn = new CustomEditColumn('Beruf Branche Id', 'beruf_branche_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for beruf_branche_id field
-            //
-            $editor = new TextEdit('beruf_branche_id_edit');
-            $editColumn = new CustomEditColumn('Beruf Branche Id', 'beruf_branche_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -570,41 +554,6 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for kommission field
-            //
-            $column = new TextViewColumn('kommission', 'Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommission_handler');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for kommission field
-            //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for kommission field
-            //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Mitglied in Kommission(en) als Freitext'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -859,13 +808,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for beruf_branche_id field
-            //
-            $column = new TextViewColumn('beruf_branche_id', 'Beruf Branche Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
@@ -907,15 +849,6 @@
             //
             $column = new TextViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for kommission field
-            //
-            $column = new TextViewColumn('kommission', 'Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kommission_handler');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -998,15 +931,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for beruf_branche_id field
-            //
-            $editor = new TextEdit('beruf_branche_id_edit');
-            $editColumn = new CustomEditColumn('Beruf Branche Id', 'beruf_branche_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for ratstyp field
             //
             $editor = new ComboBox('ratstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -1068,16 +992,6 @@
             $editor->SetSize(4);
             $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for kommission field
-            //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1181,15 +1095,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for beruf_branche_id field
-            //
-            $editor = new TextEdit('beruf_branche_id_edit');
-            $editColumn = new CustomEditColumn('Beruf Branche Id', 'beruf_branche_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for ratstyp field
             //
             $editor = new ComboBox('ratstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -1252,16 +1157,6 @@
             $editor->SetSize(4);
             $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for kommission field
-            //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1376,13 +1271,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for beruf_branche_id field
-            //
-            $column = new TextViewColumn('beruf_branche_id', 'Beruf Branche Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
@@ -1421,13 +1309,6 @@
             // View column for im_rat_seit field
             //
             $column = new TextViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for kommission field
-            //
-            $column = new TextViewColumn('kommission', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1507,13 +1388,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for beruf_branche_id field
-            //
-            $column = new TextViewColumn('beruf_branche_id', 'Beruf Branche Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
@@ -1552,13 +1426,6 @@
             // View column for im_rat_seit field
             //
             $column = new TextViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for kommission field
-            //
-            $column = new TextViewColumn('kommission', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1812,37 +1679,6 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteifunktion_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for kommission field
-            //
-            $column = new TextViewColumn('kommission', 'Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for kommission field
-            //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for kommission field
-            //
-            $editor = new TextAreaEdit('kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Kommission', 'kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for kleinbild field
             //
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
@@ -1904,13 +1740,6 @@
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteifunktion_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for kommission field
-            //
-            $column = new TextViewColumn('kommission', 'Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommission_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for kleinbild field
