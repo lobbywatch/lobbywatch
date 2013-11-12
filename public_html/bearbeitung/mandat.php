@@ -58,6 +58,16 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion');
             $this->dataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('zugangsberechtigung_id', 'zugangsberechtigung', new IntegerField('id', null, null, true), new IntegerField('parlamentarier_id', 'zugangsberechtigung_id_parlamentarier_id', 'zugangsberechtigung_id_parlamentarier_id_zugangsberechtigung'), 'zugangsberechtigung_id_parlamentarier_id_zugangsberechtigung');
             $this->dataset->AddLookupField('organisation_id', 'organisation', new IntegerField('id', null, null, true), new StringField('name', 'organisation_id_name', 'organisation_id_name_organisation'), 'organisation_id_name_organisation');
         }
