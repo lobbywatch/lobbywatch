@@ -3,10 +3,11 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 12. Nov 2013 um 19:38
+-- Erstellungszeit: 12. Nov 2013 um 21:57
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -26,6 +27,8 @@ USE `lobbycontrol`;
 
 --
 -- Tabellenstruktur für Tabelle `branche`
+--
+-- Erzeugt am: 12. Nov 2013 um 18:30
 --
 
 DROP TABLE IF EXISTS `branche`;
@@ -54,6 +57,8 @@ CREATE TABLE IF NOT EXISTS `branche` (
 
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
+--
+-- Erzeugt am: 12. Nov 2013 um 18:24
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
@@ -94,6 +99,8 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
 --
 -- Tabellenstruktur für Tabelle `interessengruppe`
 --
+-- Erzeugt am: 11. Nov 2013 um 06:38
+--
 
 DROP TABLE IF EXISTS `interessengruppe`;
 CREATE TABLE IF NOT EXISTS `interessengruppe` (
@@ -120,6 +127,8 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
+-- Erzeugt am: 11. Nov 2013 um 06:39
+--
 
 DROP TABLE IF EXISTS `kommission`;
 CREATE TABLE IF NOT EXISTS `kommission` (
@@ -138,6 +147,8 @@ CREATE TABLE IF NOT EXISTS `kommission` (
 
 --
 -- Tabellenstruktur für Tabelle `mandat`
+--
+-- Erzeugt am: 12. Nov 2013 um 18:33
 --
 
 DROP TABLE IF EXISTS `mandat`;
@@ -164,6 +175,8 @@ CREATE TABLE IF NOT EXISTS `mandat` (
 
 --
 -- Tabellenstruktur für Tabelle `organisation`
+--
+-- Erzeugt am: 12. Nov 2013 um 17:53
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -198,6 +211,8 @@ CREATE TABLE IF NOT EXISTS `organisation` (
 
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
+--
+-- Erzeugt am: 12. Nov 2013 um 18:35
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -260,6 +275,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
+-- Erzeugt am: 11. Nov 2013 um 06:42
+--
 
 DROP TABLE IF EXISTS `partei`;
 CREATE TABLE IF NOT EXISTS `partei` (
@@ -281,6 +298,8 @@ CREATE TABLE IF NOT EXISTS `partei` (
 
 --
 -- Tabellenstruktur für Tabelle `zugangsberechtigung`
+--
+-- Erzeugt am: 12. Nov 2013 um 18:37
 --
 
 DROP TABLE IF EXISTS `zugangsberechtigung`;
@@ -376,6 +395,7 @@ ALTER TABLE `zugangsberechtigung`
   ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY (`ALT_lobbyorganisation_id`) REFERENCES `organisation` (`id`),
   ADD CONSTRAINT `fk_zb_lt` FOREIGN KEY (`ALT_branche_id`) REFERENCES `branche` (`id`),
   ADD CONSTRAINT `fk_zb_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
+SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
