@@ -29,6 +29,8 @@
 # done
 
 public_dir="public_html"    # compiled site directory
+db_dir="../data/"
+remote_db_dir="/home/csvimsne/sql_scripts"
 
 ssh_user="csvimsne@csvi-ms.net"
 ssh_port="22"
@@ -38,6 +40,7 @@ deploy_default="rsync"
 
 
 fast="--exclude-from ./rsync-fast-exclude"
+dry_run="";
 #fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"
 #absolute_path=$(readlink -m /home/nohsib/dvc/../bop)
 # Ref: http://stackoverflow.com/questions/7069682/how-to-get-arguments-with-flags-in-bash-script
@@ -51,11 +54,16 @@ while test $# -gt 0; do
                         echo "options:"
                         echo "-h, --help                show brief help"
                         echo "-f, --full                deploy full with system files"
+                        echo "-d, --dry-run             dry run"
                         exit 0
                         ;;
                 -f|--full)
                         shift
                         fast=""
+                        ;;
+                -d|--dry-run)
+                        shift
+                        dry_run="--dry-run"
                         ;;
                 *)
                         break
@@ -71,5 +79,8 @@ delete=""
 if $rsync_delete ; then delete='--delete --dry-run'; fi
 
 echo "## Deploying website via Rsync"
-# --dry-run
-rsync -avze "ssh -p $ssh_port" $exclude $fast $delete $public_dir/ $ssh_user:$document_root
+rsync -avze "ssh -p $ssh_port" $exclude $fast $delete --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root
+
+echo "## Copy DB via Rsync"
+include_db="--include prod*"
+rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir
