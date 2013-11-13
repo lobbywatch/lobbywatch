@@ -37,6 +37,7 @@ ssh_port="22"
 document_root="/home/csvimsne/public_html/lobbycontrol/"
 rsync_delete=false
 deploy_default="rsync"
+load_sql=false
 
 
 fast="--exclude-from ./rsync-fast-exclude"
@@ -55,6 +56,7 @@ while test $# -gt 0; do
                         echo "-h, --help                show brief help"
                         echo "-f, --full                deploy full with system files"
                         echo "-d, --dry-run             dry run"
+                        echo "-s, --sql                 copy and run sql"
                         exit 0
                         ;;
                 -f|--full)
@@ -64,6 +66,10 @@ while test $# -gt 0; do
                 -d|--dry-run)
                         shift
                         dry_run="--dry-run"
+                        ;;
+                -s|--sql)
+                        shift
+                        load_sql=true
                         ;;
                 *)
                         break
@@ -85,6 +91,12 @@ echo "## Prepare release"
 echo "## Deploying website via Rsync"
 rsync -avze "ssh -p $ssh_port" $exclude $fast $delete --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root
 
-echo "## Copy DB via Rsync"
-include_db="--include prod*"
-rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir
+if $load_sql ; then
+  echo "## Copy DB via Rsync"
+  include_db="--include prod*"
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir
+
+  echo "## Run SQL script"
+  #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/prod_load_db.sh
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -c ./prod_load_db.sh"
+fi
