@@ -78,6 +78,10 @@ if [ -f './rsync-exclude' ] ; then exclude="--exclude-from ./rsync-exclude" ; fi
 delete=""
 if $rsync_delete ; then delete='--delete --dry-run'; fi
 
+
+echo "## Prepare release"
+./prepare_release.sh
+
 echo "## Deploying website via Rsync"
 rsync -avze "ssh -p $ssh_port" $exclude $fast $delete --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root
 
