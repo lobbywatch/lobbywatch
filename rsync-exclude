@@ -1,0 +1,8 @@
+# Excluded files of lobbycontrol deploy
+
+settings/
+oldauswertung/
+bearbeitung/templates_c/
+*.bak
+.*
+bak/

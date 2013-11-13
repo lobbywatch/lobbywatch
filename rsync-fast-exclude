@@ -1,0 +1,8 @@
+# Files excluded in fast rsync mode
+
+bearbeitung/components
+bearbeitung/database_engine
+bearbeitung/images
+bearbeitung/libs
+bearbeitung/templates_c
+bak/
