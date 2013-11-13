@@ -23,7 +23,7 @@ include_once 'common/build_date.php';
   <p><b>Webseite und Datenmodell sind noch in der Entwicklung. Alle Daten werden regelmässig überschrieben.</b></p>
   <p><b>Deshalb noch keine dauerhaften Änderungen vornehmen.</b></p>
   <p>
-    <a href="/auswertung">Auswertung</a>
+    <a href="/auswertung">Auswertung</a> (Nicht an neues Datenmodell angepasst → funktioniert nicht mehr oder nur eingeschränkt. Alternative: Alte Auswertung benutzen)
     <br>
     <a href="/bearbeitung/interessenbindung.php">Bearbeitung</a>
     <br>
