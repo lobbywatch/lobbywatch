@@ -28,7 +28,7 @@ function setupRSS($page, $dataset) {
   $rss_body .= "<br>$title ID %id%<br>Updated by %updated_visa% at %updated_date%";
 
   $base_url = "http://$_SERVER[HTTP_HOST]";
-  $generator = new DatasetRssGenerator ( $dataset, convert_utf8 ( $title . ' RSS' ), $base_url, convert_utf8 ( 'Änderungen der Lobbycontrol-Datenbank als RSS Feed' ), $rss_title, $table . ' at %id%', $rss_body );
+  $generator = new DatasetRssGenerator ( $dataset, convert_utf8 ( $title . ' RSS' ), $base_url, convert_utf8 ( 'ï¿½nderungen der Lobbycontrol-Datenbank als RSS Feed' ), $rss_title, $table . ' at %id%', $rss_body );
   $generator->SetItemPublicationDateFieldName ( 'updated_date' );
   $generator->SetOrderByFieldName ( 'updated_date' );
   $generator->SetOrderType ( otDescending );
@@ -39,6 +39,11 @@ function convert_utf8($text) {
   return ConvertTextToEncoding ( $text, GetAnsiEncoding (), 'UTF-8' );
 }
 function dc($msg) {
+  if ($debug !== true)
+    return;
+  if (is_array($msg)) {
+    $msg = print_r($msg, true);
+  }
   print ("<!-- $msg -->") ;
 }
 function dcXXX($msg) {
