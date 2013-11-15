@@ -46,6 +46,8 @@ function GetPageInfos()
     $result[] = array('caption' => 'Interessenbindung', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung');
     $result[] = array('caption' => 'Mandat', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat');
     $result[] = array('caption' => 'Organisation', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation');
+    $result[] = array('caption' => 'In Kommission', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission');
+    $result[] = array('caption' => 'Organisation Beziehung', 'short_caption' => 'Organisation Beziehung', 'filename' => 'organisation_beziehung.php', 'name' => 'organisation_beziehung');
     return $result;
 }
 

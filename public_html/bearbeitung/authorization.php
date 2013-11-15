@@ -27,7 +27,9 @@ $grants = array('guest' =>
         'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false))
+        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'otto' => 
         array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
@@ -38,7 +40,9 @@ $grants = array('guest' =>
         'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false))
+        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'rkurmann' => 
         array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
@@ -49,7 +53,9 @@ $grants = array('guest' =>
         'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false))
+        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'rebecca' => 
         array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
@@ -60,7 +66,9 @@ $grants = array('guest' =>
         'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false))
+        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'thomas' => 
         array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
@@ -71,7 +79,9 @@ $grants = array('guest' =>
         'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false))
+        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'bane' => 
         array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
@@ -82,7 +92,9 @@ $grants = array('guest' =>
         'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false))
+        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'roland' => 
         array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
@@ -93,7 +105,9 @@ $grants = array('guest' =>
         'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false))
+        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'admin' => 
         array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
@@ -104,7 +118,9 @@ $grants = array('guest' =>
         'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false))
+        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
     );
 
 $appGrants = array('guest' => new DataSourceSecurityInfo(false, false, false, false),
@@ -125,7 +141,9 @@ $tableCaptions = array('parlamentarier' => 'Parlamentarier',
 'zugangsberechtigung' => 'Zugangsberechtigung',
 'interessenbindung' => 'Interessenbindung',
 'mandat' => 'Mandat',
-'organisation' => 'Organisation');
+'organisation' => 'Organisation',
+'in_kommission' => 'In Kommission',
+'organisation_beziehung' => 'Organisation Beziehung');
 
 function SetUpUserAuthorization()
 {

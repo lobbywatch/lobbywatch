@@ -66,7 +66,7 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, false);
-            $field = new StringField('partei');
+            $field = new StringField('ALT_partei');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -79,16 +79,6 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new DateField('Geburtstag');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('1_kommission_id');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('2_kommission_id');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('3_kommission_id');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('4_kommission_id');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('5_kommission_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $field->SetIsNotNull(true);
@@ -144,6 +134,10 @@
                 $result->AddPage(new PageLink($this->RenderText('Mandat'), 'mandat.php', $this->RenderText('Mandat'), $currentPageCaption == $this->RenderText('Mandat')));
             if (GetCurrentUserGrantForDataSource('organisation')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Organisation'), 'organisation.php', $this->RenderText('Organisation'), $currentPageCaption == $this->RenderText('Organisation')));
+            if (GetCurrentUserGrantForDataSource('in_kommission')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('In Kommission'), 'in_kommission.php', $this->RenderText('In Kommission'), $currentPageCaption == $this->RenderText('In Kommission')));
+            if (GetCurrentUserGrantForDataSource('organisation_beziehung')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Organisation Beziehung'), 'organisation_beziehung.php', $this->RenderText('Organisation Beziehung'), $currentPageCaption == $this->RenderText('Organisation Beziehung')));
             
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() )
               $result->AddPage(new PageLink($this->GetLocalizerCaptions()->GetMessageString('AdminPage'), 'phpgen_admin.php', $this->GetLocalizerCaptions()->GetMessageString('AdminPage'), false, true));
@@ -158,8 +152,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'beruf', 'ratstyp', 'kanton', 'partei_id', 'partei', 'parteifunktion', 'im_rat_seit', 'kleinbild', 'sitzplatz', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Beruf'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'nachname', 'vorname', 'beruf', 'ratstyp', 'kanton', 'partei_id', 'parteifunktion', 'im_rat_seit', 'kleinbild', 'sitzplatz', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Beruf'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -185,7 +179,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ratstyp', $this->RenderText('Ratstyp')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kanton', $this->RenderText('Kanton')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('partei_id', $this->RenderText('Partei Id')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('partei', $this->RenderText('Partei')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parteifunktion', $this->RenderText('Parteifunktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kleinbild', $this->RenderText('Kleinbild')));
@@ -444,43 +437,6 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for partei field
-            //
-            $column = new TextViewColumn('partei', 'Partei', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for partei field
-            //
-            $editor = new TextEdit('partei_edit');
-            $editor->SetSize(20);
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('Partei', 'partei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for partei field
-            //
-            $editor = new TextEdit('partei_edit');
-            $editor->SetSize(20);
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('Partei', 'partei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Partei als Text'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -829,13 +785,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for partei field
-            //
-            $column = new TextViewColumn('partei', 'Partei', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
@@ -960,18 +909,6 @@
             $editor = new TextEdit('partei_id_edit');
             $editColumn = new CustomEditColumn('Partei Id', 'partei_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for partei field
-            //
-            $editor = new TextEdit('partei_edit');
-            $editor->SetSize(20);
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('Partei', 'partei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -1128,18 +1065,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for partei field
-            //
-            $editor = new TextEdit('partei_edit');
-            $editor->SetSize(20);
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('Partei', 'partei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for parteifunktion field
             //
             $editor = new TextAreaEdit('parteifunktion_edit', 50, 8);
@@ -1292,13 +1217,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for partei field
-            //
-            $column = new TextViewColumn('partei', 'Partei', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
@@ -1405,13 +1323,6 @@
             // View column for partei_id field
             //
             $column = new TextViewColumn('partei_id', 'Partei Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for partei field
-            //
-            $column = new TextViewColumn('partei', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

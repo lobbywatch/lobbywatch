@@ -15415,6 +15415,2708 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
+      <Page type="table" tableName="in_kommission" fileName="in_kommission" caption="In Kommission" shortCaption="In Kommission" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+        <BeforeGridText/>
+        <Columns>
+          <ViewColumns>
+            <Column fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Kommissionszugehörigkeit" totalFunction="0">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="funktion" caption="Funktion">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                    <Value name="''" caption="''"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                    <Value name="''" caption="''"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel eines Parlamentariers" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="parlamentarier_id" caption="Parlamentarier Id">
+                <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="parlamentarier_id" caption="Parlamentarier Id" defaultInsertValue="">
+                <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel einer Kommission" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="kommission_id" caption="Kommission Id">
+                <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="kommission_id" caption="Kommission Id" defaultInsertValue="">
+                <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" headerHint="Erstellt am" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+          </ViewColumns>
+          <SingleRecordViewColumns>
+            <Column fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Kommissionszugehörigkeit">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="funktion" caption="Funktion">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                    <Value name="''" caption="''"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                    <Value name="''" caption="''"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel eines Parlamentariers" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="parlamentarier_id" caption="Parlamentarier Id">
+                <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="parlamentarier_id" caption="Parlamentarier Id" defaultInsertValue="">
+                <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel einer Kommission" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="kommission_id" caption="Kommission Id">
+                <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="kommission_id" caption="Kommission Id" defaultInsertValue="">
+                <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" headerHint="Erstellt am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+          </SingleRecordViewColumns>
+          <EditColumns>
+            <Column fieldName="funktion" caption="Funktion">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="präsident" caption="präsident"/>
+                  <Value name="vizepräsident" caption="vizepräsident"/>
+                  <Value name="mitglied" caption="mitglied"/>
+                  <Value name="''" caption="''"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id">
+              <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="kommission_id" caption="Kommission Id">
+              <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true">
+              <EditProperties type="textBox" size="10" maxLength="10"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+              <EditProperties type="textBox" size="10" maxLength="10"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+          </EditColumns>
+          <InsertColumns>
+            <Column fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="präsident" caption="präsident"/>
+                  <Value name="vizepräsident" caption="vizepräsident"/>
+                  <Value name="mitglied" caption="mitglied"/>
+                  <Value name="''" caption="''"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" defaultInsertValue="">
+              <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="kommission_id" caption="Kommission Id" defaultInsertValue="">
+              <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+          </InsertColumns>
+          <SimpleSearchColumns>
+            <Column fieldName="id" caption="Id"/>
+            <Column fieldName="funktion" caption="Funktion"/>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id">
+              <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="kommission_id" caption="Kommission Id">
+              <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa"/>
+            <Column fieldName="created_date" caption="Created Date"/>
+            <Column fieldName="updated_visa" caption="Updated Visa"/>
+            <Column fieldName="updated_date" caption="Updated Date"/>
+          </SimpleSearchColumns>
+          <AdvancedSearchColumns>
+            <Column fieldName="id" caption="Id" useComboBox="false"/>
+            <Column fieldName="funktion" caption="Funktion" useComboBox="false"/>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" useComboBox="false">
+              <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="kommission_id" caption="Kommission Id" useComboBox="false">
+              <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" useComboBox="false"/>
+            <Column fieldName="created_date" caption="Created Date" useComboBox="false"/>
+            <Column fieldName="updated_visa" caption="Updated Visa" useComboBox="false"/>
+            <Column fieldName="updated_date" caption="Updated Date" useComboBox="false"/>
+          </AdvancedSearchColumns>
+          <ExportColumns>
+            <Column fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Kommissionszugehörigkeit">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="funktion" caption="Funktion">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                    <Value name="''" caption="''"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                    <Value name="''" caption="''"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel eines Parlamentariers" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="parlamentarier_id" caption="Parlamentarier Id">
+                <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="parlamentarier_id" caption="Parlamentarier Id" defaultInsertValue="">
+                <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel einer Kommission" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="kommission_id" caption="Kommission Id">
+                <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="kommission_id" caption="Kommission Id" defaultInsertValue="">
+                <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" headerHint="Erstellt am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+          </ExportColumns>
+          <PrintColumns>
+            <Column fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Kommissionszugehörigkeit">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="funktion" caption="Funktion">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                    <Value name="''" caption="''"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                    <Value name="''" caption="''"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel eines Parlamentariers" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="parlamentarier_id" caption="Parlamentarier Id">
+                <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="parlamentarier_id" caption="Parlamentarier Id" defaultInsertValue="">
+                <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel einer Kommission" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="kommission_id" caption="Kommission Id">
+                <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="kommission_id" caption="Kommission Id" defaultInsertValue="">
+                <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" headerHint="Erstellt am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+          </PrintColumns>
+        </Columns>
+        <Details/>
+        <EventHandlers>
+          <BeforePageExecute enabled="true"/>
+          <CustomDrawRow enabled="true"/>
+          <CustomDrawRow_SimpleHandler enabled="true"/>
+          <BeforeInsertRecord enabled="true"/>
+          <BeforeDeleteRecord enabled="true"/>
+          <BeforeUpdateRecord enabled="true"/>
+          <AfterInsertRecord enabled="true"/>
+          <AfterDeleteRecord enabled="true"/>
+          <AfterUpdateRecord enabled="true"/>
+          <CustomRenderColumnHandlerText enabled="true"/>
+          <CustomRenderPrintColumn enabled="true"/>
+          <CustomRenderExportColumn enabled="true"/>
+          <CustomHTMLHeaderHandlerText enabled="true"/>
+          <CustomRenderTotalsHandlerText enabled="true"/>
+          <OnGetCustomTemplate enabled="true"/>
+          <CustomScript enabled="true"/>
+          <OnPageLoaded enabled="true"/>
+          <OnInsertFormValidate enabled="true"/>
+          <OnEditFormValidate enabled="true"/>
+          <OnInsertFormEditorValueChanged enabled="true"/>
+          <OnEditFormEditorValueChanged enabled="true"/>
+          <OnInsertFormLoaded enabled="true"/>
+          <OnEditFormLoaded enabled="true"/>
+        </EventHandlers>
+        <RecordPermissions useRecordPermissions="false"/>
+        <PartitionNavigators/>
+      </Page>
+      <Page type="table" tableName="organisation_beziehung" fileName="organisation_beziehung" caption="Organisation Beziehung" shortCaption="Organisation Beziehung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+        <BeforeGridText/>
+        <Columns>
+          <ViewColumns>
+            <Column fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Organisationsbeziehung" totalFunction="0">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+            </Column>
+            <Column fieldName="beziehungsart" caption="Beziehungsart" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorgansation" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="beziehungsart" caption="Beziehungsart">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mitglied von" caption="mitglied von"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="beziehungsart" caption="Beziehungsart" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mitglied von" caption="mitglied von"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Beziehung in einer Organisation (Fremdschlüssel)" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="organisation_id" caption="Organisation Id">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="organisation_id" caption="Organisation Id" defaultInsertValue="">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" headerHint="Zielorganisation" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="ziel_organisation_id" caption="Ziel Organisation Id">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="ziel_organisation_id" caption="Ziel Organisation Id" defaultInsertValue="">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" headerHint="Erstellt am" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+          </ViewColumns>
+          <SingleRecordViewColumns>
+            <Column fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Organisationsbeziehung">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+            </Column>
+            <Column fieldName="beziehungsart" caption="Beziehungsart" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorgansation" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="beziehungsart" caption="Beziehungsart">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mitglied von" caption="mitglied von"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="beziehungsart" caption="Beziehungsart" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mitglied von" caption="mitglied von"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Beziehung in einer Organisation (Fremdschlüssel)" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="organisation_id" caption="Organisation Id">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="organisation_id" caption="Organisation Id" defaultInsertValue="">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" headerHint="Zielorganisation" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="ziel_organisation_id" caption="Ziel Organisation Id">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="ziel_organisation_id" caption="Ziel Organisation Id" defaultInsertValue="">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" headerHint="Erstellt am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+          </SingleRecordViewColumns>
+          <EditColumns>
+            <Column fieldName="beziehungsart" caption="Beziehungsart">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="mandat für" caption="mandat für"/>
+                  <Value name="mitglied von" caption="mitglied von"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="organisation_id" caption="Organisation Id">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true">
+              <EditProperties type="textBox" size="10" maxLength="10"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+              <EditProperties type="textBox" size="10" maxLength="10"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+          </EditColumns>
+          <InsertColumns>
+            <Column fieldName="beziehungsart" caption="Beziehungsart" defaultInsertValue="">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="mandat für" caption="mandat für"/>
+                  <Value name="mitglied von" caption="mitglied von"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="organisation_id" caption="Organisation Id" defaultInsertValue="">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" defaultInsertValue="">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textBox" size="10" maxLength="10"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+          </InsertColumns>
+          <SimpleSearchColumns>
+            <Column fieldName="id" caption="Id"/>
+            <Column fieldName="beziehungsart" caption="Beziehungsart"/>
+            <Column fieldName="organisation_id" caption="Organisation Id">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa"/>
+            <Column fieldName="created_date" caption="Created Date"/>
+            <Column fieldName="updated_visa" caption="Updated Visa"/>
+            <Column fieldName="updated_date" caption="Updated Date"/>
+          </SimpleSearchColumns>
+          <AdvancedSearchColumns>
+            <Column fieldName="id" caption="Id" useComboBox="false"/>
+            <Column fieldName="beziehungsart" caption="Beziehungsart" useComboBox="false"/>
+            <Column fieldName="organisation_id" caption="Organisation Id" useComboBox="false">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" useComboBox="false">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" useComboBox="false"/>
+            <Column fieldName="created_date" caption="Created Date" useComboBox="false"/>
+            <Column fieldName="updated_visa" caption="Updated Visa" useComboBox="false"/>
+            <Column fieldName="updated_date" caption="Updated Date" useComboBox="false"/>
+          </AdvancedSearchColumns>
+          <ExportColumns>
+            <Column fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Organisationsbeziehung">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+            </Column>
+            <Column fieldName="beziehungsart" caption="Beziehungsart" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorgansation" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="beziehungsart" caption="Beziehungsart">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mitglied von" caption="mitglied von"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="beziehungsart" caption="Beziehungsart" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mitglied von" caption="mitglied von"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Beziehung in einer Organisation (Fremdschlüssel)" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="organisation_id" caption="Organisation Id">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="organisation_id" caption="Organisation Id" defaultInsertValue="">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" headerHint="Zielorganisation" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="ziel_organisation_id" caption="Ziel Organisation Id">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="ziel_organisation_id" caption="Ziel Organisation Id" defaultInsertValue="">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" headerHint="Erstellt am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+          </ExportColumns>
+          <PrintColumns>
+            <Column fieldName="id" caption="Id" headerHint="Technischer Schlüssel einer Organisationsbeziehung">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+            </Column>
+            <Column fieldName="beziehungsart" caption="Beziehungsart" headerHint="Beschreibt die Beziehung einer Organisation zu einer Zielorgansation" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="beziehungsart" caption="Beziehungsart">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mitglied von" caption="mitglied von"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="beziehungsart" caption="Beziehungsart" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mitglied von" caption="mitglied von"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Beziehung in einer Organisation (Fremdschlüssel)" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="organisation_id" caption="Organisation Id">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="organisation_id" caption="Organisation Id" defaultInsertValue="">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" headerHint="Zielorganisation" useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="ziel_organisation_id" caption="Ziel Organisation Id">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="ziel_organisation_id" caption="Ziel Organisation Id" defaultInsertValue="">
+                <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_visa" caption="Created Visa" headerHint="Erstellt von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="created_date" caption="Created Date" headerHint="Erstellt am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_visa" caption="Updated Visa" headerHint="Abgäendert von" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textBox" size="10" maxLength="10"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="updated_date" caption="Updated Date" headerHint="Abgäendert am" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+                <DivAttributes/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+          </PrintColumns>
+        </Columns>
+        <Details/>
+        <EventHandlers>
+          <BeforePageExecute enabled="true"/>
+          <CustomDrawRow enabled="true"/>
+          <CustomDrawRow_SimpleHandler enabled="true"/>
+          <BeforeInsertRecord enabled="true"/>
+          <BeforeDeleteRecord enabled="true"/>
+          <BeforeUpdateRecord enabled="true"/>
+          <AfterInsertRecord enabled="true"/>
+          <AfterDeleteRecord enabled="true"/>
+          <AfterUpdateRecord enabled="true"/>
+          <CustomRenderColumnHandlerText enabled="true"/>
+          <CustomRenderPrintColumn enabled="true"/>
+          <CustomRenderExportColumn enabled="true"/>
+          <CustomHTMLHeaderHandlerText enabled="true"/>
+          <CustomRenderTotalsHandlerText enabled="true"/>
+          <OnGetCustomTemplate enabled="true"/>
+          <CustomScript enabled="true"/>
+          <OnPageLoaded enabled="true"/>
+          <OnInsertFormValidate enabled="true"/>
+          <OnEditFormValidate enabled="true"/>
+          <OnInsertFormEditorValueChanged enabled="true"/>
+          <OnEditFormEditorValueChanged enabled="true"/>
+          <OnInsertFormLoaded enabled="true"/>
+          <OnEditFormLoaded enabled="true"/>
+        </EventHandlers>
+        <RecordPermissions useRecordPermissions="false"/>
+        <PartitionNavigators/>
+      </Page>
     </Pages>
     <UserAuthorization type="hardCoded" passwordEncryption="md5">
       <Users>
@@ -15446,6 +18148,8 @@
           <PageGrant pageName="interessenbindung"/>
           <PageGrant pageName="mandat"/>
           <PageGrant pageName="organisation"/>
+          <PageGrant pageName="in_kommission"/>
+          <PageGrant pageName="organisation_beziehung"/>
         </PageGrants>
         <PageGrants userName="otto">
           <PageGrant pageName="parlamentarier"/>
@@ -15457,6 +18161,8 @@
           <PageGrant pageName="interessenbindung"/>
           <PageGrant pageName="mandat"/>
           <PageGrant pageName="organisation"/>
+          <PageGrant pageName="in_kommission"/>
+          <PageGrant pageName="organisation_beziehung"/>
         </PageGrants>
         <PageGrants userName="rkurmann">
           <PageGrant pageName="parlamentarier"/>
@@ -15468,6 +18174,8 @@
           <PageGrant pageName="interessenbindung"/>
           <PageGrant pageName="mandat"/>
           <PageGrant pageName="organisation"/>
+          <PageGrant pageName="in_kommission"/>
+          <PageGrant pageName="organisation_beziehung"/>
         </PageGrants>
         <PageGrants userName="rebecca">
           <PageGrant pageName="parlamentarier"/>
@@ -15479,6 +18187,8 @@
           <PageGrant pageName="interessenbindung"/>
           <PageGrant pageName="mandat"/>
           <PageGrant pageName="organisation"/>
+          <PageGrant pageName="in_kommission"/>
+          <PageGrant pageName="organisation_beziehung"/>
         </PageGrants>
         <PageGrants userName="thomas">
           <PageGrant pageName="parlamentarier"/>
@@ -15490,6 +18200,8 @@
           <PageGrant pageName="interessenbindung"/>
           <PageGrant pageName="mandat"/>
           <PageGrant pageName="organisation"/>
+          <PageGrant pageName="in_kommission"/>
+          <PageGrant pageName="organisation_beziehung"/>
         </PageGrants>
         <PageGrants userName="bane">
           <PageGrant pageName="parlamentarier"/>
@@ -15501,6 +18213,8 @@
           <PageGrant pageName="interessenbindung"/>
           <PageGrant pageName="mandat"/>
           <PageGrant pageName="organisation"/>
+          <PageGrant pageName="in_kommission"/>
+          <PageGrant pageName="organisation_beziehung"/>
         </PageGrants>
         <PageGrants userName="roland">
           <PageGrant pageName="parlamentarier"/>
@@ -15512,6 +18226,8 @@
           <PageGrant pageName="interessenbindung"/>
           <PageGrant pageName="mandat"/>
           <PageGrant pageName="organisation"/>
+          <PageGrant pageName="in_kommission"/>
+          <PageGrant pageName="organisation_beziehung"/>
         </PageGrants>
         <PageGrants userName="admin">
           <PageGrant pageName="parlamentarier"/>
@@ -15523,6 +18239,8 @@
           <PageGrant pageName="interessenbindung"/>
           <PageGrant pageName="mandat"/>
           <PageGrant pageName="organisation"/>
+          <PageGrant pageName="in_kommission"/>
+          <PageGrant pageName="organisation_beziehung"/>
         </PageGrants>
       </UserPageGrants>
     </UserGrants>
