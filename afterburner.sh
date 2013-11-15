@@ -131,6 +131,8 @@ do
   > "lobbycontrol_bearbeitung_public.pgtm";
 done
 
+cp lobbycontrol_er.pdf public_html/
+
 git st
 
 # Sed: http://www.grymoire.com/Unix/Sed.html

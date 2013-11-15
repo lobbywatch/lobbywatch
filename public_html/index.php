@@ -29,6 +29,7 @@ include_once 'common/build_date.php';
     <br>
     <a href="/oldauswertung">Alte Auswertung (zur Kontrolle)</a>
   </p>
+  <p><a href="/lobbycontrol_er.pdf">Datenmodell (PDF)</a></p>
   <footer><p>Build date: <?php print $build_date;?></p></footer>
   </body>
 </html>
