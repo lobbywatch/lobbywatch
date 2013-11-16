@@ -4,6 +4,7 @@
 require_once dirname(__FILE__) . "/../settings/settings.php";
 require_once dirname(__FILE__) . "/../custom/custom.php";
 require_once dirname(__FILE__) . "/../common/build_date.php";
+require_once dirname(__FILE__) . "/../common/utils.php";
 // Processed by afterburner.sh
 
 

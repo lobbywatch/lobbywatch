@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 15. Nov 2013 um 21:40
+-- Erstellungszeit: 16. Nov 2013 um 08:14
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -28,7 +28,7 @@ USE `lobbycontrol`;
 --
 -- Tabellenstruktur für Tabelle `branche`
 --
--- Erzeugt am: 12. Nov 2013 um 18:30
+-- Erzeugt am: 16. Nov 2013 um 06:52
 --
 
 DROP TABLE IF EXISTS `branche`;
@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `branche` (
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
   `angaben` text NOT NULL COMMENT 'Angaben zur Branche',
   `kommission_id` int(11) DEFAULT NULL COMMENT 'Zusändige Kommission im Parlament',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `OLD_kommission` varchar(255) NOT NULL COMMENT 'Kommission im Parlament (Kommissionsabkürzung)',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -58,19 +59,22 @@ CREATE TABLE IF NOT EXISTS `branche` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 15. Nov 2013 um 20:03
+-- Erzeugt am: 16. Nov 2013 um 07:09
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
 CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessenbindung',
-  `beschreibung` varchar(255) NOT NULL COMMENT 'Bezeichung der Interessenbindung',
+  `beschreibung` varchar(150) NOT NULL COMMENT 'Bezeichung der Interessenbindung',
   `status` enum('deklariert','nicht-deklariert','zutrittsberechtigung') NOT NULL DEFAULT 'deklariert' COMMENT 'Deklariert oder nicht deklariert?',
   `parlamentarier_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Parlamentarier',
-  `bindungsart` enum('mitglied','geschäftsführend','vorstand','exekutiv') DEFAULT 'mitglied' COMMENT 'Art der Bindung',
+  `bindungsart` enum('mitglied','geschäftsführend','vorstand','exekutiv','beirat') DEFAULT 'mitglied' COMMENT 'Art der Bindung',
   `OLD_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe',
   `organisation_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Organisation',
+  `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am',
+  `autorisiert_visa` varchar(10) DEFAULT NULL,
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
@@ -99,15 +103,16 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
 --
 -- Tabellenstruktur für Tabelle `interessengruppe`
 --
--- Erzeugt am: 11. Nov 2013 um 06:38
+-- Erzeugt am: 16. Nov 2013 um 06:48
 --
 
 DROP TABLE IF EXISTS `interessengruppe`;
 CREATE TABLE IF NOT EXISTS `interessengruppe` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessengruppe',
-  `bezeichnung` varchar(255) NOT NULL COMMENT 'Bezeichnung der Interessengruppe',
+  `bezeichnung` varchar(150) NOT NULL COMMENT 'Bezeichnung der Interessengruppe',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung zur Interessengruppe',
   `branche_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Branche',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
@@ -127,7 +132,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
 --
 -- Tabellenstruktur für Tabelle `in_kommission`
 --
--- Erzeugt am: 15. Nov 2013 um 19:43
+-- Erzeugt am: 16. Nov 2013 um 06:33
 --
 
 DROP TABLE IF EXISTS `in_kommission`;
@@ -136,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
   `funktion` enum('präsident','vizepräsident','mitglied','') NOT NULL DEFAULT 'mitglied',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Parlamentariers',
   `kommission_id` int(11) NOT NULL COMMENT 'Fremdschlüssel einer Kommission',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
@@ -158,14 +164,14 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
--- Erzeugt am: 11. Nov 2013 um 06:39
+-- Erzeugt am: 16. Nov 2013 um 06:49
 --
 
 DROP TABLE IF EXISTS `kommission`;
 CREATE TABLE IF NOT EXISTS `kommission` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Kommission',
   `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
-  `name` varchar(120) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
+  `name` varchar(100) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Kommission',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -179,16 +185,19 @@ CREATE TABLE IF NOT EXISTS `kommission` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 12. Nov 2013 um 22:02
+-- Erzeugt am: 16. Nov 2013 um 07:10
 --
 
 DROP TABLE IF EXISTS `mandat`;
 CREATE TABLE IF NOT EXISTS `mandat` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel eines Mandates',
-  `beschreibung` varchar(255) NOT NULL COMMENT 'Umschreibung des Mandates',
+  `beschreibung` varchar(150) NOT NULL COMMENT 'Umschreibung des Mandates',
   `zugangsberechtigung_id` int(11) NOT NULL COMMENT 'Fremschlüssel Zugangsberechtigung',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Lobbyorganisation',
-  `funktion` enum('mitglied','geschäftsführend','vorstand','exekutiv') DEFAULT NULL COMMENT 'Funktion des Mandatsträgers innerhalb der Organisation',
+  `funktion` enum('mitglied','geschäftsführend','vorstand','exekutiv','beirat') DEFAULT NULL,
+  `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am',
+  `autorisiert_visa` varchar(10) DEFAULT NULL,
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
@@ -211,13 +220,13 @@ CREATE TABLE IF NOT EXISTS `mandat` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 15. Nov 2013 um 19:25
+-- Erzeugt am: 16. Nov 2013 um 06:52
 --
 
 DROP TABLE IF EXISTS `organisation`;
 CREATE TABLE IF NOT EXISTS `organisation` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Lobbyorganisation',
-  `name` varchar(255) NOT NULL COMMENT 'Name der Lobbyorganisation',
+  `name` varchar(150) NOT NULL COMMENT 'Name der Lobbyorganisation',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Lobbyorganisation',
   `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe') NOT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Lobbyorganisation',
@@ -226,6 +235,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `bisherige_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL COMMENT 'Bisherige Verbindung der Organisation ins Parlament',
   `OLD_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
@@ -248,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung`
 --
--- Erzeugt am: 15. Nov 2013 um 19:28
+-- Erzeugt am: 16. Nov 2013 um 06:52
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung`;
@@ -257,6 +267,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
   `beziehungsart` enum('mandat für','mitglied von') NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation',
   `organisation_id` int(11) NOT NULL COMMENT 'Beziehung in einer Organisation (Fremdschlüssel)',
   `ziel_organisation_id` int(11) NOT NULL COMMENT 'Zielorganisation',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
@@ -279,15 +290,15 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 15. Nov 2013 um 19:48
+-- Erzeugt am: 16. Nov 2013 um 06:45
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
 CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Parlamentariers',
-  `nachname` varchar(150) NOT NULL COMMENT 'Nachname des Parlamentariers',
-  `vorname` varchar(150) NOT NULL COMMENT 'Vornahme des Parlamentariers',
-  `beruf` varchar(255) NOT NULL COMMENT 'Beruf des Parlamentariers',
+  `nachname` varchar(100) NOT NULL COMMENT 'Nachname des Parlamentariers',
+  `vorname` varchar(50) NOT NULL COMMENT 'Vornahme des Parlamentariers',
+  `beruf` varchar(150) NOT NULL COMMENT 'Beruf des Parlamentariers',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
   `ratstyp` enum('NR','SR') NOT NULL COMMENT 'National- oder Ständerat?',
   `kanton` char(2) NOT NULL COMMENT 'Kantonskürzel',
@@ -295,11 +306,12 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `ALT_partei` varchar(20) NOT NULL COMMENT 'Partei als Text',
   `parteifunktion` enum('mitglied','präsident','vizepräsident','fraktionschef') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
   `ALT_parteifunktion` varchar(255) NOT NULL DEFAULT 'Mitglied' COMMENT 'Parteiamt als Freitext',
-  `im_rat_seit` varchar(4) NOT NULL COMMENT 'Mitglied im Parlament seit',
+  `im_rat_seit` year(4) NOT NULL COMMENT 'Mitglied im Parlament seit',
   `Geburtstag` date DEFAULT NULL COMMENT 'Geburtstag des Parlamentariers',
   `ALT_kommission` varchar(255) NOT NULL COMMENT 'Mitglied in Kommission(en) als Freitext',
   `kleinbild` varchar(80) NOT NULL DEFAULT 'leer.png' COMMENT 'Dateiname des Photos (44x62 px), muss auf Server vorhanden sein oder leer.png',
   `sitzplatz` int(11) NOT NULL COMMENT 'Sitzplatznr im Parlament',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
@@ -322,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
--- Erzeugt am: 11. Nov 2013 um 06:42
+-- Erzeugt am: 16. Nov 2013 um 06:55
 --
 
 DROP TABLE IF EXISTS `partei`;
@@ -330,9 +342,9 @@ CREATE TABLE IF NOT EXISTS `partei` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Partei',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Parteiabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
-  `bemerkung` text COMMENT 'Bemerkung zur Partei',
-  `gruendung` date DEFAULT NULL COMMENT 'Gründungsjahr der Partei',
+  `gruendung` year(4) DEFAULT NULL COMMENT 'Gründungsjahr der Partei',
   `position` enum('links','rechts','mitte','') DEFAULT NULL COMMENT 'Politische Position der Partei',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
@@ -346,19 +358,20 @@ CREATE TABLE IF NOT EXISTS `partei` (
 --
 -- Tabellenstruktur für Tabelle `zugangsberechtigung`
 --
--- Erzeugt am: 12. Nov 2013 um 18:37
+-- Erzeugt am: 16. Nov 2013 um 06:57
 --
 
 DROP TABLE IF EXISTS `zugangsberechtigung`;
 CREATE TABLE IF NOT EXISTS `zugangsberechtigung` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Zugangsberechtigung',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel zu Parlamentarier',
-  `nachname` varchar(160) NOT NULL COMMENT 'Nachname des berechtigten Persion',
-  `vorname` varchar(160) NOT NULL COMMENT 'Vorname der berechtigten Person',
-  `funktion` varchar(255) DEFAULT NULL COMMENT 'Angegebene Funktion bei der Zugangsberechtigung',
-  `beruf` varchar(255) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
+  `nachname` varchar(100) NOT NULL COMMENT 'Nachname des berechtigten Persion',
+  `vorname` varchar(50) NOT NULL COMMENT 'Vorname der berechtigten Person',
+  `funktion` varchar(150) DEFAULT NULL COMMENT 'Angegebene Funktion bei der Zugangsberechtigung',
+  `beruf` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
   `ALT_branche_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zu Branche',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Interessengruppe für den Beruf',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `ALT_lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Lobbyorganisation',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',

@@ -52,11 +52,11 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('name');
             $this->dataset->AddField($field, false);
-            $field = new StringField('bemerkung');
-            $this->dataset->AddField($field, false);
-            $field = new DateField('gruendung');
+            $field = new DateTimeField('gruendung');
             $this->dataset->AddField($field, false);
             $field = new StringField('position');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
             $this->dataset->AddField($field, false);
@@ -121,8 +121,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parteissearch', $this->dataset,
-                array('id', 'abkuerzung', 'name', 'bemerkung', 'gruendung', 'position', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Bemerkung'), $this->RenderText('Gruendung'), $this->RenderText('Position'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'abkuerzung', 'name', 'gruendung', 'position', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Gruendung'), $this->RenderText('Position'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -144,7 +144,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('abkuerzung', $this->RenderText('Abkuerzung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('bemerkung', $this->RenderText('Bemerkung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('gruendung', $this->RenderText('Gruendung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('position', $this->RenderText('Position')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
@@ -265,39 +264,6 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Ausgeschriebener Name der Partei'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for bemerkung field
-            //
-            $column = new TextViewColumn('bemerkung', 'Bemerkung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('bemerkung_handler');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for bemerkung field
-            //
-            $editor = new TextAreaEdit('bemerkung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bemerkung', 'bemerkung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for bemerkung field
-            //
-            $editor = new TextAreaEdit('bemerkung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bemerkung', 'bemerkung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Bemerkung zur Partei'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -539,15 +505,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for bemerkung field
-            //
-            $column = new TextViewColumn('bemerkung', 'Bemerkung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('bemerkung_handler');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
@@ -614,15 +571,6 @@
             $editor->SetSize(100);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for bemerkung field
-            //
-            $editor = new TextAreaEdit('bemerkung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bemerkung', 'bemerkung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -713,15 +661,6 @@
             $editor->SetSize(100);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for bemerkung field
-            //
-            $editor = new TextAreaEdit('bemerkung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bemerkung', 'bemerkung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -827,13 +766,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for bemerkung field
-            //
-            $column = new TextViewColumn('bemerkung', 'Bemerkung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
@@ -899,13 +831,6 @@
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for bemerkung field
-            //
-            $column = new TextViewColumn('bemerkung', 'Bemerkung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1066,48 +991,12 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for bemerkung field
-            //
-            $column = new TextViewColumn('bemerkung', 'Bemerkung', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for bemerkung field
-            //
-            $editor = new TextAreaEdit('bemerkung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bemerkung', 'bemerkung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for bemerkung field
-            //
-            $editor = new TextAreaEdit('bemerkung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bemerkung', 'bemerkung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'bemerkung_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for bemerkung field
-            //
-            $column = new TextViewColumn('bemerkung', 'Bemerkung', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'bemerkung_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }

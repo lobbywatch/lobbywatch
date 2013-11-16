@@ -58,6 +58,12 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion');
             $this->dataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('created_date');
@@ -170,6 +176,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
@@ -215,6 +223,8 @@
             $field = new IntegerField('OLD_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -341,6 +351,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
@@ -393,6 +405,8 @@
             $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
@@ -464,6 +478,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
@@ -522,6 +538,8 @@
             $field = new IntegerField('OLD_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -670,6 +688,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
@@ -728,6 +748,8 @@
             $field = new IntegerField('OLD_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -805,6 +827,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
@@ -863,6 +887,8 @@
             $field = new IntegerField('OLD_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);

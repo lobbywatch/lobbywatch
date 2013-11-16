@@ -72,6 +72,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('created_date');
@@ -183,6 +185,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('OLD_kommission');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -213,6 +217,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -535,6 +541,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('OLD_kommission');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -581,6 +589,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('OLD_kommission');
             $field->SetIsNotNull(true);
@@ -636,6 +646,8 @@
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
@@ -677,6 +689,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -1044,6 +1058,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('OLD_kommission');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1086,6 +1102,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -1249,6 +1267,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('OLD_kommission');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1291,6 +1311,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);

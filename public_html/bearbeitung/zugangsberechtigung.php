@@ -64,6 +64,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
@@ -187,7 +189,7 @@
             $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('im_rat_seit');
+            $field = new DateTimeField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('Geburtstag');
@@ -200,6 +202,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -308,7 +312,7 @@
             $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('im_rat_seit');
+            $field = new DateTimeField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('Geburtstag');
@@ -321,6 +325,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -384,7 +390,7 @@
             $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('im_rat_seit');
+            $field = new DateTimeField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('Geburtstag');
@@ -397,6 +403,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -782,7 +790,7 @@
             $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('im_rat_seit');
+            $field = new DateTimeField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('Geburtstag');
@@ -795,6 +803,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -930,7 +940,7 @@
             $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('im_rat_seit');
+            $field = new DateTimeField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('Geburtstag');
@@ -943,6 +953,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);

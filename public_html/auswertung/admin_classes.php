@@ -1,18 +1,7 @@
 <?php
 
 require_once "../settings/settings.php";
-
-function dc($msg) {
-  if ($debug !== true)
-    return;
-  if (is_array($msg)) {
-    $msg = print_r($msg, true);
-  }
-  print ("<p style='color:red;'>$msg</p>") ;
-}
-function dcXXX($msg) {
-  // Disabled debug comment: do nothing
-}
+require_once "../common/utils.php";
 
 // phpinfo();
 /**
@@ -179,7 +168,7 @@ class Parlamentarier {
 
     /* $sql="SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,a.partei,a.parteifunktion,a.im_rat_seit,a.kommission,a.kleinbild,b.beschreibung,b.id, b.status,c.name FROM parlamentarier a ,interessenbindung b ,branche c WHERE a.id=b.id AND b.id=c.id AND a.nachname LIKE '$name%' ORDER BY c.name"; */
     $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,a.partei,a.parteifunktion,a.im_rat_seit,a.kommission,a.kleinbild FROM parlamentarier a WHERE a.nachname LIKE '$name%' ORDER BY a.nachname";
-    dc($sql);
+    dt($sql);
     $einzelParlam = $this->db->query ( $sql );
     $erg = $einzelParlam->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
@@ -193,7 +182,7 @@ class Parlamentarier {
   // Interessenbindungen nach id des Parlamentariers finden
   function ibEinzelparlamentarier($idparl) {
     $sql = "SELECT a.beschreibung,a.id,a.status,b.name FROM interessenbindung a, branche b WHERE a.branche_id=b.id AND a.parlamentarier_id='$idparl' ORDER BY  b.name";
-    dc($sql);
+    dt($sql);
     $ibparl = $this->db->query ( $sql );
     $erg = $ibparl->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
@@ -313,7 +302,7 @@ class Parlamentarier {
   function zugangsberechtigung($id) { // $name
                                         // Quelle f&uuml;r solche SQLs:http://aktuell.de.selfhtml.org/artikel/datenbanken/fortgeschrittene-joins/mehrfachjoin2.htm
     $sql = "SELECT p.nachname,p.vorname,zugangsberechtigung.nachname,zugangsberechtigung.vorname,funktion,zugangsberechtigung.id,name FROM parlamentarier p INNER JOIN (zugangsberechtigung LEFT JOIN branche ON branche.id=zugangsberechtigung.branche_id) ON p.id=zugangsberechtigung.parlamentarier_id  WHERE p.id='$id' ORDER BY p.nachname,name";
-    dc($sql);
+    dt($sql);
     $zugang = $this->db->query ( $sql );
     $erg = $zugang->fetchAll ( PDO::FETCH_ASSOC );
     if (count ( $erg ) > 0) {
@@ -649,7 +638,7 @@ if ((isset ( $_POST ['parlamname'] ) and strlen ( utf8_decode ( $_POST ['parlamn
         $ibn [] = $wert ['beschreibung'] . ' Bereich: ' . $wert ['name'] . "<img src='./icons/mouseclick_mini.jpg' />";
         $lorgnrn [] = $wert ['id'];
       } else {
-        dc($wert);
+        dt($wert);
       }
     }
     // print_r($ib);//OK

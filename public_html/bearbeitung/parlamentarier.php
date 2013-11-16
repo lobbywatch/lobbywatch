@@ -75,7 +75,7 @@
             $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new StringField('im_rat_seit');
+            $field = new DateTimeField('im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new DateField('Geburtstag');
@@ -88,6 +88,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
             $this->dataset->AddField($field, false);
@@ -180,7 +182,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kanton', $this->RenderText('Kanton')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('partei_id', $this->RenderText('Partei Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parteifunktion', $this->RenderText('Parteifunktion')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kleinbild', $this->RenderText('Kleinbild')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));

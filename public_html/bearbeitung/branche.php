@@ -58,6 +58,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $this->dataset->AddField($field, false);
             $field = new StringField('OLD_kommission');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
