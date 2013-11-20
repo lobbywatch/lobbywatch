@@ -31,7 +31,10 @@ include_once 'common/build_date.php';
   </p>
   <p>
     <a href="/lobbycontrol_er.pdf">Datenmodell (PDF)</a><br/>
-    <a href="https://github.com/scito/lobbycontrol/wiki/Wertebereiche">Wertebereiche auf Wiki</a><br/>
+    <a href="/wiki/tiki-index.php?page=Wertebereiche&structure=Lobbycontrol-Wiki">Wertebereiche auf Wiki</a><br/>
+  </p>
+  <p>
+    <a href="/wiki">Wiki</a><br/>
   </p>
   <footer><p>Build date: <?php print $build_date;?></p></footer>
   </body>
