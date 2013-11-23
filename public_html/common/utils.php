@@ -1,6 +1,7 @@
 <?php
 
 function dt($msg) {
+  global $debug;
   if ($debug !== true)
     return;
   if (is_array($msg)) {
