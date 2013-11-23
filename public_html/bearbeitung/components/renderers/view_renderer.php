@@ -173,6 +173,7 @@ class DeleteRenderer extends Renderer
         $Grid->GetDataset()->Open();
 
         $Row = array();
+        $hiddenValues = '';
         if($Grid->GetDataset()->Next())
         {
             foreach($Grid->GetSingleRecordViewColumns() as $column)

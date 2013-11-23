@@ -1,7 +1,10 @@
 <?php
 
-require_once 'components/grid/vertical_grid.php';
-require_once 'components/grid/record_card_view.php';
+// require_once 'components/grid/vertical_grid.php';
+// require_once 'components/grid/record_card_view.php';
+
+include_once dirname(__FILE__) . '/' . 'vertical_grid.php';
+include_once dirname(__FILE__) . '/' . 'record_card_view.php';
 
 class InlineGridViewHandler extends HTTPHandler
 {

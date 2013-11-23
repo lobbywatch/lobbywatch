@@ -1,11 +1,19 @@
 <?php
 
-require_once 'components/renderers/renderer.php';
-require_once 'components/component.php';
-require_once 'components/editors/editors.php';
-require_once 'components/editors/multilevel_selection.php';
-require_once 'components/filter_builder.php';
-require_once 'components/utils/array_utils.php';
+// require_once 'components/renderers/renderer.php';
+// require_once 'components/component.php';
+// require_once 'components/editors/editors.php';
+// require_once 'components/editors/multilevel_selection.php';
+// require_once 'components/filter_builder.php';
+// require_once 'components/utils/array_utils.php';
+
+include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
+include_once dirname(__FILE__) . '/' . '../component.php';
+include_once dirname(__FILE__) . '/' . '../editors/editors.php';
+include_once dirname(__FILE__) . '/' . '../editors/multilevel_selection.php';
+include_once dirname(__FILE__) . '/' . '../filter_builder.php';
+include_once dirname(__FILE__) . '/' . '../utils/array_utils.php';
+
 include_once dirname(__FILE__) . '/' . 'quick_filter.php';
 include_once dirname(__FILE__) . '/' . 'grid_state.php';
 include_once dirname(__FILE__) . '/' . 'commit_values_grid_state.php';
@@ -1799,7 +1807,10 @@ class Grid {
                         $column->GetName();
 
                     $searchColumn = null;
-                    if ($column instanceof CustomDatasetFieldViewColumn || $column instanceof CustomFormatValueViewColumnDecorator || $column instanceof ImageViewColumn) {
+                    if ($column instanceof CustomDatasetFieldViewColumn ||
+                        $column instanceof CustomFormatValueViewColumnDecorator ||
+                        $column instanceof ImageViewColumn)
+                    {
                         $searchColumn = $advancedSearch->FindSearchColumnByName($columnName);
                     }
 
@@ -1844,6 +1855,8 @@ class Grid {
                     $result['Columns'][$column->GetName()] = $searchColumnViewData;
                 }
             }
+
+            $result['TimerInterval'] = $advancedSearch->getTimerInterval();
 
 
             $tempArray = array();

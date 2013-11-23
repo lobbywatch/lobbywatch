@@ -189,9 +189,9 @@ class FilterConditionGenerator {
             if ($value === '' && $this->field->FieldType == ftNumber)
             {
                 if ($filter->GetFilterType() == '=')
-                    $this->resultCondition = $this->engCommandImp->GetIsNullCoditition($this->engCommandImp->GetFieldFullName($this->field));
+                    $this->resultCondition = $this->engCommandImp->GetIsNullConditition($this->engCommandImp->GetFieldFullName($this->field));
                 elseif($filter->GetFilterType() == '<>')
-                    $this->resultCondition = sprintf('NOT (%s)', $this->engCommandImp->GetIsNullCoditition($this->engCommandImp->GetFieldFullName($this->field)));
+                    $this->resultCondition = sprintf('NOT (%s)', $this->engCommandImp->GetIsNullConditition($this->engCommandImp->GetFieldFullName($this->field)));
             }
             elseif (isset($value))
             {
@@ -220,9 +220,9 @@ class FilterConditionGenerator {
             else
             {
                 if ($filter->GetFilterType() == '=')
-                    $this->resultCondition = $this->engCommandImp->GetIsNullCoditition($this->engCommandImp->GetFieldFullName($this->field));
+                    $this->resultCondition = $this->engCommandImp->GetIsNullConditition($this->engCommandImp->GetFieldFullName($this->field));
                 elseif($filter->GetFilterType() == '<>')
-                    $this->resultCondition = sprintf('NOT (%s)', $this->engCommandImp->GetIsNullCoditition($this->engCommandImp->GetFieldFullName($this->field)));
+                    $this->resultCondition = sprintf('NOT (%s)', $this->engCommandImp->GetIsNullConditition($this->engCommandImp->GetFieldFullName($this->field)));
             }
         }
 
@@ -266,7 +266,7 @@ class FilterConditionGenerator {
 
     public function VisitIsNullFieldFilter($filter)
     {
-        $this->resultCondition = $this->engCommandImp->GetIsNullCoditition(
+        $this->resultCondition = $this->engCommandImp->GetIsNullConditition(
                 $this->engCommandImp->GetFieldFullName($this->field));
     }
 }
@@ -758,7 +758,7 @@ class EngCommandImp
             $this->GetFieldFullName($joinInfo->Field));
     }
 
-    public function GetIsNullCoditition($fieldName)
+    public function GetIsNullConditition($fieldName)
     {
         return $fieldName . ' IS NULL';
     }
@@ -881,6 +881,10 @@ class EngCommandImp
         $connection->ExecSQL($command->GetSQL());
     }
 
+    /**
+     * @param BaseSelectCommand $command
+     * @return string
+     */
     public function GetAfterSelectSQL($command)
     {
         return '';

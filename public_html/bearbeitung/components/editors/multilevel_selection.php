@@ -1,11 +1,18 @@
 <?php
 
-require_once 'components/renderers/renderer.php';
-require_once 'components/editors/editors.php';
-require_once 'components/dataset/dataset.php';
-require_once 'components/common.php';
-require_once 'components/utils/system_utils.php';
-require_once 'components/superglobal_wrapper.php';
+include_once dirname(__FILE__) . '/' . '../renderers/renderer.php';
+include_once dirname(__FILE__) . '/' . 'editors.php';
+include_once dirname(__FILE__) . '/' . '../dataset/dataset.php';
+include_once dirname(__FILE__) . '/' . '../common.php';
+include_once dirname(__FILE__) . '/' . '../utils/system_utils.php';
+include_once dirname(__FILE__) . '/' . '../superglobal_wrapper.php';
+
+// require_once 'components/renderers/renderer.php';
+// require_once 'components/editors/editors.php';
+// require_once 'components/dataset/dataset.php';
+// require_once 'components/common.php';
+// require_once 'components/utils/system_utils.php';
+// require_once 'components/superglobal_wrapper.php';
 
 class ForeignKeyInfo
 {

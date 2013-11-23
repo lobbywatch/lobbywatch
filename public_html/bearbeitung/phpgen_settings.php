@@ -18,7 +18,7 @@ require_once dirname(__FILE__) . "/../common/utils.php";
 set_include_path('.' . PATH_SEPARATOR . get_include_path());
 
 
-require_once 'components/utils/system_utils.php';
+include_once dirname(__FILE__) . '/' . 'components/utils/system_utils.php';
 
 //  SystemUtils::DisableMagicQuotesRuntime();
 
@@ -66,7 +66,7 @@ function GetPagesFooter(){
 Build date: ' . "$build_date" . ''; 
     }
 
-function ApplyCommonPageSettings($page, $grid)
+function ApplyCommonPageSettings(Page $page, Grid $grid)
 {
     $page->SetShowUserAuthBar(true);
     $grid->BeforeUpdateRecord->AddListener('Global_BeforeUpdateHandler');

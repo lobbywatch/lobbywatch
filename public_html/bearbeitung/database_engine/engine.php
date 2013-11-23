@@ -91,6 +91,11 @@ interface IEngConnection {
      * @return string
      */
     function LastError();
+
+    /**
+     * @return void
+     */
+    function commitTransaction();
 }
 
 abstract class ConnectionFactory {
@@ -320,12 +325,14 @@ abstract class EngConnection implements IEngConnection {
     }
 
     public function ExecSQL($sql) {
+        // echo $sql . '<br>';
         if (!$this->DoExecSQL($sql)) {
             throw new SMSQLException('Cannot execute SQL: ' . $sql . "\n" . $this->LastError());
         }
     }
 
     public function ExecSQLEx($sql) {
+        // echo $sql . '<br>';
         if (!$this->DoExecSQL($sql))
             throw new SMSQLException('Cannot execute SQL: ' . $sql . "\n" . $this->LastError());
     }
@@ -406,6 +413,8 @@ abstract class EngConnection implements IEngConnection {
     public function GetServerVersion() {
         return $this->serverVersion;
     }
+
+    public function commitTransaction() {/* nothing here */}
 }
 
 abstract class EngDataReader {

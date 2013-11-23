@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 16. Nov 2013 um 08:14
+-- Erstellungszeit: 23. Nov 2013 um 15:21
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -28,18 +28,17 @@ USE `lobbycontrol`;
 --
 -- Tabellenstruktur für Tabelle `branche`
 --
--- Erzeugt am: 16. Nov 2013 um 06:52
+-- Erzeugt am: 23. Nov 2013 um 13:10
 --
 
 DROP TABLE IF EXISTS `branche`;
 CREATE TABLE IF NOT EXISTS `branche` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Branche',
-  `name` varchar(255) NOT NULL COMMENT 'Name der Branche, z.B. Gesundheit, Energie',
+  `name` varchar(100) NOT NULL COMMENT 'Name der Branche, z.B. Gesundheit, Energie',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
-  `angaben` text NOT NULL COMMENT 'Angaben zur Branche',
+  `angaben` text COMMENT 'Angaben zur Branche',
   `kommission_id` int(11) DEFAULT NULL COMMENT 'Zusändige Kommission im Parlament',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
-  `OLD_kommission` varchar(255) NOT NULL COMMENT 'Kommission im Parlament (Kommissionsabkürzung)',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
@@ -59,19 +58,17 @@ CREATE TABLE IF NOT EXISTS `branche` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 16. Nov 2013 um 07:09
+-- Erzeugt am: 23. Nov 2013 um 13:30
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
 CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessenbindung',
   `beschreibung` varchar(150) NOT NULL COMMENT 'Bezeichung der Interessenbindung',
-  `status` enum('deklariert','nicht-deklariert','zutrittsberechtigung') NOT NULL DEFAULT 'deklariert' COMMENT 'Deklariert oder nicht deklariert?',
-  `parlamentarier_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Parlamentarier',
-  `bindungsart` enum('mitglied','geschäftsführend','vorstand','exekutiv','beirat') DEFAULT 'mitglied' COMMENT 'Art der Bindung',
-  `OLD_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
-  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe',
-  `organisation_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Organisation',
+  `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Deklariert oder nicht deklariert?',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
+  `art` enum('mitglied','geschäftsführend','vorstand','tätig','beirat') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Bindung',
+  `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am',
   `autorisiert_visa` varchar(10) DEFAULT NULL,
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -81,19 +78,13 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   KEY `idx_parlam` (`parlamentarier_id`),
-  KEY `idx_lobbytyp` (`OLD_branche_id`),
-  KEY `idx_lobbygroup` (`interessengruppe_id`),
   KEY `idx_lobbyorg` (`organisation_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=337 ;
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung`:
---   `interessengruppe_id`
---       `interessengruppe` -> `id`
 --   `organisation_id`
 --       `organisation` -> `id`
---   `OLD_branche_id`
---       `branche` -> `id`
 --   `parlamentarier_id`
 --       `parlamentarier` -> `id`
 --
@@ -185,16 +176,16 @@ CREATE TABLE IF NOT EXISTS `kommission` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 16. Nov 2013 um 07:10
+-- Erzeugt am: 23. Nov 2013 um 12:47
 --
 
 DROP TABLE IF EXISTS `mandat`;
 CREATE TABLE IF NOT EXISTS `mandat` (
+  `art` enum('mitglied','geschäftsführend','vorstand','tätig','beirat') DEFAULT NULL COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel eines Mandates',
   `beschreibung` varchar(150) NOT NULL COMMENT 'Umschreibung des Mandates',
   `zugangsberechtigung_id` int(11) NOT NULL COMMENT 'Fremschlüssel Zugangsberechtigung',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Lobbyorganisation',
-  `funktion` enum('mitglied','geschäftsführend','vorstand','exekutiv','beirat') DEFAULT NULL,
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am',
   `autorisiert_visa` varchar(10) DEFAULT NULL,
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -206,6 +197,12 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   KEY `zugangsberechtigung_id` (`zugangsberechtigung_id`),
   KEY `organisations_id` (`organisation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=1 ;
+
+--
+-- MIME TYPEN DER TABELLE `mandat`:
+--   `art`
+--       `Application_Octetstream`
+--
 
 --
 -- RELATIONEN DER TABELLE `mandat`:
@@ -220,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `mandat` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 16. Nov 2013 um 06:52
+-- Erzeugt am: 23. Nov 2013 um 14:18
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -228,12 +225,12 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Lobbyorganisation',
   `name` varchar(150) NOT NULL COMMENT 'Name der Lobbyorganisation',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Lobbyorganisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe') NOT NULL COMMENT 'Rechtsform der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe') NOT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Lobbyorganisation',
   `url` varchar(255) NOT NULL COMMENT 'Link zur Webseite',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilnahme an Vernehmlassungen',
-  `bisherige_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL COMMENT 'Bisherige Verbindung der Organisation ins Parlament',
-  `OLD_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
+  `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL COMMENT 'Bisherige Verbindung der Organisation ins Parlament',
+  `ALT_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
@@ -241,15 +238,15 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
-  KEY `idx_lobbytyp` (`OLD_branche_id`),
+  KEY `idx_lobbytyp` (`ALT_branche_id`),
   KEY `idx_lobbygroup` (`interessengruppe_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=349 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=351 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation`:
 --   `interessengruppe_id`
 --       `interessengruppe` -> `id`
---   `OLD_branche_id`
+--   `ALT_branche_id`
 --       `branche` -> `id`
 --
 
@@ -290,7 +287,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 16. Nov 2013 um 06:45
+-- Erzeugt am: 23. Nov 2013 um 14:06
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -303,9 +300,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `ratstyp` enum('NR','SR') NOT NULL COMMENT 'National- oder Ständerat?',
   `kanton` char(2) NOT NULL COMMENT 'Kantonskürzel',
   `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei',
-  `ALT_partei` varchar(20) NOT NULL COMMENT 'Partei als Text',
-  `parteifunktion` enum('mitglied','präsident','vizepräsident','fraktionschef') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
-  `ALT_parteifunktion` varchar(255) NOT NULL DEFAULT 'Mitglied' COMMENT 'Parteiamt als Freitext',
+  `parteifunktion` set('mitglied','präsident','vizepräsident','fraktionschef') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
   `im_rat_seit` year(4) NOT NULL COMMENT 'Mitglied im Parlament seit',
   `Geburtstag` date DEFAULT NULL COMMENT 'Geburtstag des Parlamentariers',
   `ALT_kommission` varchar(255) NOT NULL COMMENT 'Mitglied in Kommission(en) als Freitext',
@@ -351,14 +346,14 @@ CREATE TABLE IF NOT EXISTS `partei` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `pt_name` (`abkuerzung`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `zugangsberechtigung`
 --
--- Erzeugt am: 16. Nov 2013 um 06:57
+-- Erzeugt am: 23. Nov 2013 um 14:16
 --
 
 DROP TABLE IF EXISTS `zugangsberechtigung`;
@@ -369,7 +364,6 @@ CREATE TABLE IF NOT EXISTS `zugangsberechtigung` (
   `vorname` varchar(50) NOT NULL COMMENT 'Vorname der berechtigten Person',
   `funktion` varchar(150) DEFAULT NULL COMMENT 'Angegebene Funktion bei der Zugangsberechtigung',
   `beruf` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
-  `ALT_branche_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zu Branche',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Interessengruppe für den Beruf',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `ALT_lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Lobbyorganisation',
@@ -379,7 +373,6 @@ CREATE TABLE IF NOT EXISTS `zugangsberechtigung` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   KEY `idx_parlam` (`parlamentarier_id`),
-  KEY `idx_lobbytyp` (`ALT_branche_id`),
   KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=63 ;
@@ -390,8 +383,6 @@ CREATE TABLE IF NOT EXISTS `zugangsberechtigung` (
 --       `interessengruppe` -> `id`
 --   `ALT_lobbyorganisation_id`
 --       `organisation` -> `id`
---   `ALT_branche_id`
---       `branche` -> `id`
 --   `parlamentarier_id`
 --       `parlamentarier` -> `id`
 --
@@ -410,9 +401,7 @@ ALTER TABLE `branche`
 -- Constraints der Tabelle `interessenbindung`
 --
 ALTER TABLE `interessenbindung`
-  ADD CONSTRAINT `fk_ib_lobbygroup` FOREIGN KEY (`interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
-  ADD CONSTRAINT `fk_ib_lobbyorg` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
-  ADD CONSTRAINT `fk_ib_lobbytyp` FOREIGN KEY (`OLD_branche_id`) REFERENCES `branche` (`id`),
+  ADD CONSTRAINT `fk_ib_org` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
   ADD CONSTRAINT `fk_ib_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
 
 --
@@ -440,7 +429,7 @@ ALTER TABLE `mandat`
 --
 ALTER TABLE `organisation`
   ADD CONSTRAINT `fk_lo_lg` FOREIGN KEY (`interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
-  ADD CONSTRAINT `fk_lo_lt` FOREIGN KEY (`OLD_branche_id`) REFERENCES `branche` (`id`);
+  ADD CONSTRAINT `fk_lo_lt` FOREIGN KEY (`ALT_branche_id`) REFERENCES `branche` (`id`);
 
 --
 -- Constraints der Tabelle `organisation_beziehung`
@@ -462,7 +451,6 @@ ALTER TABLE `parlamentarier`
 ALTER TABLE `zugangsberechtigung`
   ADD CONSTRAINT `fk_zb_lg` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
   ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY (`ALT_lobbyorganisation_id`) REFERENCES `organisation` (`id`),
-  ADD CONSTRAINT `fk_zb_lt` FOREIGN KEY (`ALT_branche_id`) REFERENCES `branche` (`id`),
   ADD CONSTRAINT `fk_zb_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
 SET FOREIGN_KEY_CHECKS=1;
 

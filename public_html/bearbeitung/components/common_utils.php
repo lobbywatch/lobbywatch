@@ -1,7 +1,10 @@
 <?php
 
-require_once 'utils/string_utils.php';
-require_once 'utils/dataset_utils.php';
+// require_once 'utils/string_utils.php';
+// require_once 'utils/dataset_utils.php';
+
+include_once dirname(__FILE__) . '/' . 'utils/string_utils.php';
+include_once dirname(__FILE__) . '/' . 'utils/dataset_utils.php';
 
 // TODO : move to dataset utils
 function FormatDatasetFieldsTemplate($dataset, $template)
@@ -14,6 +17,10 @@ function ApplyVarablesMapToTemplate($template, $varArray)
     return StringUtils::ApplyVarablesMapToTemplate($template, $varArray);
 }
 
+/**
+ * @param Exception $exception
+ * @return string
+ */
 function FormatExceptionTrace($exception)
 {
     return '<pre>'.$exception->getTraceAsString().'</pre>';
@@ -22,7 +29,7 @@ function FormatExceptionTrace($exception)
 define('METHOD_POST', 1); // deprectated
 define('METHOD_GET', 2); // deprectated
 
-// TODO : deprectated function, use the SuperGlobals 
+// TODO : deprecated function, use the SuperGlobals
 function ExtractInputValue($name, $method = METHOD_GET)
 {
     $result = null;
@@ -74,6 +81,11 @@ function AddPrimaryKeyParametersToArray(&$targetArray, $primaryKeyValues)
     }
 }
 
+/**
+ * @param LinkBuilder $linkBuilder
+ * @param array $PrimaryKeyValues
+ * @return string
+ */
 function AddPrimaryKeyParameters($linkBuilder, $PrimaryKeyValues)
 {
     $KeyValueList = '';

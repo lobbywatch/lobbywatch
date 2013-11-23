@@ -1,8 +1,12 @@
 <?php
 
-require_once 'components/grid/grid.php';
-require_once 'components/utils/file_utils.php';
-require_once 'components/utils/html_utils.php';
+// require_once 'components/grid/grid.php';
+// require_once 'components/utils/file_utils.php';
+// require_once 'components/utils/html_utils.php';
+
+include_once dirname(__FILE__) . '/' . '../grid/grid.php';
+include_once dirname(__FILE__) . '/' . '../utils/file_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/html_utils.php';
 
 abstract class Renderer
 {
@@ -20,6 +24,9 @@ abstract class Renderer
         header('Cache-Control: max-age=0');
     }
 
+    /**
+     * @param Page $page
+     */
     protected function SetHTTPContentTypeByPage($page)  {
         $headerString = 'Content-Type: text/html';
         if ($page->GetContentEncoding() != null)
@@ -244,6 +251,9 @@ abstract class Renderer
         $this->result = $control->GetHtml();
     }
 
+    /**
+     * @param Hyperlink $hyperLink
+     */
     public function RenderHyperLink($hyperLink)  {
         $this->result = sprintf('<a href="%s">%s</a>%s', $hyperLink->GetLink(), $hyperLink->GetInnerText(), $hyperLink->GetAfterLinkText());
     }
@@ -339,7 +349,10 @@ abstract class Renderer
             $this->result = $value;
     }
 
-    public function RenderTextViewColumn($column) 
+    /**
+     * @param TextViewColumn $column
+     */
+    public function RenderTextViewColumn($column)
     {
         $value = $column->GetValue();
         $dataset = $column->GetDataset();
@@ -512,7 +525,10 @@ abstract class Renderer
 
     #region Pages
 
-    public function RenderPageNavigator($Page) { }
+    /**
+     * @param PageNavigator $PageNavigator
+     */
+    public function RenderPageNavigator($PageNavigator) { }
 
     public abstract function RenderPage(Page $Page);
 
@@ -552,6 +568,9 @@ abstract class Renderer
                 );
     }
 
+    /**
+     * @param DetailPageEdit $DetailPage
+     */
     public function RenderDetailPageEdit($DetailPage) { }
 
     public function RenderLoginPage($loginPage)  {

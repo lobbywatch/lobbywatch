@@ -1,10 +1,16 @@
 <?php
 
-require_once 'components/component.php';
-require_once 'components/utils/file_utils.php';
-require_once 'components/utils/string_utils.php';
-require_once 'components/utils/html_utils.php';
-require_once 'components/editors/validators.php';
+include_once dirname(__FILE__) . '/' . '../component.php';
+include_once dirname(__FILE__) . '/' . '../utils/file_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/string_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/html_utils.php';
+include_once dirname(__FILE__) . '/' . 'validators.php';
+
+// require_once 'components/component.php';
+// require_once 'components/utils/file_utils.php';
+// require_once 'components/utils/string_utils.php';
+// require_once 'components/utils/html_utils.php';
+// require_once 'components/editors/validators.php';
 
 
 /**

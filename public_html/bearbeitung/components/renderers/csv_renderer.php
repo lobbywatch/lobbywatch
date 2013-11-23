@@ -1,7 +1,10 @@
 <?php
 
-require_once 'renderer.php';
-require_once 'components/utils/file_utils.php';
+// require_once 'renderer.php';
+// require_once 'components/utils/file_utils.php';
+
+include_once dirname(__FILE__) . '/' . 'renderer.php';
+include_once dirname(__FILE__) . '/' . '../utils/file_utils.php';
 
 class CsvRenderer extends Renderer
 {

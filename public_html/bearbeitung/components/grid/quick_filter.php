@@ -1,6 +1,7 @@
 <?php
 
-require_once 'components/superglobal_wrapper.php';
+// require_once 'components/superglobal_wrapper.php';
+include_once dirname(__FILE__) . '/' . '../superglobal_wrapper.php';
 
 class QuickFilter {
     /** @var string */

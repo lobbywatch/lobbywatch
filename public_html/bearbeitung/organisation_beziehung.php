@@ -143,6 +143,7 @@
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('organisation_beziehungasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
+            $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beziehungsart', $this->RenderText('Beziehungsart')));
             
@@ -171,10 +172,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -217,10 +218,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -358,10 +359,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -419,10 +420,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -489,10 +490,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -550,10 +551,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -871,10 +872,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -930,10 +931,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -1055,10 +1056,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -1114,10 +1115,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);

@@ -4,8 +4,9 @@ include_once dirname(__FILE__) . '/' . '../../database_engine/filterable.php';
 include_once dirname(__FILE__) . '/' . '../../database_engine/insert_command.php';
 include_once dirname(__FILE__) . '/' . '../../database_engine/delete_command.php';
 include_once dirname(__FILE__) . '/' . '../../database_engine/update_command.php';
-require_once dirname(__FILE__) . '/' . '../common_utils.php';
-require_once dirname(__FILE__) . '/' . '../utils/array_utils.php';
+include_once dirname(__FILE__) . '/' . '../common_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/array_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/system_utils.php';
 
 abstract class Field {
     private $name;

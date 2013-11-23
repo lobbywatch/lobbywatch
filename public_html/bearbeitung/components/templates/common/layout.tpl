@@ -25,6 +25,13 @@
     {else}
         <script type="text/javascript" src="components/js/require.js"></script>
     {/if}
+
+    <script>{literal}
+        require(['pgui.layout'], function(layout_manager){
+            layout_manager.fixLayout();
+        });
+    {/literal}</script>
+
     {if $App}
     <script>{$App.ValidationScripts}</script>
     {/if}
@@ -40,7 +47,7 @@
             {/if}
 
         {if $Authentication.Enabled}
-            <ul class="nav pull-right">
+            <ul id="login-panel" class="nav pull-right">
                 <li class="active">
                     <a href="#" onclick="return false;" style="cursor: default;">
                         <i class="pg-icon-user"></i>

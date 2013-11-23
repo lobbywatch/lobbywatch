@@ -1,7 +1,10 @@
 <?php
 
-require_once 'components/utils/system_utils.php';
-require_once 'components/utils/string_utils.php';
+// require_once 'components/utils/system_utils.php';
+// require_once 'components/utils/string_utils.php';
+
+include_once dirname(__FILE__) . '/' . 'utils/system_utils.php';
+include_once dirname(__FILE__) . '/' . 'utils/string_utils.php';
 
 
 class GenericFilterSQLGenerator {

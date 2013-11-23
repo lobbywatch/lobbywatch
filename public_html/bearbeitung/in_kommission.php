@@ -143,6 +143,7 @@
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('in_kommissionasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
+            $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
             
@@ -172,13 +173,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ALT_partei');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('im_rat_seit');
@@ -363,13 +358,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ALT_partei');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('im_rat_seit');
@@ -441,13 +430,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ALT_partei');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('im_rat_seit');
@@ -876,13 +859,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ALT_partei');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('im_rat_seit');
@@ -1062,13 +1039,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ALT_partei');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('im_rat_seit');

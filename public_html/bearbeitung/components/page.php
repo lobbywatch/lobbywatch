@@ -3,53 +3,94 @@
 
 
 
-require_once 'libs/smartylibs/Smarty.class.php';
+// require_once 'libs/smartylibs/Smarty.class.php';
+include_once dirname(__FILE__) . '/' . '../libs/smartylibs/Smarty.class.php';
 
-require_once 'database_engine/insert_command.php';
-require_once 'database_engine/update_command.php';
-require_once 'database_engine/select_command.php';
-require_once 'database_engine/delete_command.php';
+// require_once 'database_engine/insert_command.php';
+// require_once 'database_engine/update_command.php';
+// require_once 'database_engine/select_command.php';
+// require_once 'database_engine/delete_command.php';
+include_once dirname(__FILE__) . '/' . '../database_engine/insert_command.php';
+include_once dirname(__FILE__) . '/' . '../database_engine/update_command.php';
+include_once dirname(__FILE__) . '/' . '../database_engine/select_command.php';
+include_once dirname(__FILE__) . '/' . '../database_engine/delete_command.php';
 
-require_once 'captions.php';
-require_once 'env_variables.php';
+// require_once 'captions.php';
+// require_once 'env_variables.php';
+include_once dirname(__FILE__) . '/' . 'captions.php';
+include_once dirname(__FILE__) . '/' . 'env_variables.php';
 
-require_once 'grid/grid.php';
-require_once 'grid/columns.php';
-require_once 'grid/operation_columns.php';
-require_once 'grid/edit_columns.php';
+// require_once 'grid/grid.php';
+// require_once 'grid/columns.php';
+// require_once 'grid/operation_columns.php';
+// require_once 'grid/edit_columns.php';
+include_once dirname(__FILE__) . '/' . 'grid/grid.php';
+include_once dirname(__FILE__) . '/' . 'grid/columns.php';
+include_once dirname(__FILE__) . '/' . 'grid/operation_columns.php';
+include_once dirname(__FILE__) . '/' . 'grid/edit_columns.php';
 
-require_once 'dataset/dataset.php';
-require_once 'dataset/table_dataset.php';
-require_once 'dataset/query_dataset.php';
+// require_once 'dataset/dataset.php';
+// require_once 'dataset/table_dataset.php';
+// require_once 'dataset/query_dataset.php';
+include_once dirname(__FILE__) . '/' . 'dataset/dataset.php';
+include_once dirname(__FILE__) . '/' . 'dataset/table_dataset.php';
+include_once dirname(__FILE__) . '/' . 'dataset/query_dataset.php';
 
-require_once 'renderers/renderer.php';
-require_once 'renderers/edit_renderer.php';
-require_once 'renderers/list_renderer.php';
-require_once 'renderers/view_renderer.php';
-require_once 'renderers/print_renderer.php';
-require_once 'renderers/insert_renderer.php';
-require_once 'renderers/excel_renderer.php';
-require_once 'renderers/word_renderer.php';
-require_once 'renderers/xml_renderer.php';
-require_once 'renderers/csv_renderer.php';
-require_once 'renderers/pdf_renderer.php';
-require_once 'renderers/inline_operation_renderers.php';
-require_once 'renderers/rss_renderer.php';
+// require_once 'renderers/renderer.php';
+// require_once 'renderers/edit_renderer.php';
+// require_once 'renderers/list_renderer.php';
+// require_once 'renderers/view_renderer.php';
+// require_once 'renderers/print_renderer.php';
+// require_once 'renderers/insert_renderer.php';
+// require_once 'renderers/excel_renderer.php';
+// require_once 'renderers/word_renderer.php';
+// require_once 'renderers/xml_renderer.php';
+// require_once 'renderers/csv_renderer.php';
+// require_once 'renderers/pdf_renderer.php';
+// require_once 'renderers/inline_operation_renderers.php';
+// require_once 'renderers/rss_renderer.php';
 
-require_once 'common.php';
-require_once 'page.php';
-require_once 'page_navigator.php';
-require_once 'simple_search_control.php';
-require_once 'advanced_search_page.php';
-require_once 'page_list.php';
-require_once 'dataset_rss_generator.php';
-require_once 'error_utils.php';
-require_once 'superglobal_wrapper.php';
-require_once 'utils/array_utils.php';
+include_once dirname(__FILE__) . '/' . 'renderers/renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderers/edit_renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderers/list_renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderers/view_renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderers/print_renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderers/insert_renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderers/excel_renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderers/word_renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderers/xml_renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderers/csv_renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderers/pdf_renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderers/inline_operation_renderers.php';
+include_once dirname(__FILE__) . '/' . 'renderers/rss_renderer.php';
 
-require_once 'security/security_info.php';
+// require_once 'common.php';
+// require_once 'page.php';
+// require_once 'page_navigator.php';
+// require_once 'simple_search_control.php';
+// require_once 'advanced_search_page.php';
+// require_once 'page_list.php';
+// require_once 'dataset_rss_generator.php';
+// require_once 'error_utils.php';
+// require_once 'superglobal_wrapper.php';
+// require_once 'utils/array_utils.php';
 
-require_once 'application.php';
+include_once dirname(__FILE__) . '/' . 'common.php';
+include_once dirname(__FILE__) . '/' . 'page.php';
+include_once dirname(__FILE__) . '/' . 'page_navigator.php';
+include_once dirname(__FILE__) . '/' . 'simple_search_control.php';
+include_once dirname(__FILE__) . '/' . 'advanced_search_page.php';
+include_once dirname(__FILE__) . '/' . 'page_list.php';
+include_once dirname(__FILE__) . '/' . 'dataset_rss_generator.php';
+include_once dirname(__FILE__) . '/' . 'error_utils.php';
+include_once dirname(__FILE__) . '/' . 'superglobal_wrapper.php';
+include_once dirname(__FILE__) . '/' . 'utils/array_utils.php';
+
+// require_once 'security/security_info.php';
+include_once dirname(__FILE__) . '/' . 'security/security_info.php';
+
+// require_once 'application.php';
+include_once dirname(__FILE__) . '/' . 'application.php';
 
 define('OPERATION_HTTPHANDLER_NAME_PARAMNAME', 'hname');
 define('OPERATION_PARAMNAME', 'operation');
@@ -84,8 +125,11 @@ define('OPERATION_RSS', 'rss');
 
 define('OPERATION_HTTPHANDLER_REQUEST', 'httphandler');
 
-require_once 'components/grid/vertical_grid.php';
-require_once 'components/grid/modal_edit_handler.php';
+// require_once 'components/grid/vertical_grid.php';
+// require_once 'components/grid/modal_edit_handler.php';
+
+include_once dirname(__FILE__) . '/' . 'grid/vertical_grid.php';
+include_once dirname(__FILE__) . '/' . 'grid/modal_edit_handler.php';
 
 class PagePart {
     const Grid = 'grid';
@@ -150,6 +194,7 @@ abstract class Page implements IPage, IVariableContainer
 
     /** @var AbstractPageNavigator */
     private $pageNavigator;
+    /** @var DatasetRssGenerator */
     private $rssGenerator;
 
     /** @var AdvancedSearchControl */
@@ -854,6 +899,7 @@ abstract class Page implements IPage, IVariableContainer
                 $this->RaiseSecurityError(!$this->securityInfo->HasViewGrant(), OPERATION_VIEW);
                 break;
         }
+        return true;
     }
 
     function SelectRenderer()
@@ -1004,6 +1050,9 @@ abstract class Page implements IPage, IVariableContainer
         echo $errorStateRenderer->Render($this);
     }
 
+    /**
+     * @param Renderer $visitor
+     */
     function Accept($visitor)
     {
         $visitor->RenderPage($this);
@@ -1143,6 +1192,11 @@ abstract class Page implements IPage, IVariableContainer
         $result = $this->CreateLinkBuilder();
         return $result->GetLink();
     }
+
+    /**
+     * @return PageList
+     */
+    public abstract function GetPageList();
 }
 
 abstract class DetailPage extends Page
@@ -1152,6 +1206,8 @@ abstract class DetailPage extends Page
     private $recordLimit;
     private $totalRowCount;
     private $fullViewHandlerName;
+    /** @var Page */
+    private $parentPage;
 
     public $DetailRowNumber;
 
@@ -1236,6 +1292,7 @@ abstract class DetailPage extends Page
         return $result->GetLink();
     }
 
+    /** @inheritdoc */
     function Accept($visitor)
     {
         $visitor->RenderDetailPage($this);
@@ -1252,8 +1309,10 @@ abstract class DetailPageEdit extends Page
     private $foreingKeyValues;
     private $foreingKeyFields;
     private $masterKeyFields;
+    /** @var Dataset */
     private $masterDataset;
     private $masterGrid;
+    /** @var Page */
     private $parentPage;
     private $parentMasterKeyFields;
     private $parentMasterKeyValues;
@@ -1334,6 +1393,7 @@ abstract class DetailPageEdit extends Page
         }
     }
 
+    /** @inheritdoc */
     function Accept($visitor)
     {
         $visitor->RenderDetailPageEdit($this);
@@ -1415,4 +1475,6 @@ class CustomLoginPage implements IPage
     {
         return ConvertTextToEncoding($text, GetAnsiEncoding(), $this->GetContentEncoding());
     }
+
+    public function GetContentEncoding() { return 'UTF-8'; }
 }

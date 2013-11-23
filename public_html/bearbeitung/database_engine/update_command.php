@@ -6,6 +6,7 @@ include_once dirname(__FILE__) . '/' . '../components/utils/string_utils.php';
 
 class MultiStatementUpdateCommand extends EngCommand
 {
+    /** @var CustomUpdateCommand[] */
     private $updateCommands;
 
     public function __construct($statements, EngCommandImp $engCommandImp)

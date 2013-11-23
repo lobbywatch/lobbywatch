@@ -86,8 +86,8 @@ abstract class PDOConnection extends EngConnection
     {
         if ($this->connection)
         {
-            $pdoErrorInfo = $this->connection->errorInfo();
-            return $pdoErrorInfo[2];
+                $pdoErrorInfo = $this->connection->errorInfo();
+                return $pdoErrorInfo[2];
         }
         else
         {
@@ -98,6 +98,10 @@ abstract class PDOConnection extends EngConnection
     public function SupportsLastInsertId()
     {
         return true;
+    }
+
+    public function commitTransaction() {
+        $this->connection->commit();
     }
 }
 

@@ -1,8 +1,13 @@
 <?php
 
-require_once 'components/renderers/renderer.php';
-require_once 'components/grid/grid.php';
-require_once 'components/utils/system_utils.php';
+// require_once 'components/renderers/renderer.php';
+// require_once 'components/grid/grid.php';
+// require_once 'components/utils/system_utils.php';
+
+include_once dirname(__FILE__) . '/' . 'renderer.php';
+include_once dirname(__FILE__) . '/' . '../grid/grid.php';
+include_once dirname(__FILE__) . '/' . '../utils/system_utils.php';
+
 
 class InlineEditRenderer extends Renderer
 {

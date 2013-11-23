@@ -1,9 +1,9 @@
 <?php
 
-require_once 'renderer.php';
-require_once 'components/env_variables.php';
-require_once 'components/utils/html_utils.php';
-
+include_once dirname(__FILE__) . '/' . 'renderer.php';
+include_once dirname(__FILE__) . '/' . '../env_variables.php';
+include_once dirname(__FILE__) . '/' . '../utils/html_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/system_utils.php';
 
 class ViewAllRenderer extends Renderer
 {
@@ -65,6 +65,9 @@ class ViewAllRenderer extends Renderer
         );
     }
 
+    /**
+     * @inheritdoc
+     */
     public function RenderDetailPageEdit($DetailPage)  {
         $this->SetHTTPContentTypeByPage($DetailPage);
 
@@ -170,10 +173,9 @@ class ViewAllRenderer extends Renderer
         );
     }
 
-    public function RenderCustomPageNavigator($pageNavigator) {
-        if ($pageNavigator->GetNavigationStyle() == NS_LIST)
-            $templateName = 'custom_page_navigator.tpl';
-        elseif ($pageNavigator->GetNavigationStyle() == NS_COMBOBOX)
+    public function RenderCustomPageNavigator(CustomPageNavigator $pageNavigator) {
+        $templateName = 'custom_page_navigator.tpl'; // here $pageNavigator->GetNavigationStyle() == NS_LIST
+        if ($pageNavigator->GetNavigationStyle() == NS_COMBOBOX)
             $templateName = 'combo_box_custom_page_navigator.tpl';
 
         $this->DisplayTemplate('list/'.$templateName,
@@ -221,6 +223,7 @@ class ViewAllRenderer extends Renderer
 
 class ErrorStateRenderer extends ViewAllRenderer
 {
+    /** @var  Exception */
     private $exception;
 
     public function  __construct($captions, $exception)
@@ -236,12 +239,23 @@ class ErrorStateRenderer extends ViewAllRenderer
         $PageList = $Page->GetPageList();
         $PageList = isset($PageList) ? $this->Render($PageList) : '';
 
+        $displayDebugInfo = DebugUtils::GetDebugLevel();
+
+        $inputValues = array(
+            'PageList' => $PageList,
+            'ErrorMessage' => $this->exception->getMessage(),
+            'DisplayDebugInfo' => $displayDebugInfo
+        );
+
+        if ($displayDebugInfo == 1) {
+            $inputValues['File'] = $this->exception->getFile();
+            $inputValues['Line'] = $this->exception->getLine();
+            $inputValues['Trace'] = $this->exception->getTraceAsString();
+        }
+
         $this->DisplayTemplate('list/error_page.tpl',
             array('Page' => $Page),
-            array(
-                'PageList' => $PageList,
-                'ErrorMessage' => $this->exception->getMessage(),
-                )
+            $inputValues
         );
     }
 }

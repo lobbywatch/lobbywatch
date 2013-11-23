@@ -1,6 +1,7 @@
 <?php
 
-require_once 'renderer.php';
+// require_once 'renderer.php';
+include_once dirname(__FILE__) . '/' . 'renderer.php';
 
 class EditRenderer extends Renderer
 {

@@ -5762,7 +5762,7 @@ table.pgui-grid > thead > tr.header > th.descending .sort-icon {
   background-position: -1371px 0;
 }
 table.pgui-grid > tbody > tr > td.empty-grid {
-  height: 200px;
+  height: 25px;
 }
 table.pgui-grid > tbody > tr > td.line-number {
   font-family: "Courier New";

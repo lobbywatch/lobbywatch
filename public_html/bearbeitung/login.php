@@ -57,7 +57,7 @@
             $this->userIdentityStorage = new UserIdentityCookieStorage($identityCheckStrategy);
         }
 
-        public function Accept($renderer)
+        public function Accept(Renderer $renderer)
         {
             $renderer->RenderLoginControl($this);
         }
@@ -185,7 +185,7 @@
 
         private $captions;
 
-        public function __construct($loginControl)
+        public function __construct(LoginControl $loginControl)
         {
             parent::__construct();
             $this->loginControl = $loginControl;
@@ -198,7 +198,7 @@
             return $this->loginControl;
         }
 
-        public function Accept($renderer)
+        public function Accept(Renderer $renderer)
         {
             $renderer->RenderLoginPage($this);
         }

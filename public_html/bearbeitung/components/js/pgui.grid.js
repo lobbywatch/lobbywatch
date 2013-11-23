@@ -12,12 +12,26 @@ define(function(require, exports, module) {
 
 
     var FilterRow = Class.extend({
+        /**
+         *
+         * @param {jQuery} $row tr.search-line list/grid.tpl
+         */
         init: function($row) {
             this.$row = $row;
             this.lastModification = 0;
             this._bindHandlers();
             this._updateEditorsEnability();
             this._storeInitialValues();
+            this.timerInterval = this._calculateTimerInterval();
+        },
+
+        _calculateTimerInterval: function () {
+            var result = 1000;
+            var valueFromAttribute = +this.$row.attr('timer-interval');
+            if (!(_.isUndefined(valueFromAttribute))) {
+                result = valueFromAttribute;
+            }
+            return result;
         },
 
         _storeInitialValues: function() {
@@ -33,7 +47,10 @@ define(function(require, exports, module) {
                 var filterControl = $(this).find('.filter-control');
                 var filterControlInput = $(this).find('.filter-control input');
 
-                if (filterControl.attr('data-operator') == 'IS NULL' || filterControl.attr('data-operator') == 'IS NOT NULL' || filterControl.attr('data-operator') == '') {
+                if (filterControl.attr('data-operator') == 'IS NULL' ||
+                    filterControl.attr('data-operator') == 'IS NOT NULL' ||
+                    filterControl.attr('data-operator') == '')
+                {
                     filterControlInput.addClass('disabled');
                     filterControlInput.attr('disabled', '');
                 }
@@ -46,10 +63,12 @@ define(function(require, exports, module) {
 
         _bindHandlers: function() {
             var self = this;
+
             this.$row.find('a.reset-filter-row').click(function(e) {
                 e.preventDefault();
                 self._postFilterReset();
             });
+
             this.$row.find('.column-filter').each(function() {
                 var columnFilter = $(this);
                 var filterControl = columnFilter.find('.filter-control');
@@ -57,9 +76,10 @@ define(function(require, exports, module) {
                     return;
                 var filterControlInput = filterControl.find('input');
 
-                setupInputEvents(filterControlInput);
-
-                filterControlInput.data('pg-events').onChange(function() {
+                function inputChangeHandler() {
+                    if (self.timerInterval === 0) {
+                        return;
+                    }
                     self.lastModification++;
                     if (!filterControlInput.hasClass('editing'))
                         (function(modification) {
@@ -71,10 +91,13 @@ define(function(require, exports, module) {
                                         ) {
                                         self._postFilter();
                                     }
-
-                                }, 1000)
+                                }, self.timerInterval)
                         })(self.lastModification);
-                });
+                }
+
+                setupInputEvents(filterControlInput);
+
+                filterControlInput.data('pg-events').onChange(inputChangeHandler);
 
                 filterControlInput
                     .keydown(function(e) {
@@ -83,21 +106,7 @@ define(function(require, exports, module) {
                                 self._postFilter();
                         }
                     }).
-                    keyup(function() {
-                        self.lastModification++;
-                        if (!filterControlInput.hasClass('editing'))
-                            (function(modification) {
-                                _.delay(
-                                    function() {
-                                        if (
-                                            (self.lastModification == modification) &&
-                                            (filterControlInput.val() != filterControlInput.attr('data-initial-value'))
-                                            ) {
-                                            self._postFilter();
-                                        }
-                                    }, 1000)
-                            })(self.lastModification);
-                    });
+                    keyup(inputChangeHandler);
 
                 $(this).find('.operator-menu').each(function() {
                     $(this).find('li a').click(function() {
@@ -309,6 +318,11 @@ define(function(require, exports, module) {
     };
 
     var Grid = exports.Grid = Class.extend({
+
+        /**
+         * @param {jQuery} container $(table#<table_name>Grid) See grid.tpl, Grid::GetId
+         * @param options
+         */
         init: function(container, options) {
             var self = this;
             this.container = container;
@@ -333,6 +347,7 @@ define(function(require, exports, module) {
 
             this.currentFilter = new fb.Filter();
             this.configureFilterBuilderCallback = function() { };
+
             this._bindHandlers();
             this._enableRowHighlighting(this.container.hasClass('row-hover-highlight'));
             this.hiddenValues = {};
@@ -462,10 +477,14 @@ define(function(require, exports, module) {
             });
         },
 
+        /**
+         * @param {jQuery} $rows tr.pg-row
+         */
         integrateRows: function($rows) {
             var self = this;
             var modalEditLinks = $rows.find('a[modal-edit=true]');
 
+            // See Renderer::RenderImageViewColumn
             require(['jquery/jquery.lightbox'], function() {
                 self.container.find('[rel=zoom]').lightbox();
             });
@@ -585,6 +604,9 @@ define(function(require, exports, module) {
             }
         },
 
+        /**
+         * See DeleteSelectedGridState::ProcessMessages
+         */
         deleteSelectRows: function() {
             var rowsToDelete = this.container
                 .find('.pg-row')

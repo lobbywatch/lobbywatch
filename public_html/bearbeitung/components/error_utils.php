@@ -1,9 +1,12 @@
 <?php
 
+// require_once 'libs/smartylibs/Smarty.class.php';
+// require_once 'components/renderers/list_renderer.php';
+// require_once 'components/captions.php';
 
-require_once 'libs/smartylibs/Smarty.class.php';
-require_once 'components/renderers/list_renderer.php';
-require_once 'components/captions.php';
+include_once dirname(__FILE__) . '/' . '../libs/smartylibs/Smarty.class.php';
+include_once dirname(__FILE__) . '/' . 'renderers/list_renderer.php';
+include_once dirname(__FILE__) . '/' . 'captions.php';
 
 function RaiseError($message = '')
 {
@@ -11,6 +14,10 @@ function RaiseError($message = '')
     throw new Exception($message);
 }
 
+/**
+ * @param Page $parentPage
+ * @param string $message
+ */
 function ShowSecurityErrorPage($parentPage, $message)
 {
     $renderer = new ViewAllRenderer($parentPage->GetLocalizerCaptions());
@@ -50,6 +57,12 @@ class CustomErrorPage
     private $message;
     private $description;
 
+    /**
+     * @param Page $parentPage
+     * @param string $caption
+     * @param string $message
+     * @param string $description
+     */
     public function __construct($parentPage, $caption, $message, $description)
     {
         $this->parentPage = $parentPage;
@@ -98,6 +111,9 @@ class CustomErrorPage
         return $this->parentPage->GetAuthenticationViewData();
     }
 
+    /**
+     * @param Renderer $renderer
+     */
     public function Accept($renderer)
     {
         $renderer->RenderCustomErrorPage($this);

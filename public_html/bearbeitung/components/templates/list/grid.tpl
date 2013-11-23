@@ -54,7 +54,7 @@
             </div>
 
             {if $DataGrid.AllowQuickFilter}
-            <div class="btn-toolbar pull-right">
+            <div id="quick-filter-toolbar" class="btn-toolbar pull-right">
                 <div class="btn-group">
                     <div class="input-append" style="float: left; margin-bottom: 0;">
                         <input placeholder="{$Captions->GetMessageString('QuickSearch')}" type="text" size="16" class="quick-filter-text" value="{$DataGrid.QuickFilter.Value|escape:html}"><button type="button" class="btn quick-filter-go"><i class="pg-icon-quick-find"></i></button><button type="button" class="btn quick-filter-reset"><i class="pg-icon-filter-reset"></i></button>
@@ -125,7 +125,7 @@
     </tr>
 
     {if $DataGrid.AllowFilterRow and count($DataGrid.FilterRow.Columns) > 0}
-    <tr class="addition-block search-line"  dir="ltr">
+    <tr class="addition-block search-line"  dir="ltr" timer-interval="{$DataGrid.FilterRow.TimerInterval}">
         {if $DataGrid.AllowDeleteSelected}
             <td></td>
         {/if}

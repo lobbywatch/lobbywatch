@@ -1,6 +1,7 @@
 <?php
 
-require_once 'utils/string_utils.php';
+// require_once 'utils/string_utils.php';
+include_once dirname(__FILE__) . '/' . 'utils/string_utils.php';
 
 class InputMethod
 {
@@ -33,7 +34,7 @@ class SuperGlobals
     {
         return StringUtils::IsNullOrEmpty($this->context) ? 
             true : 
-            StringUtils::StartsWith($name, $context . '_');
+            StringUtils::StartsWith($name, $this->context . '_');
     }
 
     private function GetNameInContext($name)
@@ -78,7 +79,7 @@ class SuperGlobals
         return isset($inputArray[$this->GetNameInContext($name)]);
     }
 
-    public function GetInputValue($name, $method, $refine = true)
+    public function GetInputValue($name, $method)
     {
         $inputArray = $this->GetArrayByInputMethod($method);
         return $this->RefineInputValue($inputArray[$this->GetNameInContext($name)]);

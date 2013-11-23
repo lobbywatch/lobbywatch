@@ -1,9 +1,14 @@
 <?php
 
-require_once 'components/env_variables.php';
-require_once 'components/utils/system_utils.php';
-require_once 'components/utils/file_utils.php';
-require_once 'components/utils/dataset_utils.php';
+include_once dirname(__FILE__) . '/' . '../env_variables.php';
+include_once dirname(__FILE__) . '/' . '../utils/system_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/file_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/dataset_utils.php';
+
+// require_once 'components/env_variables.php';
+// require_once 'components/utils/system_utils.php';
+// require_once 'components/utils/file_utils.php';
+// require_once 'components/utils/dataset_utils.php';
 
 class SMException extends Exception
 {
@@ -469,11 +474,12 @@ class DynamicLookupEditColumn extends CustomEditColumn
      * @param string $fieldName
      * @param string $displayFieldName
      * @param string $handlerName
-     * @param CustomEditor $editControl
+     * @param AutocomleteComboBox $editControl
      * @param Dataset $dataset
      * @param Dataset $lookupDataset
      * @param string $lookupIdFieldName
      * @param string $lookupDisplayFieldName
+     * @param string $captionTemplate
      */
     public function __construct($caption,
         $fieldName,

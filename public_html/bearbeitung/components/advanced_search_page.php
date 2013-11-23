@@ -1,10 +1,17 @@
 <?php
 
-require_once 'phpgen_settings.php';
-require_once 'components/utils/string_utils.php';
-require_once 'components/superglobal_wrapper.php';
-require_once 'components/renderers/renderer.php';
-require_once 'components/editors/editors.php';
+// require_once 'phpgen_settings.php';
+// require_once 'components/utils/string_utils.php';
+// require_once 'components/superglobal_wrapper.php';
+// require_once 'components/renderers/renderer.php';
+// require_once 'components/editors/editors.php';
+
+include_once dirname(__FILE__) . '/' . '../phpgen_settings.php';
+include_once dirname(__FILE__) . '/' . 'utils/string_utils.php';
+include_once dirname(__FILE__) . '/' . 'superglobal_wrapper.php';
+include_once dirname(__FILE__) . '/' . 'renderers/renderer.php';
+include_once dirname(__FILE__) . '/' . 'editors/editors.php';
+
 
 /** @var SearchFilterOperator[] $operators  */
 $operators = array();
@@ -211,7 +218,7 @@ abstract class SearchColumn {
         $this->superGlobals->UnSetSessionVariable($this->GetSecondEditorControl()->GetName());
     }
 
-    public function GetFiterTypeInputName()
+    public function GetFilterTypeInputName()
     {
         return 'filtertype_' . 
             StringUtils::ReplaceIllegalPostVariableNameChars($this->GetFieldName());
@@ -227,7 +234,7 @@ abstract class SearchColumn {
     {
         $valueChanged = true;
         $this->applyNotOperator = GetApplication()->GetSuperGlobals()->IsPostValueSet($this->GetNotMarkInputName());
-        $this->filterIndex = GetApplication()->GetSuperGlobals()->GetPostValueDef($this->GetFiterTypeInputName(), '');
+        $this->filterIndex = GetApplication()->GetSuperGlobals()->GetPostValueDef($this->GetFilterTypeInputName(), '');
         $this->firstValue = $this->GetEditorControl()->ExtractsValueFromPost($valueChanged);
         $this->secondValue = $this->GetSecondEditorControl()->ExtractsValueFromPost($valueChanged);
 
@@ -255,10 +262,13 @@ abstract class SearchColumn {
             $result = $filter;
         if (!isset($result) && isset($this->firstValue) && $this->firstValue != '')
         {
+            // Between is not supported in the Filter Row
+            /*
             if ($this->filterIndex == 'between')
                 $result = new BetweenFieldFilter(
                     EnvVariablesUtils::EvaluateVariableTemplate($this->variableContainer, $this->firstValue),
                     EnvVariablesUtils::EvaluateVariableTemplate($this->variableContainer, $this->secondValue));
+            */
             if ($this->filterIndex == 'IS NOT NULL')
                 $result = new NotPredicateFilter(new IsNullFieldFilter());
             elseif ($this->filterIndex == 'STARTS')
@@ -513,31 +523,16 @@ class DateTimeSearchColumn extends StringSearchColumn {
 }
 
 class LookupSearchColumn extends StringSearchColumn {
-    /**
-     * @var LinkBuilder
-     */
+    /** @var LinkBuilder */
     private $linkBuilder;
-
-    /**
-     * @var Dataset
-     */
+    /** @var Dataset */
     private $lookupDataset;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $idColumn;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $valueColumn;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $handlerName;
-
     /** @var boolean */
     private $useComboBox;
 
@@ -588,7 +583,7 @@ class LookupSearchColumn extends StringSearchColumn {
                     $this->lookupDataset->GetFieldValueByName($this->valueColumn)
                 );
             }
-            $this->lookupDataset->CLose();
+            $this->lookupDataset->Close();
         }
         return $result;
     }
@@ -614,7 +609,7 @@ class LookupSearchColumn extends StringSearchColumn {
                     $this->lookupDataset->GetFieldValueByName($this->valueColumn)
                 );
             }
-            $this->lookupDataset->CLose();
+            $this->lookupDataset->Close();
         }
         return $result;
     }
@@ -628,7 +623,7 @@ class LookupSearchColumn extends StringSearchColumn {
         {
             $result = $this->lookupDataset->GetFieldValueByName($this->valueColumn);
         }
-        $this->lookupDataset->CLose();
+        $this->lookupDataset->Close();
         $this->lookupDataset->ClearFieldFilters();
         return $result;
     }
@@ -644,7 +639,7 @@ class LookupSearchColumn extends StringSearchColumn {
             {
                 $result = $this->lookupDataset->GetFieldValueByName($this->valueColumn);
             }
-            $this->lookupDataset->CLose();
+            $this->lookupDataset->Close();
             $this->lookupDataset->ClearFieldFilters();
         }
         return $result;
@@ -664,7 +659,7 @@ class LookupSearchColumn extends StringSearchColumn {
                 $editorControl = $this->GetEditorControl();
                 $editorControl->SetDisplayValue($this->lookupDataset->GetFieldValueByName($this->valueColumn));
             }
-            $this->lookupDataset->CLose();
+            $this->lookupDataset->Close();
             $this->lookupDataset->ClearFieldFilters();
         }
     }
@@ -683,7 +678,7 @@ class LookupSearchColumn extends StringSearchColumn {
                 $editorControl = $this->GetSecondEditorControl();
                 $editorControl->SetDisplayValue($this->lookupDataset->GetFieldValueByName($this->valueColumn));
             }
-            $this->lookupDataset->CLose();
+            $this->lookupDataset->Close();
             $this->lookupDataset->ClearFieldFilters();
         }
     }
@@ -705,19 +700,11 @@ class LookupSearchColumn extends StringSearchColumn {
 }
 
 class LookupSearchColumnDataHandler extends HTTPHandler {
-    /**
-     * @var \Dataset
-     */
+    /** @var \Dataset */
     private $dataset;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $idField;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $valueField;
 
     /**
@@ -793,52 +780,30 @@ class LookupSearchColumnDataHandler extends HTTPHandler {
 }
 
 class AdvancedSearchControl {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $name;
-
-    /**
-     * @var Dataset
-     */
+    /** @var Dataset */
     private $dataset;
-
     /** @var SearchColumn[] */
     private $columns;
-
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $applyAndOperator;
-
-    /**
-     * @var string
-     */
+    /** @var string */
     private $target;
-
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $hidden;
-
-    /**
-     * @var Captions
-     */
+    /** @var Captions */
     private $stringLocalizer;
-
-    /**
-     * @var boolean
-     */
+    /** @var boolean */
     private $allowOpenInNewWindow;
-
     /** @var boolean */
     private $openInNewWindowLink;
-
     /** @var \IVariableContainer */
     private $variableContainer;
-
     /** @var \LinkBuilder */
     private $linkBuilder;
+    /** @var int */
+    private $timerInterval;
     
     public function __construct($name, $dataset, $stringLocalizer, IVariableContainer $variableContainer, LinkBuilder $linkBuilder)
     {
@@ -854,6 +819,7 @@ class AdvancedSearchControl {
         $this->allowOpenInNewWindow = true;
         $this->variableContainer = $variableContainer;
         $this->linkBuilder = $linkBuilder;
+        $this->timerInterval = 1000;
     }
 
     #region Factory methods
@@ -938,6 +904,20 @@ class AdvancedSearchControl {
     public function GetHidden()
     {
         return $this->hidden;
+    }
+
+    /**
+     * @param int $value
+     */
+    public function setTimerInterval($value) {
+        $this->timerInterval = $value;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimerInterval() {
+        return $this->timerInterval;
     }
 
     #endregion
@@ -1043,7 +1023,8 @@ class AdvancedSearchControl {
 
     public function ProcessMessages()
     {
-        if ((GetApplication()->IsPOSTValueSet('ResetFilter') && GetApplication()->GetPOSTValue('ResetFilter') == '1') || (GetApplication()->IsPOSTValueSet('operation') && GetApplication()->GetPOSTValue('operation') == 'ssearch'))
+        if ((GetApplication()->IsPOSTValueSet('ResetFilter') && GetApplication()->GetPOSTValue('ResetFilter') == '1') ||
+            (GetApplication()->IsPOSTValueSet('operation') && GetApplication()->GetPOSTValue('operation') == 'ssearch'))
         {
             $this->ResetFilter();
         }
@@ -1132,6 +1113,5 @@ class AdvancedSearchControl {
             }
         return $result;
     }
-
     #endregion
 }

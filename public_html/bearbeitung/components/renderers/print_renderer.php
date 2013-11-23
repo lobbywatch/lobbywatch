@@ -1,7 +1,10 @@
 <?php
 
-require_once 'components/renderers/renderer.php';
-require_once 'components/utils/query_utils.php';
+// require_once 'components/renderers/renderer.php';
+// require_once 'components/utils/query_utils.php';
+
+include_once dirname(__FILE__) . '/' . 'renderer.php';
+include_once dirname(__FILE__) . '/' . '../utils/query_utils.php';
 
 
 class PrintRenderer extends Renderer

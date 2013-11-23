@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
 
     <link rel="stylesheet" type="text/css" href="components/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="components/css/user.css" />
 
     <script src="components/js/jquery/jquery.min.js"></script>
     <script src="components/js/bootstrap/bootstrap.js"></script>

@@ -1,6 +1,7 @@
-<?php   
+<?php
 
-require_once 'components/utils/system_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/system_utils.php';
+// require_once 'components/utils/system_utils.php';
 
 function GetOrderTypeCaption($orderType)
 {
@@ -641,7 +642,7 @@ class DateTimeViewColumn extends CustomDatasetFieldViewColumn
 abstract class CustomFormatValueViewColumnDecorator extends CustomViewColumn
 {
     /** @var CustomDatasetFieldViewColumn */
-    private $innerField;
+    protected $innerField;
 
     public function __construct($innerField)
     {

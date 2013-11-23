@@ -1,10 +1,15 @@
 <?php
 
-require_once 'components/grid/columns.php';
-require_once 'components/utils/html_utils.php';
+// require_once 'components/grid/columns.php';
+// require_once 'components/utils/html_utils.php';
+
+include_once dirname(__FILE__) . '/' . 'columns.php';
+include_once dirname(__FILE__) . '/' . '../utils/html_utils.php';
 
 class RowOperationByLinkColumn extends CustomViewColumn
 {
+    /** @var Dataset */
+    private $dataset;
     private $operationName;
     private $imagePath;
     
@@ -14,6 +19,12 @@ class RowOperationByLinkColumn extends CustomViewColumn
 
     private $additionalAttributes;
 
+    /**
+     * @param string $caption
+     * @param string $operationName
+     * @param Dataset $dataset
+     * @param string|null $imagePath
+     */
     function __construct($caption, $operationName, $dataset, $imagePath = null)
     {
         parent::__construct($caption);
@@ -132,6 +143,7 @@ abstract class ModalRecordOperationsColumn extends CustomViewColumn
 
 class ModalDialogViewRowColumn extends ModalRecordOperationsColumn
 {
+    /** @var Dataset */
     private $dataset;
     private $handlerName;
     private $dialogTitle;
@@ -141,6 +153,12 @@ class ModalDialogViewRowColumn extends ModalRecordOperationsColumn
     public $OnShow;
     #endregion
 
+    /**
+     * @param string $caption
+     * @param Dataset $dataset
+     * @param string $dialogTitle
+     * @param string $handlerName
+     */
     function __construct($caption, $dataset, $dialogTitle, $handlerName)
     {
         parent::__construct($caption);
@@ -222,6 +240,7 @@ class ModalDialogViewRowColumn extends ModalRecordOperationsColumn
 
 class ModalDialogEditRowColumn extends ModalRecordOperationsColumn
 {
+    /** @var Dataset */
     private $dataset;
     private $handlerName;
     private $dialogTitle;
@@ -230,7 +249,13 @@ class ModalDialogEditRowColumn extends ModalRecordOperationsColumn
     #region Events
     public $OnShow;
     #endregion
-    
+
+    /**
+     * @param string $caption
+     * @param Dataset $dataset
+     * @param string $dialogTitle
+     * @param string $handlerName
+     */
     function __construct($caption, $dataset, $dialogTitle, $handlerName)
     {
         parent::__construct($caption);
@@ -316,6 +341,7 @@ class ModalDialogEditRowColumn extends ModalRecordOperationsColumn
 
 class ModalDialogCopyRowColumn extends ModalRecordOperationsColumn
 {
+    /** @var Dataset */
     private $dataset;
     private $handlerName;
     private $dialogTitle;
@@ -329,6 +355,12 @@ class ModalDialogCopyRowColumn extends ModalRecordOperationsColumn
         return 'data-operation';
     }
 
+    /**
+     * @param string $caption
+     * @param Dataset $dataset
+     * @param string $dialogTitle
+     * @param string $handlerName
+     */
     function __construct($caption, $dataset, $dialogTitle, $handlerName)
     {
         parent::__construct($caption);
@@ -408,6 +440,7 @@ class ModalDialogCopyRowColumn extends ModalRecordOperationsColumn
 
 class InlineEditRowColumn extends CustomViewColumn
 {
+    /** @var Dataset */
     private $dataset;
     private $cancelButtonText;
     private $commitButtonText;
@@ -419,6 +452,14 @@ class InlineEditRowColumn extends CustomViewColumn
         return 'data-operation';
     }
 
+    /**
+     * @param string $caption
+     * @param Dataset $dataset
+     * @param string $editButtonText
+     * @param string $cancelButtonText
+     * @param string $commitButtonText
+     * @param bool $useImages
+     */
     function __construct($caption, $dataset, $editButtonText, $cancelButtonText, $commitButtonText, $useImages = true)
     {
         parent::__construct($caption);
@@ -480,7 +521,8 @@ class InlineEditRowColumn extends CustomViewColumn
 
             $keyValues = $this->dataset->GetPrimaryKeyValues();
             for($i = 0; $i < count($keyValues); $i++)
-                AddStr($result, sprintf('<input type="hidden" name="pk%d" value="%s"></input>', $i, $keyValues[$i]));
+                // AddStr($result, sprintf('<input type="hidden" name="pk%d" value="%s"></input>', $i, $keyValues[$i]));
+                AddStr($result, sprintf('<input type="hidden" name="pk%d" value="%s"/>', $i, $keyValues[$i]));
 
             AddStr($result, '</span>');
 

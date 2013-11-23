@@ -66,13 +66,7 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_partei');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
             $field = new StringField('parteifunktion');
-            $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_parteifunktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('im_rat_seit');
@@ -156,8 +150,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'beruf', 'beruf_interessengruppe_id_bezeichnung', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'ALT_partei', 'parteifunktion', 'ALT_parteifunktion', 'im_rat_seit', 'Geburtstag', 'ALT_kommission', 'kleinbild', 'sitzplatz', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('ALT Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('ALT Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Geburtstag'), $this->RenderText('ALT Kommission'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'nachname', 'vorname', 'beruf', 'beruf_interessengruppe_id_bezeichnung', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'im_rat_seit', 'Geburtstag', 'ALT_kommission', 'kleinbild', 'sitzplatz', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Geburtstag'), $this->RenderText('ALT Kommission'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -176,6 +170,7 @@
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('parlamentarierasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
+            $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('nachname', $this->RenderText('Nachname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vorname', $this->RenderText('Vorname')));
@@ -242,9 +237,7 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('partei_id', $this->RenderText('Partei Id'), $lookupDataset, 'id', 'abkuerzung', false));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_partei', $this->RenderText('ALT Partei')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parteifunktion', $this->RenderText('Parteifunktion')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_parteifunktion', $this->RenderText('ALT Parteifunktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('Geburtstag', $this->RenderText('Geburtstag')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_kommission', $this->RenderText('ALT Kommission')));
@@ -678,43 +671,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ALT_partei field
-            //
-            $column = new TextViewColumn('ALT_partei', 'ALT Partei', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_partei field
-            //
-            $editor = new TextEdit('alt_partei_edit');
-            $editor->SetSize(20);
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('ALT Partei', 'ALT_partei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_partei field
-            //
-            $editor = new TextEdit('alt_partei_edit');
-            $editor->SetSize(20);
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('ALT Partei', 'ALT_partei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Partei als Text'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
@@ -724,7 +680,8 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new ComboBox('parteifunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new CheckBoxGroup('parteifunktion_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('präsident', $this->RenderText('präsident'));
             $editor->AddValue('vizepräsident', $this->RenderText('vizepräsident'));
@@ -740,7 +697,8 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new ComboBox('parteifunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new CheckBoxGroup('parteifunktion_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('präsident', $this->RenderText('präsident'));
             $editor->AddValue('vizepräsident', $this->RenderText('vizepräsident'));
@@ -753,42 +711,6 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Partei'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parteifunktion field
-            //
-            $column = new TextViewColumn('ALT_parteifunktion', 'ALT Parteifunktion', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ALT_parteifunktion_handler');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_parteifunktion field
-            //
-            $editor = new TextAreaEdit('alt_parteifunktion_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Parteifunktion', 'ALT_parteifunktion', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_parteifunktion field
-            //
-            $editor = new TextAreaEdit('alt_parteifunktion_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Parteifunktion', 'ALT_parteifunktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Parteiamt als Freitext'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -830,7 +752,7 @@
             // View column for Geburtstag field
             //
             $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -1203,26 +1125,10 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for ALT_partei field
-            //
-            $column = new TextViewColumn('ALT_partei', 'ALT Partei', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for ALT_parteifunktion field
-            //
-            $column = new TextViewColumn('ALT_parteifunktion', 'ALT Parteifunktion', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ALT_parteifunktion_handler');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1237,7 +1143,7 @@
             // View column for Geburtstag field
             //
             $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1451,36 +1357,15 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for ALT_partei field
-            //
-            $editor = new TextEdit('alt_partei_edit');
-            $editor->SetSize(20);
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('ALT Partei', 'ALT_partei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for parteifunktion field
             //
-            $editor = new ComboBox('parteifunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new CheckBoxGroup('parteifunktion_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('präsident', $this->RenderText('präsident'));
             $editor->AddValue('vizepräsident', $this->RenderText('vizepräsident'));
             $editor->AddValue('fraktionschef', $this->RenderText('fraktionschef'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for ALT_parteifunktion field
-            //
-            $editor = new TextAreaEdit('alt_parteifunktion_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Parteifunktion', 'ALT_parteifunktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1734,37 +1619,15 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for ALT_partei field
-            //
-            $editor = new TextEdit('alt_partei_edit');
-            $editor->SetSize(20);
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('ALT Partei', 'ALT_partei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for parteifunktion field
             //
-            $editor = new ComboBox('parteifunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new CheckBoxGroup('parteifunktion_edit');
+            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('präsident', $this->RenderText('präsident'));
             $editor->AddValue('vizepräsident', $this->RenderText('vizepräsident'));
             $editor->AddValue('fraktionschef', $this->RenderText('fraktionschef'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for ALT_parteifunktion field
-            //
-            $editor = new TextAreaEdit('alt_parteifunktion_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Parteifunktion', 'ALT_parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1946,23 +1809,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for ALT_partei field
-            //
-            $column = new TextViewColumn('ALT_partei', 'ALT Partei', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parteifunktion field
-            //
-            $column = new TextViewColumn('ALT_parteifunktion', 'ALT Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1978,7 +1827,7 @@
             // View column for Geburtstag field
             //
             $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -2100,23 +1949,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for ALT_partei field
-            //
-            $column = new TextViewColumn('ALT_partei', 'ALT Partei', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for ALT_parteifunktion field
-            //
-            $column = new TextViewColumn('ALT_parteifunktion', 'ALT Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -2132,7 +1967,7 @@
             // View column for Geburtstag field
             //
             $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -2341,38 +2176,6 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'beruf_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for ALT_parteifunktion field
-            //
-            $column = new TextViewColumn('ALT_parteifunktion', 'ALT Parteifunktion', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_parteifunktion field
-            //
-            $editor = new TextAreaEdit('alt_parteifunktion_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Parteifunktion', 'ALT_parteifunktion', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_parteifunktion field
-            //
-            $editor = new TextAreaEdit('alt_parteifunktion_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Parteifunktion', 'ALT_parteifunktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ALT_parteifunktion_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
@@ -2480,13 +2283,6 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'beruf_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for ALT_parteifunktion field
-            //
-            $column = new TextViewColumn('ALT_parteifunktion', 'ALT Parteifunktion', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ALT_parteifunktion_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ALT_kommission field

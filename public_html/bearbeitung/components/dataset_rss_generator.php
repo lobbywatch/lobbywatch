@@ -1,10 +1,16 @@
 <?php
 
-require_once 'components/common.php';
-require_once 'components/common_utils.php';
-require_once 'components/dataset/dataset.php';
-require_once 'components/rss_feed_generator.php';
-require_once 'components/grid/grid.php'; // TODO : remove
+// require_once 'components/common.php';
+// require_once 'components/common_utils.php';
+// require_once 'components/dataset/dataset.php';
+// require_once 'components/rss_feed_generator.php';
+// require_once 'components/grid/grid.php'; // TODO : remove
+
+include_once dirname(__FILE__) . '/' . 'common.php';
+include_once dirname(__FILE__) . '/' . 'common_utils.php';
+include_once dirname(__FILE__) . '/' . 'dataset/dataset.php';
+include_once dirname(__FILE__) . '/' . 'rss_feed_generator.php';
+include_once dirname(__FILE__) . '/' . 'grid/grid.php'; // TODO : remove
 
 class DatasetRssGenerator
 {

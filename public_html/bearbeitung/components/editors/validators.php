@@ -12,7 +12,9 @@ abstract class Validator
     public abstract function GetValidatorName();
 
     protected function DoGetAdditionalAttributes()
-    { }
+    {
+        return '';
+    }
 
     public function GetMessage()
     {
@@ -277,6 +279,7 @@ class ValidatorCollection
     }
 
     /**
+     * @param bool $suppressRequiredValidation
      * @return string
      */
     public function GetInputAttributes($suppressRequiredValidation = false)

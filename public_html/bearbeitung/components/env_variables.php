@@ -1,6 +1,9 @@
 <?php
 
-require_once 'utils/string_utils.php';
+// require_once 'utils/string_utils.php';
+
+include_once dirname(__FILE__) . '/' . 'utils/string_utils.php';
+
 
 interface IVariableContainer
 {
@@ -11,6 +14,7 @@ interface IVariableContainer
 
 class CompositeVariableContainer implements IVariableContainer
 {
+    /** @var IVariableContainer[] */
     private $containers;
 
     private function AddVariableContainer(IVariableContainer $variableContainer)

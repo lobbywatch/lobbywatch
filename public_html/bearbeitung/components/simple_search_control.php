@@ -1,6 +1,7 @@
 <?php
 
-require_once 'components/application.php';
+// require_once 'components/application.php';
+include_once dirname(__FILE__) . '/' . 'application.php';
 
 class SimpleSearch
 {

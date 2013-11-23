@@ -1,10 +1,14 @@
 <?php
 
-require_once 'engine.php';
-require_once 'commands.php';
+// require_once 'engine.php';
+// require_once 'commands.php';
+
+include_once dirname(__FILE__) . '/' . 'engine.php';
+include_once dirname(__FILE__) . '/' . 'commands.php';
 
 class MultiStatementInsertCommand extends EngCommand
 {
+    /** @var CustomInsertCommand[] */
     private $insertCommands;
 
     public function __construct($statements, EngCommandImp $engCommandImp)
@@ -62,6 +66,8 @@ class CustomInsertCommand extends EngCommand
     private $fieldValues;
     private $setToDefaultFields;
     private $autoincrementInsertion;
+    /** @var FieldInfo[] */
+    private $fields;
 
 
     public function __construct($sql, EngCommandImp $engCommandImp)
@@ -71,6 +77,7 @@ class CustomInsertCommand extends EngCommand
         $this->params = array();
         $this->fieldValues = array();
         $this->setToDefaultFields = array();
+        $this->fields = array();
     }
 
     public function AddField($paramName, $paramType)

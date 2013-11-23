@@ -44,6 +44,8 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`mandat`');
+            $field = new StringField('art');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('id', null, null, true);
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -55,8 +57,6 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('organisation_id');
             $field->SetIsNotNull(true);
-            $this->dataset->AddField($field, false);
-            $field = new StringField('funktion');
             $this->dataset->AddField($field, false);
             $field = new DateField('autorisiert_datum');
             $this->dataset->AddField($field, false);
@@ -129,8 +129,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('mandatssearch', $this->dataset,
-                array('id', 'beschreibung', 'zugangsberechtigung_id_parlamentarier_id', 'organisation_id_name', 'funktion', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Beschreibung'), $this->RenderText('Zugangsberechtigung Id'), $this->RenderText('Organisation Id'), $this->RenderText('Funktion'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('art', 'id', 'beschreibung', 'zugangsberechtigung_id_parlamentarier_id', 'organisation_id_name', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Art'), $this->RenderText('Id'), $this->RenderText('Beschreibung'), $this->RenderText('Zugangsberechtigung Id'), $this->RenderText('Organisation Id'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -149,6 +149,8 @@
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('mandatasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
+            $this->AdvancedSearchControl->setTimerInterval(1000);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             
@@ -171,8 +173,6 @@
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -217,10 +217,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -237,7 +237,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation Id'), $lookupDataset, 'id', 'name', false));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('autorisiert_visa', $this->RenderText('Autorisiert Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
@@ -279,6 +278,47 @@
     
         protected function AddFieldColumns(Grid $grid)
         {
+            //
+            // View column for art field
+            //
+            $column = new TextViewColumn('art', 'Art', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for art field
+            //
+            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('geschäftsführend', $this->RenderText('geschäftsführend'));
+            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
+            $editor->AddValue('tätig', $this->RenderText('tätig'));
+            $editor->AddValue('beirat', $this->RenderText('beirat'));
+            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for art field
+            //
+            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('geschäftsführend', $this->RenderText('geschäftsführend'));
+            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
+            $editor->AddValue('tätig', $this->RenderText('tätig'));
+            $editor->AddValue('beirat', $this->RenderText('beirat'));
+            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Art der Funktion des Mandatsträgers innerhalb der Organisation'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
             //
             // View column for id field
             //
@@ -354,8 +394,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_branche_id');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -408,8 +446,6 @@
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -478,10 +514,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -539,10 +575,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -574,51 +610,10 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for funktion field
-            //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for funktion field
-            //
-            $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('geschäftsführend', $this->RenderText('geschäftsführend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('beirat', $this->RenderText('beirat'));
-            $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for funktion field
-            //
-            $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('geschäftsführend', $this->RenderText('geschäftsführend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('beirat', $this->RenderText('beirat'));
-            $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -858,6 +853,13 @@
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
+            // View column for art field
+            //
+            $column = new TextViewColumn('art', 'Art', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
@@ -888,17 +890,10 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for funktion field
-            //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -952,6 +947,20 @@
         protected function AddEditColumns(Grid $grid)
         {
             //
+            // Edit column for art field
+            //
+            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('geschäftsführend', $this->RenderText('geschäftsführend'));
+            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
+            $editor->AddValue('tätig', $this->RenderText('tätig'));
+            $editor->AddValue('beirat', $this->RenderText('beirat'));
+            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
@@ -984,8 +993,6 @@
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -1043,10 +1050,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -1070,20 +1077,6 @@
                 $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for funktion field
-            //
-            $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('geschäftsführend', $this->RenderText('geschäftsführend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('beirat', $this->RenderText('beirat'));
-            $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -1162,6 +1155,20 @@
         protected function AddInsertColumns(Grid $grid)
         {
             //
+            // Edit column for art field
+            //
+            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('geschäftsführend', $this->RenderText('geschäftsführend'));
+            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
+            $editor->AddValue('tätig', $this->RenderText('tätig'));
+            $editor->AddValue('beirat', $this->RenderText('beirat'));
+            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
@@ -1194,8 +1201,6 @@
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -1253,10 +1258,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -1280,20 +1285,6 @@
                 $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for funktion field
-            //
-            $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('geschäftsführend', $this->RenderText('geschäftsführend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('beirat', $this->RenderText('beirat'));
-            $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -1384,6 +1375,13 @@
         protected function AddPrintColumns(Grid $grid)
         {
             //
+            // View column for art field
+            //
+            $column = new TextViewColumn('art', 'Art', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
@@ -1412,17 +1410,10 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for funktion field
-            //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1474,6 +1465,13 @@
         protected function AddExportColumns(Grid $grid)
         {
             //
+            // View column for art field
+            //
+            $column = new TextViewColumn('art', 'Art', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
@@ -1502,17 +1500,10 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for funktion field
-            //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

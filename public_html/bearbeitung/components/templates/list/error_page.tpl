@@ -4,13 +4,18 @@
 
 {capture assign="ContentBlock"}
 
-<br>
-
 <div class="alert alert-error">
-<strong>{$Captions->GetMessageString('ErrorsDuringDataRetrieving')}</strong>
-    <br>
-    <br>
+<h3>{$Captions->GetMessageString('ErrorsDuringDataRetrieving')}</h3>
 {$ErrorMessage}
+
+{if ($DisplayDebugInfo eq 1)}
+<hr/>
+<h3>Additional exception info:</h3>
+<strong>File:</strong> {$File} <br/>
+<strong>Line:</strong> {$Line} <br/>
+<strong>Trace:</strong> {$Trace}
+{/if}
+
 </div>
 {/capture}
 

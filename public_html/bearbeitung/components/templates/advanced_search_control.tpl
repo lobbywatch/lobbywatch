@@ -7,9 +7,9 @@
     <fieldset>
         {foreach item=Column from=$AdvancedSearchControl->GetSearchColumns() name=ColumnsIterator}
             <div class="control-group">
-                <label class="control-label" for="{$Column->GetFiterTypeInputName()}">{$Column->GetCaption()}</label>
+                <label class="control-label" for="{$Column->GetFilterTypeInputName()}">{$Column->GetCaption()}</label>
                 <div class="controls">
-                    <input type="text" class="input-xlarge" id="{$Column->GetFiterTypeInputName()}">
+                    <input type="text" class="input-xlarge" id="{$Column->GetFilterTypeInputName()}">
                 </div>
             </div>
         {/foreach}
@@ -96,9 +96,9 @@
             <select {n}
                 class="sm_comboBox adv_filter_type" {n}
                 style="width: 120px;" {n}
-                id="{$Column->GetFiterTypeInputName()}" {n}
-                name="{$Column->GetFiterTypeInputName()}" {n}
-                onchange="if ($('#{$Column->GetFiterTypeInputName()}').val() == 'between') $('#{$Column->GetFieldName()}_second').show(); else $('#{$Column->GetFieldName()}_second').hide(); if ($('#{$Column->GetFiterTypeInputName()}').val() == 'IS NULL') $('{$Column->GetFieldName()}_value').hide(); else $('#{$Column->GetFieldName()}_value').show();">
+                id="{$Column->GetFilterTypeInputName()}" {n}
+                name="{$Column->GetFilterTypeInputName()}" {n}
+                onchange="if ($('#{$Column->GetFilterTypeInputName()}').val() == 'between') $('#{$Column->GetFieldName()}_second').show(); else $('#{$Column->GetFieldName()}_second').hide(); if ($('#{$Column->GetFilterTypeInputName()}').val() == 'IS NULL') $('{$Column->GetFieldName()}_value').hide(); else $('#{$Column->GetFieldName()}_value').show();">
 {foreach key=FilterTypeName item=FilterTypeCaption from=$Column->GetAvailableFilterTypes()}
                 <option {n}
                     value="{$FilterTypeName}" {n}
@@ -142,12 +142,12 @@
 <script language="javascript">
 
 {foreach item=Column from=$AdvancedSearchControl->GetSearchColumns() name=ColumnsIterator}
-    if ($('#{$Column->GetFiterTypeInputName()}').val() == 'between')
+    if ($('#{$Column->GetFilterTypeInputName()}').val() == 'between')
         $('#{$Column->GetFieldName()}_second').show();
     else
         $('#{$Column->GetFieldName()}_second').hide();
 
-    if ($('#{$Column->GetFiterTypeInputName()}').val() == 'IS NULL')
+    if ($('#{$Column->GetFilterTypeInputName()}').val() == 'IS NULL')
         $('#{$Column->GetFieldName()}_value').hide();
     else
         $('#{$Column->GetFieldName()}_value').show();

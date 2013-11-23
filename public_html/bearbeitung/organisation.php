@@ -65,10 +65,10 @@
             $field = new StringField('vernehmlassung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new StringField('bisherige_parlam_verbindung');
+            $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('OLD_branche_id');
+            $field = new IntegerField('ALT_branche_id');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $this->dataset->AddField($field, false);
@@ -84,7 +84,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('OLD_branche_id', 'branche', new IntegerField('id', null, null, true), new StringField('name', 'OLD_branche_id_name', 'OLD_branche_id_name_branche'), 'OLD_branche_id_name_branche');
+            $this->dataset->AddLookupField('ALT_branche_id', 'branche', new IntegerField('id', null, null, true), new StringField('name', 'ALT_branche_id_name', 'ALT_branche_id_name_branche'), 'ALT_branche_id_name_branche');
             $this->dataset->AddLookupField('interessengruppe_id', 'interessengruppe', new IntegerField('id', null, null, true), new StringField('bezeichnung', 'interessengruppe_id_bezeichnung', 'interessengruppe_id_bezeichnung_interessengruppe'), 'interessengruppe_id_bezeichnung_interessengruppe');
         }
     
@@ -139,8 +139,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
-                array('id', 'name', 'beschreibung', 'rechtsform', 'typ', 'url', 'vernehmlassung', 'bisherige_parlam_verbindung', 'OLD_branche_id_name', 'interessengruppe_id_bezeichnung', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Beschreibung'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Url'), $this->RenderText('Vernehmlassung'), $this->RenderText('Bisherige Parlam Verbindung'), $this->RenderText('OLD Branche Id'), $this->RenderText('Interessengruppe Id'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'name', 'beschreibung', 'rechtsform', 'typ', 'url', 'vernehmlassung', 'ALT_parlam_verbindung', 'ALT_branche_id_name', 'interessengruppe_id_bezeichnung', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Beschreibung'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Url'), $this->RenderText('Vernehmlassung'), $this->RenderText('ALT Parlam Verbindung'), $this->RenderText('ALT Branche Id'), $this->RenderText('Interessengruppe Id'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -159,6 +159,7 @@
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('organisationasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
+            $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
@@ -166,7 +167,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('typ', $this->RenderText('Typ')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('url', $this->RenderText('Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vernehmlassung', $this->RenderText('Vernehmlassung')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('bisherige_parlam_verbindung', $this->RenderText('Bisherige Parlam Verbindung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_parlam_verbindung', $this->RenderText('ALT Parlam Verbindung')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -182,14 +183,10 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('OLD_kommission');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -201,7 +198,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('OLD_branche_id', $this->RenderText('OLD Branche Id'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('ALT_branche_id', $this->RenderText('ALT Branche Id'), $lookupDataset, 'id', 'name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -366,6 +363,7 @@
             $editor->AddValue('Stiftung', $this->RenderText('Stiftung'));
             $editor->AddValue('Verein', $this->RenderText('Verein'));
             $editor->AddValue('Informelle Gruppe', $this->RenderText('Informelle Gruppe'));
+            $editor->AddValue('Parlamentarische Gruppe', $this->RenderText('Parlamentarische Gruppe'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -383,6 +381,7 @@
             $editor->AddValue('Stiftung', $this->RenderText('Stiftung'));
             $editor->AddValue('Verein', $this->RenderText('Verein'));
             $editor->AddValue('Informelle Gruppe', $this->RenderText('Informelle Gruppe'));
+            $editor->AddValue('Parlamentarische Gruppe', $this->RenderText('Parlamentarische Gruppe'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -513,23 +512,23 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for bisherige_parlam_verbindung field
+            // View column for ALT_parlam_verbindung field
             //
-            $column = new TextViewColumn('bisherige_parlam_verbindung', 'Bisherige Parlam Verbindung', $this->dataset);
+            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for bisherige_parlam_verbindung field
+            // Edit column for ALT_parlam_verbindung field
             //
-            $editor = new CheckBoxGroup('bisherige_parlam_verbindung_edit');
+            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
             $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
             $editor->AddValue('einzel', $this->RenderText('einzel'));
             $editor->AddValue('mehrere', $this->RenderText('mehrere'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
             $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('Bisherige Parlam Verbindung', 'bisherige_parlam_verbindung', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -538,16 +537,16 @@
             
             /* <inline insert column> */
             //
-            // Edit column for bisherige_parlam_verbindung field
+            // Edit column for ALT_parlam_verbindung field
             //
-            $editor = new CheckBoxGroup('bisherige_parlam_verbindung_edit');
+            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
             $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
             $editor->AddValue('einzel', $this->RenderText('einzel'));
             $editor->AddValue('mehrere', $this->RenderText('mehrere'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
             $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('Bisherige Parlam Verbindung', 'bisherige_parlam_verbindung', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -560,14 +559,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('OLD_branche_id_name', 'OLD Branche Id', $this->dataset);
+            $column = new TextViewColumn('ALT_branche_id_name', 'ALT Branche Id', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for OLD_branche_id field
+            // Edit column for ALT_branche_id field
             //
-            $editor = new ComboBox('old_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('alt_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -582,14 +581,10 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('OLD_kommission');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -603,8 +598,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'OLD Branche Id', 
-                'OLD_branche_id', 
+                'ALT Branche Id', 
+                'ALT_branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -614,9 +609,9 @@
             
             /* <inline insert column> */
             //
-            // Edit column for OLD_branche_id field
+            // Edit column for ALT_branche_id field
             //
-            $editor = new ComboBox('old_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('alt_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -631,14 +626,10 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('OLD_kommission');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -652,8 +643,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'OLD Branche Id', 
-                'OLD_branche_id', 
+                'ALT Branche Id', 
+                'ALT_branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -993,16 +984,16 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for bisherige_parlam_verbindung field
+            // View column for ALT_parlam_verbindung field
             //
-            $column = new TextViewColumn('bisherige_parlam_verbindung', 'Bisherige Parlam Verbindung', $this->dataset);
+            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('OLD_branche_id_name', 'OLD Branche Id', $this->dataset);
+            $column = new TextViewColumn('ALT_branche_id_name', 'ALT Branche Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1084,6 +1075,7 @@
             $editor->AddValue('Stiftung', $this->RenderText('Stiftung'));
             $editor->AddValue('Verein', $this->RenderText('Verein'));
             $editor->AddValue('Informelle Gruppe', $this->RenderText('Informelle Gruppe'));
+            $editor->AddValue('Parlamentarische Gruppe', $this->RenderText('Parlamentarische Gruppe'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1130,25 +1122,25 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for bisherige_parlam_verbindung field
+            // Edit column for ALT_parlam_verbindung field
             //
-            $editor = new CheckBoxGroup('bisherige_parlam_verbindung_edit');
+            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
             $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
             $editor->AddValue('einzel', $this->RenderText('einzel'));
             $editor->AddValue('mehrere', $this->RenderText('mehrere'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
             $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('Bisherige Parlam Verbindung', 'bisherige_parlam_verbindung', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for OLD_branche_id field
+            // Edit column for ALT_branche_id field
             //
-            $editor = new ComboBox('old_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('alt_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -1163,14 +1155,10 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('OLD_kommission');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -1184,8 +1172,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'OLD Branche Id', 
-                'OLD_branche_id', 
+                'ALT Branche Id', 
+                'ALT_branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -1317,6 +1305,7 @@
             $editor->AddValue('Stiftung', $this->RenderText('Stiftung'));
             $editor->AddValue('Verein', $this->RenderText('Verein'));
             $editor->AddValue('Informelle Gruppe', $this->RenderText('Informelle Gruppe'));
+            $editor->AddValue('Parlamentarische Gruppe', $this->RenderText('Parlamentarische Gruppe'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1363,25 +1352,25 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for bisherige_parlam_verbindung field
+            // Edit column for ALT_parlam_verbindung field
             //
-            $editor = new CheckBoxGroup('bisherige_parlam_verbindung_edit');
+            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
             $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
             $editor->AddValue('einzel', $this->RenderText('einzel'));
             $editor->AddValue('mehrere', $this->RenderText('mehrere'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
             $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('Bisherige Parlam Verbindung', 'bisherige_parlam_verbindung', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for OLD_branche_id field
+            // Edit column for ALT_branche_id field
             //
-            $editor = new ComboBox('old_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('alt_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -1396,14 +1385,10 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('OLD_kommission');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $lookupDataset->AddField($field, false);
@@ -1417,8 +1402,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'OLD Branche Id', 
-                'OLD_branche_id', 
+                'ALT Branche Id', 
+                'ALT_branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -1583,16 +1568,16 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for bisherige_parlam_verbindung field
+            // View column for ALT_parlam_verbindung field
             //
-            $column = new TextViewColumn('bisherige_parlam_verbindung', 'Bisherige Parlam Verbindung', $this->dataset);
+            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('OLD_branche_id_name', 'OLD Branche Id', $this->dataset);
+            $column = new TextViewColumn('ALT_branche_id_name', 'ALT Branche Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1693,16 +1678,16 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for bisherige_parlam_verbindung field
+            // View column for ALT_parlam_verbindung field
             //
-            $column = new TextViewColumn('bisherige_parlam_verbindung', 'Bisherige Parlam Verbindung', $this->dataset);
+            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('OLD_branche_id_name', 'OLD Branche Id', $this->dataset);
+            $column = new TextViewColumn('ALT_branche_id_name', 'ALT Branche Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
