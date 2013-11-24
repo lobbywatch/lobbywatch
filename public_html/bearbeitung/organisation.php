@@ -68,7 +68,7 @@
             $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('ALT_branche_id');
+            $field = new IntegerField('branche_id');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $this->dataset->AddField($field, false);
@@ -84,7 +84,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('ALT_branche_id', 'branche', new IntegerField('id', null, null, true), new StringField('name', 'ALT_branche_id_name', 'ALT_branche_id_name_branche'), 'ALT_branche_id_name_branche');
+            $this->dataset->AddLookupField('branche_id', 'branche', new IntegerField('id', null, null, true), new StringField('name', 'branche_id_name', 'branche_id_name_branche'), 'branche_id_name_branche');
             $this->dataset->AddLookupField('interessengruppe_id', 'interessengruppe', new IntegerField('id', null, null, true), new StringField('bezeichnung', 'interessengruppe_id_bezeichnung', 'interessengruppe_id_bezeichnung_interessengruppe'), 'interessengruppe_id_bezeichnung_interessengruppe');
         }
     
@@ -139,8 +139,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
-                array('id', 'name', 'beschreibung', 'rechtsform', 'typ', 'url', 'vernehmlassung', 'ALT_parlam_verbindung', 'ALT_branche_id_name', 'interessengruppe_id_bezeichnung', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Beschreibung'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Url'), $this->RenderText('Vernehmlassung'), $this->RenderText('ALT Parlam Verbindung'), $this->RenderText('ALT Branche Id'), $this->RenderText('Interessengruppe Id'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'name', 'beschreibung', 'rechtsform', 'typ', 'url', 'vernehmlassung', 'ALT_parlam_verbindung', 'branche_id_name', 'interessengruppe_id_bezeichnung', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Beschreibung'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Url'), $this->RenderText('Vernehmlassung'), $this->RenderText('ALT Parlam Verbindung'), $this->RenderText('Branche Id'), $this->RenderText('Interessengruppe Id'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -198,7 +198,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('ALT_branche_id', $this->RenderText('ALT Branche Id'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche Id'), $lookupDataset, 'id', 'name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -559,14 +559,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('ALT_branche_id_name', 'ALT Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for ALT_branche_id field
+            // Edit column for branche_id field
             //
-            $editor = new ComboBox('alt_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -598,8 +598,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'ALT Branche Id', 
-                'ALT_branche_id', 
+                'Branche Id', 
+                'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -609,9 +609,9 @@
             
             /* <inline insert column> */
             //
-            // Edit column for ALT_branche_id field
+            // Edit column for branche_id field
             //
-            $editor = new ComboBox('alt_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -643,8 +643,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'ALT Branche Id', 
-                'ALT_branche_id', 
+                'Branche Id', 
+                'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -993,7 +993,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('ALT_branche_id_name', 'ALT Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1138,9 +1138,9 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for ALT_branche_id field
+            // Edit column for branche_id field
             //
-            $editor = new ComboBox('alt_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -1172,8 +1172,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'ALT Branche Id', 
-                'ALT_branche_id', 
+                'Branche Id', 
+                'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -1368,9 +1368,9 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for ALT_branche_id field
+            // Edit column for branche_id field
             //
-            $editor = new ComboBox('alt_branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -1402,8 +1402,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'ALT Branche Id', 
-                'ALT_branche_id', 
+                'Branche Id', 
+                'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -1577,7 +1577,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('ALT_branche_id_name', 'ALT Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1687,7 +1687,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('ALT_branche_id_name', 'ALT Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

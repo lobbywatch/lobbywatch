@@ -15692,12 +15692,12 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ALT_branche_id" caption="ALT Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="ALT_branche_id" caption="ALT Branche Id" canSetNull="true">
+              <InlineEditColumn fieldName="branche_id" caption="Branche Id" canSetNull="true">
                 <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
@@ -15714,7 +15714,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="ALT_branche_id" caption="ALT Branche Id" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="branche_id" caption="Branche Id" canSetNull="true" defaultInsertValue="">
                 <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
@@ -16241,12 +16241,12 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ALT_branche_id" caption="ALT Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="ALT_branche_id" caption="ALT Branche Id" canSetNull="true">
+              <InlineEditColumn fieldName="branche_id" caption="Branche Id" canSetNull="true">
                 <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
@@ -16263,7 +16263,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="ALT_branche_id" caption="ALT Branche Id" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="branche_id" caption="Branche Id" canSetNull="true" defaultInsertValue="">
                 <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
@@ -16619,7 +16619,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="ALT_branche_id" caption="ALT Branche Id" canSetNull="true">
+            <Column fieldName="branche_id" caption="Branche Id" canSetNull="true">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
@@ -16856,7 +16856,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="ALT_branche_id" caption="ALT Branche Id" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="branche_id" caption="Branche Id" canSetNull="true" defaultInsertValue="">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
@@ -16970,7 +16970,7 @@
             <Column fieldName="url" caption="Url"/>
             <Column fieldName="vernehmlassung" caption="Vernehmlassung"/>
             <Column fieldName="ALT_parlam_verbindung" caption="ALT Parlam Verbindung"/>
-            <Column fieldName="ALT_branche_id" caption="ALT Branche Id">
+            <Column fieldName="branche_id" caption="Branche Id">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Interessengruppe Id">
@@ -16991,7 +16991,7 @@
             <Column fieldName="url" caption="Url" useComboBox="false"/>
             <Column fieldName="vernehmlassung" caption="Vernehmlassung" useComboBox="false"/>
             <Column fieldName="ALT_parlam_verbindung" caption="ALT Parlam Verbindung" useComboBox="false"/>
-            <Column fieldName="ALT_branche_id" caption="ALT Branche Id" useComboBox="false">
+            <Column fieldName="branche_id" caption="Branche Id" useComboBox="false">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" useComboBox="false">
@@ -17306,12 +17306,12 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ALT_branche_id" caption="ALT Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="ALT_branche_id" caption="ALT Branche Id" canSetNull="true">
+              <InlineEditColumn fieldName="branche_id" caption="Branche Id" canSetNull="true">
                 <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
@@ -17328,7 +17328,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="ALT_branche_id" caption="ALT Branche Id" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="branche_id" caption="Branche Id" canSetNull="true" defaultInsertValue="">
                 <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
@@ -17855,12 +17855,12 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ALT_branche_id" caption="ALT Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="ALT_branche_id" caption="ALT Branche Id" canSetNull="true">
+              <InlineEditColumn fieldName="branche_id" caption="Branche Id" canSetNull="true">
                 <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
@@ -17877,7 +17877,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="ALT_branche_id" caption="ALT Branche Id" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="branche_id" caption="Branche Id" canSetNull="true" defaultInsertValue="">
                 <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
@@ -18131,7 +18131,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="in_kommission" fileName="in_kommission" caption="In Kommission" shortCaption="In Kommission" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="in_kommission" fileName="in_kommission" caption="In Kommission" shortCaption="In Kommission" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -21288,6 +21288,6 @@ Build date: $build_date:$    </Footer>
   </Presentation>
   <UserCSS/>
   <ExcludedPaths/>
-  <DefaultPageProperties recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true"/>
+  <DefaultPageProperties recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true"/>
   <DefaultDataFormats numberAfterDecimal="4" DecimalSeparator="." ThousandSeparator="'" DateTimeFormat="d.m.Y H:i:s" DateFormat="d.m.Y" firstDayOfWeek="1"/>
 </Project>

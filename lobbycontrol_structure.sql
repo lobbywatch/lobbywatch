@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 24. Nov 2013 um 10:51
+-- Erstellungszeit: 24. Nov 2013 um 15:23
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -197,6 +197,12 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   KEY `zugangsberechtigung_id` (`zugangsberechtigung_id`),
   KEY `organisations_id` (`organisation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=1 ;
+
+--
+-- MIME TYPEN DER TABELLE `mandat`:
+--   `art`
+--       `Application_Octetstream`
+--
 
 --
 -- RELATIONEN DER TABELLE `mandat`:

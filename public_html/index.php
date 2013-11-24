@@ -28,7 +28,7 @@ include_once 'common/build_date.php';
     <br>
     <a href="/bearbeitung/interessenbindung.php">Bearbeitung</a>
     <br>
-    <a href="/oldauswertung">Alte Auswertung</a> (alte Daten, zum Vergleich, zur Kontrolle)
+    <a href="/oldauswertung">Alte Auswertung</a> (alte Daten, zum Vergleich/zur Kontrolle)
   </p>
   <p>
     <a href="/lobbycontrol_er.pdf">Datenmodell (PDF)</a><br/>

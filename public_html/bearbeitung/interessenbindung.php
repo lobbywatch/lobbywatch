@@ -244,7 +244,7 @@
             $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_branche_id');
+            $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -620,7 +620,7 @@
             $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_branche_id');
+            $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -681,7 +681,7 @@
             $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_branche_id');
+            $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -1195,7 +1195,7 @@
             $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_branche_id');
+            $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -1437,7 +1437,7 @@
             $field = new StringField('ALT_parlam_verbindung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_branche_id');
+            $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
