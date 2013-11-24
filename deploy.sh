@@ -1,23 +1,5 @@
 #!/bin/bash
 
-# ## -- Rsync Deploy config -- ##
-# # Be sure your public key is listed in your server's ~/.ssh/authorized_keys file
-# ssh_user       = "csvimsne@csvi-ms.net"
-# ssh_port       = "22"
-# document_root  = "/home/csvimsne/public_html/rk/"
-# rsync_delete   = true
-# deploy_default = "rsync"
-# 
-# desc "Deploy website via rsync"
-# task :rsync do
-#   exclude = ""
-#   if File.exists?('./rsync-exclude')
-#     exclude = "--exclude-from '#{File.expand_path('./rsync-exclude')}'"
-#   end
-#   puts "## Deploying website via Rsync"
-#   ok_failed system("rsync -avze 'ssh -p #{ssh_port}' #{exclude} #{"--delete" unless rsync_delete == false} #{public_dir}/ #{ssh_user}:#{document_root}")
-# end
-
 # fast="--exclude-from './rsync-fast-exclude'"
 # # Ref: http://linux.about.com/od/Bash_Scripting_Solutions/a/How-To-Pass-Arguments-To-A-Bash-Script.htm
 # while getopts f option
@@ -38,6 +20,7 @@ document_root="/home/csvimsne/public_html/lobbycontrol/"
 rsync_delete=false
 deploy_default="rsync"
 load_sql=false
+maintenance_mode=false
 
 
 fast="--exclude-from ./rsync-fast-exclude"
@@ -57,6 +40,7 @@ while test $# -gt 0; do
                         echo "-f, --full                deploy full with system files"
                         echo "-d, --dry-run             dry run"
                         echo "-s, --sql                 copy and run sql"
+                        echo "-m, --maintenance         set maintenance mode"
                         exit 0
                         ;;
                 -f|--full)
@@ -71,6 +55,10 @@ while test $# -gt 0; do
                         shift
                         load_sql=true
                         ;;
+                -m|--maintenance)
+                        shift
+                        maintenance_mode=true
+                        ;;
                 *)
                         break
                         ;;
@@ -84,6 +72,7 @@ if [ -f './rsync-exclude' ] ; then exclude="--exclude-from ./rsync-exclude" ; fi
 delete=""
 if $rsync_delete ; then delete='--delete --dry-run'; fi
 
+echo -e "<?php\n\$maintenance_mode = $maintenance_mode;" > $public_dir/settings/maintenance_mode.php;
 
 echo "## Prepare release"
 ./prepare_release.sh

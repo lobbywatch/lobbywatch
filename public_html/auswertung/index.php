@@ -1,4 +1,5 @@
 <?php
+require_once '../settings/settings.php';
 include_once '../common/build_date.php';
 ?>
 <!DOCTYPE html >

@@ -1,11 +1,10 @@
 <?php
-require_once 'settings/settings.php';
-include_once 'common/build_date.php';
+include_once 'build_date.php';
 ?>
 <!DOCTYPE html >
 <html>
 <head>
-<title>LobbyControl</title>
+<title>LobbyControl in Wartung</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="favicon.png" type="image/png" />
 <style></style>
@@ -20,16 +19,9 @@ include_once 'common/build_date.php';
 </script>
 </head>
 <body>
-  <h1>Lobbycontrol</h1>
-  <p><b>Webseite und Datenmodell sind noch in der Entwicklung. Alle Daten werden regelmässig überschrieben.</b></p>
-  <p><b>Deshalb noch keine dauerhaften Änderungen vornehmen.</b></p>
-  <p>
-    <a href="/auswertung">Auswertung</a> (Nicht an neues Datenmodell angepasst → funktioniert nicht mehr oder nur eingeschränkt. Alternative: Alte Auswertung benutzen)
-    <br>
-    <a href="/bearbeitung/interessenbindung.php">Bearbeitung</a>
-    <br>
-    <a href="/oldauswertung">Alte Auswertung (zur Kontrolle)</a>
-  </p>
+  <h1>Lobbycontrol in Wartung</h1>
+  <p><b>Wartungsarbeiten werden an Lobbycontrol vorgenommen.</b></p>
+  <p><b>Lobbycontrol steht deshalb nicht zur Verfügung.</b></p>
   <p>
     <a href="/lobbycontrol_er.pdf">Datenmodell (PDF)</a><br/>
     <a href="/wiki/tiki-index.php?page=Wertebereiche&structure=Lobbycontrol-Wiki">Wertebereiche auf Wiki</a><br/>
