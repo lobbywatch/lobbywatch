@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 23. Nov 2013 um 15:21
+-- Erstellungszeit: 24. Nov 2013 um 07:43
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `mandat` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 23. Nov 2013 um 14:18
+-- Erzeugt am: 23. Nov 2013 um 18:53
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -231,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilnahme an Vernehmlassungen',
   `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL COMMENT 'Bisherige Verbindung der Organisation ins Parlament',
   `ALT_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
-  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe',
+  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -287,7 +287,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 23. Nov 2013 um 14:06
+-- Erzeugt am: 23. Nov 2013 um 18:52
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -299,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
   `ratstyp` enum('NR','SR') NOT NULL COMMENT 'National- oder Ständerat?',
   `kanton` char(2) NOT NULL COMMENT 'Kantonskürzel',
-  `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei',
+  `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Ohne Partei, bedeutet parteilos.',
   `parteifunktion` set('mitglied','präsident','vizepräsident','fraktionschef') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
   `im_rat_seit` year(4) NOT NULL COMMENT 'Mitglied im Parlament seit',
   `Geburtstag` date DEFAULT NULL COMMENT 'Geburtstag des Parlamentariers',
