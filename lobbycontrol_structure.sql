@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 24. Nov 2013 um 07:43
+-- Erstellungszeit: 24. Nov 2013 um 10:51
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -123,15 +123,15 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
 --
 -- Tabellenstruktur für Tabelle `in_kommission`
 --
--- Erzeugt am: 16. Nov 2013 um 06:33
+-- Erzeugt am: 24. Nov 2013 um 07:02
 --
 
 DROP TABLE IF EXISTS `in_kommission`;
 CREATE TABLE IF NOT EXISTS `in_kommission` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel einer Kommissionszugehörigkeit',
-  `funktion` enum('präsident','vizepräsident','mitglied','') NOT NULL DEFAULT 'mitglied',
-  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Parlamentariers',
-  `kommission_id` int(11) NOT NULL COMMENT 'Fremdschlüssel einer Kommission',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
+  `kommission_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Kommission',
+  `funktion` enum('präsident','vizepräsident','mitglied') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Kommission',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
   PRIMARY KEY (`id`),
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `kommissions_id` (`kommission_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=3 ;
 
 --
 -- RELATIONEN DER TABELLE `in_kommission`:
@@ -199,12 +199,6 @@ CREATE TABLE IF NOT EXISTS `mandat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=1 ;
 
 --
--- MIME TYPEN DER TABELLE `mandat`:
---   `art`
---       `Application_Octetstream`
---
-
---
 -- RELATIONEN DER TABELLE `mandat`:
 --   `organisation_id`
 --       `organisation` -> `id`
@@ -217,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `mandat` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 23. Nov 2013 um 18:53
+-- Erzeugt am: 24. Nov 2013 um 07:12
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -230,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `url` varchar(255) NOT NULL COMMENT 'Link zur Webseite',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilnahme an Vernehmlassungen',
   `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL COMMENT 'Bisherige Verbindung der Organisation ins Parlament',
-  `ALT_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
+  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
@@ -238,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
-  KEY `idx_lobbytyp` (`ALT_branche_id`),
+  KEY `idx_lobbytyp` (`branche_id`),
   KEY `idx_lobbygroup` (`interessengruppe_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=351 ;
 
@@ -246,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
 -- RELATIONEN DER TABELLE `organisation`:
 --   `interessengruppe_id`
 --       `interessengruppe` -> `id`
---   `ALT_branche_id`
+--   `branche_id`
 --       `branche` -> `id`
 --
 
@@ -429,7 +423,7 @@ ALTER TABLE `mandat`
 --
 ALTER TABLE `organisation`
   ADD CONSTRAINT `fk_lo_lg` FOREIGN KEY (`interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
-  ADD CONSTRAINT `fk_lo_lt` FOREIGN KEY (`ALT_branche_id`) REFERENCES `branche` (`id`);
+  ADD CONSTRAINT `fk_lo_lt` FOREIGN KEY (`branche_id`) REFERENCES `branche` (`id`);
 
 --
 -- Constraints der Tabelle `organisation_beziehung`

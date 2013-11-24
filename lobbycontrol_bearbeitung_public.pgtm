@@ -18,7 +18,7 @@
   <FieldContainers/>
   <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
-      <Page type="table" tableName="parlamentarier" fileName="parlamentarier" caption="Parlamentarier" shortCaption="Parlamentarier" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="parlamentarier" fileName="parlamentarier" caption="Parlamentarier" shortCaption="Parlamentarier" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -244,7 +244,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei. Ohne Partei, bedeutet parteilos." useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -365,7 +365,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="Geburtstag" caption="Geburtstag" headerHint="Geburtstag des Parlamentariers" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="Geburtstag" caption="Geburtstag" canSetNull="true">
@@ -885,7 +885,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei. Ohne Partei, bedeutet parteilos." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -1006,7 +1006,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="Geburtstag" caption="Geburtstag" headerHint="Geburtstag des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="Geburtstag" caption="Geburtstag" canSetNull="true">
@@ -2122,7 +2122,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei. Ohne Partei, bedeutet parteilos." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -2243,7 +2243,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="Geburtstag" caption="Geburtstag" headerHint="Geburtstag des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="Geburtstag" caption="Geburtstag" canSetNull="true">
@@ -2763,7 +2763,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei. Ohne Partei, bedeutet parteilos." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -2884,7 +2884,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="Geburtstag" caption="Geburtstag" headerHint="Geburtstag des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="Geburtstag" caption="Geburtstag" canSetNull="true">
@@ -3211,7 +3211,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="interessengruppe" fileName="interessengruppe" caption="Interessengruppe" shortCaption="Interessengruppe" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="interessengruppe" fileName="interessengruppe" caption="Interessengruppe" shortCaption="Interessengruppe" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -4616,7 +4616,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="branche" fileName="branche" caption="Branche" shortCaption="Branche" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="branche" fileName="branche" caption="Branche" shortCaption="Branche" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -6183,7 +6183,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="kommission" fileName="kommission" caption="Kommission" shortCaption="Kommission" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="kommission" fileName="kommission" caption="Kommission" shortCaption="Kommission" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -7388,7 +7388,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="partei" fileName="partei" caption="Partei" shortCaption="Partei" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="partei" fileName="partei" caption="Partei" shortCaption="Partei" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -8997,7 +8997,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="zugangsberechtigung" fileName="zugangsberechtigung" caption="Zugangsberechtigung" shortCaption="Zugangsberechtigung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="zugangsberechtigung" fileName="zugangsberechtigung" caption="Zugangsberechtigung" shortCaption="Zugangsberechtigung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -11126,7 +11126,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="interessenbindung" fileName="interessenbindung" caption="Interessenbindung" shortCaption="Interessenbindung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="interessenbindung" fileName="interessenbindung" caption="Interessenbindung" shortCaption="Interessenbindung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -11345,7 +11345,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -11792,7 +11792,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -12659,7 +12659,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -13106,7 +13106,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -13367,7 +13367,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="mandat" fileName="mandat" caption="Mandat" shortCaption="Mandat" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="mandat" fileName="mandat" caption="Mandat" shortCaption="Mandat" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -13541,7 +13541,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -13943,7 +13943,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -14723,7 +14723,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -15125,7 +15125,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -15386,7 +15386,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="organisation" fileName="organisation" caption="Organisation" shortCaption="Organisation" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="organisation" fileName="organisation" caption="Organisation" shortCaption="Organisation" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -15732,7 +15732,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet." useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -16281,7 +16281,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -17346,7 +17346,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -17895,7 +17895,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -18140,56 +18140,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="funktion" caption="Funktion" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <ViewProperties type="text">
-                <DivAttributes bold="false" italic="false"/>
-              </ViewProperties>
-              <InlineEditColumn fieldName="funktion" caption="Funktion">
-                <EditProperties type="comboBox">
-                  <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
-                    <Value name="mitglied" caption="mitglied"/>
-                    <Value name="''" caption="''"/>
-                  </Values>
-                  <MFUItems/>
-                </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineEditColumn>
-              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
-                <EditProperties type="comboBox">
-                  <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
-                    <Value name="mitglied" caption="mitglied"/>
-                    <Value name="''" caption="''"/>
-                  </Values>
-                  <MFUItems/>
-                </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineInsertColumn>
-            </Column>
-            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel eines Parlamentariers" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel des Parlamentariers" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -18229,7 +18180,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel einer Kommission" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel der Kommission" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -18254,6 +18205,53 @@
               <InlineInsertColumn fieldName="kommission_id" caption="Kommission Id" defaultInsertValue="">
                 <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" headerHint="Funktion des Parlamentariers in der Kommission" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="funktion" caption="Funktion">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                  </Values>
                   <MFUItems/>
                 </EditProperties>
                 <Validators>
@@ -18441,56 +18439,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="funktion" caption="Funktion" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="text">
-                <DivAttributes bold="false" italic="false"/>
-              </ViewProperties>
-              <InlineEditColumn fieldName="funktion" caption="Funktion">
-                <EditProperties type="comboBox">
-                  <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
-                    <Value name="mitglied" caption="mitglied"/>
-                    <Value name="''" caption="''"/>
-                  </Values>
-                  <MFUItems/>
-                </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineEditColumn>
-              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
-                <EditProperties type="comboBox">
-                  <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
-                    <Value name="mitglied" caption="mitglied"/>
-                    <Value name="''" caption="''"/>
-                  </Values>
-                  <MFUItems/>
-                </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineInsertColumn>
-            </Column>
-            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel eines Parlamentariers" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -18530,7 +18479,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel einer Kommission" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel der Kommission" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -18555,6 +18504,53 @@
               <InlineInsertColumn fieldName="kommission_id" caption="Kommission Id" defaultInsertValue="">
                 <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" headerHint="Funktion des Parlamentariers in der Kommission" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="funktion" caption="Funktion">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                  </Values>
                   <MFUItems/>
                 </EditProperties>
                 <Validators>
@@ -18737,28 +18733,6 @@
             </Column>
           </SingleRecordViewColumns>
           <EditColumns>
-            <Column fieldName="funktion" caption="Funktion">
-              <EditProperties type="comboBox">
-                <Values>
-                  <Value name="präsident" caption="präsident"/>
-                  <Value name="vizepräsident" caption="vizepräsident"/>
-                  <Value name="mitglied" caption="mitglied"/>
-                  <Value name="''" caption="''"/>
-                </Values>
-                <MFUItems/>
-              </EditProperties>
-              <Validators>
-                <RequiredClientValidatorInfo enabled="false"/>
-                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                <EmailClientValidatorInfo enabled="false"/>
-                <CreditCardClientValidatorInfo enabled="false"/>
-                <NumberClientValidatorInfo enabled="false"/>
-                <DigitsClientValidatorInfo enabled="false"/>
-                <UrlClientValidatorInfo enabled="false"/>
-                <RegExpClientValidatorInfo enabled="false" expression=""/>
-              </Validators>
-            </Column>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier Id">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
@@ -18779,6 +18753,27 @@
             <Column fieldName="kommission_id" caption="Kommission Id">
               <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="präsident" caption="präsident"/>
+                  <Value name="vizepräsident" caption="vizepräsident"/>
+                  <Value name="mitglied" caption="mitglied"/>
+                </Values>
                 <MFUItems/>
               </EditProperties>
               <Validators>
@@ -18865,28 +18860,6 @@
             </Column>
           </EditColumns>
           <InsertColumns>
-            <Column fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
-              <EditProperties type="comboBox">
-                <Values>
-                  <Value name="präsident" caption="präsident"/>
-                  <Value name="vizepräsident" caption="vizepräsident"/>
-                  <Value name="mitglied" caption="mitglied"/>
-                  <Value name="''" caption="''"/>
-                </Values>
-                <MFUItems/>
-              </EditProperties>
-              <Validators>
-                <RequiredClientValidatorInfo enabled="false"/>
-                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                <EmailClientValidatorInfo enabled="false"/>
-                <CreditCardClientValidatorInfo enabled="false"/>
-                <NumberClientValidatorInfo enabled="false"/>
-                <DigitsClientValidatorInfo enabled="false"/>
-                <UrlClientValidatorInfo enabled="false"/>
-                <RegExpClientValidatorInfo enabled="false" expression=""/>
-              </Validators>
-            </Column>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" defaultInsertValue="">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
@@ -18907,6 +18880,27 @@
             <Column fieldName="kommission_id" caption="Kommission Id" defaultInsertValue="">
               <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
+                <MFUItems/>
+              </EditProperties>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="präsident" caption="präsident"/>
+                  <Value name="vizepräsident" caption="vizepräsident"/>
+                  <Value name="mitglied" caption="mitglied"/>
+                </Values>
                 <MFUItems/>
               </EditProperties>
               <Validators>
@@ -18994,13 +18988,13 @@
           </InsertColumns>
           <SimpleSearchColumns>
             <Column fieldName="id" caption="Id"/>
-            <Column fieldName="funktion" caption="Funktion"/>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier Id">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission Id">
               <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
+            <Column fieldName="funktion" caption="Funktion"/>
             <Column fieldName="notizen" caption="Notizen"/>
             <Column fieldName="created_visa" caption="Created Visa"/>
             <Column fieldName="created_date" caption="Created Date"/>
@@ -19009,13 +19003,13 @@
           </SimpleSearchColumns>
           <AdvancedSearchColumns>
             <Column fieldName="id" caption="Id" useComboBox="false"/>
-            <Column fieldName="funktion" caption="Funktion" useComboBox="false"/>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" useComboBox="false">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="kommission_id" caption="Kommission Id" useComboBox="false">
               <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
+            <Column fieldName="funktion" caption="Funktion" useComboBox="false"/>
             <Column fieldName="notizen" caption="Notizen" useComboBox="false"/>
             <Column fieldName="created_visa" caption="Created Visa" useComboBox="false"/>
             <Column fieldName="created_date" caption="Created Date" useComboBox="false"/>
@@ -19028,56 +19022,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="funktion" caption="Funktion" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="text">
-                <DivAttributes bold="false" italic="false"/>
-              </ViewProperties>
-              <InlineEditColumn fieldName="funktion" caption="Funktion">
-                <EditProperties type="comboBox">
-                  <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
-                    <Value name="mitglied" caption="mitglied"/>
-                    <Value name="''" caption="''"/>
-                  </Values>
-                  <MFUItems/>
-                </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineEditColumn>
-              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
-                <EditProperties type="comboBox">
-                  <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
-                    <Value name="mitglied" caption="mitglied"/>
-                    <Value name="''" caption="''"/>
-                  </Values>
-                  <MFUItems/>
-                </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineInsertColumn>
-            </Column>
-            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel eines Parlamentariers" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -19117,7 +19062,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel einer Kommission" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel der Kommission" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -19142,6 +19087,53 @@
               <InlineInsertColumn fieldName="kommission_id" caption="Kommission Id" defaultInsertValue="">
                 <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" headerHint="Funktion des Parlamentariers in der Kommission" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="funktion" caption="Funktion">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                  </Values>
                   <MFUItems/>
                 </EditProperties>
                 <Validators>
@@ -19329,56 +19321,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="funktion" caption="Funktion" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="text">
-                <DivAttributes bold="false" italic="false"/>
-              </ViewProperties>
-              <InlineEditColumn fieldName="funktion" caption="Funktion">
-                <EditProperties type="comboBox">
-                  <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
-                    <Value name="mitglied" caption="mitglied"/>
-                    <Value name="''" caption="''"/>
-                  </Values>
-                  <MFUItems/>
-                </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineEditColumn>
-              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
-                <EditProperties type="comboBox">
-                  <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
-                    <Value name="mitglied" caption="mitglied"/>
-                    <Value name="''" caption="''"/>
-                  </Values>
-                  <MFUItems/>
-                </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineInsertColumn>
-            </Column>
-            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel eines Parlamentariers" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -19418,7 +19361,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel einer Kommission" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="kommission_id" caption="Kommission Id" headerHint="Fremdschlüssel der Kommission" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -19443,6 +19386,53 @@
               <InlineInsertColumn fieldName="kommission_id" caption="Kommission Id" defaultInsertValue="">
                 <Lookup tableName="kommission" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="funktion" caption="Funktion" headerHint="Funktion des Parlamentariers in der Kommission" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="funktion" caption="Funktion">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="präsident" caption="präsident"/>
+                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="mitglied" caption="mitglied"/>
+                  </Values>
                   <MFUItems/>
                 </EditProperties>
                 <Validators>
@@ -19654,7 +19644,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="organisation_beziehung" fileName="organisation_beziehung" caption="Organisation Beziehung" shortCaption="Organisation Beziehung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="organisation_beziehung" fileName="organisation_beziehung" caption="Organisation Beziehung" shortCaption="Organisation Beziehung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>

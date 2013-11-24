@@ -666,7 +666,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Fremdschlüssel Partei'));
+            $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Ohne Partei, bedeutet parteilos.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -752,7 +752,7 @@
             // View column for Geburtstag field
             //
             $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -1143,7 +1143,7 @@
             // View column for Geburtstag field
             //
             $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1827,7 +1827,7 @@
             // View column for Geburtstag field
             //
             $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1967,7 +1967,7 @@
             // View column for Geburtstag field
             //
             $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

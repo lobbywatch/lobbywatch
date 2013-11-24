@@ -870,7 +870,8 @@ table td {
 }
 
 #canvasElement {
-  margin: 0 20px 0 0px; width : 500 px;
+  margin: 0 20px 0 0px;
+  width: 500 px;
   height: 500 px;
   float: left;
   width: 500 px;
@@ -895,18 +896,23 @@ table td {
     <p class='logobild'>
       <img src='lobbybilder/lobbyismus.png' />
     </p>
+    <div>
+      <p>
+        Auswertungsseite von <a href="/">Lobbycontrol</a>.
+      </p>
+      <p>Build date: <?php print $build_date;?></p>
+    </div>
   </div>
   <div style='clear: both'>
 
     <ul id='horiz_menu'>
       <li class='Parlamentarier' data-typ='parlam'><a href='#'>Parlamentarier</a></li>
-      <li class='Lobbyorganisationen' data-typ='lobbyorg'><a
-        href='#'>Lobbyorganisationen</a></li>
-      <li class='Themensuche' data-typ='themen'><a href='#'>Themensuche</a></li>
+      <li class='Lobbyorganisationen' data-typ='lobbyorg'><a href='#'><strike>Lobbyorganisationen</strike></a></li>
+      <li class='Themensuche' data-typ='themen'><a href='#'><strike>Themensuche</strike></a></li>
       <li class='Kommissionen' data-typ='kommiss'><a href='#'>Kommissionen
           & Gesch&auml;fte</a></li>
       <li class='Statistik' data-typ='statistik'><a href='#'>Statistik</a></li>
-      <li class='Info Lobbycontrol' data-typ='konzept'><a href='#'>Konzept</a></li>
+      <li class='Info Lobbycontrol' data-typ='konzept'><a href='#'><strike>Konzept</strike></a></li>
 
     </ul>
 
@@ -936,9 +942,5 @@ table td {
     <button id='reload'>Neue Abfrage</button>
   </div>
   <!--<div id="footer">&copy;LobbyControl Otto Hostettler, Andreas Lutz 2012</div>-->
-  <footer>
-  <p>Auswertungsseite von <a href="/">Lobbycontrol</a>.</p>
-  <p>Build date: <?php print $build_date;?></p>
-  </footer>
 </body>
 </html>

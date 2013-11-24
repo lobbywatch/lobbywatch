@@ -24,15 +24,15 @@ include_once 'common/build_date.php';
   <p><b>Webseite und Datenmodell sind noch in der Entwicklung. Alle Daten werden regelmässig überschrieben.</b></p>
   <p><b>Deshalb noch keine dauerhaften Änderungen vornehmen.</b></p>
   <p>
-    <a href="/auswertung">Auswertung</a> (Nicht an neues Datenmodell angepasst → funktioniert nicht mehr oder nur eingeschränkt. Alternative: Alte Auswertung benutzen)
+    <a href="/auswertung">Auswertung</a> (Neue Daten, durchgestrichene Menus funktionieren nicht, andere rudimentär getestet)
     <br>
     <a href="/bearbeitung/interessenbindung.php">Bearbeitung</a>
     <br>
-    <a href="/oldauswertung">Alte Auswertung (zur Kontrolle)</a>
+    <a href="/oldauswertung">Alte Auswertung</a> (alte Daten, zum Vergleich, zur Kontrolle)
   </p>
   <p>
     <a href="/lobbycontrol_er.pdf">Datenmodell (PDF)</a><br/>
-    <a href="/wiki/tiki-index.php?page=Wertebereiche&structure=Lobbycontrol-Wiki">Wertebereiche auf Wiki</a><br/>
+    <a href="/wiki/tiki-index.php?page=Wertebereiche">Wertebereiche auf Wiki</a><br/>
   </p>
   <p>
     <a href="/wiki">Wiki</a><br/>
