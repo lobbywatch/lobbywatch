@@ -63,7 +63,7 @@ while test $# -gt 0; do
                         ;;
                 -p|--production)
                         shift
-                        env=""
+                        env="production"
                         ;;
                 *)
                         break
@@ -80,7 +80,10 @@ if $rsync_delete ; then delete='--delete --dry-run'; fi
 
 echo -e "<?php\n\$maintenance_mode = $maintenance_mode;" > $public_dir/settings/maintenance_mode.php;
 
-if [[ "$env" != "" ]] ; then
+if [[ "$env" = "production" ]] ; then
+  env_suffix=
+  env_dir_suffix=
+else
   env_suffix=$env
   env_dir_suffix=$env/
 fi
