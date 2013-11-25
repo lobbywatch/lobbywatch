@@ -414,9 +414,33 @@
             //
             // Edit column for kanton field
             //
-            $editor = new TextEdit('kanton_edit');
-            $editor->SetSize(2);
-            $editor->SetMaxLength(2);
+            $editor = new ComboBox('kanton_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('AG', $this->RenderText('AG'));
+            $editor->AddValue('AR', $this->RenderText('AR'));
+            $editor->AddValue('AI', $this->RenderText('AI'));
+            $editor->AddValue('BL', $this->RenderText('BL'));
+            $editor->AddValue('BS', $this->RenderText('BS'));
+            $editor->AddValue('BE', $this->RenderText('BE'));
+            $editor->AddValue('FR', $this->RenderText('FR'));
+            $editor->AddValue('GE', $this->RenderText('GE'));
+            $editor->AddValue('GL', $this->RenderText('GL'));
+            $editor->AddValue('GR', $this->RenderText('GR'));
+            $editor->AddValue('JU', $this->RenderText('JU'));
+            $editor->AddValue('LU', $this->RenderText('LU'));
+            $editor->AddValue('NE', $this->RenderText('NE'));
+            $editor->AddValue('NW', $this->RenderText('NW'));
+            $editor->AddValue('OW', $this->RenderText('OW'));
+            $editor->AddValue('SH', $this->RenderText('SH'));
+            $editor->AddValue('SZ', $this->RenderText('SZ'));
+            $editor->AddValue('SO', $this->RenderText('SO'));
+            $editor->AddValue('SG', $this->RenderText('SG'));
+            $editor->AddValue('TI', $this->RenderText('TI'));
+            $editor->AddValue('TG', $this->RenderText('TG'));
+            $editor->AddValue('UR', $this->RenderText('UR'));
+            $editor->AddValue('VD', $this->RenderText('VD'));
+            $editor->AddValue('VS', $this->RenderText('VS'));
+            $editor->AddValue('ZG', $this->RenderText('ZG'));
+            $editor->AddValue('ZH', $this->RenderText('ZH'));
             $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -428,9 +452,33 @@
             //
             // Edit column for kanton field
             //
-            $editor = new TextEdit('kanton_edit');
-            $editor->SetSize(2);
-            $editor->SetMaxLength(2);
+            $editor = new ComboBox('kanton_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('AG', $this->RenderText('AG'));
+            $editor->AddValue('AR', $this->RenderText('AR'));
+            $editor->AddValue('AI', $this->RenderText('AI'));
+            $editor->AddValue('BL', $this->RenderText('BL'));
+            $editor->AddValue('BS', $this->RenderText('BS'));
+            $editor->AddValue('BE', $this->RenderText('BE'));
+            $editor->AddValue('FR', $this->RenderText('FR'));
+            $editor->AddValue('GE', $this->RenderText('GE'));
+            $editor->AddValue('GL', $this->RenderText('GL'));
+            $editor->AddValue('GR', $this->RenderText('GR'));
+            $editor->AddValue('JU', $this->RenderText('JU'));
+            $editor->AddValue('LU', $this->RenderText('LU'));
+            $editor->AddValue('NE', $this->RenderText('NE'));
+            $editor->AddValue('NW', $this->RenderText('NW'));
+            $editor->AddValue('OW', $this->RenderText('OW'));
+            $editor->AddValue('SH', $this->RenderText('SH'));
+            $editor->AddValue('SZ', $this->RenderText('SZ'));
+            $editor->AddValue('SO', $this->RenderText('SO'));
+            $editor->AddValue('SG', $this->RenderText('SG'));
+            $editor->AddValue('TI', $this->RenderText('TI'));
+            $editor->AddValue('TG', $this->RenderText('TG'));
+            $editor->AddValue('UR', $this->RenderText('UR'));
+            $editor->AddValue('VD', $this->RenderText('VD'));
+            $editor->AddValue('VS', $this->RenderText('VS'));
+            $editor->AddValue('ZG', $this->RenderText('ZG'));
+            $editor->AddValue('ZH', $this->RenderText('ZH'));
             $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1261,9 +1309,33 @@
             //
             // Edit column for kanton field
             //
-            $editor = new TextEdit('kanton_edit');
-            $editor->SetSize(2);
-            $editor->SetMaxLength(2);
+            $editor = new ComboBox('kanton_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('AG', $this->RenderText('AG'));
+            $editor->AddValue('AR', $this->RenderText('AR'));
+            $editor->AddValue('AI', $this->RenderText('AI'));
+            $editor->AddValue('BL', $this->RenderText('BL'));
+            $editor->AddValue('BS', $this->RenderText('BS'));
+            $editor->AddValue('BE', $this->RenderText('BE'));
+            $editor->AddValue('FR', $this->RenderText('FR'));
+            $editor->AddValue('GE', $this->RenderText('GE'));
+            $editor->AddValue('GL', $this->RenderText('GL'));
+            $editor->AddValue('GR', $this->RenderText('GR'));
+            $editor->AddValue('JU', $this->RenderText('JU'));
+            $editor->AddValue('LU', $this->RenderText('LU'));
+            $editor->AddValue('NE', $this->RenderText('NE'));
+            $editor->AddValue('NW', $this->RenderText('NW'));
+            $editor->AddValue('OW', $this->RenderText('OW'));
+            $editor->AddValue('SH', $this->RenderText('SH'));
+            $editor->AddValue('SZ', $this->RenderText('SZ'));
+            $editor->AddValue('SO', $this->RenderText('SO'));
+            $editor->AddValue('SG', $this->RenderText('SG'));
+            $editor->AddValue('TI', $this->RenderText('TI'));
+            $editor->AddValue('TG', $this->RenderText('TG'));
+            $editor->AddValue('UR', $this->RenderText('UR'));
+            $editor->AddValue('VD', $this->RenderText('VD'));
+            $editor->AddValue('VS', $this->RenderText('VS'));
+            $editor->AddValue('ZG', $this->RenderText('ZG'));
+            $editor->AddValue('ZH', $this->RenderText('ZH'));
             $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1527,9 +1599,33 @@
             //
             // Edit column for kanton field
             //
-            $editor = new TextEdit('kanton_edit');
-            $editor->SetSize(2);
-            $editor->SetMaxLength(2);
+            $editor = new ComboBox('kanton_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('AG', $this->RenderText('AG'));
+            $editor->AddValue('AR', $this->RenderText('AR'));
+            $editor->AddValue('AI', $this->RenderText('AI'));
+            $editor->AddValue('BL', $this->RenderText('BL'));
+            $editor->AddValue('BS', $this->RenderText('BS'));
+            $editor->AddValue('BE', $this->RenderText('BE'));
+            $editor->AddValue('FR', $this->RenderText('FR'));
+            $editor->AddValue('GE', $this->RenderText('GE'));
+            $editor->AddValue('GL', $this->RenderText('GL'));
+            $editor->AddValue('GR', $this->RenderText('GR'));
+            $editor->AddValue('JU', $this->RenderText('JU'));
+            $editor->AddValue('LU', $this->RenderText('LU'));
+            $editor->AddValue('NE', $this->RenderText('NE'));
+            $editor->AddValue('NW', $this->RenderText('NW'));
+            $editor->AddValue('OW', $this->RenderText('OW'));
+            $editor->AddValue('SH', $this->RenderText('SH'));
+            $editor->AddValue('SZ', $this->RenderText('SZ'));
+            $editor->AddValue('SO', $this->RenderText('SO'));
+            $editor->AddValue('SG', $this->RenderText('SG'));
+            $editor->AddValue('TI', $this->RenderText('TI'));
+            $editor->AddValue('TG', $this->RenderText('TG'));
+            $editor->AddValue('UR', $this->RenderText('UR'));
+            $editor->AddValue('VD', $this->RenderText('VD'));
+            $editor->AddValue('VS', $this->RenderText('VS'));
+            $editor->AddValue('ZG', $this->RenderText('ZG'));
+            $editor->AddValue('ZH', $this->RenderText('ZH'));
             $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);

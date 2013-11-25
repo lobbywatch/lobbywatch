@@ -18,7 +18,7 @@
   <FieldContainers/>
   <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
-      <Page type="table" tableName="parlamentarier" fileName="parlamentarier" caption="Parlamentarier" shortCaption="Parlamentarier" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="parlamentarier" fileName="parlamentarier" caption="Parlamentarier" shortCaption="Parlamentarier" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -143,7 +143,37 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="kanton" caption="Kanton">
-                <EditProperties type="textBox" size="2" maxLength="2"/>
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="AG" caption="AG"/>
+                    <Value name="AR" caption="AR"/>
+                    <Value name="AI" caption="AI"/>
+                    <Value name="BL" caption="BL"/>
+                    <Value name="BS" caption="BS"/>
+                    <Value name="BE" caption="BE"/>
+                    <Value name="FR" caption="FR"/>
+                    <Value name="GE" caption="GE"/>
+                    <Value name="GL" caption="GL"/>
+                    <Value name="GR" caption="GR"/>
+                    <Value name="JU" caption="JU"/>
+                    <Value name="LU" caption="LU"/>
+                    <Value name="NE" caption="NE"/>
+                    <Value name="NW" caption="NW"/>
+                    <Value name="OW" caption="OW"/>
+                    <Value name="SH" caption="SH"/>
+                    <Value name="SZ" caption="SZ"/>
+                    <Value name="SO" caption="SO"/>
+                    <Value name="SG" caption="SG"/>
+                    <Value name="TI" caption="TI"/>
+                    <Value name="TG" caption="TG"/>
+                    <Value name="UR" caption="UR"/>
+                    <Value name="VD" caption="VD"/>
+                    <Value name="VS" caption="VS"/>
+                    <Value name="ZG" caption="ZG"/>
+                    <Value name="ZH" caption="ZH"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -157,7 +187,37 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="kanton" caption="Kanton" defaultInsertValue="">
-                <EditProperties type="textBox" size="2" maxLength="2"/>
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="AG" caption="AG"/>
+                    <Value name="AR" caption="AR"/>
+                    <Value name="AI" caption="AI"/>
+                    <Value name="BL" caption="BL"/>
+                    <Value name="BS" caption="BS"/>
+                    <Value name="BE" caption="BE"/>
+                    <Value name="FR" caption="FR"/>
+                    <Value name="GE" caption="GE"/>
+                    <Value name="GL" caption="GL"/>
+                    <Value name="GR" caption="GR"/>
+                    <Value name="JU" caption="JU"/>
+                    <Value name="LU" caption="LU"/>
+                    <Value name="NE" caption="NE"/>
+                    <Value name="NW" caption="NW"/>
+                    <Value name="OW" caption="OW"/>
+                    <Value name="SH" caption="SH"/>
+                    <Value name="SZ" caption="SZ"/>
+                    <Value name="SO" caption="SO"/>
+                    <Value name="SG" caption="SG"/>
+                    <Value name="TI" caption="TI"/>
+                    <Value name="TG" caption="TG"/>
+                    <Value name="UR" caption="UR"/>
+                    <Value name="VD" caption="VD"/>
+                    <Value name="VS" caption="VS"/>
+                    <Value name="ZG" caption="ZG"/>
+                    <Value name="ZH" caption="ZH"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -784,7 +844,37 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="kanton" caption="Kanton">
-                <EditProperties type="textBox" size="2" maxLength="2"/>
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="AG" caption="AG"/>
+                    <Value name="AR" caption="AR"/>
+                    <Value name="AI" caption="AI"/>
+                    <Value name="BL" caption="BL"/>
+                    <Value name="BS" caption="BS"/>
+                    <Value name="BE" caption="BE"/>
+                    <Value name="FR" caption="FR"/>
+                    <Value name="GE" caption="GE"/>
+                    <Value name="GL" caption="GL"/>
+                    <Value name="GR" caption="GR"/>
+                    <Value name="JU" caption="JU"/>
+                    <Value name="LU" caption="LU"/>
+                    <Value name="NE" caption="NE"/>
+                    <Value name="NW" caption="NW"/>
+                    <Value name="OW" caption="OW"/>
+                    <Value name="SH" caption="SH"/>
+                    <Value name="SZ" caption="SZ"/>
+                    <Value name="SO" caption="SO"/>
+                    <Value name="SG" caption="SG"/>
+                    <Value name="TI" caption="TI"/>
+                    <Value name="TG" caption="TG"/>
+                    <Value name="UR" caption="UR"/>
+                    <Value name="VD" caption="VD"/>
+                    <Value name="VS" caption="VS"/>
+                    <Value name="ZG" caption="ZG"/>
+                    <Value name="ZH" caption="ZH"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -798,7 +888,37 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="kanton" caption="Kanton" defaultInsertValue="">
-                <EditProperties type="textBox" size="2" maxLength="2"/>
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="AG" caption="AG"/>
+                    <Value name="AR" caption="AR"/>
+                    <Value name="AI" caption="AI"/>
+                    <Value name="BL" caption="BL"/>
+                    <Value name="BS" caption="BS"/>
+                    <Value name="BE" caption="BE"/>
+                    <Value name="FR" caption="FR"/>
+                    <Value name="GE" caption="GE"/>
+                    <Value name="GL" caption="GL"/>
+                    <Value name="GR" caption="GR"/>
+                    <Value name="JU" caption="JU"/>
+                    <Value name="LU" caption="LU"/>
+                    <Value name="NE" caption="NE"/>
+                    <Value name="NW" caption="NW"/>
+                    <Value name="OW" caption="OW"/>
+                    <Value name="SH" caption="SH"/>
+                    <Value name="SZ" caption="SZ"/>
+                    <Value name="SO" caption="SO"/>
+                    <Value name="SG" caption="SG"/>
+                    <Value name="TI" caption="TI"/>
+                    <Value name="TG" caption="TG"/>
+                    <Value name="UR" caption="UR"/>
+                    <Value name="VD" caption="VD"/>
+                    <Value name="VS" caption="VS"/>
+                    <Value name="ZG" caption="ZG"/>
+                    <Value name="ZH" caption="ZH"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -1353,7 +1473,37 @@
               </Validators>
             </Column>
             <Column fieldName="kanton" caption="Kanton">
-              <EditProperties type="textBox" size="2" maxLength="2"/>
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="AG" caption="AG"/>
+                  <Value name="AR" caption="AR"/>
+                  <Value name="AI" caption="AI"/>
+                  <Value name="BL" caption="BL"/>
+                  <Value name="BS" caption="BS"/>
+                  <Value name="BE" caption="BE"/>
+                  <Value name="FR" caption="FR"/>
+                  <Value name="GE" caption="GE"/>
+                  <Value name="GL" caption="GL"/>
+                  <Value name="GR" caption="GR"/>
+                  <Value name="JU" caption="JU"/>
+                  <Value name="LU" caption="LU"/>
+                  <Value name="NE" caption="NE"/>
+                  <Value name="NW" caption="NW"/>
+                  <Value name="OW" caption="OW"/>
+                  <Value name="SH" caption="SH"/>
+                  <Value name="SZ" caption="SZ"/>
+                  <Value name="SO" caption="SO"/>
+                  <Value name="SG" caption="SG"/>
+                  <Value name="TI" caption="TI"/>
+                  <Value name="TG" caption="TG"/>
+                  <Value name="UR" caption="UR"/>
+                  <Value name="VD" caption="VD"/>
+                  <Value name="VS" caption="VS"/>
+                  <Value name="ZG" caption="ZG"/>
+                  <Value name="ZH" caption="ZH"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -1626,7 +1776,37 @@
               </Validators>
             </Column>
             <Column fieldName="kanton" caption="Kanton" defaultInsertValue="">
-              <EditProperties type="textBox" size="2" maxLength="2"/>
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="AG" caption="AG"/>
+                  <Value name="AR" caption="AR"/>
+                  <Value name="AI" caption="AI"/>
+                  <Value name="BL" caption="BL"/>
+                  <Value name="BS" caption="BS"/>
+                  <Value name="BE" caption="BE"/>
+                  <Value name="FR" caption="FR"/>
+                  <Value name="GE" caption="GE"/>
+                  <Value name="GL" caption="GL"/>
+                  <Value name="GR" caption="GR"/>
+                  <Value name="JU" caption="JU"/>
+                  <Value name="LU" caption="LU"/>
+                  <Value name="NE" caption="NE"/>
+                  <Value name="NW" caption="NW"/>
+                  <Value name="OW" caption="OW"/>
+                  <Value name="SH" caption="SH"/>
+                  <Value name="SZ" caption="SZ"/>
+                  <Value name="SO" caption="SO"/>
+                  <Value name="SG" caption="SG"/>
+                  <Value name="TI" caption="TI"/>
+                  <Value name="TG" caption="TG"/>
+                  <Value name="UR" caption="UR"/>
+                  <Value name="VD" caption="VD"/>
+                  <Value name="VS" caption="VS"/>
+                  <Value name="ZG" caption="ZG"/>
+                  <Value name="ZH" caption="ZH"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2021,7 +2201,37 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="kanton" caption="Kanton">
-                <EditProperties type="textBox" size="2" maxLength="2"/>
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="AG" caption="AG"/>
+                    <Value name="AR" caption="AR"/>
+                    <Value name="AI" caption="AI"/>
+                    <Value name="BL" caption="BL"/>
+                    <Value name="BS" caption="BS"/>
+                    <Value name="BE" caption="BE"/>
+                    <Value name="FR" caption="FR"/>
+                    <Value name="GE" caption="GE"/>
+                    <Value name="GL" caption="GL"/>
+                    <Value name="GR" caption="GR"/>
+                    <Value name="JU" caption="JU"/>
+                    <Value name="LU" caption="LU"/>
+                    <Value name="NE" caption="NE"/>
+                    <Value name="NW" caption="NW"/>
+                    <Value name="OW" caption="OW"/>
+                    <Value name="SH" caption="SH"/>
+                    <Value name="SZ" caption="SZ"/>
+                    <Value name="SO" caption="SO"/>
+                    <Value name="SG" caption="SG"/>
+                    <Value name="TI" caption="TI"/>
+                    <Value name="TG" caption="TG"/>
+                    <Value name="UR" caption="UR"/>
+                    <Value name="VD" caption="VD"/>
+                    <Value name="VS" caption="VS"/>
+                    <Value name="ZG" caption="ZG"/>
+                    <Value name="ZH" caption="ZH"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2035,7 +2245,37 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="kanton" caption="Kanton" defaultInsertValue="">
-                <EditProperties type="textBox" size="2" maxLength="2"/>
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="AG" caption="AG"/>
+                    <Value name="AR" caption="AR"/>
+                    <Value name="AI" caption="AI"/>
+                    <Value name="BL" caption="BL"/>
+                    <Value name="BS" caption="BS"/>
+                    <Value name="BE" caption="BE"/>
+                    <Value name="FR" caption="FR"/>
+                    <Value name="GE" caption="GE"/>
+                    <Value name="GL" caption="GL"/>
+                    <Value name="GR" caption="GR"/>
+                    <Value name="JU" caption="JU"/>
+                    <Value name="LU" caption="LU"/>
+                    <Value name="NE" caption="NE"/>
+                    <Value name="NW" caption="NW"/>
+                    <Value name="OW" caption="OW"/>
+                    <Value name="SH" caption="SH"/>
+                    <Value name="SZ" caption="SZ"/>
+                    <Value name="SO" caption="SO"/>
+                    <Value name="SG" caption="SG"/>
+                    <Value name="TI" caption="TI"/>
+                    <Value name="TG" caption="TG"/>
+                    <Value name="UR" caption="UR"/>
+                    <Value name="VD" caption="VD"/>
+                    <Value name="VS" caption="VS"/>
+                    <Value name="ZG" caption="ZG"/>
+                    <Value name="ZH" caption="ZH"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2662,7 +2902,37 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="kanton" caption="Kanton">
-                <EditProperties type="textBox" size="2" maxLength="2"/>
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="AG" caption="AG"/>
+                    <Value name="AR" caption="AR"/>
+                    <Value name="AI" caption="AI"/>
+                    <Value name="BL" caption="BL"/>
+                    <Value name="BS" caption="BS"/>
+                    <Value name="BE" caption="BE"/>
+                    <Value name="FR" caption="FR"/>
+                    <Value name="GE" caption="GE"/>
+                    <Value name="GL" caption="GL"/>
+                    <Value name="GR" caption="GR"/>
+                    <Value name="JU" caption="JU"/>
+                    <Value name="LU" caption="LU"/>
+                    <Value name="NE" caption="NE"/>
+                    <Value name="NW" caption="NW"/>
+                    <Value name="OW" caption="OW"/>
+                    <Value name="SH" caption="SH"/>
+                    <Value name="SZ" caption="SZ"/>
+                    <Value name="SO" caption="SO"/>
+                    <Value name="SG" caption="SG"/>
+                    <Value name="TI" caption="TI"/>
+                    <Value name="TG" caption="TG"/>
+                    <Value name="UR" caption="UR"/>
+                    <Value name="VD" caption="VD"/>
+                    <Value name="VS" caption="VS"/>
+                    <Value name="ZG" caption="ZG"/>
+                    <Value name="ZH" caption="ZH"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2676,7 +2946,37 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="kanton" caption="Kanton" defaultInsertValue="">
-                <EditProperties type="textBox" size="2" maxLength="2"/>
+                <EditProperties type="comboBox">
+                  <Values>
+                    <Value name="AG" caption="AG"/>
+                    <Value name="AR" caption="AR"/>
+                    <Value name="AI" caption="AI"/>
+                    <Value name="BL" caption="BL"/>
+                    <Value name="BS" caption="BS"/>
+                    <Value name="BE" caption="BE"/>
+                    <Value name="FR" caption="FR"/>
+                    <Value name="GE" caption="GE"/>
+                    <Value name="GL" caption="GL"/>
+                    <Value name="GR" caption="GR"/>
+                    <Value name="JU" caption="JU"/>
+                    <Value name="LU" caption="LU"/>
+                    <Value name="NE" caption="NE"/>
+                    <Value name="NW" caption="NW"/>
+                    <Value name="OW" caption="OW"/>
+                    <Value name="SH" caption="SH"/>
+                    <Value name="SZ" caption="SZ"/>
+                    <Value name="SO" caption="SO"/>
+                    <Value name="SG" caption="SG"/>
+                    <Value name="TI" caption="TI"/>
+                    <Value name="TG" caption="TG"/>
+                    <Value name="UR" caption="UR"/>
+                    <Value name="VD" caption="VD"/>
+                    <Value name="VS" caption="VS"/>
+                    <Value name="ZG" caption="ZG"/>
+                    <Value name="ZH" caption="ZH"/>
+                  </Values>
+                  <MFUItems/>
+                </EditProperties>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
