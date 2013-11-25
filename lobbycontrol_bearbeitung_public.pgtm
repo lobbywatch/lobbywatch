@@ -21950,10 +21950,10 @@ $rowData['updated_visa'] = $userName;
 $rowData['updated_date'] = $datetime;      </BeforeUpdateRecord>
     </EventHandlers>
     <Header>
-&lt;h1&gt;Lobbycontrol Datenbearbeitung&lt;/h1&gt;    </Header>
+&lt;h1&gt;Lobbycontrol Datenbearbeitung $env&lt;/h1&gt;    </Header>
     <Footer>
-Bearbeitungsseiten von &lt;a href=&quot;/&quot;&gt;Lobbycontrol&lt;/a&gt;.&lt;br&gt;
-Build date: $build_date:$    </Footer>
+Bearbeitungsseiten von &lt;a href=&quot;/$env_dir&quot;&gt;Lobbycontrol $env&lt;/a&gt;.&lt;br&gt;
+Mode: $env / Build date: $build_date:$    </Footer>
   </Presentation>
   <UserCSS/>
   <ExcludedPaths/>

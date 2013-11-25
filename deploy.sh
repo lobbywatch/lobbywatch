@@ -21,6 +21,7 @@ rsync_delete=false
 deploy_default="rsync"
 load_sql=false
 maintenance_mode=false
+env="test"
 
 
 fast="--exclude-from ./rsync-fast-exclude"
@@ -41,6 +42,7 @@ while test $# -gt 0; do
                         echo "-d, --dry-run             dry run"
                         echo "-s, --sql                 copy and run sql"
                         echo "-m, --maintenance         set maintenance mode"
+                        echo "-p, --production          deploy to production, otherwise test"
                         exit 0
                         ;;
                 -f|--full)
@@ -59,6 +61,10 @@ while test $# -gt 0; do
                         shift
                         maintenance_mode=true
                         ;;
+                -p|--production)
+                        shift
+                        env=""
+                        ;;
                 *)
                         break
                         ;;
@@ -74,18 +80,25 @@ if $rsync_delete ; then delete='--delete --dry-run'; fi
 
 echo -e "<?php\n\$maintenance_mode = $maintenance_mode;" > $public_dir/settings/maintenance_mode.php;
 
+if [[ "$env" != "" ]] ; then
+  env_suffix=$env
+  env_dir_suffix=$env/
+fi
+
+echo -e "Environment: $env"
+
 echo "## Prepare release"
-./prepare_release.sh
+./prepare_release.sh $env_suffix
 
 echo "## Deploying website via Rsync"
-rsync -avze "ssh -p $ssh_port" $exclude $fast $delete --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root
+rsync -avze "ssh -p $ssh_port" $exclude $fast $delete --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir_suffix
 
 if $load_sql ; then
   echo "## Copy DB via Rsync"
-  include_db="--include prod*"
+  include_db="--include deploy_*"
   rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir
 
   echo "## Run SQL script"
-  #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/prod_load_db.sh
-  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -c ./prod_load_db.sh"
+  #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
+  ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -c ./deploy_load_db.sh"
 fi

@@ -95,12 +95,14 @@ do
   cat "$file.bak" \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\nrequire_once dirname(__FILE__) . "\/..\/settings\/settings.php";\nrequire_once dirname(__FILE__) . "\/\.\.\/custom\/custom.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/build_date.php";\nrequire_once dirname(__FILE__) . "\/..\/common\/utils.php";/' \
   | perl -0 -p -e's/(?<=GetGlobalConnectionOptions\(\)).*?(?=\})/\{\n    \/\/ Custom modification: Use \$db_connection from settings.php\n    global \$db_connection;\n    return \$db_connection;\n/s' \
-  | perl -0 -p -e's/(?<=GetPagesFooter\(\)).*?\{/\{\n    global \$build_date;\n/s' \
   | perl -p -e's/(\/\/\s*?)(?=defineXXX)//' \
   | perl -p -e's/(\/\/\s*?)(?=error_reportingXXX)//' \
   | perl -p -e's/(\/\/\s*?)(?=ini_setXXX)//' \
   | perl -p -e's/Handler\(\$page, \$rowData/Handler\(\$page, &\$rowData/g' \
-  | perl -p -e's/\$build_date:\$/'\'' \. "\$build_date" \. '\''/' \
+  | perl -p -e's/\$build_date:\$/'\'' \. "\$build_date" \. '\''/g' \
+  | perl -p -e's/\$env_dir/'\'' \. \$env_dir \. '\''/g' \
+  | perl -p -e's/\$env(?!_dir)/'\'' \. \$env \. '\''/g' \
+  | perl -0 -p -e's/(?<=GetPages(Footer|Header)\(\)).*?\{/\{\n    global \$build_date;\n    global \$env;\n    global \$env_dir;\n/gs' \
   > "$file";
 done
 

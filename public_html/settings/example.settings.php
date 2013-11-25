@@ -7,6 +7,9 @@ require_once dirname(__FILE__) . "/maintenance_mode.php";
 
 $debug = false;
 
+$env = "dev";
+$env_dir = "";
+
 $db_connection = array (
     'server' => 'localhost',
     'port' => '3306',

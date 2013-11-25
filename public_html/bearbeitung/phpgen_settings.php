@@ -52,18 +52,23 @@ function GetPageInfos()
     return $result;
 }
 
-function GetPagesHeader()
-{
+function GetPagesHeader(){
+    global $build_date;
+    global $env;
+    global $env_dir;
+
     return
-    '<h1>Lobbycontrol Datenbearbeitung</h1>';
+    '<h1>Lobbycontrol Datenbearbeitung ' . $env . '</h1>';
 }
 
 function GetPagesFooter(){
     global $build_date;
+    global $env;
+    global $env_dir;
 
     return
-        'Bearbeitungsseiten von <a href="/">Lobbycontrol</a>.<br>
-Build date: ' . "$build_date" . ''; 
+        'Bearbeitungsseiten von <a href="/' . $env_dir . '">Lobbycontrol ' . $env . '</a>.<br>
+Mode: ' . $env . ' / Build date: ' . "$build_date" . ''; 
     }
 
 function ApplyCommonPageSettings(Page $page, Grid $grid)

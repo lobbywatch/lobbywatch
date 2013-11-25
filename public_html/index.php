@@ -5,7 +5,7 @@ include_once 'common/build_date.php';
 <!DOCTYPE html >
 <html>
 <head>
-<title>LobbyControl</title>
+<title>LobbyControl <?php print "$env";?></title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="favicon.png" type="image/png" />
 <style></style>
@@ -20,18 +20,31 @@ include_once 'common/build_date.php';
 </script>
 </head>
 <body>
-  <h1>Lobbycontrol</h1>
-  <p><b>Webseite und Datenmodell sind noch in der Entwicklung. Alle Daten werden regelmässig überschrieben.</b></p>
-  <p><b>Deshalb noch keine dauerhaften Änderungen vornehmen.</b></p>
+  <h1>Lobbycontrol <?php print "$env";?></h1>
+  <?php if ($env === 'production' || $env === 'dev'): ?>
+    <p><b>Webseite und Datenmodell wurden teilweise zum Bearbeiten freigegeben.</b></p>
+    <p><b>Die Tabellen <i>In_kommission</i> und <i>Kommission</i> können bearbeitet werden.</b></p>
+    <p><b>Die anderen Änderungen gehen wieder verloren.</b></p>
+  <?php endif; ?>
+  <?php if ($env === 'test' || $env === 'dev'): ?>
+    <p><b>Dies ist die Testseite. Alle Daten werden regelmässig überschrieben.</b></p>
+  <?php endif;?>
   <p>
-    <a href="/auswertung">Auswertung</a> (Neue Daten, durchgestrichene Menus funktionieren nicht, andere rudimentär getestet)
+    <a href="/<?php print "$env_dir";?>auswertung">Auswertung</a> (Neue Daten, durchgestrichene Menus funktionieren nicht, andere rudimentär getestet)
     <br>
-    <a href="/bearbeitung/interessenbindung.php">Bearbeitung</a>
+    <a href="/<?php print "$env_dir";?>bearbeitung/interessenbindung.php">Bearbeitung</a>
     <br>
     <a href="/oldauswertung">Alte Auswertung</a> (alte Daten, zum Vergleich/zur Kontrolle)
   </p>
+  <h2>Umgebung</h2>
   <p>
-    <a href="/lobbycontrol_er.pdf">Datenmodell (PDF)</a><br/>
+    <a href="/">Lobbycontrol (Richtige Seite)</a>
+    <br>
+    <a href="/test/">Lobbycontrol (Testseite)</a>
+  </p>
+  <h2>Informationen</h2>
+  <p>
+    <a href="/<?php print "$env_dir";?>lobbycontrol_er.pdf">Datenmodell (PDF)</a><br/>
     <a href="/wiki/tiki-index.php?page=Wertebereiche">Wertebereiche auf Wiki</a><br/>
   </p>
   <p>

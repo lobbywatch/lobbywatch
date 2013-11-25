@@ -898,9 +898,9 @@ table td {
     </p>
     <div>
       <p>
-        Auswertungsseite von <a href="/">Lobbycontrol</a>.
+        Auswertungsseite von <a href="/<?php print "$env_dir";?>">Lobbycontrol <?php print "$env";?></a>.
       </p>
-      <p>Build date: <?php print $build_date;?></p>
+      <p>Mode: <?php print "$env";?> / Build date: <?php print $build_date;?></p>
     </div>
   </div>
   <div style='clear: both'>
