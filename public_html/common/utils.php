@@ -39,3 +39,14 @@ function dfXXX($msg) {
   // Disabled debug comment: do nothing
 }
 
+function dc($msg) {
+  if ($debug !== true)
+    return;
+  if (is_array($msg)) {
+    $msg = print_r($msg, true);
+  }
+  print ("<!-- $msg -->") ;
+}
+function dcXXX($msg) {
+  // Disabled debug comment: do nothing
+}
