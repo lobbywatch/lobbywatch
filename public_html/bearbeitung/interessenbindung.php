@@ -180,7 +180,7 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('im_rat_seit');
+            $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
@@ -347,7 +347,7 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('im_rat_seit');
+            $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
@@ -419,7 +419,7 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('im_rat_seit');
+            $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
@@ -1095,7 +1095,7 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('im_rat_seit');
+            $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
@@ -1340,7 +1340,7 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('im_rat_seit');
+            $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');

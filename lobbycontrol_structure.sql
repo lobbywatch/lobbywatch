@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 25. Nov 2013 um 10:21
+-- Erstellungszeit: 25. Nov 2013 um 14:06
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 25. Nov 2013 um 09:19
+-- Erzeugt am: 25. Nov 2013 um 12:47
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -305,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') NOT NULL COMMENT 'Kantonskürzel',
   `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Leer bedeutet parteilos.',
   `parteifunktion` set('mitglied','praesident','vizepraesident','fraktionschef') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
-  `im_rat_seit` year(4) NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
+  `im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
   `beruf` varchar(150) NOT NULL COMMENT 'Beruf des Parlamentariers',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
   `Geburtstag` date DEFAULT NULL COMMENT 'Geburtstag des Parlamentariers',

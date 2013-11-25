@@ -64,7 +64,7 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new DateTimeField('im_rat_seit');
+            $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('beruf');
@@ -634,14 +634,14 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
             // Edit column for im_rat_seit field
             //
-            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -653,7 +653,7 @@
             //
             // Edit column for im_rat_seit field
             //
-            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1175,7 +1175,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1402,7 +1402,7 @@
             //
             // Edit column for im_rat_seit field
             //
-            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1693,7 +1693,7 @@
             //
             // Edit column for im_rat_seit field
             //
-            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1917,7 +1917,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -2057,7 +2057,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

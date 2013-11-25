@@ -319,11 +319,11 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="im_rat_seit" caption="Im Rat Seit" headerHint="Jahr der Zugehörigkeit zum Parlament" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+              <ViewProperties type="dateTime" dateTimeFormat="Y">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="im_rat_seit" caption="Im Rat Seit">
-                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -337,7 +337,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="im_rat_seit" caption="Im Rat Seit" defaultInsertValue="">
-                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -1020,11 +1020,11 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="im_rat_seit" caption="Im Rat Seit" headerHint="Jahr der Zugehörigkeit zum Parlament" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+              <ViewProperties type="dateTime" dateTimeFormat="Y">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="im_rat_seit" caption="Im Rat Seit">
-                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -1038,7 +1038,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="im_rat_seit" caption="Im Rat Seit" defaultInsertValue="">
-                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -1555,7 +1555,7 @@
               </Validators>
             </Column>
             <Column fieldName="im_rat_seit" caption="Im Rat Seit">
-              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y" firstDayOfWeek="0"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -1858,7 +1858,7 @@
               </Validators>
             </Column>
             <Column fieldName="im_rat_seit" caption="Im Rat Seit" defaultInsertValue="">
-              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+              <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y" firstDayOfWeek="0"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2377,11 +2377,11 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="im_rat_seit" caption="Im Rat Seit" headerHint="Jahr der Zugehörigkeit zum Parlament" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+              <ViewProperties type="dateTime" dateTimeFormat="Y">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="im_rat_seit" caption="Im Rat Seit">
-                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -2395,7 +2395,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="im_rat_seit" caption="Im Rat Seit" defaultInsertValue="">
-                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3078,11 +3078,11 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="im_rat_seit" caption="Im Rat Seit" headerHint="Jahr der Zugehörigkeit zum Parlament" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
+              <ViewProperties type="dateTime" dateTimeFormat="Y">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="im_rat_seit" caption="Im Rat Seit">
-                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -3096,7 +3096,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="im_rat_seit" caption="Im Rat Seit" defaultInsertValue="">
-                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+                <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
