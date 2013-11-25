@@ -22,7 +22,8 @@ include_once 'common/build_date.php';
 <body>
   <h1>Lobbycontrol <?php print "$env";?></h1>
   <?php if ($env === 'production' || $env === 'dev'): ?>
-    <p><b>Webseite und Datenmodell wurden teilweise zum Bearbeiten freigegeben.</b></p>
+    <p><b>Dies ist die "richtige Seite" (production) zum Bearbeiten.</b></p>
+    <p>Webseite und Datenmodell wurden teilweise zum Bearbeiten freigegeben.</p>
     <p><b>Die Tabellen <i>In_kommission</i> und <i>Kommission</i> können bearbeitet werden.</b></p>
     <p><b>Die anderen Änderungen gehen wieder verloren.</b></p>
   <?php endif; ?>
