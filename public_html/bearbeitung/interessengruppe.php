@@ -47,7 +47,7 @@
             $field = new IntegerField('id', null, null, true);
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new StringField('bezeichnung');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new IntegerField('branche_id');
@@ -122,8 +122,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessengruppessearch', $this->dataset,
-                array('id', 'bezeichnung', 'branche_id_name', 'beschreibung', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Bezeichnung'), $this->RenderText('Branche Id'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'name', 'branche_id_name', 'beschreibung', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Branche Id'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -144,7 +144,7 @@
             $this->AdvancedSearchControl = new AdvancedSearchControl('interessengruppeasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('bezeichnung', $this->RenderText('Bezeichnung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -226,19 +226,19 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for bezeichnung field
+            // View column for name field
             //
-            $column = new TextViewColumn('bezeichnung', 'Bezeichnung', $this->dataset);
+            $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('bezeichnung_handler');
+            $column->SetFullTextWindowHandlerName('name_handler');
             
             /* <inline edit column> */
             //
-            // Edit column for bezeichnung field
+            // Edit column for name field
             //
-            $editor = new TextAreaEdit('bezeichnung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bezeichnung', 'bezeichnung', $editor, $this->dataset);
+            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -247,10 +247,10 @@
             
             /* <inline insert column> */
             //
-            // Edit column for bezeichnung field
+            // Edit column for name field
             //
-            $editor = new TextAreaEdit('bezeichnung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bezeichnung', 'bezeichnung', $editor, $this->dataset);
+            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -357,7 +357,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription($this->RenderText('Fremdschlüssel Branche'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -580,12 +580,12 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for bezeichnung field
+            // View column for name field
             //
-            $column = new TextViewColumn('bezeichnung', 'Bezeichnung', $this->dataset);
+            $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('bezeichnung_handler');
+            $column->SetFullTextWindowHandlerName('name_handler');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -647,10 +647,10 @@
         protected function AddEditColumns(Grid $grid)
         {
             //
-            // Edit column for bezeichnung field
+            // Edit column for name field
             //
-            $editor = new TextAreaEdit('bezeichnung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bezeichnung', 'bezeichnung', $editor, $this->dataset);
+            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -765,10 +765,10 @@
         protected function AddInsertColumns(Grid $grid)
         {
             //
-            // Edit column for bezeichnung field
+            // Edit column for name field
             //
-            $editor = new TextAreaEdit('bezeichnung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bezeichnung', 'bezeichnung', $editor, $this->dataset);
+            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -902,9 +902,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for bezeichnung field
+            // View column for name field
             //
-            $column = new TextViewColumn('bezeichnung', 'Bezeichnung', $this->dataset);
+            $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -970,9 +970,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for bezeichnung field
+            // View column for name field
             //
-            $column = new TextViewColumn('bezeichnung', 'Bezeichnung', $this->dataset);
+            $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1108,17 +1108,17 @@
             // Http Handlers
             //
             //
-            // View column for bezeichnung field
+            // View column for name field
             //
-            $column = new TextViewColumn('bezeichnung', 'Bezeichnung', $this->dataset);
+            $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for bezeichnung field
+            // Edit column for name field
             //
-            $editor = new TextAreaEdit('bezeichnung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bezeichnung', 'bezeichnung', $editor, $this->dataset);
+            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1127,16 +1127,16 @@
             
             /* <inline insert column> */
             //
-            // Edit column for bezeichnung field
+            // Edit column for name field
             //
-            $editor = new TextAreaEdit('bezeichnung_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Bezeichnung', 'bezeichnung', $editor, $this->dataset);
+            $editor = new TextAreaEdit('name_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'bezeichnung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -1198,11 +1198,11 @@
             /* </inline insert column> */
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
-            // View column for bezeichnung field
+            // View column for name field
             //
-            $column = new TextViewColumn('bezeichnung', 'Bezeichnung', $this->dataset);
+            $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'bezeichnung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field

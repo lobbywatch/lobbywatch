@@ -18,7 +18,7 @@
   <FieldContainers/>
   <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
-      <Page type="table" tableName="parlamentarier" fileName="parlamentarier" caption="Parlamentarier" shortCaption="Parlamentarier" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="parlamentarier" fileName="parlamentarier" caption="Parlamentarier" shortCaption="Parlamentarier" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -93,7 +93,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ratstyp" caption="Ratstyp" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="ratstyp" caption="Ratstyp" headerHint="National- oder Ständerat?" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -138,7 +138,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kanton" caption="Kanton" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="kanton" caption="Kanton" headerHint="Kantonskürzel" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -171,7 +171,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="partei_id" caption="Partei Id" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei. Leer bedeutet parteilos." useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -211,7 +211,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="parteifunktion" caption="Parteifunktion" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -219,8 +219,8 @@
                 <EditProperties type="checkBoxGroup" displayMode="0">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="fraktionschef" caption="fraktionschef"/>
                   </Values>
                 </EditProperties>
@@ -240,8 +240,8 @@
                 <EditProperties type="checkBoxGroup" displayMode="0">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="fraktionschef" caption="fraktionschef"/>
                   </Values>
                 </EditProperties>
@@ -258,7 +258,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="im_rat_seit" caption="Im Rat Seit" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="im_rat_seit" caption="Im Rat Seit" headerHint="Jahr der Zugehörigkeit zum Parlament" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
@@ -325,12 +325,12 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" headerHint="Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -347,7 +347,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -365,7 +365,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="Geburtstag" caption="Geburtstag" headerHint="Geburtstag des Parlamentariers" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="Geburtstag" caption="Geburtstag" canSetNull="true">
@@ -397,7 +397,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kleinbild" caption="Kleinbild" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -430,7 +430,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="sitzplatz" caption="Sitzplatz" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="sitzplatz" caption="Sitzplatz" headerHint="Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -734,7 +734,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ratstyp" caption="Ratstyp" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="ratstyp" caption="Ratstyp" headerHint="National- oder Ständerat?" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -779,7 +779,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kanton" caption="Kanton" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="kanton" caption="Kanton" headerHint="Kantonskürzel" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -812,7 +812,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="partei_id" caption="Partei Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei. Leer bedeutet parteilos." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -852,7 +852,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="parteifunktion" caption="Parteifunktion" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -860,8 +860,8 @@
                 <EditProperties type="checkBoxGroup" displayMode="0">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="fraktionschef" caption="fraktionschef"/>
                   </Values>
                 </EditProperties>
@@ -881,8 +881,8 @@
                 <EditProperties type="checkBoxGroup" displayMode="0">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="fraktionschef" caption="fraktionschef"/>
                   </Values>
                 </EditProperties>
@@ -899,7 +899,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="im_rat_seit" caption="Im Rat Seit" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="im_rat_seit" caption="Im Rat Seit" headerHint="Jahr der Zugehörigkeit zum Parlament" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
@@ -966,12 +966,12 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" headerHint="Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -988,7 +988,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -1006,7 +1006,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="Geburtstag" caption="Geburtstag" headerHint="Geburtstag des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="Geburtstag" caption="Geburtstag" canSetNull="true">
@@ -1038,7 +1038,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kleinbild" caption="Kleinbild" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -1071,7 +1071,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="sitzplatz" caption="Sitzplatz" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="sitzplatz" caption="Sitzplatz" headerHint="Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -1387,8 +1387,8 @@
               <EditProperties type="checkBoxGroup" displayMode="0">
                 <Values>
                   <Value name="mitglied" caption="mitglied"/>
-                  <Value name="präsident" caption="präsident"/>
-                  <Value name="vizepräsident" caption="vizepräsident"/>
+                  <Value name="praesident" caption="praesident"/>
+                  <Value name="vizepraesident" caption="vizepraesident"/>
                   <Value name="fraktionschef" caption="fraktionschef"/>
                 </Values>
               </EditProperties>
@@ -1433,7 +1433,7 @@
               </Validators>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -1660,8 +1660,8 @@
               <EditProperties type="checkBoxGroup" displayMode="0">
                 <Values>
                   <Value name="mitglied" caption="mitglied"/>
-                  <Value name="präsident" caption="präsident"/>
-                  <Value name="vizepräsident" caption="vizepräsident"/>
+                  <Value name="praesident" caption="praesident"/>
+                  <Value name="vizepraesident" caption="vizepraesident"/>
                   <Value name="fraktionschef" caption="fraktionschef"/>
                 </Values>
               </EditProperties>
@@ -1706,7 +1706,7 @@
               </Validators>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -1862,7 +1862,7 @@
             <Column fieldName="im_rat_seit" caption="Im Rat Seit"/>
             <Column fieldName="beruf" caption="Beruf"/>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="Geburtstag" caption="Geburtstag"/>
             <Column fieldName="kleinbild" caption="Kleinbild"/>
@@ -1887,7 +1887,7 @@
             <Column fieldName="im_rat_seit" caption="Im Rat Seit" useComboBox="false"/>
             <Column fieldName="beruf" caption="Beruf" useComboBox="false"/>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" useComboBox="false">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="Geburtstag" caption="Geburtstag" useComboBox="false"/>
             <Column fieldName="kleinbild" caption="Kleinbild" useComboBox="false"/>
@@ -1971,7 +1971,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ratstyp" caption="Ratstyp" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="ratstyp" caption="Ratstyp" headerHint="National- oder Ständerat?" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -2016,7 +2016,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kanton" caption="Kanton" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="kanton" caption="Kanton" headerHint="Kantonskürzel" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -2049,7 +2049,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="partei_id" caption="Partei Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei. Leer bedeutet parteilos." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -2089,7 +2089,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="parteifunktion" caption="Parteifunktion" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -2097,8 +2097,8 @@
                 <EditProperties type="checkBoxGroup" displayMode="0">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="fraktionschef" caption="fraktionschef"/>
                   </Values>
                 </EditProperties>
@@ -2118,8 +2118,8 @@
                 <EditProperties type="checkBoxGroup" displayMode="0">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="fraktionschef" caption="fraktionschef"/>
                   </Values>
                 </EditProperties>
@@ -2136,7 +2136,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="im_rat_seit" caption="Im Rat Seit" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="im_rat_seit" caption="Im Rat Seit" headerHint="Jahr der Zugehörigkeit zum Parlament" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
@@ -2203,12 +2203,12 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" headerHint="Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -2225,7 +2225,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -2243,7 +2243,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="Geburtstag" caption="Geburtstag" headerHint="Geburtstag des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="Geburtstag" caption="Geburtstag" canSetNull="true">
@@ -2275,7 +2275,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kleinbild" caption="Kleinbild" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -2308,7 +2308,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="sitzplatz" caption="Sitzplatz" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="sitzplatz" caption="Sitzplatz" headerHint="Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -2612,7 +2612,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ratstyp" caption="Ratstyp" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="ratstyp" caption="Ratstyp" headerHint="National- oder Ständerat?" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -2657,7 +2657,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kanton" caption="Kanton" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="kanton" caption="Kanton" headerHint="Kantonskürzel" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -2690,7 +2690,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="partei_id" caption="Partei Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="partei_id" caption="Partei Id" headerHint="Fremdschlüssel Partei. Leer bedeutet parteilos." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="partei" linkFieldName="id" displayFieldName="abkuerzung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -2730,7 +2730,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="parteifunktion" caption="Parteifunktion" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="parteifunktion" caption="Parteifunktion" headerHint="Funktion des Parlamentariers in der Partei" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -2738,8 +2738,8 @@
                 <EditProperties type="checkBoxGroup" displayMode="0">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="fraktionschef" caption="fraktionschef"/>
                   </Values>
                 </EditProperties>
@@ -2759,8 +2759,8 @@
                 <EditProperties type="checkBoxGroup" displayMode="0">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="fraktionschef" caption="fraktionschef"/>
                   </Values>
                 </EditProperties>
@@ -2777,7 +2777,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="im_rat_seit" caption="Im Rat Seit" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="im_rat_seit" caption="Im Rat Seit" headerHint="Jahr der Zugehörigkeit zum Parlament" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
@@ -2844,12 +2844,12 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" headerHint="Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -2866,7 +2866,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -2884,7 +2884,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="Geburtstag" caption="Geburtstag" headerHint="Geburtstag des Parlamentariers" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="Geburtstag" caption="Geburtstag" canSetNull="true">
@@ -2916,7 +2916,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="kleinbild" caption="Kleinbild" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="kleinbild" caption="Kleinbild" headerHint="Bild 44x62 px oder leer.png" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -2949,7 +2949,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="sitzplatz" caption="Sitzplatz" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="sitzplatz" caption="Sitzplatz" headerHint="Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -3211,7 +3211,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="interessengruppe" fileName="interessengruppe" caption="Interessengruppe" shortCaption="Interessengruppe" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="interessengruppe" fileName="interessengruppe" caption="Interessengruppe" shortCaption="Interessengruppe" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -3220,11 +3220,11 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="bezeichnung" caption="Bezeichnung" headerHint="Bezeichnung der Interessengruppe" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="name" caption="Name" headerHint="Bezeichnung der Interessengruppe" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="bezeichnung" caption="Bezeichnung">
+              <InlineEditColumn fieldName="name" caption="Name">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -3238,7 +3238,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="bezeichnung" caption="Bezeichnung" defaultInsertValue="">
+              <InlineInsertColumn fieldName="name" caption="Name" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -3253,7 +3253,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="branche_id" caption="Branche Id" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -3498,11 +3498,11 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="bezeichnung" caption="Bezeichnung" headerHint="Bezeichnung der Interessengruppe" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="name" caption="Name" headerHint="Bezeichnung der Interessengruppe" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="bezeichnung" caption="Bezeichnung">
+              <InlineEditColumn fieldName="name" caption="Name">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -3516,7 +3516,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="bezeichnung" caption="Bezeichnung" defaultInsertValue="">
+              <InlineInsertColumn fieldName="name" caption="Name" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -3531,7 +3531,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="branche_id" caption="Branche Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -3771,7 +3771,7 @@
             </Column>
           </SingleRecordViewColumns>
           <EditColumns>
-            <Column fieldName="bezeichnung" caption="Bezeichnung">
+            <Column fieldName="name" caption="Name">
               <EditProperties type="textArea" columnCount="50" rowCount="8"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -3888,7 +3888,7 @@
             </Column>
           </EditColumns>
           <InsertColumns>
-            <Column fieldName="bezeichnung" caption="Bezeichnung" defaultInsertValue="">
+            <Column fieldName="name" caption="Name" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -4006,7 +4006,7 @@
           </InsertColumns>
           <SimpleSearchColumns>
             <Column fieldName="id" caption="Id"/>
-            <Column fieldName="bezeichnung" caption="Bezeichnung"/>
+            <Column fieldName="name" caption="Name"/>
             <Column fieldName="branche_id" caption="Branche Id">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
@@ -4019,7 +4019,7 @@
           </SimpleSearchColumns>
           <AdvancedSearchColumns>
             <Column fieldName="id" caption="Id" useComboBox="false"/>
-            <Column fieldName="bezeichnung" caption="Bezeichnung" useComboBox="false"/>
+            <Column fieldName="name" caption="Name" useComboBox="false"/>
             <Column fieldName="branche_id" caption="Branche Id" useComboBox="false">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
@@ -4036,11 +4036,11 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="bezeichnung" caption="Bezeichnung" headerHint="Bezeichnung der Interessengruppe" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="name" caption="Name" headerHint="Bezeichnung der Interessengruppe" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="bezeichnung" caption="Bezeichnung">
+              <InlineEditColumn fieldName="name" caption="Name">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -4054,7 +4054,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="bezeichnung" caption="Bezeichnung" defaultInsertValue="">
+              <InlineInsertColumn fieldName="name" caption="Name" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -4069,7 +4069,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="branche_id" caption="Branche Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -4314,11 +4314,11 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="bezeichnung" caption="Bezeichnung" headerHint="Bezeichnung der Interessengruppe" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="name" caption="Name" headerHint="Bezeichnung der Interessengruppe" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="bezeichnung" caption="Bezeichnung">
+              <InlineEditColumn fieldName="name" caption="Name">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -4332,7 +4332,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="bezeichnung" caption="Bezeichnung" defaultInsertValue="">
+              <InlineInsertColumn fieldName="name" caption="Name" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -4347,7 +4347,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="branche_id" caption="Branche Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -4616,7 +4616,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="branche" fileName="branche" caption="Branche" shortCaption="Branche" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="branche" fileName="branche" caption="Branche" shortCaption="Branche" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -6328,7 +6328,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6342,7 +6342,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6599,7 +6599,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6613,7 +6613,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6632,7 +6632,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_date" caption="Created Date">
+              <InlineEditColumn fieldName="created_date" caption="Created Date" readOnly="true">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6646,7 +6646,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6665,7 +6665,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6679,7 +6679,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6698,7 +6698,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date" readOnly="true">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6712,7 +6712,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6785,7 +6785,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true">
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -6829,6 +6829,20 @@
             </Column>
             <Column fieldName="updated_date" caption="Updated Date" readOnly="true">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
+            <Column fieldName="id" caption="Id" readOnly="true">
+              <EditProperties type="textBox" size="0" maxLength="0"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -6899,7 +6913,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -7120,7 +7134,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7134,7 +7148,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7153,7 +7167,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_date" caption="Created Date">
+              <InlineEditColumn fieldName="created_date" caption="Created Date" readOnly="true">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7167,7 +7181,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7186,7 +7200,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7200,7 +7214,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7219,7 +7233,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date" readOnly="true">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7233,7 +7247,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7391,7 +7405,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7405,7 +7419,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7424,7 +7438,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_date" caption="Created Date">
+              <InlineEditColumn fieldName="created_date" caption="Created Date" readOnly="true">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7438,7 +7452,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7457,7 +7471,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7471,7 +7485,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7490,7 +7504,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date" readOnly="true">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7504,7 +7518,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7550,7 +7564,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="partei" fileName="partei" caption="Partei" shortCaption="Partei" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="partei" fileName="partei" caption="Partei" shortCaption="Partei" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -9159,7 +9173,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="zugangsberechtigung" fileName="zugangsberechtigung" caption="Zugangsberechtigung" shortCaption="Zugangsberechtigung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="zugangsberechtigung" fileName="zugangsberechtigung" caption="Zugangsberechtigung" shortCaption="Zugangsberechtigung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -9341,12 +9355,12 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" headerHint="Fremschlüssel zur Interessengruppe für den Beruf" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -9363,7 +9377,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -9765,12 +9779,12 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" headerHint="Fremschlüssel zur Interessengruppe für den Beruf" useInlineEdit="true" useInlineInsert="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -9787,7 +9801,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -10085,7 +10099,7 @@
               </Validators>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -10264,7 +10278,7 @@
               </Validators>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -10378,7 +10392,7 @@
             <Column fieldName="funktion" caption="Funktion"/>
             <Column fieldName="beruf" caption="Beruf"/>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="notizen" caption="Notizen"/>
             <Column fieldName="ALT_lobbyorganisation_id" caption="ALT Lobbyorganisation Id">
@@ -10399,7 +10413,7 @@
             <Column fieldName="funktion" caption="Funktion" useComboBox="false"/>
             <Column fieldName="beruf" caption="Beruf" useComboBox="false"/>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" useComboBox="false">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="notizen" caption="Notizen" useComboBox="false"/>
             <Column fieldName="ALT_lobbyorganisation_id" caption="ALT Lobbyorganisation Id" useComboBox="false">
@@ -10589,12 +10603,12 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" headerHint="Fremschlüssel zur Interessengruppe für den Beruf" useInlineEdit="true" useInlineInsert="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -10611,7 +10625,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -11013,12 +11027,12 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" headerHint="Fremschlüssel zur Interessengruppe für den Beruf" useInlineEdit="true" useInlineInsert="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -11035,7 +11049,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="beruf_interessengruppe_id" caption="Beruf Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -11288,7 +11302,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="interessenbindung" fileName="interessenbindung" caption="Interessenbindung" shortCaption="Interessenbindung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="interessenbindung" fileName="interessenbindung" caption="Interessenbindung" shortCaption="Interessenbindung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -11297,7 +11311,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel Parlamentarier" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -11337,7 +11351,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="organisation_id" caption="Organisation Id" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Fremdschlüssel Organisation" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -11377,7 +11391,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="art" caption="Art" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="art" caption="Art" headerHint="Art der Interessenbindung" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -11385,9 +11399,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -11408,9 +11422,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -11428,7 +11442,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="status" caption="Status" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="status" caption="Status" headerHint="Status der Interessenbindung" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -11507,7 +11521,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -11539,7 +11553,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -11744,7 +11758,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel Parlamentarier" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -11784,7 +11798,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="organisation_id" caption="Organisation Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Fremdschlüssel Organisation" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -11824,7 +11838,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="art" caption="Art" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="art" caption="Art" headerHint="Art der Interessenbindung" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -11832,9 +11846,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -11855,9 +11869,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -11875,7 +11889,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="status" caption="Status" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="status" caption="Status" headerHint="Status der Interessenbindung" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -11954,7 +11968,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -11986,7 +12000,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -12224,9 +12238,9 @@
               <EditProperties type="comboBox">
                 <Values>
                   <Value name="mitglied" caption="mitglied"/>
-                  <Value name="geschäftsführend" caption="geschäftsführend"/>
+                  <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                   <Value name="vorstand" caption="vorstand"/>
-                  <Value name="tätig" caption="tätig"/>
+                  <Value name="taetig" caption="taetig"/>
                   <Value name="beirat" caption="beirat"/>
                 </Values>
                 <MFUItems/>
@@ -12415,9 +12429,9 @@
               <EditProperties type="comboBox">
                 <Values>
                   <Value name="mitglied" caption="mitglied"/>
-                  <Value name="geschäftsführend" caption="geschäftsführend"/>
+                  <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                   <Value name="vorstand" caption="vorstand"/>
-                  <Value name="tätig" caption="tätig"/>
+                  <Value name="taetig" caption="taetig"/>
                   <Value name="beirat" caption="beirat"/>
                 </Values>
                 <MFUItems/>
@@ -12611,7 +12625,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel Parlamentarier" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -12651,7 +12665,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="organisation_id" caption="Organisation Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Fremdschlüssel Organisation" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -12691,7 +12705,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="art" caption="Art" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="art" caption="Art" headerHint="Art der Interessenbindung" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -12699,9 +12713,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -12722,9 +12736,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -12742,7 +12756,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="status" caption="Status" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="status" caption="Status" headerHint="Status der Interessenbindung" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -12821,7 +12835,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -12853,7 +12867,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -13058,7 +13072,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" headerHint="Fremdschlüssel Parlamentarier" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="parlamentarier" linkFieldName="id" displayFieldName="nachname" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -13098,7 +13112,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="organisation_id" caption="Organisation Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Fremdschlüssel Organisation" useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -13138,7 +13152,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="art" caption="Art" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="art" caption="Art" headerHint="Art der Interessenbindung" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -13146,9 +13160,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -13169,9 +13183,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -13189,7 +13203,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="status" caption="Status" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="status" caption="Status" headerHint="Status der Interessenbindung" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -13268,7 +13282,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -13300,7 +13314,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="autorisiert_visa" caption="Autorisiert Visa" headerHint="Autorisiert durch. Sonstige Angaben als Notiz erfassen." useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -13529,7 +13543,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="mandat" fileName="mandat" caption="Mandat" shortCaption="Mandat" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="mandat" fileName="mandat" caption="Mandat" shortCaption="Mandat" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -13626,9 +13640,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -13649,9 +13663,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -13703,7 +13717,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -14028,9 +14042,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -14051,9 +14065,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -14105,7 +14119,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -14375,9 +14389,9 @@
               <EditProperties type="comboBox">
                 <Values>
                   <Value name="mitglied" caption="mitglied"/>
-                  <Value name="geschäftsführend" caption="geschäftsführend"/>
+                  <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                   <Value name="vorstand" caption="vorstand"/>
-                  <Value name="tätig" caption="tätig"/>
+                  <Value name="taetig" caption="taetig"/>
                   <Value name="beirat" caption="beirat"/>
                 </Values>
                 <MFUItems/>
@@ -14546,9 +14560,9 @@
               <EditProperties type="comboBox">
                 <Values>
                   <Value name="mitglied" caption="mitglied"/>
-                  <Value name="geschäftsführend" caption="geschäftsführend"/>
+                  <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                   <Value name="vorstand" caption="vorstand"/>
-                  <Value name="tätig" caption="tätig"/>
+                  <Value name="taetig" caption="taetig"/>
                   <Value name="beirat" caption="beirat"/>
                 </Values>
                 <MFUItems/>
@@ -14808,9 +14822,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -14831,9 +14845,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -14885,7 +14899,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -15210,9 +15224,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -15233,9 +15247,9 @@
                 <EditProperties type="comboBox">
                   <Values>
                     <Value name="mitglied" caption="mitglied"/>
-                    <Value name="geschäftsführend" caption="geschäftsführend"/>
+                    <Value name="geschaeftsfuehrend" caption="geschaeftsfuehrend"/>
                     <Value name="vorstand" caption="vorstand"/>
-                    <Value name="tätig" caption="tätig"/>
+                    <Value name="taetig" caption="taetig"/>
                     <Value name="beirat" caption="beirat"/>
                   </Values>
                   <MFUItems/>
@@ -15287,7 +15301,7 @@
               </InlineInsertColumn>
             </Column>
             <Column fieldName="autorisiert_datum" caption="Autorisiert Datum" headerHint="Autorisiert am" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y">
+              <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
               <InlineEditColumn fieldName="autorisiert_datum" caption="Autorisiert Datum" canSetNull="true">
@@ -15590,7 +15604,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="rechtsform" caption="Rechtsform" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="rechtsform" caption="Rechtsform" headerHint="Rechtsform der Organisation" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -15643,11 +15657,11 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="adresse" caption="Adresse" headerHint="Adresse der Organisation" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="adresse" caption="Adresse" canSetNull="true">
+              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -15661,7 +15675,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="adresse" caption="Adresse" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -15676,7 +15690,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="typ" caption="Typ" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="typ" caption="Typ" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden." useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -15725,7 +15739,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="vernehmlassung" caption="Vernehmlassung" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="vernehmlassung" caption="Vernehmlassung" headerHint="Häufigkeit der Vernehmlassungsteilnahme" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -15772,13 +15786,13 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet." useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="interessengruppe_id" caption="Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -15795,7 +15809,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="interessengruppe_id" caption="Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -15812,7 +15826,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="branche_id" caption="Branche Id" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche." useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -15852,11 +15866,11 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="url" caption="Url" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="url" caption="Url" headerHint="Link zur Webseite" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="url" caption="Url">
+              <InlineEditColumn fieldName="url" caption="Url" canSetNull="true">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -15870,7 +15884,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="url" caption="Url" defaultInsertValue="">
+              <InlineInsertColumn fieldName="url" caption="Url" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -16172,7 +16186,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="rechtsform" caption="Rechtsform" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="rechtsform" caption="Rechtsform" headerHint="Rechtsform der Organisation" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -16225,11 +16239,11 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="adresse" caption="Adresse" headerHint="Adresse der Organisation" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="adresse" caption="Adresse" canSetNull="true">
+              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -16243,7 +16257,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="adresse" caption="Adresse" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -16258,7 +16272,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="typ" caption="Typ" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="typ" caption="Typ" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden." useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -16307,7 +16321,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="vernehmlassung" caption="Vernehmlassung" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="vernehmlassung" caption="Vernehmlassung" headerHint="Häufigkeit der Vernehmlassungsteilnahme" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -16354,13 +16368,13 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" useInlineEdit="true" useInlineInsert="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet." useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="interessengruppe_id" caption="Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -16377,7 +16391,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="interessengruppe_id" caption="Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -16394,7 +16408,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="branche_id" caption="Branche Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -16434,11 +16448,11 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="url" caption="Url" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="url" caption="Url" headerHint="Link zur Webseite" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="url" caption="Url">
+              <InlineEditColumn fieldName="url" caption="Url" canSetNull="true">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -16452,7 +16466,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="url" caption="Url" defaultInsertValue="">
+              <InlineInsertColumn fieldName="url" caption="Url" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -16754,7 +16768,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="adresse" caption="Adresse" canSetNull="true">
+            <Column fieldName="ort" caption="Ort" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="8"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -16812,7 +16826,7 @@
               </Validators>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" canSetNull="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -16845,7 +16859,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="url" caption="Url">
+            <Column fieldName="url" caption="Url" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="8"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -17005,7 +17019,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="adresse" caption="Adresse" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -17063,7 +17077,7 @@
               </Validators>
             </Column>
             <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <EditProperties type="comboBox">
                 <MFUItems/>
               </EditProperties>
@@ -17096,7 +17110,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="url" caption="Url" defaultInsertValue="">
+            <Column fieldName="url" caption="Url" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -17221,11 +17235,11 @@
             <Column fieldName="id" caption="Id"/>
             <Column fieldName="name" caption="Name"/>
             <Column fieldName="rechtsform" caption="Rechtsform"/>
-            <Column fieldName="adresse" caption="Adresse"/>
+            <Column fieldName="ort" caption="Ort"/>
             <Column fieldName="typ" caption="Typ"/>
             <Column fieldName="vernehmlassung" caption="Vernehmlassung"/>
             <Column fieldName="interessengruppe_id" caption="Interessengruppe Id">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="branche_id" caption="Branche Id">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -17243,11 +17257,11 @@
             <Column fieldName="id" caption="Id" useComboBox="false"/>
             <Column fieldName="name" caption="Name" useComboBox="false"/>
             <Column fieldName="rechtsform" caption="Rechtsform" useComboBox="false"/>
-            <Column fieldName="adresse" caption="Adresse" useComboBox="false"/>
+            <Column fieldName="ort" caption="Ort" useComboBox="false"/>
             <Column fieldName="typ" caption="Typ" useComboBox="false"/>
             <Column fieldName="vernehmlassung" caption="Vernehmlassung" useComboBox="false"/>
             <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" useComboBox="false">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
             </Column>
             <Column fieldName="branche_id" caption="Branche Id" useComboBox="false">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
@@ -17300,7 +17314,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="rechtsform" caption="Rechtsform" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="rechtsform" caption="Rechtsform" headerHint="Rechtsform der Organisation" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -17353,11 +17367,11 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="adresse" caption="Adresse" headerHint="Adresse der Organisation" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="adresse" caption="Adresse" canSetNull="true">
+              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -17371,7 +17385,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="adresse" caption="Adresse" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -17386,7 +17400,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="typ" caption="Typ" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="typ" caption="Typ" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden." useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -17435,7 +17449,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="vernehmlassung" caption="Vernehmlassung" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="vernehmlassung" caption="Vernehmlassung" headerHint="Häufigkeit der Vernehmlassungsteilnahme" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -17482,13 +17496,13 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" useInlineEdit="true" useInlineInsert="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet." useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="interessengruppe_id" caption="Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -17505,7 +17519,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="interessengruppe_id" caption="Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -17522,7 +17536,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="branche_id" caption="Branche Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -17562,11 +17576,11 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="url" caption="Url" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="url" caption="Url" headerHint="Link zur Webseite" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="url" caption="Url">
+              <InlineEditColumn fieldName="url" caption="Url" canSetNull="true">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -17580,7 +17594,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="url" caption="Url" defaultInsertValue="">
+              <InlineInsertColumn fieldName="url" caption="Url" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -17882,7 +17896,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="rechtsform" caption="Rechtsform" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="rechtsform" caption="Rechtsform" headerHint="Rechtsform der Organisation" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -17935,11 +17949,11 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="adresse" caption="Adresse" headerHint="Adresse der Organisation" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="adresse" caption="Adresse" canSetNull="true">
+              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -17953,7 +17967,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="adresse" caption="Adresse" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -17968,7 +17982,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="typ" caption="Typ" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="typ" caption="Typ" headerHint="Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden." useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -18017,7 +18031,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="vernehmlassung" caption="Vernehmlassung" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="vernehmlassung" caption="Vernehmlassung" headerHint="Häufigkeit der Vernehmlassungsteilnahme" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -18064,13 +18078,13 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" useInlineEdit="true" useInlineInsert="true">
-              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+            <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" headerHint="Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet." useInlineEdit="true" useInlineInsert="true">
+              <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
               <InlineEditColumn fieldName="interessengruppe_id" caption="Interessengruppe Id" canSetNull="true">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -18087,7 +18101,7 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="interessengruppe_id" caption="Interessengruppe Id" canSetNull="true" defaultInsertValue="">
-                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="bezeichnung" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
+                <Lookup tableName="interessengruppe" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
                 <EditProperties type="comboBox">
                   <MFUItems/>
                 </EditProperties>
@@ -18104,7 +18118,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="branche_id" caption="Branche Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="branche_id" caption="Branche Id" headerHint="Fremdschlüssel Branche." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="branche" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -18144,11 +18158,11 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="url" caption="Url" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="url" caption="Url" headerHint="Link zur Webseite" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="url" caption="Url">
+              <InlineEditColumn fieldName="url" caption="Url" canSetNull="true">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -18162,7 +18176,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="url" caption="Url" defaultInsertValue="">
+              <InlineInsertColumn fieldName="url" caption="Url" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -18551,8 +18565,8 @@
               <InlineEditColumn fieldName="funktion" caption="Funktion">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="mitglied" caption="mitglied"/>
                   </Values>
                   <MFUItems/>
@@ -18572,8 +18586,8 @@
               <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="mitglied" caption="mitglied"/>
                   </Values>
                   <MFUItems/>
@@ -18850,8 +18864,8 @@
               <InlineEditColumn fieldName="funktion" caption="Funktion">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="mitglied" caption="mitglied"/>
                   </Values>
                   <MFUItems/>
@@ -18871,8 +18885,8 @@
               <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="mitglied" caption="mitglied"/>
                   </Values>
                   <MFUItems/>
@@ -19094,8 +19108,8 @@
             <Column fieldName="funktion" caption="Funktion">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="präsident" caption="präsident"/>
-                  <Value name="vizepräsident" caption="vizepräsident"/>
+                  <Value name="praesident" caption="praesident"/>
+                  <Value name="vizepraesident" caption="vizepraesident"/>
                   <Value name="mitglied" caption="mitglied"/>
                 </Values>
                 <MFUItems/>
@@ -19182,6 +19196,20 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
+            <Column fieldName="id" caption="Id" readOnly="true">
+              <EditProperties type="textBox" size="0" maxLength="0"/>
+              <Validators>
+                <RequiredClientValidatorInfo enabled="false"/>
+                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                <EmailClientValidatorInfo enabled="false"/>
+                <CreditCardClientValidatorInfo enabled="false"/>
+                <NumberClientValidatorInfo enabled="false"/>
+                <DigitsClientValidatorInfo enabled="false"/>
+                <UrlClientValidatorInfo enabled="false"/>
+                <RegExpClientValidatorInfo enabled="false" expression=""/>
+              </Validators>
+            </Column>
           </EditColumns>
           <InsertColumns>
             <Column fieldName="parlamentarier_id" caption="Parlamentarier Id" defaultInsertValue="">
@@ -19221,8 +19249,8 @@
             <Column fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="präsident" caption="präsident"/>
-                  <Value name="vizepräsident" caption="vizepräsident"/>
+                  <Value name="praesident" caption="praesident"/>
+                  <Value name="vizepraesident" caption="vizepraesident"/>
                   <Value name="mitglied" caption="mitglied"/>
                 </Values>
                 <MFUItems/>
@@ -19433,8 +19461,8 @@
               <InlineEditColumn fieldName="funktion" caption="Funktion">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="mitglied" caption="mitglied"/>
                   </Values>
                   <MFUItems/>
@@ -19454,8 +19482,8 @@
               <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="mitglied" caption="mitglied"/>
                   </Values>
                   <MFUItems/>
@@ -19732,8 +19760,8 @@
               <InlineEditColumn fieldName="funktion" caption="Funktion">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="mitglied" caption="mitglied"/>
                   </Values>
                   <MFUItems/>
@@ -19753,8 +19781,8 @@
               <InlineInsertColumn fieldName="funktion" caption="Funktion" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="präsident" caption="präsident"/>
-                    <Value name="vizepräsident" caption="vizepräsident"/>
+                    <Value name="praesident" caption="praesident"/>
+                    <Value name="vizepraesident" caption="vizepraesident"/>
                     <Value name="mitglied" caption="mitglied"/>
                   </Values>
                   <MFUItems/>
@@ -19968,7 +19996,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="organisation_beziehung" fileName="organisation_beziehung" caption="Organisation Beziehung" shortCaption="Organisation Beziehung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="organisation_beziehung" fileName="organisation_beziehung" caption="Organisation Beziehung" shortCaption="Organisation Beziehung" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -19977,7 +20005,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="organisation_id" caption="Organisation Id" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Fremdschlüssel Organisation." useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -20017,7 +20045,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" headerHint="Fremdschlüssel der Zielorganisation." useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -20064,7 +20092,7 @@
               <InlineEditColumn fieldName="beziehungsart" caption="Beziehungsart">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mandat fuer" caption="mandat fuer"/>
                     <Value name="mitglied von" caption="mitglied von"/>
                   </Values>
                   <MFUItems/>
@@ -20084,7 +20112,7 @@
               <InlineInsertColumn fieldName="beziehungsart" caption="Beziehungsart" defaultInsertValue="">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mandat fuer" caption="mandat fuer"/>
                     <Value name="mitglied von" caption="mitglied von"/>
                   </Values>
                   <MFUItems/>
@@ -20274,7 +20302,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="organisation_id" caption="Organisation Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Fremdschlüssel Organisation." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -20314,7 +20342,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" headerHint="Fremdschlüssel der Zielorganisation." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -20361,7 +20389,7 @@
               <InlineEditColumn fieldName="beziehungsart" caption="Beziehungsart">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mandat fuer" caption="mandat fuer"/>
                     <Value name="mitglied von" caption="mitglied von"/>
                   </Values>
                   <MFUItems/>
@@ -20381,7 +20409,7 @@
               <InlineInsertColumn fieldName="beziehungsart" caption="Beziehungsart" defaultInsertValue="">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mandat fuer" caption="mandat fuer"/>
                     <Value name="mitglied von" caption="mitglied von"/>
                   </Values>
                   <MFUItems/>
@@ -20603,7 +20631,7 @@
             <Column fieldName="beziehungsart" caption="Beziehungsart">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mandat für" caption="mandat für"/>
+                  <Value name="mandat fuer" caption="mandat fuer"/>
                   <Value name="mitglied von" caption="mitglied von"/>
                 </Values>
                 <MFUItems/>
@@ -20729,7 +20757,7 @@
             <Column fieldName="beziehungsart" caption="Beziehungsart" defaultInsertValue="">
               <EditProperties type="comboBox">
                 <Values>
-                  <Value name="mandat für" caption="mandat für"/>
+                  <Value name="mandat fuer" caption="mandat fuer"/>
                   <Value name="mitglied von" caption="mitglied von"/>
                 </Values>
                 <MFUItems/>
@@ -20853,7 +20881,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="organisation_id" caption="Organisation Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Fremdschlüssel Organisation." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -20893,7 +20921,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" headerHint="Fremdschlüssel der Zielorganisation." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -20940,7 +20968,7 @@
               <InlineEditColumn fieldName="beziehungsart" caption="Beziehungsart">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mandat fuer" caption="mandat fuer"/>
                     <Value name="mitglied von" caption="mitglied von"/>
                   </Values>
                   <MFUItems/>
@@ -20960,7 +20988,7 @@
               <InlineInsertColumn fieldName="beziehungsart" caption="Beziehungsart" defaultInsertValue="">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mandat fuer" caption="mandat fuer"/>
                     <Value name="mitglied von" caption="mitglied von"/>
                   </Values>
                   <MFUItems/>
@@ -21150,7 +21178,7 @@
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
             </Column>
-            <Column fieldName="organisation_id" caption="Organisation Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="organisation_id" caption="Organisation Id" headerHint="Fremdschlüssel Organisation." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -21190,7 +21218,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="ziel_organisation_id" caption="Ziel Organisation Id" headerHint="Fremdschlüssel der Zielorganisation." useInlineEdit="true" useInlineInsert="true">
               <Lookup tableName="organisation" linkFieldName="id" displayFieldName="name" lookupFilter="" useLookupOrdering="true" lookupOrdering="0"/>
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -21237,7 +21265,7 @@
               <InlineEditColumn fieldName="beziehungsart" caption="Beziehungsart">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mandat fuer" caption="mandat fuer"/>
                     <Value name="mitglied von" caption="mitglied von"/>
                   </Values>
                   <MFUItems/>
@@ -21257,7 +21285,7 @@
               <InlineInsertColumn fieldName="beziehungsart" caption="Beziehungsart" defaultInsertValue="">
                 <EditProperties type="comboBox">
                   <Values>
-                    <Value name="mandat für" caption="mandat für"/>
+                    <Value name="mandat fuer" caption="mandat fuer"/>
                     <Value name="mitglied von" caption="mitglied von"/>
                   </Values>
                   <MFUItems/>
@@ -21657,6 +21685,6 @@ Build date: $build_date:$    </Footer>
   </Presentation>
   <UserCSS/>
   <ExcludedPaths/>
-  <DefaultPageProperties recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true"/>
+  <DefaultPageProperties recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true"/>
   <DefaultDataFormats numberAfterDecimal="4" DecimalSeparator="." ThousandSeparator="'" DateTimeFormat="d.m.Y H:i:s" DateFormat="d.m.Y" firstDayOfWeek="1"/>
 </Project>

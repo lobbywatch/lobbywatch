@@ -156,10 +156,10 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -172,7 +172,6 @@
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('url');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
@@ -204,10 +203,10 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -220,7 +219,6 @@
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('url');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
@@ -311,10 +309,10 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -327,7 +325,6 @@
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('url');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
@@ -374,10 +371,10 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -390,7 +387,6 @@
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('url');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
@@ -421,7 +417,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription($this->RenderText('Fremdschlüssel Organisation.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -446,10 +442,10 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -462,7 +458,6 @@
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('url');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
@@ -509,10 +504,10 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -525,7 +520,6 @@
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('url');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
@@ -556,7 +550,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription($this->RenderText('Fremdschlüssel der Zielorganisation.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -571,7 +565,7 @@
             // Edit column for beziehungsart field
             //
             $editor = new ComboBox('beziehungsart_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mandat für', $this->RenderText('mandat für'));
+            $editor->AddValue('mandat fuer', $this->RenderText('mandat fuer'));
             $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
             $editColumn = new CustomEditColumn('Beziehungsart', 'beziehungsart', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -585,7 +579,7 @@
             // Edit column for beziehungsart field
             //
             $editor = new ComboBox('beziehungsart_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mandat für', $this->RenderText('mandat für'));
+            $editor->AddValue('mandat fuer', $this->RenderText('mandat fuer'));
             $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
             $editColumn = new CustomEditColumn('Beziehungsart', 'beziehungsart', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -857,10 +851,10 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -873,7 +867,6 @@
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('url');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
@@ -918,10 +911,10 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -934,7 +927,6 @@
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('url');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
@@ -969,7 +961,7 @@
             // Edit column for beziehungsart field
             //
             $editor = new ComboBox('beziehungsart_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mandat für', $this->RenderText('mandat für'));
+            $editor->AddValue('mandat fuer', $this->RenderText('mandat fuer'));
             $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
             $editColumn = new CustomEditColumn('Beziehungsart', 'beziehungsart', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1045,10 +1037,10 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1061,7 +1053,6 @@
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('url');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
@@ -1106,10 +1097,10 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1122,7 +1113,6 @@
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('url');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
@@ -1157,7 +1147,7 @@
             // Edit column for beziehungsart field
             //
             $editor = new ComboBox('beziehungsart_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mandat für', $this->RenderText('mandat für'));
+            $editor->AddValue('mandat fuer', $this->RenderText('mandat fuer'));
             $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
             $editColumn = new CustomEditColumn('Beziehungsart', 'beziehungsart', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));

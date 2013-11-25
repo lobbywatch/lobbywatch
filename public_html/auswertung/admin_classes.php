@@ -114,10 +114,10 @@ class LobbyOrgSuche {
       $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id   AND a.vernehmlassung='nie'  AND a.id='$branche'  ORDER BY a.name";
     } else if ($bedeutung == 'alle' and $branche !== 'alle' and $lobbygroup != 'alle') {
       // alle/1/1 Mit Interessengruppen
-      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name,c.bezeichnung FROM organisation a,branche b , interessengruppe c WHERE a.branche_id=b.id  AND a.interessengruppe_id=c.id  AND a.id='$branche' AND a.interessengruppe_id ='$lobbygroup' ORDER BY a.name";
+      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name,c.name FROM organisation a,branche b , interessengruppe c WHERE a.branche_id=b.id  AND a.interessengruppe_id=c.id  AND a.id='$branche' AND a.interessengruppe_id ='$lobbygroup' ORDER BY a.name";
     } else if ($bedeutung == 1 and $branche !== 'alle' and $lobbygroup != 'alle') {
       // hoch/1/1/0 //Mit Lobbygroup
-      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name,c.bezeichnung FROM organisation a,branche b , interessengruppe c WHERE a.branche_id=b.id  AND a.interessengruppe_id=c.id AND a.typ LIKE '%dezidierteLobby' AND (a.vernehmlassung='immer' OR a.vernehmlassung='punktuell') AND (a.ALT_parlam_verbindung LIKE '%exekutiv%' OR a.ALT_parlam_verbindung='') AND a.id='$branche' AND a.interessengruppe_id ='$lobbygroup' ORDER BY a.name,a.vernehmlassung";
+      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name,c.name FROM organisation a,branche b , interessengruppe c WHERE a.branche_id=b.id  AND a.interessengruppe_id=c.id AND a.typ LIKE '%dezidierteLobby' AND (a.vernehmlassung='immer' OR a.vernehmlassung='punktuell') AND (a.ALT_parlam_verbindung LIKE '%exekutiv%' OR a.ALT_parlam_verbindung='') AND a.id='$branche' AND a.interessengruppe_id ='$lobbygroup' ORDER BY a.name,a.vernehmlassung";
     } else {
       dtXXX($bedeutung . ' ' . $branche . ' ' . $lobbygroup);
     }
@@ -175,7 +175,7 @@ class Parlamentarier {
   function einzelParlamentarier($name) {
 
     /* $sql="SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,a.partei,a.parteifunktion,a.im_rat_seit,a.kommission,a.kleinbild,b.beschreibung,b.id, b.status,c.name FROM parlamentarier a ,interessenbindung b ,branche c WHERE a.id=b.id AND b.id=c.id AND a.nachname LIKE '$name%' ORDER BY c.name"; */
-    $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton, partei.abkuerzung as partei, a.parteifunktion,a.im_rat_seit,k.name as kommission,a.kleinbild FROM parlamentarier a LEFT JOIN partei ON a.partei_id = partei.id LEFT JOIN in_kommission ik ON ik.parlamentarier_id = a.id INNER JOIN kommission k ON ik.kommission_id=k.id WHERE a.nachname LIKE '$name%' ORDER BY a.nachname";
+    $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton, partei.abkuerzung as partei, a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild FROM parlamentarier a LEFT JOIN partei ON a.partei_id = partei.id LEFT JOIN in_kommission ik ON ik.parlamentarier_id = a.id INNER JOIN kommission k ON ik.kommission_id=k.id WHERE a.nachname LIKE '$name%' GROUP BY a.id ORDER BY a.nachname";
     dtXXX($sql);
     $einzelParlam = $this->db->query ( $sql );
     $erg = $einzelParlam->fetchAll ( PDO::FETCH_ASSOC );
@@ -256,7 +256,7 @@ class Parlamentarier {
   }
   // Alle Parlamentarier
   function alleParlamentarier() {
-    $sql = "SELECT *, pa.abkuerzung as partei  FROM parlamentarier p LEFT JOIN partei pa ON p.partei_id = p.id, in_kommission ik, kommission k WHERE ik.parlamentarier_id = p.id AND ik.kommission_id = k.id AND k.abkuerzung = 'SGK' ORDER BY p.nachname";
+    $sql = "SELECT p.*, pa.abkuerzung as partei  FROM parlamentarier p LEFT JOIN partei pa ON p.partei_id = p.id, in_kommission ik, kommission k WHERE ik.parlamentarier_id = p.id AND ik.kommission_id = k.id AND k.abkuerzung = 'SGK' ORDER BY p.nachname";
     dtXXX($sql);
     $parlam = $this->db->query ( $sql );
     $erg = $parlam->fetchAll ( PDO::FETCH_ASSOC );
@@ -296,17 +296,17 @@ class Parlamentarier {
     return $ltyp; // Nur eine Kategorie
   }
   function interessengruppe($branche) {
-    $sql = "SELECT id,bezeichnung FROM interessengruppe WHERE branche_id='$branche' ORDER BY bezeichnung ASC";
+    $sql = "SELECT id,name FROM interessengruppe WHERE branche_id='$branche' ORDER BY name ASC";
     $interessengruppe = $this->db->query ( $sql );
     $lg = $interessengruppe->fetchAll ( PDO::FETCH_ASSOC );
     return $lg;
   }
   function lobbygruppen_einfach($id) { // Einfacher Array mit Branchen
-    $sql = "SELECT bezeichnung FROM interessengruppe WHERE branche_id='$id'";
+    $sql = "SELECT name FROM interessengruppe WHERE branche_id='$id'";
     $interessengruppe = $this->db->query ( $sql );
     $lgroup = $interessengruppe->fetchAll ( PDO::FETCH_ASSOC );
     foreach ( $lgroup as $val ) {
-      $lgroup = $val ['bezeichnung'];
+      $lgroup = $val ['name'];
     }
     return $lgroup; // Nur eine Kategorie
   }
@@ -367,12 +367,12 @@ class Statistik {
   }
   function ungewichtetEinzelInteressengruppen($id, $branche = '1') {
     // Komplex->Gruppen werden &uuml;ber organisation ermittelt
-    $sql = "SELECT d.name, b.name, c.bezeichnung, count( 'c.bezeichnung' ) AS Anzahl FROM interessenbindung a, branche b, interessengruppe c, parlamentarier d, organisation e WHERE e.branche_id = b.id AND e.interessengruppe_id = c.id
+    $sql = "SELECT d.nachname, b.name, c.name, count( 'c.name' ) AS Anzahl FROM interessenbindung a, branche b, interessengruppe c, parlamentarier d, organisation e WHERE e.branche_id = b.id AND e.interessengruppe_id = c.id
 AND a.parlamentarier_id = d.id
 AND a.organisation_id = e.id
 AND a.id = '$branche'
 AND a.parlamentarier_id = '$id'
-GROUP BY c.bezeichnung
+GROUP BY c.name
 ORDER BY Anzahl DESC ";
     $gruppen = $this->db->query ( $sql );
     $erg = $gruppen->fetchAll ( PDO::FETCH_ASSOC );
@@ -468,8 +468,8 @@ class Kommission {
 
   // Branchen und Interessengruppen je Kommission
   function BranchenInteressengruppen($komm) {
-    $sql = "SELECT a.name,b.bezeichnung,b.beschreibung FROM branche a, interessengruppe b, kommission k WHERE b.branche_id=a.id AND a.kommission_id = k.id AND k.abkuerzung='$komm'
-   ORDER BY b.bezeichnung ASC";
+    $sql = "SELECT a.name,b.name,b.beschreibung FROM branche a, interessengruppe b, kommission k WHERE b.branche_id=a.id AND a.kommission_id = k.id AND k.abkuerzung='$komm'
+   ORDER BY b.name ASC";
     dtXXX($sql);
     $gruppen = $this->db->query ( $sql );
     $erg = $gruppen->fetchAll ( PDO::FETCH_ASSOC );
@@ -482,7 +482,7 @@ class Kommission {
   }
   // Gruppierte Lobbybeziehungen nach Typ und Gruppe (Statistisch)
   function gruppierteLobbyGruppen($komm, $branche) {
-    $sql = "SELECT b.name, c.bezeichnung, count( 'c.bezeichnung' ) AS Anzahl FROM organisation a, branche b, interessengruppe c, kommission k WHERE a.interessengruppe_id = c.id AND c.branche_id = b.id AND b.name = '$branche' AND b.kommission_id = k.id AND k.abkuerzung = '$komm' GROUP BY c.bezeichnung ORDER BY Anzahl DESC";
+    $sql = "SELECT b.name, c.name, count( 'c.name' ) AS Anzahl FROM organisation a, branche b, interessengruppe c, kommission k WHERE a.interessengruppe_id = c.id AND c.branche_id = b.id AND b.name = '$branche' AND b.kommission_id = k.id AND k.abkuerzung = '$komm' GROUP BY c.name ORDER BY Anzahl DESC";
     dtXXX($sql);
     $gruppiert = $this->db->query ( $sql );
     $erg = $gruppiert->fetchAll ( PDO::FETCH_ASSOC );
@@ -1076,7 +1076,7 @@ if (isset ( $_POST ['bedeutung'] )) {
       // function typ() einsetzen
       $lot = typ ( $val ['typ'] );
 
-      // $interessengruppe=$lobbygroup=='alle'?"Alle Interessengruppen":"{$val['bezeichnung']}";
+      // $interessengruppe=$lobbygroup=='alle'?"Alle Interessengruppen":"{$val['name']}";
       $html .= "<td style='width:150px'>$lot</td><td width='150'>{$val['name']}<br>Interessengruppe: $logruppe</td><td width='100'>{$val['vernehmlassung']}</td><td width='50'><a href='{$val['url']}'>Weblink</a></td><td id='{$val['id']}' data-darstellung='$darstellung' style='width:130px;cursor:pointer' class='parlamlink' >{$val['ALT_parlam_verbindung']} <img src='./icons/mouseclick_mini.jpg' /></td></tr><tr>";
     }
     $html .= "</tr><table></div>";
@@ -1320,7 +1320,7 @@ if (isset ( $_GET ['optionen'] ) and $_GET ['optionen'] != 'alle') {
   if ($opts != '') {
 
     foreach ( $opts as $val ) {
-      $html .= "<option value={$val['interessengruppe_id']}>{$val['bezeichnung']}</option>";
+      $html .= "<option value={$val['interessengruppe_id']}>{$val['name']}</option>";
     }
   } else {
     break;
@@ -1349,7 +1349,7 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'statistik') {
   $html .= "<option></option>";
   $html .= "<option value='alle'>alle</option>";
   foreach ( $erg as $val ) {
-    $html .= "<option value='{$val['id']}'>{$val['name']} {$val['vorname']}</option>";
+    $html .= "<option value='{$val['id']}'>{$val['nachname']} {$val['vorname']}</option>";
   }
   $html .= "</li></select>";
 
@@ -1502,7 +1502,7 @@ if (isset ( $_GET ['pid'] )) {
   $html .= "<table border='1' style='width:200px'>";
   $html .= "<tr>";
   foreach ( $erg as $val ) {
-    $html .= "<td>{$val['bezeichnung']}</td><td>{$val['Anzahl']}</td></tr><tr>";
+    $html .= "<td>{$val['name']}</td><td>{$val['Anzahl']}</td></tr><tr>";
   }
   $html .= "</tr></table>";
   print $html;
@@ -1562,7 +1562,7 @@ if (isset ( $_GET ['beidekomm'] )) {
   // print_r($typen);
 
   // Aufgabenbeschreibung auseinendernehmen
-  $aufgaben = $kommnr [0] ['sachthemen']; // String
+  $aufgaben = $kommnr [0] ['sachbereiche']; // String
   $aufgaben = explode ( ';', $aufgaben ); // array
   $anzahlnr = count ( $mitgliedernr );
   $anzahlsr = count ( $mitgliedersr );
@@ -1619,7 +1619,7 @@ if (isset ( $_GET ['beidekomm'] )) {
     if (in_array ( $typenar [$i], $typus )) { // Gruppe definiert?
 
       foreach ( $gruppen as $val ) {
-        $html .= "<li><b>{$val['bezeichnung']}:</b> {$val['beschreibung']}</li>";
+        $html .= "<li><b>{$val['name']}:</b> {$val['beschreibung']}</li>";
       }
     } else {
       $html .= "<li>Noch keine Gruppen definiert</li>";
@@ -1641,7 +1641,7 @@ if (isset ( $_GET ['beidekomm'] )) {
       $html .= "<caption><b>$val</b></caption>";
       $html .= "<tr><th>Gruppen</th><th>Anzahl Lobbybeziehungen</th></tr><tr>";
       foreach ( $gewichtet as $cont ) {
-        $html .= "<td>{$cont['bezeichnung']}</td><td>{$cont['Anzahl']}</td></tr><tr>";
+        $html .= "<td>{$cont['name']}</td><td>{$cont['Anzahl']}</td></tr><tr>";
       }
     }
     if (is_string ( $gewichtet )) {
