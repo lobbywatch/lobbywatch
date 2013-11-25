@@ -99,6 +99,7 @@ do
   | perl -p -e's/(\/\/\s*?)(?=defineXXX)//' \
   | perl -p -e's/(\/\/\s*?)(?=error_reportingXXX)//' \
   | perl -p -e's/(\/\/\s*?)(?=ini_setXXX)//' \
+  | perl -p -e's/Handler\(\$page, \$rowData/Handler\(\$page, &\$rowData/g' \
   | perl -p -e's/\$build_date:\$/'\'' \. "\$build_date" \. '\''/' \
   > "$file";
 done

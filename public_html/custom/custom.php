@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(__FILE__) . "/../common/utils.php";
+
 function setupRSS($page, $dataset) {
   $title = ucwords ( $page->GetCaption () );
   $table = str_replace ( '`', '', $dataset->GetName () );

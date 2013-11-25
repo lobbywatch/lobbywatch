@@ -26,6 +26,7 @@ class LobbyOrgSuche {
   }
   // Fortschreitende Suche
   function lobbyorgFinden($name) {
+    //TODO a.ALT_parlam_verbindung; c.kommission noch nicht angepasst
     $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.interessengruppe_id,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, c.nachname,c.vorname,c.ratstyp,c.abkuerzung as partei,c.kanton,c.kommission,d.name FROM organisation a,parlamentarier c LEFT JOIN partei p ON c.partei_id = p.id, interessenbindung b,branche d WHERE  b.parlamentarier_id=c.id  AND a.id=b.organisation_id AND a.branche_id=d.id  AND a.name LIKE '%$name%' ORDER BY a.id";
     $suche = $this->db->query ( $sql );
     $erg = $suche->fetchAll ( PDO::FETCH_ASSOC );
@@ -49,6 +50,7 @@ class LobbyOrgSuche {
     }
   }
   function verbindungen($id) {
+    //TODO a.kommission noch nicht angepasst
     $sql = "SELECT a.id,a.nachname,a.vorname,a.abkuerzung as partei,a.ratstyp,a.kanton, a.kommission, a.kleinbild,b.id_interessen FROM parlamentarier a LEFT JOIN partei p ON c.partei_id = p.id, interessenbindung b, organisation c  WHERE  a.id=b.parlamentarier_id AND c.id=b.organisation_id AND c.id='$id' ORDER BY a.nachname";
     $quicksearchnamen = $this->db->query ( $sql );
     $namen = $quicksearchnamen->fetchAll ( PDO::FETCH_ASSOC );
@@ -139,6 +141,7 @@ class LobbyOrgSuche {
   }
   // Aus Suchergebnissen organisationen Parlamentarische Verbindung finden: Vorgabe: id
   function lobbyOrgParlam($id) {
+    //TODO a.kommission noch nicht angepasst
     $sql = "SELECT a.id,a.nachname,a.vorname,a.ratstyp,partei.abkuerzung as partei,a.kanton,a.kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a LEFT JOIN partei ON a.partei_id=partei.id,interessenbindung b,organisation c WHERE a.id=b.parlamentarier_id AND c.id=b.organisation_id AND c.id='$id' ORDER BY partei.abkuerzung,a.nachname";
     $bindung = $this->db->query ( $sql );
     $erg = $bindung->fetchAll ( PDO::FETCH_ASSOC );
@@ -151,6 +154,7 @@ class LobbyOrgSuche {
   }
   // organisationen aus Zugangsberechtigungen in den Suchergebnissen organisationen
   function lobbyOrgParlamentZugang($id) {
+    //TODO a.kommission noch nicht angepasst
     $sql = "SELECT a.id,a.nachname,a.vorname,a.ratstyp,a.partei,a.kanton,a.kommission,a.kleinbild,a.sitzplatz, b.nachname,vorname FROM parlamentarier a,zugangsberechtigung b, mandat m, organisation c WHERE a.id=b.parlamentarier_id AND m.zugangsberechtigung_id=b.id AND m.organisation_id = c.id AND c.id='$id' ORDER BY a.nachname,a.partei";
     $bindungzugang = $this->db->query ( $sql );
     $erg = $bindungzugang->fetchAll ( PDO::FETCH_ASSOC );
@@ -1558,7 +1562,7 @@ if (isset ( $_GET ['beidekomm'] )) {
   // print_r($typen);
 
   // Aufgabenbeschreibung auseinendernehmen
-  $aufgaben = $kommnr [0] ['beschreibung']; // String
+  $aufgaben = $kommnr [0] ['sachthemen']; // String
   $aufgaben = explode ( ';', $aufgaben ); // array
   $anzahlnr = count ( $mitgliedernr );
   $anzahlsr = count ( $mitgliedersr );

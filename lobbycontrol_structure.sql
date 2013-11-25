@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 24. Nov 2013 um 15:23
+-- Erstellungszeit: 24. Nov 2013 um 23:00
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -28,22 +28,23 @@ USE `lobbycontrol`;
 --
 -- Tabellenstruktur für Tabelle `branche`
 --
--- Erzeugt am: 23. Nov 2013 um 13:10
+-- Erzeugt am: 24. Nov 2013 um 20:17
 --
 
 DROP TABLE IF EXISTS `branche`;
 CREATE TABLE IF NOT EXISTS `branche` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Branche',
   `name` varchar(100) NOT NULL COMMENT 'Name der Branche, z.B. Gesundheit, Energie',
+  `kommission_id` int(11) DEFAULT NULL COMMENT 'Zuständige Kommission im Parlament',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
   `angaben` text COMMENT 'Angaben zur Branche',
-  `kommission_id` int(11) DEFAULT NULL COMMENT 'Zusändige Kommission im Parlament',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_br_unique` (`name`) COMMENT 'Fachlicher unique constraint',
   KEY `kommission_id` (`kommission_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen und Parlam. Kommissionen' AUTO_INCREMENT=19 ;
 
@@ -58,17 +59,17 @@ CREATE TABLE IF NOT EXISTS `branche` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 23. Nov 2013 um 13:30
+-- Erzeugt am: 24. Nov 2013 um 21:54
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
 CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessenbindung',
-  `beschreibung` varchar(150) NOT NULL COMMENT 'Bezeichung der Interessenbindung',
-  `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Deklariert oder nicht deklariert?',
-  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
-  `art` enum('mitglied','geschäftsführend','vorstand','tätig','beirat') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Bindung',
-  `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
+  `parlamentarier_id` int(11) NOT NULL,
+  `organisation_id` int(11) NOT NULL,
+  `art` enum('mitglied','geschäftsführend','vorstand','tätig','beirat') NOT NULL DEFAULT 'mitglied',
+  `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert',
+  `beschreibung` varchar(150) NOT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Bezeichnung wird zur Auswertung wahrscheinlich nicht gebraucht.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am',
   `autorisiert_visa` varchar(10) DEFAULT NULL,
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -77,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_ib_unique` (`art`,`parlamentarier_id`,`organisation_id`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbyorg` (`organisation_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=337 ;
@@ -94,21 +96,22 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
 --
 -- Tabellenstruktur für Tabelle `interessengruppe`
 --
--- Erzeugt am: 16. Nov 2013 um 06:48
+-- Erzeugt am: 24. Nov 2013 um 20:19
 --
 
 DROP TABLE IF EXISTS `interessengruppe`;
 CREATE TABLE IF NOT EXISTS `interessengruppe` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessengruppe',
   `bezeichnung` varchar(150) NOT NULL COMMENT 'Bezeichnung der Interessengruppe',
+  `branche_id` int(11) NOT NULL,
   `beschreibung` text NOT NULL COMMENT 'Beschreibung zur Interessengruppe',
-  `branche_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Branche',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_ig_unique` (`bezeichnung`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_lobbytyp` (`branche_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=10 ;
 
@@ -123,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
 --
 -- Tabellenstruktur für Tabelle `in_kommission`
 --
--- Erzeugt am: 24. Nov 2013 um 07:02
+-- Erzeugt am: 24. Nov 2013 um 19:33
 --
 
 DROP TABLE IF EXISTS `in_kommission`;
@@ -138,9 +141,10 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `ik_unique` (`funktion`,`parlamentarier_id`,`kommission_id`) COMMENT 'Fachlicher unique constraint',
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `kommissions_id` (`kommission_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=5 ;
 
 --
 -- RELATIONEN DER TABELLE `in_kommission`:
@@ -155,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
--- Erzeugt am: 16. Nov 2013 um 06:49
+-- Erzeugt am: 24. Nov 2013 um 20:12
 --
 
 DROP TABLE IF EXISTS `kommission`;
@@ -163,12 +167,15 @@ CREATE TABLE IF NOT EXISTS `kommission` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Kommission',
   `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
   `name` varchar(100) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
-  `beschreibung` text NOT NULL COMMENT 'Beschreibung der Kommission',
+  `sachbereiche` text NOT NULL COMMENT 'Liste der Sachbereiche der Kommission, abgetrennt durch ";".',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_ko_unique_abkuerzung` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
+  UNIQUE KEY `idx_ko_unique_name` (`name`) COMMENT 'Fachlicher unique constraint'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=19 ;
 
 -- --------------------------------------------------------
@@ -176,33 +183,28 @@ CREATE TABLE IF NOT EXISTS `kommission` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 23. Nov 2013 um 12:47
+-- Erzeugt am: 24. Nov 2013 um 21:57
 --
 
 DROP TABLE IF EXISTS `mandat`;
 CREATE TABLE IF NOT EXISTS `mandat` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `zugangsberechtigung_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Zugangsberechtigung.',
+  `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `art` enum('mitglied','geschäftsführend','vorstand','tätig','beirat') DEFAULT NULL COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel eines Mandates',
-  `beschreibung` varchar(150) NOT NULL COMMENT 'Umschreibung des Mandates',
-  `zugangsberechtigung_id` int(11) NOT NULL COMMENT 'Fremschlüssel Zugangsberechtigung',
-  `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Lobbyorganisation',
+  `beschreibung` varchar(150) NOT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird zur Auswertung wahrscheinlich nicht gebraucht.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am',
-  `autorisiert_visa` varchar(10) DEFAULT NULL,
+  `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_md_unique` (`art`,`zugangsberechtigung_id`,`organisation_id`) COMMENT 'Fachlicher unique constraint',
   KEY `zugangsberechtigung_id` (`zugangsberechtigung_id`),
   KEY `organisations_id` (`organisation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=1 ;
-
---
--- MIME TYPEN DER TABELLE `mandat`:
---   `art`
---       `Application_Octetstream`
---
 
 --
 -- RELATIONEN DER TABELLE `mandat`:
@@ -217,27 +219,29 @@ CREATE TABLE IF NOT EXISTS `mandat` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 24. Nov 2013 um 07:12
+-- Erzeugt am: 24. Nov 2013 um 21:52
 --
 
 DROP TABLE IF EXISTS `organisation`;
 CREATE TABLE IF NOT EXISTS `organisation` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Lobbyorganisation',
-  `name` varchar(150) NOT NULL COMMENT 'Name der Lobbyorganisation',
+  `name` varchar(150) NOT NULL COMMENT 'Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe') NOT NULL,
+  `adresse` varchar(400) DEFAULT NULL COMMENT 'Adresse der Organisation',
+  `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL,
+  `vernehmlassung` enum('immer','punktuell','nie') NOT NULL,
+  `interessengruppe_id` int(11) DEFAULT NULL,
+  `branche_id` int(11) DEFAULT NULL,
+  `url` varchar(255) NOT NULL,
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Lobbyorganisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe') NOT NULL COMMENT 'Rechtsform der Organisation',
-  `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Lobbyorganisation',
-  `url` varchar(255) NOT NULL COMMENT 'Link zur Webseite',
-  `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilnahme an Vernehmlassungen',
   `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL COMMENT 'Bisherige Verbindung der Organisation ins Parlament',
-  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
-  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_org_unique` (`name`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `idx_lobbygroup` (`interessengruppe_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=351 ;
@@ -255,21 +259,22 @@ CREATE TABLE IF NOT EXISTS `organisation` (
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung`
 --
--- Erzeugt am: 16. Nov 2013 um 06:52
+-- Erzeugt am: 24. Nov 2013 um 21:46
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung`;
 CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel einer Organisationsbeziehung',
+  `organisation_id` int(11) NOT NULL,
+  `ziel_organisation_id` int(11) NOT NULL,
   `beziehungsart` enum('mandat für','mitglied von') NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation',
-  `organisation_id` int(11) NOT NULL COMMENT 'Beziehung in einer Organisation (Fremdschlüssel)',
-  `ziel_organisation_id` int(11) NOT NULL COMMENT 'Zielorganisation',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_ob_unique` (`beziehungsart`,`organisation_id`,`ziel_organisation_id`) COMMENT 'Fachlicher unique constraint',
   KEY `organisation_id` (`organisation_id`),
   KEY `ziel_organisation_id` (`ziel_organisation_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=1 ;
@@ -287,7 +292,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 23. Nov 2013 um 18:52
+-- Erzeugt am: 24. Nov 2013 um 21:50
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -295,23 +300,24 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Parlamentariers',
   `nachname` varchar(100) NOT NULL COMMENT 'Nachname des Parlamentariers',
   `vorname` varchar(50) NOT NULL COMMENT 'Vornahme des Parlamentariers',
+  `ratstyp` enum('NR','SR') NOT NULL,
+  `kanton` char(2) NOT NULL,
+  `partei_id` int(11) DEFAULT NULL,
+  `parteifunktion` set('mitglied','präsident','vizepräsident','fraktionschef') NOT NULL DEFAULT 'mitglied',
+  `im_rat_seit` year(4) NOT NULL,
   `beruf` varchar(150) NOT NULL COMMENT 'Beruf des Parlamentariers',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
-  `ratstyp` enum('NR','SR') NOT NULL COMMENT 'National- oder Ständerat?',
-  `kanton` char(2) NOT NULL COMMENT 'Kantonskürzel',
-  `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Ohne Partei, bedeutet parteilos.',
-  `parteifunktion` set('mitglied','präsident','vizepräsident','fraktionschef') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
-  `im_rat_seit` year(4) NOT NULL COMMENT 'Mitglied im Parlament seit',
   `Geburtstag` date DEFAULT NULL COMMENT 'Geburtstag des Parlamentariers',
-  `ALT_kommission` varchar(255) NOT NULL COMMENT 'Mitglied in Kommission(en) als Freitext',
-  `kleinbild` varchar(80) NOT NULL DEFAULT 'leer.png' COMMENT 'Dateiname des Photos (44x62 px), muss auf Server vorhanden sein oder leer.png',
-  `sitzplatz` int(11) NOT NULL COMMENT 'Sitzplatznr im Parlament',
+  `kleinbild` varchar(80) NOT NULL DEFAULT 'leer.png',
+  `sitzplatz` int(11) NOT NULL,
+  `ALT_kommission` varchar(255) NOT NULL COMMENT 'Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_pm_unique` (`nachname`,`vorname`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_partei` (`partei_id`),
   KEY `beruf_branche_id` (`beruf_interessengruppe_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=39 ;
@@ -329,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
--- Erzeugt am: 16. Nov 2013 um 06:55
+-- Erzeugt am: 24. Nov 2013 um 20:13
 --
 
 DROP TABLE IF EXISTS `partei`;
@@ -345,7 +351,8 @@ CREATE TABLE IF NOT EXISTS `partei` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `pt_name` (`abkuerzung`)
+  UNIQUE KEY `idx_pt_unique_abkuerzung` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
+  UNIQUE KEY `idx_pt_unique_name` (`name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
@@ -353,7 +360,7 @@ CREATE TABLE IF NOT EXISTS `partei` (
 --
 -- Tabellenstruktur für Tabelle `zugangsberechtigung`
 --
--- Erzeugt am: 23. Nov 2013 um 14:16
+-- Erzeugt am: 24. Nov 2013 um 21:49
 --
 
 DROP TABLE IF EXISTS `zugangsberechtigung`;
@@ -366,12 +373,13 @@ CREATE TABLE IF NOT EXISTS `zugangsberechtigung` (
   `beruf` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Interessengruppe für den Beruf',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
-  `ALT_lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Lobbyorganisation',
+  `ALT_lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Wird später entfernt. Fremschlüssel zur Lobbyorganisation',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_zb_unique` (`nachname`,`vorname`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`)
