@@ -1,5 +1,8 @@
 <?php
 
+include_once dirname(__FILE__) . '/build_date.php';
+include_once dirname(__FILE__) . '/deploy_date.php';
+
 function dt($msg) {
   global $debug;
   if ($debug !== true)

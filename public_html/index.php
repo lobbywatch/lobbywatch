@@ -1,6 +1,6 @@
 <?php
 require_once 'settings/settings.php';
-include_once 'common/build_date.php';
+require_once 'common/utils.php';
 ?>
 <!DOCTYPE html >
 <html>
@@ -51,6 +51,6 @@ include_once 'common/build_date.php';
   <p>
     <a href="/wiki">Wiki</a><br/>
   </p>
-  <footer><p>Build date: <?php print $build_date;?></p></footer>
+  <footer><p>Deploy date: <?php print $deploy_date;?> / Build date: <?php print $build_date;?></p></footer>
   </body>
 </html>

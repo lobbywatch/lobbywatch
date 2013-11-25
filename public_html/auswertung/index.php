@@ -1,6 +1,6 @@
 <?php
 require_once '../settings/settings.php';
-include_once '../common/build_date.php';
+require_once '../common/utils.php';
 ?>
 <!DOCTYPE html >
 <html>
@@ -900,7 +900,7 @@ table td {
       <p>
         Auswertungsseite von <a href="/<?php print "$env_dir";?>">Lobbycontrol <?php print "$env";?></a>.
       </p>
-      <p>Mode: <?php print "$env";?> / Build date: <?php print $build_date;?></p>
+      <p>Mode: <?php print "$env";?><br/>Deploy date: <?php print $deploy_date;?><br/>Build date: <?php print $build_date;?></p>
     </div>
   </div>
   <div style='clear: both'>
