@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 25. Nov 2013 um 07:57
+-- Erstellungszeit: 25. Nov 2013 um 10:05
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -96,7 +96,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
 --
 -- Tabellenstruktur für Tabelle `interessengruppe`
 --
--- Erzeugt am: 25. Nov 2013 um 05:18
+-- Erzeugt am: 25. Nov 2013 um 09:03
 --
 
 DROP TABLE IF EXISTS `interessengruppe`;
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessengruppe',
   `name` varchar(150) NOT NULL COMMENT 'Bezeichnung der Interessengruppe',
   `branche_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Branche',
-  `beschreibung` text NOT NULL COMMENT 'Beschreibung zur Interessengruppe',
+  `beschreibung` text NOT NULL COMMENT 'Eingrenzung und Beschreibung zur Interessengruppe',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',

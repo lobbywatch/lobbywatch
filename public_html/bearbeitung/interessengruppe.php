@@ -392,7 +392,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Beschreibung zur Interessengruppe'));
+            $column->SetDescription($this->RenderText('Eingrenzung und Beschreibung zur Interessengruppe'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             

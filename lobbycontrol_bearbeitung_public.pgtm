@@ -3293,7 +3293,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung zur Interessengruppe" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+            <Column fieldName="beschreibung" caption="Beschreibung" headerHint="Eingrenzung und Beschreibung zur Interessengruppe" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -3571,7 +3571,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung zur Interessengruppe" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="beschreibung" caption="Beschreibung" headerHint="Eingrenzung und Beschreibung zur Interessengruppe" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text" maxLength="75">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -4109,7 +4109,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung zur Interessengruppe" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="beschreibung" caption="Beschreibung" headerHint="Eingrenzung und Beschreibung zur Interessengruppe" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -4387,7 +4387,7 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
-            <Column fieldName="beschreibung" caption="Beschreibung" headerHint="Beschreibung zur Interessengruppe" useInlineEdit="true" useInlineInsert="true">
+            <Column fieldName="beschreibung" caption="Beschreibung" headerHint="Eingrenzung und Beschreibung zur Interessengruppe" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
@@ -18455,7 +18455,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="in_kommission" fileName="in_kommission" caption="In Kommission" shortCaption="In Kommission" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="in_kommission" fileName="in_kommission" caption="In Kommission" shortCaption="In Kommission" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
