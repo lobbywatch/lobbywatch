@@ -16,7 +16,17 @@ $usersIds = array('otto' => -1, 'roland' => -1, 'rebecca' => -1, 'thomas' => -1,
 $dataSourceRecordPermissions = array();
 
 $grants = array('guest' => 
-        array()
+        array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
+        'branche' => new DataSourceSecurityInfo(false, false, false, false),
+        'kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'partei' => new DataSourceSecurityInfo(false, false, false, false),
+        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
+        'mandat' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'defaultUser' => 
         array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
@@ -123,7 +133,7 @@ $grants = array('guest' =>
         'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
     );
 
-$appGrants = array('guest' => new DataSourceSecurityInfo(false, false, false, false),
+$appGrants = array('guest' => new DataSourceSecurityInfo(GetApplication()->GetOperation() === 'rss', false, false, false),
     'defaultUser' => new DataSourceSecurityInfo(true, false, false, false),
     'otto' => new DataSourceSecurityInfo(true, true, true, true),
     'rkurmann' => new DataSourceSecurityInfo(true, true, true, true),
