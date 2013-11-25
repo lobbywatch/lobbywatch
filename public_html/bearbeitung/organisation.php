@@ -140,8 +140,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
-                array('id', 'name', 'rechtsform', 'ort', 'typ', 'vernehmlassung', 'interessengruppe_id_name', 'branche_id_name', 'url', 'beschreibung', 'ALT_parlam_verbindung', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Rechtsform'), $this->RenderText('Ort'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe Id'), $this->RenderText('Branche Id'), $this->RenderText('Url'), $this->RenderText('Beschreibung'), $this->RenderText('ALT Parlam Verbindung'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'name', 'ort', 'rechtsform', 'typ', 'vernehmlassung', 'interessengruppe_id_name', 'branche_id_name', 'url', 'beschreibung', 'ALT_parlam_verbindung', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe Id'), $this->RenderText('Branche Id'), $this->RenderText('Url'), $this->RenderText('Beschreibung'), $this->RenderText('ALT Parlam Verbindung'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -163,8 +163,8 @@
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('rechtsform', $this->RenderText('Rechtsform')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ort', $this->RenderText('Ort')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('rechtsform', $this->RenderText('Rechtsform')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('typ', $this->RenderText('Typ')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vernehmlassung', $this->RenderText('Vernehmlassung')));
             
@@ -315,6 +315,39 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for ort field
+            //
+            $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('ort_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for ort field
+            //
+            $editor = new TextAreaEdit('ort_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for ort field
+            //
+            $editor = new TextAreaEdit('ort_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Ort der Organisation'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -356,39 +389,6 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Rechtsform der Organisation'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for ort field
-            //
-            $column = new TextViewColumn('ort', 'Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ort_handler');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ort field
-            //
-            $editor = new TextAreaEdit('ort_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ort field
-            //
-            $editor = new TextAreaEdit('ort_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Ort der Organisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -986,19 +986,19 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for rechtsform field
-            //
-            $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('ort_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for rechtsform field
+            //
+            $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1107,6 +1107,15 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for ort field
+            //
+            $editor = new TextAreaEdit('ort_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for rechtsform field
             //
             $editor = new ComboBox('rechtsform_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -1119,15 +1128,6 @@
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for ort field
-            //
-            $editor = new TextAreaEdit('ort_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -1349,6 +1349,15 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for ort field
+            //
+            $editor = new TextAreaEdit('ort_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for rechtsform field
             //
             $editor = new ComboBox('rechtsform_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -1361,15 +1370,6 @@
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for ort field
-            //
-            $editor = new TextAreaEdit('ort_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Ort', 'ort', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -1607,16 +1607,16 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for rechtsform field
+            // View column for ort field
             //
-            $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
-            // View column for ort field
+            // View column for rechtsform field
             //
-            $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1724,16 +1724,16 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for rechtsform field
+            // View column for ort field
             //
-            $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
+            $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
-            // View column for ort field
+            // View column for rechtsform field
             //
-            $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

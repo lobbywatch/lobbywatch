@@ -6183,7 +6183,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="kommission" fileName="kommission" caption="Kommission" shortCaption="Kommission" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="kommission" fileName="kommission" caption="Kommission" shortCaption="Kommission" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -6328,7 +6328,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6342,7 +6342,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6361,7 +6361,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_date" caption="Created Date" readOnly="true">
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6375,7 +6375,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6394,7 +6394,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true">
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6408,7 +6408,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6427,7 +6427,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_date" caption="Updated Date" readOnly="true">
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6441,7 +6441,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6599,7 +6599,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6613,7 +6613,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6632,7 +6632,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_date" caption="Created Date" readOnly="true">
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6646,7 +6646,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6665,7 +6665,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true">
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6679,7 +6679,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6698,7 +6698,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_date" caption="Updated Date" readOnly="true">
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6712,7 +6712,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -6785,7 +6785,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -6799,7 +6799,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_date" caption="Created Date" readOnly="true">
+            <Column fieldName="created_date" caption="Created Date">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -6813,7 +6813,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true">
+            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -6827,22 +6827,8 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" readOnly="true">
+            <Column fieldName="updated_date" caption="Updated Date">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
-              <Validators>
-                <RequiredClientValidatorInfo enabled="false"/>
-                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                <EmailClientValidatorInfo enabled="false"/>
-                <CreditCardClientValidatorInfo enabled="false"/>
-                <NumberClientValidatorInfo enabled="false"/>
-                <DigitsClientValidatorInfo enabled="false"/>
-                <UrlClientValidatorInfo enabled="false"/>
-                <RegExpClientValidatorInfo enabled="false" expression=""/>
-              </Validators>
-            </Column>
-            <Column fieldName="id" caption="Id" readOnly="true">
-              <EditProperties type="textBox" size="0" maxLength="0"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -6913,7 +6899,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -6927,7 +6913,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_date" caption="Created Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -6941,7 +6927,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -6955,7 +6941,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -7134,7 +7120,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7148,7 +7134,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7167,7 +7153,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_date" caption="Created Date" readOnly="true">
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7181,7 +7167,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7200,7 +7186,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true">
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7214,7 +7200,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7233,7 +7219,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_date" caption="Updated Date" readOnly="true">
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7247,7 +7233,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7405,7 +7391,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7419,7 +7405,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7438,7 +7424,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_date" caption="Created Date" readOnly="true">
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7452,7 +7438,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7471,7 +7457,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true">
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7485,7 +7471,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7504,7 +7490,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_date" caption="Updated Date" readOnly="true">
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7518,7 +7504,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7564,7 +7550,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="partei" fileName="partei" caption="Partei" shortCaption="Partei" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="partei" fileName="partei" caption="Partei" shortCaption="Partei" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -7758,7 +7744,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7772,7 +7758,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -8286,7 +8272,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -8422,7 +8408,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -15562,7 +15548,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="organisation" fileName="organisation" caption="Organisation" shortCaption="Organisation" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="organisation" fileName="organisation" caption="Organisation" shortCaption="Organisation" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -15590,6 +15576,39 @@
                 </Validators>
               </InlineEditColumn>
               <InlineInsertColumn fieldName="name" caption="Name" defaultInsertValue="">
+                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
+            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
+              <ViewProperties type="text" maxLength="75">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
+                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -15644,39 +15663,6 @@
                   </Values>
                   <MFUItems/>
                 </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineInsertColumn>
-            </Column>
-            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true" totalFunction="0">
-              <ViewProperties type="text" maxLength="75">
-                <DivAttributes bold="false" italic="false"/>
-              </ViewProperties>
-              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineEditColumn>
-              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -16186,6 +16172,39 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
+            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text" maxLength="75">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
+                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" headerHint="Rechtsform der Organisation" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -16226,39 +16245,6 @@
                   </Values>
                   <MFUItems/>
                 </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineInsertColumn>
-            </Column>
-            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="text" maxLength="75">
-                <DivAttributes bold="false" italic="false"/>
-              </ViewProperties>
-              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineEditColumn>
-              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -16744,18 +16730,8 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="rechtsform" caption="Rechtsform">
-              <EditProperties type="comboBox">
-                <Values>
-                  <Value name="AG" caption="AG"/>
-                  <Value name="GmbH" caption="GmbH"/>
-                  <Value name="Stiftung" caption="Stiftung"/>
-                  <Value name="Verein" caption="Verein"/>
-                  <Value name="Informelle Gruppe" caption="Informelle Gruppe"/>
-                  <Value name="Parlamentarische Gruppe" caption="Parlamentarische Gruppe"/>
-                </Values>
-                <MFUItems/>
-              </EditProperties>
+            <Column fieldName="ort" caption="Ort" canSetNull="true">
+              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -16768,8 +16744,18 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="ort" caption="Ort" canSetNull="true">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+            <Column fieldName="rechtsform" caption="Rechtsform">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="AG" caption="AG"/>
+                  <Value name="GmbH" caption="GmbH"/>
+                  <Value name="Stiftung" caption="Stiftung"/>
+                  <Value name="Verein" caption="Verein"/>
+                  <Value name="Informelle Gruppe" caption="Informelle Gruppe"/>
+                  <Value name="Parlamentarische Gruppe" caption="Parlamentarische Gruppe"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -16995,18 +16981,8 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="rechtsform" caption="Rechtsform" defaultInsertValue="">
-              <EditProperties type="comboBox">
-                <Values>
-                  <Value name="AG" caption="AG"/>
-                  <Value name="GmbH" caption="GmbH"/>
-                  <Value name="Stiftung" caption="Stiftung"/>
-                  <Value name="Verein" caption="Verein"/>
-                  <Value name="Informelle Gruppe" caption="Informelle Gruppe"/>
-                  <Value name="Parlamentarische Gruppe" caption="Parlamentarische Gruppe"/>
-                </Values>
-                <MFUItems/>
-              </EditProperties>
+            <Column fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -17019,8 +16995,18 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+            <Column fieldName="rechtsform" caption="Rechtsform" defaultInsertValue="">
+              <EditProperties type="comboBox">
+                <Values>
+                  <Value name="AG" caption="AG"/>
+                  <Value name="GmbH" caption="GmbH"/>
+                  <Value name="Stiftung" caption="Stiftung"/>
+                  <Value name="Verein" caption="Verein"/>
+                  <Value name="Informelle Gruppe" caption="Informelle Gruppe"/>
+                  <Value name="Parlamentarische Gruppe" caption="Parlamentarische Gruppe"/>
+                </Values>
+                <MFUItems/>
+              </EditProperties>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -17234,8 +17220,8 @@
           <SimpleSearchColumns>
             <Column fieldName="id" caption="Id"/>
             <Column fieldName="name" caption="Name"/>
-            <Column fieldName="rechtsform" caption="Rechtsform"/>
             <Column fieldName="ort" caption="Ort"/>
+            <Column fieldName="rechtsform" caption="Rechtsform"/>
             <Column fieldName="typ" caption="Typ"/>
             <Column fieldName="vernehmlassung" caption="Vernehmlassung"/>
             <Column fieldName="interessengruppe_id" caption="Interessengruppe Id">
@@ -17256,8 +17242,8 @@
           <AdvancedSearchColumns>
             <Column fieldName="id" caption="Id" useComboBox="false"/>
             <Column fieldName="name" caption="Name" useComboBox="false"/>
-            <Column fieldName="rechtsform" caption="Rechtsform" useComboBox="false"/>
             <Column fieldName="ort" caption="Ort" useComboBox="false"/>
+            <Column fieldName="rechtsform" caption="Rechtsform" useComboBox="false"/>
             <Column fieldName="typ" caption="Typ" useComboBox="false"/>
             <Column fieldName="vernehmlassung" caption="Vernehmlassung" useComboBox="false"/>
             <Column fieldName="interessengruppe_id" caption="Interessengruppe Id" useComboBox="false">
@@ -17314,6 +17300,39 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
+            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
+                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" headerHint="Rechtsform der Organisation" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -17354,39 +17373,6 @@
                   </Values>
                   <MFUItems/>
                 </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineInsertColumn>
-            </Column>
-            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="text">
-                <DivAttributes bold="false" italic="false"/>
-              </ViewProperties>
-              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineEditColumn>
-              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -17896,6 +17882,39 @@
                 </Validators>
               </InlineInsertColumn>
             </Column>
+            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true">
+              <ViewProperties type="text">
+                <DivAttributes bold="false" italic="false"/>
+              </ViewProperties>
+              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
+                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineEditColumn>
+              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
+                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
+                <Validators>
+                  <RequiredClientValidatorInfo enabled="false"/>
+                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
+                  <EmailClientValidatorInfo enabled="false"/>
+                  <CreditCardClientValidatorInfo enabled="false"/>
+                  <NumberClientValidatorInfo enabled="false"/>
+                  <DigitsClientValidatorInfo enabled="false"/>
+                  <UrlClientValidatorInfo enabled="false"/>
+                  <RegExpClientValidatorInfo enabled="false" expression=""/>
+                </Validators>
+              </InlineInsertColumn>
+            </Column>
             <Column fieldName="rechtsform" caption="Rechtsform" headerHint="Rechtsform der Organisation" useInlineEdit="true" useInlineInsert="true">
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
@@ -17936,39 +17955,6 @@
                   </Values>
                   <MFUItems/>
                 </EditProperties>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineInsertColumn>
-            </Column>
-            <Column fieldName="ort" caption="Ort" headerHint="Ort der Organisation" useInlineEdit="true" useInlineInsert="true">
-              <ViewProperties type="text">
-                <DivAttributes bold="false" italic="false"/>
-              </ViewProperties>
-              <InlineEditColumn fieldName="ort" caption="Ort" canSetNull="true">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
-                <Validators>
-                  <RequiredClientValidatorInfo enabled="false"/>
-                  <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                  <EmailClientValidatorInfo enabled="false"/>
-                  <CreditCardClientValidatorInfo enabled="false"/>
-                  <NumberClientValidatorInfo enabled="false"/>
-                  <DigitsClientValidatorInfo enabled="false"/>
-                  <UrlClientValidatorInfo enabled="false"/>
-                  <RegExpClientValidatorInfo enabled="false" expression=""/>
-                </Validators>
-              </InlineEditColumn>
-              <InlineInsertColumn fieldName="ort" caption="Ort" canSetNull="true" defaultInsertValue="">
-                <EditProperties type="textArea" columnCount="50" rowCount="8"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
                   <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -18642,7 +18628,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -18656,7 +18642,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -18675,7 +18661,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_date" caption="Created Date" readOnly="true">
+              <InlineEditColumn fieldName="created_date" caption="Created Date">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -18689,7 +18675,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -18708,7 +18694,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true">
+              <InlineEditColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -18722,7 +18708,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -18741,7 +18727,7 @@
               <ViewProperties type="dateTime" dateTimeFormat="d.m.Y H:i:s">
                 <DivAttributes/>
               </ViewProperties>
-              <InlineEditColumn fieldName="updated_date" caption="Updated Date" readOnly="true">
+              <InlineEditColumn fieldName="updated_date" caption="Updated Date">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -18755,7 +18741,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
                 <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -19140,7 +19126,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -19154,7 +19140,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_date" caption="Created Date" readOnly="true">
+            <Column fieldName="created_date" caption="Created Date">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -19168,7 +19154,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true">
+            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -19182,22 +19168,8 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" readOnly="true">
+            <Column fieldName="updated_date" caption="Updated Date">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
-              <Validators>
-                <RequiredClientValidatorInfo enabled="false"/>
-                <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                <LengthRangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
-                <EmailClientValidatorInfo enabled="false"/>
-                <CreditCardClientValidatorInfo enabled="false"/>
-                <NumberClientValidatorInfo enabled="false"/>
-                <DigitsClientValidatorInfo enabled="false"/>
-                <UrlClientValidatorInfo enabled="false"/>
-                <RegExpClientValidatorInfo enabled="false" expression=""/>
-              </Validators>
-            </Column>
-            <Column fieldName="id" caption="Id" readOnly="true">
-              <EditProperties type="textBox" size="0" maxLength="0"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
                 <RangeClientValidatorInfo enabled="false" maxValue="0" minValue="0"/>
@@ -19281,7 +19253,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -19295,7 +19267,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_date" caption="Created Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="created_date" caption="Created Date" canSetServerDefault="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -19309,7 +19281,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="updated_visa" caption="Updated Visa" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -19323,7 +19295,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" readOnly="true" defaultInsertValue="">
+            <Column fieldName="updated_date" caption="Updated Date" canSetServerDefault="true" defaultInsertValue="">
               <EditProperties type="dateTime" showsTime="true" dateTimeFormat="Y-m-d H:i:s" firstDayOfWeek="0"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
