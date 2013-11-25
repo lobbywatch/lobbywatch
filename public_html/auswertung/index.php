@@ -900,7 +900,7 @@ table td {
       <p>
         Auswertungsseite von <a href="/<?php print "$env_dir";?>">Lobbycontrol <?php print "$env";?></a>.
       </p>
-      <p>Mode: <?php print "$env";?><br/>Deploy date: <?php print $deploy_date;?><br/>Build date: <?php print $build_date;?></p>
+      <p>Mode: <b><?php print "$env";?></b><br/>Deploy date: <?php print $deploy_date;?><br/>Build date: <?php print $build_date;?></p>
     </div>
   </div>
   <div style='clear: both'>
