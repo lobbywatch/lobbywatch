@@ -7564,7 +7564,7 @@
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="partei" fileName="partei" caption="Partei" shortCaption="Partei" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
+      <Page type="table" tableName="partei" fileName="partei" caption="Partei" shortCaption="Partei" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="100" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToExcelAvailable="false" exportToWordAvailable="false" exportToXmlAvailable="false" exportToCsvAvailable="false" exportToPdfAvailable="false" printerFriendlyAvailable="false" advancedSearchAvailable="false" filterRowAvailable="false" visualEffectsEnabled="false" showSetNullCheckBox="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -7758,7 +7758,7 @@
               <ViewProperties type="text">
                 <DivAttributes bold="false" italic="false"/>
               </ViewProperties>
-              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true">
+              <InlineEditColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -7772,7 +7772,7 @@
                   <RegExpClientValidatorInfo enabled="false" expression=""/>
                 </Validators>
               </InlineEditColumn>
-              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+              <InlineInsertColumn fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
                 <EditProperties type="textBox" size="10" maxLength="10"/>
                 <Validators>
                   <RequiredClientValidatorInfo enabled="false"/>
@@ -8286,7 +8286,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true">
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
@@ -8422,7 +8422,7 @@
                 <RegExpClientValidatorInfo enabled="false" expression=""/>
               </Validators>
             </Column>
-            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" defaultInsertValue="">
+            <Column fieldName="created_visa" caption="Created Visa" canSetNull="true" readOnly="true" defaultInsertValue="">
               <EditProperties type="textBox" size="10" maxLength="10"/>
               <Validators>
                 <RequiredClientValidatorInfo enabled="false"/>
