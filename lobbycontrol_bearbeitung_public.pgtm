@@ -21779,20 +21779,35 @@
         <User name="rebecca" password="hidden" userId="rebecca"/>
         <User name="thomas" password="hidden" userId="thomas"/>
         <User name="bane" password="hidden" userId="bane"/>
+        <User name="demo" password="hidden" userId="demo"/>
         <User name="admin" password="hidden"/>
       </Users>
     </UserAuthorization>
     <UserGrants enableGuestAccess="true">
+      <UserGrant userName="guest" select="1"/>
       <UserGrant userName="defaultUser" select="1"/>
       <UserGrant userName="otto" select="1" insert="1" update="1" delete="1"/>
       <UserGrant userName="rkurmann" select="1" insert="1" update="1" delete="1"/>
       <UserGrant userName="rebecca" select="1" insert="1" update="1" delete="1"/>
       <UserGrant userName="thomas" select="1" insert="1" update="1" delete="1"/>
-      <UserGrant userName="bane" select="1" insert="1" update="1" delete="1" admin="1"/>
-      <UserGrant userName="roland" select="1" insert="1" update="1" delete="1"/>
-      <UserGrant userName="guest" select="1"/>
+      <UserGrant userName="bane" select="1" insert="1" update="1" delete="1"/>
+      <UserGrant userName="roland" select="1" insert="1" update="1" delete="1" admin="1"/>
+      <UserGrant userName="demo" select="1"/>
       <UserGrant userName="admin" select="1" insert="1" update="1" delete="1" admin="1"/>
       <UserPageGrants>
+        <PageGrants userName="guest">
+          <PageGrant pageName="parlamentarier"/>
+          <PageGrant pageName="interessengruppe"/>
+          <PageGrant pageName="branche"/>
+          <PageGrant pageName="kommission"/>
+          <PageGrant pageName="partei"/>
+          <PageGrant pageName="zugangsberechtigung"/>
+          <PageGrant pageName="interessenbindung"/>
+          <PageGrant pageName="mandat"/>
+          <PageGrant pageName="organisation"/>
+          <PageGrant pageName="in_kommission"/>
+          <PageGrant pageName="organisation_beziehung"/>
+        </PageGrants>
         <PageGrants userName="defaultUser">
           <PageGrant pageName="parlamentarier"/>
           <PageGrant pageName="interessengruppe"/>
@@ -21884,7 +21899,7 @@
           <PageGrant pageName="in_kommission"/>
           <PageGrant pageName="organisation_beziehung"/>
         </PageGrants>
-        <PageGrants userName="guest">
+        <PageGrants userName="demo">
           <PageGrant pageName="parlamentarier"/>
           <PageGrant pageName="interessengruppe"/>
           <PageGrant pageName="branche"/>

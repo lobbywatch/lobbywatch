@@ -25,6 +25,7 @@ $users = array (
     'thomas' => '',
     'bane' => '',
     'admin' => '',
+    'demo' => '',
 );
 
 if (@$maintenance_mode === true) {

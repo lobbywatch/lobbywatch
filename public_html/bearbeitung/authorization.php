@@ -11,7 +11,7 @@ require_once 'components/security/user_grants_manager.php';
 
 // Custom modification: Use $users form settings.php
 
-$usersIds = array('otto' => -1, 'roland' => -1, 'rebecca' => -1, 'thomas' => -1, 'bane' => -1, 'admin' => -1);
+$usersIds = array('otto' => -1, 'roland' => -1, 'rebecca' => -1, 'thomas' => -1, 'bane' => -1, 'demo' => -1, 'admin' => -1);
 
 $dataSourceRecordPermissions = array();
 
@@ -119,6 +119,19 @@ $grants = array('guest' =>
         'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
         'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
     ,
+    'demo' => 
+        array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
+        'branche' => new DataSourceSecurityInfo(false, false, false, false),
+        'kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'partei' => new DataSourceSecurityInfo(false, false, false, false),
+        'zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
+        'mandat' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
+        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
+        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false))
+    ,
     'admin' => 
         array('parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
@@ -139,8 +152,9 @@ $appGrants = array('guest' => new DataSourceSecurityInfo(GetApplication()->GetOp
     'rkurmann' => new DataSourceSecurityInfo(true, true, true, true),
     'rebecca' => new DataSourceSecurityInfo(true, true, true, true),
     'thomas' => new DataSourceSecurityInfo(true, true, true, true),
-    'bane' => new AdminDataSourceSecurityInfo(),
-    'roland' => new DataSourceSecurityInfo(true, true, true, true),
+    'bane' => new DataSourceSecurityInfo(true, true, true, true),
+    'roland' => new AdminDataSourceSecurityInfo(),
+    'demo' => new DataSourceSecurityInfo(true, false, false, false),
     'admin' => new AdminDataSourceSecurityInfo());
 
 $tableCaptions = array('parlamentarier' => 'Parlamentarier',
