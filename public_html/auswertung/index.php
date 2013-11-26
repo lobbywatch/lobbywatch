@@ -897,9 +897,13 @@ table td {
       <img src='lobbybilder/lobbyismus.png' />
     </p>
     <div>
-      <p>
-        Auswertungsseite von <a href="/<?php print "$env_dir";?>">Lobbycontrol <?php print "$env";?></a>.
+     <p>
+        Auswertungsseite von Lobbycontrol <b><?php print "$env";?></b>.
       </p>
+       <p>
+        <a href="<?php print "$env_dir";?>bearbeitung">Bearbeitungsseite Lobbycontrol <?php print "$env";?></a>.<br>
+        <a href="<?php print "$env_dir";?>info.php">Infoseite Lobbycontrol <?php print "$env";?></a>.
+        </p>
       <p>Mode: <b><?php print "$env";?></b><br/>Deploy date: <?php print $deploy_date;?><br/>Build date: <?php print $build_date;?></p>
     </div>
   </div>

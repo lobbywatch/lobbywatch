@@ -38,16 +38,16 @@ function HasAdminPage()
 function GetPageInfos()
 {
     $result = array();
+    $result[] = array('caption' => 'Kommission', 'short_caption' => 'Kommission', 'filename' => 'kommission.php', 'name' => 'kommission');
+    $result[] = array('caption' => 'In Kommission', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission');
     $result[] = array('caption' => 'Parlamentarier', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier');
     $result[] = array('caption' => 'Interessengruppe', 'short_caption' => 'Interessengruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe');
     $result[] = array('caption' => 'Branche', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche');
-    $result[] = array('caption' => 'Kommission', 'short_caption' => 'Kommission', 'filename' => 'kommission.php', 'name' => 'kommission');
     $result[] = array('caption' => 'Partei', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei');
     $result[] = array('caption' => 'Zugangsberechtigung', 'short_caption' => 'Zugangsberechtigung', 'filename' => 'zugangsberechtigung.php', 'name' => 'zugangsberechtigung');
     $result[] = array('caption' => 'Interessenbindung', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung');
     $result[] = array('caption' => 'Mandat', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat');
     $result[] = array('caption' => 'Organisation', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation');
-    $result[] = array('caption' => 'In Kommission', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission');
     $result[] = array('caption' => 'Organisation Beziehung', 'short_caption' => 'Organisation Beziehung', 'filename' => 'organisation_beziehung.php', 'name' => 'organisation_beziehung');
     return $result;
 }
@@ -67,7 +67,7 @@ function GetPagesFooter(){
     global $env_dir;
 
     return
-        'Bearbeitungsseiten von <a href="/' . $env_dir . '">Lobbycontrol ' . $env . '</a>.<br>
+        'Bearbeitungsseiten von <a href="' . $env_dir . '">Lobbycontrol ' . $env . '</a>.<br>
 Mode: ' . $env . ' / Build date: ' . "$build_date" . ''; 
     }
 

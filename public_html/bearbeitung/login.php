@@ -128,7 +128,7 @@
 
         private function OnAfterLogin($userName, $connection)
         {
-
+            // stub
         }
 
         private function GetUrlToRedirectAfterLogin()
@@ -227,7 +227,7 @@
     $loginPage = new LoginPage(
         new LoginControl(
             GetIdentityCheckStrategy(),
-            'parlamentarier.php',
+            'kommission.php',
             GetCaptions('UTF-8')));
 
     SetUpUserAuthorization();
