@@ -1,5 +1,7 @@
 <?php
 
+exit(0);
+
 require_once "../../common/settings.php";
 
 // phpinfo();
@@ -15,7 +17,7 @@ header ( 'Content-type: text/html; charset=UTF-8' );
 $optionen = array (
     PDO::ATTR_PERSISTENT => true
 );
-$db = new PDO ( 'mysql:host=localhost;dbname=' . $db_connection['database'] . ';charset=utf8', $db_connection['username'], $db_connection['password'], $optionen );
+$db = new PDO ( 'mysql:host=localhost;dbname=' . $db_connection['database'] . ';charset=utf8', $db_connection['reader_username'], $db_connection['reader_password'], $optionen );
 /* Schnellsuche auf lobbyorg.htm */
 class LobbyOrgSuche {
   var $db = NULL;

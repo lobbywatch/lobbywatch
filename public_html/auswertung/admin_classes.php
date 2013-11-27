@@ -36,7 +36,7 @@ class LobbyOrgSuche {
     //TODO a.ALT_parlam_verbindung; c.kommission noch nicht angepasst
     $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.interessengruppe_id,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, c.nachname,c.vorname,c.ratstyp,c.abkuerzung as partei,c.kanton,c.kommission,d.name FROM organisation a,parlamentarier c LEFT JOIN partei p ON c.partei_id = p.id, interessenbindung b,branche d WHERE  b.parlamentarier_id=c.id  AND a.id=b.organisation_id AND a.branche_id=d.id  AND a.name LIKE :name ORDER BY a.id";
     $suche = $this->db->prepare ( $sql );
-    $suche = $this->db->execute ( array(':name' => "%$name%") );
+    $suche->execute ( array(':name' => "%$name%") );
     $erg = $suche->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -49,7 +49,7 @@ class LobbyOrgSuche {
   function quickSearchLobbys($term) {
     $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung,b.name FROM organisation a,branche b WHERE a.branche_id=b.id AND a.name LIKE :term ORDER BY id";
     $quicksearch = $this->db->prepare ( $sql );
-   $quicksearch = $this->db->excute ( array(':term' => "%$term%") );
+   $this->db->execute ( array(':term' => "%$term%") );
     $erg = $quicksearch->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -60,8 +60,9 @@ class LobbyOrgSuche {
   }
   function verbindungen($id) {
     //TODO a.kommission noch nicht angepasst
-    $sql = "SELECT a.id,a.nachname,a.vorname,a.abkuerzung as partei,a.ratstyp,a.kanton, a.kommission, a.kleinbild,b.id_interessen FROM parlamentarier a LEFT JOIN partei p ON c.partei_id = p.id, interessenbindung b, organisation c  WHERE  a.id=b.parlamentarier_id AND c.id=b.organisation_id AND c.id='$id' ORDER BY a.nachname";
-    $quicksearchnamen = $this->db->query ( $sql );
+    $sql = "SELECT a.id,a.nachname,a.vorname,a.abkuerzung as partei,a.ratstyp,a.kanton, a.kommission, a.kleinbild,b.id_interessen FROM parlamentarier a LEFT JOIN partei p ON c.partei_id = p.id, interessenbindung b, organisation c  WHERE  a.id=b.parlamentarier_id AND c.id=b.organisation_id AND c.id=:id ORDER BY a.nachname";
+    $quicksearchnamen = $this->db->prepare ( $sql );
+    $quicksearchnamen->execute ( array(':id' => $id) );
     $namen = $quicksearchnamen->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $namen );
     if ($anz > 0) {
@@ -73,15 +74,17 @@ class LobbyOrgSuche {
 
   // EinzelParlamentarier Kurzinfos Lobbyorg
   function lobbyOrgEinzel($id) {
-    $sql = "SELECT name,typ,vernehmlassung,ALT_parlam_verbindung,url FROM organisation WHERE id='$id'";
-    $lobbyorg = $this->db->query ( $sql );
+    $sql = "SELECT name,typ,vernehmlassung,ALT_parlam_verbindung,url FROM organisation WHERE id=:id";
+    $lobbyorg = $this->db->prepare ( $sql );
+    $lobbyorg->execute ( array(':id' => $id) );
     $erg = $lobbyorg->fetchAll ( PDO::FETCH_ASSOC );
     return $erg;
   }
   // Mehrfachverbindungen &uuml;ber Parlamentarier-Interface
   function lobbyOrgMehrfach($id) {
-    $sql = "SELECT a.nachname,a.vorname,a.abkuerzung as partei,a.ratstyp FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id, interessenbindung b WHERE a.id=b.parlamentarier_id AND b.id ='$id'";
-    $mehrfach = $this->db->query ( $sql );
+    $sql = "SELECT a.nachname,a.vorname,a.abkuerzung as partei,a.ratstyp FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id, interessenbindung b WHERE a.id=b.parlamentarier_id AND b.id =:id";
+    $mehrfach = $this->db->prepare ( $sql );
+    $mehrfach->execute ( array(':id' => $id) );
     $erg = $mehrfach->fetchAll ( PDO::FETCH_ASSOC );
     return $erg;
   }
@@ -96,37 +99,47 @@ class LobbyOrgSuche {
      */
     // 0100
     if ($bedeutung == 'alle' and $branche !== 'alle' and $lobbygroup == 'alle') {
-      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id  AND a.id ='$branche'  ORDER BY a.name";
+      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id  AND a.id =:branche  ORDER BY a.name";
+      // $param = array(':branche' => $branche, ':lobbygroup' => $lobbygroup, );
+      $param = array(':branche' => $branche, );
       // 1000
     } else if ($bedeutung != 'alle' and $branche == 'alle' and $lobbygroup == 'alle') {
       // 1000
       if ($bedeutung == 1) { // hoch
                              // Kommissionsbezug fehlt noch
         $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id  AND a.typ LIKE '%dezidierteLobby' AND (a.vernehmlassung='immer' OR a.vernehmlassung='punktuell') AND a.ALT_parlam_verbindung LIKE '%exekutiv%' ORDER BY b.name,a.name";
+        $param = array();
       }
       // mittel/0/0/0
       if ($bedeutung == 2) { // mittel
         $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id  AND a.typ LIKE '%dezidierteLobby' AND a.vernehmlassung='punktuell'  AND a.ALT_parlam_verbindung LIKE '%exekutiv%' ORDER BY b.name,a.name";
+        $param = array();
       }
       // gering/000
       if ($bedeutung == 3) { // gering
         $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id   AND a.vernehmlassung='nie'  ORDER BY b.name,a.name";
+        $param = array();
       }
     } else if ($bedeutung == 1 and $branche !== 'alle' and $lobbygroup == 'alle') {
       // hoch/1/0/0
-      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id  AND a.typ LIKE '%dezidierteLobby' AND (a.vernehmlassung='immer' OR a.vernehmlassung='punktuell') AND a.ALT_parlam_verbindung LIKE '%exekutiv%' AND a.id='$branche'  ORDER BY a.name,a.vernehmlassung";
+      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id  AND a.typ LIKE '%dezidierteLobby' AND (a.vernehmlassung='immer' OR a.vernehmlassung='punktuell') AND a.ALT_parlam_verbindung LIKE '%exekutiv%' AND a.id=:branche  ORDER BY a.name,a.vernehmlassung";
+      $param = array(':branche' => $branche, );
     } else if ($bedeutung == 2 and $branche !== 'alle' and $lobbygroup == 'alle') {
       // mittel/1/0/0
-      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id  AND a.typ LIKE '%dezidierteLobby' AND a.vernehmlassung='punktuell' AND a.ALT_parlam_verbindung LIKE '%exekutiv%' AND a.id='$branche'  ORDER BY a.name";
+      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id  AND a.typ LIKE '%dezidierteLobby' AND a.vernehmlassung='punktuell' AND a.ALT_parlam_verbindung LIKE '%exekutiv%' AND a.id=:branche  ORDER BY a.name";
+      $param = array(':branche' => $branche, );
     } else if ($bedeutung == 3 and $branche !== 'alle' and $lobbygroup == 'alle') {
       // gering/1/0/0
-      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id   AND a.vernehmlassung='nie'  AND a.id='$branche'  ORDER BY a.name";
+      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name FROM organisation a,branche b  WHERE a.branche_id=b.id   AND a.vernehmlassung='nie'  AND a.id=:branche  ORDER BY a.name";
+      $param = array(':branche' => $branche, );
     } else if ($bedeutung == 'alle' and $branche !== 'alle' and $lobbygroup != 'alle') {
       // alle/1/1 Mit Interessengruppen
-      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name,c.name FROM organisation a,branche b , interessengruppe c WHERE a.branche_id=b.id  AND a.interessengruppe_id=c.id  AND a.id='$branche' AND a.interessengruppe_id ='$lobbygroup' ORDER BY a.name";
+      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name,c.name FROM organisation a,branche b , interessengruppe c WHERE a.branche_id=b.id  AND a.interessengruppe_id=c.id  AND a.id=:branche AND a.interessengruppe_id =:lobbygroup ORDER BY a.name";
+      $param = array(':branche' => $branche, ':lobbygroup' => $lobbygroup, );
     } else if ($bedeutung == 1 and $branche !== 'alle' and $lobbygroup != 'alle') {
       // hoch/1/1/0 //Mit Lobbygroup
-      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name,c.name FROM organisation a,branche b , interessengruppe c WHERE a.branche_id=b.id  AND a.interessengruppe_id=c.id AND a.typ LIKE '%dezidierteLobby' AND (a.vernehmlassung='immer' OR a.vernehmlassung='punktuell') AND (a.ALT_parlam_verbindung LIKE '%exekutiv%' OR a.ALT_parlam_verbindung='') AND a.id='$branche' AND a.interessengruppe_id ='$lobbygroup' ORDER BY a.name,a.vernehmlassung";
+      $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, b.name,c.name FROM organisation a,branche b , interessengruppe c WHERE a.branche_id=b.id  AND a.interessengruppe_id=c.id AND a.typ LIKE '%dezidierteLobby' AND (a.vernehmlassung='immer' OR a.vernehmlassung='punktuell') AND (a.ALT_parlam_verbindung LIKE '%exekutiv%' OR a.ALT_parlam_verbindung='') AND a.id=:branche AND a.interessengruppe_id =:lobbygroup ORDER BY a.name,a.vernehmlassung";
+      $param = array(':branche' => $branche, ':lobbygroup' => $lobbygroup, );
     } else {
       dtXXX($bedeutung . ' ' . $branche . ' ' . $lobbygroup);
     }
@@ -139,7 +152,9 @@ class LobbyOrgSuche {
 
     dtXXX($sql);
 
-    $lobbygroup = $this->db->query ( $sql );
+//     $lobbygroup = $this->db->query ( $sql );
+    $lobbygroup = $this->db->prepare ( $sql );
+    $lobbygroup->execute ( array(':branche' => $branche, ':lobbygroup' => $lobbygroup, ) );
     $erg = $lobbygroup->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -151,8 +166,9 @@ class LobbyOrgSuche {
   // Aus Suchergebnissen organisationen Parlamentarische Verbindung finden: Vorgabe: id
   function lobbyOrgParlam($id) {
     //TODO a.kommission noch nicht angepasst
-    $sql = "SELECT a.id,a.nachname,a.vorname,a.ratstyp,partei.abkuerzung as partei,a.kanton,a.kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a LEFT JOIN partei ON a.partei_id=partei.id,interessenbindung b,organisation c WHERE a.id=b.parlamentarier_id AND c.id=b.organisation_id AND c.id='$id' ORDER BY partei.abkuerzung,a.nachname";
-    $bindung = $this->db->query ( $sql );
+    $sql = "SELECT a.id,a.nachname,a.vorname,a.ratstyp,partei.abkuerzung as partei,a.kanton,a.kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a LEFT JOIN partei ON a.partei_id=partei.id,interessenbindung b,organisation c WHERE a.id=b.parlamentarier_id AND c.id=b.organisation_id AND c.id=:id ORDER BY partei.abkuerzung,a.nachname";
+    $bindung = $this->db->prepare ( $sql );
+    $bindung->execute ( array(':id' => $id) );
     $erg = $bindung->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -164,8 +180,9 @@ class LobbyOrgSuche {
   // organisationen aus Zugangsberechtigungen in den Suchergebnissen organisationen
   function lobbyOrgParlamentZugang($id) {
     //TODO a.kommission noch nicht angepasst
-    $sql = "SELECT a.id,a.nachname,a.vorname,a.ratstyp,a.partei,a.kanton,a.kommission,a.kleinbild,a.sitzplatz, b.nachname,vorname FROM parlamentarier a,zugangsberechtigung b, mandat m, organisation c WHERE a.id=b.parlamentarier_id AND m.zugangsberechtigung_id=b.id AND m.organisation_id = c.id AND c.id='$id' ORDER BY a.nachname,a.partei";
-    $bindungzugang = $this->db->query ( $sql );
+    $sql = "SELECT a.id,a.nachname,a.vorname,a.ratstyp,a.partei,a.kanton,a.kommission,a.kleinbild,a.sitzplatz, b.nachname,vorname FROM parlamentarier a,zugangsberechtigung b, mandat m, organisation c WHERE a.id=b.parlamentarier_id AND m.zugangsberechtigung_id=b.id AND m.organisation_id = c.id AND c.id=:id ORDER BY a.nachname,a.partei";
+    $bindungzugang = $this->db->prepare ( $sql );
+    $bindungzugang->execute ( array(':id' => $id) );
     $erg = $bindungzugang->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -184,9 +201,10 @@ class Parlamentarier {
   function einzelParlamentarier($name) {
 
     /* $sql="SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,a.partei,a.parteifunktion,a.im_rat_seit,a.kommission,a.kleinbild,b.beschreibung,b.id, b.status,c.name FROM parlamentarier a ,interessenbindung b ,branche c WHERE a.id=b.id AND b.id=c.id AND a.nachname LIKE '$name%' ORDER BY c.name"; */
-    $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton, partei.abkuerzung as partei, a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild FROM parlamentarier a LEFT JOIN partei ON a.partei_id = partei.id LEFT JOIN in_kommission ik ON ik.parlamentarier_id = a.id LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE a.nachname LIKE '$name%' GROUP BY a.id ORDER BY a.nachname";
+    $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton, partei.abkuerzung as partei, a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild FROM parlamentarier a LEFT JOIN partei ON a.partei_id = partei.id LEFT JOIN in_kommission ik ON ik.parlamentarier_id = a.id LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE a.nachname LIKE :name GROUP BY a.id ORDER BY a.nachname";
     dtXXX($sql);
-    $einzelParlam = $this->db->query ( $sql );
+    $einzelParlam = $this->db->prepare ( $sql );
+    $einzelParlam->execute ( array(':name' => "$name%") );
     $erg = $einzelParlam->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -198,9 +216,10 @@ class Parlamentarier {
 
   // Interessenbindungen nach id des Parlamentariers finden
   function ibEinzelparlamentarier($idparl) {
-    $sql = "SELECT a.beschreibung,a.id,a.status,b.name FROM interessenbindung a, branche b, organisation o WHERE a.organisation_id = o.id and o.branche_id = b.id AND a.parlamentarier_id='$idparl' ORDER BY  b.name";
+    $sql = "SELECT a.beschreibung,a.id,a.status,b.name FROM interessenbindung a, branche b, organisation o WHERE a.organisation_id = o.id and o.branche_id = b.id AND a.parlamentarier_id=:idparl ORDER BY  b.name";
     dtXXX($sql);
-    $ibparl = $this->db->query ( $sql );
+    $ibparl = $this->db->prepare ( $sql );
+    $ibparl->execute ( array(':idparl' => $idparl) );
     $erg = $ibparl->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -212,9 +231,10 @@ class Parlamentarier {
 
   // Einzelparlamentarier nach Sitzplatznummer und Ratstyp f&uuml;r Sitzplatzfenster
   function sitzplatz($ratstyp, $sitzplatz) {
-    $sql = "SELECT parlamentarier.id,nachname,vorname,beruf,ratstyp,kanton,p.abkuerzung as partei,parteifunktion,im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,kleinbild FROM parlamentarier LEFT JOIN partei p ON parlamentarier.partei_id =p.id LEFT JOIN in_kommission ik ON parlamentarier.id = ik.parlamentarier_id LEFT JOIN kommission k ON k.id = ik.kommission_id WHERE ratstyp='$ratstyp' AND sitzplatz='$sitzplatz' GROUP BY parlamentarier.id";
+    $sql = "SELECT parlamentarier.id,nachname,vorname,beruf,ratstyp,kanton,p.abkuerzung as partei,parteifunktion,im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,kleinbild FROM parlamentarier LEFT JOIN partei p ON parlamentarier.partei_id =p.id LEFT JOIN in_kommission ik ON parlamentarier.id = ik.parlamentarier_id LEFT JOIN kommission k ON k.id = ik.kommission_id WHERE ratstyp=:ratstyp AND sitzplatz=:sitzplatz GROUP BY parlamentarier.id";
     dtXXX($sql);
-    $sitzplatz = $this->db->query ( $sql );
+    $sitzplatz = $this->db->prepare ( $sql );
+    $sitzplatz->execute ( array(':sitzplatz' => $sitzplatz, ':ratstyp' => $ratstyp,) );
     $erg = $sitzplatz->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -227,35 +247,45 @@ class Parlamentarier {
   // Untermengen Parlamentarier-Suche
   function gruppenParlamentarier($partei, $kanton, $ratstyp, $komm) {
 
-    dt($komm);
+    dtXXX($komm);
     // 100
     if ($partei != 'alleparteien' and $kanton == 'allekantone' and $ratstyp == 'alleraete') {
-      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = '$komm' AND p.abkuerzung = '$partei' GROUP BY a.id ORDER BY  a.nachname";
+      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = :komm AND p.abkuerzung = :partei GROUP BY a.id ORDER BY  a.nachname";
+      //$param = array(':komm' => $komm, ':partei' => $partei, ':kanton' => $kanton, ':ratstyp' => $ratstyp,)
+      $param = array(':komm' => $komm, ':partei' => $partei);
       // 010
     } else if ($partei == 'alleparteien' and $kanton != 'allekantone' and $ratstyp == 'alleraete') {
-      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id  WHERE k.abkuerzung = '$komm' AND a.kanton = '$kanton' GROUP BY a.id ORDER BY p.abkuerzung,a.nachname";
+      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id  WHERE k.abkuerzung = :komm AND a.kanton = :kanton GROUP BY a.id ORDER BY p.abkuerzung,a.nachname";
+      $param = array(':komm' => $komm, ':kanton' => $kanton,);
       // 001
     } else if ($partei == 'alleparteien' and $kanton == 'allekantone' and $ratstyp != 'alleraete') {
-      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id  WHERE k.abkuerzung = '$komm' AND  a.ratstyp = '$ratstyp' GROUP BY a.id ORDER BY  p.abkuerzung,a.nachname";
+      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id  WHERE k.abkuerzung = :komm AND  a.ratstyp = :ratstyp GROUP BY a.id ORDER BY  p.abkuerzung,a.nachname";
+      $param = array(':komm' => $komm, ':ratstyp' => $ratstyp,);
       // 110
     } else if ($partei != 'alleparteien' and $kanton != 'allekantone' and $ratstyp == 'alleraete') {
-      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = '$komm' AND  p.abkuerzung = '$partei' AND a.kanton='$kanton' GROUP BY a.id ORDER BY  a.kanton,a.nachname";
+      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = :komm AND  p.abkuerzung = :partei AND a.kanton=:kanton GROUP BY a.id ORDER BY  a.kanton,a.nachname";
+      $param = array(':komm' => $komm, ':partei' => $partei, ':kanton' => $kanton,);
       // 101
     } else if ($partei != 'alleparteien' and $kanton == 'allekantone' and $ratstyp != 'alleraete') {
-      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz  FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = '$komm' AND  p.abkuerzung = '$partei' AND a.ratstyp='$ratstyp' GROUP BY a.id ORDER BY  a.ratstyp,p.abkuerzung";
+      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz  FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = :komm AND  p.abkuerzung = :partei AND a.ratstyp=:ratstyp GROUP BY a.id ORDER BY  a.ratstyp,p.abkuerzung";
+      $param = array(':komm' => $komm, ':partei' => $partei, ':ratstyp' => $ratstyp,);
       // 011
     } else if ($partei == 'alleparteien' and $kanton != 'allekantone' and $ratstyp != 'alleraete') {
-      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz  FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = '$komm' AND  a.kanton = '$kanton' AND a.ratstyp='$ratstyp' GROUP BY a.id ORDER BY  a.ratstyp,a.kanton";
+      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz  FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = :komm AND  a.kanton = :kanton AND a.ratstyp=:ratstyp GROUP BY a.id ORDER BY  a.ratstyp,a.kanton";
+      $param = array(':komm' => $komm,':kanton' => $kanton, ':ratstyp' => $ratstyp,);
       // 111
     } else if ($partei != 'alleparteien' and $kanton != 'allekantone' and $ratstyp != 'alleraete') {
-      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz  FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = '$komm' AND a.kanton = '$kanton' AND a.ratstyp='$ratstyp' AND p.abkuerzung='$partei' GROUP BY a.id ORDER BY  p.abkuerzung,a.kanton";
+      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz  FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = :komm AND a.kanton = :kanton AND a.ratstyp=:ratstyp AND p.abkuerzung=:partei GROUP BY a.id ORDER BY  p.abkuerzung,a.kanton";
+      $param = array(':komm' => $komm, ':partei' => $partei, ':kanton' => $kanton, ':ratstyp' => $ratstyp,);
       // 000
     } else if ($partei == 'alleparteien' and $kanton == 'allekantone' and $ratstyp == 'alleraete') {
-      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz  FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = '$komm' GROUP BY a.id ORDER BY a.ratstyp,a.nachname";
+      $sql = "SELECT a.id,a.nachname,a.vorname,a.beruf,a.ratstyp,a.kanton,p.abkuerzung as partei,a.parteifunktion,a.im_rat_seit,GROUP_CONCAT(CONCAT(k.name, ' (', k.abkuerzung, ')') SEPARATOR ', ') as kommission,a.kleinbild,a.sitzplatz  FROM parlamentarier a LEFT JOIN partei p ON a.partei_id = p.id INNER JOIN in_kommission ik ON a.id = ik.parlamentarier_id INNER JOIN kommission k ON ik.kommission_id = k.id WHERE k.abkuerzung = :komm GROUP BY a.id ORDER BY a.ratstyp,a.nachname";
+      $param = array(':komm' => $komm,);
     }
 
     dtXXX($sql);
-    $gruppe = $this->db->query ( $sql );
+    $gruppe = $this->db->prepare ( $sql );
+    $gruppe->execute ( $param );
     $erg = $gruppe->fetchAll ( PDO::FETCH_ASSOC );
     dtXXX($erg);
     $anz = count ( $erg );
@@ -269,7 +299,8 @@ class Parlamentarier {
   function alleParlamentarier() {
     $sql = "SELECT p.*, pa.abkuerzung as partei  FROM parlamentarier p LEFT JOIN partei pa ON p.partei_id = p.id, in_kommission ik, kommission k WHERE ik.parlamentarier_id = p.id AND ik.kommission_id = k.id AND k.abkuerzung = 'SGK' ORDER BY p.nachname";
     dtXXX($sql);
-    $parlam = $this->db->query ( $sql );
+    $parlam = $this->db->prepare ( $sql );
+    $parlam->execute ( );
     $erg = $parlam->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -280,26 +311,30 @@ class Parlamentarier {
   }
   function kantonskuerzel() {
     $sql = "SELECT distinct kanton FROM parlamentarier ORDER BY kanton ASC";
-    $kanton = $this->db->query ( $sql );
+    $kanton = $this->db->prepare ( $sql );
+    $kanton->execute ( );
     $kt = $kanton->fetchAll ( PDO::FETCH_ASSOC );
     return $kt;
   }
   function parteikuerzel() {
     $sql = "SELECT distinct partei.abkuerzung as partei FROM parlamentarier LEFT JOIN partei ON parlamentarier.partei_id = partei.id ORDER BY partei.abkuerzung ASC";
     dtXXX($sql);
-    $partei = $this->db->query ( $sql );
+    $partei = $this->db->prepare ( $sql );
+    $partei->execute ( );
     $pk = $partei->fetchAll ( PDO::FETCH_ASSOC );
     return $pk;
   }
   function branche() {
     $sql = "SELECT id,name FROM branche ORDER BY name ASC";
-    $branche = $this->db->query ( $sql );
+    $branche = $this->db->prepare ( $sql );
+    $branche->execute ( );
     $lt = $branche->fetchAll ( PDO::FETCH_ASSOC );
     return $lt;
   }
   function lobbytypen_einfach($id) { // Einfacher Array mit Branchen
-    $sql = "SELECT name FROM branche WHERE id='$id'";
-    $branche = $this->db->query ( $sql );
+    $sql = "SELECT name FROM branche WHERE id=:id";
+    $branche = $this->db->prepare ( $sql );
+    $branche->execute ( array(':id' => $id) );
     $ltyp = $branche->fetchAll ( PDO::FETCH_ASSOC );
     foreach ( $ltyp as $val ) {
       $ltyp = $val ['name'];
@@ -307,14 +342,16 @@ class Parlamentarier {
     return $ltyp; // Nur eine Kategorie
   }
   function interessengruppe($branche) {
-    $sql = "SELECT id,name FROM interessengruppe WHERE branche_id='$branche' ORDER BY name ASC";
-    $interessengruppe = $this->db->query ( $sql );
+    $sql = "SELECT id,name FROM interessengruppe WHERE branche_id=:branche ORDER BY name ASC";
+    $interessengruppe = $this->db->prepare ( $sql );
+    $interessengruppe->execute ( array(':branche' => $branche) );
     $lg = $interessengruppe->fetchAll ( PDO::FETCH_ASSOC );
     return $lg;
   }
   function lobbygruppen_einfach($id) { // Einfacher Array mit Branchen
-    $sql = "SELECT name FROM interessengruppe WHERE branche_id='$id'";
-    $interessengruppe = $this->db->query ( $sql );
+    $sql = "SELECT name FROM interessengruppe WHERE branche_id=:id";
+    $interessengruppe = $this->db->prepare ( $sql );
+    $interessengruppe->execute ( array(':id' => $id) );
     $lgroup = $interessengruppe->fetchAll ( PDO::FETCH_ASSOC );
     foreach ( $lgroup as $val ) {
       $lgroup = $val ['name'];
@@ -324,9 +361,10 @@ class Parlamentarier {
   // Zugangsberechtigungen nach ParlamentarierName: differenziert nach gew&ouml;hnlichen G&auml;sten ohne oder mit Lobbyorg
   function zugangsberechtigung($id) { // $name
                                         // Quelle f&uuml;r solche SQLs:http://aktuell.de.selfhtml.org/artikel/datenbanken/fortgeschrittene-joins/mehrfachjoin2.htm
-    $sql = "SELECT p.nachname,p.vorname,zugangsberechtigung.nachname,zugangsberechtigung.vorname,zugangsberechtigung.funktion,zugangsberechtigung.id,branche.name FROM parlamentarier p INNER JOIN (zugangsberechtigung LEFT JOIN mandat ON zugangsberechtigung.id = mandat.zugangsberechtigung_id LEFT JOIN organisation ON mandat.organisation_id = organisation.id LEFT JOIN branche ON branche.id=organisation.branche_id) ON p.id=zugangsberechtigung.parlamentarier_id WHERE p.id='1' ORDER BY p.nachname,branche.name";
+    $sql = "SELECT p.nachname,p.vorname,zugangsberechtigung.nachname,zugangsberechtigung.vorname,zugangsberechtigung.funktion,zugangsberechtigung.id,branche.name FROM parlamentarier p INNER JOIN (zugangsberechtigung LEFT JOIN mandat ON zugangsberechtigung.id = mandat.zugangsberechtigung_id LEFT JOIN organisation ON mandat.organisation_id = organisation.id LEFT JOIN branche ON branche.id=organisation.branche_id) ON p.id=zugangsberechtigung.parlamentarier_id WHERE p.id=:id ORDER BY p.nachname,branche.name";
     dtXXX($sql);
-    $zugang = $this->db->query ( $sql );
+    $zugang = $this->db->prepare ( $sql );
+    $zugang->execute ( array(':id' => $id) );
     $erg = $zugang->fetchAll ( PDO::FETCH_ASSOC );
     if (count ( $erg ) > 0) {
       return $erg;
@@ -336,8 +374,9 @@ class Parlamentarier {
   }
   // Zugangsberechtigungen nach ParlamentarierID:Left JOIN f&uuml;r blosse G&auml;ste oder pers.Mitarbeiter: Nur wenn Lobbyorg ungleich Null ist
   function zugangsberechtigungenNachId($id) {
-    $sql = "SELECT nachname,vorname,funktion,name FROM zugangsberechtigung LEFT JOIN branche ON branche.id=zugangsberechtigung.id WHERE zugangsberechtigung.id ='$id' ";
-    $zugang = $this->db->query ( $sql );
+    $sql = "SELECT nachname,vorname,funktion,name FROM zugangsberechtigung LEFT JOIN branche ON branche.id=zugangsberechtigung.id WHERE zugangsberechtigung.id =:id ";
+    $zugang = $this->db->prepare ( $sql );
+    $zugang->execute ( array(':id' => $id) );
     $erg = $zugang->fetchAll ( PDO::FETCH_ASSOC );
     if (count ( $erg ) > 0) {
       return $erg;
@@ -356,8 +395,9 @@ class Statistik {
   }
   // Auswahl Parlamentarier
   function getPnamen($name) {
-    $sql = "SELECT id,nachname,vorname FROM parlamentarier WHERE nachname LIKE '$name%' ORDER BY nachname ASC";
-    $names = $this->db->query ( $sql );
+    $sql = "SELECT id,nachname,vorname FROM parlamentarier WHERE nachname LIKE :name ORDER BY nachname ASC";
+    $names = $this->db->prepare ( $sql );
+    $names->execute ( array(':name' => "$name%") );
     $erg = $names->fetchAll ( PDO::FETCH_ASSOC );
     if (count ( $erg ) > 0) {
       return $erg;
@@ -367,8 +407,9 @@ class Statistik {
   }
   // nach Branchen
   function ungewichtetEinzel($id) {
-    $sql = "SELECT b.nachname,b.vorname, b.ratstyp,p.abkuerzung as partei,b.kanton,c.name,count('a.id') AS Anzahl FROM interessenbindung a, parlamentarier b LEFT JOIN partei p ON b.partei_id = p.id,branche c, organisation o WHERE a.parlamentarier_id=b.id AND a.organisation_id=o.id AND o.branche_id = c.id AND b.id ='$id' GROUP BY a.id ORDER BY Anzahl DESC";
-    $pie = $this->db->query ( $sql );
+    $sql = "SELECT b.nachname,b.vorname, b.ratstyp,p.abkuerzung as partei,b.kanton,c.name,count('a.id') AS Anzahl FROM interessenbindung a, parlamentarier b LEFT JOIN partei p ON b.partei_id = p.id,branche c, organisation o WHERE a.parlamentarier_id=b.id AND a.organisation_id=o.id AND o.branche_id = c.id AND b.id =:id GROUP BY a.id ORDER BY Anzahl DESC";
+    $pie = $this->db->prepare ( $sql );
+    $pie->execute ( array(':id' => $id) );
     $erg = $pie->fetchAll ( PDO::FETCH_ASSOC );
     if (count ( $erg ) > 0) {
       return $erg;
@@ -381,11 +422,12 @@ class Statistik {
     $sql = "SELECT d.nachname, b.name, c.name, count( 'c.name' ) AS Anzahl FROM interessenbindung a, branche b, interessengruppe c, parlamentarier d, organisation e WHERE e.branche_id = b.id AND e.interessengruppe_id = c.id
 AND a.parlamentarier_id = d.id
 AND a.organisation_id = e.id
-AND a.id = '$branche'
-AND a.parlamentarier_id = '$id'
+AND a.id = :branche
+AND a.parlamentarier_id = :id
 GROUP BY c.name
 ORDER BY Anzahl DESC ";
-    $gruppen = $this->db->query ( $sql );
+    $gruppen = $this->db->prepare ( $sql );
+    $gruppen->execute ( array(':id' => $id, ':branche' => $branche) );
     $erg = $gruppen->fetchAll ( PDO::FETCH_ASSOC );
     if (count ( $erg ) > 0) {
       return $erg;
@@ -397,19 +439,22 @@ ORDER BY Anzahl DESC ";
     // hoch
     // Ergibt alle Datens&auml;tze hoch z.B. Steiert: 4 : kann auch mit count('c.id') AS Anzahl realisiert werden (1 Zeile)
     // AND c.typ LIKE '%dezidierteLobby'
-    $sql = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name FROM parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id  AND (c.vernehmlassung='immer' OR c.vernehmlassung='punktuell') AND d.name='$branche' AND c.ALT_parlam_verbindung LIKE '%exekutiv,kommission' AND b.id='$id'";
+    $sql = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name FROM parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id  AND (c.vernehmlassung='immer' OR c.vernehmlassung='punktuell') AND d.name=:branche AND c.ALT_parlam_verbindung LIKE '%exekutiv,kommission' AND b.id=:id";
     // mittlere Bedeutung
     // AND c.typ LIKE '%dezidierteLobby'
-    $sql1 = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name FROM parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id  AND (c.vernehmlassung='immer' OR c.vernehmlassung='punktuell') AND d.name='$branche' AND c.ALT_parlam_verbindung LIKE '%mitglied,kommission' AND b.id='$id'";
+    $sql1 = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name FROM parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id  AND (c.vernehmlassung='immer' OR c.vernehmlassung='punktuell') AND d.name=:branche AND c.ALT_parlam_verbindung LIKE '%mitglied,kommission' AND b.id=:id";
     // Geringe Bedeutung
-    $sql2 = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name FROM parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id AND c.vernehmlassung='nie'  AND d.name='$branche' AND c.ALT_parlam_verbindung LIKE '%kommission' AND b.id='$id'";
-    $abfr = $this->db->query ( $sql );
+    $sql2 = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name FROM parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id AND c.vernehmlassung='nie'  AND d.name=:branche AND c.ALT_parlam_verbindung LIKE '%kommission' AND b.id=:id";
+    $abfr = $this->db->prepare ( $sql );
+    $abfr->execute ( array(':id' => $id, ':branche' => $branche,) );
     $erg = $abfr->fetchAll ( PDO::FETCH_ASSOC );
     $hoch = count ( $erg );
-    $abfr1 = $this->db->query ( $sql1 );
+    $abfr1 = $this->db->prepare ( $sql1 );
+    $abfr1->execute ( array(':id' => $id, ':branche' => $branche,) );
     $erg1 = $abfr1->fetchAll ( PDO::FETCH_ASSOC );
     $mittel = count ( $erg1 );
-    $abfr2 = $this->db->query ( $sql2 );
+    $abfr2 = $this->db->prepare ( $sql2 );
+    $abfr2->execute ( array(':id' => $id, ':branche' => $branche,) );
     $erg2 = $abfr2->fetchAll ( PDO::FETCH_ASSOC );
     $gering = count ( $erg2 );
     $gew = array (
@@ -439,22 +484,25 @@ class Kommission {
   function allekommission() {
     $sql = "SELECT * FROM kommission ORDER BY abkuerzung";
     dtXXX($sql);
-    $komm = $this->db->query ( $sql );
+    $komm = $this->db->prepare ( $sql );
+    $komm->execute ( );
     $erg = $komm->fetchAll ( PDO::FETCH_ASSOC );
     return $erg;
   }
   // Einzel
   function einzelkommission($komm) {
-    $sql = "SELECT * FROM kommission WHERE abkuerzung='$komm'";
+    $sql = "SELECT * FROM kommission WHERE abkuerzung=:komm";
     dtXXX($sql);
-    $einzelkomm = $this->db->query ( $sql );
+    $einzelkomm = $this->db->prepare ( $sql );
+    $einzelkomm->execute ( array(':komm' => $komm) );
     $erg = $einzelkomm->fetchAll ( PDO::FETCH_ASSOC );
     return $erg;
   }
   function kommissionsMitglieder($komm, $rat) {
-    $sql = "SELECT nachname,vorname,partei.abkuerzung as partei,kanton,ratstyp,kommission.abkuerzung as kommission,kleinbild FROM parlamentarier LEFT JOIN in_kommission ON parlamentarier.id = in_kommission.parlamentarier_id LEFT JOIN kommission ON in_kommission.kommission_id = kommission.id LEFT JOIN partei ON parlamentarier.partei_id = partei.id WHERE ratstyp='$rat' AND kommission.abkuerzung = '$komm' ORDER BY partei.abkuerzung, nachname";
+    $sql = "SELECT nachname,vorname,partei.abkuerzung as partei,kanton,ratstyp,kommission.abkuerzung as kommission,kleinbild FROM parlamentarier LEFT JOIN in_kommission ON parlamentarier.id = in_kommission.parlamentarier_id LEFT JOIN kommission ON in_kommission.kommission_id = kommission.id LEFT JOIN partei ON parlamentarier.partei_id = partei.id WHERE ratstyp='$rat' AND kommission.abkuerzung = :komm ORDER BY partei.abkuerzung, nachname";
     dtXXX($sql);
-    $kmitglieder = $this->db->query ( $sql );
+    $kmitglieder = $this->db->prepare ( $sql );
+    $kmitglieder->execute ( array(':komm' => $komm) );
     $erg = $kmitglieder->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($erg > 0) {
@@ -465,9 +513,10 @@ class Kommission {
   }
   // Nur Branchen
   function branche($komm) {
-    $sql = "SELECT branche.name FROM branche, kommission WHERE kommission.abkuerzung='$komm' AND branche.kommission_id = kommission.id ORDER BY branche.name ASC";
+    $sql = "SELECT branche.name FROM branche, kommission WHERE kommission.abkuerzung=:komm AND branche.kommission_id = kommission.id ORDER BY branche.name ASC";
     dtXXX($sql);
-    $typen = $this->db->query ( $sql );
+    $typen = $this->db->prepare ( $sql );
+    $typen->execute ( array(':komm' => $komm) );
     $erg = $typen->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -479,10 +528,11 @@ class Kommission {
 
   // Branchen und Interessengruppen je Kommission
   function BranchenInteressengruppen($komm) {
-    $sql = "SELECT a.name,b.name,b.beschreibung FROM branche a, interessengruppe b, kommission k WHERE b.branche_id=a.id AND a.kommission_id = k.id AND k.abkuerzung='$komm'
+    $sql = "SELECT a.name,b.name,b.beschreibung FROM branche a, interessengruppe b, kommission k WHERE b.branche_id=a.id AND a.kommission_id = k.id AND k.abkuerzung=:komm
    ORDER BY b.name ASC";
     dtXXX($sql);
-    $gruppen = $this->db->query ( $sql );
+    $gruppen = $this->db->prepare ( $sql );
+    $gruppen->execute ( array(':komm' => $komm) );
     $erg = $gruppen->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -493,9 +543,10 @@ class Kommission {
   }
   // Gruppierte Lobbybeziehungen nach Typ und Gruppe (Statistisch)
   function gruppierteLobbyGruppen($komm, $branche) {
-    $sql = "SELECT b.name, c.name, count( 'c.name' ) AS Anzahl FROM organisation a, branche b, interessengruppe c, kommission k WHERE a.interessengruppe_id = c.id AND c.branche_id = b.id AND b.name = '$branche' AND b.kommission_id = k.id AND k.abkuerzung = '$komm' GROUP BY c.name ORDER BY Anzahl DESC";
+    $sql = "SELECT b.name, c.name, count( 'c.name' ) AS Anzahl FROM organisation a, branche b, interessengruppe c, kommission k WHERE a.interessengruppe_id = c.id AND c.branche_id = b.id AND b.name = :branche AND b.kommission_id = k.id AND k.abkuerzung = :komm GROUP BY c.name ORDER BY Anzahl DESC";
     dtXXX($sql);
-    $gruppiert = $this->db->query ( $sql );
+    $gruppiert = $this->db->prepare ( $sql );
+    $gruppiert->execute ( array(':branche' => $branche, ':komm' => $komm) );
     $erg = $gruppiert->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -1681,6 +1732,4 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'konzept') {
 
   print $html;
 }
-?>
-
 
