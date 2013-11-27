@@ -1,0 +1,9 @@
+#Lock Mediawiki
+
+# ErrorDocument 401 ?Unauthorized? is required for Drupal
+ErrorDocument 401 "Unauthorized"
+AuthType Basic
+AuthName "Zugriffsbeschraenkung (Webseite nicht mehr gepflegt)"
+AuthUserFile /home/csvimsne/.htpasswds/.htpasswds_lobbycontrol
+Require valid-user
+
