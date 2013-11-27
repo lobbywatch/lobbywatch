@@ -42,7 +42,7 @@ DirectoryIndex index.php index.html index.htm
   # Cache all files for 2 weeks after access (A).
   ExpiresDefault A1209600
 
-  <FilesMatch \.php$>
+  <FilesMatch "\.(php|html)$">
     # Do not allow PHP scripts to be cached unless they explicitly send cache
     # headers themselves. Otherwise all scripts would have to overwrite the
     # headers set by mod_expires if they want another caching behavior. This may
