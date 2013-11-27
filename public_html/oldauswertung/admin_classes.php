@@ -19,6 +19,8 @@ $optionen = array (
     PDO::ATTR_PERSISTENT => true
 );
 $db = new PDO ( 'mysql:host=localhost;dbname=' . $db_connection['database'] . '_old' . ';charset=utf8', $db_connection['reader_username'], $db_connection['reader_password'], $optionen );
+$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 /* Schnellsuche auf lobbyorg.htm */
 class LobbyOrgSuche {
   var $db = NULL;
