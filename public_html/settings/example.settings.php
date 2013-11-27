@@ -13,9 +13,11 @@ $env_dir = "/";
 $db_connection = array (
     'server' => 'localhost',
     'port' => '3306',
+    'database' => '',
     'username' => '',
     'password' => '',
-    'database' => '',
+    'reader_username' => '',
+    'reader_password' => '',
 );
 
 $users = array (

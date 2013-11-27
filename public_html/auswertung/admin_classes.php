@@ -16,7 +16,11 @@ header ( 'Content-type: text/html; charset=UTF-8' );
 $optionen = array (
     PDO::ATTR_PERSISTENT => true
 );
-$db = new PDO ( 'mysql:host=localhost;dbname=' . $db_connection['database'] . ';charset=utf8', $db_connection['username'], $db_connection['password'], $optionen );
+$db = new PDO ( 'mysql:host=localhost;dbname=' . $db_connection['database'] . ';charset=utf8', $db_connection['reader_username'], $db_connection['reader_password'], $optionen );
+// Disable prepared statement emulation, http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php
+$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 /* Schnellsuche auf lobbyorg.htm */
 class LobbyOrgSuche {
   var $db = NULL;
@@ -27,8 +31,9 @@ class LobbyOrgSuche {
   // Fortschreitende Suche
   function lobbyorgFinden($name) {
     //TODO a.ALT_parlam_verbindung; c.kommission noch nicht angepasst
-    $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.interessengruppe_id,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, c.nachname,c.vorname,c.ratstyp,c.abkuerzung as partei,c.kanton,c.kommission,d.name FROM organisation a,parlamentarier c LEFT JOIN partei p ON c.partei_id = p.id, interessenbindung b,branche d WHERE  b.parlamentarier_id=c.id  AND a.id=b.organisation_id AND a.branche_id=d.id  AND a.name LIKE '%$name%' ORDER BY a.id";
-    $suche = $this->db->query ( $sql );
+    $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.interessengruppe_id,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, c.nachname,c.vorname,c.ratstyp,c.abkuerzung as partei,c.kanton,c.kommission,d.name FROM organisation a,parlamentarier c LEFT JOIN partei p ON c.partei_id = p.id, interessenbindung b,branche d WHERE  b.parlamentarier_id=c.id  AND a.id=b.organisation_id AND a.branche_id=d.id  AND a.name LIKE :name ORDER BY a.id";
+    $suche = $this->db->prepare ( $sql );
+    $suche = $this->db->execute ( array(':name' => "%$name%") );
     $erg = $suche->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
@@ -39,8 +44,9 @@ class LobbyOrgSuche {
   }
   // fortschreitende Suche auf dem QuicksearchPanel organisationen
   function quickSearchLobbys($term) {
-    $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung,b.name FROM organisation a,branche b WHERE a.branche_id=b.id AND a.name LIKE '%$term%' ORDER BY id";
-    $quicksearch = $this->db->query ( $sql );
+    $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.url,a.vernehmlassung,a.ALT_parlam_verbindung,b.name FROM organisation a,branche b WHERE a.branche_id=b.id AND a.name LIKE :term ORDER BY id";
+    $quicksearch = $this->db->prepare ( $sql );
+   $quicksearch = $this->db->excute ( array(':term' => "%$term%") );
     $erg = $quicksearch->fetchAll ( PDO::FETCH_ASSOC );
     $anz = count ( $erg );
     if ($anz > 0) {
