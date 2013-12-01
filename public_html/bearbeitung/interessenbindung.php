@@ -59,6 +59,8 @@
             $field = new StringField('status');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('verguetung');
+            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
@@ -169,6 +171,8 @@
             $field = new StringField('vorname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zweiter_vorname');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ratstyp');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -190,11 +194,17 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('Geburtstag');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('photo');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kleinbild');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $field->SetIsNotNull(true);
@@ -279,17 +289,20 @@
             {
                 $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('View'), OPERATION_VIEW, $this->dataset);
                 $grid->AddViewColumn($column, $actionsBandName);
+                $column->SetImagePath('images/view_action.png');
             }
             if ($this->GetSecurityInfo()->HasEditGrant())
             {
                 $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Edit'), OPERATION_EDIT, $this->dataset);
                 $grid->AddViewColumn($column, $actionsBandName);
+                $column->SetImagePath('images/edit_action.png');
                 $column->OnShow->AddListener('ShowEditButtonHandler', $this);
             }
             if ($this->GetSecurityInfo()->HasDeleteGrant())
             {
                 $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Delete'), OPERATION_DELETE, $this->dataset);
                 $grid->AddViewColumn($column, $actionsBandName);
+                $column->SetImagePath('images/delete_action.png');
                 $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
             $column->SetAdditionalAttribute("data-modal-delete", "true");
             $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
@@ -298,6 +311,7 @@
             {
                 $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Copy'), OPERATION_COPY, $this->dataset);
                 $grid->AddViewColumn($column, $actionsBandName);
+                $column->SetImagePath('images/copy_action.png');
             }
         }
     
@@ -336,6 +350,8 @@
             $field = new StringField('vorname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zweiter_vorname');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ratstyp');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -357,11 +373,17 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('Geburtstag');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('photo');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kleinbild');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $field->SetIsNotNull(true);
@@ -408,6 +430,8 @@
             $field = new StringField('vorname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zweiter_vorname');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ratstyp');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -429,11 +453,17 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('Geburtstag');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('photo');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kleinbild');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $field->SetIsNotNull(true);
@@ -1084,6 +1114,8 @@
             $field = new StringField('vorname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zweiter_vorname');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ratstyp');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1105,11 +1137,17 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('Geburtstag');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('photo');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kleinbild');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $field->SetIsNotNull(true);
@@ -1329,6 +1367,8 @@
             $field = new StringField('vorname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zweiter_vorname');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ratstyp');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1350,11 +1390,17 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('Geburtstag');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('photo');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kleinbild');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $field->SetIsNotNull(true);
@@ -1803,7 +1849,7 @@
             if ($this->GetSecurityInfo()->HasDeleteGrant())
                $result->SetAllowDeleteSelected(true);
             else
-               $result->SetAllowDeleteSelected(true);   
+               $result->SetAllowDeleteSelected(false);   
             
             ApplyCommonPageSettings($this, $result);
             

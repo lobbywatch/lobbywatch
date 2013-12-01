@@ -64,6 +64,11 @@ ADD COLUMN `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '
 ADD COLUMN `updated_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Abgäendert von',
 ADD COLUMN `updated_date` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgäendert am';
 
+ALTER TABLE `parlamentarier_anhang`
+ADD COLUMN `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Erstellt von',
+ADD COLUMN `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+ADD COLUMN `updated_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Abgäendert von',
+ADD COLUMN `updated_date` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgäendert am';
 
 
 UPDATE `lobbycontrol`.`branche` SET
@@ -134,3 +139,41 @@ SELECT p.abkuerzung, `ALT_partei` FROM `parlamentarier` l left join partei p on 
 UPDATE lobbycontrol.`parlamentarier` n JOIN lobbycontrol_old.`parlamentarier` o ON o.id_parlam = n.id SET n.im_rat_seit = o.im_rat_seit;
 
 UPDATE lobbycontrol.`parlamentarier` n JOIN lobbycontrol_old.`parlamentarier` o ON o.id_parlam = n.id SET n.im_rat_seit = STR_TO_DATE(CONCAT('01.01.', o.im_rat_seit),'%d.%m.%Y')
+
+
+ALTER TABLE `partei`
+ADD COLUMN `freigabe_von` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Freigabe von',
+ADD COLUMN `freigabe_datum` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Freigabedatum';
+
+ALTER TABLE `parlamentarier`
+
+
+ALTER TABLE `kommission`
+
+
+ALTER TABLE `interessenbindung`
+
+
+ALTER TABLE `zugangsberechtigung`
+
+
+ALTER TABLE `lobbyorganisation`
+
+
+ALTER TABLE `interessengruppe`
+
+
+ALTER TABLE `branche`
+
+
+ALTER TABLE `mandat`
+
+
+ALTER TABLE `kommissionsarbeit`
+
+
+ALTER TABLE `organisation_beziehung`
+
+
+ALTER TABLE `parlamentarier_anhang`
+
