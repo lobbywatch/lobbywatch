@@ -270,6 +270,8 @@ delimiter ;
 -- 
 -- CREATE OR REPLACE VIEW `parlamentarier_anhang` AS SELECT t.* FROM `v_parlamentarier_anhang` t;
 
+-- start with connect by http://explainextended.com/2009/03/17/hierarchical-queries-in-mysql/
+
 -- VIEWS
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS SELECT CONCAT(t.vorname, ' ', t.nachname) AS name, t.*  FROM `parlamentarier` t;
@@ -300,13 +302,17 @@ CREATE OR REPLACE VIEW `v_user` AS SELECT t.* FROM `user` t;
 
 CREATE OR REPLACE VIEW `v_user_permission` AS SELECT t.* FROM `user_permission` t;
 
+-- Der der Kommissionen für Parlamenterier
+-- Connector: in_kommission.parlamentarier_id
 CREATE OR REPLACE VIEW `v_in_kommission_liste` AS SELECT kommission.abkuerzung, kommission.name, in_kommission.*
 FROM v_in_kommission in_kommission
 INNER JOIN v_kommission kommission
   ON in_kommission.kommission_id = kommission.id
 ORDER BY kommission.abkuerzung;
 
-CREATE OR REPLACE VIEW `v_parlamentarier_in_kommission` AS SELECT parlamentarier.name, partei.abkuerzung, in_kommission.*
+-- Parlamenterier einer Kommission
+-- Connector: in_kommission.kommission_id
+CREATE OR REPLACE VIEW `v_in_kommission_parlamentarier` AS SELECT parlamentarier.name, partei.abkuerzung, in_kommission.*
 FROM v_in_kommission in_kommission
 INNER JOIN v_parlamentarier parlamentarier
   ON in_kommission.parlamentarier_id = parlamentarier.id
@@ -314,19 +320,31 @@ LEFT JOIN v_partei partei
   ON parlamentarier.partei_id = partei.id
 ORDER BY parlamentarier.name;
 
+-- Interessenbindung eines Parlamenteriers
+-- Connector: interessenbindung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_interessenbindung_liste` AS SELECT organisation.name, interessenbindung.*
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
 ORDER BY organisation.name;
 
-CREATE OR REPLACE VIEW `v_parlamentarier_interessenbindung` AS SELECT parlamentarier.name, interessenbindung.*
+-- Indirekte Interessenbindungen eines Parlamenteriers
+-- Connector: interessenbindung.parlamentarier_id
+CREATE OR REPLACE VIEW `v_interessenbindung_liste_indirekt` AS SELECT 'direkt' as beziehung, interessenbindung_liste.* FROM v_interessenbindung_liste interessenbindung_liste
+UNION
+SELECT 'indirekt' as beziehung, organisation.name, interessenbindung.*
 FROM v_interessenbindung interessenbindung
-INNER JOIN v_parlamentarier parlamentarier
-  ON interessenbindung.parlamentarier_id = parlamentarier.id
-ORDER BY parlamentarier.name;
+INNER JOIN v_organisation_beziehung organisation_beziehung
+  ON interessenbindung.organisation_id = organisation_beziehung.organisation_id
+INNER JOIN v_organisation organisation
+  ON organisation_beziehung.ziel_organisation_id = organisation.id
+WHERE
+  organisation_beziehung.art = 'arbeitet fuer';
 
-CREATE OR REPLACE VIEW `v_zugangsberechtigung_mandate` AS SELECT zugangsberechtigung.parlamentarier_id, organisation.name as organisation_name, zugangsberechtigung.name, zugangsberechtigung.funktion, mandat.*
+-- Mandate einer Zugangsberechtigung (INNER JOIN)
+-- Connector: zugangsberechtigung.parlamentarier_id
+CREATE OR REPLACE VIEW `v_zugangsberechtigung_mandate` AS
+SELECT zugangsberechtigung.parlamentarier_id, organisation.name as organisation_name, zugangsberechtigung.name, zugangsberechtigung.funktion, mandat.*
 FROM v_zugangsberechtigung zugangsberechtigung
 INNER JOIN v_mandat mandat
   ON zugangsberechtigung.id = mandat.zugangsberechtigung_id
@@ -334,7 +352,10 @@ INNER JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id
 ORDER BY organisation.name;
 
-CREATE OR REPLACE VIEW `v_zugangsberechtigung_mit_mandaten` AS SELECT zugangsberechtigung.parlamentarier_id, zugangsberechtigung.name, zugangsberechtigung.funktion, organisation.name as organisation_name, mandat.*
+-- Mandate einer Zugangsberechtigung (LFET JOIN)
+-- Connector: zugangsberechtigung.parlamentarier_id
+CREATE OR REPLACE VIEW `v_zugangsberechtigung_mit_mandaten` AS
+SELECT zugangsberechtigung.parlamentarier_id, zugangsberechtigung.name, zugangsberechtigung.funktion, organisation.name as organisation_name, mandat.*
 FROM v_zugangsberechtigung zugangsberechtigung
 LEFT JOIN v_mandat mandat
   ON zugangsberechtigung.id = mandat.zugangsberechtigung_id
@@ -342,34 +363,81 @@ LEFT JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id
 ORDER BY zugangsberechtigung.name;
 
-CREATE OR REPLACE VIEW `v_organisation_beziehung_mandat_fuer` AS SELECT ziel_organisation.name, organisation_beziehung.*
-FROM v_organisation_beziehung organisation_beziehung
-INNER JOIN v_organisation ziel_organisation
-  ON organisation_beziehung.ziel_organisation_id = ziel_organisation.id
+-- Indirekte Mandate einer Zugangsberechtigung (LFET JOIN)
+-- Connector: zugangsberechtigung.parlamentarier_id
+CREATE OR REPLACE VIEW `v_zugangsberechtigung_mit_mandaten_indirekt` AS SELECT 'direkt' as beziehung, zugangsberechtigung.* FROM v_zugangsberechtigung_mit_mandaten zugangsberechtigung
+UNION
+SELECT 'indirekt' as beziehung, zugangsberechtigung.parlamentarier_id, zugangsberechtigung.name, zugangsberechtigung.funktion, organisation.name as organisation_name, mandat.*
+FROM v_zugangsberechtigung zugangsberechtigung
+INNER JOIN v_mandat mandat
+  ON zugangsberechtigung.id = mandat.zugangsberechtigung_id
+INNER JOIN v_organisation_beziehung organisation_beziehung
+  ON mandat.organisation_id = organisation_beziehung.organisation_id
+INNER JOIN v_organisation organisation
+  ON organisation_beziehung.ziel_organisation_id = organisation.id
 WHERE
-  organisation_beziehung.art = 'mandat_fuer'
-ORDER BY ziel_organisation.name;
+  organisation_beziehung.art = 'arbeitet fuer';
 
-CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglied_von` AS SELECT ziel_organisation.name, organisation_beziehung.*
+-- Organisationen für welche eine PR-Agentur arbeitet.
+-- Connector: organisation_beziehung.organisation_id
+CREATE OR REPLACE VIEW `v_organisation_beziehung_arbeitet_fuer` AS SELECT organisation.name, organisation_beziehung.*
 FROM v_organisation_beziehung organisation_beziehung
-INNER JOIN v_organisation ziel_organisation
-  ON organisation_beziehung.ziel_organisation_id = ziel_organisation.id
+INNER JOIN v_organisation organisation
+  ON organisation_beziehung.ziel_organisation_id = organisation.id
 WHERE
-  organisation_beziehung.art = 'mitglied_von'
-ORDER BY ziel_organisation.name;
+  organisation_beziehung.art = 'arbeitet fuer'
+ORDER BY organisation.name;
 
+-- Organisationen, die eine PR-Firma beauftragt haben.
+-- Connector: organisation_beziehung.ziel_organisation_id
+-- Reverse Beziehung
+CREATE OR REPLACE VIEW `v_organisation_beziehung_auftraggeber_fuer` AS SELECT organisation.name, organisation_beziehung.*
+FROM v_organisation_beziehung organisation_beziehung
+INNER JOIN v_organisation organisation
+  ON organisation_beziehung.organisation_id = organisation.id
+WHERE
+  organisation_beziehung.art = 'arbeitet fuer'
+ORDER BY organisation.name;
+
+-- Organisationen, in welcher eine Organisation Mitglied ist.
+-- Connector: organisation_beziehung.organisation_id
+CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglied_von` AS SELECT organisation.name, organisation_beziehung.*
+FROM v_organisation_beziehung organisation_beziehung
+INNER JOIN v_organisation organisation
+  ON organisation_beziehung.ziel_organisation_id = organisation.id
+WHERE
+  organisation_beziehung.art = 'mitglied von'
+ORDER BY organisation.name;
+
+-- Mitgliedsorganisationen
+-- Connector: organisation_beziehung.ziel_organisation_id
+-- Reverse Beziehung
 CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglieder` AS SELECT organisation.name, organisation_beziehung.*
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation organisation
   ON organisation_beziehung.organisation_id = organisation.id
 WHERE
-  organisation_beziehung.art = 'mitglied_von'
+  organisation_beziehung.art = 'mitglied von'
 ORDER BY organisation.name;
 
-CREATE OR REPLACE VIEW `v_organisation_beziehung_mandat_auftrag` AS SELECT organisation.name, organisation_beziehung.*
+-- Parlamenterier, die eine Interessenbindung zu dieser Organisation haben.
+-- Connector: interessenbindung.organisation_id
+CREATE OR REPLACE VIEW `v_organisation_parlamentarier` AS SELECT parlamentarier.name, interessenbindung.*
+FROM v_interessenbindung interessenbindung
+INNER JOIN v_parlamentarier parlamentarier
+  ON interessenbindung.parlamentarier_id = parlamentarier.id
+ORDER BY parlamentarier.name;
+
+-- Parlamenterier, die eine indirekte Interessenbindung zu dieser Organisation haben.
+-- Connector: connector_organisation_id
+-- Reverse Beziehung
+CREATE OR REPLACE VIEW `v_organisation_parlamentarier_indirekt` AS SELECT 'direkt' as beziehung, organisation_parlamentarier.*, organisation_parlamentarier.organisation_id as connector_organisation_id FROM v_organisation_parlamentarier organisation_parlamentarier
+UNION
+SELECT 'indirekt' as beziehung, parlamentarier.name, interessenbindung.*, organisation_beziehung.ziel_organisation_id as connector_organisation_id
 FROM v_organisation_beziehung organisation_beziehung
-INNER JOIN v_organisation organisation
-  ON organisation_beziehung.organisation_id = organisation.id
+INNER JOIN v_interessenbindung interessenbindung
+  ON organisation_beziehung.organisation_id = interessenbindung.organisation_id
+INNER JOIN v_parlamentarier parlamentarier
+  ON interessenbindung.parlamentarier_id = parlamentarier.id
 WHERE
-  organisation_beziehung.art = 'mandat_fuer'
-ORDER BY organisation.name;
+  organisation_beziehung.art = 'arbeitet fuer';

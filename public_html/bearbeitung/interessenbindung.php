@@ -84,7 +84,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('parlamentarier_id', 'parlamentarier', new IntegerField('id', null, null, true), new StringField('nachname', 'parlamentarier_id_nachname', 'parlamentarier_id_nachname_parlamentarier'), 'parlamentarier_id_nachname_parlamentarier');
+            $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('name', 'parlamentarier_id_name', 'parlamentarier_id_name_v_parlamentarier'), 'parlamentarier_id_name_v_parlamentarier');
             $this->dataset->AddLookupField('organisation_id', 'organisation', new IntegerField('id', null, null, true), new StringField('name_de', 'organisation_id_name_de', 'organisation_id_name_de_organisation'), 'organisation_id_name_de_organisation');
         }
     
@@ -139,7 +139,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessenbindungssearch', $this->dataset,
-                array('id', 'parlamentarier_id_nachname', 'organisation_id_name_de', 'art', 'status', 'verguetung', 'beschreibung', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array('id', 'parlamentarier_id_name', 'organisation_id_name_de', 'art', 'status', 'verguetung', 'beschreibung', 'autorisiert_datum', 'autorisiert_visa', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
                 array($this->RenderText('Id'), $this->RenderText('Parlamentarier Id'), $this->RenderText('Organisation Id'), $this->RenderText('Art'), $this->RenderText('Status'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -165,10 +165,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -229,7 +232,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier Id'), $lookupDataset, 'id', 'nachname', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier Id'), $lookupDataset, 'id', 'name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -346,9 +349,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -359,10 +362,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -423,12 +429,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -443,10 +449,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -507,12 +516,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1151,9 +1160,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1273,10 +1282,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1337,12 +1349,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1570,10 +1582,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1634,12 +1649,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1882,9 +1897,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -2001,9 +2016,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
