@@ -7009,16 +7009,16 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('parlamentarier_id', 'parlamentarier', new IntegerField('id', null, null, true), new StringField('nachname', 'parlamentarier_id_nachname', 'parlamentarier_id_nachname_parlamentarier'), 'parlamentarier_id_nachname_parlamentarier');
+            $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('name', 'parlamentarier_id_name', 'parlamentarier_id_name_v_parlamentarier'), 'parlamentarier_id_name_v_parlamentarier');
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'interessengruppe', new IntegerField('id', null, null, true), new StringField('name', 'beruf_interessengruppe_id_name', 'beruf_interessengruppe_id_name_interessengruppe'), 'beruf_interessengruppe_id_name_interessengruppe');
         }
     
         protected function AddFieldColumns(Grid $grid)
         {
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(false);
             
             /* <inline edit column> */
@@ -7029,10 +7029,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7093,12 +7096,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7113,10 +7116,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7177,12 +7183,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7901,7 +7907,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('parlamentarier_id', 'parlamentarier', new IntegerField('id', null, null, true), new StringField('nachname', 'parlamentarier_id_nachname', 'parlamentarier_id_nachname_parlamentarier'), 'parlamentarier_id_nachname_parlamentarier');
+            $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('name', 'parlamentarier_id_name', 'parlamentarier_id_name_v_parlamentarier'), 'parlamentarier_id_name_v_parlamentarier');
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'interessengruppe', new IntegerField('id', null, null, true), new StringField('name', 'beruf_interessengruppe_id_name', 'beruf_interessengruppe_id_name_interessengruppe'), 'beruf_interessengruppe_id_name_interessengruppe');
         }
     
@@ -7930,7 +7936,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('zugangsberechtigungDetailEdit3parlamentarierssearch', $this->dataset,
-                array('parlamentarier_id_nachname', 'nachname', 'vorname', 'funktion', 'beruf', 'beruf_interessengruppe_id_name', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array('parlamentarier_id_name', 'nachname', 'vorname', 'funktion', 'beruf', 'beruf_interessengruppe_id_name', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
                 array($this->RenderText('Parlamentarier Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Funktion'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -7954,10 +7960,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8018,7 +8027,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier Id'), $lookupDataset, 'id', 'nachname', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier Id'), $lookupDataset, 'id', 'name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('nachname', $this->RenderText('Nachname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vorname', $this->RenderText('Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
@@ -8108,9 +8117,9 @@
         protected function AddFieldColumns(Grid $grid)
         {
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -8121,10 +8130,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8185,12 +8197,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8205,10 +8217,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8269,12 +8284,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8789,9 +8804,9 @@
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -8900,10 +8915,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8964,12 +8982,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -9151,10 +9169,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -9215,12 +9236,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -9408,9 +9429,9 @@
         protected function AddPrintColumns(Grid $grid)
         {
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -9505,9 +9526,9 @@
         protected function AddExportColumns(Grid $grid)
         {
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -9874,7 +9895,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('parlamentarier_id', 'parlamentarier', new IntegerField('id', null, null, true), new StringField('nachname', 'parlamentarier_id_nachname', 'parlamentarier_id_nachname_parlamentarier'), 'parlamentarier_id_nachname_parlamentarier');
+            $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('name', 'parlamentarier_id_name', 'parlamentarier_id_name_v_parlamentarier'), 'parlamentarier_id_name_v_parlamentarier');
         }
     
         protected function AddFieldColumns(Grid $grid)
@@ -9884,38 +9905,14 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(false);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for id field
-            //
-            $editor = new TextEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for id field
-            //
-            $editor = new TextEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentarieranhangs'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(false);
             
             /* <inline edit column> */
@@ -9926,10 +9923,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -9990,12 +9990,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -10010,10 +10010,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -10074,12 +10077,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -10101,10 +10104,11 @@
             //
             // Edit column for datei field
             //
-            $editor = new TextAreaEdit('datei_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Datei', 'datei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -10113,10 +10117,11 @@
             //
             // Edit column for datei field
             //
-            $editor = new TextAreaEdit('datei_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Datei', 'datei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -10422,10 +10427,11 @@
             //
             // Edit column for datei field
             //
-            $editor = new TextAreaEdit('datei_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Datei', 'datei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -10434,10 +10440,11 @@
             //
             // Edit column for datei field
             //
-            $editor = new TextAreaEdit('datei_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Datei', 'datei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -10518,7 +10525,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('parlamentarier_id', 'parlamentarier', new IntegerField('id', null, null, true), new StringField('nachname', 'parlamentarier_id_nachname', 'parlamentarier_id_nachname_parlamentarier'), 'parlamentarier_id_nachname_parlamentarier');
+            $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('name', 'parlamentarier_id_name', 'parlamentarier_id_name_v_parlamentarier'), 'parlamentarier_id_name_v_parlamentarier');
         }
     
         protected function CreatePageNavigator()
@@ -10546,7 +10553,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarier_anhangDetailEdit4parlamentarierssearch', $this->dataset,
-                array('id', 'parlamentarier_id_nachname', 'datei', 'beschreibung', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array('id', 'parlamentarier_id_name', 'datei', 'beschreibung', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
                 array($this->RenderText('Id'), $this->RenderText('Parlamentarier Id'), $this->RenderText('Datei'), $this->RenderText('Beschreibung'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -10572,10 +10579,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -10636,7 +10646,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier Id'), $lookupDataset, 'id', 'nachname', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier Id'), $lookupDataset, 'id', 'name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('datei', $this->RenderText('Datei')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_von', $this->RenderText('Freigabe Von')));
@@ -10693,38 +10703,14 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for id field
-            //
-            $editor = new TextEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for id field
-            //
-            $editor = new TextEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentarieranhangs'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -10735,10 +10721,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -10799,12 +10788,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -10819,10 +10808,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -10883,12 +10875,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -10910,10 +10902,11 @@
             //
             // Edit column for datei field
             //
-            $editor = new TextAreaEdit('datei_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Datei', 'datei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -10922,10 +10915,11 @@
             //
             // Edit column for datei field
             //
-            $editor = new TextAreaEdit('datei_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Datei', 'datei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -11193,16 +11187,9 @@
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
-            // View column for id field
+            // View column for name field
             //
-            $column = new TextViewColumn('id', 'Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for nachname field
-            //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -11273,26 +11260,19 @@
         protected function AddEditColumns(Grid $grid)
         {
             //
-            // Edit column for id field
-            //
-            $editor = new TextEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for parlamentarier_id field
             //
             $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -11353,12 +11333,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -11367,10 +11347,11 @@
             //
             // Edit column for datei field
             //
-            $editor = new TextAreaEdit('datei_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Datei', 'datei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -11457,26 +11438,19 @@
         protected function AddInsertColumns(Grid $grid)
         {
             //
-            // Edit column for id field
-            //
-            $editor = new TextEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for parlamentarier_id field
             //
             $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`parlamentarier`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_parlamentarier`');
+            $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('nachname');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -11537,12 +11511,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('nachname', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier Id', 
                 'parlamentarier_id', 
                 $editor, 
-                $this->dataset, 'id', 'nachname', $lookupDataset);
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -11551,10 +11525,11 @@
             //
             // Edit column for datei field
             //
-            $editor = new TextAreaEdit('datei_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Datei', 'datei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -11660,9 +11635,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -11736,9 +11711,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for nachname field
+            // View column for name field
             //
-            $column = new TextViewColumn('parlamentarier_id_nachname', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -11817,6 +11792,38 @@
         {
             return ;
         }
+        public function datei_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        public function datei_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -11884,10 +11891,11 @@
             //
             // Edit column for datei field
             //
-            $editor = new TextAreaEdit('datei_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Datei', 'datei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -11896,10 +11904,11 @@
             //
             // Edit column for datei field
             //
-            $editor = new TextAreaEdit('datei_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Datei', 'datei', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -18217,10 +18226,17 @@
             //
             // Edit column for photo field
             //
-            $editor = new TextEdit('photo_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Photo', 'photo', $editor, $this->dataset);
+            $editor = new ImageUploader('photo_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/files/%id%');
+            $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_inline_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetGenerationImageThumbnails(
+                'photo',
+                '',
+                Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_inline_edit'),
+                new ImageFitByHeightResizeFilter(100)
+            );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -18230,10 +18246,17 @@
             //
             // Edit column for photo field
             //
-            $editor = new TextEdit('photo_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Photo', 'photo', $editor, $this->dataset);
+            $editor = new ImageUploader('photo_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/files/%id%');
+            $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_inline_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetGenerationImageThumbnails(
+                'photo',
+                '',
+                Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_inline_insert'),
+                new ImageFitByHeightResizeFilter(100)
+            );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -18245,21 +18268,19 @@
             //
             // View column for kleinbild field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
+            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
             
             /* <inline edit column> */
             //
             // Edit column for kleinbild field
             //
-            $editor = new TextEdit('kleinbild_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(80);
-            $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('kleinbild_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Kleinbild', 'kleinbild', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+            $editColumn->OnCustomFileName->AddListener('kleinbild_GenerateFileName_inline_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -18268,13 +18289,12 @@
             //
             // Edit column for kleinbild field
             //
-            $editor = new TextEdit('kleinbild_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(80);
-            $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
+            $editor = new ImageUploader('kleinbild_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Kleinbild', 'kleinbild', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+            $editColumn->OnCustomFileName->AddListener('kleinbild_GenerateFileName_inline_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetAllowSetToDefault(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -18348,6 +18368,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -18381,6 +18402,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -18779,10 +18801,9 @@
             //
             // View column for kleinbild field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
+            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -18799,6 +18820,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -18808,6 +18830,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -19098,10 +19121,17 @@
             //
             // Edit column for photo field
             //
-            $editor = new TextEdit('photo_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Photo', 'photo', $editor, $this->dataset);
+            $editor = new ImageUploader('photo_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/files/%id%');
+            $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetGenerationImageThumbnails(
+                'photo',
+                '',
+                Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_edit'),
+                new ImageFitByHeightResizeFilter(100)
+            );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -19109,12 +19139,11 @@
             //
             // Edit column for kleinbild field
             //
-            $editor = new TextEdit('kleinbild_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(80);
-            $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('kleinbild_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Kleinbild', 'kleinbild', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+            $editColumn->OnCustomFileName->AddListener('kleinbild_GenerateFileName_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -19462,10 +19491,17 @@
             //
             // Edit column for photo field
             //
-            $editor = new TextEdit('photo_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Photo', 'photo', $editor, $this->dataset);
+            $editor = new ImageUploader('photo_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/files/%id%');
+            $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetGenerationImageThumbnails(
+                'photo',
+                '',
+                Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_insert'),
+                new ImageFitByHeightResizeFilter(100)
+            );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -19473,13 +19509,12 @@
             //
             // Edit column for kleinbild field
             //
-            $editor = new TextEdit('kleinbild_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(80);
-            $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
+            $editor = new ImageUploader('kleinbild_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Kleinbild', 'kleinbild', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+            $editColumn->OnCustomFileName->AddListener('kleinbild_GenerateFileName_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetAllowSetToDefault(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -20129,10 +20164,9 @@
             //
             // View column for kleinbild field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
+            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -20153,6 +20187,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -20164,6 +20199,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -20567,10 +20603,9 @@
             //
             // View column for kleinbild field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
+            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -20591,6 +20626,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -20602,6 +20638,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21005,10 +21042,9 @@
             //
             // View column for kleinbild field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
+            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21029,6 +21065,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21040,6 +21077,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21443,10 +21481,9 @@
             //
             // View column for kleinbild field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
+            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21467,6 +21504,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21478,6 +21516,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21881,10 +21920,9 @@
             //
             // View column for kleinbild field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
+            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21905,6 +21943,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21916,6 +21955,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22319,10 +22359,9 @@
             //
             // View column for kleinbild field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
+            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22343,6 +22382,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22354,6 +22394,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22757,10 +22798,9 @@
             //
             // View column for kleinbild field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
+            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22781,6 +22821,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22792,6 +22833,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23057,6 +23099,39 @@
             
             return $result;
         }
+        public function kleinbild_GenerateFileName_inline_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        
+        public function kleinbild_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
         
         function GetCustomClientScript()
         {
@@ -23066,6 +23141,104 @@
         function GetOnPageLoadedClientScript()
         {
             return ;
+        }
+        public function photo_Thumbnail_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('small_%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        
+        public function photo_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/files/%id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        public function kleinbild_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        public function photo_Thumbnail_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('small_%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        
+        public function photo_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/files/%id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        public function kleinbild_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -23307,10 +23480,17 @@
             //
             // Edit column for photo field
             //
-            $editor = new TextEdit('photo_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Photo', 'photo', $editor, $this->dataset);
+            $editor = new ImageUploader('photo_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/files/%id%');
+            $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_inline_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetGenerationImageThumbnails(
+                'photo',
+                '',
+                Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_inline_edit'),
+                new ImageFitByHeightResizeFilter(100)
+            );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -23320,51 +23500,22 @@
             //
             // Edit column for photo field
             //
-            $editor = new TextEdit('photo_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Photo', 'photo', $editor, $this->dataset);
+            $editor = new ImageUploader('photo_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/files/%id%');
+            $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_inline_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetGenerationImageThumbnails(
+                'photo',
+                '',
+                Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_inline_insert'),
+                new ImageFitByHeightResizeFilter(100)
+            );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for kleinbild field
-            //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for kleinbild field
-            //
-            $editor = new TextEdit('kleinbild_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(80);
-            $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for kleinbild field
-            //
-            $editor = new TextEdit('kleinbild_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(80);
-            $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kleinbild_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -23397,6 +23548,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -23426,6 +23578,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -23509,17 +23662,11 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for kleinbild field
-            //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kleinbild_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -23527,6 +23674,7 @@
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //

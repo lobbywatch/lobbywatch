@@ -19387,6 +19387,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $column->SetDescription($this->RenderText('Link zur Webseite'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -19813,6 +19814,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -20900,6 +20902,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $column->SetDescription($this->RenderText('Link zur Webseite'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21252,6 +21255,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $column->SetDescription($this->RenderText('Link zur Webseite'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21604,6 +21608,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $column->SetDescription($this->RenderText('Link zur Webseite'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -21956,6 +21961,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $column->SetDescription($this->RenderText('Link zur Webseite'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22308,6 +22314,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $column->SetDescription($this->RenderText('Link zur Webseite'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22660,6 +22667,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $column->SetDescription($this->RenderText('Link zur Webseite'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23012,6 +23020,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $column->SetDescription($this->RenderText('Link zur Webseite'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23364,6 +23373,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $column->SetDescription($this->RenderText('Link zur Webseite'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23935,6 +23945,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'url_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -24029,6 +24040,7 @@
             //
             $column = new TextViewColumn('url', 'Url', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%url%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'url_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
