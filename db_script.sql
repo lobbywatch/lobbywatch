@@ -1,3 +1,5 @@
+-- DML
+
 ALTER TABLE `partei`
 CHANGE `created_by` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Erstellt von',
 CHANGE `created_date` `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -141,39 +143,233 @@ UPDATE lobbycontrol.`parlamentarier` n JOIN lobbycontrol_old.`parlamentarier` o 
 UPDATE lobbycontrol.`parlamentarier` n JOIN lobbycontrol_old.`parlamentarier` o ON o.id_parlam = n.id SET n.im_rat_seit = STR_TO_DATE(CONCAT('01.01.', o.im_rat_seit),'%d.%m.%Y')
 
 
-ALTER TABLE `partei`
-ADD COLUMN `freigabe_von` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Freigabe von',
-ADD COLUMN `freigabe_datum` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Freigabedatum';
+ALTER TABLE `t_partei`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `notizen`;
 
-ALTER TABLE `parlamentarier`
+ALTER TABLE `t_parlamentarier`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `notizen`,
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
+ALTER TABLE `t_kommission`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `notizen`,
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
-ALTER TABLE `kommission`
+ALTER TABLE `t_interessenbindung`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `notizen`,
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
+ALTER TABLE `t_zugangsberechtigung`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `notizen`,
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
-ALTER TABLE `interessenbindung`
+ALTER TABLE `t_organisation`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `notizen`,
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
+ALTER TABLE `t_interessengruppe`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `notizen`,
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
-ALTER TABLE `zugangsberechtigung`
+ALTER TABLE `t_branche`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `notizen`,
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
+ALTER TABLE `t_mandat`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `notizen`,
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
-ALTER TABLE `lobbyorganisation`
+ALTER TABLE `t_in_kommission`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `notizen`,
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
+ALTER TABLE `t_organisation_beziehung`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `notizen`,
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
-ALTER TABLE `interessengruppe`
+ALTER TABLE `t_parlamentarier_anhang`
+ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `beschreibung`,
+ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
+-- TRIGGERS
 
-ALTER TABLE `branche`
+-- http://blog.mclaughlinsoftware.com/2012/07/03/placement-over-substance/
+SET SQL_MODE=(SELECT CONCAT(@@sql_mode,',IGNORE_SPACE'));
 
+-- Before MySQL 5.5
+delimiter $$
+drop trigger if exists trg_organisation_name_ins $$
+create trigger trg_organisation_name_ins before insert on organisation
+for each row
+begin
+    if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
+        call organisation_name_de_fr_it_must_be_set;
+    end if;
+end; $$
+delimiter ;
+delimiter $$
+drop trigger if exists trg_organisation_name_upd $$
+create trigger trg_organisation_name_upd before update on organisation
+for each row
+begin
+    if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
+        call organisation_name_de_fr_it_must_be_set;
+    end if;
+end; $$ 
+delimiter ;
 
-ALTER TABLE `mandat`
+-- MySQL 5.5 required
+delimiter $$
+drop trigger if exists trg_organisation_name_ins $$
+create trigger trg_organisation_name_ins before insert on organisation
+for each row
+begin
+    declare msg varchar(255);
+    if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
+        set msg = concat('NameError: Either name_de, name_fr or name_it must be set. ID: ', cast(new.id as char));
+        signal sqlstate '45000' set message_text = msg;
+    end if;
+end $$
+delimiter ;
+delimiter $$
+drop trigger if exists trg_organisation_name_upd $$
+create trigger trg_organisation_name_upd before update on organisation
+for each row
+begin
+    declare msg varchar(255);
+    if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
+        set msg = concat('NameError: Either name_de, name_fr or name_it must be set. ID: ', cast(new.id as char));
+        signal sqlstate '45000' set message_text = msg;
+    end if;
+end $$
+delimiter ;
 
+-- -- Compatibility VIEWS for Auswertung
+-- 
+-- CREATE OR REPLACE VIEW `parlamentarier` AS SELECT t.*  FROM `v_parlamentarier` t;
+-- 
+-- CREATE OR REPLACE VIEW `kommission` AS SELECT t.* FROM `v_kommission` t;
+-- 
+-- CREATE OR REPLACE VIEW `partei` AS SELECT t.* FROM `v_partei` t;
+-- 
+-- CREATE OR REPLACE VIEW `interessenbindung` AS SELECT t.* FROM `v_interessenbindung` t;
+-- 
+-- CREATE OR REPLACE VIEW `zugangsberechtigung` AS SELECT t.* FROM `v_zugangsberechtigung` t;
+-- 
+-- CREATE OR REPLACE VIEW `organisation` AS SELECT t.* FROM `v_organisation` t;
+-- 
+-- CREATE OR REPLACE VIEW `interessengruppe` AS SELECT t.* FROM `v_interessengruppe` t;
+-- 
+-- CREATE OR REPLACE VIEW `branche` AS SELECT t.* FROM `v_branche` t;
+-- 
+-- CREATE OR REPLACE VIEW `mandat` AS SELECT t.* FROM `v_mandat` t;
+-- 
+-- CREATE OR REPLACE VIEW `in_kommission` AS SELECT t.* FROM `v_in_kommission` t;
+-- 
+-- CREATE OR REPLACE VIEW `organisation_beziehung` AS SELECT t.* FROM `v_organisation_beziehung` t;
+-- 
+-- CREATE OR REPLACE VIEW `parlamentarier_anhang` AS SELECT t.* FROM `v_parlamentarier_anhang` t;
 
-ALTER TABLE `kommissionsarbeit`
+-- VIEWS
 
+CREATE OR REPLACE VIEW `v_parlamentarier` AS SELECT CONCAT(t.vorname, ' ', t.nachname) AS name, t.*  FROM `parlamentarier` t;
 
-ALTER TABLE `organisation_beziehung`
+CREATE OR REPLACE VIEW `v_kommission` AS SELECT t.* FROM `kommission` t;
 
+CREATE OR REPLACE VIEW `v_partei` AS SELECT t.* FROM `partei` t;
 
-ALTER TABLE `parlamentarier_anhang`
+CREATE OR REPLACE VIEW `v_interessenbindung` AS SELECT t.* FROM `interessenbindung` t;
 
+CREATE OR REPLACE VIEW `v_zugangsberechtigung` AS SELECT CONCAT(t.vorname, ' ', t.nachname) AS name, t.* FROM `zugangsberechtigung` t;
+
+CREATE OR REPLACE VIEW `v_organisation` AS SELECT CONCAT(t.name_de) AS name, t.* FROM `organisation` t;
+
+CREATE OR REPLACE VIEW `v_interessengruppe` AS SELECT t.* FROM `interessengruppe` t;
+
+CREATE OR REPLACE VIEW `v_branche` AS SELECT t.* FROM `branche` t;
+
+CREATE OR REPLACE VIEW `v_mandat` AS SELECT t.* FROM `mandat` t;
+
+CREATE OR REPLACE VIEW `v_in_kommission` AS SELECT t.* FROM `in_kommission` t;
+
+CREATE OR REPLACE VIEW `v_organisation_beziehung` AS SELECT t.* FROM `organisation_beziehung` t;
+
+CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS SELECT t.* FROM `parlamentarier_anhang` t;
+
+CREATE OR REPLACE VIEW `v_user` AS SELECT t.* FROM `user` t;
+
+CREATE OR REPLACE VIEW `v_user_permission` AS SELECT t.* FROM `user_permission` t;
+
+CREATE OR REPLACE VIEW `v_in_kommission_liste` AS SELECT kommission.abkuerzung, kommission.name, in_kommission.*
+FROM v_in_kommission in_kommission
+INNER JOIN v_kommission kommission
+  ON in_kommission.kommission_id = kommission.id
+ORDER BY kommission.abkuerzung;
+
+CREATE OR REPLACE VIEW `v_parlamentarier_in_kommission` AS SELECT parlamentarier.name, partei.abkuerzung, in_kommission.*
+FROM v_in_kommission in_kommission
+INNER JOIN v_parlamentarier parlamentarier
+  ON in_kommission.parlamentarier_id = parlamentarier.id
+LEFT JOIN v_partei partei
+  ON parlamentarier.partei_id = partei.id
+ORDER BY parlamentarier.name;
+
+CREATE OR REPLACE VIEW `v_interessenbindung_liste` AS SELECT organisation.name, interessenbindung.*
+FROM v_interessenbindung interessenbindung
+INNER JOIN v_organisation organisation
+  ON interessenbindung.organisation_id = organisation.id
+ORDER BY organisation.name;
+
+CREATE OR REPLACE VIEW `v_parlamentarier_interessenbindung` AS SELECT parlamentarier.name, interessenbindung.*
+FROM v_interessenbindung interessenbindung
+INNER JOIN v_parlamentarier parlamentarier
+  ON interessenbindung.parlamentarier_id = parlamentarier.id
+ORDER BY parlamentarier.name;
+
+CREATE OR REPLACE VIEW `v_zugangsberechtigung_mandate` AS SELECT zugangsberechtigung.parlamentarier_id, organisation.name as organisation_name, zugangsberechtigung.name, zugangsberechtigung.funktion, mandat.*
+FROM v_zugangsberechtigung zugangsberechtigung
+INNER JOIN v_mandat mandat
+  ON zugangsberechtigung.id = mandat.zugangsberechtigung_id
+INNER JOIN v_organisation organisation
+  ON mandat.organisation_id = organisation.id
+ORDER BY organisation.name;
+
+CREATE OR REPLACE VIEW `v_zugangsberechtigung_mit_mandaten` AS SELECT zugangsberechtigung.parlamentarier_id, zugangsberechtigung.name, zugangsberechtigung.funktion, organisation.name as organisation_name, mandat.*
+FROM v_zugangsberechtigung zugangsberechtigung
+LEFT JOIN v_mandat mandat
+  ON zugangsberechtigung.id = mandat.zugangsberechtigung_id
+LEFT JOIN v_organisation organisation
+  ON mandat.organisation_id = organisation.id
+ORDER BY zugangsberechtigung.name;
+
+CREATE OR REPLACE VIEW `v_organisation_beziehung_mandat_fuer` AS SELECT ziel_organisation.name, organisation_beziehung.*
+FROM v_organisation_beziehung organisation_beziehung
+INNER JOIN v_organisation ziel_organisation
+  ON organisation_beziehung.ziel_organisation_id = ziel_organisation.id
+WHERE
+  organisation_beziehung.art = 'mandat_fuer'
+ORDER BY ziel_organisation.name;
+
+CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglied_von` AS SELECT ziel_organisation.name, organisation_beziehung.*
+FROM v_organisation_beziehung organisation_beziehung
+INNER JOIN v_organisation ziel_organisation
+  ON organisation_beziehung.ziel_organisation_id = ziel_organisation.id
+WHERE
+  organisation_beziehung.art = 'mitglied_von'
+ORDER BY ziel_organisation.name;
+
+CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglieder` AS SELECT organisation.name, organisation_beziehung.*
+FROM v_organisation_beziehung organisation_beziehung
+INNER JOIN v_organisation organisation
+  ON organisation_beziehung.organisation_id = organisation.id
+WHERE
+  organisation_beziehung.art = 'mitglied_von'
+ORDER BY organisation.name;
+
+CREATE OR REPLACE VIEW `v_organisation_beziehung_mandat_auftrag` AS SELECT organisation.name, organisation_beziehung.*
+FROM v_organisation_beziehung organisation_beziehung
+INNER JOIN v_organisation organisation
+  ON organisation_beziehung.organisation_id = organisation.id
+WHERE
+  organisation_beziehung.art = 'mandat_fuer'
+ORDER BY organisation.name;

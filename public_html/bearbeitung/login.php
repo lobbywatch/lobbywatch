@@ -227,7 +227,7 @@
     $loginPage = new LoginPage(
         new LoginControl(
             GetIdentityCheckStrategy(),
-            'kommission.php',
+            'branche.php',
             GetCaptions('UTF-8')));
 
     SetUpUserAuthorization();
