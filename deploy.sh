@@ -97,12 +97,12 @@ echo "## Prepare release"
 ./prepare_release.sh $env_suffix
 
 echo "## Deploying website via Rsync"
-rsync -avze "ssh -p $ssh_port" $exclude $fast $delete --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir_suffix
+rsync -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir_suffix
 
 if $load_sql ; then
   echo "## Copy DB via Rsync"
   include_db="--include deploy_*"
-  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir
+  rsync -avze "ssh -p $ssh_port" $include_db --exclude '*' --backup --backup-dir=bak $dry_run $db_dir/ $ssh_user:$remote_db_dir
 
   echo "## Run SQL script"
   #ssh $ssh_user -t -p $ssh_port "cd $remote_db_dir; bash -s" < $db_dir/deploy_load_db.sh
