@@ -17,6 +17,9 @@
 // Processed by afterburner.sh
 
 
+// Processed by afterburner.sh
+
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  *                                   ATTENTION!
  * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
@@ -1047,6 +1050,7 @@
         GetApplication()->SetCanUserChangeOwnPassword(
             !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
+        before_render($Page);
         before_render($Page);
         before_render($Page);
         before_render($Page);
