@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 02. Dez 2013 um 16:35
+-- Erstellungszeit: 02. Dez 2013 um 17:04
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -292,10 +292,8 @@ DROP TRIGGER IF EXISTS `trg_organisation_name_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_name_upd` BEFORE UPDATE ON `organisation`
  FOR EACH ROW begin
-    declare msg varchar(255);
     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
-        set msg = concat('NameError: Either name_de, name_fr or name_it must be set. ID: ', cast(new.id as char));
-        signal sqlstate '45000' set message_text = msg;
+        call organisation_name_de_fr_it_must_be_set;
     end if;
 end
 //
