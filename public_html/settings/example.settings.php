@@ -30,7 +30,7 @@ $users = array (
     'demo' => '',
 );
 
-if (@$maintenance_mode === true) {
+if (@$maintenance_mode === true && preg_match('/(auswertung|info.php$)/', $_SERVER['REQUEST_URI']) == 0) {
   include dirname(__FILE__) . "/../common/maintenance.php";
   exit(0);
 }
