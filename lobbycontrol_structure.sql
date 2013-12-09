@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 09. Dez 2013 um 22:40
+-- Erstellungszeit: 09. Dez 2013 um 23:01
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -1099,7 +1099,7 @@ CREATE TABLE IF NOT EXISTS `v_zugangsberechtigung_mit_mandaten_indirekt` (
 --
 -- Tabellenstruktur für Tabelle `zugangsberechtigung`
 --
--- Erzeugt am: 02. Dez 2013 um 09:27
+-- Erzeugt am: 09. Dez 2013 um 21:58
 --
 
 DROP TABLE IF EXISTS `zugangsberechtigung`;
@@ -1120,7 +1120,7 @@ CREATE TABLE IF NOT EXISTS `zugangsberechtigung` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `zugangsberechtigung_nachname_vorname_unique` (`nachname`,`vorname`) COMMENT 'Fachlicher unique constraint',
+  UNIQUE KEY `zugangsberechtigung_nachname_vorname_unique` (`nachname`,`vorname`,`parlamentarier_id`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`)
