@@ -2056,7 +2056,6 @@
             $field = new StringField('ort');
             $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -3221,7 +3220,6 @@
             $field = new StringField('ort');
             $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);

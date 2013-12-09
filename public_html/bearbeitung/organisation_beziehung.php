@@ -72,8 +72,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation'), 'organisation_id_name_v_organisation');
-            $this->dataset->AddLookupField('ziel_organisation_id', 'v_organisation', new IntegerField('id'), new StringField('name', 'ziel_organisation_id_name', 'ziel_organisation_id_name_v_organisation'), 'ziel_organisation_id_name_v_organisation');
+            $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('anzeige_name', 'organisation_id_anzeige_name', 'organisation_id_anzeige_name_v_organisation'), 'organisation_id_anzeige_name_v_organisation');
+            $this->dataset->AddLookupField('ziel_organisation_id', 'v_organisation', new IntegerField('id'), new StringField('anzeige_name', 'ziel_organisation_id_anzeige_name', 'ziel_organisation_id_anzeige_name_v_organisation'), 'ziel_organisation_id_anzeige_name_v_organisation');
         }
     
         protected function CreatePageNavigator()
@@ -127,7 +127,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisation_beziehungssearch', $this->dataset,
-                array('id', 'art', 'organisation_id_name', 'ziel_organisation_id_name', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array('id', 'art', 'organisation_id_anzeige_name', 'ziel_organisation_id_anzeige_name', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
                 array($this->RenderText('Id'), $this->RenderText('Art'), $this->RenderText('Organisation'), $this->RenderText('Ziel Organisation'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -155,8 +155,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -171,7 +172,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -207,14 +207,15 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -229,7 +230,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -265,7 +265,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('ziel_organisation_id', $this->RenderText('Ziel Organisation'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('ziel_organisation_id', $this->RenderText('Ziel Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_von', $this->RenderText('Freigabe Von')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('freigabe_datum', $this->RenderText('Freigabe Datum')));
@@ -358,9 +358,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('organisation_id_name', 'Organisation', $this->dataset);
+            $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -373,8 +373,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -389,7 +390,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -425,8 +425,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_name', 'inline_edit_organisation_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_name', 'inline_edit_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -443,8 +443,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -459,7 +460,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -495,8 +495,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_name', 'inline_insert_organisation_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_name', 'inline_insert_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -507,9 +507,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('ziel_organisation_id_name', 'Ziel Organisation', $this->dataset);
+            $column = new TextViewColumn('ziel_organisation_id_anzeige_name', 'Ziel Organisation', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -522,8 +522,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -538,7 +539,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -574,8 +574,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_name', 'inline_edit_ziel_organisation_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_anzeige_name', 'inline_edit_ziel_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -592,8 +592,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -608,7 +609,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -644,8 +644,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_name', 'inline_insert_ziel_organisation_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_anzeige_name', 'inline_insert_ziel_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -927,16 +927,16 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('organisation_id_name', 'Organisation', $this->dataset);
+            $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('ziel_organisation_id_name', 'Ziel Organisation', $this->dataset);
+            $column = new TextViewColumn('ziel_organisation_id_anzeige_name', 'Ziel Organisation', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1018,8 +1018,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -1034,7 +1035,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1070,8 +1070,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_name', 'edit_organisation_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_name', 'edit_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1086,8 +1086,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -1102,7 +1103,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1138,8 +1138,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_name', 'edit_ziel_organisation_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_anzeige_name', 'edit_ziel_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1247,8 +1247,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -1263,7 +1264,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1299,8 +1299,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_name', 'insert_organisation_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_name', 'insert_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1315,8 +1315,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -1331,7 +1332,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1367,8 +1367,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_name', 'insert_ziel_organisation_id_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'name', '');
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_anzeige_name', 'insert_ziel_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1482,16 +1482,16 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('organisation_id_name', 'Organisation', $this->dataset);
+            $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('ziel_organisation_id_name', 'Ziel Organisation', $this->dataset);
+            $column = new TextViewColumn('ziel_organisation_id_anzeige_name', 'Ziel Organisation', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1565,16 +1565,16 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('organisation_id_name', 'Organisation', $this->dataset);
+            $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('ziel_organisation_id_name', 'Ziel Organisation', $this->dataset);
+            $column = new TextViewColumn('ziel_organisation_id_anzeige_name', 'Ziel Organisation', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1714,8 +1714,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -1730,7 +1731,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1766,17 +1766,18 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_edit_organisation_id_name_search', 'id', 'name', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_edit_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -1791,7 +1792,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1827,16 +1827,17 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_insert_organisation_id_name_search', 'id', 'name', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_insert_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -1851,7 +1852,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1887,17 +1887,18 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_edit_ziel_organisation_id_name_search', 'id', 'name', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_edit_ziel_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -1912,7 +1913,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -1948,9 +1948,9 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_insert_ziel_organisation_id_name_search', 'id', 'name', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_insert_ziel_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -1991,8 +1991,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -2007,7 +2008,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -2043,16 +2043,17 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_organisation_id_name_search', 'id', 'name', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -2067,7 +2068,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -2103,16 +2103,17 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_ziel_organisation_id_name_search', 'id', 'name', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_ziel_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -2127,7 +2128,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -2163,16 +2163,17 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_organisation_id_name_search', 'id', 'name', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_organisation`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -2187,7 +2188,6 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -2223,9 +2223,9 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_ziel_organisation_id_name_search', 'id', 'name', null);
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_ziel_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
