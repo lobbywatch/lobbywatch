@@ -331,7 +331,6 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mandat fuer', $this->RenderText('mandat fuer'));
             $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
             $editor->AddValue('arbeitet fuer', $this->RenderText('arbeitet fuer'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
@@ -346,7 +345,6 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mandat fuer', $this->RenderText('mandat fuer'));
             $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
             $editor->AddValue('arbeitet fuer', $this->RenderText('arbeitet fuer'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
@@ -1003,7 +1001,6 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mandat fuer', $this->RenderText('mandat fuer'));
             $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
             $editor->AddValue('arbeitet fuer', $this->RenderText('arbeitet fuer'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
@@ -1233,7 +1230,6 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mandat fuer', $this->RenderText('mandat fuer'));
             $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
             $editor->AddValue('arbeitet fuer', $this->RenderText('arbeitet fuer'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
