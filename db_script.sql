@@ -275,6 +275,12 @@ delimiter ;
 
 -- start with connect by http://explainextended.com/2009/03/17/hierarchical-queries-in-mysql/
 
+-- Clean trailing whitespace
+
+UPDATE `zugangsberechtigung` SET `nachname`=TRIM(`nachname`),`vorname`=TRIM(`vorname`)
+
+UPDATE `parlamentarier` SET `nachname`=TRIM(`nachname`),`vorname`=TRIM(`vorname`)
+
 -- VIEWS
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS SELECT CONCAT(t.nachname, ', ', t.vorname) AS anzeige_name, CONCAT(t.vorname, ' ', t.nachname) AS name, t.*  FROM `parlamentarier` t;
