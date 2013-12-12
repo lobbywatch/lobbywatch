@@ -122,7 +122,7 @@
             //
             // View column for dateiname_voll field
             //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
@@ -134,7 +134,7 @@
             $editor = new TextEdit('dateiname_voll_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Dateiname Voll', 'dateiname_voll', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Dateiname', 'dateiname_voll', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -358,7 +358,7 @@
             //
             // View column for dateiname_voll field
             //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(false);
             
             /* <inline edit column> */
@@ -368,7 +368,7 @@
             $editor = new TextEdit('dateiname_voll_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Dateiname Voll', 'dateiname_voll', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Dateiname', 'dateiname_voll', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -498,7 +498,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarier_anhangDetailEdit0parlamentarierssearch', $this->dataset,
                 array('id', 'parlamentarier_id_anzeige_name', 'datei', 'dateiname_voll', 'beschreibung', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'mime_type', 'encoding'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier Id'), $this->RenderText('Datei'), $this->RenderText('Dateiname Voll'), $this->RenderText('Beschreibung'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Mime Type'), $this->RenderText('Encoding')),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier Id'), $this->RenderText('Datei'), $this->RenderText('Dateiname'), $this->RenderText('Beschreibung'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Mime Type'), $this->RenderText('Encoding')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -593,7 +593,7 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier Id'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('datei', $this->RenderText('Datei')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateiname_voll', $this->RenderText('Dateiname Voll')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateiname_voll', $this->RenderText('Dateiname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
@@ -677,7 +677,7 @@
             //
             // View column for dateiname_voll field
             //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
@@ -689,7 +689,7 @@
             $editor = new TextEdit('dateiname_voll_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Dateiname Voll', 'dateiname_voll', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Dateiname', 'dateiname_voll', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -857,7 +857,7 @@
             //
             // View column for dateiname_voll field
             //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
@@ -1014,7 +1014,7 @@
             $editor = new TextEdit('dateiname_voll_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Dateiname Voll', 'dateiname_voll', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Dateiname', 'dateiname_voll', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1531,7 +1531,7 @@
             //
             // View column for dateiname_voll field
             //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -1541,7 +1541,7 @@
             $editor = new TextEdit('dateiname_voll_edit');
             $editor->SetSize(80);
             $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Dateiname Voll', 'dateiname_voll', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Dateiname', 'dateiname_voll', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1589,7 +1589,7 @@
             //
             // View column for dateiname_voll field
             //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'dateiname_voll_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
