@@ -1155,7 +1155,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Parlamentarier Id', 
+                'Parlamentarier', 
                 'parlamentarier_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
@@ -1210,7 +1210,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1299,7 +1299,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier Id', $this->dataset);
+            $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
