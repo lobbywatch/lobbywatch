@@ -32,13 +32,13 @@ $grants = array('guest' =>
         'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
@@ -55,7 +55,8 @@ $grants = array('guest' =>
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'bane' => 
         array('kommission' => new DataSourceSecurityInfo(false, false, false, false),
@@ -71,13 +72,13 @@ $grants = array('guest' =>
         'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
@@ -94,7 +95,8 @@ $grants = array('guest' =>
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'rebecca' => 
         array('kommission' => new DataSourceSecurityInfo(false, false, false, false),
@@ -110,13 +112,13 @@ $grants = array('guest' =>
         'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
@@ -133,7 +135,8 @@ $grants = array('guest' =>
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'otto' => 
         array('kommission' => new DataSourceSecurityInfo(false, false, false, false),
@@ -149,13 +152,13 @@ $grants = array('guest' =>
         'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
@@ -172,7 +175,8 @@ $grants = array('guest' =>
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'thomas' => 
         array('kommission' => new DataSourceSecurityInfo(false, false, false, false),
@@ -188,13 +192,13 @@ $grants = array('guest' =>
         'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
@@ -211,7 +215,8 @@ $grants = array('guest' =>
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false))
     ,
     'admin' => 
         array('kommission' => new DataSourceSecurityInfo(false, false, false, false),
@@ -227,13 +232,13 @@ $grants = array('guest' =>
         'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
         'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_zugangsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
         'parlamentarier.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
         'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
@@ -250,7 +255,8 @@ $grants = array('guest' =>
         'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false))
+        'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
+        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false))
     );
 
 $appGrants = array('guest' => new DataSourceSecurityInfo(false, false, false, false),
@@ -274,13 +280,13 @@ $tableCaptions = array('kommission' => 'Kommission',
 'organisation.interessenbindung' => 'Organisation.Interessenbindung',
 'organisation.mandat' => 'Organisation.Mandat',
 'parlamentarier' => 'Parlamentarier',
+'parlamentarier.parlamentarier_anhang' => 'Parlamentarier.Parlamentarier Anhang',
 'parlamentarier.v_interessenbindung_liste_indirekt' => 'Parlamentarier.V Interessenbindung Liste Indirekt',
 'parlamentarier.v_zugangsberechtigung_mit_mandaten_indirekt' => 'Parlamentarier.V Zugangsberechtigung Mit Mandaten Indirekt',
 'parlamentarier.v_in_kommission_liste' => 'Parlamentarier.V In Kommission Liste',
 'parlamentarier.v_zugangsberechtigung_mit_mandaten' => 'Parlamentarier.V Zugangsberechtigung Mit Mandaten',
 'parlamentarier.v_interessenbindung_liste' => 'Parlamentarier.V Interessenbindung Liste',
 'parlamentarier.zugangsberechtigung' => 'Parlamentarier.Zugangsberechtigung',
-'parlamentarier.parlamentarier_anhang' => 'Parlamentarier.Parlamentarier Anhang',
 'in_kommission' => 'In Kommission',
 'in_kommission.v_in_kommission_parlamentarier' => 'In Kommission.V In Kommission Parlamentarier',
 'interessenbindung' => 'Interessenbindung',
@@ -297,7 +303,8 @@ $tableCaptions = array('kommission' => 'Kommission',
 'interessengruppe' => 'Interessengruppe',
 'interessengruppe.organisation' => 'Interessengruppe.Organisation',
 'interessengruppe.parlamentarier' => 'Interessengruppe.Parlamentarier',
-'interessengruppe.zugangsberechtigung' => 'Interessengruppe.Zugangsberechtigung');
+'interessengruppe.zugangsberechtigung' => 'Interessengruppe.Zugangsberechtigung',
+'Parlamentarier_photo_fehlt' => 'Parlamentarier Photo Fehlt');
 
 function SetUpUserAuthorization()
 {

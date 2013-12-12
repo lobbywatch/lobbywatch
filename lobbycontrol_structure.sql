@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 09. Dez 2013 um 23:01
+-- Erstellungszeit: 12. Dez 2013 um 08:49
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -397,14 +397,19 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang`
 --
--- Erzeugt am: 02. Dez 2013 um 10:09
+-- Erzeugt am: 12. Dez 2013 um 05:44
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang`;
 CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel des Parlamentarieranhangs',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Parlamentarieranhangs',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Parlamentariers',
   `datei` varchar(255) NOT NULL COMMENT 'Datei',
+  `dateiname` varchar(255) NOT NULL COMMENT 'Dateiname ohne Erweiterung',
+  `dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Erweiterung der Datei',
+  `dateiname_voll` varchar(255) NOT NULL COMMENT 'Dateiname inkl. Erweiterung',
+  `mime_type` varchar(100) NOT NULL COMMENT 'MIME Type der Datei',
+  `encoding` varchar(20) NOT NULL COMMENT 'Encoding der Datei',
   `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Anhangs',
   `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
@@ -414,7 +419,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   KEY `parlamentarier_id` (`parlamentarier_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern';
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=17 ;
 
 --
 -- MIME TYPEN DER TABELLE `parlamentarier_anhang`:
@@ -932,9 +937,15 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 --
 DROP VIEW IF EXISTS `v_parlamentarier_anhang`;
 CREATE TABLE IF NOT EXISTS `v_parlamentarier_anhang` (
-`id` int(11)
+`parlamentarier_name` varchar(152)
+,`id` int(11)
 ,`parlamentarier_id` int(11)
 ,`datei` varchar(255)
+,`dateiname` varchar(255)
+,`dateierweiterung` varchar(15)
+,`dateiname_voll` varchar(255)
+,`mime_type` varchar(100)
+,`encoding` varchar(20)
 ,`beschreibung` varchar(150)
 ,`freigabe_von` enum('otto','rebecca','thomas','bane','roland')
 ,`freigabe_datum` timestamp
@@ -1314,7 +1325,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_parlamentarier_anhang`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_anhang` AS select `t`.`id` AS `id`,`t`.`parlamentarier_id` AS `parlamentarier_id`,`t`.`datei` AS `datei`,`t`.`beschreibung` AS `beschreibung`,`t`.`freigabe_von` AS `freigabe_von`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `parlamentarier_anhang` `t`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_anhang` AS select `p`.`anzeige_name` AS `parlamentarier_name`,`t`.`id` AS `id`,`t`.`parlamentarier_id` AS `parlamentarier_id`,`t`.`datei` AS `datei`,`t`.`dateiname` AS `dateiname`,`t`.`dateierweiterung` AS `dateierweiterung`,`t`.`dateiname_voll` AS `dateiname_voll`,`t`.`mime_type` AS `mime_type`,`t`.`encoding` AS `encoding`,`t`.`beschreibung` AS `beschreibung`,`t`.`freigabe_von` AS `freigabe_von`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from (`parlamentarier_anhang` `t` join `v_parlamentarier` `p` on((`p`.`id` = `t`.`parlamentarier_id`)));
 
 -- --------------------------------------------------------
 

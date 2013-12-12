@@ -191,6 +191,21 @@ ALTER TABLE `t_parlamentarier_anhang`
 ADD COLUMN `freigabe_von` enum('otto','rebecca','thomas','bane','roland') NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)' AFTER `beschreibung`,
 ADD COLUMN `freigabe_datum` TIMESTAMP NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)' AFTER `freigabe_von`;
 
+
+-- File metadata
+ALTER TABLE `parlamentarier_anhang`
+ADD `dateiname` VARCHAR( 255 ) NOT NULL COMMENT 'Dateiname ohne Erweiterung' AFTER `datei` ,
+ADD `dateierweiterung` VARCHAR( 15 ) NOT NULL COMMENT 'Erweiterung der Datei' AFTER `dateiname` ,
+ADD `dateiname_voll` VARCHAR( 255 ) NOT NULL COMMENT 'Dateiname mit Erweiterung' AFTER `datei` ,
+ADD `mime_type` VARCHAR( 100 ) NOT NULL COMMENT 'MIME Type der Datei' AFTER `dateierweiterung` ,
+ADD `encoding` VARCHAR( 20 ) NOT NULL COMMENT 'Encoding der Datei' AFTER `mime_type` ;
+
+ALTER TABLE `parlamentarier`
+ADD `photo_dateiname` VARCHAR( 255 ) NOT NULL COMMENT 'Photodateiname ohne Erweiterung' AFTER `photo` ,
+ADD `photo_dateierweiterung` VARCHAR( 15 ) NOT NULL COMMENT 'Erweiterung der Photodatei' AFTER `photo_dateiname` ,
+ADD `photo_dateiname_voll` VARCHAR( 255 ) NOT NULL COMMENT 'Photodateiname mit Erweiterung' AFTER `photo_dateierweiterung` ,
+ADD `photo_mime_type` VARCHAR( 100 ) NOT NULL COMMENT 'MIME Type des Photos' AFTER `photo_dateiname_voll`;
+
 -- TRIGGERS
 
 -- http://blog.mclaughlinsoftware.com/2012/07/03/placement-over-substance/
@@ -305,7 +320,7 @@ CREATE OR REPLACE VIEW `v_in_kommission` AS SELECT t.* FROM `in_kommission` t;
 
 CREATE OR REPLACE VIEW `v_organisation_beziehung` AS SELECT t.* FROM `organisation_beziehung` t;
 
-CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS SELECT t.* FROM `parlamentarier_anhang` t;
+CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS SELECT p.anzeige_name as parlamentarier_name, t.* FROM `parlamentarier_anhang` t INNER JOIN `v_parlamentarier` p ON p.id = t.parlamentarier_id;
 
 CREATE OR REPLACE VIEW `v_user` AS SELECT t.* FROM `user` t;
 
