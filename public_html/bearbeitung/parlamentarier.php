@@ -103,6 +103,19 @@
             //
             $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
             
+            /* <inline edit column> */
+            //
+            // Edit column for datei field
+            //
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
             /* <inline insert column> */
             //
             // Edit column for datei field
@@ -497,8 +510,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarier_anhangDetailEdit0parlamentarierssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'datei', 'dateiname_voll', 'beschreibung', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'mime_type', 'encoding'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier Id'), $this->RenderText('Datei'), $this->RenderText('Dateiname'), $this->RenderText('Beschreibung'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Mime Type'), $this->RenderText('Encoding')),
+                array('id', 'parlamentarier_id_anzeige_name', 'datei', 'dateiname_voll', 'beschreibung', 'dateierweiterung', 'mime_type', 'encoding', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier Id'), $this->RenderText('Datei'), $this->RenderText('Dateiname'), $this->RenderText('Beschreibung'), $this->RenderText('Dateierweiterung'), $this->RenderText('Mime Type'), $this->RenderText('Encoding'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -595,12 +608,13 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('datei', $this->RenderText('Datei')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateiname_voll', $this->RenderText('Dateiname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateierweiterung', $this->RenderText('Dateierweiterung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('mime_type', $this->RenderText('Mime Type')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('encoding', $this->RenderText('Encoding')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('mime_type', $this->RenderText('Mime Type')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('encoding', $this->RenderText('Encoding')));
         }
     
         public function GetPageDirection()
@@ -657,6 +671,19 @@
             // View column for datei field
             //
             $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
+            
+            /* <inline edit column> */
+            //
+            // Edit column for datei field
+            //
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
             
             /* <inline insert column> */
             //
@@ -873,6 +900,29 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for dateierweiterung field
+            //
+            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for mime_type field
+            //
+            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('mime_type_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for encoding field
+            //
+            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
@@ -901,110 +951,18 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mime_type_handler');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for encoding field
-            //
-            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
         {
             //
-            // Edit column for parlamentarier_id field
+            // Edit column for datei field
             //
-            $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_parlamentarier`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('nachname');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vorname');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('zweiter_vorname');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('partei_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('parteifunktion');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('im_rat_seit');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beruf');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('beruf_interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new DateField('Geburtstag');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('photo');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kleinbild');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('sitzplatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('email');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ALT_kommission');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Parlamentarier Id', 
-                'parlamentarier_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -1028,6 +986,44 @@
             $editor->SetSize(80);
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for dateierweiterung field
+            //
+            $editor = new TextEdit('dateierweiterung_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Dateierweiterung', 'dateierweiterung', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for mime_type field
+            //
+            $editor = new TextEdit('mime_type_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Mime Type', 'mime_type', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for encoding field
+            //
+            $editor = new TextEdit('encoding_edit');
+            $editor->SetSize(20);
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Encoding', 'encoding', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1073,32 +1069,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for mime_type field
-            //
-            $editor = new TextEdit('mime_type_edit');
-            $editor->SetSize(100);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Mime Type', 'mime_type', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for encoding field
-            //
-            $editor = new TextEdit('encoding_edit');
-            $editor->SetSize(20);
-            $editor->SetMaxLength(20);
-            $editColumn = new CustomEditColumn('Encoding', 'encoding', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1189,7 +1159,6 @@
                 'parlamentarier_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1267,6 +1236,27 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for dateierweiterung field
+            //
+            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for mime_type field
+            //
+            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for encoding field
+            //
+            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
@@ -1293,20 +1283,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for encoding field
-            //
-            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -1349,6 +1325,27 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for dateierweiterung field
+            //
+            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for mime_type field
+            //
+            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for encoding field
+            //
+            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
@@ -1375,20 +1372,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for encoding field
-            //
-            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -1450,6 +1433,22 @@
             $rowData['dateiname_voll'] = $path_parts['basename'];
             $rowData['mime_type'] = $finfo_mime->file($file);
             $rowData['encoding'] = $finfo_encoding->file($file);
+        }
+        public function datei_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/private_files/lobbycontrol_db_files/parlamentarier_anhang/%parlamentarier_id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
         }
         public function datei_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
@@ -19974,7 +19973,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -20196,10 +20195,10 @@
             $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_inline_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
-                'photo',
-                '/home/csvimsne/public_html/lobbycontrol/files/parlamentarier_photos/%id%',
+                'kleinbild',
+                '/auswertung/parlamentarierBilder',
                 Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_inline_edit'),
-                new ImageFitByWidthResizeFilter(600)
+                new ImageFitByWidthResizeFilter(44)
             );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20216,10 +20215,10 @@
             $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_inline_insert', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
-                'photo',
-                '/home/csvimsne/public_html/lobbycontrol/files/parlamentarier_photos/%id%',
+                'kleinbild',
+                '/auswertung/parlamentarierBilder',
                 Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_inline_insert'),
-                new ImageFitByWidthResizeFilter(600)
+                new ImageFitByWidthResizeFilter(44)
             );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20232,8 +20231,8 @@
             //
             // View column for kleinbild field
             //
-            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
-            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('auswertung/parlamentarierBilder/');
             $column->SetSourceSuffix('');
             
             /* <inline edit column> */
@@ -20242,26 +20241,13 @@
             //
             $editor = new ImageUploader('kleinbild_edit');
             $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Kleinbild', 'kleinbild', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+            $editColumn = new UploadFileToFolderColumn('Kleinbild', 'kleinbild', $editor, $this->dataset, false, false, '/auswertung/parlamentarierBilder/');
             $editColumn->OnCustomFileName->AddListener('kleinbild_GenerateFileName_inline_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetReadOnly(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for kleinbild field
-            //
-            $editor = new ImageUploader('kleinbild_edit');
-            $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Kleinbild', 'kleinbild', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
-            $editColumn->OnCustomFileName->AddListener('kleinbild_GenerateFileName_inline_insert', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $editColumn->SetAllowSetToDefault(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -20334,7 +20320,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -20399,17 +20385,6 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
             $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -20677,7 +20652,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -20715,8 +20690,8 @@
             //
             // View column for kleinbild field
             //
-            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
-            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('auswertung/parlamentarierBilder/');
             $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -20734,7 +20709,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21045,10 +21020,10 @@
             $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
-                'photo',
-                '/home/csvimsne/public_html/lobbycontrol/files/parlamentarier_photos/%id%',
+                'kleinbild',
+                '/auswertung/parlamentarierBilder',
                 Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_edit'),
-                new ImageFitByWidthResizeFilter(600)
+                new ImageFitByWidthResizeFilter(44)
             );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -21059,9 +21034,10 @@
             //
             $editor = new ImageUploader('kleinbild_edit');
             $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Kleinbild', 'kleinbild', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+            $editColumn = new UploadFileToFolderColumn('Kleinbild', 'kleinbild', $editor, $this->dataset, false, false, '/auswertung/parlamentarierBilder/');
             $editColumn->OnCustomFileName->AddListener('kleinbild_GenerateFileName_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetReadOnly(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -21423,24 +21399,12 @@
             $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_insert', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
-                'photo',
-                '/home/csvimsne/public_html/lobbycontrol/files/parlamentarier_photos/%id%',
+                'kleinbild',
+                '/auswertung/parlamentarierBilder',
                 Delegate::CreateFromMethod($this, 'photo_Thumbnail_GenerateFileName_insert'),
-                new ImageFitByWidthResizeFilter(600)
+                new ImageFitByWidthResizeFilter(44)
             );
             $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for kleinbild field
-            //
-            $editor = new ImageUploader('kleinbild_edit');
-            $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Kleinbild', 'kleinbild', $editor, $this->dataset, false, false, '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
-            $editColumn->OnCustomFileName->AddListener('kleinbild_GenerateFileName_insert', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $editColumn->SetAllowSetToDefault(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -21476,15 +21440,6 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -21593,7 +21548,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -21776,7 +21731,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -21996,7 +21951,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
@@ -22044,8 +21999,8 @@
             //
             // View column for kleinbild field
             //
-            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
-            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('auswertung/parlamentarierBilder/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -22067,7 +22022,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22223,7 +22178,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22433,7 +22388,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
@@ -22481,8 +22436,8 @@
             //
             // View column for kleinbild field
             //
-            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
-            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('auswertung/parlamentarierBilder/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -22504,7 +22459,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22660,7 +22615,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22870,7 +22825,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
@@ -22918,8 +22873,8 @@
             //
             // View column for kleinbild field
             //
-            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
-            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('auswertung/parlamentarierBilder/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -22941,7 +22896,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23097,7 +23052,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23307,7 +23262,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
@@ -23355,8 +23310,8 @@
             //
             // View column for kleinbild field
             //
-            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
-            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('auswertung/parlamentarierBilder/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -23378,7 +23333,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23534,7 +23489,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23744,7 +23699,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
@@ -23792,8 +23747,8 @@
             //
             // View column for kleinbild field
             //
-            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
-            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('auswertung/parlamentarierBilder/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -23815,7 +23770,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23971,7 +23926,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24181,7 +24136,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
@@ -24229,8 +24184,8 @@
             //
             // View column for kleinbild field
             //
-            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
-            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('auswertung/parlamentarierBilder/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -24252,7 +24207,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -24408,7 +24363,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24618,7 +24573,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
@@ -24666,8 +24621,8 @@
             //
             // View column for kleinbild field
             //
-            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '');
-            $column->SetSourcePrefix('/auswertung/parlamentarierBilder/');
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('auswertung/parlamentarierBilder/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
@@ -24689,7 +24644,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -24845,7 +24800,7 @@
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24969,7 +24924,7 @@
         }
         public function kleinbild_GenerateFileName_inline_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/auswertung/parlamentarierBilder/');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -24984,9 +24939,9 @@
         $handled = true;
         }
         
-        public function kleinbild_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        public function kleinbild_GenerateFileName_inline_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/auswertung/parlamentarierBilder/');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -25012,10 +24967,10 @@
         }
         public function photo_Thumbnail_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/files/parlamentarier_photos/%id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/auswertung/parlamentarierBilder');
         FileUtils::ForceDirectories($targetFolder);
         
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%_600px.%original_file_extension%%original_file_name%.%original_file_extension%',
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%_44x62.%original_file_extension%',
             array(
                 'original_file_name' => $original_file_name,
                 'original_file_extension' => $original_file_extension,
@@ -25032,7 +24987,7 @@
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/files/parlamentarier_photos/%id%');
         FileUtils::ForceDirectories($targetFolder);
         
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%.%original_file_extension%',
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
             array(
                 'original_file_name' => $original_file_name,
                 'original_file_extension' => $original_file_extension,
@@ -25045,7 +25000,7 @@
         }
         public function kleinbild_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/auswertung/parlamentarierBilder/');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -25061,10 +25016,10 @@
         }
         public function photo_Thumbnail_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/files/parlamentarier_photos/%id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/auswertung/parlamentarierBilder');
         FileUtils::ForceDirectories($targetFolder);
         
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%_600px.%original_file_extension%%original_file_name%.%original_file_extension%',
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%_44x62.%original_file_extension%',
             array(
                 'original_file_name' => $original_file_name,
                 'original_file_extension' => $original_file_extension,
@@ -25079,22 +25034,6 @@
         public function photo_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/files/parlamentarier_photos/%id%');
-        FileUtils::ForceDirectories($targetFolder);
-        
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%.%original_file_extension%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
-        }
-        public function kleinbild_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '/home/csvimsne/public_html/lobbycontrol/test/auswertung/parlamentarierBilder/');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -25382,7 +25321,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -25439,17 +25378,6 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'ALT_kommission_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -25504,7 +25432,7 @@
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //

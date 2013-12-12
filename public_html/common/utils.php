@@ -36,7 +36,7 @@ function df($msg) {
   if (is_array($msg) || is_object($msg)) {
     $msg = print_r($msg, true);
   }
-  file_put_contents(dirname(__FILE__) . "/../../logs/bearbeitung.log", date('c') . ': ' . $msg, FILE_APPEND);
+  file_put_contents(dirname(__FILE__) . "/../../logs/bearbeitung.log", date('c') . ': ' . $msg . "\n", FILE_APPEND);
 }
 function dfXXX($msg) {
   // Disabled debug comment: do nothing
