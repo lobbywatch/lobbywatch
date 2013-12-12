@@ -70,7 +70,7 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
-            $field = new DateField('Geburtstag');
+            $field = new DateField('geburtstag');
             $this->dataset->AddField($field, false);
             $field = new StringField('photo');
             $this->dataset->AddField($field, false);
@@ -159,8 +159,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('Parlamentarier_photo_fehltssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'ratstyp', 'kanton', 'partei_id', 'parteifunktion', 'im_rat_seit', 'beruf', 'beruf_interessengruppe_id', 'Geburtstag', 'photo', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'ALT_kommission', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Geburtstag'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'ratstyp', 'kanton', 'partei_id', 'parteifunktion', 'im_rat_seit', 'beruf', 'beruf_interessengruppe_id', 'photo', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'ALT_kommission', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'geburtstag'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Geburtstag')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -191,7 +191,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf', $this->RenderText('Beruf')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Interessengruppe Id')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('Geburtstag', $this->RenderText('Geburtstag')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo', $this->RenderText('Photo')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kleinbild', $this->RenderText('Kleinbild')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
@@ -205,6 +204,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('geburtstag', $this->RenderText('Geburtstag')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -586,40 +586,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for Geburtstag field
-            //
-            $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('Y-m-d');
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for Geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'Geburtstag', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for Geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'Geburtstag', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
@@ -1050,6 +1016,40 @@
             $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetDateTimeFormat('Y-m-d');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1141,14 +1141,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for Geburtstag field
-            //
-            $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('Y-m-d');
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
@@ -1239,6 +1231,14 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetDateTimeFormat('Y-m-d');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -1356,16 +1356,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for Geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'Geburtstag', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for photo field
             //
             $editor = new TextEdit('photo_edit');
@@ -1494,6 +1484,16 @@
             $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1613,16 +1613,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for Geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'Geburtstag', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for photo field
             //
             $editor = new TextEdit('photo_edit');
@@ -1755,6 +1745,16 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
                 $grid->SetShowAddButton(false);
@@ -1848,14 +1848,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for Geburtstag field
-            //
-            $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('Y-m-d');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
@@ -1946,6 +1938,14 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetDateTimeFormat('Y-m-d');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -2031,14 +2031,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for Geburtstag field
-            //
-            $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('Y-m-d');
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
@@ -2129,6 +2121,14 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetDateTimeFormat('Y-m-d');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }

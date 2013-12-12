@@ -3722,7 +3722,7 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
-            $field = new DateField('Geburtstag');
+            $field = new DateField('geburtstag');
             $this->dataset->AddField($field, false);
             $field = new StringField('photo');
             $this->dataset->AddField($field, false);
@@ -4333,38 +4333,6 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for Geburtstag field
-            //
-            $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(false);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for Geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'Geburtstag', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for Geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'Geburtstag', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -5174,7 +5142,7 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
-            $field = new DateField('Geburtstag');
+            $field = new DateField('geburtstag');
             $this->dataset->AddField($field, false);
             $field = new StringField('photo');
             $this->dataset->AddField($field, false);
@@ -5246,8 +5214,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierDetailEdit1interessengruppessearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'im_rat_seit', 'beruf', 'beruf_interessengruppe_id_name', 'Geburtstag', 'photo', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'ALT_kommission', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Geburtstag'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'im_rat_seit', 'beruf', 'beruf_interessengruppe_id_name', 'photo', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'ALT_kommission', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -5344,7 +5312,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Interessengruppe Id'), $lookupDataset, 'id', 'name', false));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('Geburtstag', $this->RenderText('Geburtstag')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo', $this->RenderText('Photo')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kleinbild', $this->RenderText('Kleinbild')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
@@ -5967,38 +5934,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for Geburtstag field
-            //
-            $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for Geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'Geburtstag', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for Geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'Geburtstag', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
@@ -6553,14 +6488,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for Geburtstag field
-            //
-            $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
@@ -6875,15 +6802,6 @@
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for Geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'Geburtstag', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -7244,15 +7162,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for Geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'Geburtstag', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for photo field
             //
             $editor = new TextEdit('photo_edit');
@@ -7488,14 +7397,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for Geburtstag field
-            //
-            $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
@@ -7667,14 +7568,6 @@
             // View column for name field
             //
             $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for Geburtstag field
-            //
-            $column = new DateTimeViewColumn('Geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -8282,7 +8175,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
-            $field = new DateField('Geburtstag');
+            $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
@@ -8376,7 +8269,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
-            $field = new DateField('Geburtstag');
+            $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
@@ -9375,7 +9268,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
-            $field = new DateField('Geburtstag');
+            $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
@@ -9615,7 +9508,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
-            $field = new DateField('Geburtstag');
+            $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
@@ -9709,7 +9602,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
-            $field = new DateField('Geburtstag');
+            $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
@@ -10573,7 +10466,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
-            $field = new DateField('Geburtstag');
+            $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
@@ -10900,7 +10793,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
-            $field = new DateField('Geburtstag');
+            $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
