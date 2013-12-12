@@ -320,7 +320,7 @@ CREATE OR REPLACE VIEW `v_in_kommission` AS SELECT t.* FROM `in_kommission` t;
 
 CREATE OR REPLACE VIEW `v_organisation_beziehung` AS SELECT t.* FROM `organisation_beziehung` t;
 
-CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS SELECT p.anzeige_name as parlamentarier_name, t.* FROM `parlamentarier_anhang` t INNER JOIN `v_parlamentarier` p ON p.id = t.parlamentarier_id;
+CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS SELECT t.parlamentarier_id as parlamentarier_id2, t.* FROM `parlamentarier_anhang` t;
 
 CREATE OR REPLACE VIEW `v_user` AS SELECT t.* FROM `user` t;
 

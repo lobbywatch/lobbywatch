@@ -74,6 +74,14 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('photo');
             $this->dataset->AddField($field, false);
+            $field = new StringField('photo_dateiname');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('photo_dateierweiterung');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('photo_dateiname_voll');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('photo_mime_type');
+            $this->dataset->AddField($field, false);
             $field = new StringField('kleinbild');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
