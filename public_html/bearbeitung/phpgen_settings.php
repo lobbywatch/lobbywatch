@@ -49,7 +49,7 @@ function GetPageInfos()
     $result[] = array('caption' => 'Branche', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche');
     $result[] = array('caption' => 'Partei', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei');
     $result[] = array('caption' => 'Interessengruppe', 'short_caption' => 'Interessengruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe');
-    $result[] = array('caption' => 'Tabellenstand', 'short_caption' => 'Tabellenstand', 'filename' => 'tabellenstand.php', 'name' => 'tabellenstand');
+    $result[] = array('caption' => 'Tabellenstand', 'short_caption' => 'Tabellenstand', 'filename' => 'tabellenstand.php', 'name' => 'q_last_updated_tables');
     return $result;
 }
 

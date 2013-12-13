@@ -125,7 +125,7 @@
                 $result->AddPage(new PageLink($this->RenderText('Partei'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('Partei')));
             if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessengruppe'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('Interessengruppe')));
-            if (GetCurrentUserGrantForDataSource('tabellenstand')->HasViewGrant())
+            if (GetCurrentUserGrantForDataSource('q_last_updated_tables')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Tabellenstand'), 'tabellenstand.php', $this->RenderText('Tabellenstand'), $currentPageCaption == $this->RenderText('Tabellenstand')));
             
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() )

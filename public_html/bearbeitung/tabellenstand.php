@@ -36,7 +36,7 @@
     
     
     
-    class tabellenstandPage extends Page
+    class q_last_updated_tablesPage extends Page
     {
         protected function DoBeforeCreate()
         {
@@ -169,7 +169,7 @@
             $this->dataset = new QueryDataset(
               new MyPDOConnectionFactory(), 
               GetConnectionOptions(),
-              $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'tabellenstand');
+              $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_last_updated_tables');
             $field = new StringField('table_name');
             $this->dataset->AddField($field, true);
             $field = new StringField('visa');
@@ -215,7 +215,7 @@
                 $result->AddPage(new PageLink($this->RenderText('Partei'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('Partei')));
             if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessengruppe'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('Interessengruppe')));
-            if (GetCurrentUserGrantForDataSource('tabellenstand')->HasViewGrant())
+            if (GetCurrentUserGrantForDataSource('q_last_updated_tables')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Tabellenstand'), 'tabellenstand.php', $this->RenderText('Tabellenstand'), $currentPageCaption == $this->RenderText('Tabellenstand')));
             
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() )
@@ -230,7 +230,7 @@
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
-            $grid->SearchControl = new SimpleSearch('tabellenstandssearch', $this->dataset,
+            $grid->SearchControl = new SimpleSearch('q_last_updated_tablesssearch', $this->dataset,
                 array('table_name', 'visa', 'last_updated'),
                 array($this->RenderText('Table Name'), $this->RenderText('Visa'), $this->RenderText('Last Updated')),
                 array(
@@ -250,7 +250,7 @@
     
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
-            $this->AdvancedSearchControl = new AdvancedSearchControl('tabellenstandasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
+            $this->AdvancedSearchControl = new AdvancedSearchControl('q_last_updated_tablesasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('table_name', $this->RenderText('Table Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('visa', $this->RenderText('Visa')));
@@ -539,7 +539,7 @@
     
         protected function CreateGrid()
         {
-            $result = new Grid($this, $this->dataset, 'tabellenstandGrid');
+            $result = new Grid($this, $this->dataset, 'q_last_updated_tablesGrid');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
                $result->SetAllowDeleteSelected(false);
             else
@@ -601,12 +601,12 @@
 
     try
     {
-        $Page = new tabellenstandPage("tabellenstand.php", "tabellenstand", GetCurrentUserGrantForDataSource("tabellenstand"), 'UTF-8');
+        $Page = new q_last_updated_tablesPage("tabellenstand.php", "q_last_updated_tables", GetCurrentUserGrantForDataSource("q_last_updated_tables"), 'UTF-8');
         $Page->SetShortCaption('Tabellenstand');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
         $Page->SetCaption('Tabellenstand');
-        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("tabellenstand"));
+        $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("q_last_updated_tables"));
         GetApplication()->SetEnableLessRunTimeCompile(GetEnableLessFilesRunTimeCompilation());
         GetApplication()->SetCanUserChangeOwnPassword(
             !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());

@@ -91,7 +91,7 @@
                 $result->AddPage(new PageLink($this->RenderText('Partei'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('Partei')));
             if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessengruppe'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('Interessengruppe')));
-            if (GetCurrentUserGrantForDataSource('tabellenstand')->HasViewGrant())
+            if (GetCurrentUserGrantForDataSource('q_last_updated_tables')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Tabellenstand'), 'tabellenstand.php', $this->RenderText('Tabellenstand'), $currentPageCaption == $this->RenderText('Tabellenstand')));
             
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() )
@@ -329,7 +329,7 @@
 
     try
     {
-        $Page = new v_last_updated_tablesPage("v_last_updated_tables.php", "v_last_updated_tables", GetCurrentUserGrantForDataSource("v_last_updated_tables"), 'UTF-8');
+        $Page = new v_last_updated_tablesPage("last_updated_tables.php", "v_last_updated_tables", GetCurrentUserGrantForDataSource("v_last_updated_tables"), 'UTF-8');
         $Page->SetShortCaption('Tabellenstand');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
