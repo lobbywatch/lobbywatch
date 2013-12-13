@@ -36,6 +36,8 @@ $tables = array('branche',
 // `$table` t)";
 
 $table_queries = array();
+$table_views = array();
+$view_queries = array();
 foreach ($tables as $table) {
   //$table_queries2[] = preg_replace('\$table', $table, $table_query);
 //   $table_queries[] = "(SELECT
@@ -46,25 +48,52 @@ foreach ($tables as $table) {
 //   `$table` t
 //   GROUP BY t.`updated_date`
 //   )";
-  $table_queries[] = "(SELECT
+  $table_queries[] =
+  "(SELECT
   '$table' table_name,
   t.`updated_visa` AS visa,
   t.`updated_date` last_updated
   FROM
   `$table` t
-  WHERE
-  t.`updated_date` = (SELECT MAX(`updated_date`) FROM `$table`)
+  ORDER BY t.`updated_date` DESC
   LIMIT 1
   )";
+  $table_views[] =
+  "CREATE OR REPLACE VIEW `v_last_updated_$table` AS
+  (SELECT
+  '$table' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `$table` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );";
+  $view_queries[] = "SELECT * FROM v_last_updated_$table";
+  //   "(SELECT
+//   '$table' table_name,
+//   t.`updated_visa` AS visa,
+//   t.`updated_date` last_updated
+//   FROM
+//   `$table` t
+//   WHERE
+//   t.`updated_date` = (SELECT MAX(`updated_date`) FROM `$table`)
+//   LIMIT 1
+//   )";
 }
-
-$union_query = implode("\nUNION\n", $table_queries) . "\n";
 
 $master_query = "SELECT * FROM (
 SELECT *
-FROM ($union_query) union_query
+FROM (" . implode("\nUNION\n", $table_queries) . ") union_query
 ) complete
-ORDER BY complete.last_updated DESC\n";
+ORDER BY complete.last_updated DESC;\n";
+
+$unordered_views = "CREATE OR REPLACE VIEW `v_last_updated_tables_unordered` AS\n"
+. implode("\nUNION\n", $view_queries) . ";\n";
+
+$master_view = "CREATE OR REPLACE VIEW `v_last_updated_tables` AS
+SELECT * FROM `v_last_updated_tables_unordered`
+ORDER BY last_updated DESC;\n";
 
 // --UNION
 // --SELECT 'all' table_name, visa, last_updated
@@ -74,3 +103,7 @@ ORDER BY complete.last_updated DESC\n";
 // --LIMIT 1
 
 echo $master_query;
+echo "---- VIEWS ----\n";
+echo implode("\n", $table_views);
+echo $unordered_views;
+echo $master_view;

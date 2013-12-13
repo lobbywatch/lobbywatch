@@ -290,6 +290,131 @@ delimiter ;
 
 -- start with connect by http://explainextended.com/2009/03/17/hierarchical-queries-in-mysql/
 
+-- Last updated tables query
+SELECT * FROM (
+SELECT *
+FROM ((SELECT
+  'branche' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `branche` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'interessenbindung' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `interessenbindung` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'interessengruppe' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `interessengruppe` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'in_kommission' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `in_kommission` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'kommission' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `kommission` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'mandat' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `mandat` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'organisation' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `organisation` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'organisation_beziehung' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `organisation_beziehung` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'parlamentarier' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `parlamentarier` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'parlamentarier_anhang' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `parlamentarier_anhang` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'partei' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `partei` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'zugangsberechtigung' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `zugangsberechtigung` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )) union_query
+) complete
+ORDER BY complete.last_updated DESC;
+
 -- Clean trailing whitespace
 
 UPDATE `zugangsberechtigung` SET `nachname`=TRIM(`nachname`),`vorname`=TRIM(`vorname`)
@@ -471,3 +596,152 @@ INNER JOIN v_parlamentarier parlamentarier
 WHERE
   organisation_beziehung.art = 'arbeitet fuer'
 ORDER BY beziehung, parlamentarier_name;
+
+-- Last updated tables
+-- CREATE OR REPLACE VIEW `v_last_updated_tables` AS
+CREATE OR REPLACE VIEW `v_last_updated_branche` AS
+  (SELECT
+  'branche' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `branche` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_interessenbindung` AS
+  (SELECT
+  'interessenbindung' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `interessenbindung` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_interessengruppe` AS
+  (SELECT
+  'interessengruppe' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `interessengruppe` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_in_kommission` AS
+  (SELECT
+  'in_kommission' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `in_kommission` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_kommission` AS
+  (SELECT
+  'kommission' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `kommission` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_mandat` AS
+  (SELECT
+  'mandat' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `mandat` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_organisation` AS
+  (SELECT
+  'organisation' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `organisation` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_organisation_beziehung` AS
+  (SELECT
+  'organisation_beziehung' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `organisation_beziehung` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_parlamentarier` AS
+  (SELECT
+  'parlamentarier' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `parlamentarier` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_parlamentarier_anhang` AS
+  (SELECT
+  'parlamentarier_anhang' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `parlamentarier_anhang` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_partei` AS
+  (SELECT
+  'partei' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `partei` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_zugangsberechtigung` AS
+  (SELECT
+  'zugangsberechtigung' table_name,
+  t.`updated_visa` AS visa,
+  t.`updated_date` last_updated
+  FROM
+  `zugangsberechtigung` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );CREATE OR REPLACE VIEW `v_last_updated_tables_unordered` AS
+SELECT * FROM v_last_updated_branche
+UNION
+SELECT * FROM v_last_updated_interessenbindung
+UNION
+SELECT * FROM v_last_updated_interessengruppe
+UNION
+SELECT * FROM v_last_updated_in_kommission
+UNION
+SELECT * FROM v_last_updated_kommission
+UNION
+SELECT * FROM v_last_updated_mandat
+UNION
+SELECT * FROM v_last_updated_organisation
+UNION
+SELECT * FROM v_last_updated_organisation_beziehung
+UNION
+SELECT * FROM v_last_updated_parlamentarier
+UNION
+SELECT * FROM v_last_updated_parlamentarier_anhang
+UNION
+SELECT * FROM v_last_updated_partei
+UNION
+SELECT * FROM v_last_updated_zugangsberechtigung;
+CREATE OR REPLACE VIEW `v_last_updated_tables` AS
+SELECT * FROM `v_last_updated_tables_unordered`
+ORDER BY last_updated DESC;
