@@ -44,6 +44,7 @@
             SELECT *
             FROM ((SELECT
               \'branche\' table_name,
+              \'Branche\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -54,6 +55,7 @@
             UNION
             (SELECT
               \'interessenbindung\' table_name,
+              \'Interessenbindung\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -64,6 +66,7 @@
             UNION
             (SELECT
               \'interessengruppe\' table_name,
+              \'Interessengruppe\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -74,6 +77,7 @@
             UNION
             (SELECT
               \'in_kommission\' table_name,
+              \'In Kommission\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -84,6 +88,7 @@
             UNION
             (SELECT
               \'kommission\' table_name,
+              \'Kommission\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -94,6 +99,7 @@
             UNION
             (SELECT
               \'mandat\' table_name,
+              \'Mandat\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -104,6 +110,7 @@
             UNION
             (SELECT
               \'organisation\' table_name,
+              \'Organisation\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -114,6 +121,7 @@
             UNION
             (SELECT
               \'organisation_beziehung\' table_name,
+              \'Organisation Beziehung\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -124,6 +132,7 @@
             UNION
             (SELECT
               \'parlamentarier\' table_name,
+              \'Parlamentarier\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -134,6 +143,7 @@
             UNION
             (SELECT
               \'parlamentarier_anhang\' table_name,
+              \'Parlamentarieranhang\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -144,6 +154,7 @@
             UNION
             (SELECT
               \'partei\' table_name,
+              \'Partei\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -154,6 +165,7 @@
             UNION
             (SELECT
               \'zugangsberechtigung\' table_name,
+              \'Zugangsberechtigung\' name,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated
               FROM
@@ -172,6 +184,8 @@
               $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_last_updated_tables');
             $field = new StringField('table_name');
             $this->dataset->AddField($field, true);
+            $field = new StringField('name');
+            $this->dataset->AddField($field, false);
             $field = new StringField('visa');
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('last_updated');
@@ -231,8 +245,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('q_last_updated_tablesssearch', $this->dataset,
-                array('table_name', 'visa', 'last_updated'),
-                array($this->RenderText('Table Name'), $this->RenderText('Visa'), $this->RenderText('Last Updated')),
+                array('name', 'table_name', 'visa', 'last_updated'),
+                array($this->RenderText('Name'), $this->RenderText('Table Name'), $this->RenderText('Visa'), $this->RenderText('Last Updated')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -252,6 +266,7 @@
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('q_last_updated_tablesasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('table_name', $this->RenderText('Table Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('visa', $this->RenderText('Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('last_updated', $this->RenderText('Last Updated')));
@@ -264,6 +279,39 @@
     
         protected function AddFieldColumns(Grid $grid)
         {
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('name', 'Name', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for name field
+            //
+            $editor = new TextEdit('name_edit');
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for name field
+            //
+            $editor = new TextEdit('name_edit');
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
             //
             // View column for table_name field
             //
@@ -368,6 +416,13 @@
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
+            // View column for name field
+            //
+            $column = new TextViewColumn('name', 'Name', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for table_name field
             //
             $column = new TextViewColumn('table_name', 'Table Name', $this->dataset);
@@ -392,6 +447,16 @@
     
         protected function AddEditColumns(Grid $grid)
         {
+            //
+            // Edit column for name field
+            //
+            $editor = new TextEdit('name_edit');
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
             //
             // Edit column for table_name field
             //
@@ -425,6 +490,16 @@
     
         protected function AddInsertColumns(Grid $grid)
         {
+            //
+            // Edit column for name field
+            //
+            $editor = new TextEdit('name_edit');
+            $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
             //
             // Edit column for table_name field
             //
@@ -469,6 +544,13 @@
         protected function AddPrintColumns(Grid $grid)
         {
             //
+            // View column for name field
+            //
+            $column = new TextViewColumn('name', 'Name', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for table_name field
             //
             $column = new TextViewColumn('table_name', 'Table Name', $this->dataset);
@@ -493,6 +575,13 @@
     
         protected function AddExportColumns(Grid $grid)
         {
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('name', 'Name', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
             //
             // View column for table_name field
             //
