@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 14. Dez 2013 um 07:44
+-- Erstellungszeit: 14. Dez 2013 um 10:53
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
--- Erzeugt am: 02. Dez 2013 um 09:26
+-- Erzeugt am: 14. Dez 2013 um 08:58
 --
 
 DROP TABLE IF EXISTS `kommission`;
@@ -179,6 +179,7 @@ CREATE TABLE IF NOT EXISTS `kommission` (
   `typ` enum('kommission','spezialkommission') NOT NULL DEFAULT 'kommission' COMMENT 'Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne).',
   `sachbereiche` text NOT NULL COMMENT 'Liste der Sachbereiche der Kommission, abgetrennt durch ";".',
   `abkuerung_delegation` varchar(15) DEFAULT NULL COMMENT 'Abkürzung der Delegation. Delegation im engeren Sinne als Subkommission.',
+  `parlament_link` varchar(255) DEFAULT NULL COMMENT 'Link zur Seite auf Parlament.ch',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
@@ -339,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 14. Dez 2013 um 06:31
+-- Erzeugt am: 14. Dez 2013 um 08:59
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -364,6 +365,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `kleinbild` varchar(80) DEFAULT 'leer.png' COMMENT 'Bild 44x62 px oder leer.png',
   `sitzplatz` int(11) DEFAULT NULL COMMENT 'Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch',
   `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Parlamentariers',
+  `parlament_link` varchar(255) DEFAULT NULL COMMENT 'Link zur Biographie auf Parlament.ch',
   `homepage` varchar(150) DEFAULT NULL COMMENT 'Homepage des Parlamentariers',
   `ALT_kommission` varchar(255) DEFAULT NULL COMMENT 'Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',

@@ -19405,8 +19405,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'im_rat_seit', 'beruf', 'beruf_interessengruppe_id_name', 'geburtstag', 'photo', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'ALT_kommission', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'photo_dateiname_voll'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Geburtstag'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Photo Dateiname')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'im_rat_seit', 'beruf', 'beruf_interessengruppe_id_name', 'geburtstag', 'photo', 'kleinbild', 'sitzplatz', 'email', 'parlament_link', 'homepage', 'ALT_kommission', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'photo_dateiname_voll'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Geburtstag'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Parlament Link'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Photo Dateiname')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -19510,6 +19510,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kleinbild', $this->RenderText('Kleinbild')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_link', $this->RenderText('Parlament Link')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_kommission', $this->RenderText('ALT Kommission')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
@@ -20373,6 +20374,44 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlament_link_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for parlament_link field
+            //
+            $editor = new TextEdit('parlament_link_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Parlament Link', 'parlament_link', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for parlament_link field
+            //
+            $editor = new TextEdit('parlament_link_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Parlament Link', 'parlament_link', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
+            $column->SetDescription($this->RenderText('Link zur Biographie auf Parlament.ch'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -20761,6 +20800,16 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlament_link_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -21118,6 +21167,17 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for parlament_link field
+            //
+            $editor = new TextEdit('parlament_link_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Parlament Link', 'parlament_link', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -21502,6 +21562,17 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for parlament_link field
+            //
+            $editor = new TextEdit('parlament_link_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Parlament Link', 'parlament_link', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for homepage field
             //
             $editor = new TextEdit('homepage_edit');
@@ -21670,6 +21741,13 @@
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -21860,6 +21938,13 @@
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -22112,6 +22197,18 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlament_link_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
+            $column->SetDescription($this->RenderText('Link zur Biographie auf Parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -22313,6 +22410,13 @@
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22555,6 +22659,18 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlament_link_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
+            $column->SetDescription($this->RenderText('Link zur Biographie auf Parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -22756,6 +22872,13 @@
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22998,6 +23121,18 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlament_link_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
+            $column->SetDescription($this->RenderText('Link zur Biographie auf Parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -23199,6 +23334,13 @@
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23441,6 +23583,18 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlament_link_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
+            $column->SetDescription($this->RenderText('Link zur Biographie auf Parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -23642,6 +23796,13 @@
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23884,6 +24045,18 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlament_link_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
+            $column->SetDescription($this->RenderText('Link zur Biographie auf Parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -24085,6 +24258,13 @@
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24327,6 +24507,18 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlament_link_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
+            $column->SetDescription($this->RenderText('Link zur Biographie auf Parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -24528,6 +24720,13 @@
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24770,6 +24969,18 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parlament_link_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
+            $column->SetDescription($this->RenderText('Link zur Biographie auf Parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -24971,6 +25182,13 @@
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -25453,6 +25671,40 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for parlament_link field
+            //
+            $editor = new TextEdit('parlament_link_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Parlament Link', 'parlament_link', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for parlament_link field
+            //
+            $editor = new TextEdit('parlament_link_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Parlament Link', 'parlament_link', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlament_link_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -25561,6 +25813,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for parlament_link field
+            //
+            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlament_link_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
