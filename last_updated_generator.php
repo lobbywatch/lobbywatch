@@ -52,9 +52,10 @@ foreach ($tables as $table => $name) {
   "(SELECT
   '$table' table_name,
   '$name' name,
+  count(*) anzahl_eintraege,
   t.`updated_visa` AS visa,
   t.`updated_date` last_updated,
-  t.id
+  t.id last_updated_id
   FROM
   `$table` t
   ORDER BY t.`updated_date` DESC
@@ -65,9 +66,10 @@ foreach ($tables as $table => $name) {
   (SELECT
   '$table' table_name,
   '$name' name,
+  count(*) anzahl_eintraege,
   t.`updated_visa` AS visa,
   t.`updated_date` last_updated,
-  t.id
+  t.id last_updated_id
   FROM
   `$table` t
   ORDER BY t.`updated_date` DESC

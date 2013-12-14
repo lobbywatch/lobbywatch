@@ -50,13 +50,14 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('anzahl_eintraege');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
             $field = new StringField('visa');
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('last_updated');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
+            $field = new IntegerField('last_updated_id');
             $this->dataset->AddField($field, false);
         }
     
@@ -113,8 +114,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('v_last_updated_tablesssearch', $this->dataset,
-                array('name', 'table_name', 'visa', 'last_updated', 'id'),
-                array($this->RenderText('Name'), $this->RenderText('Table Name'), $this->RenderText('Visa'), $this->RenderText('Last Updated'), $this->RenderText('Id')),
+                array('name', 'table_name', 'anzahl_eintraege', 'visa', 'last_updated', 'last_updated_id'),
+                array($this->RenderText('Name'), $this->RenderText('Table Name'), $this->RenderText('Anzahl Eintraege'), $this->RenderText('Visa'), $this->RenderText('Last Updated'), $this->RenderText('Last Updated Id')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -136,9 +137,10 @@
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('table_name', $this->RenderText('Table Name')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_eintraege', $this->RenderText('Anzahl Eintraege')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('visa', $this->RenderText('Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('last_updated', $this->RenderText('Last Updated')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('last_updated_id', $this->RenderText('Last Updated Id')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -198,6 +200,39 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for anzahl_eintraege field
+            //
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for anzahl_eintraege field
+            //
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for anzahl_eintraege field
+            //
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for visa field
             //
             $column = new TextViewColumn('visa', 'Visa', $this->dataset);
@@ -217,31 +252,29 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for id field
+            // View column for last_updated_id field
             //
-            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column = new TextViewColumn('last_updated_id', 'Last Updated Id', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for id field
+            // Edit column for last_updated_id field
             //
-            $editor = new TextEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new TextEdit('last_updated_id_edit');
+            $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
             
             /* <inline insert column> */
             //
-            // Edit column for id field
+            // Edit column for last_updated_id field
             //
-            $editor = new TextEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editor = new TextEdit('last_updated_id_edit');
+            $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -261,9 +294,16 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for id field
+            // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for last_updated_id field
+            //
+            $column = new TextViewColumn('last_updated_id', 'Last Updated Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -284,12 +324,21 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for id field
+            // Edit column for anzahl_eintraege field
             //
-            $editor = new TextEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for last_updated_id field
+            //
+            $editor = new TextEdit('last_updated_id_edit');
+            $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
@@ -310,12 +359,21 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for id field
+            // Edit column for anzahl_eintraege field
             //
-            $editor = new TextEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for last_updated_id field
+            //
+            $editor = new TextEdit('last_updated_id_edit');
+            $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
@@ -348,6 +406,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for anzahl_eintraege field
+            //
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for visa field
             //
             $column = new TextViewColumn('visa', 'Visa', $this->dataset);
@@ -363,9 +428,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for id field
+            // View column for last_updated_id field
             //
-            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column = new TextViewColumn('last_updated_id', 'Last Updated Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -388,6 +453,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for anzahl_eintraege field
+            //
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for visa field
             //
             $column = new TextViewColumn('visa', 'Visa', $this->dataset);
@@ -403,9 +475,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for id field
+            // View column for last_updated_id field
             //
-            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column = new TextViewColumn('last_updated_id', 'Last Updated Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }

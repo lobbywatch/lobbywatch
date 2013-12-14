@@ -45,9 +45,10 @@
             FROM ((SELECT
               \'branche\' table_name,
               \'Branche\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `branche` t
               ORDER BY t.`updated_date` DESC
@@ -57,9 +58,10 @@
             (SELECT
               \'interessenbindung\' table_name,
               \'Interessenbindung\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `interessenbindung` t
               ORDER BY t.`updated_date` DESC
@@ -69,9 +71,10 @@
             (SELECT
               \'interessengruppe\' table_name,
               \'Interessengruppe\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `interessengruppe` t
               ORDER BY t.`updated_date` DESC
@@ -81,9 +84,10 @@
             (SELECT
               \'in_kommission\' table_name,
               \'In Kommission\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `in_kommission` t
               ORDER BY t.`updated_date` DESC
@@ -93,9 +97,10 @@
             (SELECT
               \'kommission\' table_name,
               \'Kommission\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `kommission` t
               ORDER BY t.`updated_date` DESC
@@ -105,9 +110,10 @@
             (SELECT
               \'mandat\' table_name,
               \'Mandat\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `mandat` t
               ORDER BY t.`updated_date` DESC
@@ -117,9 +123,10 @@
             (SELECT
               \'organisation\' table_name,
               \'Organisation\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `organisation` t
               ORDER BY t.`updated_date` DESC
@@ -129,9 +136,10 @@
             (SELECT
               \'organisation_beziehung\' table_name,
               \'Organisation Beziehung\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `organisation_beziehung` t
               ORDER BY t.`updated_date` DESC
@@ -141,9 +149,10 @@
             (SELECT
               \'parlamentarier\' table_name,
               \'Parlamentarier\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `parlamentarier` t
               ORDER BY t.`updated_date` DESC
@@ -153,9 +162,10 @@
             (SELECT
               \'parlamentarier_anhang\' table_name,
               \'Parlamentarieranhang\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `parlamentarier_anhang` t
               ORDER BY t.`updated_date` DESC
@@ -165,9 +175,10 @@
             (SELECT
               \'partei\' table_name,
               \'Partei\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `partei` t
               ORDER BY t.`updated_date` DESC
@@ -177,9 +188,10 @@
             (SELECT
               \'zugangsberechtigung\' table_name,
               \'Zugangsberechtigung\' name,
+              count(*) anzahl_eintraege,
               t.`updated_visa` AS visa,
               t.`updated_date` last_updated,
-              t.id
+              t.id last_updated_id
               FROM
               `zugangsberechtigung` t
               ORDER BY t.`updated_date` DESC
@@ -198,11 +210,13 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('name');
             $this->dataset->AddField($field, false);
+            $field = new StringField('anzahl_eintraege');
+            $this->dataset->AddField($field, false);
             $field = new StringField('visa');
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('last_updated');
             $this->dataset->AddField($field, true);
-            $field = new IntegerField('id');
+            $field = new IntegerField('last_updated_id');
             $this->dataset->AddField($field, false);
         }
     
@@ -259,8 +273,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('q_last_updated_tablesssearch', $this->dataset,
-                array('name', 'table_name', 'visa', 'last_updated', 'id'),
-                array($this->RenderText('Name'), $this->RenderText('Table Name'), $this->RenderText('Visa'), $this->RenderText('Last Updated'), $this->RenderText('Id')),
+                array('name', 'table_name', 'visa', 'last_updated', 'anzahl_eintraege', 'last_updated_id'),
+                array($this->RenderText('Name'), $this->RenderText('Table Name'), $this->RenderText('Visa'), $this->RenderText('Last Updated'), $this->RenderText('Anzahl Eintraege'), $this->RenderText('Last Updated Id')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -284,7 +298,8 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('table_name', $this->RenderText('Table Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('visa', $this->RenderText('Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('last_updated', $this->RenderText('Last Updated')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_eintraege', $this->RenderText('Anzahl Eintraege')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('last_updated_id', $this->RenderText('Last Updated Id')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -429,17 +444,17 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for id field
+            // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for id field
+            // Edit column for anzahl_eintraege field
             //
-            $editor = new SpinEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -448,10 +463,43 @@
             
             /* <inline insert column> */
             //
-            // Edit column for id field
+            // Edit column for anzahl_eintraege field
             //
-            $editor = new SpinEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for last_updated_id field
+            //
+            $column = new TextViewColumn('last_updated_id', 'Last Updated Id', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for last_updated_id field
+            //
+            $editor = new SpinEdit('last_updated_id_edit');
+            $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for last_updated_id field
+            //
+            $editor = new SpinEdit('last_updated_id_edit');
+            $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -495,9 +543,16 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for id field
+            // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for last_updated_id field
+            //
+            $column = new TextViewColumn('last_updated_id', 'Last Updated Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -545,10 +600,20 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for id field
+            // Edit column for anzahl_eintraege field
             //
-            $editor = new SpinEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for last_updated_id field
+            //
+            $editor = new SpinEdit('last_updated_id_edit');
+            $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -598,10 +663,20 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for id field
+            // Edit column for anzahl_eintraege field
             //
-            $editor = new SpinEdit('id_edit');
-            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for last_updated_id field
+            //
+            $editor = new SpinEdit('last_updated_id_edit');
+            $editColumn = new CustomEditColumn('Last Updated Id', 'last_updated_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -651,9 +726,16 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for id field
+            // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for last_updated_id field
+            //
+            $column = new TextViewColumn('last_updated_id', 'Last Updated Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -691,9 +773,16 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for id field
+            // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for last_updated_id field
+            //
+            $column = new TextViewColumn('last_updated_id', 'Last Updated Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
