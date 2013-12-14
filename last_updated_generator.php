@@ -53,7 +53,8 @@ foreach ($tables as $table => $name) {
   '$table' table_name,
   '$name' name,
   t.`updated_visa` AS visa,
-  t.`updated_date` last_updated
+  t.`updated_date` last_updated,
+  t.id
   FROM
   `$table` t
   ORDER BY t.`updated_date` DESC
@@ -65,7 +66,8 @@ foreach ($tables as $table => $name) {
   '$table' table_name,
   '$name' name,
   t.`updated_visa` AS visa,
-  t.`updated_date` last_updated
+  t.`updated_date` last_updated,
+  t.id
   FROM
   `$table` t
   ORDER BY t.`updated_date` DESC

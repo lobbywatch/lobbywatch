@@ -46,7 +46,8 @@
               \'branche\' table_name,
               \'Branche\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `branche` t
               ORDER BY t.`updated_date` DESC
@@ -57,7 +58,8 @@
               \'interessenbindung\' table_name,
               \'Interessenbindung\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `interessenbindung` t
               ORDER BY t.`updated_date` DESC
@@ -68,7 +70,8 @@
               \'interessengruppe\' table_name,
               \'Interessengruppe\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `interessengruppe` t
               ORDER BY t.`updated_date` DESC
@@ -79,7 +82,8 @@
               \'in_kommission\' table_name,
               \'In Kommission\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `in_kommission` t
               ORDER BY t.`updated_date` DESC
@@ -90,7 +94,8 @@
               \'kommission\' table_name,
               \'Kommission\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `kommission` t
               ORDER BY t.`updated_date` DESC
@@ -101,7 +106,8 @@
               \'mandat\' table_name,
               \'Mandat\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `mandat` t
               ORDER BY t.`updated_date` DESC
@@ -112,7 +118,8 @@
               \'organisation\' table_name,
               \'Organisation\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `organisation` t
               ORDER BY t.`updated_date` DESC
@@ -123,7 +130,8 @@
               \'organisation_beziehung\' table_name,
               \'Organisation Beziehung\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `organisation_beziehung` t
               ORDER BY t.`updated_date` DESC
@@ -134,7 +142,8 @@
               \'parlamentarier\' table_name,
               \'Parlamentarier\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `parlamentarier` t
               ORDER BY t.`updated_date` DESC
@@ -145,7 +154,8 @@
               \'parlamentarier_anhang\' table_name,
               \'Parlamentarieranhang\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `parlamentarier_anhang` t
               ORDER BY t.`updated_date` DESC
@@ -156,7 +166,8 @@
               \'partei\' table_name,
               \'Partei\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `partei` t
               ORDER BY t.`updated_date` DESC
@@ -167,7 +178,8 @@
               \'zugangsberechtigung\' table_name,
               \'Zugangsberechtigung\' name,
               t.`updated_visa` AS visa,
-              t.`updated_date` last_updated
+              t.`updated_date` last_updated,
+              t.id
               FROM
               `zugangsberechtigung` t
               ORDER BY t.`updated_date` DESC
@@ -190,6 +202,8 @@
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('last_updated');
             $this->dataset->AddField($field, true);
+            $field = new IntegerField('id');
+            $this->dataset->AddField($field, false);
         }
     
         protected function CreatePageNavigator()
@@ -245,8 +259,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('q_last_updated_tablesssearch', $this->dataset,
-                array('name', 'table_name', 'visa', 'last_updated'),
-                array($this->RenderText('Name'), $this->RenderText('Table Name'), $this->RenderText('Visa'), $this->RenderText('Last Updated')),
+                array('name', 'table_name', 'visa', 'last_updated', 'id'),
+                array($this->RenderText('Name'), $this->RenderText('Table Name'), $this->RenderText('Visa'), $this->RenderText('Last Updated'), $this->RenderText('Id')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -270,6 +284,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('table_name', $this->RenderText('Table Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('visa', $this->RenderText('Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('last_updated', $this->RenderText('Last Updated')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -412,6 +427,39 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for id field
+            //
+            $editor = new SpinEdit('id_edit');
+            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for id field
+            //
+            $editor = new SpinEdit('id_edit');
+            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -443,6 +491,13 @@
             //
             $column = new DateTimeViewColumn('last_updated', 'Last Updated', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -484,6 +539,16 @@
             //
             $editor = new DateTimeEdit('last_updated_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Last Updated', 'last_updated', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for id field
+            //
+            $editor = new SpinEdit('id_edit');
+            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -531,6 +596,16 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for id field
+            //
+            $editor = new SpinEdit('id_edit');
+            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
                 $grid->SetShowAddButton(false);
@@ -574,6 +649,13 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -605,6 +687,13 @@
             //
             $column = new DateTimeViewColumn('last_updated', 'Last Updated', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
