@@ -19325,6 +19325,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('email');
             $this->dataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $this->dataset->AddField($field, false);
             $field = new StringField('homepage');
             $this->dataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
@@ -25599,7 +25601,17 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return 'Parlamentarier(externer Link) des Parlamentes.
+    HinweisHinweis
+    Ohne Zuordnung einer Partei, gilt ein Parlamentarier als parteilos.
+    Edit Plugin:remarksbox
+    
+    
+    Partei erfassen, deshalb nicht vergessen.
+    HinweisTip
+    Der Sitzplatz eines Parlamentariers kann auf Parlament.ch(externer Link) abgerufen werden.
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

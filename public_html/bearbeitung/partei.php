@@ -92,6 +92,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('email');
             $this->dataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $this->dataset->AddField($field, false);
             $field = new StringField('homepage');
             $this->dataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
@@ -1506,6 +1508,8 @@
             $field = new IntegerField('sitzplatz');
             $this->dataset->AddField($field, false);
             $field = new StringField('email');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('parlament_link');
             $this->dataset->AddField($field, false);
             $field = new StringField('homepage');
             $this->dataset->AddField($field, false);

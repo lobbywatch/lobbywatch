@@ -318,6 +318,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -371,6 +373,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -960,6 +964,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -1268,6 +1274,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -1321,6 +1329,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1857,6 +1867,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -2097,6 +2109,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2647,6 +2661,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -2699,6 +2715,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -3328,6 +3346,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -3477,6 +3497,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -3529,6 +3551,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4020,6 +4044,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -4182,6 +4208,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4764,6 +4792,8 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('parlament_link');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -6556,16 +6586,16 @@
     
         protected function DoGetGridHeader()
         {
-            return '<a href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/Seiten/default.aspx" target="_blank">Kommissionen</a> und <a href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/DELEGATIONEN/Seiten/default.aspx" target="_blank">Delegationen</a>.<br>
-    Delegationen im engeren Sinne (Bsp GPDel - Geschäftsprüfungsdelegation) sind Subkommissionen [Implizit].<br>
-    Delegationen im weiteren Sinne (Bsp ER - Parlamentarische Versammlung des Europarates) sind Spezialkommissionen [Typ=Spezialkommission].<br>
+            return '<div class="wiki-table-help">
+    <p><a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/Seiten/default.aspx" rel="_blank external nofollow">Kommissionen</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14"> und <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/DELEGATIONEN/Seiten/default.aspx" rel="_blank external nofollow">Delegationen</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14"> des Parlamentes.
+    </p>
     
-    <div class="clearfix rbox warning"><div class="rbox-title"><img src="img/icons/exclamation.png" alt="Warnung" title="Warnung" class="icon" height="16" width="16"><span>Warnung</span></div><div class="rbox-data">In einem Feld soll nur noch eine Art Information enthalten sein, nämlich die vorgesehne.</div></div>
-    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" height="16" width="16"><span>Hinweis</span></div><div class="rbox-data">Notizen sollten zur Nachvollziehbarkeit mit Datum und Namen versehen werden.</div></div>
-    Beispielsweise:
-    23.11.2013/Roland: Ist Kommission richtig gesetzt?
-    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" height="16" width="16"><span>Hinweis</span></div><div class="rbox-data">Notizen werden nicht angenommen und gespeichert, wenn der Knopt "Set to null" aktiviert ist.</div></div>
-    Mehr, siehe <a href="http://lobbycontrol.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbycontrol-Wiki" target="_blank">Wiki Datenbearbeitung</a>.';
+    <p>Bearbeitungshinweise:
+    </p>
+    <ul><li> Delegationen im engeren Sinne (Bsp GPDel - Geschäftsprüfungsdelegation) sind Subkommissionen [Implizit]. Eine Mitglied zu einer Delegation muss bei "In Kommission.Funktion" als "delegation" eingetragen werden.
+    </li><li> Delegationen im weiteren Sinne (Bsp ER - Parlamentarische Versammlung des Europarates) sind Spezialkommissionen [Typ=Spezialkommission].
+    </li></ul></div>
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

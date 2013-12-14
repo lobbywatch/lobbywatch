@@ -775,7 +775,7 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return 'Zeigt die letzten Änderungen der Tabellen an.';
         }
     }
 

@@ -2065,6 +2065,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -2377,6 +2379,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -2430,6 +2434,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2910,6 +2916,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -3150,6 +3158,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerung_delegation');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_link');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -3751,7 +3761,14 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '<div class="wiki-table-help">
+    <p>Diese Tabelle ordnet einem <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx" rel="_blank external nofollow">Parlamentarier</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14"> sein parlamentarischen <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/Seiten/default.aspx" rel="_blank external nofollow">Kommissions</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14">- und <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/DELEGATIONEN/Seiten/default.aspx" rel="_blank external nofollow">Delegations</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14">mitgliedschaften zu.
+    </p>
+    
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Delegationsmitgliedschaften für <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/Seiten/default.aspx" rel="_blank external nofollow">Delegationen im engeren Sinne</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" width="15" height="14"> werden mit <em>Funktion</em> "delegation" eingegeben werden.</div></div>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

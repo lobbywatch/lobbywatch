@@ -40,6 +40,8 @@ do
   | perl -p -e's/\$public_files_dir/'\'' \. \$GLOBALS["public_files_dir"] \. '\''/g' \
   | perl -p -e's/\$private_files_dir/'\'' \. \$GLOBALS["private_files_dir"] \. '\''/g' \
   | perl -p -e's/\$build_date:\$/'\'' \. \$GLOBALS["build_date"] \. '\''/g' \
+  | perl -p -e's/\$edit_general_hint/'\'' \. \$GLOBALS["edit_general_hint"] \. '\''/g' \
+  | perl -p -e's/<a id="plugin-edit-remarksbox.*?<\/a>//g' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
 done

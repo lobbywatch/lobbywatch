@@ -2,6 +2,8 @@
 
 require_once dirname(__FILE__) . "/../common/utils.php";
 
+$edit_general_hint = "<p>Generelle Bearbeitungshinweise siehe <a href=\"http://lobbycontrol.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbycontrol-Wiki\" target=\"_blank\">Wiki Datenbearbeitung</a>.</p>";
+
 function setupRSS($page, $dataset) {
   $title = ucwords ( $page->GetCaption () );
   $table = str_replace ( '`', '', $dataset->GetName () );
@@ -70,8 +72,13 @@ function setupRSS($page, $dataset) {
 
   return $generator;
 }
+
 function convert_utf8($text) {
-  return ConvertTextToEncoding ( $text, GetAnsiEncoding (), 'UTF-8' );
+  return ConvertTextToEncoding($text, GetAnsiEncoding(), 'UTF-8' );
+}
+
+function convert_ansi($text) {
+  return ConvertTextToEncoding($text, 'UTF-8', GetAnsiEncoding());
 }
 
 function before_render(Page $page) {
@@ -101,7 +108,7 @@ EOD;
 
 function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$message, $tableName)
 {
-  df($rowData);
+  // df($rowData);
   $file = $rowData['photo'];
 
   // A photo filename ending with / means there was no photo

@@ -24321,7 +24321,23 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return 'Organisationen, die Lobbying im Parlament betreiben.
+    WarnungWarnung
+    Der Name sollte nur den Namen enthalten. Andere Informationen wie Orte sollen in den dafür vorgesehenen Feldern erfasst werden.
+    Edit Plugin:remarksbox
+    
+    
+    Grund: Wenn mehrere Daten in einem Feld abgelegt sind können diese Felder nicht mehr automatisch ausgewertet werden.
+    HinweisHinweis
+    Durch die Interessengruppe wird eine Organisation einer Branche zugeordnet.
+    Edit Plugin:remarksbox
+    
+    
+    Das Erfassen der Interessengruppe bei einer Organisation ist deshalb wichtig.
+    HinweisHinweis
+    Durch die Rechtsform einer Organisation wird bei einer Interessenbindung bestimmt, ob ein Vorstand ein Stiftungsrat oder ein Verwaltungsrat ist.
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 
