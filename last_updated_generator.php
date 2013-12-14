@@ -14,18 +14,18 @@
  ORDER BY
  TABLES.`TABLE_NAME` ASC
  */
-$tables = array('branche',
-'interessenbindung',
-'interessengruppe',
-'in_kommission',
-'kommission',
-'mandat',
-'organisation',
-'organisation_beziehung',
-'parlamentarier',
-'parlamentarier_anhang',
-'partei',
-'zugangsberechtigung',);
+$tables = array('branche' => 'Branche',
+'interessenbindung' => 'Interessenbindung',
+'interessengruppe' => 'Interessengruppe',
+'in_kommission' => 'In Kommission',
+'kommission' => 'Kommission',
+'mandat' => 'Mandat',
+'organisation' => 'Organisation',
+'organisation_beziehung' => 'Organisation Beziehung',
+'parlamentarier' => 'Parlamentarier',
+'parlamentarier_anhang' => 'Parlamentarieranhang',
+'partei' => 'Partei',
+'zugangsberechtigung' => 'Zugangsberechtigung');
 
 
 // $table_query = "(SELECT
@@ -38,7 +38,7 @@ $tables = array('branche',
 $table_queries = array();
 $table_views = array();
 $view_queries = array();
-foreach ($tables as $table) {
+foreach ($tables as $table => $name) {
   //$table_queries2[] = preg_replace('\$table', $table, $table_query);
 //   $table_queries[] = "(SELECT
 //   '$table' table_name,
@@ -51,6 +51,7 @@ foreach ($tables as $table) {
   $table_queries[] =
   "(SELECT
   '$table' table_name,
+  '$name' name,
   t.`updated_visa` AS visa,
   t.`updated_date` last_updated
   FROM
@@ -62,6 +63,7 @@ foreach ($tables as $table) {
   "CREATE OR REPLACE VIEW `v_last_updated_$table` AS
   (SELECT
   '$table' table_name,
+  '$name' name,
   t.`updated_visa` AS visa,
   t.`updated_date` last_updated
   FROM
@@ -103,7 +105,7 @@ ORDER BY last_updated DESC;\n";
 // --LIMIT 1
 
 echo $master_query;
-echo "---- VIEWS ----\n";
-echo implode("\n", $table_views);
-echo $unordered_views;
-echo $master_view;
+echo "\n---- VIEWS ----\n\n";
+echo implode("\n", $table_views) . "\n";
+echo $unordered_views . "\n";
+echo $master_view . "\n";
