@@ -42,7 +42,8 @@
         {
             $selectQuery = 'SELECT * FROM (
             SELECT *
-            FROM ((SELECT
+            FROM (
+            (SELECT
               \'branche\' table_name,
               \'Branche\' name,
               (select count(*) from `branche`) anzahl_eintraege,
@@ -196,7 +197,8 @@
               `zugangsberechtigung` t
               ORDER BY t.`updated_date` DESC
               LIMIT 1
-              )) union_query
+              )
+            ) union_query
             ) complete
             ORDER BY complete.last_updated DESC';
             $insertQuery = array();

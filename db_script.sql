@@ -299,7 +299,8 @@ UPDATE `parlamentarier` SET `nachname`=TRIM(`nachname`),`vorname`=TRIM(`vorname`
 -- Last updated tables
 SELECT * FROM (
 SELECT *
-FROM ((SELECT
+FROM (
+(SELECT
   'branche' table_name,
   'Branche' name,
   (select count(*) from `branche`) anzahl_eintraege,
@@ -453,7 +454,8 @@ UNION
   `zugangsberechtigung` t
   ORDER BY t.`updated_date` DESC
   LIMIT 1
-  )) union_query
+  )
+) union_query
 ) complete
 ORDER BY complete.last_updated DESC;
 

@@ -76,6 +76,11 @@ foreach ($tables as $table => $name) {
   LIMIT 1
   );";
   $view_queries[] = "SELECT * FROM v_last_updated_$table";
+
+  // Ref: http://stackoverflow.com/questions/1895110/row-number-in-mysql
+  //  @rownum := @rownum + 1 AS rank
+//   (SELECT @rownum := 0) r
+
   //   "(SELECT
 //   '$table' table_name,
 //   t.`updated_visa` AS visa,
@@ -90,7 +95,7 @@ foreach ($tables as $table => $name) {
 
 $master_query = "SELECT * FROM (
 SELECT *
-FROM (" . implode("\nUNION\n", $table_queries) . ") union_query
+FROM (\n" . implode("\nUNION\n", $table_queries) . "\n) union_query
 ) complete
 ORDER BY complete.last_updated DESC;\n";
 
