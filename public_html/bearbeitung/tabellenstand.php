@@ -46,7 +46,7 @@
               \'branche\' table_name,
               \'Branche\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -59,7 +59,7 @@
               \'interessenbindung\' table_name,
               \'Interessenbindung\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -72,7 +72,7 @@
               \'interessengruppe\' table_name,
               \'Interessengruppe\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -85,7 +85,7 @@
               \'in_kommission\' table_name,
               \'In Kommission\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -98,7 +98,7 @@
               \'kommission\' table_name,
               \'Kommission\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -111,7 +111,7 @@
               \'mandat\' table_name,
               \'Mandat\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -124,7 +124,7 @@
               \'organisation\' table_name,
               \'Organisation\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -137,7 +137,7 @@
               \'organisation_beziehung\' table_name,
               \'Organisation Beziehung\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -150,7 +150,7 @@
               \'parlamentarier\' table_name,
               \'Parlamentarier\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -163,7 +163,7 @@
               \'parlamentarier_anhang\' table_name,
               \'Parlamentarieranhang\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -176,7 +176,7 @@
               \'partei\' table_name,
               \'Partei\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -189,7 +189,7 @@
               \'zugangsberechtigung\' table_name,
               \'Zugangsberechtigung\' name,
               count(*) anzahl_eintraege,
-              t.`updated_visa` AS visa,
+              t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
@@ -212,8 +212,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('anzahl_eintraege');
             $this->dataset->AddField($field, false);
-            $field = new StringField('visa');
-            $this->dataset->AddField($field, true);
+            $field = new StringField('last_visa');
+            $this->dataset->AddField($field, false);
             $field = new DateTimeField('last_updated');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('last_updated_id');
@@ -273,8 +273,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('q_last_updated_tablesssearch', $this->dataset,
-                array('name', 'table_name', 'visa', 'last_updated', 'anzahl_eintraege', 'last_updated_id'),
-                array($this->RenderText('Name'), $this->RenderText('Table Name'), $this->RenderText('Visa'), $this->RenderText('Last Updated'), $this->RenderText('Anzahl Eintraege'), $this->RenderText('Last Updated Id')),
+                array('name', 'table_name', 'anzahl_eintraege', 'last_updated', 'last_visa', 'last_updated_id'),
+                array($this->RenderText('Name'), $this->RenderText('Table Name'), $this->RenderText('Anzahl Eintraege'), $this->RenderText('Last Updated'), $this->RenderText('Last Visa'), $this->RenderText('Last Updated Id')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -296,9 +296,9 @@
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('table_name', $this->RenderText('Table Name')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('visa', $this->RenderText('Visa')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('last_updated', $this->RenderText('Last Updated')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_eintraege', $this->RenderText('Anzahl Eintraege')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('last_updated', $this->RenderText('Last Updated')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('last_visa', $this->RenderText('Last Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('last_updated_id', $this->RenderText('Last Updated Id')));
         }
     
@@ -377,17 +377,17 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for visa field
+            // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('visa', 'Visa', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for visa field
+            // Edit column for anzahl_eintraege field
             //
-            $editor = new TextEdit('visa_edit');
-            $editColumn = new CustomEditColumn('Visa', 'visa', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -396,10 +396,10 @@
             
             /* <inline insert column> */
             //
-            // Edit column for visa field
+            // Edit column for anzahl_eintraege field
             //
-            $editor = new TextEdit('visa_edit');
-            $editColumn = new CustomEditColumn('Visa', 'visa', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -444,17 +444,17 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzahl_eintraege field
+            // View column for last_visa field
             //
-            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column = new TextViewColumn('last_visa', 'Last Visa', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for anzahl_eintraege field
+            // Edit column for last_visa field
             //
-            $editor = new TextEdit('anzahl_eintraege_edit');
-            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $editor = new TextEdit('last_visa_edit');
+            $editColumn = new CustomEditColumn('Last Visa', 'last_visa', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -463,10 +463,10 @@
             
             /* <inline insert column> */
             //
-            // Edit column for anzahl_eintraege field
+            // Edit column for last_visa field
             //
-            $editor = new TextEdit('anzahl_eintraege_edit');
-            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $editor = new TextEdit('last_visa_edit');
+            $editColumn = new CustomEditColumn('Last Visa', 'last_visa', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -528,9 +528,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for visa field
+            // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('visa', 'Visa', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -543,9 +543,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for anzahl_eintraege field
+            // View column for last_visa field
             //
-            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column = new TextViewColumn('last_visa', 'Last Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -580,10 +580,10 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for visa field
+            // Edit column for anzahl_eintraege field
             //
-            $editor = new TextEdit('visa_edit');
-            $editColumn = new CustomEditColumn('Visa', 'visa', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -600,10 +600,10 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for anzahl_eintraege field
+            // Edit column for last_visa field
             //
-            $editor = new TextEdit('anzahl_eintraege_edit');
-            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $editor = new TextEdit('last_visa_edit');
+            $editColumn = new CustomEditColumn('Last Visa', 'last_visa', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -643,10 +643,10 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for visa field
+            // Edit column for anzahl_eintraege field
             //
-            $editor = new TextEdit('visa_edit');
-            $editColumn = new CustomEditColumn('Visa', 'visa', $editor, $this->dataset);
+            $editor = new TextEdit('anzahl_eintraege_edit');
+            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -663,10 +663,10 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for anzahl_eintraege field
+            // Edit column for last_visa field
             //
-            $editor = new TextEdit('anzahl_eintraege_edit');
-            $editColumn = new CustomEditColumn('Anzahl Eintraege', 'anzahl_eintraege', $editor, $this->dataset);
+            $editor = new TextEdit('last_visa_edit');
+            $editColumn = new CustomEditColumn('Last Visa', 'last_visa', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -711,9 +711,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for visa field
+            // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('visa', 'Visa', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -726,9 +726,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for anzahl_eintraege field
+            // View column for last_visa field
             //
-            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column = new TextViewColumn('last_visa', 'Last Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -758,9 +758,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for visa field
+            // View column for anzahl_eintraege field
             //
-            $column = new TextViewColumn('visa', 'Visa', $this->dataset);
+            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -773,9 +773,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for anzahl_eintraege field
+            // View column for last_visa field
             //
-            $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $column = new TextViewColumn('last_visa', 'Last Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
