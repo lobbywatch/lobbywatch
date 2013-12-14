@@ -25317,6 +25317,7 @@
         }
         function parlamentarierGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
+            parlamentarier_remove_old_photo($page, $rowData, $cancel, $message, $tableName);
             parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);
         }
         function parlamentarierGrid_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)

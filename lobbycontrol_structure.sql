@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 14. Dez 2013 um 12:00
+-- Erstellungszeit: 14. Dez 2013 um 21:10
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -340,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 14. Dez 2013 um 08:59
+-- Erzeugt am: 14. Dez 2013 um 20:07
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -357,7 +357,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `beruf` varchar(150) NOT NULL COMMENT 'Beruf des Parlamentariers',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
   `geburtstag` date DEFAULT NULL COMMENT 'Geburtstag des Parlamentariers',
-  `photo` varchar(100) DEFAULT NULL COMMENT 'Photo des Parlamentariers (JPEG/jpg)',
+  `photo` varchar(255) DEFAULT NULL COMMENT 'Photo des Parlamentariers (JPEG/jpg)',
   `photo_dateiname` varchar(255) DEFAULT NULL COMMENT 'Photodateiname ohne Erweiterung',
   `photo_dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Erweiterung der Photodatei',
   `photo_dateiname_voll` varchar(255) DEFAULT NULL COMMENT 'Photodateiname mit Erweiterung',
@@ -1104,7 +1104,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`beruf` varchar(150)
 ,`beruf_interessengruppe_id` int(11)
 ,`Geburtstag` date
-,`photo` varchar(100)
+,`photo` varchar(255)
 ,`photo_dateiname` varchar(255)
 ,`photo_dateierweiterung` varchar(15)
 ,`photo_dateiname_voll` varchar(255)

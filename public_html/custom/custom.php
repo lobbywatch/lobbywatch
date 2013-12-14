@@ -139,3 +139,31 @@ function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$mess
     $rowData['kleinbild'] = null;
   }
 }
+
+function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, $tableName)
+{
+//   df($rowData);
+//   df($tableName);
+  $file = $rowData['photo'];
+  $id = $rowData['id'];
+
+  // prevent SQL injection
+  if (!is_numeric($id)) {
+    return false;
+  }
+
+  $values = array();
+  $page->GetConnection()->ExecQueryToArray("SELECT `id`, `photo` FROM $tableName WHERE `id`=$id", $values);
+//   df("SELECT `photo` FROM $tableName WHERE id=$id");
+//   df($values);
+  if (count($values) > 0 ) {
+    $old_file = $values[0]['photo'];
+  } else {
+    return false;
+  }
+  // A photo filename ending with / means there was no photo
+  if ($old_file !== null && $old_file !== $file) {
+    $result = FileUtils::RemoveFile($old_file);
+    $message = "Deleted old photo $old_file";
+  }
+}
