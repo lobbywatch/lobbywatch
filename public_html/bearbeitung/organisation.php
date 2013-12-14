@@ -68,7 +68,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -1023,7 +1022,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -9721,7 +9719,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -10613,7 +10610,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -12674,7 +12670,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -13662,7 +13657,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -15946,7 +15940,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -16825,7 +16818,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -24321,21 +24313,22 @@
     
         protected function DoGetGridHeader()
         {
-            return 'Organisationen, die Lobbying im Parlament betreiben.
-    WarnungWarnung
-    Der Name sollte nur den Namen enthalten. Andere Informationen wie Orte sollen in den dafür vorgesehenen Feldern erfasst werden.
-    Edit Plugin:remarksbox
+            return '<div class="wiki-table-help">
+    <p>Organisationen, die Lobbying im Parlament betreiben.
+    </p>
     
+    <div class="clearfix rbox warning"><div class="rbox-title"><img src="img/icons/exclamation.png" alt="Warnung" title="Warnung" class="icon" width="16" height="16"><span>Warnung</span></div><div class="rbox-data">Der Name sollte nur den Namen enthalten. Andere Informationen wie Orte sollen in den dafür vorgesehenen Feldern erfasst werden.</div></div>
+    <p>
+    <br>Grund: Wenn mehrere Daten in einem Feld abgelegt sind können diese Felder nicht mehr automatisch ausgewertet werden.
+    </p>
     
-    Grund: Wenn mehrere Daten in einem Feld abgelegt sind können diese Felder nicht mehr automatisch ausgewertet werden.
-    HinweisHinweis
-    Durch die Interessengruppe wird eine Organisation einer Branche zugeordnet.
-    Edit Plugin:remarksbox
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Durch die Interessengruppe wird eine Organisation einer Branche zugeordnet.</div></div>
+    <p>
+    <br>Das Erfassen der Interessengruppe bei einer Organisation ist deshalb wichtig.
+    </p>
     
-    
-    Das Erfassen der Interessengruppe bei einer Organisation ist deshalb wichtig.
-    HinweisHinweis
-    Durch die Rechtsform einer Organisation wird bei einer Interessenbindung bestimmt, ob ein Vorstand ein Stiftungsrat oder ein Verwaltungsrat ist.
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Durch die Rechtsform einer Organisation wird bei einer Interessenbindung bestimmt, ob ein Vorstand ein Stiftungsrat oder ein Verwaltungsrat ist.</div></div>
+    </div>
     
     ' . $GLOBALS["edit_general_hint"] . '';
         }

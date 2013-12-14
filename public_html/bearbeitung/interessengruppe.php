@@ -13500,7 +13500,18 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '<div class="wiki-table-help">
+    <p>Liste der Interessengruppen. Innerhalb einer Branche gibt es normalerweise verschiedene Interessengruppen.
+    </p>
+    
+    <p>Beispiel: Das Gesundheitswesen hat die Interessengruppen Pharmaindustrie, Ärzte, Pflegeberufe, Patienten, Spitäler, Krankenkassen, …
+    </p>
+    
+    <p>Interessengruppen versuchen die Politik in ihrem Interesse zu beeinflussen.
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

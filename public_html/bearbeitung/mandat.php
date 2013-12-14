@@ -58,7 +58,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -2216,7 +2215,20 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '<div class="wiki-table-help">
+    <p>Zuordung von Mandaten zu Zutrittsberechtigen.
+    </p>
+    
+    <p>Diese Zuordnung ist analog zu den Interessenbindungen der Parlamentarier.
+    </p>
+    
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Das Feld Mandat.beschreibung ist nicht wichtig.</div></div>
+    <p>
+    <br>Das Feld Mandat.beschreibung ist redundant (=überflüssig), denn die Informationen sind an anderen Orten besser abgelegt. In Zukunft könnte es einmal gelöscht werden.
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

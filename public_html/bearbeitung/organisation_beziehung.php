@@ -2135,7 +2135,25 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '<div class="wiki-table-help">
+    <p>Beziehungen wie <em>"Mitglied von"</em> und <em>"arbeitet für"</em> zwischen Organisationen können erfasst werden.
+    </p>
+    
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Die richtige Angabe von Organisation und Zielorganisation ist wichtig. Eine Organisation bezieht sich auf eine Zielorganisation.</div></div>
+    <p>Beispiel: Novartis ist Mitglied von Interpharma.
+    </p>
+    <ul><li> Organisation = Novartis
+    </li><li> Beziehungsart = Mitglied von
+    </li><li> Zielorganisation = Interpharma
+    </li></ul><p>
+    <br>Beispiel: PR-Büro X arbeitet für Novartis.
+    </p>
+    <ul><li> Organisation = PR-Büro X
+    </li><li> Beziehungsart = arbeitet für
+    </li><li> Zielorganisation = Novartis
+    </li></ul></div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

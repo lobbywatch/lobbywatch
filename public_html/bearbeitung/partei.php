@@ -5827,7 +5827,12 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '<div class="wiki-table-help">
+    <p>Tabelle der Parteien
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

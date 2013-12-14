@@ -58,7 +58,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -917,7 +916,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -2909,7 +2907,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -3758,7 +3755,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -8802,7 +8798,12 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '<div class="wiki-table-help">
+    <p>Diese Tabelle ordnet einem <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx" rel="_blank external nofollow">Parlamentarier</a> die <a class="wiki external" target="_blank" href="http://www.parlament.ch/d/organe-mitglieder/nationalrat/Documents/zutrittsberechtigte-nr.pdf" rel="_blank external nofollow">zutrittsberechtigten Personen</a> zu.
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

@@ -1671,7 +1671,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -2541,7 +2540,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -13434,7 +13432,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -14277,7 +14274,6 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -19666,6 +19662,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -20692,6 +20689,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -22059,6 +22057,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22521,6 +22520,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22983,6 +22983,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23445,6 +23446,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23907,6 +23909,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -24369,6 +24372,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -24831,6 +24835,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -25593,6 +25598,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -25795,6 +25801,7 @@
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -25861,15 +25868,17 @@
     
         protected function DoGetGridHeader()
         {
-            return 'Parlamentarier(externer Link) des Parlamentes.
-    HinweisHinweis
-    Ohne Zuordnung einer Partei, gilt ein Parlamentarier als parteilos.
-    Edit Plugin:remarksbox
+            return '<div class="wiki-table-help">
+    <p><a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx" rel="_blank external nofollow">Parlamentarier</a> des Parlamentes.
+    </p>
     
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Ohne Zuordnung einer Partei, gilt ein Parlamentarier als parteilos.</div></div>
+    <p>
+    <br>Partei erfassen, deshalb nicht vergessen.
+    </p>
     
-    Partei erfassen, deshalb nicht vergessen.
-    HinweisTip
-    Der Sitzplatz eines Parlamentariers kann auf Parlament.ch(externer Link) abgerufen werden.
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Tip</span></div><div class="rbox-data">Der Sitzplatz eines Parlamentariers kann auf <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/NATIONALRAT/SITZORDNUNG/Seiten/default.aspx" rel="external nofollow">Parlament.ch Sitzordnung</a> und das Photo kann auf der Biographie des jeweiligen <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/NATIONALRAT/Seiten/default.aspx" rel="_blank external nofollow">Parlamentariers</a> abgerufen werden.</div></div>
+    </div>
     
     ' . $GLOBALS["edit_general_hint"] . '';
         }
