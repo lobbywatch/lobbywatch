@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 14. Dez 2013 um 10:53
+-- Erstellungszeit: 14. Dez 2013 um 12:00
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `branche` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 09. Dez 2013 um 14:32
+-- Erzeugt am: 14. Dez 2013 um 10:59
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
   `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
   `verguetung` int(11) DEFAULT NULL COMMENT 'Monatliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.',
-  `beschreibung` varchar(150) NOT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Bezeichnung wird zur Auswertung wahrscheinlich nicht gebraucht.',
+  `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Bezeichnung wird zur Auswertung wahrscheinlich nicht gebraucht.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
@@ -198,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `kommission` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 09. Dez 2013 um 14:33
+-- Erzeugt am: 14. Dez 2013 um 11:00
 --
 
 DROP TABLE IF EXISTS `mandat`;
@@ -208,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat') DEFAULT NULL COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
   `verguetung` int(11) DEFAULT NULL COMMENT 'Monatliche Vergütung CHF für Tätigkeiten aus dieses Mandates, z.B. Entschädigung für Beiratsfunktion.',
-  `beschreibung` varchar(150) NOT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird zur Auswertung wahrscheinlich nicht gebraucht.',
+  `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird zur Auswertung wahrscheinlich nicht gebraucht.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
