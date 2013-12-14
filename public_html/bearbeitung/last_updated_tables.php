@@ -51,13 +51,14 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new IntegerField('anzahl_eintraege');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('last_visa');
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('last_updated');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new IntegerField('last_updated_id');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
         }
     

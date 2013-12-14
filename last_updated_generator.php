@@ -52,7 +52,7 @@ foreach ($tables as $table => $name) {
   "(SELECT
   '$table' table_name,
   '$name' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `$table`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -66,7 +66,7 @@ foreach ($tables as $table => $name) {
   (SELECT
   '$table' table_name,
   '$name' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `$table`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -109,7 +109,7 @@ ORDER BY last_updated DESC;\n";
 // --LIMIT 1
 
 echo $master_query;
-echo "\n---- VIEWS ----\n\n";
+echo "\n-- Last updated views\n\n";
 echo implode("\n", $table_views) . "\n";
 echo $unordered_views . "\n";
 echo $master_view . "\n";

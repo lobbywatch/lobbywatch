@@ -302,7 +302,7 @@ SELECT *
 FROM ((SELECT
   'branche' table_name,
   'Branche' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `branche`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -315,7 +315,7 @@ UNION
 (SELECT
   'interessenbindung' table_name,
   'Interessenbindung' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `interessenbindung`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -328,7 +328,7 @@ UNION
 (SELECT
   'interessengruppe' table_name,
   'Interessengruppe' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `interessengruppe`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -341,7 +341,7 @@ UNION
 (SELECT
   'in_kommission' table_name,
   'In Kommission' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `in_kommission`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -354,7 +354,7 @@ UNION
 (SELECT
   'kommission' table_name,
   'Kommission' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `kommission`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -367,7 +367,7 @@ UNION
 (SELECT
   'mandat' table_name,
   'Mandat' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `mandat`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -380,7 +380,7 @@ UNION
 (SELECT
   'organisation' table_name,
   'Organisation' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `organisation`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -393,7 +393,7 @@ UNION
 (SELECT
   'organisation_beziehung' table_name,
   'Organisation Beziehung' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `organisation_beziehung`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -406,7 +406,7 @@ UNION
 (SELECT
   'parlamentarier' table_name,
   'Parlamentarier' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `parlamentarier`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -419,7 +419,7 @@ UNION
 (SELECT
   'parlamentarier_anhang' table_name,
   'Parlamentarieranhang' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `parlamentarier_anhang`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -432,7 +432,7 @@ UNION
 (SELECT
   'partei' table_name,
   'Partei' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `partei`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -445,7 +445,7 @@ UNION
 (SELECT
   'zugangsberechtigung' table_name,
   'Zugangsberechtigung' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `zugangsberechtigung`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -457,13 +457,13 @@ UNION
 ) complete
 ORDER BY complete.last_updated DESC;
 
--- Last updated VIEW
+-- Last updated views
 
 CREATE OR REPLACE VIEW `v_last_updated_branche` AS
   (SELECT
   'branche' table_name,
   'Branche' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `branche`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -476,7 +476,7 @@ CREATE OR REPLACE VIEW `v_last_updated_interessenbindung` AS
   (SELECT
   'interessenbindung' table_name,
   'Interessenbindung' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `interessenbindung`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -489,7 +489,7 @@ CREATE OR REPLACE VIEW `v_last_updated_interessengruppe` AS
   (SELECT
   'interessengruppe' table_name,
   'Interessengruppe' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `interessengruppe`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -502,7 +502,7 @@ CREATE OR REPLACE VIEW `v_last_updated_in_kommission` AS
   (SELECT
   'in_kommission' table_name,
   'In Kommission' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `in_kommission`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -515,7 +515,7 @@ CREATE OR REPLACE VIEW `v_last_updated_kommission` AS
   (SELECT
   'kommission' table_name,
   'Kommission' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `kommission`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -528,7 +528,7 @@ CREATE OR REPLACE VIEW `v_last_updated_mandat` AS
   (SELECT
   'mandat' table_name,
   'Mandat' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `mandat`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -541,7 +541,7 @@ CREATE OR REPLACE VIEW `v_last_updated_organisation` AS
   (SELECT
   'organisation' table_name,
   'Organisation' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `organisation`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -554,7 +554,7 @@ CREATE OR REPLACE VIEW `v_last_updated_organisation_beziehung` AS
   (SELECT
   'organisation_beziehung' table_name,
   'Organisation Beziehung' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `organisation_beziehung`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -567,7 +567,7 @@ CREATE OR REPLACE VIEW `v_last_updated_parlamentarier` AS
   (SELECT
   'parlamentarier' table_name,
   'Parlamentarier' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `parlamentarier`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -580,7 +580,7 @@ CREATE OR REPLACE VIEW `v_last_updated_parlamentarier_anhang` AS
   (SELECT
   'parlamentarier_anhang' table_name,
   'Parlamentarieranhang' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `parlamentarier_anhang`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -593,7 +593,7 @@ CREATE OR REPLACE VIEW `v_last_updated_partei` AS
   (SELECT
   'partei' table_name,
   'Partei' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `partei`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
@@ -606,7 +606,7 @@ CREATE OR REPLACE VIEW `v_last_updated_zugangsberechtigung` AS
   (SELECT
   'zugangsberechtigung' table_name,
   'Zugangsberechtigung' name,
-  count(*) anzahl_eintraege,
+  (select count(*) from `zugangsberechtigung`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
   t.id last_updated_id
