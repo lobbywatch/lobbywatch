@@ -34,25 +34,7 @@
 
 function parlamentarierGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
 {
-  $file = $rowData['photo'];
-  
-  $path_parts = pathinfo($file);
-  
-  $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-  
-  $rowData['photo_dateiname'] = $path_parts['filename'];
-  if (isset($path_parts['extension'])) {
-    $rowData['photo_dateierweiterung'] = $path_parts['extension'];
-  }
-  $rowData['photo_dateiname_voll'] = $path_parts['basename'];
-  $rowData['photo_mime_type'] = $finfo_mime->file($file);
-  
-  // Kleinbild
-  $file = $rowData['kleinbild'];
-  
-  $path_parts = pathinfo($file);
-  
-  $rowData['kleinbild'] = $path_parts['basename'];
+  parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);
 }
 function parlamentarierGrid_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
 {
@@ -65,24 +47,6 @@ function parlamentarierGrid_BeforeDeleteRecord($page, &$rowData, &$cancel, &$mes
 }
 function parlamentarierGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
 {
-  $file = $rowData['photo'];
-  
-  $path_parts = pathinfo($file);
-  
-  $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-  
-  $rowData['photo_dateiname'] = $path_parts['filename'];
-  if (isset($path_parts['extension'])) {
-    $rowData['photo_dateierweiterung'] = $path_parts['extension'];
-  }
-  $rowData['photo_dateiname_voll'] = $path_parts['basename'];
-  $rowData['photo_mime_type'] = $finfo_mime->file($file);
-  
-  // Kleinbild
-  $file = $rowData['kleinbild'];
-  
-  $path_parts = pathinfo($file);
-  
-  $rowData['kleinbild'] = $path_parts['basename'];
+  parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);
 }
 

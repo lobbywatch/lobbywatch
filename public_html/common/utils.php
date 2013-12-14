@@ -3,6 +3,19 @@
 include_once dirname(__FILE__) . '/build_date.php';
 include_once dirname(__FILE__) . '/deploy_date.php';
 
+//Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
+function startsWith($haystack, $needle)
+{
+  return $needle === "" || strpos($haystack, $needle) === 0;
+}
+//Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
+function endsWith($haystack, $needle)
+{
+  return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
+}
+
+// Logging
+
 function dt($msg) {
   global $debug;
   if ($debug !== true)

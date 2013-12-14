@@ -35,10 +35,11 @@ do
   | perl -p -e's/CanLoginAsGuest\(\)\s*\{\s*return true;\s*\}/CanLoginAsGuest\(\) \{ return false; \}/g' \
   | perl -p -e's/'\''guest'\''\s*=>\s*new\s+DataSourceSecurityInfo\(\s*true/'\''guest'\'' => new DataSourceSecurityInfo\(GetApplication\(\)->GetOperation\(\) === '\''rss'\''/g' \
   | perl -0 -p -e's/(?<=CreateRssGenerator\(\)).*?(?=\})/ \{\n            return setupRSS\(\$this, \$this->dataset\);\n        /s' \
-  | perl -p -e's/\$env_dir/'\'' \. \$env_dir \. '\''/g' \
-  | perl -p -e's/\$env(?!_dir)/'\'' \. \$env \. '\''/g' \
-  | perl -p -e's/\$public_files_dir/'\'' \. \$public_files_dir \. '\''/g' \
-  | perl -p -e's/\$private_files_dir/'\'' \. \$private_files_dir \. '\''/g' \
+  | perl -p -e's/\$env_dir/'\'' \. \$GLOBALS["env_dir"] \. '\''/g' \
+  | perl -p -e's/\$env(?!_dir)/'\'' \. \$GLOBALS["env"] \. '\''/g' \
+  | perl -p -e's/\$public_files_dir/'\'' \. \$GLOBALS["public_files_dir"] \. '\''/g' \
+  | perl -p -e's/\$private_files_dir/'\'' \. \$GLOBALS["private_files_dir"] \. '\''/g' \
+  | perl -p -e's/\$build_date:\$/'\'' \. \$GLOBALS["build_date"] \. '\''/g' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
 done
@@ -113,8 +114,6 @@ do
   | perl -p -e's/(\/\/\s*?)(?=error_reporting)//' \
   | perl -p -e's/(\/\/\s*?)(?=ini_set)//' \
   | perl -p -e's/Handler\(\$page, \$rowData/Handler\(\$page, &\$rowData/g' \
-  | perl -p -e's/\$build_date:\$/'\'' \. "\$build_date" \. '\''/g' \
-  | perl -0 -p -e's/(?<=GetPages(Footer|Header)\(\)).*?\{/\{\n    global \$build_date;\n    global \$env;\n    global \$env_dir;\n/gs' \
   > "$file";
 done
 

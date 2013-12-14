@@ -98,3 +98,37 @@ $result .= <<<EOD
 EOD;
 
 }
+
+function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$message, $tableName)
+{
+  df($rowData);
+  $file = $rowData['photo'];
+
+  // A photo filename ending with / means there was no photo
+  if ($file !== null && !endsWith($file, '/')) {
+    $path_parts = pathinfo($file);
+
+    $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
+
+    $rowData['photo_dateiname'] = $path_parts['filename'];
+    if (isset($path_parts['extension'])) {
+      $rowData['photo_dateierweiterung'] = $path_parts['extension'];
+    }
+    $rowData['photo_dateiname_voll'] = $path_parts['basename'];
+    $rowData['photo_mime_type'] = $finfo_mime->file($file);
+
+    // Kleinbild
+    $file = $rowData['kleinbild'];
+
+    $path_parts = pathinfo($file);
+
+    $rowData['kleinbild'] = $path_parts['basename'];
+  } else {
+    $rowData['photo'] = null;
+    $rowData['photo_dateiname'] = null;
+    $rowData['photo_dateierweiterung'] = null;
+    $rowData['photo_dateiname_voll'] = null;
+    $rowData['photo_mime_type'] = null;
+    $rowData['kleinbild'] = null;
+  }
+}

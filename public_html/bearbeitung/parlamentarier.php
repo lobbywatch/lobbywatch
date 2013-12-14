@@ -109,7 +109,7 @@
             //
             $editor = new ImageUploader('datei_edit');
             $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $private_files_dir . '' . $env_dir . 'parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '' . $GLOBALS["env_dir"] . 'parlamentarier_anhang/%parlamentarier_id%');
             $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -122,7 +122,7 @@
             //
             $editor = new ImageUploader('datei_edit');
             $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $private_files_dir . '' . $env_dir . 'parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '' . $GLOBALS["env_dir"] . 'parlamentarier_anhang/%parlamentarier_id%');
             $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -292,7 +292,7 @@
         
         public function datei_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $private_files_dir . '' . $env_dir . 'parlamentarier_anhang/%parlamentarier_id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '' . $GLOBALS["env_dir"] . 'parlamentarier_anhang/%parlamentarier_id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -578,19 +578,14 @@
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateiname');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateierweiterung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateiname_voll');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_mime_type');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kleinbild');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $lookupDataset->AddField($field, false);
@@ -690,7 +685,7 @@
             //
             $editor = new ImageUploader('datei_edit');
             $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $private_files_dir . '' . $env_dir . 'parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '' . $GLOBALS["env_dir"] . 'parlamentarier_anhang/%parlamentarier_id%');
             $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -703,7 +698,7 @@
             //
             $editor = new ImageUploader('datei_edit');
             $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $private_files_dir . '' . $env_dir . 'parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '' . $GLOBALS["env_dir"] . 'parlamentarier_anhang/%parlamentarier_id%');
             $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -972,7 +967,7 @@
             //
             $editor = new ImageUploader('datei_edit');
             $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $private_files_dir . '' . $env_dir . 'parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '' . $GLOBALS["env_dir"] . 'parlamentarier_anhang/%parlamentarier_id%');
             $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1139,19 +1134,14 @@
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateiname');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateierweiterung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateiname_voll');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_mime_type');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kleinbild');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $lookupDataset->AddField($field, false);
@@ -1193,7 +1183,7 @@
             //
             $editor = new ImageUploader('datei_edit');
             $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $private_files_dir . '' . $env_dir . 'parlamentarier_anhang/%parlamentarier_id%');
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '' . $GLOBALS["env_dir"] . 'parlamentarier_anhang/%parlamentarier_id%');
             $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_insert', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1408,7 +1398,7 @@
     
         public function datei_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $private_files_dir . '' . $env_dir . 'parlamentarier_anhang/%parlamentarier_id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '' . $GLOBALS["env_dir"] . 'parlamentarier_anhang/%parlamentarier_id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -1460,7 +1450,7 @@
         }
         public function datei_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $private_files_dir . '' . $env_dir . 'parlamentarier_anhang/%parlamentarier_id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '' . $GLOBALS["env_dir"] . 'parlamentarier_anhang/%parlamentarier_id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -1476,7 +1466,7 @@
         }
         public function datei_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $private_files_dir . '' . $env_dir . 'parlamentarier_anhang/%parlamentarier_id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '' . $GLOBALS["env_dir"] . 'parlamentarier_anhang/%parlamentarier_id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -17207,19 +17197,14 @@
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateiname');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateierweiterung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateiname_voll');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_mime_type');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kleinbild');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $lookupDataset->AddField($field, false);
@@ -18206,19 +18191,14 @@
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateiname');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateierweiterung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateiname_voll');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_mime_type');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kleinbild');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $lookupDataset->AddField($field, false);
@@ -18539,19 +18519,14 @@
             $field = new StringField('photo');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateiname');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateierweiterung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_dateiname_voll');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo_mime_type');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kleinbild');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $lookupDataset->AddField($field, false);
@@ -19337,19 +19312,14 @@
             $field = new StringField('photo');
             $this->dataset->AddField($field, false);
             $field = new StringField('photo_dateiname');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('photo_dateierweiterung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('photo_dateiname_voll');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('photo_mime_type');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('kleinbild');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new IntegerField('sitzplatz');
             $this->dataset->AddField($field, false);
@@ -20265,7 +20235,7 @@
             //
             $editor = new ImageUploader('photo_edit');
             $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $public_files_dir . '/parlamentarier_photos/%id%');
+            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir"] . '/parlamentarier_photos/%id%');
             $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_inline_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
@@ -20285,7 +20255,7 @@
             //
             $editor = new ImageUploader('photo_edit');
             $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $public_files_dir . '/parlamentarier_photos/%id%');
+            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir"] . '/parlamentarier_photos/%id%');
             $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_inline_insert', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
@@ -21101,7 +21071,7 @@
             //
             $editor = new ImageUploader('photo_edit');
             $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $public_files_dir . '/parlamentarier_photos/%id%');
+            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir"] . '/parlamentarier_photos/%id%');
             $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
@@ -21494,7 +21464,7 @@
             //
             $editor = new ImageUploader('photo_edit');
             $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $public_files_dir . '/parlamentarier_photos/%id%');
+            $editColumn = new UploadFileToFolderColumn('Photo', 'photo', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir"] . '/parlamentarier_photos/%id%');
             $editColumn->OnCustomFileName->AddListener('photo_GenerateFileName_insert', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
@@ -25096,7 +25066,7 @@
         
         public function photo_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $public_files_dir . '/parlamentarier_photos/%id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir"] . '/parlamentarier_photos/%id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -25122,25 +25092,7 @@
         }
         function parlamentarierGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            $file = $rowData['photo'];
-                
-                $path_parts = pathinfo($file);
-                
-                $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-                
-                $rowData['photo_dateiname'] = $path_parts['filename'];
-                if (isset($path_parts['extension'])) {
-                  $rowData['photo_dateierweiterung'] = $path_parts['extension'];
-                }
-                $rowData['photo_dateiname_voll'] = $path_parts['basename'];
-                $rowData['photo_mime_type'] = $finfo_mime->file($file);
-                
-                // Kleinbild
-                $file = $rowData['kleinbild'];
-                
-                $path_parts = pathinfo($file);
-            
-                $rowData['kleinbild'] = $path_parts['basename'];
+            parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);
         }
         function parlamentarierGrid_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
@@ -25153,25 +25105,7 @@
         }
         function parlamentarierGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            $file = $rowData['photo'];
-                
-                $path_parts = pathinfo($file);
-                
-                $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-                
-                $rowData['photo_dateiname'] = $path_parts['filename'];
-                if (isset($path_parts['extension'])) {
-                  $rowData['photo_dateierweiterung'] = $path_parts['extension'];
-                }
-                $rowData['photo_dateiname_voll'] = $path_parts['basename'];
-                $rowData['photo_mime_type'] = $finfo_mime->file($file);
-                
-                // Kleinbild
-                $file = $rowData['kleinbild'];
-                
-                $path_parts = pathinfo($file);
-            
-                $rowData['kleinbild'] = $path_parts['basename'];
+            parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);
         }
         public function photo_Thumbnail_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
@@ -25192,7 +25126,7 @@
         
         public function photo_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $public_files_dir . '/parlamentarier_photos/%id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir"] . '/parlamentarier_photos/%id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -25225,7 +25159,7 @@
         
         public function photo_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $public_files_dir . '/parlamentarier_photos/%id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir"] . '/parlamentarier_photos/%id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',

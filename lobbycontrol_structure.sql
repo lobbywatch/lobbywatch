@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 13. Dez 2013 um 23:12
+-- Erstellungszeit: 14. Dez 2013 um 07:44
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -339,7 +339,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 12. Dez 2013 um 20:32
+-- Erzeugt am: 14. Dez 2013 um 06:31
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -357,11 +357,11 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
   `geburtstag` date DEFAULT NULL COMMENT 'Geburtstag des Parlamentariers',
   `photo` varchar(100) DEFAULT NULL COMMENT 'Photo des Parlamentariers (JPEG/jpg)',
-  `photo_dateiname` varchar(255) NOT NULL COMMENT 'Photodateiname ohne Erweiterung',
-  `photo_dateierweiterung` varchar(15) NOT NULL COMMENT 'Erweiterung der Photodatei',
-  `photo_dateiname_voll` varchar(255) NOT NULL COMMENT 'Photodateiname mit Erweiterung',
-  `photo_mime_type` varchar(100) NOT NULL COMMENT 'MIME Type des Photos',
-  `kleinbild` varchar(80) NOT NULL DEFAULT 'leer.png' COMMENT 'Bild 44x62 px oder leer.png',
+  `photo_dateiname` varchar(255) DEFAULT NULL COMMENT 'Photodateiname ohne Erweiterung',
+  `photo_dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Erweiterung der Photodatei',
+  `photo_dateiname_voll` varchar(255) DEFAULT NULL COMMENT 'Photodateiname mit Erweiterung',
+  `photo_mime_type` varchar(100) DEFAULT NULL COMMENT 'MIME Type des Photos',
+  `kleinbild` varchar(80) DEFAULT 'leer.png' COMMENT 'Bild 44x62 px oder leer.png',
   `sitzplatz` int(11) DEFAULT NULL COMMENT 'Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch',
   `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Parlamentariers',
   `homepage` varchar(150) DEFAULT NULL COMMENT 'Homepage des Parlamentariers',
@@ -423,7 +423,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   KEY `parlamentarier_id` (`parlamentarier_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=53 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=56 ;
 
 --
 -- MIME TYPEN DER TABELLE `parlamentarier_anhang`:
@@ -703,8 +703,10 @@ CREATE TABLE IF NOT EXISTS `v_kommission` (
 DROP VIEW IF EXISTS `v_last_updated_branche`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_branche` (
 `table_name` varchar(7)
+,`name` varchar(7)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -714,8 +716,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_branche` (
 DROP VIEW IF EXISTS `v_last_updated_interessenbindung`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_interessenbindung` (
 `table_name` varchar(17)
+,`name` varchar(17)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -725,8 +729,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_interessenbindung` (
 DROP VIEW IF EXISTS `v_last_updated_interessengruppe`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_interessengruppe` (
 `table_name` varchar(16)
+,`name` varchar(16)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -736,8 +742,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_interessengruppe` (
 DROP VIEW IF EXISTS `v_last_updated_in_kommission`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_in_kommission` (
 `table_name` varchar(13)
+,`name` varchar(13)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -747,8 +755,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_in_kommission` (
 DROP VIEW IF EXISTS `v_last_updated_kommission`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_kommission` (
 `table_name` varchar(10)
+,`name` varchar(10)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -758,8 +768,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_kommission` (
 DROP VIEW IF EXISTS `v_last_updated_mandat`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_mandat` (
 `table_name` varchar(6)
+,`name` varchar(6)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -769,8 +781,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_mandat` (
 DROP VIEW IF EXISTS `v_last_updated_organisation`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_organisation` (
 `table_name` varchar(12)
+,`name` varchar(12)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -780,8 +794,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_organisation` (
 DROP VIEW IF EXISTS `v_last_updated_organisation_beziehung`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_organisation_beziehung` (
 `table_name` varchar(22)
+,`name` varchar(22)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -791,8 +807,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_organisation_beziehung` (
 DROP VIEW IF EXISTS `v_last_updated_parlamentarier`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_parlamentarier` (
 `table_name` varchar(14)
+,`name` varchar(14)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -802,8 +820,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_parlamentarier` (
 DROP VIEW IF EXISTS `v_last_updated_parlamentarier_anhang`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_parlamentarier_anhang` (
 `table_name` varchar(21)
+,`name` varchar(20)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -813,8 +833,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_parlamentarier_anhang` (
 DROP VIEW IF EXISTS `v_last_updated_partei`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_partei` (
 `table_name` varchar(6)
+,`name` varchar(6)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -824,8 +846,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_partei` (
 DROP VIEW IF EXISTS `v_last_updated_tables`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_tables` (
 `table_name` varchar(22)
+,`name` varchar(22)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -835,8 +859,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_tables` (
 DROP VIEW IF EXISTS `v_last_updated_tables_unordered`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_tables_unordered` (
 `table_name` varchar(22)
+,`name` varchar(22)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -846,8 +872,10 @@ CREATE TABLE IF NOT EXISTS `v_last_updated_tables_unordered` (
 DROP VIEW IF EXISTS `v_last_updated_zugangsberechtigung`;
 CREATE TABLE IF NOT EXISTS `v_last_updated_zugangsberechtigung` (
 `table_name` varchar(19)
+,`name` varchar(19)
 ,`visa` varchar(10)
 ,`last_updated` timestamp
+,`id` int(11)
 );
 -- --------------------------------------------------------
 
@@ -1397,7 +1425,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_branche`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_branche` AS (select 'branche' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `branche` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_branche` AS (select 'branche' AS `table_name`,'Branche' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `branche` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -1406,7 +1434,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_interessenbindung`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_interessenbindung` AS (select 'interessenbindung' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `interessenbindung` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_interessenbindung` AS (select 'interessenbindung' AS `table_name`,'Interessenbindung' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `interessenbindung` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -1415,7 +1443,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_interessengruppe`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_interessengruppe` AS (select 'interessengruppe' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `interessengruppe` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_interessengruppe` AS (select 'interessengruppe' AS `table_name`,'Interessengruppe' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `interessengruppe` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -1424,7 +1452,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_in_kommission`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_in_kommission` AS (select 'in_kommission' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `in_kommission` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_in_kommission` AS (select 'in_kommission' AS `table_name`,'In Kommission' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `in_kommission` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -1433,7 +1461,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_kommission`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_kommission` AS (select 'kommission' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `kommission` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_kommission` AS (select 'kommission' AS `table_name`,'Kommission' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `kommission` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -1442,7 +1470,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_mandat`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_mandat` AS (select 'mandat' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `mandat` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_mandat` AS (select 'mandat' AS `table_name`,'Mandat' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `mandat` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -1451,7 +1479,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_organisation`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_organisation` AS (select 'organisation' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `organisation` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_organisation` AS (select 'organisation' AS `table_name`,'Organisation' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `organisation` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -1460,7 +1488,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_organisation_beziehung`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_organisation_beziehung` AS (select 'organisation_beziehung' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `organisation_beziehung` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_organisation_beziehung` AS (select 'organisation_beziehung' AS `table_name`,'Organisation Beziehung' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `organisation_beziehung` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -1469,7 +1497,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_parlamentarier`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_parlamentarier` AS (select 'parlamentarier' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `parlamentarier` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_parlamentarier` AS (select 'parlamentarier' AS `table_name`,'Parlamentarier' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `parlamentarier` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -1478,7 +1506,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_parlamentarier_anhang`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_parlamentarier_anhang` AS (select 'parlamentarier_anhang' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `parlamentarier_anhang` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_parlamentarier_anhang` AS (select 'parlamentarier_anhang' AS `table_name`,'Parlamentarieranhang' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `parlamentarier_anhang` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -1487,7 +1515,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_partei`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_partei` AS (select 'partei' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `partei` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_partei` AS (select 'partei' AS `table_name`,'Partei' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `partei` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -1496,7 +1524,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_tables`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_tables` AS select `v_last_updated_tables_unordered`.`table_name` AS `table_name`,`v_last_updated_tables_unordered`.`visa` AS `visa`,`v_last_updated_tables_unordered`.`last_updated` AS `last_updated` from `v_last_updated_tables_unordered` order by `v_last_updated_tables_unordered`.`last_updated` desc;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_tables` AS select `v_last_updated_tables_unordered`.`table_name` AS `table_name`,`v_last_updated_tables_unordered`.`name` AS `name`,`v_last_updated_tables_unordered`.`visa` AS `visa`,`v_last_updated_tables_unordered`.`last_updated` AS `last_updated`,`v_last_updated_tables_unordered`.`id` AS `id` from `v_last_updated_tables_unordered` order by `v_last_updated_tables_unordered`.`last_updated` desc;
 
 -- --------------------------------------------------------
 
@@ -1505,7 +1533,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_tables_unordered`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_tables_unordered` AS select `v_last_updated_branche`.`table_name` AS `table_name`,`v_last_updated_branche`.`visa` AS `visa`,`v_last_updated_branche`.`last_updated` AS `last_updated` from `v_last_updated_branche` union select `v_last_updated_interessenbindung`.`table_name` AS `table_name`,`v_last_updated_interessenbindung`.`visa` AS `visa`,`v_last_updated_interessenbindung`.`last_updated` AS `last_updated` from `v_last_updated_interessenbindung` union select `v_last_updated_interessengruppe`.`table_name` AS `table_name`,`v_last_updated_interessengruppe`.`visa` AS `visa`,`v_last_updated_interessengruppe`.`last_updated` AS `last_updated` from `v_last_updated_interessengruppe` union select `v_last_updated_in_kommission`.`table_name` AS `table_name`,`v_last_updated_in_kommission`.`visa` AS `visa`,`v_last_updated_in_kommission`.`last_updated` AS `last_updated` from `v_last_updated_in_kommission` union select `v_last_updated_kommission`.`table_name` AS `table_name`,`v_last_updated_kommission`.`visa` AS `visa`,`v_last_updated_kommission`.`last_updated` AS `last_updated` from `v_last_updated_kommission` union select `v_last_updated_mandat`.`table_name` AS `table_name`,`v_last_updated_mandat`.`visa` AS `visa`,`v_last_updated_mandat`.`last_updated` AS `last_updated` from `v_last_updated_mandat` union select `v_last_updated_organisation`.`table_name` AS `table_name`,`v_last_updated_organisation`.`visa` AS `visa`,`v_last_updated_organisation`.`last_updated` AS `last_updated` from `v_last_updated_organisation` union select `v_last_updated_organisation_beziehung`.`table_name` AS `table_name`,`v_last_updated_organisation_beziehung`.`visa` AS `visa`,`v_last_updated_organisation_beziehung`.`last_updated` AS `last_updated` from `v_last_updated_organisation_beziehung` union select `v_last_updated_parlamentarier`.`table_name` AS `table_name`,`v_last_updated_parlamentarier`.`visa` AS `visa`,`v_last_updated_parlamentarier`.`last_updated` AS `last_updated` from `v_last_updated_parlamentarier` union select `v_last_updated_parlamentarier_anhang`.`table_name` AS `table_name`,`v_last_updated_parlamentarier_anhang`.`visa` AS `visa`,`v_last_updated_parlamentarier_anhang`.`last_updated` AS `last_updated` from `v_last_updated_parlamentarier_anhang` union select `v_last_updated_partei`.`table_name` AS `table_name`,`v_last_updated_partei`.`visa` AS `visa`,`v_last_updated_partei`.`last_updated` AS `last_updated` from `v_last_updated_partei` union select `v_last_updated_zugangsberechtigung`.`table_name` AS `table_name`,`v_last_updated_zugangsberechtigung`.`visa` AS `visa`,`v_last_updated_zugangsberechtigung`.`last_updated` AS `last_updated` from `v_last_updated_zugangsberechtigung`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_tables_unordered` AS select `v_last_updated_branche`.`table_name` AS `table_name`,`v_last_updated_branche`.`name` AS `name`,`v_last_updated_branche`.`visa` AS `visa`,`v_last_updated_branche`.`last_updated` AS `last_updated`,`v_last_updated_branche`.`id` AS `id` from `v_last_updated_branche` union select `v_last_updated_interessenbindung`.`table_name` AS `table_name`,`v_last_updated_interessenbindung`.`name` AS `name`,`v_last_updated_interessenbindung`.`visa` AS `visa`,`v_last_updated_interessenbindung`.`last_updated` AS `last_updated`,`v_last_updated_interessenbindung`.`id` AS `id` from `v_last_updated_interessenbindung` union select `v_last_updated_interessengruppe`.`table_name` AS `table_name`,`v_last_updated_interessengruppe`.`name` AS `name`,`v_last_updated_interessengruppe`.`visa` AS `visa`,`v_last_updated_interessengruppe`.`last_updated` AS `last_updated`,`v_last_updated_interessengruppe`.`id` AS `id` from `v_last_updated_interessengruppe` union select `v_last_updated_in_kommission`.`table_name` AS `table_name`,`v_last_updated_in_kommission`.`name` AS `name`,`v_last_updated_in_kommission`.`visa` AS `visa`,`v_last_updated_in_kommission`.`last_updated` AS `last_updated`,`v_last_updated_in_kommission`.`id` AS `id` from `v_last_updated_in_kommission` union select `v_last_updated_kommission`.`table_name` AS `table_name`,`v_last_updated_kommission`.`name` AS `name`,`v_last_updated_kommission`.`visa` AS `visa`,`v_last_updated_kommission`.`last_updated` AS `last_updated`,`v_last_updated_kommission`.`id` AS `id` from `v_last_updated_kommission` union select `v_last_updated_mandat`.`table_name` AS `table_name`,`v_last_updated_mandat`.`name` AS `name`,`v_last_updated_mandat`.`visa` AS `visa`,`v_last_updated_mandat`.`last_updated` AS `last_updated`,`v_last_updated_mandat`.`id` AS `id` from `v_last_updated_mandat` union select `v_last_updated_organisation`.`table_name` AS `table_name`,`v_last_updated_organisation`.`name` AS `name`,`v_last_updated_organisation`.`visa` AS `visa`,`v_last_updated_organisation`.`last_updated` AS `last_updated`,`v_last_updated_organisation`.`id` AS `id` from `v_last_updated_organisation` union select `v_last_updated_organisation_beziehung`.`table_name` AS `table_name`,`v_last_updated_organisation_beziehung`.`name` AS `name`,`v_last_updated_organisation_beziehung`.`visa` AS `visa`,`v_last_updated_organisation_beziehung`.`last_updated` AS `last_updated`,`v_last_updated_organisation_beziehung`.`id` AS `id` from `v_last_updated_organisation_beziehung` union select `v_last_updated_parlamentarier`.`table_name` AS `table_name`,`v_last_updated_parlamentarier`.`name` AS `name`,`v_last_updated_parlamentarier`.`visa` AS `visa`,`v_last_updated_parlamentarier`.`last_updated` AS `last_updated`,`v_last_updated_parlamentarier`.`id` AS `id` from `v_last_updated_parlamentarier` union select `v_last_updated_parlamentarier_anhang`.`table_name` AS `table_name`,`v_last_updated_parlamentarier_anhang`.`name` AS `name`,`v_last_updated_parlamentarier_anhang`.`visa` AS `visa`,`v_last_updated_parlamentarier_anhang`.`last_updated` AS `last_updated`,`v_last_updated_parlamentarier_anhang`.`id` AS `id` from `v_last_updated_parlamentarier_anhang` union select `v_last_updated_partei`.`table_name` AS `table_name`,`v_last_updated_partei`.`name` AS `name`,`v_last_updated_partei`.`visa` AS `visa`,`v_last_updated_partei`.`last_updated` AS `last_updated`,`v_last_updated_partei`.`id` AS `id` from `v_last_updated_partei` union select `v_last_updated_zugangsberechtigung`.`table_name` AS `table_name`,`v_last_updated_zugangsberechtigung`.`name` AS `name`,`v_last_updated_zugangsberechtigung`.`visa` AS `visa`,`v_last_updated_zugangsberechtigung`.`last_updated` AS `last_updated`,`v_last_updated_zugangsberechtigung`.`id` AS `id` from `v_last_updated_zugangsberechtigung`;
 
 -- --------------------------------------------------------
 
@@ -1514,7 +1542,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_zugangsberechtigung`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_zugangsberechtigung` AS (select 'zugangsberechtigung' AS `table_name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated` from `zugangsberechtigung` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_zugangsberechtigung` AS (select 'zugangsberechtigung' AS `table_name`,'Zugangsberechtigung' AS `name`,`t`.`updated_visa` AS `visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `id` from `zugangsberechtigung` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
