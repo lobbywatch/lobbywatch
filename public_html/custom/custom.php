@@ -163,7 +163,8 @@ function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, 
   }
   // A photo filename ending with / means there was no photo
   if ($old_file !== null && $old_file !== $file) {
-    $result = FileUtils::RemoveFile($old_file);
+    if (FileUtils::FileExists($old_file))
+      $result = FileUtils::RemoveFile($old_file);
     $message = "Deleted old photo $old_file";
   }
 }
