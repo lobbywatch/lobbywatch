@@ -18980,7 +18980,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('interessengruppe_id', 'interessengruppe', new IntegerField('id', null, null, true), new StringField('name', 'interessengruppe_id_name', 'interessengruppe_id_name_interessengruppe'), 'interessengruppe_id_name_interessengruppe');
+            $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe', new IntegerField('id'), new StringField('name', 'interessengruppe_id_name', 'interessengruppe_id_name_v_interessengruppe'), 'interessengruppe_id_name_v_interessengruppe');
             $this->dataset->AddLookupField('branche_id', 'branche', new IntegerField('id', null, null, true), new StringField('name', 'branche_id_name', 'branche_id_name_branche'), 'branche_id_name_branche');
         }
     
@@ -19045,7 +19045,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
                 array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'typ', 'vernehmlassung', 'interessengruppe_id_name', 'branche_id_name', 'url', 'beschreibung', 'ALT_parlam_verbindung', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe Id'), $this->RenderText('Branche Id'), $this->RenderText('Url'), $this->RenderText('Beschreibung'), $this->RenderText('ALT Parlam Verbindung'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe'), $this->RenderText('Branche'), $this->RenderText('Url'), $this->RenderText('Beschreibung'), $this->RenderText('ALT Parlam Verbindung'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -19077,10 +19077,10 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`interessengruppe`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_interessengruppe`');
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -19106,7 +19106,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe_id', $this->RenderText('Interessengruppe Id'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe_id', $this->RenderText('Interessengruppe'), $lookupDataset, 'id', 'name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -19141,7 +19141,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche Id'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('url', $this->RenderText('Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_parlam_verbindung', $this->RenderText('ALT Parlam Verbindung')));
@@ -19557,7 +19557,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -19568,10 +19568,10 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`interessengruppe`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_interessengruppe`');
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -19599,7 +19599,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Interessengruppe Id', 
+                'Interessengruppe', 
                 'interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -19616,10 +19616,10 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`interessengruppe`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_interessengruppe`');
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -19647,7 +19647,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Interessengruppe Id', 
+                'Interessengruppe', 
                 'interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -19662,7 +19662,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -19705,7 +19705,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Branche Id', 
+                'Branche', 
                 'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -19754,7 +19754,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Branche Id', 
+                'Branche', 
                 'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -20152,14 +20152,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -20345,10 +20345,10 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`interessengruppe`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_interessengruppe`');
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -20376,7 +20376,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Interessengruppe Id', 
+                'Interessengruppe', 
                 'interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -20423,7 +20423,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Branche Id', 
+                'Branche', 
                 'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -20648,10 +20648,10 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`interessengruppe`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_interessengruppe`');
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -20679,7 +20679,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Interessengruppe Id', 
+                'Interessengruppe', 
                 'interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -20726,7 +20726,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Branche Id', 
+                'Branche', 
                 'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -20875,14 +20875,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -21021,14 +21021,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -21210,7 +21210,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
             $column->SetFixedWidth(null);
@@ -21219,7 +21219,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
             $column->SetFixedWidth(null);
@@ -21384,14 +21384,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -21563,7 +21563,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
             $column->SetFixedWidth(null);
@@ -21572,7 +21572,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
             $column->SetFixedWidth(null);
@@ -21737,14 +21737,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -21916,7 +21916,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
             $column->SetFixedWidth(null);
@@ -21925,7 +21925,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
             $column->SetFixedWidth(null);
@@ -22090,14 +22090,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22269,7 +22269,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
             $column->SetFixedWidth(null);
@@ -22278,7 +22278,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
             $column->SetFixedWidth(null);
@@ -22443,14 +22443,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22622,7 +22622,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
             $column->SetFixedWidth(null);
@@ -22631,7 +22631,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
             $column->SetFixedWidth(null);
@@ -22796,14 +22796,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22975,7 +22975,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
             $column->SetFixedWidth(null);
@@ -22984,7 +22984,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
             $column->SetFixedWidth(null);
@@ -23149,14 +23149,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23328,7 +23328,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
             $column->SetFixedWidth(null);
@@ -23337,7 +23337,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
             $column->SetFixedWidth(null);
@@ -23502,14 +23502,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23681,7 +23681,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
             $column->SetFixedWidth(null);
@@ -23690,7 +23690,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
             $column->SetFixedWidth(null);
@@ -23855,14 +23855,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
             // View column for name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

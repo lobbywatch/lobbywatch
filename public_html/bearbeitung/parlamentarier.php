@@ -19468,7 +19468,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
                 array('id', 'nachname', 'vorname', 'zweiter_vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'im_rat_seit', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'photo', 'kleinbild', 'sitzplatz', 'email', 'parlament_link', 'homepage', 'ALT_kommission', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'photo_dateiname_voll'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Parlament Link'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Photo Dateiname')),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Parlament Link'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Photo Dateiname')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -19529,7 +19529,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('partei_id', $this->RenderText('Partei Id'), $lookupDataset, 'id', 'abkuerzung', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('partei_id', $this->RenderText('Partei'), $lookupDataset, 'id', 'abkuerzung', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parteifunktion', $this->RenderText('Parteifunktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf', $this->RenderText('Beruf')));
@@ -19566,7 +19566,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Interessengruppe Id'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Interessengruppe'), $lookupDataset, 'id', 'name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('geschlecht', $this->RenderText('Geschlecht')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('geburtstag', $this->RenderText('Geburtstag')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo', $this->RenderText('Photo')));
@@ -19931,7 +19931,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -19975,7 +19975,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Partei Id', 
+                'Partei', 
                 'partei_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -20025,7 +20025,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Partei Id', 
+                'Partei', 
                 'partei_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -20157,7 +20157,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -20199,7 +20199,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe Id', 
+                'Beruf Interessengruppe', 
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -20247,7 +20247,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe Id', 
+                'Beruf Interessengruppe', 
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -20825,7 +20825,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -20856,7 +20856,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -21124,7 +21124,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Partei Id', 
+                'Partei', 
                 'partei_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -21207,7 +21207,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe Id', 
+                'Beruf Interessengruppe', 
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -21538,7 +21538,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Partei Id', 
+                'Partei', 
                 'partei_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -21622,7 +21622,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe Id', 
+                'Beruf Interessengruppe', 
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -21804,7 +21804,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -21833,7 +21833,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -22008,7 +22008,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -22037,7 +22037,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -22246,7 +22246,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
@@ -22285,7 +22285,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
@@ -22497,7 +22497,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22526,7 +22526,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22725,7 +22725,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
@@ -22764,7 +22764,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
@@ -22976,7 +22976,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23005,7 +23005,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23204,7 +23204,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
@@ -23243,7 +23243,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
@@ -23455,7 +23455,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23484,7 +23484,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23683,7 +23683,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
@@ -23722,7 +23722,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
@@ -23934,7 +23934,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23963,7 +23963,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24162,7 +24162,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
@@ -24201,7 +24201,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
@@ -24413,7 +24413,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24442,7 +24442,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24641,7 +24641,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
@@ -24680,7 +24680,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
@@ -24892,7 +24892,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24921,7 +24921,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -25120,7 +25120,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
@@ -25159,7 +25159,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
@@ -25371,7 +25371,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei Id', $this->dataset);
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -25400,7 +25400,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

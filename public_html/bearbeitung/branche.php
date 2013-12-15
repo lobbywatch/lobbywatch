@@ -5783,7 +5783,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('branchessearch', $this->dataset,
                 array('id', 'name', 'kommission_id_abkuerzung', 'beschreibung', 'angaben', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Kommission Id'), $this->RenderText('Beschreibung'), $this->RenderText('Angaben'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Kommission'), $this->RenderText('Beschreibung'), $this->RenderText('Angaben'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -5845,7 +5845,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission_id', $this->RenderText('Kommission Id'), $lookupDataset, 'id', 'abkuerzung', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission_id', $this->RenderText('Kommission'), $lookupDataset, 'id', 'abkuerzung', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('angaben', $this->RenderText('Angaben')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
@@ -5962,7 +5962,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
+            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -6011,7 +6011,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission Id', 
+                'Kommission', 
                 'kommission_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -6066,7 +6066,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission Id', 
+                'Kommission', 
                 'kommission_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -6366,7 +6366,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
+            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -6502,7 +6502,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission Id', 
+                'Kommission', 
                 'kommission_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -6667,7 +6667,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission Id', 
+                'Kommission', 
                 'kommission_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -6756,7 +6756,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
+            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -6846,7 +6846,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
+            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -6961,7 +6961,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
+            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Zuständige Kommission im Parlament'));
             $column->SetFixedWidth(null);
@@ -7074,7 +7074,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
+            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -7179,7 +7179,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
+            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Zuständige Kommission im Parlament'));
             $column->SetFixedWidth(null);
@@ -7292,7 +7292,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
+            $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

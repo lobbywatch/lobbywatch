@@ -44,7 +44,8 @@
             photo is null OR photo = \'\' OR
             sitzplatz is null OR sitzplatz = 0 OR
             geschlecht is null OR
-            geburtstag is null';
+            geburtstag is null OR
+            email is null OR trim(email)=\'\'';
             $insertQuery = array();
             $updateQuery = array();
             $deleteQuery = array();
@@ -1416,7 +1417,8 @@
     <li>das Photo fehlt,
     <li>keine Sitzplatznr eingetragen ist,
     <li>das Geburtsdatum fehlt,
-    <li>das Geschlecht fehlt.
+    <li>das Geschlecht fehlt,
+    <li>die E-Mail-Adresse fehlt.
     </ul>
     </p>
     
