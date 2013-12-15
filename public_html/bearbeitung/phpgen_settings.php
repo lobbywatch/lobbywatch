@@ -49,6 +49,7 @@ function GetPageInfos()
     $result[] = array('caption' => 'Branche', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche');
     $result[] = array('caption' => 'Partei', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei');
     $result[] = array('caption' => 'Interessengruppe', 'short_caption' => 'Interessengruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe');
+    $result[] = array('caption' => 'Parlamentarier Email', 'short_caption' => 'Parlamentarier Email', 'filename' => 'v_parlamentarier_authorisierungs_email.php', 'name' => 'v_parlamentarier_authorisierungs_email');
     $result[] = array('caption' => 'Unvollständige Parlamentarier', 'short_caption' => 'Unvollständige Parlamentarier', 'filename' => 'q_unvollstaendige_parlamentarier.php', 'name' => 'q_unvollstaendige_parlamentarier');
     $result[] = array('caption' => 'Unvollständige Organisationen', 'short_caption' => 'Unvollständige Organisationen', 'filename' => 'q_unvollstaendige_organisationen.php', 'name' => 'q_unvollstaendige_organisationen');
     $result[] = array('caption' => 'Tabellenstand', 'short_caption' => 'Tabellenstand', 'filename' => 'tabellenstand.php', 'name' => 'q_last_updated_tables');

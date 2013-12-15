@@ -19444,6 +19444,8 @@
                 $result->AddPage(new PageLink($this->RenderText('Partei'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('Partei')));
             if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessengruppe'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('Interessengruppe')));
+            if (GetCurrentUserGrantForDataSource('v_parlamentarier_authorisierungs_email')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Parlamentarier Email'), 'v_parlamentarier_authorisierungs_email.php', $this->RenderText('Parlamentarier Email'), $currentPageCaption == $this->RenderText('Parlamentarier Email')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Unvollständige Parlamentarier'), 'q_unvollstaendige_parlamentarier.php', $this->RenderText('Unvollständige Parlamentarier'), $currentPageCaption == $this->RenderText('Unvollständige Parlamentarier')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_organisationen')->HasViewGrant())
@@ -20465,7 +20467,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -20901,7 +20903,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -22342,7 +22344,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22821,7 +22823,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23300,7 +23302,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23779,7 +23781,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -24258,7 +24260,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -24737,7 +24739,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -25216,7 +25218,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -25929,7 +25931,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -26074,7 +26076,7 @@
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //

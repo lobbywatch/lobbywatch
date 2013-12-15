@@ -853,7 +853,7 @@ ORDER BY beziehung, parlamentarier_name;
 -- Authorisieurngsemail Interessenbindung für Parlamenterier
 -- Connector: interessenbindung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_interessenbindung_authorisierungs_email` AS
-SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, ''), organisation.anzeige_name as organisation_name, IFNULL(organisation.rechtsform,''), IFNULL(organisation.ort,''), interessenbindung.art, interessenbindung.beschreibung
+SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, organisation.anzeige_name as organisation_name, IFNULL(organisation.rechtsform,'') rechtsform, IFNULL(organisation.ort,'') ort, interessenbindung.art, interessenbindung.beschreibung
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
@@ -864,7 +864,58 @@ ORDER BY organisation.anzeige_name;
 -- Authorisieurngsemail Interessenbindung für Parlamenterier
 -- Connector: interessenbindung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_zugangsberechtigung_authorisierungs_email` AS
-SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, ''), zugangsberechtigung.name zugangsberechtigung_name, zugangsberechtigung.funktion
+SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, zugangsberechtigung.name zugangsberechtigung_name, zugangsberechtigung.funktion
 FROM v_zugangsberechtigung zugangsberechtigung
 INNER JOIN v_parlamentarier parlamentarier
-  ON zugangsberechtigung.parlamentarier_id = parlamentarier.id;
+  ON zugangsberechtigung.parlamentarier_id = parlamentarier.id
+GROUP BY parlamentarier.id;
+
+-- Authorisieurngsemail Interessenbindung für Parlamenterier
+-- Connector: interessenbindung.parlamentarier_id
+CREATE OR REPLACE VIEW `v_interessenbindung_authorisierungs_email` AS
+SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, organisation.anzeige_name as organisation_name, IFNULL(organisation.rechtsform,'') rechtsform, IFNULL(organisation.ort,'') ort, interessenbindung.art, interessenbindung.beschreibung
+FROM v_interessenbindung interessenbindung
+INNER JOIN v_organisation organisation
+  ON interessenbindung.organisation_id = organisation.id
+INNER JOIN v_parlamentarier parlamentarier
+  ON interessenbindung.parlamentarier_id = parlamentarier.id
+ORDER BY organisation.anzeige_name
+GROUP BY parlamentarier.id;
+
+-- Authorisieurngsemail Interessenbindung für Parlamenterier
+-- Connector: parlamentarier_id
+CREATE OR REPLACE VIEW `v_parlamentarier_authorisierungs_email` AS
+SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email,
+CONCAT(
+  CASE parlamentarier.geschlecht
+    WHEN 'M' THEN CONCAT('<p>Sehr geehrter Herr ', parlamentarier.nachname, '</p>')
+    WHEN 'F' THEN CONCAT('<p>Sehr geehrte Frau ', parlamentarier.nachname, '</p>')
+    ELSE CONCAT('<p>Sehr geehrte(r) Herr/Frau ', parlamentarier.nachname, '</p>')
+  END,
+  '<p>[Einleitung]</p>',
+  '<p>Ihre <b>Interessenbindungen</b>:</p>',
+  '<ul>',
+  GROUP_CONCAT(DISTINCT
+    CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art, ', ', interessenbindung.beschreibung)
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ' '
+  ),
+  '</ul>',
+  '<p>Ihre <b>Gäste</b>:</p>',
+  '<ul>',
+  GROUP_CONCAT(DISTINCT
+    CONCAT('<li>', zugangsberechtigung.name, ', ', zugangsberechtigung.funktion)
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ' '
+  ),
+  '</ul>',
+  '<p>Mit freundlichen Grüssen,<br></p>'
+) email_text
+FROM v_parlamentarier parlamentarier
+LEFT JOIN v_interessenbindung interessenbindung
+  ON interessenbindung.parlamentarier_id = parlamentarier.id
+LEFT JOIN v_organisation organisation
+  ON interessenbindung.organisation_id = organisation.id
+LEFT JOIN v_zugangsberechtigung zugangsberechtigung
+  ON zugangsberechtigung.parlamentarier_id = parlamentarier.id
+GROUP BY parlamentarier.id;

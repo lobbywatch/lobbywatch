@@ -259,6 +259,8 @@
                 $result->AddPage(new PageLink($this->RenderText('Partei'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('Partei')));
             if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessengruppe'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('Interessengruppe')));
+            if (GetCurrentUserGrantForDataSource('v_parlamentarier_authorisierungs_email')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Parlamentarier Email'), 'v_parlamentarier_authorisierungs_email.php', $this->RenderText('Parlamentarier Email'), $currentPageCaption == $this->RenderText('Parlamentarier Email')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Unvollständige Parlamentarier'), 'q_unvollstaendige_parlamentarier.php', $this->RenderText('Unvollständige Parlamentarier'), $currentPageCaption == $this->RenderText('Unvollständige Parlamentarier')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_organisationen')->HasViewGrant())
