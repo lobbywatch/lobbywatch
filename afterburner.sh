@@ -8,6 +8,10 @@ NOW=$(date +"%d.%m.%Y %H:%M");
 
 echo -e "<?php\n\$build_date = '$NOW';" > $root_dir/common/build_date.php;
 
+# Also in deploy.sh
+VERSION=$(git describe)
+echo -e "<?php\n\$version = '$VERSION';" >  $root_dir/common/version.php;
+
 rm -rf $dir/templates_c/*
 
 all_files=`find $dir -name "*.php"`;
@@ -41,6 +45,7 @@ do
   | perl -p -e's/\$private_files_dir/'\'' \. \$GLOBALS["private_files_dir"] \. '\''/g' \
   | perl -p -e's/\$build_date:\$/'\'' \. \$GLOBALS["build_date"] \. '\''/g' \
   | perl -p -e's/\$deploy_date:\$/'\'' \. \$GLOBALS["deploy_date"] \. '\''/g' \
+  | perl -p -e's/\$version/'\'' \. \$GLOBALS["version"] \. '\''/g' \
   | perl -p -e's/\$edit_general_hint/'\'' \. \$GLOBALS["edit_general_hint"] \. '\''/g' \
   | perl -p -e's/<a id="plugin-edit-remarksbox.*?<\/a>//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" width="15" height="14">//g' \

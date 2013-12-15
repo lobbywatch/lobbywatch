@@ -2,6 +2,7 @@
 
 include_once dirname(__FILE__) . '/build_date.php';
 include_once dirname(__FILE__) . '/deploy_date.php';
+include_once dirname(__FILE__) . '/version.php';
 
 //Ref: http://stackoverflow.com/questions/834303/php-startswith-and-endswith-functions
 function startsWith($haystack, $needle)

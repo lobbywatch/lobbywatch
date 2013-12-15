@@ -26,6 +26,10 @@ env="test"
 NOW=$(date +"%d.%m.%Y %H:%M");
 echo -e "<?php\n\$deploy_date = '$NOW';" > $public_dir/common/deploy_date.php;
 
+# Also in afterburner.sh
+VERSION=$(git describe)
+echo -e "<?php\n\$version = '$VERSION';" >  $public_dir/common/version.php;
+
 fast="--exclude-from ./rsync-fast-exclude"
 dry_run="";
 #fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"

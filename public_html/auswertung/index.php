@@ -904,7 +904,7 @@ table td {
         <a href="<?php print "$env_dir";?>bearbeitung">Bearbeitungsseite Lobbycontrol <?php print "$env";?></a>.<br>
         <a href="<?php print "$env_dir";?>info.php">Infoseite Lobbycontrol <?php print "$env";?></a>.
         </p>
-      <p>Mode: <b><?php print "$env";?></b><br/>Deploy date: <?php print $deploy_date;?><br/>Build date: <?php print $build_date;?></p>
+        <p>Mode: <b><?php print "$env";?></b><br/>Version: <?php print $version;?><br/>Deploy date: <?php print $deploy_date;?><br/>Build date: <?php print $build_date;?></p>
     </div>
   </div>
   <div style='clear: both'>
