@@ -2008,6 +2008,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
@@ -2208,6 +2210,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
@@ -2304,6 +2308,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
@@ -2861,6 +2867,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
@@ -3108,6 +3116,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);

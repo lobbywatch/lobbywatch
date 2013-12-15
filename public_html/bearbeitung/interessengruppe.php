@@ -3722,6 +3722,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $this->dataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $this->dataset->AddField($field, false);
             $field = new StringField('photo');
@@ -5138,6 +5140,8 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('geschlecht');
             $this->dataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $this->dataset->AddField($field, false);
@@ -8090,6 +8094,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -8168,6 +8174,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
@@ -8259,6 +8267,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
@@ -9151,6 +9161,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('freigabe_von');
@@ -9255,6 +9267,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
@@ -9493,6 +9507,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
@@ -9583,6 +9599,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
@@ -10445,6 +10463,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);
             $field = new StringField('photo');
@@ -10768,6 +10788,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $lookupDataset->AddField($field, false);

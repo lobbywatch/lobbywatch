@@ -42,7 +42,9 @@
         {
             $selectQuery = 'select * from parlamentarier where
             photo is null OR photo = \'\' OR
-            sitzplatz is null OR sitzplatz = 0';
+            sitzplatz is null OR sitzplatz = 0 OR
+            geschlecht is null OR
+            geburtstag is null';
             $insertQuery = array();
             $updateQuery = array();
             $deleteQuery = array();
@@ -71,6 +73,8 @@
             $field = new StringField('beruf');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('geschlecht');
             $this->dataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $this->dataset->AddField($field, false);
@@ -1408,7 +1412,9 @@
     <p>Ein Parlamentarier erscheint hier wenn
     <ul>
     <li>das Photo fehlt,
-    <li>keine Sitzplatznr eingetragen ist.
+    <li>keine Sitzplatznr eingetragen ist,
+    <li>das Geburtsdatum fehlt,
+    <li>das Geschlecht fehlt.
     </ul>
     </p>
     

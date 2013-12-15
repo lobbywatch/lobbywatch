@@ -206,6 +206,26 @@ ADD `photo_dateierweiterung` VARCHAR( 15 ) NOT NULL COMMENT 'Erweiterung der Pho
 ADD `photo_dateiname_voll` VARCHAR( 255 ) NOT NULL COMMENT 'Photodateiname mit Erweiterung' AFTER `photo_dateierweiterung` ,
 ADD `photo_mime_type` VARCHAR( 100 ) NOT NULL COMMENT 'MIME Type des Photos' AFTER `photo_dateiname_voll`;
 
+
+-- Geschlecht
+
+ALTER TABLE `parlamentarier` ADD `geschlecht` ENUM( 'M', 'F' ) NULL COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau' AFTER `beruf_interessengruppe_id` ;
+
+ALTER TABLE `parlamentarier_log` ADD `geschlecht` ENUM( 'M', 'F' ) NULL COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau' AFTER `beruf_interessengruppe_id` ;
+
+ALTER TABLE `zugangsberechtigung` ADD `geschlecht` ENUM( 'M', 'F' ) NULL COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau' AFTER `beruf_interessengruppe_id` ;
+
+ALTER TABLE `zugangsberechtigung_log` ADD `geschlecht` ENUM( 'M', 'F' ) NULL COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau' AFTER `beruf_interessengruppe_id` ;
+
+
+ALTER TABLE `parlamentarier` CHANGE `geschlecht` `geschlecht` ENUM( 'M', 'F' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'M' COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau';
+
+ALTER TABLE `parlamentarier_log` CHANGE `geschlecht` `geschlecht` ENUM( 'M', 'F' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'M' COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau';
+
+ALTER TABLE `zugangsberechtigung` CHANGE `geschlecht` `geschlecht` ENUM( 'M', 'F' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'M' COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau';
+
+ALTER TABLE `zugangsberechtigung_log` CHANGE `geschlecht` `geschlecht` ENUM( 'M', 'F' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT 'M' COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau';
+
 -- TRIGGERS
 
 -- http://blog.mclaughlinsoftware.com/2012/07/03/placement-over-substance/
@@ -678,7 +698,8 @@ CREATE OR REPLACE VIEW `v_user_permission` AS SELECT t.* FROM `user_permission` 
 
 -- Der der Kommissionen für Parlamenterier
 -- Connector: in_kommission.parlamentarier_id
-CREATE OR REPLACE VIEW `v_in_kommission_liste` AS SELECT kommission.abkuerzung, kommission.name, in_kommission.*
+CREATE OR REPLACE VIEW `v_in_kommission_liste` AS
+SELECT kommission.abkuerzung, kommission.name, in_kommission.*
 FROM v_in_kommission in_kommission
 INNER JOIN v_kommission kommission
   ON in_kommission.kommission_id = kommission.id
@@ -686,7 +707,8 @@ ORDER BY kommission.abkuerzung;
 
 -- Parlamenterier einer Kommission
 -- Connector: in_kommission.kommission_id
-CREATE OR REPLACE VIEW `v_in_kommission_parlamentarier` AS SELECT parlamentarier.anzeige_name as parlamentarier_name, partei.abkuerzung, in_kommission.*
+CREATE OR REPLACE VIEW `v_in_kommission_parlamentarier` AS
+SELECT parlamentarier.anzeige_name as parlamentarier_name, partei.abkuerzung, in_kommission.*
 FROM v_in_kommission in_kommission
 INNER JOIN v_parlamentarier parlamentarier
   ON in_kommission.parlamentarier_id = parlamentarier.id
@@ -696,7 +718,8 @@ ORDER BY parlamentarier.anzeige_name;
 
 -- Interessenbindung eines Parlamenteriers
 -- Connector: interessenbindung.parlamentarier_id
-CREATE OR REPLACE VIEW `v_interessenbindung_liste` AS SELECT organisation.anzeige_name as organisation_name, interessenbindung.*
+CREATE OR REPLACE VIEW `v_interessenbindung_liste` AS
+SELECT organisation.anzeige_name as organisation_name, interessenbindung.*
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
@@ -758,7 +781,8 @@ ORDER BY beziehung, organisation_name;
 
 -- Organisationen für welche eine PR-Agentur arbeitet.
 -- Connector: organisation_beziehung.organisation_id
-CREATE OR REPLACE VIEW `v_organisation_beziehung_arbeitet_fuer` AS SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
+CREATE OR REPLACE VIEW `v_organisation_beziehung_arbeitet_fuer` AS
+SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation organisation
   ON organisation_beziehung.ziel_organisation_id = organisation.id
@@ -769,7 +793,8 @@ ORDER BY organisation.anzeige_name;
 -- Organisationen, die eine PR-Firma beauftragt haben.
 -- Connector: organisation_beziehung.ziel_organisation_id
 -- Reverse Beziehung
-CREATE OR REPLACE VIEW `v_organisation_beziehung_auftraggeber_fuer` AS SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
+CREATE OR REPLACE VIEW `v_organisation_beziehung_auftraggeber_fuer` AS
+SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation organisation
   ON organisation_beziehung.organisation_id = organisation.id
@@ -779,7 +804,8 @@ ORDER BY organisation.anzeige_name;
 
 -- Organisationen, in welcher eine Organisation Mitglied ist.
 -- Connector: organisation_beziehung.organisation_id
-CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglied_von` AS SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
+CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglied_von` AS
+SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation organisation
   ON organisation_beziehung.ziel_organisation_id = organisation.id
@@ -790,7 +816,8 @@ ORDER BY organisation.anzeige_name;
 -- Mitgliedsorganisationen
 -- Connector: organisation_beziehung.ziel_organisation_id
 -- Reverse Beziehung
-CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglieder` AS SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
+CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglieder` AS
+SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation organisation
   ON organisation_beziehung.organisation_id = organisation.id
@@ -800,7 +827,8 @@ ORDER BY organisation.anzeige_name;
 
 -- Parlamenterier, die eine Interessenbindung zu dieser Organisation haben.
 -- Connector: interessenbindung.organisation_id
-CREATE OR REPLACE VIEW `v_organisation_parlamentarier` AS SELECT parlamentarier.anzeige_name as parlamentarier_name, interessenbindung.*
+CREATE OR REPLACE VIEW `v_organisation_parlamentarier` AS
+SELECT parlamentarier.anzeige_name as parlamentarier_name, interessenbindung.*
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_parlamentarier parlamentarier
   ON interessenbindung.parlamentarier_id = parlamentarier.id
@@ -822,3 +850,21 @@ WHERE
   organisation_beziehung.art = 'arbeitet fuer'
 ORDER BY beziehung, parlamentarier_name;
 
+-- Authorisieurngsemail Interessenbindung für Parlamenterier
+-- Connector: interessenbindung.parlamentarier_id
+CREATE OR REPLACE VIEW `v_interessenbindung_authorisierungs_email` AS
+SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, ''), organisation.anzeige_name as organisation_name, IFNULL(organisation.rechtsform,''), IFNULL(organisation.ort,''), interessenbindung.art, interessenbindung.beschreibung
+FROM v_interessenbindung interessenbindung
+INNER JOIN v_organisation organisation
+  ON interessenbindung.organisation_id = organisation.id
+INNER JOIN v_parlamentarier parlamentarier
+  ON interessenbindung.parlamentarier_id = parlamentarier.id
+ORDER BY organisation.anzeige_name;
+
+-- Authorisieurngsemail Interessenbindung für Parlamenterier
+-- Connector: interessenbindung.parlamentarier_id
+CREATE OR REPLACE VIEW `v_zugangsberechtigung_authorisierungs_email` AS
+SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, ''), zugangsberechtigung.name zugangsberechtigung_name, zugangsberechtigung.funktion
+FROM v_zugangsberechtigung zugangsberechtigung
+INNER JOIN v_parlamentarier parlamentarier
+  ON zugangsberechtigung.parlamentarier_id = parlamentarier.id;

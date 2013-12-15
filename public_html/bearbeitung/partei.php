@@ -74,6 +74,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $this->dataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $this->dataset->AddField($field, false);
             $field = new StringField('photo');
@@ -1490,6 +1492,8 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('geschlecht');
             $this->dataset->AddField($field, false);
             $field = new DateField('geburtstag');
             $this->dataset->AddField($field, false);
