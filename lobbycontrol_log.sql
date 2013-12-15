@@ -1,3 +1,7 @@
+-- This script sets up logging of tables changes and snapshot capability.
+
+-- Run: mysql -u root -h 127.0.0.1 lobbycontrol < lobbycontrol_log.sql
+
 -- phpMyAdmin SQL Dump
 -- version 4.0.4.1
 -- http://www.phpmyadmin.net
@@ -7,12 +11,9 @@
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
--- Run: mysql -u root -h 127.0.0.1 lobbycontrol < lobbycontrol_log.sql
-
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 -- ;SET time_zone = "+00:00";
-
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -23,7 +24,58 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 -- Datenbank: `lobbycontrol`
 --
 -- ; CREATE DATABASE IF NOT EXISTS `lobbycontrol` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `lobbycontrol`;
+-- USE `lobbycontrol`;
+
+-- Run: CALL takeSnapshot('roland', 'Initial');
+
+DROP PROCEDURE IF EXISTS takeSnapshot;
+delimiter //
+CREATE PROCEDURE takeSnapshot(aVisa VARCHAR(10), aBeschreibung VARCHAR(150)) MODIFIES SQL DATA
+COMMENT 'Speichert einen Snapshot in die _log Tabellen.'
+BEGIN
+  DECLARE ts TIMESTAMP DEFAULT NOW();
+  DECLARE sid int(11);
+  INSERT INTO `snapshot` (`id`, `beschreibung`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES (NULL, aBeschreibung, NULL, aVisa, ts, aVisa, ts);
+  SELECT LAST_INSERT_ID() INTO sid;
+
+   INSERT INTO `branche_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `branche`;
+
+   INSERT INTO `interessenbindung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessenbindung`;
+
+   INSERT INTO `interessengruppe_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessengruppe`;
+
+   INSERT INTO `in_kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_kommission`;
+
+   INSERT INTO `kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kommission`;
+
+   INSERT INTO `mandat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `mandat`;
+
+   INSERT INTO `organisation_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation`;
+
+   INSERT INTO `organisation_beziehung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_beziehung`;
+
+   INSERT INTO `parlamentarier_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier`;
+
+   INSERT INTO `parlamentarier_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier_anhang`;
+
+   INSERT INTO `partei_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `partei`;
+
+   INSERT INTO `zugangsberechtigung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `zugangsberechtigung`;
+END
+//
+delimiter ;
 
 -- --------------------------------------------------------
 

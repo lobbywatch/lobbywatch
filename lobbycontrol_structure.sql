@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 14. Dez 2013 um 23:50
+-- Erstellungszeit: 15. Dez 2013 um 13:05
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -22,6 +22,59 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `lobbycontrol` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `lobbycontrol`;
+
+DELIMITER $$
+--
+-- Prozeduren
+--
+DROP PROCEDURE IF EXISTS `takeSnapshot`$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `takeSnapshot`(aVisa VARCHAR(10), aBeschreibung VARCHAR(150))
+    MODIFIES SQL DATA
+    COMMENT 'Speichert einen Snapshot in die _log Tabellen.'
+BEGIN
+  DECLARE ts TIMESTAMP DEFAULT NOW();
+  DECLARE sid int(11);
+  INSERT INTO `snapshot` (`id`, `beschreibung`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES (NULL, aBeschreibung, NULL, aVisa, ts, aVisa, ts);
+  SELECT LAST_INSERT_ID() INTO sid;
+
+   INSERT INTO `branche_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `branche`;
+
+   INSERT INTO `interessenbindung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessenbindung`;
+
+   INSERT INTO `interessengruppe_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessengruppe`;
+
+   INSERT INTO `in_kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_kommission`;
+
+   INSERT INTO `kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kommission`;
+
+   INSERT INTO `mandat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `mandat`;
+
+   INSERT INTO `organisation_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation`;
+
+   INSERT INTO `organisation_beziehung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_beziehung`;
+
+   INSERT INTO `parlamentarier_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier`;
+
+   INSERT INTO `parlamentarier_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier_anhang`;
+
+   INSERT INTO `partei_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `partei`;
+
+   INSERT INTO `zugangsberechtigung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `zugangsberechtigung`;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -48,12 +101,91 @@ CREATE TABLE IF NOT EXISTS `branche` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `branche_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
   KEY `kommission_id` (`kommission_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=20 ;
 
 --
 -- RELATIONEN DER TABELLE `branche`:
 --   `kommission_id`
 --       `kommission` -> `id`
+--
+
+--
+-- Trigger `branche`
+--
+DROP TRIGGER IF EXISTS `trg_branche_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_branche_log_del_after` AFTER DELETE ON `branche`
+ FOR EACH ROW begin
+   UPDATE `branche_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_branche_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_branche_log_del_before` BEFORE DELETE ON `branche`
+ FOR EACH ROW begin
+   INSERT INTO `branche_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `branche` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_branche_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_branche_log_ins` AFTER INSERT ON `branche`
+ FOR EACH ROW begin
+   INSERT INTO `branche_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_branche_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_branche_log_upd` AFTER UPDATE ON `branche`
+ FOR EACH ROW begin
+   INSERT INTO `branche_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `branche_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:03
+--
+
+DROP TABLE IF EXISTS `branche_log`;
+CREATE TABLE IF NOT EXISTS `branche_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `name` varchar(100) NOT NULL COMMENT 'Name der Branche, z.B. Gesundheit, Energie',
+  `kommission_id` int(11) DEFAULT NULL COMMENT 'Zuständige Kommission im Parlament',
+  `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
+  `angaben` text COMMENT 'Angaben zur Branche',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `kommission_id` (`kommission_id`),
+  KEY `fk_branche_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=32 ;
+
+--
+-- RELATIONEN DER TABELLE `branche_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
 --
 
 -- --------------------------------------------------------
@@ -96,6 +228,90 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
 --       `parlamentarier` -> `id`
 --
 
+--
+-- Trigger `interessenbindung`
+--
+DROP TRIGGER IF EXISTS `trg_interessenbindung_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_interessenbindung_log_del_after` AFTER DELETE ON `interessenbindung`
+ FOR EACH ROW begin
+   UPDATE `interessenbindung_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_interessenbindung_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_interessenbindung_log_del_before` BEFORE DELETE ON `interessenbindung`
+ FOR EACH ROW begin
+   INSERT INTO `interessenbindung_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `interessenbindung` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_interessenbindung_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_interessenbindung_log_ins` AFTER INSERT ON `interessenbindung`
+ FOR EACH ROW begin
+   INSERT INTO `interessenbindung_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_interessenbindung_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_interessenbindung_log_upd` AFTER UPDATE ON `interessenbindung`
+ FOR EACH ROW begin
+   INSERT INTO `interessenbindung_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `interessenbindung_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:03
+--
+
+DROP TABLE IF EXISTS `interessenbindung_log`;
+CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
+  `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
+  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
+  `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
+  `verguetung` int(11) DEFAULT NULL COMMENT 'Monatliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.',
+  `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Bezeichnung wird zur Auswertung wahrscheinlich nicht gebraucht.',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am',
+  `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `idx_parlam` (`parlamentarier_id`),
+  KEY `idx_lobbyorg` (`organisation_id`),
+  KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=512 ;
+
+--
+-- RELATIONEN DER TABELLE `interessenbindung_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -126,6 +342,84 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
 -- RELATIONEN DER TABELLE `interessengruppe`:
 --   `branche_id`
 --       `branche` -> `id`
+--
+
+--
+-- Trigger `interessengruppe`
+--
+DROP TRIGGER IF EXISTS `trg_interessengruppe_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_interessengruppe_log_del_after` AFTER DELETE ON `interessengruppe`
+ FOR EACH ROW begin
+   UPDATE `interessengruppe_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_interessengruppe_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_interessengruppe_log_del_before` BEFORE DELETE ON `interessengruppe`
+ FOR EACH ROW begin
+   INSERT INTO `interessengruppe_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `interessengruppe` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_interessengruppe_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_interessengruppe_log_ins` AFTER INSERT ON `interessengruppe`
+ FOR EACH ROW begin
+   INSERT INTO `interessengruppe_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_interessengruppe_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_interessengruppe_log_upd` AFTER UPDATE ON `interessengruppe`
+ FOR EACH ROW begin
+   INSERT INTO `interessengruppe_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `interessengruppe_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:03
+--
+
+DROP TABLE IF EXISTS `interessengruppe_log`;
+CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `name` varchar(150) NOT NULL COMMENT 'Bezeichnung der Interessengruppe',
+  `branche_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Branche',
+  `beschreibung` text NOT NULL COMMENT 'Eingrenzung und Beschreibung zur Interessengruppe',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `idx_lobbytyp` (`branche_id`),
+  KEY `fk_interessengruppe_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=16 ;
+
+--
+-- RELATIONEN DER TABELLE `interessengruppe_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
 --
 
 -- --------------------------------------------------------
@@ -163,6 +457,85 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
 --       `parlamentarier` -> `id`
 --
 
+--
+-- Trigger `in_kommission`
+--
+DROP TRIGGER IF EXISTS `trg_in_kommission_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_in_kommission_log_del_after` AFTER DELETE ON `in_kommission`
+ FOR EACH ROW begin
+   UPDATE `in_kommission_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_in_kommission_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_in_kommission_log_del_before` BEFORE DELETE ON `in_kommission`
+ FOR EACH ROW begin
+   INSERT INTO `in_kommission_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `in_kommission` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_in_kommission_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_in_kommission_log_ins` AFTER INSERT ON `in_kommission`
+ FOR EACH ROW begin
+   INSERT INTO `in_kommission_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_in_kommission_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_in_kommission_log_upd` AFTER UPDATE ON `in_kommission`
+ FOR EACH ROW begin
+   INSERT INTO `in_kommission_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `in_kommission_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:03
+--
+
+DROP TABLE IF EXISTS `in_kommission_log`;
+CREATE TABLE IF NOT EXISTS `in_kommission_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
+  `kommission_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Kommission',
+  `funktion` set('praesident','vizepraesident','mitglied','delegation') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Kommission',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `parlamentarier_id` (`parlamentarier_id`),
+  KEY `kommissions_id` (`kommission_id`),
+  KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=128 ;
+
+--
+-- RELATIONEN DER TABELLE `in_kommission_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -192,6 +565,86 @@ CREATE TABLE IF NOT EXISTS `kommission` (
   UNIQUE KEY `kommission_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `kommission_name_unique` (`name`) COMMENT 'Fachlicher unique constraint'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=44 ;
+
+--
+-- Trigger `kommission`
+--
+DROP TRIGGER IF EXISTS `trg_kommission_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_kommission_log_del_after` AFTER DELETE ON `kommission`
+ FOR EACH ROW begin
+   UPDATE `kommission_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_kommission_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_kommission_log_del_before` BEFORE DELETE ON `kommission`
+ FOR EACH ROW begin
+   INSERT INTO `kommission_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `kommission` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_kommission_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_kommission_log_ins` AFTER INSERT ON `kommission`
+ FOR EACH ROW begin
+   INSERT INTO `kommission_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_kommission_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_kommission_log_upd` AFTER UPDATE ON `kommission`
+ FOR EACH ROW begin
+   INSERT INTO `kommission_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `kommission_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:03
+--
+
+DROP TABLE IF EXISTS `kommission_log`;
+CREATE TABLE IF NOT EXISTS `kommission_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
+  `name` varchar(100) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
+  `typ` enum('kommission','spezialkommission') NOT NULL DEFAULT 'kommission' COMMENT 'Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne).',
+  `sachbereiche` text NOT NULL COMMENT 'Liste der Sachbereiche der Kommission, abgetrennt durch ";".',
+  `abkuerung_delegation` varchar(15) DEFAULT NULL COMMENT 'Abkürzung der Delegation. Delegation im engeren Sinne als Subkommission.',
+  `parlament_link` varchar(255) DEFAULT NULL COMMENT 'Link zur Seite auf Parlament.ch',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `fk_kommission_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=32 ;
+
+--
+-- RELATIONEN DER TABELLE `kommission_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
+--
 
 -- --------------------------------------------------------
 
@@ -232,12 +685,95 @@ CREATE TABLE IF NOT EXISTS `mandat` (
 --       `zugangsberechtigung` -> `id`
 --
 
+--
+-- Trigger `mandat`
+--
+DROP TRIGGER IF EXISTS `trg_mandat_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_mandat_log_del_after` AFTER DELETE ON `mandat`
+ FOR EACH ROW begin
+   UPDATE `mandat_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_mandat_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_mandat_log_del_before` BEFORE DELETE ON `mandat`
+ FOR EACH ROW begin
+   INSERT INTO `mandat_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `mandat` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_mandat_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_mandat_log_ins` AFTER INSERT ON `mandat`
+ FOR EACH ROW begin
+   INSERT INTO `mandat_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_mandat_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_mandat_log_upd` AFTER UPDATE ON `mandat`
+ FOR EACH ROW begin
+   INSERT INTO `mandat_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `mandat_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:03
+--
+
+DROP TABLE IF EXISTS `mandat_log`;
+CREATE TABLE IF NOT EXISTS `mandat_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `zugangsberechtigung_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Zugangsberechtigung.',
+  `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
+  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat') DEFAULT NULL COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
+  `verguetung` int(11) DEFAULT NULL COMMENT 'Monatliche Vergütung CHF für Tätigkeiten aus dieses Mandates, z.B. Entschädigung für Beiratsfunktion.',
+  `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird zur Auswertung wahrscheinlich nicht gebraucht.',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am',
+  `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `zugangsberechtigung_id` (`zugangsberechtigung_id`),
+  KEY `organisations_id` (`organisation_id`),
+  KEY `fk_mandat_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=4 ;
+
+--
+-- RELATIONEN DER TABELLE `mandat_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 09. Dez 2013 um 19:28
+-- Erzeugt am: 15. Dez 2013 um 09:13
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -263,7 +799,9 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `organisation_name_unique` (`name_de`) COMMENT 'Fachlicher unique constraint',
+  UNIQUE KEY `organisation_name_de_unique` (`name_de`) COMMENT 'Fachlicher unique constraint',
+  UNIQUE KEY `organisation_name_fr_unique` (`name_fr`) COMMENT 'Fachlicher unique constraint',
+  UNIQUE KEY `organisation_name_it_unique` (`name_it`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `idx_lobbygroup` (`interessengruppe_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=350 ;
@@ -279,6 +817,43 @@ CREATE TABLE IF NOT EXISTS `organisation` (
 --
 -- Trigger `organisation`
 --
+DROP TRIGGER IF EXISTS `trg_organisation_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_organisation_log_del_after` AFTER DELETE ON `organisation`
+ FOR EACH ROW begin
+   UPDATE `organisation_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_organisation_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_organisation_log_del_before` BEFORE DELETE ON `organisation`
+ FOR EACH ROW begin
+   INSERT INTO `organisation_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `organisation` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_organisation_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_organisation_log_ins` AFTER INSERT ON `organisation`
+ FOR EACH ROW begin
+   INSERT INTO `organisation_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_organisation_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_organisation_log_upd` AFTER UPDATE ON `organisation`
+ FOR EACH ROW begin
+   INSERT INTO `organisation_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_organisation_name_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_name_ins` BEFORE INSERT ON `organisation`
@@ -333,6 +908,132 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
 --       `organisation` -> `id`
 --   `ziel_organisation_id`
 --       `organisation` -> `id`
+--
+
+--
+-- Trigger `organisation_beziehung`
+--
+DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_organisation_beziehung_log_del_after` AFTER DELETE ON `organisation_beziehung`
+ FOR EACH ROW begin
+   UPDATE `organisation_beziehung_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_organisation_beziehung_log_del_before` BEFORE DELETE ON `organisation_beziehung`
+ FOR EACH ROW begin
+   INSERT INTO `organisation_beziehung_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `organisation_beziehung` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_organisation_beziehung_log_ins` AFTER INSERT ON `organisation_beziehung`
+ FOR EACH ROW begin
+   INSERT INTO `organisation_beziehung_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_organisation_beziehung_log_upd` AFTER UPDATE ON `organisation_beziehung`
+ FOR EACH ROW begin
+   INSERT INTO `organisation_beziehung_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `organisation_beziehung_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:04
+--
+
+DROP TABLE IF EXISTS `organisation_beziehung_log`;
+CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation.',
+  `ziel_organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Zielorganisation.',
+  `art` enum('arbeitet fuer','mitglied von') NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `organisation_id` (`organisation_id`),
+  KEY `ziel_organisation_id` (`ziel_organisation_id`),
+  KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=8 ;
+
+--
+-- RELATIONEN DER TABELLE `organisation_beziehung_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `organisation_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:04
+--
+
+DROP TABLE IF EXISTS `organisation_log`;
+CREATE TABLE IF NOT EXISTS `organisation_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `name_de` varchar(150) NOT NULL COMMENT 'Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.',
+  `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französischer Name',
+  `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
+  `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
+  `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Vernehmlassungsteilnahme',
+  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
+  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche.',
+  `url` varchar(255) DEFAULT NULL COMMENT 'Link zur Webseite',
+  `beschreibung` text NOT NULL COMMENT 'Beschreibung der Lobbyorganisation',
+  `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL COMMENT 'Bisherige Verbindung der Organisation ins Parlament',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `idx_lobbytyp` (`branche_id`),
+  KEY `idx_lobbygroup` (`interessengruppe_id`),
+  KEY `fk_organisation_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=512 ;
+
+--
+-- RELATIONEN DER TABELLE `organisation_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
 --
 
 -- --------------------------------------------------------
@@ -398,6 +1099,47 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 --       `partei` -> `id`
 --
 
+--
+-- Trigger `parlamentarier`
+--
+DROP TRIGGER IF EXISTS `trg_parlamentarier_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_parlamentarier_log_del_after` AFTER DELETE ON `parlamentarier`
+ FOR EACH ROW begin
+   UPDATE `parlamentarier_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_parlamentarier_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_parlamentarier_log_del_before` BEFORE DELETE ON `parlamentarier`
+ FOR EACH ROW begin
+   INSERT INTO `parlamentarier_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_parlamentarier_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_parlamentarier_log_ins` AFTER INSERT ON `parlamentarier`
+ FOR EACH ROW begin
+   INSERT INTO `parlamentarier_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_parlamentarier_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_parlamentarier_log_upd` AFTER UPDATE ON `parlamentarier`
+ FOR EACH ROW begin
+   INSERT INTO `parlamentarier_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -439,6 +1181,145 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
 --       `parlamentarier` -> `id`
 --
 
+--
+-- Trigger `parlamentarier_anhang`
+--
+DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_parlamentarier_anhang_log_del_after` AFTER DELETE ON `parlamentarier_anhang`
+ FOR EACH ROW begin
+   UPDATE `parlamentarier_anhang_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_parlamentarier_anhang_log_del_before` BEFORE DELETE ON `parlamentarier_anhang`
+ FOR EACH ROW begin
+   INSERT INTO `parlamentarier_anhang_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_parlamentarier_anhang_log_ins` AFTER INSERT ON `parlamentarier_anhang`
+ FOR EACH ROW begin
+   INSERT INTO `parlamentarier_anhang_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_parlamentarier_anhang_log_upd` AFTER UPDATE ON `parlamentarier_anhang`
+ FOR EACH ROW begin
+   INSERT INTO `parlamentarier_anhang_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:04
+--
+
+DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
+CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Parlamentariers',
+  `datei` varchar(255) NOT NULL COMMENT 'Datei',
+  `dateiname` varchar(255) NOT NULL COMMENT 'Dateiname ohne Erweiterung',
+  `dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Erweiterung der Datei',
+  `dateiname_voll` varchar(255) NOT NULL COMMENT 'Dateiname inkl. Erweiterung',
+  `mime_type` varchar(100) NOT NULL COMMENT 'MIME Type der Datei',
+  `encoding` varchar(20) NOT NULL COMMENT 'Encoding der Datei',
+  `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Anhangs',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `parlamentarier_id` (`parlamentarier_id`),
+  KEY `fk_parlamentarier_anhang_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=1 ;
+
+--
+-- RELATIONEN DER TABELLE `parlamentarier_anhang_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `parlamentarier_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:04
+--
+
+DROP TABLE IF EXISTS `parlamentarier_log`;
+CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `nachname` varchar(100) NOT NULL COMMENT 'Nachname des Parlamentariers',
+  `vorname` varchar(50) NOT NULL COMMENT 'Vornahme des Parlamentariers',
+  `zweiter_vorname` varchar(50) DEFAULT NULL COMMENT 'Zweiter Vorname des Parlamentariers',
+  `ratstyp` enum('NR','SR') NOT NULL COMMENT 'National- oder Ständerat?',
+  `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') NOT NULL COMMENT 'Kantonskürzel',
+  `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Leer bedeutet parteilos.',
+  `parteifunktion` set('mitglied','praesident','vizepraesident','fraktionschef') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
+  `im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
+  `beruf` varchar(150) NOT NULL COMMENT 'Beruf des Parlamentariers',
+  `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
+  `geburtstag` date DEFAULT NULL COMMENT 'Geburtstag des Parlamentariers',
+  `photo` varchar(255) DEFAULT NULL COMMENT 'Photo des Parlamentariers (JPEG/jpg)',
+  `photo_dateiname` varchar(255) DEFAULT NULL COMMENT 'Photodateiname ohne Erweiterung',
+  `photo_dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Erweiterung der Photodatei',
+  `photo_dateiname_voll` varchar(255) DEFAULT NULL COMMENT 'Photodateiname mit Erweiterung',
+  `photo_mime_type` varchar(100) DEFAULT NULL COMMENT 'MIME Type des Photos',
+  `kleinbild` varchar(80) DEFAULT 'leer.png' COMMENT 'Bild 44x62 px oder leer.png',
+  `sitzplatz` int(11) DEFAULT NULL COMMENT 'Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch',
+  `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Parlamentariers',
+  `parlament_link` varchar(255) DEFAULT NULL COMMENT 'Link zur Biographie auf Parlament.ch',
+  `homepage` varchar(150) DEFAULT NULL COMMENT 'Homepage des Parlamentariers',
+  `ALT_kommission` varchar(255) DEFAULT NULL COMMENT 'Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `idx_partei` (`partei_id`),
+  KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
+  KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=64 ;
+
+--
+-- RELATIONEN DER TABELLE `parlamentarier_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -465,6 +1346,104 @@ CREATE TABLE IF NOT EXISTS `partei` (
   UNIQUE KEY `partei_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `partei_name_unique` (`name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=9 ;
+
+--
+-- Trigger `partei`
+--
+DROP TRIGGER IF EXISTS `trg_partei_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_partei_log_del_after` AFTER DELETE ON `partei`
+ FOR EACH ROW begin
+   UPDATE `partei_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_partei_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_partei_log_del_before` BEFORE DELETE ON `partei`
+ FOR EACH ROW begin
+   INSERT INTO `partei_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `partei` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_partei_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_partei_log_ins` AFTER INSERT ON `partei`
+ FOR EACH ROW begin
+   INSERT INTO `partei_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_partei_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_partei_log_upd` AFTER UPDATE ON `partei`
+ FOR EACH ROW begin
+   INSERT INTO `partei_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `partei_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:04
+--
+
+DROP TABLE IF EXISTS `partei_log`;
+CREATE TABLE IF NOT EXISTS `partei_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `abkuerzung` varchar(20) NOT NULL COMMENT 'Parteiabkürzung',
+  `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
+  `gruendung` year(4) DEFAULT NULL COMMENT 'Gründungsjahr der Partei',
+  `position` enum('links','rechts','mitte','') DEFAULT NULL COMMENT 'Politische Position der Partei',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `fk_partei_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=16 ;
+
+--
+-- RELATIONEN DER TABELLE `partei_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `snapshot`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:03
+--
+
+DROP TABLE IF EXISTS `snapshot`;
+CREATE TABLE IF NOT EXISTS `snapshot` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Snapshots',
+  `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Snapshots',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Eintrge am besten mit Datum und Visa versehen.',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) NOT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Lobbycontrol snapshots' AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -1355,6 +2334,90 @@ CREATE TABLE IF NOT EXISTS `zugangsberechtigung` (
 --       `parlamentarier` -> `id`
 --
 
+--
+-- Trigger `zugangsberechtigung`
+--
+DROP TRIGGER IF EXISTS `trg_zugangsberechtigung_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_zugangsberechtigung_log_del_after` AFTER DELETE ON `zugangsberechtigung`
+ FOR EACH ROW begin
+   UPDATE `zugangsberechtigung_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_zugangsberechtigung_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_zugangsberechtigung_log_del_before` BEFORE DELETE ON `zugangsberechtigung`
+ FOR EACH ROW begin
+   INSERT INTO `zugangsberechtigung_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `zugangsberechtigung` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_zugangsberechtigung_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_zugangsberechtigung_log_ins` AFTER INSERT ON `zugangsberechtigung`
+ FOR EACH ROW begin
+   INSERT INTO `zugangsberechtigung_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `zugangsberechtigung` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_zugangsberechtigung_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_zugangsberechtigung_log_upd` AFTER UPDATE ON `zugangsberechtigung`
+ FOR EACH ROW begin
+   INSERT INTO `zugangsberechtigung_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `zugangsberechtigung` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `zugangsberechtigung_log`
+--
+-- Erzeugt am: 15. Dez 2013 um 12:04
+--
+
+DROP TABLE IF EXISTS `zugangsberechtigung_log`;
+CREATE TABLE IF NOT EXISTS `zugangsberechtigung_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel zu Parlamentarier',
+  `nachname` varchar(100) NOT NULL COMMENT 'Nachname des berechtigten Persion',
+  `vorname` varchar(50) NOT NULL COMMENT 'Vorname der berechtigten Person',
+  `funktion` varchar(150) DEFAULT NULL COMMENT 'Angegebene Funktion bei der Zugangsberechtigung',
+  `beruf` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
+  `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Interessengruppe für den Beruf',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `ALT_lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Wird später entfernt. Fremschlüssel zur Lobbyorganisation',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `idx_parlam` (`parlamentarier_id`),
+  KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
+  KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`),
+  KEY `fk_zugangsberechtigung_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=64 ;
+
+--
+-- RELATIONEN DER TABELLE `zugangsberechtigung_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -1735,6 +2798,12 @@ ALTER TABLE `branche`
   ADD CONSTRAINT `fk_kommission_id` FOREIGN KEY (`kommission_id`) REFERENCES `kommission` (`id`);
 
 --
+-- Constraints der Tabelle `branche_log`
+--
+ALTER TABLE `branche_log`
+  ADD CONSTRAINT `fk_branche_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
 -- Constraints der Tabelle `interessenbindung`
 --
 ALTER TABLE `interessenbindung`
@@ -1742,10 +2811,22 @@ ALTER TABLE `interessenbindung`
   ADD CONSTRAINT `fk_ib_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
 
 --
+-- Constraints der Tabelle `interessenbindung_log`
+--
+ALTER TABLE `interessenbindung_log`
+  ADD CONSTRAINT `fk_interessenbindung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
 -- Constraints der Tabelle `interessengruppe`
 --
 ALTER TABLE `interessengruppe`
   ADD CONSTRAINT `fk_lg_lt` FOREIGN KEY (`branche_id`) REFERENCES `branche` (`id`);
+
+--
+-- Constraints der Tabelle `interessengruppe_log`
+--
+ALTER TABLE `interessengruppe_log`
+  ADD CONSTRAINT `fk_interessengruppe_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `in_kommission`
@@ -1755,11 +2836,29 @@ ALTER TABLE `in_kommission`
   ADD CONSTRAINT `fk_in_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
 
 --
+-- Constraints der Tabelle `in_kommission_log`
+--
+ALTER TABLE `in_kommission_log`
+  ADD CONSTRAINT `fk_in_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
+-- Constraints der Tabelle `kommission_log`
+--
+ALTER TABLE `kommission_log`
+  ADD CONSTRAINT `fk_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
 -- Constraints der Tabelle `mandat`
 --
 ALTER TABLE `mandat`
   ADD CONSTRAINT `fk_organisations_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
   ADD CONSTRAINT `fk_zugangsberechtigung_id` FOREIGN KEY (`zugangsberechtigung_id`) REFERENCES `zugangsberechtigung` (`id`);
+
+--
+-- Constraints der Tabelle `mandat_log`
+--
+ALTER TABLE `mandat_log`
+  ADD CONSTRAINT `fk_mandat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `organisation`
@@ -1776,6 +2875,18 @@ ALTER TABLE `organisation_beziehung`
   ADD CONSTRAINT `fk_ziel_organisation_id` FOREIGN KEY (`ziel_organisation_id`) REFERENCES `organisation` (`id`);
 
 --
+-- Constraints der Tabelle `organisation_beziehung_log`
+--
+ALTER TABLE `organisation_beziehung_log`
+  ADD CONSTRAINT `fk_organisation_beziehung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
+-- Constraints der Tabelle `organisation_log`
+--
+ALTER TABLE `organisation_log`
+  ADD CONSTRAINT `fk_organisation_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
 -- Constraints der Tabelle `parlamentarier`
 --
 ALTER TABLE `parlamentarier`
@@ -1789,12 +2900,36 @@ ALTER TABLE `parlamentarier_anhang`
   ADD CONSTRAINT `fk_parlam_anhang` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints der Tabelle `parlamentarier_anhang_log`
+--
+ALTER TABLE `parlamentarier_anhang_log`
+  ADD CONSTRAINT `fk_parlamentarier_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
+-- Constraints der Tabelle `parlamentarier_log`
+--
+ALTER TABLE `parlamentarier_log`
+  ADD CONSTRAINT `fk_parlamentarier_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
+-- Constraints der Tabelle `partei_log`
+--
+ALTER TABLE `partei_log`
+  ADD CONSTRAINT `fk_partei_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
 -- Constraints der Tabelle `zugangsberechtigung`
 --
 ALTER TABLE `zugangsberechtigung`
   ADD CONSTRAINT `fk_zb_lg` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
   ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY (`ALT_lobbyorganisation_id`) REFERENCES `organisation` (`id`),
   ADD CONSTRAINT `fk_zb_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
+
+--
+-- Constraints der Tabelle `zugangsberechtigung_log`
+--
+ALTER TABLE `zugangsberechtigung_log`
+  ADD CONSTRAINT `fk_zugangsberechtigung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

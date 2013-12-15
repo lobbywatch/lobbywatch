@@ -38,6 +38,7 @@ $tables = array('branche' => 'Branche',
 $table_queries = array();
 $table_views = array();
 $view_queries = array();
+$snapshots = array();
 foreach ($tables as $table => $name) {
   //$table_queries2[] = preg_replace('\$table', $table, $table_query);
 //   $table_queries[] = "(SELECT
@@ -76,6 +77,9 @@ foreach ($tables as $table => $name) {
   LIMIT 1
   );";
   $view_queries[] = "SELECT * FROM v_last_updated_$table";
+
+  $snapshots[] = "   INSERT INTO `${table}_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `$table`;";
 
   // Ref: http://stackoverflow.com/questions/1895110/row-number-in-mysql
   //  @rownum := @rownum + 1 AS rank
@@ -118,3 +122,5 @@ echo "\n-- Last updated views\n\n";
 echo implode("\n", $table_views) . "\n";
 echo $unordered_views . "\n";
 echo $master_view . "\n";
+
+echo "\n" . implode("\n\n", $snapshots) . "\n";
