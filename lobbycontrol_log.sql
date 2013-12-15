@@ -81,9 +81,57 @@ ALTER TABLE `branche_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_branche_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_branche_log_ins`;
+delimiter //
+create trigger `trg_branche_log_ins` after insert on `branche`
+for each row
+begin
+   INSERT INTO `branche_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_branche_log_upd`;
+delimiter //
+create trigger `trg_branche_log_upd` after update on `branche`
+for each row
+begin
+   INSERT INTO `branche_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_branche_log_del_before`;
+delimiter //
+create trigger `trg_branche_log_del_before` before delete on `branche`
+for each row
+begin
+   INSERT INTO `branche_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `branche` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_branche_log_del_after`;
+delimiter //
+create trigger `trg_branche_log_del_after` after delete on `branche`
+for each row
+begin
+   UPDATE `branche_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 --
 -- RELATIONEN DER TABELLE `branche`:
@@ -134,9 +182,57 @@ ALTER TABLE `interessenbindung_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_interessenbindung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_interessenbindung_log_ins`;
+delimiter //
+create trigger `trg_interessenbindung_log_ins` after insert on `interessenbindung`
+for each row
+begin
+   INSERT INTO `interessenbindung_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_interessenbindung_log_upd`;
+delimiter //
+create trigger `trg_interessenbindung_log_upd` after update on `interessenbindung`
+for each row
+begin
+   INSERT INTO `interessenbindung_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_interessenbindung_log_del_before`;
+delimiter //
+create trigger `trg_interessenbindung_log_del_before` before delete on `interessenbindung`
+for each row
+begin
+   INSERT INTO `interessenbindung_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `interessenbindung` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_interessenbindung_log_del_after`;
+delimiter //
+create trigger `trg_interessenbindung_log_del_after` after delete on `interessenbindung`
+for each row
+begin
+   UPDATE `interessenbindung_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung`:
@@ -183,9 +279,57 @@ ALTER TABLE `interessengruppe_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_interessengruppe_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_interessengruppe_log_ins`;
+delimiter //
+create trigger `trg_interessengruppe_log_ins` after insert on `interessengruppe`
+for each row
+begin
+   INSERT INTO `interessengruppe_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_interessengruppe_log_upd`;
+delimiter //
+create trigger `trg_interessengruppe_log_upd` after update on `interessengruppe`
+for each row
+begin
+   INSERT INTO `interessengruppe_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_interessengruppe_log_del_before`;
+delimiter //
+create trigger `trg_interessengruppe_log_del_before` before delete on `interessengruppe`
+for each row
+begin
+   INSERT INTO `interessengruppe_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `interessengruppe` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_interessengruppe_log_del_after`;
+delimiter //
+create trigger `trg_interessengruppe_log_del_after` after delete on `interessengruppe`
+for each row
+begin
+   UPDATE `interessengruppe_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe`:
@@ -231,9 +375,57 @@ ALTER TABLE `in_kommission_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_in_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_in_kommission_log_ins`;
+delimiter //
+create trigger `trg_in_kommission_log_ins` after insert on `in_kommission`
+for each row
+begin
+   INSERT INTO `in_kommission_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_in_kommission_log_upd`;
+delimiter //
+create trigger `trg_in_kommission_log_upd` after update on `in_kommission`
+for each row
+begin
+   INSERT INTO `in_kommission_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_in_kommission_log_del_before`;
+delimiter //
+create trigger `trg_in_kommission_log_del_before` before delete on `in_kommission`
+for each row
+begin
+   INSERT INTO `in_kommission_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `in_kommission` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_in_kommission_log_del_after`;
+delimiter //
+create trigger `trg_in_kommission_log_del_after` after delete on `in_kommission`
+for each row
+begin
+   UPDATE `in_kommission_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 --
 -- RELATIONEN DER TABELLE `in_kommission`:
@@ -286,9 +478,57 @@ ALTER TABLE `kommission_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_kommission_log_ins`;
+delimiter //
+create trigger `trg_kommission_log_ins` after insert on `kommission`
+for each row
+begin
+   INSERT INTO `kommission_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_kommission_log_upd`;
+delimiter //
+create trigger `trg_kommission_log_upd` after update on `kommission`
+for each row
+begin
+   INSERT INTO `kommission_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_kommission_log_del_before`;
+delimiter //
+create trigger `trg_kommission_log_del_before` before delete on `kommission`
+for each row
+begin
+   INSERT INTO `kommission_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `kommission` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_kommission_log_del_after`;
+delimiter //
+create trigger `trg_kommission_log_del_after` after delete on `kommission`
+for each row
+begin
+   UPDATE `kommission_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 -- --------------------------------------------------------
 
@@ -332,9 +572,57 @@ ALTER TABLE `mandat_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_mandat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_mandat_log_ins`;
+delimiter //
+create trigger `trg_mandat_log_ins` after insert on `mandat`
+for each row
+begin
+   INSERT INTO `mandat_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_mandat_log_upd`;
+delimiter //
+create trigger `trg_mandat_log_upd` after update on `mandat`
+for each row
+begin
+   INSERT INTO `mandat_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_mandat_log_del_before`;
+delimiter //
+create trigger `trg_mandat_log_del_before` before delete on `mandat`
+for each row
+begin
+   INSERT INTO `mandat_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `mandat` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_mandat_log_del_after`;
+delimiter //
+create trigger `trg_mandat_log_del_after` after delete on `mandat`
+for each row
+begin
+   UPDATE `mandat_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 --
 -- RELATIONEN DER TABELLE `mandat`:
@@ -393,9 +681,57 @@ ALTER TABLE `organisation_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_organisation_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_organisation_log_ins`;
+delimiter //
+create trigger `trg_organisation_log_ins` after insert on `organisation`
+for each row
+begin
+   INSERT INTO `organisation_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_organisation_log_upd`;
+delimiter //
+create trigger `trg_organisation_log_upd` after update on `organisation`
+for each row
+begin
+   INSERT INTO `organisation_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_organisation_log_del_before`;
+delimiter //
+create trigger `trg_organisation_log_del_before` before delete on `organisation`
+for each row
+begin
+   INSERT INTO `organisation_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `organisation` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_organisation_log_del_after`;
+delimiter //
+create trigger `trg_organisation_log_del_after` after delete on `organisation`
+for each row
+begin
+   UPDATE `organisation_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 --
 -- RELATIONEN DER TABELLE `organisation`:
@@ -443,9 +779,57 @@ ALTER TABLE `organisation_beziehung_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_organisation_beziehung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_organisation_beziehung_log_ins`;
+delimiter //
+create trigger `trg_organisation_beziehung_log_ins` after insert on `organisation_beziehung`
+for each row
+begin
+   INSERT INTO `organisation_beziehung_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_organisation_beziehung_log_upd`;
+delimiter //
+create trigger `trg_organisation_beziehung_log_upd` after update on `organisation_beziehung`
+for each row
+begin
+   INSERT INTO `organisation_beziehung_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_organisation_beziehung_log_del_before`;
+delimiter //
+create trigger `trg_organisation_beziehung_log_del_before` before delete on `organisation_beziehung`
+for each row
+begin
+   INSERT INTO `organisation_beziehung_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `organisation_beziehung` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_organisation_beziehung_log_del_after`;
+delimiter //
+create trigger `trg_organisation_beziehung_log_del_after` after delete on `organisation_beziehung`
+for each row
+begin
+   UPDATE `organisation_beziehung_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung`:
@@ -514,9 +898,57 @@ ALTER TABLE `parlamentarier_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_parlamentarier_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_parlamentarier_log_ins`;
+delimiter //
+create trigger `trg_parlamentarier_log_ins` after insert on `parlamentarier`
+for each row
+begin
+   INSERT INTO `parlamentarier_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_parlamentarier_log_upd`;
+delimiter //
+create trigger `trg_parlamentarier_log_upd` after update on `parlamentarier`
+for each row
+begin
+   INSERT INTO `parlamentarier_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_parlamentarier_log_del_before`;
+delimiter //
+create trigger `trg_parlamentarier_log_del_before` before delete on `parlamentarier`
+for each row
+begin
+   INSERT INTO `parlamentarier_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_parlamentarier_log_del_after`;
+delimiter //
+create trigger `trg_parlamentarier_log_del_after` after delete on `parlamentarier`
+for each row
+begin
+   UPDATE `parlamentarier_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 --
 -- MIME TYPEN DER TABELLE `parlamentarier`:
@@ -573,9 +1005,57 @@ ALTER TABLE `parlamentarier_anhang_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_parlamentarier_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_parlamentarier_anhang_log_ins`;
+delimiter //
+create trigger `trg_parlamentarier_anhang_log_ins` after insert on `parlamentarier_anhang`
+for each row
+begin
+   INSERT INTO `parlamentarier_anhang_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_parlamentarier_anhang_log_upd`;
+delimiter //
+create trigger `trg_parlamentarier_anhang_log_upd` after update on `parlamentarier_anhang`
+for each row
+begin
+   INSERT INTO `parlamentarier_anhang_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_parlamentarier_anhang_log_del_before`;
+delimiter //
+create trigger `trg_parlamentarier_anhang_log_del_before` before delete on `parlamentarier_anhang`
+for each row
+begin
+   INSERT INTO `parlamentarier_anhang_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_parlamentarier_anhang_log_del_after`;
+delimiter //
+create trigger `trg_parlamentarier_anhang_log_del_after` after delete on `parlamentarier_anhang`
+for each row
+begin
+   UPDATE `parlamentarier_anhang_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 --
 -- MIME TYPEN DER TABELLE `parlamentarier_anhang`:
@@ -628,9 +1108,57 @@ ALTER TABLE `partei_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_partei_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_partei_log_ins`;
+delimiter //
+create trigger `trg_partei_log_ins` after insert on `partei`
+for each row
+begin
+   INSERT INTO `partei_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_partei_log_upd`;
+delimiter //
+create trigger `trg_partei_log_upd` after update on `partei`
+for each row
+begin
+   INSERT INTO `partei_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_partei_log_del_before`;
+delimiter //
+create trigger `trg_partei_log_del_before` before delete on `partei`
+for each row
+begin
+   INSERT INTO `partei_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `partei` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_partei_log_del_after`;
+delimiter //
+create trigger `trg_partei_log_del_after` after delete on `partei`
+for each row
+begin
+   UPDATE `partei_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 -- --------------------------------------------------------
 
@@ -709,9 +1237,57 @@ ALTER TABLE `zugangsberechtigung_log`
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
   ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_zugangsberechtigung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_zugangsberechtigung_log_ins`;
+delimiter //
+create trigger `trg_zugangsberechtigung_log_ins` after insert on `zugangsberechtigung`
+for each row
+begin
+   INSERT INTO `zugangsberechtigung_log`
+          SELECT *, null, 'insert', null, NOW(), null FROM `zugangsberechtigung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_zugangsberechtigung_log_upd`;
+delimiter //
+create trigger `trg_zugangsberechtigung_log_upd` after update on `zugangsberechtigung`
+for each row
+begin
+   INSERT INTO `zugangsberechtigung_log`
+          SELECT *, null, 'update', null, NOW(), null FROM `zugangsberechtigung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_zugangsberechtigung_log_del_before`;
+delimiter //
+create trigger `trg_zugangsberechtigung_log_del_before` before delete on `zugangsberechtigung`
+for each row
+begin
+   INSERT INTO `zugangsberechtigung_log`
+          SELECT *, null, 'delete', null, NOW(), null FROM `zugangsberechtigung` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_zugangsberechtigung_log_del_after`;
+delimiter //
+create trigger `trg_zugangsberechtigung_log_del_after` after delete on `zugangsberechtigung`
+for each row
+begin
+   UPDATE `zugangsberechtigung_log`
+      SET `state` = 'OK'
+      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
 
 --
 -- RELATIONEN DER TABELLE `zugangsberechtigung`:

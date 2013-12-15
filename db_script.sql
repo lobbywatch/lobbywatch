@@ -222,8 +222,8 @@ begin
     end if;
 end
 //
-
 delimiter ;
+
 drop trigger if exists trg_organisation_name_upd;
 delimiter //
 create trigger trg_organisation_name_upd before update on organisation
