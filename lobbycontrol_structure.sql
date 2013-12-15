@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 15. Dez 2013 um 17:59
+-- Erstellungszeit: 15. Dez 2013 um 18:11
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -2162,6 +2162,18 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier_anhang` (
 -- --------------------------------------------------------
 
 --
+-- Stellvertreter-Struktur des Views `v_parlamentarier_authorisierungs_email`
+--
+DROP VIEW IF EXISTS `v_parlamentarier_authorisierungs_email`;
+CREATE TABLE IF NOT EXISTS `v_parlamentarier_authorisierungs_email` (
+`id` int(11)
+,`parlamentarier_name` varchar(152)
+,`email` varchar(100)
+,`email_text` text
+);
+-- --------------------------------------------------------
+
+--
 -- Stellvertreter-Struktur des Views `v_partei`
 --
 DROP VIEW IF EXISTS `v_partei`;
@@ -2765,6 +2777,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `v_parlamentarier_anhang`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_anhang` AS select `t`.`parlamentarier_id` AS `parlamentarier_id2`,`t`.`id` AS `id`,`t`.`parlamentarier_id` AS `parlamentarier_id`,`t`.`datei` AS `datei`,`t`.`dateiname` AS `dateiname`,`t`.`dateierweiterung` AS `dateierweiterung`,`t`.`dateiname_voll` AS `dateiname_voll`,`t`.`mime_type` AS `mime_type`,`t`.`encoding` AS `encoding`,`t`.`beschreibung` AS `beschreibung`,`t`.`freigabe_von` AS `freigabe_von`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `parlamentarier_anhang` `t`;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur des Views `v_parlamentarier_authorisierungs_email`
+--
+DROP TABLE IF EXISTS `v_parlamentarier_authorisierungs_email`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_authorisierungs_email` AS select `parlamentarier`.`id` AS `id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`email` AS `email`,concat((case `parlamentarier`.`geschlecht` when 'M' then concat('<p>Sehr geehrter Herr ',`parlamentarier`.`nachname`,'</p>') when 'F' then concat('<p>Sehr geehrte Frau ',`parlamentarier`.`nachname`,'</p>') else concat('<p>Sehr geehrte(r) Herr/Frau ',`parlamentarier`.`nachname`,'</p>') end),'<p>[Einleitung]</p>','<p>Ihre <b>Interessenbindungen</b>:</p>','<ul>',group_concat(distinct concat('<li>',`organisation`.`anzeige_name`,if((isnull(`organisation`.`rechtsform`) or (trim(`organisation`.`rechtsform`) = '')),'',concat(', ',`organisation`.`rechtsform`)),if((isnull(`organisation`.`ort`) or (trim(`organisation`.`ort`) = '')),'',concat(', ',`organisation`.`ort`)),', ',`interessenbindung`.`art`,', ',`interessenbindung`.`beschreibung`) order by `organisation`.`anzeige_name` ASC separator ' '),'</ul>','<p>Ihre <b>Gäste</b>:</p>','<ul>',group_concat(distinct concat('<li>',`zugangsberechtigung`.`name`,', ',`zugangsberechtigung`.`funktion`) order by `organisation`.`anzeige_name` ASC separator ' '),'</ul>','<p>Mit freundlichen Grüssen,<br></p>') AS `email_text` from (((`v_parlamentarier` `parlamentarier` left join `v_interessenbindung` `interessenbindung` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) left join `v_organisation` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) left join `v_zugangsberechtigung` `zugangsberechtigung` on((`zugangsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) group by `parlamentarier`.`id`;
 
 -- --------------------------------------------------------
 
