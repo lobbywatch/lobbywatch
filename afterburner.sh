@@ -40,6 +40,7 @@ do
   | perl -p -e's/\$public_files_dir/'\'' \. \$GLOBALS["public_files_dir"] \. '\''/g' \
   | perl -p -e's/\$private_files_dir/'\'' \. \$GLOBALS["private_files_dir"] \. '\''/g' \
   | perl -p -e's/\$build_date:\$/'\'' \. \$GLOBALS["build_date"] \. '\''/g' \
+  | perl -p -e's/\$deploy_date:\$/'\'' \. \$GLOBALS["deploy_date"] \. '\''/g' \
   | perl -p -e's/\$edit_general_hint/'\'' \. \$GLOBALS["edit_general_hint"] \. '\''/g' \
   | perl -p -e's/<a id="plugin-edit-remarksbox.*?<\/a>//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" width="15" height="14">//g' \
@@ -147,8 +148,6 @@ do
   | perl -p -e's/(database\s*=\s*)".*?"/\1""/ig' \
   > "lobbycontrol_bearbeitung_public.pgtm";
 done
-
-cp lobbycontrol_er.pdf public_html/
 
 git st
 

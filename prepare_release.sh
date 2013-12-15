@@ -10,3 +10,7 @@ cat ../data/lobbycontrol.sql \
 | perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' \
 | perl -p -e's/DEFINER=`root`@`localhost` //ig' \
 > ../data/deploy_lobbycontrol.sql;
+
+cp lobbycontrol_er.pdf public_html/
+cp lobbycontrol_er_1page.pdf public_html/
+

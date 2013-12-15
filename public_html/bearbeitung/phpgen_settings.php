@@ -66,7 +66,7 @@ function GetPagesFooter()
 {
     return
         'Bearbeitungsseiten von <a href="' . $GLOBALS["env_dir"] . '">Lobbycontrol ' . $GLOBALS["env"] . '</a>.<br>
-Mode: ' . $GLOBALS["env"] . ' / Build date: ' . $GLOBALS["build_date"] . ''; 
+Mode: ' . $GLOBALS["env"] . ' / Deploy date: ' . $GLOBALS["deploy_date"] . ' / Build date: ' . $GLOBALS["build_date"] . ''; 
     }
 
 function ApplyCommonPageSettings(Page $page, Grid $grid)
