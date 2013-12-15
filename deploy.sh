@@ -23,7 +23,6 @@ load_sql=false
 maintenance_mode=false
 env="test"
 
-
 NOW=$(date +"%d.%m.%Y %H:%M");
 echo -e "<?php\n\$deploy_date = '$NOW';" > $public_dir/common/deploy_date.php;
 
@@ -95,6 +94,8 @@ echo -e "Environment: $env"
 
 echo "## Prepare release"
 ./prepare_release.sh $env_suffix
+
+# read -s -p "Password: " passw
 
 echo "## Deploying website via Rsync"
 rsync -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir_suffix
