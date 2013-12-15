@@ -56,7 +56,8 @@ $grants = array('guest' =>
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
         'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
         'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
     ,
@@ -98,7 +99,8 @@ $grants = array('guest' =>
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
         'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
         'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
     ,
@@ -140,7 +142,8 @@ $grants = array('guest' =>
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
         'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
         'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
     ,
@@ -182,7 +185,8 @@ $grants = array('guest' =>
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
         'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
         'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
     ,
@@ -224,7 +228,8 @@ $grants = array('guest' =>
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
         'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
         'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
     ,
@@ -266,7 +271,8 @@ $grants = array('guest' =>
         'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
         'interessengruppe.zugangsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'Parlamentarier_photo_fehlt' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
+        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
         'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
         'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
     );
@@ -316,7 +322,8 @@ $tableCaptions = array('kommission' => 'Kommission',
 'interessengruppe.organisation' => 'Interessengruppe.Organisation',
 'interessengruppe.parlamentarier' => 'Interessengruppe.Parlamentarier',
 'interessengruppe.zugangsberechtigung' => 'Interessengruppe.Zugangsberechtigung',
-'Parlamentarier_photo_fehlt' => 'Parlamentarier Photo Fehlt',
+'q_unvollstaendige_parlamentarier' => 'Unvollständige Parlamentarier',
+'q_unvollstaendige_organisationen' => 'Unvollständige Organisationen',
 'v_last_updated_tables' => 'Tabellenstand',
 'q_last_updated_tables' => 'Tabellenstand');
 
