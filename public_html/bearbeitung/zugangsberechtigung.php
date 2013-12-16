@@ -6260,7 +6260,9 @@
             //
             // Edit column for funktion field
             //
-            $editor = new TextAreaEdit('funktion_edit', 50, 8);
+            $editor = new TextEdit('funktion_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6271,7 +6273,9 @@
             //
             // Edit column for funktion field
             //
-            $editor = new TextAreaEdit('funktion_edit', 50, 8);
+            $editor = new TextEdit('funktion_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6293,7 +6297,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6304,7 +6310,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7056,7 +7064,9 @@
             //
             // Edit column for funktion field
             //
-            $editor = new TextAreaEdit('funktion_edit', 50, 8);
+            $editor = new TextEdit('funktion_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7065,7 +7075,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7352,7 +7364,9 @@
             //
             // Edit column for funktion field
             //
-            $editor = new TextAreaEdit('funktion_edit', 50, 8);
+            $editor = new TextEdit('funktion_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7361,7 +7375,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8733,7 +8749,9 @@
             //
             // Edit column for funktion field
             //
-            $editor = new TextAreaEdit('funktion_edit', 50, 8);
+            $editor = new TextEdit('funktion_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8744,7 +8762,9 @@
             //
             // Edit column for funktion field
             //
-            $editor = new TextAreaEdit('funktion_edit', 50, 8);
+            $editor = new TextEdit('funktion_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8762,7 +8782,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8773,7 +8795,9 @@
             //
             // Edit column for beruf field
             //
-            $editor = new TextAreaEdit('beruf_edit', 50, 8);
+            $editor = new TextEdit('beruf_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
