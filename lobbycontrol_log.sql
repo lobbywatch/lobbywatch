@@ -6,6 +6,9 @@
 -- Error message if problem with _log tables:
 -- #1136 - Column count doesn't match value count at row 1
 
+-- Ein Fehler ist aufgetreten wärend dem Update:
+-- Cannot execute SQL: UPDATE `kommission` SET `abkuerzung` = 'FinDel', `name` = 'Finanzdelegation', `typ` = 'spezialkommission', `mutter_kommission` = NULL, `beschreibung` = NULL, `sachbereiche` = 'Zuständige Sachbereiche\r\n\r\nGemäss Art. 51 Abs. 2 des Parlamentsgesetzes obliegt der Finanzdelegation die nähere Überprüfung und Überwachung des gesamten Finanzhaushaltes.\r\nSie zählt je drei Mitglieder des Nationalrates und des Ständerates, die den Finanzkommissionen des entsprechenden Rates angehören.\r\n\r\nDer Auftrag der Finanzdelegation umfasst vor allem fünf Aufgaben:\r\nSie verfügt über besoldungs- und kreditrechtliche Kompetenzen, nimmt die Revisionsberichte der Eidgenössischen Finanzkontrolle (EFK) ab, übt die mitschreitende Aufsicht über die Finanzpolitik des Bundesrates aus und kann Mitberichte zu Botschaften des Bundesrates an die Finanzkommissionen oder andere Kommissionen verfassen.', `parlament_link` = NULL, `notizen` = NULL, `freigabe_von` = NULL, `freigabe_datum` = NULL, `updated_visa` = 'roland', `updated_date` = '2013-12-16 11:35:49' WHERE `id` = 43 Cannot add or update a child row: a foreign key constraint fails (`lobbycontrol`.`kommission_log`, CONSTRAINT `fk_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`))
+
 -- Disable logging:
 --   SET @disable_table_logging = 1;
 --   // Your update statement goes here.

@@ -5182,8 +5182,9 @@
             // Edit column for typ field
             //
             $editor = new ComboBox('typ_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('kommission', $this->RenderText('Kommission'));
+            $editor->AddValue('kommission', $this->RenderText('kommission'));
             $editor->AddValue('spezialkommission', $this->RenderText('Spezialkommission/Delegation im weiteren Sinne'));
+            $editor->AddValue('subkommission', $this->RenderText('Subkommission/Delegation im engeren Sinne'));
             $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -5196,8 +5197,9 @@
             // Edit column for typ field
             //
             $editor = new ComboBox('typ_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('kommission', $this->RenderText('Kommission'));
+            $editor->AddValue('kommission', $this->RenderText('kommission'));
             $editor->AddValue('spezialkommission', $this->RenderText('Spezialkommission/Delegation im weiteren Sinne'));
+            $editor->AddValue('subkommission', $this->RenderText('Subkommission/Delegation im engeren Sinne'));
             $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -5805,8 +5807,9 @@
             // Edit column for typ field
             //
             $editor = new ComboBox('typ_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('kommission', $this->RenderText('Kommission'));
+            $editor->AddValue('kommission', $this->RenderText('kommission'));
             $editor->AddValue('spezialkommission', $this->RenderText('Spezialkommission/Delegation im weiteren Sinne'));
+            $editor->AddValue('subkommission', $this->RenderText('Subkommission/Delegation im engeren Sinne'));
             $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -6010,8 +6013,9 @@
             // Edit column for typ field
             //
             $editor = new ComboBox('typ_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('kommission', $this->RenderText('Kommission'));
+            $editor->AddValue('kommission', $this->RenderText('kommission'));
             $editor->AddValue('spezialkommission', $this->RenderText('Spezialkommission/Delegation im weiteren Sinne'));
+            $editor->AddValue('subkommission', $this->RenderText('Subkommission/Delegation im engeren Sinne'));
             $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
