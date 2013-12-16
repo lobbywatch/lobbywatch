@@ -534,7 +534,7 @@
     
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
-            $column->SetShowSetToNullCheckBox(true);
+            $column->SetShowSetToNullCheckBox(false);
         }
     
         protected function CreateGrid()
@@ -1734,7 +1734,7 @@
     
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
-            $column->SetShowSetToNullCheckBox(true);
+            $column->SetShowSetToNullCheckBox(false);
     	$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
     
@@ -3495,7 +3495,7 @@
     
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
-            $column->SetShowSetToNullCheckBox(true);
+            $column->SetShowSetToNullCheckBox(false);
     		$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
     
