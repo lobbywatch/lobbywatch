@@ -236,7 +236,8 @@ drop trigger if exists trg_organisation_name_ins;
 delimiter //
 create trigger trg_organisation_name_ins before insert on organisation
 for each row
-begin
+thisTrigger: begin
+    IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
         call organisation_name_de_fr_it_must_be_set;
     end if;
@@ -248,7 +249,8 @@ drop trigger if exists trg_organisation_name_upd;
 delimiter //
 create trigger trg_organisation_name_upd before update on organisation
 for each row
-begin
+thisTrigger: begin
+    IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
         call organisation_name_de_fr_it_must_be_set;
     end if;
@@ -479,7 +481,9 @@ UNION
 ) complete
 ORDER BY complete.last_updated DESC;
 
--- Last updated views
+-- VIEWS ------------------
+
+-- Views Last updated
 
 CREATE OR REPLACE VIEW `v_last_updated_branche` AS
   (SELECT
@@ -879,8 +883,8 @@ INNER JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
 INNER JOIN v_parlamentarier parlamentarier
   ON interessenbindung.parlamentarier_id = parlamentarier.id
-ORDER BY organisation.anzeige_name
-GROUP BY parlamentarier.id;
+GROUP BY parlamentarier.id
+ORDER BY organisation.anzeige_name;
 
 -- Authorisieurngsemail Interessenbindung für Parlamenterier
 -- Connector: parlamentarier_id

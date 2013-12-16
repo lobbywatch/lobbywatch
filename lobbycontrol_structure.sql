@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 15. Dez 2013 um 18:11
+-- Erstellungszeit: 16. Dez 2013 um 09:23
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -115,37 +115,41 @@ CREATE TABLE IF NOT EXISTS `branche` (
 DROP TRIGGER IF EXISTS `trg_branche_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_branche_log_del_after` AFTER DELETE ON `branche`
- FOR EACH ROW begin
-   UPDATE `branche_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `branche_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_branche_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_branche_log_del_before` BEFORE DELETE ON `branche`
- FOR EACH ROW begin
-   INSERT INTO `branche_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `branche` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `branche_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `branche` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_branche_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_branche_log_ins` AFTER INSERT ON `branche`
- FOR EACH ROW begin
-   INSERT INTO `branche_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `branche_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_branche_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_branche_log_upd` AFTER UPDATE ON `branche`
- FOR EACH ROW begin
-   INSERT INTO `branche_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `branche_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
@@ -234,37 +238,41 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
 DROP TRIGGER IF EXISTS `trg_interessenbindung_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_interessenbindung_log_del_after` AFTER DELETE ON `interessenbindung`
- FOR EACH ROW begin
-   UPDATE `interessenbindung_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `interessenbindung_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_interessenbindung_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_interessenbindung_log_del_before` BEFORE DELETE ON `interessenbindung`
- FOR EACH ROW begin
-   INSERT INTO `interessenbindung_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `interessenbindung` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `interessenbindung` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_interessenbindung_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_interessenbindung_log_ins` AFTER INSERT ON `interessenbindung`
- FOR EACH ROW begin
-   INSERT INTO `interessenbindung_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_interessenbindung_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_interessenbindung_log_upd` AFTER UPDATE ON `interessenbindung`
- FOR EACH ROW begin
-   INSERT INTO `interessenbindung_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessenbindung_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `interessenbindung` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
@@ -350,37 +358,41 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
 DROP TRIGGER IF EXISTS `trg_interessengruppe_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_interessengruppe_log_del_after` AFTER DELETE ON `interessengruppe`
- FOR EACH ROW begin
-   UPDATE `interessengruppe_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `interessengruppe_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_interessengruppe_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_interessengruppe_log_del_before` BEFORE DELETE ON `interessengruppe`
- FOR EACH ROW begin
-   INSERT INTO `interessengruppe_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `interessengruppe` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessengruppe_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `interessengruppe` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_interessengruppe_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_interessengruppe_log_ins` AFTER INSERT ON `interessengruppe`
- FOR EACH ROW begin
-   INSERT INTO `interessengruppe_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessengruppe_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_interessengruppe_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_interessengruppe_log_upd` AFTER UPDATE ON `interessengruppe`
- FOR EACH ROW begin
-   INSERT INTO `interessengruppe_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `interessengruppe_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
@@ -427,7 +439,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
 --
 -- Tabellenstruktur für Tabelle `in_kommission`
 --
--- Erzeugt am: 02. Dez 2013 um 09:26
+-- Erzeugt am: 16. Dez 2013 um 07:02
 --
 
 DROP TABLE IF EXISTS `in_kommission`;
@@ -435,7 +447,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel einer Kommissionszugehörigkeit',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
   `kommission_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Kommission',
-  `funktion` set('praesident','vizepraesident','mitglied','delegation') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Kommission',
+  `funktion` enum('praesident','vizepraesident','mitglied') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Kommission',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
@@ -463,37 +475,41 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
 DROP TRIGGER IF EXISTS `trg_in_kommission_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_in_kommission_log_del_after` AFTER DELETE ON `in_kommission`
- FOR EACH ROW begin
-   UPDATE `in_kommission_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `in_kommission_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_in_kommission_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_in_kommission_log_del_before` BEFORE DELETE ON `in_kommission`
- FOR EACH ROW begin
-   INSERT INTO `in_kommission_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `in_kommission` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_kommission_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `in_kommission` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_in_kommission_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_in_kommission_log_ins` AFTER INSERT ON `in_kommission`
- FOR EACH ROW begin
-   INSERT INTO `in_kommission_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_kommission_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_in_kommission_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_in_kommission_log_upd` AFTER UPDATE ON `in_kommission`
- FOR EACH ROW begin
-   INSERT INTO `in_kommission_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_kommission_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
@@ -528,7 +544,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `kommissions_id` (`kommission_id`),
   KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=128 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=133 ;
 
 --
 -- RELATIONEN DER TABELLE `in_kommission_log`:
@@ -541,7 +557,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
--- Erzeugt am: 14. Dez 2013 um 08:58
+-- Erzeugt am: 16. Dez 2013 um 07:52
 --
 
 DROP TABLE IF EXISTS `kommission`;
@@ -549,9 +565,10 @@ CREATE TABLE IF NOT EXISTS `kommission` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Kommission',
   `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
   `name` varchar(100) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
-  `typ` enum('kommission','spezialkommission') NOT NULL DEFAULT 'kommission' COMMENT 'Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne).',
+  `typ` enum('kommission','subkommission','spezialkommission') NOT NULL DEFAULT 'kommission' COMMENT 'Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne).',
+  `beschreibung` text COMMENT 'Beschreibung der Kommission',
   `sachbereiche` text NOT NULL COMMENT 'Liste der Sachbereiche der Kommission, abgetrennt durch ";".',
-  `abkuerung_delegation` varchar(15) DEFAULT NULL COMMENT 'Abkürzung der Delegation. Delegation im engeren Sinne als Subkommission.',
+  `mutter_kommission` int(11) DEFAULT NULL COMMENT 'Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die "Oberkommission".',
   `parlament_link` varchar(255) DEFAULT NULL COMMENT 'Link zur Seite auf Parlament.ch',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
@@ -563,8 +580,15 @@ CREATE TABLE IF NOT EXISTS `kommission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_ko_unique_name` (`name`) COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `kommission_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
-  UNIQUE KEY `kommission_name_unique` (`name`) COMMENT 'Fachlicher unique constraint'
+  UNIQUE KEY `kommission_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
+  KEY `zugehoerige_kommission` (`mutter_kommission`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=44 ;
+
+--
+-- RELATIONEN DER TABELLE `kommission`:
+--   `mutter_kommission`
+--       `kommission` -> `id`
+--
 
 --
 -- Trigger `kommission`
@@ -572,37 +596,41 @@ CREATE TABLE IF NOT EXISTS `kommission` (
 DROP TRIGGER IF EXISTS `trg_kommission_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_kommission_log_del_after` AFTER DELETE ON `kommission`
- FOR EACH ROW begin
-   UPDATE `kommission_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `kommission_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_kommission_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_kommission_log_del_before` BEFORE DELETE ON `kommission`
- FOR EACH ROW begin
-   INSERT INTO `kommission_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `kommission` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kommission_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `kommission` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_kommission_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_kommission_log_ins` AFTER INSERT ON `kommission`
- FOR EACH ROW begin
-   INSERT INTO `kommission_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kommission_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_kommission_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_kommission_log_upd` AFTER UPDATE ON `kommission`
- FOR EACH ROW begin
-   INSERT INTO `kommission_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kommission_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
@@ -612,7 +640,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 15. Dez 2013 um 12:03
+-- Erzeugt am: 16. Dez 2013 um 07:54
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
@@ -620,9 +648,9 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
   `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
   `name` varchar(100) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
-  `typ` enum('kommission','spezialkommission') NOT NULL DEFAULT 'kommission' COMMENT 'Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne).',
+  `typ` enum('kommission','subkommission','spezialkommission') NOT NULL DEFAULT 'kommission' COMMENT 'Typ einer Kommission (Spezialkommission umfasst auch Delegationen im weiteren Sinne).',
+  `beschreibung` text COMMENT 'Beschreibung der Kommission',
   `sachbereiche` text NOT NULL COMMENT 'Liste der Sachbereiche der Kommission, abgetrennt durch ";".',
-  `abkuerung_delegation` varchar(15) DEFAULT NULL COMMENT 'Abkürzung der Delegation. Delegation im engeren Sinne als Subkommission.',
   `parlament_link` varchar(255) DEFAULT NULL COMMENT 'Link zur Seite auf Parlament.ch',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_von` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
@@ -636,6 +664,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  `mutter_kommission` int(11) DEFAULT NULL COMMENT 'Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen). Also die "Oberkommission".',
   PRIMARY KEY (`log_id`),
   KEY `fk_kommission_log_snapshot_id` (`snapshot_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=32 ;
@@ -691,37 +720,41 @@ CREATE TABLE IF NOT EXISTS `mandat` (
 DROP TRIGGER IF EXISTS `trg_mandat_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_mandat_log_del_after` AFTER DELETE ON `mandat`
- FOR EACH ROW begin
-   UPDATE `mandat_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `mandat_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_mandat_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_mandat_log_del_before` BEFORE DELETE ON `mandat`
- FOR EACH ROW begin
-   INSERT INTO `mandat_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `mandat` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `mandat` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_mandat_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_mandat_log_ins` AFTER INSERT ON `mandat`
- FOR EACH ROW begin
-   INSERT INTO `mandat_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_mandat_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_mandat_log_upd` AFTER UPDATE ON `mandat`
- FOR EACH ROW begin
-   INSERT INTO `mandat_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mandat_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `mandat` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
@@ -820,44 +853,49 @@ CREATE TABLE IF NOT EXISTS `organisation` (
 DROP TRIGGER IF EXISTS `trg_organisation_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_log_del_after` AFTER DELETE ON `organisation`
- FOR EACH ROW begin
-   UPDATE `organisation_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `organisation_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_organisation_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_log_del_before` BEFORE DELETE ON `organisation`
- FOR EACH ROW begin
-   INSERT INTO `organisation_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `organisation` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `organisation` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_organisation_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_log_ins` AFTER INSERT ON `organisation`
- FOR EACH ROW begin
-   INSERT INTO `organisation_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_organisation_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_log_upd` AFTER UPDATE ON `organisation`
- FOR EACH ROW begin
-   INSERT INTO `organisation_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `organisation` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_organisation_name_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_name_ins` BEFORE INSERT ON `organisation`
- FOR EACH ROW begin
+ FOR EACH ROW thisTrigger: begin
+    IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
         call organisation_name_de_fr_it_must_be_set;
     end if;
@@ -867,7 +905,8 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_organisation_name_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_name_upd` BEFORE UPDATE ON `organisation`
- FOR EACH ROW begin
+ FOR EACH ROW thisTrigger: begin
+    IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
     if new.name_de IS NULL AND new.name_fr IS NULL AND new.name_it IS NULL then
         call organisation_name_de_fr_it_must_be_set;
     end if;
@@ -916,37 +955,41 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
 DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_beziehung_log_del_after` AFTER DELETE ON `organisation_beziehung`
- FOR EACH ROW begin
-   UPDATE `organisation_beziehung_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `organisation_beziehung_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_beziehung_log_del_before` BEFORE DELETE ON `organisation_beziehung`
- FOR EACH ROW begin
-   INSERT INTO `organisation_beziehung_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `organisation_beziehung` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_beziehung_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `organisation_beziehung` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_beziehung_log_ins` AFTER INSERT ON `organisation_beziehung`
- FOR EACH ROW begin
-   INSERT INTO `organisation_beziehung_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_beziehung_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_organisation_beziehung_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_organisation_beziehung_log_upd` AFTER UPDATE ON `organisation_beziehung`
- FOR EACH ROW begin
-   INSERT INTO `organisation_beziehung_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_beziehung_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `organisation_beziehung` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
@@ -1106,37 +1149,41 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 DROP TRIGGER IF EXISTS `trg_parlamentarier_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_parlamentarier_log_del_after` AFTER DELETE ON `parlamentarier`
- FOR EACH ROW begin
-   UPDATE `parlamentarier_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `parlamentarier_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_parlamentarier_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_parlamentarier_log_del_before` BEFORE DELETE ON `parlamentarier`
- FOR EACH ROW begin
-   INSERT INTO `parlamentarier_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_parlamentarier_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_parlamentarier_log_ins` AFTER INSERT ON `parlamentarier`
- FOR EACH ROW begin
-   INSERT INTO `parlamentarier_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_parlamentarier_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_parlamentarier_log_upd` AFTER UPDATE ON `parlamentarier`
- FOR EACH ROW begin
-   INSERT INTO `parlamentarier_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
@@ -1188,37 +1235,41 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
 DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_parlamentarier_anhang_log_del_after` AFTER DELETE ON `parlamentarier_anhang`
- FOR EACH ROW begin
-   UPDATE `parlamentarier_anhang_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `parlamentarier_anhang_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_parlamentarier_anhang_log_del_before` BEFORE DELETE ON `parlamentarier_anhang`
- FOR EACH ROW begin
-   INSERT INTO `parlamentarier_anhang_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_anhang_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_parlamentarier_anhang_log_ins` AFTER INSERT ON `parlamentarier_anhang`
- FOR EACH ROW begin
-   INSERT INTO `parlamentarier_anhang_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_anhang_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_parlamentarier_anhang_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_parlamentarier_anhang_log_upd` AFTER UPDATE ON `parlamentarier_anhang`
- FOR EACH ROW begin
-   INSERT INTO `parlamentarier_anhang_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_anhang_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier_anhang` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
@@ -1355,37 +1406,41 @@ CREATE TABLE IF NOT EXISTS `partei` (
 DROP TRIGGER IF EXISTS `trg_partei_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_partei_log_del_after` AFTER DELETE ON `partei`
- FOR EACH ROW begin
-   UPDATE `partei_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `partei_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_partei_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_partei_log_del_before` BEFORE DELETE ON `partei`
- FOR EACH ROW begin
-   INSERT INTO `partei_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `partei` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `partei_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `partei` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_partei_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_partei_log_ins` AFTER INSERT ON `partei`
- FOR EACH ROW begin
-   INSERT INTO `partei_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `partei_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_partei_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_partei_log_upd` AFTER UPDATE ON `partei`
- FOR EACH ROW begin
-   INSERT INTO `partei_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `partei_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `partei` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
@@ -1533,10 +1588,10 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung` (
 DROP VIEW IF EXISTS `v_interessenbindung_authorisierungs_email`;
 CREATE TABLE IF NOT EXISTS `v_interessenbindung_authorisierungs_email` (
 `parlamentarier_name` varchar(151)
-,`IFNULL(parlamentarier.geschlecht, '')` varchar(1)
+,`geschlecht` varchar(1)
 ,`organisation_name` varchar(454)
-,`IFNULL(organisation.rechtsform,'')` varchar(23)
-,`IFNULL(organisation.ort,'')` varchar(100)
+,`rechtsform` varchar(23)
+,`ort` varchar(100)
 ,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat')
 ,`beschreibung` varchar(150)
 );
@@ -1620,7 +1675,7 @@ CREATE TABLE IF NOT EXISTS `v_in_kommission` (
 `id` int(11)
 ,`parlamentarier_id` int(11)
 ,`kommission_id` int(11)
-,`funktion` set('praesident','vizepraesident','mitglied','delegation')
+,`funktion` enum('praesident','vizepraesident','mitglied')
 ,`notizen` text
 ,`freigabe_von` enum('otto','rebecca','thomas','bane','roland')
 ,`freigabe_datum` timestamp
@@ -1641,7 +1696,7 @@ CREATE TABLE IF NOT EXISTS `v_in_kommission_liste` (
 ,`id` int(11)
 ,`parlamentarier_id` int(11)
 ,`kommission_id` int(11)
-,`funktion` set('praesident','vizepraesident','mitglied','delegation')
+,`funktion` enum('praesident','vizepraesident','mitglied')
 ,`notizen` text
 ,`freigabe_von` enum('otto','rebecca','thomas','bane','roland')
 ,`freigabe_datum` timestamp
@@ -1662,7 +1717,7 @@ CREATE TABLE IF NOT EXISTS `v_in_kommission_parlamentarier` (
 ,`id` int(11)
 ,`parlamentarier_id` int(11)
 ,`kommission_id` int(11)
-,`funktion` set('praesident','vizepraesident','mitglied','delegation')
+,`funktion` enum('praesident','vizepraesident','mitglied')
 ,`notizen` text
 ,`freigabe_von` enum('otto','rebecca','thomas','bane','roland')
 ,`freigabe_datum` timestamp
@@ -1682,9 +1737,10 @@ CREATE TABLE IF NOT EXISTS `v_kommission` (
 ,`id` int(11)
 ,`abkuerzung` varchar(15)
 ,`name` varchar(100)
-,`typ` enum('kommission','spezialkommission')
+,`typ` enum('kommission','subkommission','spezialkommission')
+,`beschreibung` text
 ,`sachbereiche` text
-,`abkuerung_delegation` varchar(15)
+,`mutter_kommission` int(11)
 ,`parlament_link` varchar(255)
 ,`notizen` text
 ,`freigabe_von` enum('otto','rebecca','thomas','bane','roland')
@@ -2249,7 +2305,7 @@ CREATE TABLE IF NOT EXISTS `v_zugangsberechtigung` (
 DROP VIEW IF EXISTS `v_zugangsberechtigung_authorisierungs_email`;
 CREATE TABLE IF NOT EXISTS `v_zugangsberechtigung_authorisierungs_email` (
 `parlamentarier_name` varchar(151)
-,`IFNULL(parlamentarier.geschlecht, '')` varchar(1)
+,`geschlecht` varchar(1)
 ,`zugangsberechtigung_name` varchar(151)
 ,`funktion` varchar(150)
 );
@@ -2384,37 +2440,41 @@ CREATE TABLE IF NOT EXISTS `zugangsberechtigung` (
 DROP TRIGGER IF EXISTS `trg_zugangsberechtigung_log_del_after`;
 DELIMITER //
 CREATE TRIGGER `trg_zugangsberechtigung_log_del_after` AFTER DELETE ON `zugangsberechtigung`
- FOR EACH ROW begin
-   UPDATE `zugangsberechtigung_log`
-      SET `state` = 'OK'
-      WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `zugangsberechtigung_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_zugangsberechtigung_log_del_before`;
 DELIMITER //
 CREATE TRIGGER `trg_zugangsberechtigung_log_del_before` BEFORE DELETE ON `zugangsberechtigung`
- FOR EACH ROW begin
-   INSERT INTO `zugangsberechtigung_log`
-          SELECT *, null, 'delete', null, NOW(), null FROM `zugangsberechtigung` WHERE id = OLD.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zugangsberechtigung_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `zugangsberechtigung` WHERE id = OLD.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_zugangsberechtigung_log_ins`;
 DELIMITER //
 CREATE TRIGGER `trg_zugangsberechtigung_log_ins` AFTER INSERT ON `zugangsberechtigung`
- FOR EACH ROW begin
-   INSERT INTO `zugangsberechtigung_log`
-          SELECT *, null, 'insert', null, NOW(), null FROM `zugangsberechtigung` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zugangsberechtigung_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `zugangsberechtigung` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
 DROP TRIGGER IF EXISTS `trg_zugangsberechtigung_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_zugangsberechtigung_log_upd` AFTER UPDATE ON `zugangsberechtigung`
- FOR EACH ROW begin
-   INSERT INTO `zugangsberechtigung_log`
-          SELECT *, null, 'update', null, NOW(), null FROM `zugangsberechtigung` WHERE id = NEW.id ;
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zugangsberechtigung_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `zugangsberechtigung` WHERE id = NEW.id ;
 end
 //
 DELIMITER ;
@@ -2488,7 +2548,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_interessenbindung_authorisierungs_email`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_interessenbindung_authorisierungs_email` AS select `parlamentarier`.`name` AS `parlamentarier_name`,ifnull(`parlamentarier`.`geschlecht`,'') AS `IFNULL(parlamentarier.geschlecht, '')`,`organisation`.`anzeige_name` AS `organisation_name`,ifnull(`organisation`.`rechtsform`,'') AS `IFNULL(organisation.rechtsform,'')`,ifnull(`organisation`.`ort`,'') AS `IFNULL(organisation.ort,'')`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`beschreibung` AS `beschreibung` from ((`v_interessenbindung` `interessenbindung` join `v_organisation` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) order by `organisation`.`anzeige_name`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_interessenbindung_authorisierungs_email` AS select `parlamentarier`.`name` AS `parlamentarier_name`,ifnull(`parlamentarier`.`geschlecht`,'') AS `geschlecht`,`organisation`.`anzeige_name` AS `organisation_name`,ifnull(`organisation`.`rechtsform`,'') AS `rechtsform`,ifnull(`organisation`.`ort`,'') AS `ort`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`beschreibung` AS `beschreibung` from ((`v_interessenbindung` `interessenbindung` join `v_organisation` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) group by `parlamentarier`.`id` order by `organisation`.`anzeige_name`;
 
 -- --------------------------------------------------------
 
@@ -2551,7 +2611,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_kommission`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_kommission` AS select concat(`t`.`name`,' (',`t`.`abkuerzung`,')') AS `anzeige_name`,`t`.`id` AS `id`,`t`.`abkuerzung` AS `abkuerzung`,`t`.`name` AS `name`,`t`.`typ` AS `typ`,`t`.`sachbereiche` AS `sachbereiche`,`t`.`abkuerung_delegation` AS `abkuerung_delegation`,`t`.`parlament_link` AS `parlament_link`,`t`.`notizen` AS `notizen`,`t`.`freigabe_von` AS `freigabe_von`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `kommission` `t`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_kommission` AS select concat(`t`.`name`,' (',`t`.`abkuerzung`,')') AS `anzeige_name`,`t`.`id` AS `id`,`t`.`abkuerzung` AS `abkuerzung`,`t`.`name` AS `name`,`t`.`typ` AS `typ`,`t`.`beschreibung` AS `beschreibung`,`t`.`sachbereiche` AS `sachbereiche`,`t`.`mutter_kommission` AS `mutter_kommission`,`t`.`parlament_link` AS `parlament_link`,`t`.`notizen` AS `notizen`,`t`.`freigabe_von` AS `freigabe_von`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `kommission` `t`;
 
 -- --------------------------------------------------------
 
@@ -2830,7 +2890,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_zugangsberechtigung_authorisierungs_email`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zugangsberechtigung_authorisierungs_email` AS select `parlamentarier`.`name` AS `parlamentarier_name`,ifnull(`parlamentarier`.`geschlecht`,'') AS `IFNULL(parlamentarier.geschlecht, '')`,`zugangsberechtigung`.`name` AS `zugangsberechtigung_name`,`zugangsberechtigung`.`funktion` AS `funktion` from (`v_zugangsberechtigung` `zugangsberechtigung` join `v_parlamentarier` `parlamentarier` on((`zugangsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zugangsberechtigung_authorisierungs_email` AS select `parlamentarier`.`name` AS `parlamentarier_name`,ifnull(`parlamentarier`.`geschlecht`,'') AS `geschlecht`,`zugangsberechtigung`.`name` AS `zugangsberechtigung_name`,`zugangsberechtigung`.`funktion` AS `funktion` from (`v_zugangsberechtigung` `zugangsberechtigung` join `v_parlamentarier` `parlamentarier` on((`zugangsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) group by `parlamentarier`.`id`;
 
 -- --------------------------------------------------------
 
@@ -2912,6 +2972,12 @@ ALTER TABLE `in_kommission`
 --
 ALTER TABLE `in_kommission_log`
   ADD CONSTRAINT `fk_in_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
+-- Constraints der Tabelle `kommission`
+--
+ALTER TABLE `kommission`
+  ADD CONSTRAINT `fk_parent_kommission_id` FOREIGN KEY (`mutter_kommission`) REFERENCES `kommission` (`id`);
 
 --
 -- Constraints der Tabelle `kommission_log`

@@ -4637,6 +4637,8 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new DivTagViewColumnDecorator($column);
+            $column->Bold = true;
             $column->SetDescription($this->RenderText('Parteiabkürzung'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -4756,6 +4758,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
             //
@@ -4962,6 +4965,8 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new DivTagViewColumnDecorator($column);
+            $column->Bold = true;
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4995,6 +5000,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5273,6 +5279,8 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new DivTagViewColumnDecorator($column);
+            $column->Bold = true;
             $grid->AddPrintColumn($column);
             
             //
@@ -5364,6 +5372,8 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new DivTagViewColumnDecorator($column);
+            $column->Bold = true;
             $grid->AddExportColumn($column);
             
             //
@@ -5476,6 +5486,8 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new DivTagViewColumnDecorator($column);
+            $column->Bold = true;
             $column->SetDescription($this->RenderText('Parteiabkürzung'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -5517,6 +5529,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -5590,6 +5603,8 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new DivTagViewColumnDecorator($column);
+            $column->Bold = true;
             $result->AddPrintColumn($column);
             
             //
@@ -5790,6 +5805,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
             //
@@ -5825,6 +5841,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
