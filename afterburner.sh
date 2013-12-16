@@ -50,6 +50,7 @@ do
   | perl -p -e's/\$edit_general_hint/'\'' \. \$GLOBALS["edit_general_hint"] \. '\''/g' \
   | perl -p -e's/\$edit_header_message/'\'' \. \$GLOBALS["edit_header_message"] \. '\''/g' \
   | perl -p -e's/<a id="plugin-edit-remarksbox.*?<\/a>//g' \
+  | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" height="14" width="15">//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" width="15" height="14">//g' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
