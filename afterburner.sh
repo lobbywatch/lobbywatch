@@ -5,8 +5,9 @@ dir=$root_dir/bearbeitung
 auswertung=$root_dir/auswertung
 
 NOW=$(date +"%d.%m.%Y %H:%M");
+NOW_SHORT=$(date +"%d.%m.%Y");
 
-echo -e "<?php\n\$build_date = '$NOW';" > $root_dir/common/build_date.php;
+echo -e "<?php\n\$build_date = '$NOW';\n\$build_date_short = '$NOW_SHORT';" > $root_dir/common/build_date.php;
 
 # Also in deploy.sh
 VERSION=$(git describe --abbrev=0 --tags)

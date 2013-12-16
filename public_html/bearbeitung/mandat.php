@@ -2276,10 +2276,7 @@
     <p>Diese Zuordnung ist analog zu den Interessenbindungen der Parlamentarier.
     </p>
     
-    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Das Feld Mandat.beschreibung ist nicht wichtig.</div></div>
-    <p>
-    <br>Das Feld Mandat.beschreibung ist redundant (=überflüssig), denn die Informationen sind an anderen Orten besser abgelegt. In Zukunft könnte es einmal gelöscht werden.
-    </p>
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Das Feld Mandat.beschreibung soll den Bearbeitern einen Hinweis geben. Das Feld wird nicht automatisch ausgewertet.</div></div>
     </div>
     
     ' . $GLOBALS["edit_general_hint"] . '';
