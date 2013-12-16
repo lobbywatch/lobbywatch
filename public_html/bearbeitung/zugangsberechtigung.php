@@ -217,6 +217,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zugangsberechtigung.php?operation=view&pk0=%zugangsberechtigung_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Zugangsberechtigung.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -364,6 +365,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Organisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1276,6 +1278,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zugangsberechtigung.php?operation=view&pk0=%zugangsberechtigung_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Zugangsberechtigung.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1423,6 +1426,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Organisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1870,6 +1874,7 @@
             //
             $column = new TextViewColumn('zugangsberechtigung_id_parlamentarier_id', 'Zugangsberechtigung Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zugangsberechtigung.php?operation=view&pk0=%zugangsberechtigung_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1877,6 +1882,7 @@
             //
             $column = new TextViewColumn('organisation_id_name_de', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2514,6 +2520,7 @@
             //
             $column = new TextViewColumn('zugangsberechtigung_id_parlamentarier_id', 'Zugangsberechtigung Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zugangsberechtigung.php?operation=view&pk0=%zugangsberechtigung_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -2521,6 +2528,7 @@
             //
             $column = new TextViewColumn('organisation_id_name_de', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -2626,6 +2634,7 @@
             //
             $column = new TextViewColumn('zugangsberechtigung_id_parlamentarier_id', 'Zugangsberechtigung Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zugangsberechtigung.php?operation=view&pk0=%zugangsberechtigung_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -2633,6 +2642,7 @@
             //
             $column = new TextViewColumn('organisation_id_name_de', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //

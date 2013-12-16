@@ -290,6 +290,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -415,6 +416,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel der Kommission'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1264,6 +1266,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1389,6 +1392,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel der Kommission'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1706,6 +1710,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1713,6 +1718,7 @@
             //
             $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2302,6 +2308,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -2309,6 +2316,7 @@
             //
             $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -2385,6 +2393,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -2392,6 +2401,7 @@
             //
             $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -2790,6 +2800,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Parlament'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -3632,6 +3643,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuständige Kommission im Parlament'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -3982,6 +3994,7 @@
             //
             $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4424,6 +4437,7 @@
             //
             $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -4514,6 +4528,7 @@
             //
             $column = new TextViewColumn('kommission_id_abkuerzung', 'Kommission Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //

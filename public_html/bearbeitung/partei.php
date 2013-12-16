@@ -166,6 +166,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%id%' , '_self');
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1221,6 +1222,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -1761,6 +1763,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%id%' , '_self');
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -2768,6 +2771,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4120,6 +4124,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -4348,6 +4353,7 @@
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //

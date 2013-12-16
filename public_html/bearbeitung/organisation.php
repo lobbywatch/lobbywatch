@@ -165,6 +165,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -861,6 +862,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -926,6 +928,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -1315,6 +1318,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -2011,6 +2015,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -2032,6 +2037,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarier_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2145,6 +2151,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2159,6 +2166,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -2858,6 +2866,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -2872,6 +2881,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
         }
     
@@ -2998,6 +3008,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -3012,6 +3023,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
         }
     
@@ -3116,6 +3128,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -3182,6 +3195,7 @@
             //
             $column = new TextViewColumn('parlamentarier_name', 'Parlamentarier Name', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -3326,6 +3340,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -3643,6 +3658,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -3891,6 +3907,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -4166,6 +4183,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4234,6 +4252,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4241,6 +4260,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -4580,6 +4600,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -4587,6 +4608,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
         }
     
@@ -4670,6 +4692,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -4677,6 +4700,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddExportColumn($column);
         }
     
@@ -4779,6 +4803,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -4814,6 +4839,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -4951,6 +4977,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -5268,6 +5295,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -5516,6 +5544,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -5791,6 +5820,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5859,6 +5889,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5866,6 +5897,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -6205,6 +6237,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -6212,6 +6245,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
         }
     
@@ -6295,6 +6329,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -6302,6 +6337,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddExportColumn($column);
         }
     
@@ -6404,6 +6440,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -6439,6 +6476,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -6576,6 +6614,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -6893,6 +6932,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -7141,6 +7181,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -7416,6 +7457,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -7484,6 +7526,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -7491,6 +7534,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -7830,6 +7874,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -7837,6 +7882,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
         }
     
@@ -7920,6 +7966,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -7927,6 +7974,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddExportColumn($column);
         }
     
@@ -8029,6 +8077,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -8064,6 +8113,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -8201,6 +8251,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -8518,6 +8569,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -8766,6 +8818,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -9041,6 +9094,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9109,6 +9163,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9116,6 +9171,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -9455,6 +9511,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -9462,6 +9519,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
         }
     
@@ -9545,6 +9603,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -9552,6 +9611,7 @@
             //
             $column = new TextViewColumn('ziel_organisation_id', 'Ziel Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%ziel_organisation_id%' , '_self');
             $grid->AddExportColumn($column);
         }
     
@@ -9654,6 +9714,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -9689,6 +9750,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -9848,6 +9910,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -10480,6 +10543,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -10545,6 +10609,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -10934,6 +10999,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -11566,6 +11632,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -11587,6 +11654,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarier_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11686,6 +11754,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11700,6 +11769,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -12354,6 +12424,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -12368,6 +12439,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
         }
     
@@ -12480,6 +12552,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -12494,6 +12567,7 @@
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
         }
     
@@ -12598,6 +12672,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -12664,6 +12739,7 @@
             //
             $column = new TextViewColumn('parlamentarier_name', 'Parlamentarier Name', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -12965,6 +13041,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Parlamentarier'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -13120,6 +13197,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Organisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -14203,6 +14281,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Parlamentarier'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -14358,6 +14437,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Organisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -14846,6 +14926,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -14853,6 +14934,7 @@
             //
             $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -15613,6 +15695,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -15620,6 +15703,7 @@
             //
             $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -15732,6 +15816,7 @@
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -15739,6 +15824,7 @@
             //
             $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -16195,6 +16281,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zugangsberechtigung.php?operation=view&pk0=%zugangsberechtigung_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Zugangsberechtigung.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -16350,6 +16437,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Organisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -17285,6 +17373,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zugangsberechtigung.php?operation=view&pk0=%zugangsberechtigung_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Zugangsberechtigung.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -17440,6 +17529,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Organisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -17887,6 +17977,7 @@
             //
             $column = new TextViewColumn('zugangsberechtigung_id_anzeige_name', 'Zugangsberechtigung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zugangsberechtigung.php?operation=view&pk0=%zugangsberechtigung_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -17894,6 +17985,7 @@
             //
             $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -18551,6 +18643,7 @@
             //
             $column = new TextViewColumn('zugangsberechtigung_id_anzeige_name', 'Zugangsberechtigung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zugangsberechtigung.php?operation=view&pk0=%zugangsberechtigung_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -18558,6 +18651,7 @@
             //
             $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -18663,6 +18757,7 @@
             //
             $column = new TextViewColumn('zugangsberechtigung_id_anzeige_name', 'Zugangsberechtigung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zugangsberechtigung.php?operation=view&pk0=%zugangsberechtigung_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -18670,6 +18765,7 @@
             //
             $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //

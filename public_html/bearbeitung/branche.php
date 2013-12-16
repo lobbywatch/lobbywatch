@@ -117,6 +117,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%id%' , '_self');
             $column->SetDescription($this->RenderText('Bezeichnung der Interessengruppe'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -580,6 +581,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -864,6 +866,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%id%' , '_self');
             $column->SetDescription($this->RenderText('Bezeichnung der Interessengruppe'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1283,6 +1286,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1933,6 +1937,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -1999,6 +2004,7 @@
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%id%' , '_self');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
