@@ -5748,6 +5748,8 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -6008,6 +6010,8 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -6103,6 +6107,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
@@ -6966,6 +6972,8 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7259,6 +7267,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
@@ -8533,6 +8543,8 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8619,6 +8631,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
@@ -8861,6 +8875,8 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8946,6 +8962,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);

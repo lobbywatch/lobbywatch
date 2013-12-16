@@ -69,6 +69,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('parteifunktion');
             $this->dataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $this->dataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $this->dataset->AddField($field, false);
             $field = new StringField('beruf');

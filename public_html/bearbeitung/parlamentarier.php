@@ -565,6 +565,8 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1124,6 +1126,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
@@ -17647,6 +17651,8 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -18832,6 +18838,8 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -19176,6 +19184,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
@@ -19756,6 +19766,8 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $this->dataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
@@ -19870,8 +19882,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'im_rat_seit', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'photo', 'photo_dateiname_voll', 'kleinbild', 'sitzplatz', 'email', 'parlament_link', 'homepage', 'ALT_kommission', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Photo'), $this->RenderText('Photo Dateiname'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Parlament Link'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'fraktionsfunktion', 'im_rat_seit', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'photo', 'kleinbild', 'photo_dateiname_voll', 'sitzplatz', 'email', 'parlament_link', 'homepage', 'ALT_kommission', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Photo Dateiname'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Parlament Link'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -19934,6 +19946,7 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('partei_id', $this->RenderText('Partei'), $lookupDataset, 'id', 'abkuerzung', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parteifunktion', $this->RenderText('Parteifunktion')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('fraktionsfunktion', $this->RenderText('Fraktionsfunktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf', $this->RenderText('Beruf')));
             
@@ -19973,8 +19986,8 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('geschlecht', $this->RenderText('Geschlecht')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('geburtstag', $this->RenderText('Geburtstag')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo', $this->RenderText('Photo')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo_dateiname_voll', $this->RenderText('Photo Dateiname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kleinbild', $this->RenderText('Kleinbild')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo_dateiname_voll', $this->RenderText('Photo Dateiname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_link', $this->RenderText('Parlament Link')));
@@ -20453,12 +20466,10 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new CheckBoxGroup('parteifunktion_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor = new ComboBox('parteifunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
-            $editor->AddValue('fraktionschef', $this->RenderText('fraktionschef'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -20470,12 +20481,10 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new CheckBoxGroup('parteifunktion_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor = new ComboBox('parteifunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
-            $editor->AddValue('fraktionschef', $this->RenderText('fraktionschef'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -20484,6 +20493,43 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Partei'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for fraktionsfunktion field
+            //
+            $editor = new ComboBox('fraktionsfunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('praesident', $this->RenderText('praesident'));
+            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
+            $editColumn = new CustomEditColumn('Fraktionsfunktion', 'fraktionsfunktion', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for fraktionsfunktion field
+            //
+            $editor = new ComboBox('fraktionsfunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('praesident', $this->RenderText('praesident'));
+            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
+            $editColumn = new CustomEditColumn('Fraktionsfunktion', 'fraktionsfunktion', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -21248,6 +21294,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -21294,20 +21347,20 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for kleinbild field
+            //
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('photo_dateiname_voll_handler');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for kleinbild field
-            //
-            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
-            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
-            $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21548,15 +21601,25 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new CheckBoxGroup('parteifunktion_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor = new ComboBox('parteifunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
-            $editor->AddValue('fraktionschef', $this->RenderText('fraktionschef'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for fraktionsfunktion field
+            //
+            $editor = new ComboBox('fraktionsfunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('praesident', $this->RenderText('praesident'));
+            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
+            $editColumn = new CustomEditColumn('Fraktionsfunktion', 'fraktionsfunktion', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -21667,10 +21730,12 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for photo_dateiname_voll field
+            // Edit column for kleinbild field
             //
-            $editor = new TextEdit('photo_dateiname_voll_edit');
-            $editColumn = new CustomEditColumn('Photodateiname', 'photo_dateiname_voll', $editor, $this->dataset);
+            $editor = new TextEdit('kleinbild_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -21678,12 +21743,10 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for kleinbild field
+            // Edit column for photo_dateiname_voll field
             //
-            $editor = new TextEdit('kleinbild_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(80);
-            $editColumn = new CustomEditColumn('Kleinbild', 'kleinbild', $editor, $this->dataset);
+            $editor = new TextEdit('photo_dateiname_voll_edit');
+            $editColumn = new CustomEditColumn('Photodateiname', 'photo_dateiname_voll', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -21962,16 +22025,26 @@
             //
             // Edit column for parteifunktion field
             //
-            $editor = new CheckBoxGroup('parteifunktion_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor = new ComboBox('parteifunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
-            $editor->AddValue('fraktionschef', $this->RenderText('fraktionschef'));
             $editColumn = new CustomEditColumn('Parteifunktion', 'parteifunktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for fraktionsfunktion field
+            //
+            $editor = new ComboBox('fraktionsfunktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('praesident', $this->RenderText('praesident'));
+            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
+            $editColumn = new CustomEditColumn('Fraktionsfunktion', 'fraktionsfunktion', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -22230,6 +22303,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -22275,16 +22355,16 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for photo_dateiname_voll field
+            // View column for kleinbild field
             //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
-            // View column for kleinbild field
+            // View column for photo_dateiname_voll field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
+            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -22436,6 +22516,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -22481,16 +22568,16 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for photo_dateiname_voll field
+            // View column for kleinbild field
             //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
-            // View column for kleinbild field
+            // View column for photo_dateiname_voll field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
+            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -22682,6 +22769,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -22932,6 +23028,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -22977,16 +23080,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for photo_dateiname_voll field
+            // View column for kleinbild field
             //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kleinbild field
+            // View column for photo_dateiname_voll field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
+            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23168,6 +23271,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -23418,6 +23530,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -23463,16 +23582,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for photo_dateiname_voll field
+            // View column for kleinbild field
             //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kleinbild field
+            // View column for photo_dateiname_voll field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
+            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23654,6 +23773,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -23904,6 +24032,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -23949,16 +24084,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for photo_dateiname_voll field
+            // View column for kleinbild field
             //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kleinbild field
+            // View column for photo_dateiname_voll field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
+            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24140,6 +24275,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -24390,6 +24534,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -24435,16 +24586,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for photo_dateiname_voll field
+            // View column for kleinbild field
             //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kleinbild field
+            // View column for photo_dateiname_voll field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
+            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24626,6 +24777,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -24876,6 +25036,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -24921,16 +25088,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for photo_dateiname_voll field
+            // View column for kleinbild field
             //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kleinbild field
+            // View column for photo_dateiname_voll field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
+            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -25112,6 +25279,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -25362,6 +25538,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -25407,16 +25590,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for photo_dateiname_voll field
+            // View column for kleinbild field
             //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kleinbild field
+            // View column for photo_dateiname_voll field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
+            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -25598,6 +25781,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -25848,6 +26040,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for fraktionsfunktion field
+            //
+            $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -25893,16 +26092,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for photo_dateiname_voll field
+            // View column for kleinbild field
             //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kleinbild field
+            // View column for photo_dateiname_voll field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
+            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
