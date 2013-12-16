@@ -9,7 +9,7 @@ NOW=$(date +"%d.%m.%Y %H:%M");
 echo -e "<?php\n\$build_date = '$NOW';" > $root_dir/common/build_date.php;
 
 # Also in deploy.sh
-VERSION=$(git describe)
+VERSION=$(git describe --abbrev=0 --tags)
 echo -e "<?php\n\$version = '$VERSION';" >  $root_dir/common/version.php;
 
 rm -rf $dir/templates_c/*

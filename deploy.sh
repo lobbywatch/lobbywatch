@@ -27,7 +27,7 @@ NOW=$(date +"%d.%m.%Y %H:%M");
 echo -e "<?php\n\$deploy_date = '$NOW';" > $public_dir/common/deploy_date.php;
 
 # Also in afterburner.sh
-VERSION=$(git describe)
+VERSION=$(git describe --abbrev=0 --tags)
 echo -e "<?php\n\$version = '$VERSION';" >  $public_dir/common/version.php;
 
 fast="--exclude-from ./rsync-fast-exclude"

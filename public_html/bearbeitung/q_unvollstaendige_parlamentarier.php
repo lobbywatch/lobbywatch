@@ -1412,10 +1412,11 @@
     
         protected function DoGetGridHeader()
         {
-            return '<div class="wiki-table-help">
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
     <p>Für Auswertungen müssen die Daten in genügender Qualität vorhanden sein. Nicht alle für die Auswertung benötigten Felder sind obligatorisch. Daten müssen deshalb nacherfasst werden. Eine Auflistung der Parlamentarier mit unvollständigen Angaben.
     </p>
-    ' . $GLOBALS["edit_header_message"] . '
     
     <p>Ein Parlamentarier ist unvollständig, wenn
     </p>

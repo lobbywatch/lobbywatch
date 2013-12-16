@@ -877,7 +877,6 @@
     <div class="wiki-table-help">
     <p>Zeigt die letzten Änderungen der Tabellen an.
     </p>
-    </div><a id="plugin-edit-div14" href="javascript:void(1)" class="editplugin"><img src="img/icons/wiki_plugin_edit.png" alt="Edit Plugin:div" title="Edit Plugin:div" class="icon" width="16" height="16"></a>
     </div>
     
     ' . $GLOBALS["edit_general_hint"] . '';

@@ -1750,7 +1750,9 @@
     
         protected function DoGetGridHeader()
         {
-            return '<p>Auflistung der Organisationen mit unvollständigen Angaben.</p>
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <p>Auflistung der Organisationen mit unvollständigen Angaben.</p>
     
     <p>Eine Organisation erscheint hier wenn
     <ul>
@@ -1759,7 +1761,9 @@
     </ul>
     </p>
     
-    <p>Diese Kritieren werden nach Bedarf angepasst.</p>';
+    <p>Diese Kritieren werden nach Bedarf angepasst.</p>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 
