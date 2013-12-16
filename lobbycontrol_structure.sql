@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 16. Dez 2013 um 17:29
+-- Erstellungszeit: 16. Dez 2013 um 17:50
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -1158,7 +1158,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 15. Dez 2013 um 15:04
+-- Erzeugt am: 16. Dez 2013 um 16:39
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -1170,7 +1170,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `ratstyp` enum('NR','SR') NOT NULL COMMENT 'National- oder Ständerat?',
   `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') NOT NULL COMMENT 'Kantonskürzel',
   `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Leer bedeutet parteilos.',
-  `parteifunktion` set('mitglied','praesident','vizepraesident','fraktionschef') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
+  `parteifunktion` enum('mitglied','praesident','vizepraesident') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
+  `fraktionsfunktion` enum('mitglied','praesident','vizepraesident') DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Fraktion',
   `im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
   `beruf` varchar(150) NOT NULL COMMENT 'Beruf des Parlamentariers',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
@@ -1394,7 +1395,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 15. Dez 2013 um 15:04
+-- Erzeugt am: 16. Dez 2013 um 16:40
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -1406,7 +1407,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   `ratstyp` enum('NR','SR') NOT NULL COMMENT 'National- oder Ständerat?',
   `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') NOT NULL COMMENT 'Kantonskürzel',
   `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Leer bedeutet parteilos.',
-  `parteifunktion` set('mitglied','praesident','vizepraesident','fraktionschef') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
+  `parteifunktion` enum('mitglied','praesident','vizepraesident') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
+  `fraktionsfunktion` enum('mitglied','praesident','vizepraesident') DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Fraktion',
   `im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
   `beruf` varchar(150) NOT NULL COMMENT 'Beruf des Parlamentariers',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
@@ -2240,7 +2242,8 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`ratstyp` enum('NR','SR')
 ,`kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH')
 ,`partei_id` int(11)
-,`parteifunktion` set('mitglied','praesident','vizepraesident','fraktionschef')
+,`parteifunktion` enum('mitglied','praesident','vizepraesident')
+,`fraktionsfunktion` enum('mitglied','praesident','vizepraesident')
 ,`im_rat_seit` date
 ,`beruf` varchar(150)
 ,`beruf_interessengruppe_id` int(11)
@@ -2902,7 +2905,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_parlamentarier`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`t`.`nachname`,', ',`t`.`vorname`) AS `anzeige_name`,concat(`t`.`vorname`,' ',`t`.`nachname`) AS `name`,`t`.`id` AS `id`,`t`.`nachname` AS `nachname`,`t`.`vorname` AS `vorname`,`t`.`zweiter_vorname` AS `zweiter_vorname`,`t`.`ratstyp` AS `ratstyp`,`t`.`kanton` AS `kanton`,`t`.`partei_id` AS `partei_id`,`t`.`parteifunktion` AS `parteifunktion`,`t`.`im_rat_seit` AS `im_rat_seit`,`t`.`beruf` AS `beruf`,`t`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`t`.`geschlecht` AS `geschlecht`,`t`.`geburtstag` AS `geburtstag`,`t`.`photo` AS `photo`,`t`.`photo_dateiname` AS `photo_dateiname`,`t`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`t`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`t`.`photo_mime_type` AS `photo_mime_type`,`t`.`kleinbild` AS `kleinbild`,`t`.`sitzplatz` AS `sitzplatz`,`t`.`email` AS `email`,`t`.`parlament_link` AS `parlament_link`,`t`.`homepage` AS `homepage`,`t`.`ALT_kommission` AS `ALT_kommission`,`t`.`notizen` AS `notizen`,`t`.`freigabe_von` AS `freigabe_von`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `parlamentarier` `t`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`t`.`nachname`,', ',`t`.`vorname`) AS `anzeige_name`,concat(`t`.`vorname`,' ',`t`.`nachname`) AS `name`,`t`.`id` AS `id`,`t`.`nachname` AS `nachname`,`t`.`vorname` AS `vorname`,`t`.`zweiter_vorname` AS `zweiter_vorname`,`t`.`ratstyp` AS `ratstyp`,`t`.`kanton` AS `kanton`,`t`.`partei_id` AS `partei_id`,`t`.`parteifunktion` AS `parteifunktion`,`t`.`fraktionsfunktion` AS `fraktionsfunktion`,`t`.`im_rat_seit` AS `im_rat_seit`,`t`.`beruf` AS `beruf`,`t`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`t`.`geschlecht` AS `geschlecht`,`t`.`geburtstag` AS `geburtstag`,`t`.`photo` AS `photo`,`t`.`photo_dateiname` AS `photo_dateiname`,`t`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`t`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`t`.`photo_mime_type` AS `photo_mime_type`,`t`.`kleinbild` AS `kleinbild`,`t`.`sitzplatz` AS `sitzplatz`,`t`.`email` AS `email`,`t`.`parlament_link` AS `parlament_link`,`t`.`homepage` AS `homepage`,`t`.`ALT_kommission` AS `ALT_kommission`,`t`.`notizen` AS `notizen`,`t`.`freigabe_von` AS `freigabe_von`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `parlamentarier` `t`;
 
 -- --------------------------------------------------------
 
@@ -2920,7 +2923,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_parlamentarier_authorisierungs_email`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_authorisierungs_email` AS select `parlamentarier`.`id` AS `id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`email` AS `email`,concat((case `parlamentarier`.`geschlecht` when 'M' then concat('<p>Sehr geehrter Herr ',`parlamentarier`.`nachname`,'</p>') when 'F' then concat('<p>Sehr geehrte Frau ',`parlamentarier`.`nachname`,'</p>') else concat('<p>Sehr geehrte(r) Herr/Frau ',`parlamentarier`.`nachname`,'</p>') end),'<p>[Einleitung]</p>','<p>Ihre <b>Interessenbindungen</b>:</p>','<ul>',group_concat(distinct concat('<li>',`organisation`.`anzeige_name`,if((isnull(`organisation`.`rechtsform`) or (trim(`organisation`.`rechtsform`) = '')),'',concat(', ',`organisation`.`rechtsform`)),if((isnull(`organisation`.`ort`) or (trim(`organisation`.`ort`) = '')),'',concat(', ',`organisation`.`ort`)),', ',`interessenbindung`.`art`,', ',`interessenbindung`.`beschreibung`) order by `organisation`.`anzeige_name` ASC separator ' '),'</ul>','<p>Ihre <b>Gäste</b>:</p>','<ul>',group_concat(distinct concat('<li>',`zugangsberechtigung`.`name`,', ',`zugangsberechtigung`.`funktion`) order by `organisation`.`anzeige_name` ASC separator ' '),'</ul>','<p>Mit freundlichen Grüssen,<br></p>') AS `email_text_html`,`UTF8_URLENCODE`(concat((case `parlamentarier`.`geschlecht` when 'M' then concat('Sehr geehrter Herr ',`parlamentarier`.`nachname`,'\r\n') when 'F' then concat('Sehr geehrte Frau ',`parlamentarier`.`nachname`,'\r\n') else concat('Sehr geehrte(r) Herr/Frau ',`parlamentarier`.`nachname`,'\r\n') end),'\r\n[Kopiere Text von HTML-Vorlage]\r\n','Ihre Interessenbindungen:\r\n',group_concat(distinct concat('* ',`organisation`.`anzeige_name`,if((isnull(`organisation`.`rechtsform`) or (trim(`organisation`.`rechtsform`) = '')),'',concat(', ',`organisation`.`rechtsform`)),if((isnull(`organisation`.`ort`) or (trim(`organisation`.`ort`) = '')),'',concat(', ',`organisation`.`ort`)),', ',`interessenbindung`.`art`,', ',`interessenbindung`.`beschreibung`,'\r\n') order by `organisation`.`anzeige_name` ASC separator ' '),'\r\nIhre Gäste:\r\n',group_concat(distinct concat('* ',`zugangsberechtigung`.`name`,', ',`zugangsberechtigung`.`funktion`,'\r\n') order by `organisation`.`anzeige_name` ASC separator ' '),'\r\nMit freundlichen Grüssen,\r\n')) AS `email_text_for_url` from (((`v_parlamentarier` `parlamentarier` left join `v_interessenbindung` `interessenbindung` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) left join `v_organisation` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) left join `v_zugangsberechtigung` `zugangsberechtigung` on((`zugangsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) group by `parlamentarier`.`id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_authorisierungs_email` AS select `parlamentarier`.`id` AS `id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`email` AS `email`,concat((case `parlamentarier`.`geschlecht` when 'M' then concat('<p>Sehr geehrter Herr ',`parlamentarier`.`nachname`,'</p>') when 'F' then concat('<p>Sehr geehrte Frau ',`parlamentarier`.`nachname`,'</p>') else concat('<p>Sehr geehrte(r) Herr/Frau ',`parlamentarier`.`nachname`,'</p>') end),'<p>[Einleitung]</p>','<p>Ihre <b>Interessenbindungen</b>:</p>','<ul>',group_concat(distinct concat('<li>',`organisation`.`anzeige_name`,if((isnull(`organisation`.`rechtsform`) or (trim(`organisation`.`rechtsform`) = '')),'',concat(', ',`organisation`.`rechtsform`)),if((isnull(`organisation`.`ort`) or (trim(`organisation`.`ort`) = '')),'',concat(', ',`organisation`.`ort`)),', ',`interessenbindung`.`art`,', ',`interessenbindung`.`beschreibung`) order by `organisation`.`anzeige_name` ASC separator ' '),'</ul>','<p>Ihre <b>Gäste</b>:</p>','<ul>',group_concat(distinct concat('<li>',`zugangsberechtigung`.`name`,', ',`zugangsberechtigung`.`funktion`) order by `organisation`.`anzeige_name` ASC separator ' '),'</ul>','<p>Mit freundlichen Grüssen,<br></p>') AS `email_text_html`,`UTF8_URLENCODE`(concat((case `parlamentarier`.`geschlecht` when 'M' then concat('Sehr geehrter Herr ',`parlamentarier`.`nachname`,'\r\n') when 'F' then concat('Sehr geehrte Frau ',`parlamentarier`.`nachname`,'\r\n') else concat('Sehr geehrte(r) Herr/Frau ',`parlamentarier`.`nachname`,'\r\n') end),'\r\n[Ersetze Text mit HTML-Vorlage]\r\n','Ihre Interessenbindungen:\r\n',group_concat(distinct concat('* ',`organisation`.`anzeige_name`,if((isnull(`organisation`.`rechtsform`) or (trim(`organisation`.`rechtsform`) = '')),'',concat(', ',`organisation`.`rechtsform`)),if((isnull(`organisation`.`ort`) or (trim(`organisation`.`ort`) = '')),'',concat(', ',`organisation`.`ort`)),', ',`interessenbindung`.`art`,', ',`interessenbindung`.`beschreibung`,'\r\n') order by `organisation`.`anzeige_name` ASC separator ' '),'\r\nIhre Gäste:\r\n',group_concat(distinct concat('* ',`zugangsberechtigung`.`name`,', ',`zugangsberechtigung`.`funktion`,'\r\n') order by `organisation`.`anzeige_name` ASC separator ' '),'\r\nMit freundlichen Grüssen,\r\n')) AS `email_text_for_url` from (((`v_parlamentarier` `parlamentarier` left join `v_interessenbindung` `interessenbindung` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) left join `v_organisation` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) left join `v_zugangsberechtigung` `zugangsberechtigung` on((`zugangsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) group by `parlamentarier`.`id`;
 
 -- --------------------------------------------------------
 
