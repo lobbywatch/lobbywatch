@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 16. Dez 2013 um 13:23
+-- Erstellungszeit: 16. Dez 2013 um 17:29
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -80,6 +80,7 @@ END$$
 DROP FUNCTION IF EXISTS `UTF8_URLENCODE`$$
 CREATE DEFINER=`root`@`localhost` FUNCTION `UTF8_URLENCODE`(str VARCHAR(4096) CHARSET utf8) RETURNS varchar(4096) CHARSET utf8
     DETERMINISTIC
+    COMMENT 'Encode UTF-8 string as URL'
 BEGIN
    -- the individual character we are converting in our loop
    -- NOTE: must be VARCHAR even though it won't vary in length
@@ -1438,7 +1439,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   KEY `idx_partei` (`partei_id`),
   KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=65 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=75 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -2919,7 +2920,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_parlamentarier_authorisierungs_email`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_authorisierungs_email` AS select `parlamentarier`.`id` AS `id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`email` AS `email`,concat((case `parlamentarier`.`geschlecht` when 'M' then concat('<p>Sehr geehrter Herr ',`parlamentarier`.`nachname`,'</p>') when 'F' then concat('<p>Sehr geehrte Frau ',`parlamentarier`.`nachname`,'</p>') else concat('<p>Sehr geehrte(r) Herr/Frau ',`parlamentarier`.`nachname`,'</p>') end),'<p>[Einleitung]</p>','<p>Ihre <b>Interessenbindungen</b>:</p>','<ul>',group_concat(distinct concat('<li>',`organisation`.`anzeige_name`,if((isnull(`organisation`.`rechtsform`) or (trim(`organisation`.`rechtsform`) = '')),'',concat(', ',`organisation`.`rechtsform`)),if((isnull(`organisation`.`ort`) or (trim(`organisation`.`ort`) = '')),'',concat(', ',`organisation`.`ort`)),', ',`interessenbindung`.`art`,', ',`interessenbindung`.`beschreibung`) order by `organisation`.`anzeige_name` ASC separator ' '),'</ul>','<p>Ihre <b>Gäste</b>:</p>','<ul>',group_concat(distinct concat('<li>',`zugangsberechtigung`.`name`,', ',`zugangsberechtigung`.`funktion`) order by `organisation`.`anzeige_name` ASC separator ' '),'</ul>','<p>Mit freundlichen Grüssen,<br></p>') AS `email_text_html`,`UTF8_URLENCODE`(concat((case `parlamentarier`.`geschlecht` when 'M' then concat('Sehr geehrter Herr ',`parlamentarier`.`nachname`,'\r\n') when 'F' then concat('Sehr geehrte Frau ',`parlamentarier`.`nachname`,'\r\n') else concat('Sehr geehrte(r) Herr/Frau ',`parlamentarier`.`nachname`,'\r\n') end),'\r\n[Kopiere Text von HTML-Vorlage]\r\nMit freundlichen Grüssen,\r\n')) AS `email_text_for_url` from (((`v_parlamentarier` `parlamentarier` left join `v_interessenbindung` `interessenbindung` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) left join `v_organisation` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) left join `v_zugangsberechtigung` `zugangsberechtigung` on((`zugangsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) group by `parlamentarier`.`id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_authorisierungs_email` AS select `parlamentarier`.`id` AS `id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`email` AS `email`,concat((case `parlamentarier`.`geschlecht` when 'M' then concat('<p>Sehr geehrter Herr ',`parlamentarier`.`nachname`,'</p>') when 'F' then concat('<p>Sehr geehrte Frau ',`parlamentarier`.`nachname`,'</p>') else concat('<p>Sehr geehrte(r) Herr/Frau ',`parlamentarier`.`nachname`,'</p>') end),'<p>[Einleitung]</p>','<p>Ihre <b>Interessenbindungen</b>:</p>','<ul>',group_concat(distinct concat('<li>',`organisation`.`anzeige_name`,if((isnull(`organisation`.`rechtsform`) or (trim(`organisation`.`rechtsform`) = '')),'',concat(', ',`organisation`.`rechtsform`)),if((isnull(`organisation`.`ort`) or (trim(`organisation`.`ort`) = '')),'',concat(', ',`organisation`.`ort`)),', ',`interessenbindung`.`art`,', ',`interessenbindung`.`beschreibung`) order by `organisation`.`anzeige_name` ASC separator ' '),'</ul>','<p>Ihre <b>Gäste</b>:</p>','<ul>',group_concat(distinct concat('<li>',`zugangsberechtigung`.`name`,', ',`zugangsberechtigung`.`funktion`) order by `organisation`.`anzeige_name` ASC separator ' '),'</ul>','<p>Mit freundlichen Grüssen,<br></p>') AS `email_text_html`,`UTF8_URLENCODE`(concat((case `parlamentarier`.`geschlecht` when 'M' then concat('Sehr geehrter Herr ',`parlamentarier`.`nachname`,'\r\n') when 'F' then concat('Sehr geehrte Frau ',`parlamentarier`.`nachname`,'\r\n') else concat('Sehr geehrte(r) Herr/Frau ',`parlamentarier`.`nachname`,'\r\n') end),'\r\n[Kopiere Text von HTML-Vorlage]\r\n','Ihre Interessenbindungen:\r\n',group_concat(distinct concat('* ',`organisation`.`anzeige_name`,if((isnull(`organisation`.`rechtsform`) or (trim(`organisation`.`rechtsform`) = '')),'',concat(', ',`organisation`.`rechtsform`)),if((isnull(`organisation`.`ort`) or (trim(`organisation`.`ort`) = '')),'',concat(', ',`organisation`.`ort`)),', ',`interessenbindung`.`art`,', ',`interessenbindung`.`beschreibung`,'\r\n') order by `organisation`.`anzeige_name` ASC separator ' '),'\r\nIhre Gäste:\r\n',group_concat(distinct concat('* ',`zugangsberechtigung`.`name`,', ',`zugangsberechtigung`.`funktion`,'\r\n') order by `organisation`.`anzeige_name` ASC separator ' '),'\r\nMit freundlichen Grüssen,\r\n')) AS `email_text_for_url` from (((`v_parlamentarier` `parlamentarier` left join `v_interessenbindung` `interessenbindung` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) left join `v_organisation` `organisation` on((`interessenbindung`.`organisation_id` = `organisation`.`id`))) left join `v_zugangsberechtigung` `zugangsberechtigung` on((`zugangsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) group by `parlamentarier`.`id`;
 
 -- --------------------------------------------------------
 
