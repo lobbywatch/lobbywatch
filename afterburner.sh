@@ -38,7 +38,7 @@ do
   | perl -p -e's/^(\s*)(GetApplication\(\)->SetMainPage\(\$Page\);)/\1\2\n\1before_render\(\$Page\);/' \
   | perl -p -e's/CanLoginAsGuest\(\)\s*\{\s*return true;\s*\}/CanLoginAsGuest\(\) \{ return false; \}/g' \
   | perl -p -e's/'\''guest'\''\s*=>\s*new\s+DataSourceSecurityInfo\(\s*true/'\''guest'\'' => new DataSourceSecurityInfo\(GetApplication\(\)->GetOperation\(\) === '\''rss'\''/g' \
-  | perl -0 -p -e's/(?<=CreateRssGenerator\(\)).*?(?=\})/ \{\n            return setupRSS\(\$this, \$this->dataset\);\n        /s' \
+  | perl -0 -p -e's/(?<=CreateRssGenerator\(\)).*?(?=\})/ \{\n            return setupRSS\(\$this, \$this->dataset\);\n        /sg' \
   | perl -p -e's/\$env_dir/'\'' \. \$GLOBALS["env_dir"] \. '\''/g' \
   | perl -p -e's/\$env(?!_dir)/'\'' \. \$GLOBALS["env"] \. '\''/g' \
   | perl -p -e's/\$public_files_dir/'\'' \. \$GLOBALS["public_files_dir"] \. '\''/g' \
@@ -47,6 +47,7 @@ do
   | perl -p -e's/\$deploy_date:\$/'\'' \. \$GLOBALS["deploy_date"] \. '\''/g' \
   | perl -p -e's/\$version/'\'' \. \$GLOBALS["version"] \. '\''/g' \
   | perl -p -e's/\$edit_general_hint/'\'' \. \$GLOBALS["edit_general_hint"] \. '\''/g' \
+  | perl -p -e's/\$edit_header_message/'\'' \. \$GLOBALS["edit_header_message"] \. '\''/g' \
   | perl -p -e's/<a id="plugin-edit-remarksbox.*?<\/a>//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" width="15" height="14">//g' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \

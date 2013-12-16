@@ -2153,7 +2153,9 @@
     
         protected function DoGetGridHeader()
         {
-            return '<div class="wiki-table-help">
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
     <p>Beziehungen wie <em>"Mitglied von"</em> und <em>"arbeitet für"</em> zwischen Organisationen können erfasst werden.
     </p>
     

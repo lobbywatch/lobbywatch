@@ -3818,9 +3818,8 @@
             return null;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -5684,9 +5683,8 @@
             return $result;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -9029,7 +9027,9 @@
     
         protected function DoGetGridHeader()
         {
-            return '<div class="wiki-table-help">
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
     <p>Diese Tabelle ordnet einem <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx" rel="_blank external nofollow">Parlamentarier</a> die <a class="wiki external" target="_blank" href="http://www.parlament.ch/d/organe-mitglieder/nationalrat/Documents/zutrittsberechtigte-nr.pdf" rel="_blank external nofollow">zutrittsberechtigten Personen</a> zu.
     </p>
     

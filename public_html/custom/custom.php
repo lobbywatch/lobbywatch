@@ -2,7 +2,9 @@
 
 require_once dirname(__FILE__) . "/../common/utils.php";
 
-$edit_general_hint = "<p>Generelle Bearbeitungshinweise siehe <a href=\"http://lobbycontrol.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbycontrol-Wiki\" target=\"_blank\">Wiki Datenbearbeitung</a>.</p>";
+$edit_header_message = '<div class="simplebox"><b>Stand</b>: Die Tabellen <i>In_kommission</i>, <i>Kommission</i>, <i>Partei</i>, <i>Branche</i> können bearbeitet werden. Die anderen Änderungen gehen wieder verloren.</div>';
+
+$edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/book_open.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten, siehe <a href=\"http://lobbycontrol.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbycontrol-Wiki\" target=\"_blank\">Wiki Datenbearbeitung</a> und <a href=\"${env_dir}lobbycontrol_datenmodell.pdf\">Datenmodell</a> (PDF)</div></div>.';
 
 function setupRSS($page, $dataset) {
   $title = ucwords ( $page->GetCaption () );
@@ -30,7 +32,7 @@ function setupRSS($page, $dataset) {
       break;
     case 'partei' :
       $rss_title = 'Partei %abkuerzung% changed by %updated_visa% at %updated_date%';
-      $rss_body = 'Name: %name%<br>GrÃ¼ndung: %gruendung%<br>Position: %position%';
+      $rss_body = 'Name: %name%<br>Gründung: %gruendung%<br>Position: %position%';
       break;
     case 'zugangsberechtigung' :
       $rss_title = 'Zutrittsberechtigung %vorname% %nachname% changed by %updated_visa% at %updated_date%';
@@ -65,7 +67,7 @@ function setupRSS($page, $dataset) {
     $rss_body .= "<br>$title ID %id%<br>Updated by %updated_visa% at %updated_date%";
 
   $base_url = "http://$_SERVER[HTTP_HOST]";
-  $generator = new DatasetRssGenerator ( $dataset, convert_utf8 ( $title . ' RSS' ), $base_url, 'Ã„nderungen der Lobbycontrol-Datenbank als RSS Feed', $rss_title, $table . ' at %id%', $rss_body );
+  $generator = new DatasetRssGenerator ( $dataset, convert_utf8 ( $title . ' RSS' ), $base_url, convert_utf8('Änderungen der Lobbycontrol-Datenbank als RSS Feed'), convert_utf8 ($rss_title), $table . ' at %id%', convert_utf8 ($rss_body) );
   $generator->SetItemPublicationDateFieldName ( 'updated_date' );
   $generator->SetOrderByFieldName ( 'updated_date' );
   $generator->SetOrderType ( otDescending );

@@ -3776,9 +3776,8 @@
             return null;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -5413,9 +5412,8 @@
             return null;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -7050,9 +7048,8 @@
             return null;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -8687,9 +8684,8 @@
             return null;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -10781,9 +10777,8 @@
             return null;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -13890,9 +13885,8 @@
             return null;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -17095,9 +17089,8 @@
             return null;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -19191,9 +19184,8 @@
             return $result;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -24661,7 +24653,9 @@
     
         protected function DoGetGridHeader()
         {
-            return '<div class="wiki-table-help">
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
     <p>Organisationen, die Lobbying im Parlament betreiben.
     </p>
     

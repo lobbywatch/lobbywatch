@@ -1412,19 +1412,23 @@
     
         protected function DoGetGridHeader()
         {
-            return '<p>Auflistung der Parlamentarier mit unvollständigen Angaben.</p>
-    
-    <p>Ein Parlamentarier erscheint hier wenn
-    <ul>
-    <li>das Photo fehlt,
-    <li>keine Sitzplatznr eingetragen ist,
-    <li>das Geburtsdatum fehlt,
-    <li>das Geschlecht fehlt,
-    <li>die E-Mail-Adresse fehlt.
-    </ul>
+            return '<div class="wiki-table-help">
+    <p>Für Auswertungen müssen die Daten in genügender Qualität vorhanden sein. Nicht alle für die Auswertung benötigten Felder sind obligatorisch. Daten müssen deshalb nacherfasst werden. Eine Auflistung der Parlamentarier mit unvollständigen Angaben.
     </p>
+    ' . $GLOBALS["edit_header_message"] . '
     
-    <p>Diese Kritieren werden nach Bedarf angepasst.</p>';
+    <p>Ein Parlamentarier ist unvollständig, wenn
+    </p>
+    <ul><li> das Photo fehlt,
+    </li><li> keine Sitzplatznr eingetragen ist,
+    </li><li> das Geburtsdatum fehlt,
+    </li><li> das Geschlecht fehlt,
+    </li><li> die E-Mail-Adresse fehlt.
+    </li></ul><p>Diese Kriterien werden nach Bedarf angepasst.
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

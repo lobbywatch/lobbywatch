@@ -3363,9 +3363,8 @@
             return null;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -4952,9 +4951,8 @@
             return $result;
         }
     
-        protected function CreateRssGenerator()
-        {
-            return null;
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -7271,7 +7269,9 @@
     
         protected function DoGetGridHeader()
         {
-            return '<div class="wiki-table-help">
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
     <p><a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/Seiten/default.aspx" rel="_blank external nofollow">Kommissionen</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" height="14" width="15"> und <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/DELEGATIONEN/Seiten/default.aspx" rel="_blank external nofollow">Delegationen</a><img src="img/icons/external_link.gif" alt="(externer Link)" title="(externer Link)" class="icon" height="14" width="15"> des Parlamentes.
     </p>
     

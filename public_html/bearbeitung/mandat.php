@@ -2255,7 +2255,9 @@
     
         protected function DoGetGridHeader()
         {
-            return '<div class="wiki-table-help">
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
     <p>Zuordung von Mandaten zu Zutrittsberechtigen.
     </p>
     

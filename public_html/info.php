@@ -45,7 +45,7 @@ require_once 'common/utils.php';
   </p>
   <h2>Informationen</h2>
   <p>
-    <a href="<?php print "$env_dir";?>lobbycontrol_er.pdf">Datenmodell (PDF)</a><br/>
+  <a href="<?php print "$env_dir";?>lobbycontrol_datenmodell.pdf">Datenmodell (PDF)</a><br/>
     <a href="/wiki/tiki-index.php?page=Wertebereiche">Wertebereiche auf Wiki</a><br/>
   </p>
   <p>
