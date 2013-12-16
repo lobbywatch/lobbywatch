@@ -62,6 +62,9 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('deklarationstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
             $field = new StringField('status');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -1029,6 +1032,9 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('art');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('status');
@@ -9817,6 +9823,9 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('deklarationstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
             $field = new StringField('status');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -10721,6 +10730,9 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('art');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('status');
@@ -12824,6 +12836,9 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('deklarationstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
             $field = new StringField('status');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
@@ -13823,6 +13838,9 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('art');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('status');
