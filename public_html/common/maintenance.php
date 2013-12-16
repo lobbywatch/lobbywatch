@@ -1,5 +1,5 @@
 <?php
-include_once 'build_date.php';
+include_once 'utils.php';
 ?>
 <!DOCTYPE html >
 <html>
@@ -22,10 +22,6 @@ include_once 'build_date.php';
   <h1>Lobbycontrol in Wartung</h1>
   <p><b>Wartungsarbeiten werden an Lobbycontrol vorgenommen.</b></p>
   <p><b>Lobbycontrol steht deshalb nicht zur Verfügung.</b></p>
-  <p>
-    <a href="/lobbycontrol_er.pdf">Datenmodell (PDF)</a><br/>
-    <a href="/wiki/tiki-index.php?page=Wertebereiche&structure=Lobbycontrol-Wiki">Wertebereiche auf Wiki</a><br/>
-  </p>
   <p>
     <a href="/wiki">Wiki</a><br/>
   </p>
