@@ -325,6 +325,7 @@ DELIMITER |
 CREATE FUNCTION UTF8_URLENCODE(str VARCHAR(4096) CHARSET utf8) RETURNS VARCHAR(4096) CHARSET utf8
 DETERMINISTIC
 CONTAINS SQL
+COMMENT 'Encode UTF-8 string as URL'
 BEGIN
    -- the individual character we are converting in our loop
    -- NOTE: must be VARCHAR even though it won't vary in length
@@ -1261,7 +1262,20 @@ UTF8_URLENCODE(CONCAT(
     WHEN 'F' THEN CONCAT('Sehr geehrte Frau ', parlamentarier.nachname, '\r\n')
     ELSE CONCAT('Sehr geehrte(r) Herr/Frau ', parlamentarier.nachname, '\r\n')
   END,
-  '\r\n[Kopiere Text von HTML-Vorlage]\r\nMit freundlichen Grüssen,\r\n'
+  '\r\n[Ersetze Text mit HTML-Vorlage]\r\n',
+  'Ihre Interessenbindungen:\r\n',
+  GROUP_CONCAT(DISTINCT
+    CONCAT('* ', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art, ', ', interessenbindung.beschreibung, '\r\n')
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ' '
+  ),
+  '\r\nIhre Gäste:\r\n',
+  GROUP_CONCAT(DISTINCT
+    CONCAT('* ', zugangsberechtigung.name, ', ', zugangsberechtigung.funktion, '\r\n')
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ' '
+  ),
+  '\r\nMit freundlichen Grüssen,\r\n'
 )) email_text_for_url
 FROM v_parlamentarier parlamentarier
 LEFT JOIN v_interessenbindung interessenbindung

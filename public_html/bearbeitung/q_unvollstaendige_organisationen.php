@@ -91,6 +91,7 @@
             $field = new DateTimeField('updated_date');
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe', new IntegerField('id'), new StringField('name', 'interessengruppe_id_name', 'interessengruppe_id_name_v_interessengruppe'), 'interessengruppe_id_name_v_interessengruppe');
+            $this->dataset->AddLookupField('branche_id', 'v_branche', new IntegerField('id'), new StringField('name', 'branche_id_name', 'branche_id_name_v_branche'), 'branche_id_name_v_branche');
         }
     
         protected function CreatePageNavigator()
@@ -152,8 +153,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('q_unvollstaendige_organisationenssearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'vernehmlassung', 'interessengruppe_id_name', 'branche_id', 'url', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe Id'), $this->RenderText('Branche Id'), $this->RenderText('Url'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'vernehmlassung', 'interessengruppe_id_name', 'branche_id_name', 'url', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe'), $this->RenderText('Branche'), $this->RenderText('Url'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -213,8 +214,42 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe_id', $this->RenderText('Interessengruppe Id'), $lookupDataset, 'id', 'name', false));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('branche_id', $this->RenderText('Branche Id')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe_id', $this->RenderText('Interessengruppe'), $lookupDataset, 'id', 'name', false));
+            
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('url', $this->RenderText('Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
@@ -471,7 +506,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -513,7 +548,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Interessengruppe Id', 
+                'Interessengruppe', 
                 'interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -562,7 +597,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Interessengruppe Id', 
+                'Interessengruppe', 
                 'interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -571,22 +606,61 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=edit&pk0=%interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for branche_id field
+            // View column for name field
             //
-            $column = new TextViewColumn('branche_id', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
             // Edit column for branche_id field
             //
-            $editor = new SpinEdit('branche_id_edit');
-            $editColumn = new CustomEditColumn('Branche Id', 'branche_id', $editor, $this->dataset);
+            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Branche', 
+                'branche_id', 
+                $editor, 
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -597,13 +671,52 @@
             //
             // Edit column for branche_id field
             //
-            $editor = new SpinEdit('branche_id_edit');
-            $editColumn = new CustomEditColumn('Branche Id', 'branche_id', $editor, $this->dataset);
+            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Branche', 
+                'branche_id', 
+                $editor, 
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=edit&pk0=%branche_id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -840,15 +953,17 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=edit&pk0=%interessengruppe_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for branche_id field
+            // View column for name field
             //
-            $column = new TextViewColumn('branche_id', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=edit&pk0=%branche_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1000,7 +1115,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Interessengruppe Id', 
+                'Interessengruppe', 
                 'interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -1012,8 +1127,46 @@
             //
             // Edit column for branche_id field
             //
-            $editor = new SpinEdit('branche_id_edit');
-            $editColumn = new CustomEditColumn('Branche Id', 'branche_id', $editor, $this->dataset);
+            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Branche', 
+                'branche_id', 
+                $editor, 
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1184,7 +1337,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Interessengruppe Id', 
+                'Interessengruppe', 
                 'interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -1196,8 +1349,46 @@
             //
             // Edit column for branche_id field
             //
-            $editor = new SpinEdit('branche_id_edit');
-            $editColumn = new CustomEditColumn('Branche Id', 'branche_id', $editor, $this->dataset);
+            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Branche', 
+                'branche_id', 
+                $editor, 
+                $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1323,15 +1514,17 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=edit&pk0=%interessengruppe_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
-            // View column for branche_id field
+            // View column for name field
             //
-            $column = new TextViewColumn('branche_id', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=edit&pk0=%branche_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -1428,15 +1621,17 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe Id', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_name', 'Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=edit&pk0=%interessengruppe_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
-            // View column for branche_id field
+            // View column for name field
             //
-            $column = new TextViewColumn('branche_id', 'Branche Id', $this->dataset);
+            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=edit&pk0=%branche_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
