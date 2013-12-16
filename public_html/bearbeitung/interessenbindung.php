@@ -789,7 +789,6 @@
             $editor = new ComboBox('deklarationstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('deklarationspflichtig', $this->RenderText('deklarationspflichtig'));
             $editor->AddValue('nicht deklarationspflicht', $this->RenderText('nicht deklarationspflicht'));
-            $editor->AddValue('\'\'', $this->RenderText('\'\''));
             $editColumn = new CustomEditColumn('Deklarationstyp', 'deklarationstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -804,7 +803,6 @@
             $editor = new ComboBox('deklarationstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('deklarationspflichtig', $this->RenderText('deklarationspflichtig'));
             $editor->AddValue('nicht deklarationspflicht', $this->RenderText('nicht deklarationspflicht'));
-            $editor->AddValue('\'\'', $this->RenderText('\'\''));
             $editColumn = new CustomEditColumn('Deklarationstyp', 'deklarationstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1514,7 +1512,6 @@
             $editor = new ComboBox('deklarationstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('deklarationspflichtig', $this->RenderText('deklarationspflichtig'));
             $editor->AddValue('nicht deklarationspflicht', $this->RenderText('nicht deklarationspflicht'));
-            $editor->AddValue('\'\'', $this->RenderText('\'\''));
             $editColumn = new CustomEditColumn('Deklarationstyp', 'deklarationstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1841,7 +1838,6 @@
             $editor = new ComboBox('deklarationstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('deklarationspflichtig', $this->RenderText('deklarationspflichtig'));
             $editor->AddValue('nicht deklarationspflicht', $this->RenderText('nicht deklarationspflicht'));
-            $editor->AddValue('\'\'', $this->RenderText('\'\''));
             $editColumn = new CustomEditColumn('Deklarationstyp', 'deklarationstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);

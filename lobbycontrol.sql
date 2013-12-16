@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 16. Dez 2013 um 19:21
+-- Erstellungszeit: 16. Dez 2013 um 20:46
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -271,7 +271,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 16. Dez 2013 um 18:18
+-- Erzeugt am: 16. Dez 2013 um 19:43
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
@@ -280,7 +280,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
-  `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht','','') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig?',
+  `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig?',
   `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
   `verguetung` int(11) DEFAULT NULL COMMENT 'Monatliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.',
   `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Bezeichnung wird zur Auswertung wahrscheinlich nicht gebraucht.',
@@ -357,7 +357,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 16. Dez 2013 um 18:19
+-- Erzeugt am: 16. Dez 2013 um 19:44
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
@@ -366,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
-  `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht','','') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig?',
+  `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig?',
   `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
   `verguetung` int(11) DEFAULT NULL COMMENT 'Monatliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.',
   `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Bezeichnung wird zur Auswertung wahrscheinlich nicht gebraucht.',
@@ -1645,7 +1645,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung` (
 ,`parlamentarier_id` int(11)
 ,`organisation_id` int(11)
 ,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat')
-,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht','','')
+,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht')
 ,`status` enum('deklariert','nicht-deklariert')
 ,`verguetung` int(11)
 ,`beschreibung` varchar(150)
@@ -1686,7 +1686,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung_liste` (
 ,`parlamentarier_id` int(11)
 ,`organisation_id` int(11)
 ,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat')
-,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht','','')
+,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht')
 ,`status` enum('deklariert','nicht-deklariert')
 ,`verguetung` int(11)
 ,`beschreibung` varchar(150)
@@ -2191,7 +2191,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_parlamentarier` (
 ,`parlamentarier_id` int(11)
 ,`organisation_id` int(11)
 ,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat')
-,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht','','')
+,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht')
 ,`status` enum('deklariert','nicht-deklariert')
 ,`verguetung` int(11)
 ,`beschreibung` varchar(150)
