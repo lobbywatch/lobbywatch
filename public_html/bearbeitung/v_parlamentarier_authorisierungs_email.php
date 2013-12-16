@@ -52,7 +52,9 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('email');
             $this->dataset->AddField($field, false);
-            $field = new StringField('email_text');
+            $field = new StringField('email_text_html');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('email_text_for_url');
             $this->dataset->AddField($field, false);
         }
     
@@ -115,8 +117,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('v_parlamentarier_authorisierungs_emailssearch', $this->dataset,
-                array('id', 'parlamentarier_name', 'email', 'email_text'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier Name'), $this->RenderText('Email'), $this->RenderText('Email Text')),
+                array('id', 'parlamentarier_name', 'email', 'email_text_html'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier Name'), $this->RenderText('Email'), $this->RenderText('Email Text Html')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -139,7 +141,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlamentarier_name', $this->RenderText('Parlamentarier Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email_text', $this->RenderText('Email Text')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email_text_html', $this->RenderText('Email Text Html')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -265,19 +267,19 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for email_text field
+            // View column for email_text_html field
             //
-            $column = new TextViewColumn('email_text', 'Email Text', $this->dataset);
+            $column = new TextViewColumn('email_text_html', 'Email Text Html', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_text_handler');
+            $column->SetFullTextWindowHandlerName('email_text_html_handler');
             
             /* <inline edit column> */
             //
-            // Edit column for email_text field
+            // Edit column for email_text_html field
             //
-            $editor = new TextAreaEdit('email_text_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Email Text', 'email_text', $editor, $this->dataset);
+            $editor = new TextAreaEdit('email_text_html_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Email Text Html', 'email_text_html', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -285,15 +287,15 @@
             
             /* <inline insert column> */
             //
-            // Edit column for email_text field
+            // Edit column for email_text_html field
             //
-            $editor = new TextAreaEdit('email_text_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Email Text', 'email_text', $editor, $this->dataset);
+            $editor = new TextAreaEdit('email_text_html_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Email Text Html', 'email_text_html', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Autorisierung&body=%email_text%&bcc=info@lobbycontrol.ch' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Autorisierung&body=%email_text_for_url%&bcc=info@lobbycontrol.ch' , '_blank');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -329,13 +331,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for email_text field
+            // View column for email_text_html field
             //
-            $column = new TextViewColumn('email_text', 'Email Text', $this->dataset);
+            $column = new TextViewColumn('email_text_html', 'Email Text Html', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_text_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Autorisierung&body=%email_text%&bcc=info@lobbycontrol.ch' , '_blank');
+            $column->SetFullTextWindowHandlerName('email_text_html_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Autorisierung&body=%email_text_for_url%&bcc=info@lobbycontrol.ch' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -373,10 +375,10 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for email_text field
+            // Edit column for email_text_html field
             //
-            $editor = new TextAreaEdit('email_text_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Email Text', 'email_text', $editor, $this->dataset);
+            $editor = new TextAreaEdit('email_text_html_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Email Text Html', 'email_text_html', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -417,10 +419,10 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for email_text field
+            // Edit column for email_text_html field
             //
-            $editor = new TextAreaEdit('email_text_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Email Text', 'email_text', $editor, $this->dataset);
+            $editor = new TextAreaEdit('email_text_html_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Email Text Html', 'email_text_html', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -460,9 +462,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for email_text field
+            // View column for email_text_html field
             //
-            $column = new TextViewColumn('email_text', 'Email Text', $this->dataset);
+            $column = new TextViewColumn('email_text_html', 'Email Text Html', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -491,9 +493,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for email_text field
+            // View column for email_text_html field
             //
-            $column = new TextViewColumn('email_text', 'Email Text', $this->dataset);
+            $column = new TextViewColumn('email_text_html', 'Email Text Html', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -631,17 +633,17 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for email_text field
+            // View column for email_text_html field
             //
-            $column = new TextViewColumn('email_text', 'Email Text', $this->dataset);
+            $column = new TextViewColumn('email_text_html', 'Email Text Html', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for email_text field
+            // Edit column for email_text_html field
             //
-            $editor = new TextAreaEdit('email_text_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Email Text', 'email_text', $editor, $this->dataset);
+            $editor = new TextAreaEdit('email_text_html_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Email Text Html', 'email_text_html', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -649,16 +651,16 @@
             
             /* <inline insert column> */
             //
-            // Edit column for email_text field
+            // Edit column for email_text_html field
             //
-            $editor = new TextAreaEdit('email_text_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Email Text', 'email_text', $editor, $this->dataset);
+            $editor = new TextAreaEdit('email_text_html_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Email Text Html', 'email_text_html', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Autorisierung&body=%email_text%&bcc=info@lobbycontrol.ch' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_text_handler', $column);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Autorisierung&body=%email_text_for_url%&bcc=info@lobbycontrol.ch' , '_blank');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_text_html_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for parlamentarier_name field
             //
@@ -676,12 +678,12 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for email_text field
+            // View column for email_text_html field
             //
-            $column = new TextViewColumn('email_text', 'Email Text', $this->dataset);
+            $column = new TextViewColumn('email_text_html', 'Email Text Html', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Autorisierung&body=%email_text%&bcc=info@lobbycontrol.ch' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_text_handler', $column);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Autorisierung&body=%email_text_for_url%&bcc=info@lobbycontrol.ch' , '_blank');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_text_html_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
