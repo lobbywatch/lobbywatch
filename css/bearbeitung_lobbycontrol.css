@@ -203,3 +203,7 @@ h3.box-title,
   -webkit-border-bottom-left-radius: 4px;
   -webkit-border-bottom-right-radius: 4px;
 }
+
+.hint {
+  border-bottom: 1px dotted black;
+}

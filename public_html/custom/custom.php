@@ -4,7 +4,9 @@ require_once dirname(__FILE__) . "/../common/utils.php";
 
 $edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version $build_date_short)</b>: Die Tabellen <i>In_kommission</i>, <i>Kommission</i>, <i>Partei</i>, <i>Branche</i> können bearbeitet werden. Die anderen Änderungen gehen wieder verloren.</div>";
 
-$edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/book_open.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten, siehe <a href="http://lobbycontrol.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbycontrol-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="' . $env_dir . 'lobbycontrol_datenmodell.pdf">Datenmodell</a> (PDF).</div></div>';
+$edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/book_open.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbycontrol.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbycontrol-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="' . $env_dir . 'lobbycontrol_datenmodell.pdf">Datenmodell</a> (PDF).</div></div>';
+
+//df_clean();
 
 function setupRSS($page, $dataset) {
   $title = ucwords ( $page->GetCaption () );
@@ -85,6 +87,15 @@ function convert_ansi($text) {
 
 function before_render(Page $page) {
   $page->OnCustomHTMLHeader->AddListener('add_custom_header');
+
+  $hints = array();
+  foreach($page->GetGrid()->GetViewColumns() as $column) {
+    $raw_name = $column->GetName();
+    $name = preg_replace('/^(.*?_id).*/', '\1', $raw_name);
+    $hints[$name] = $column->GetDescription();
+//     df("Names: $raw_name -> $name");
+  }
+  $GLOBALS['customParams'] = array( 'Hints' => $hints);
 }
 
 function add_custom_header(&$page, &$result) {

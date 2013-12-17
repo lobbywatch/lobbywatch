@@ -28,7 +28,7 @@ class EditRenderer extends Renderer
                 'HideSideBarByDefault' => $page->GetHidePageListByDefault(),
                 'LayoutTemplateName' => $layoutTemplate,
                 'PageList' => $this->RenderDef($page->GetReadyPageList()),
-                'Grid' => $this->Render($page->GetGrid()),
+                'Grid' => $this->Render($page->GetGrid(), true, true, $GLOBALS['customParams']),
                 'Variables' => $this->GetPageVariables($page)
             )
         );

@@ -2050,7 +2050,8 @@ class Grid {
                 'IsValueNull' => $column->IsValueNull(),
                 'IsValueSetToDefault' => $column->IsValueSetToDefault(),
                 'SetNullCheckBoxName' => $column->GetFieldName() . '_null',
-                'SetDefaultCheckBoxName' => $column->GetFieldName() . '_def'
+                'SetDefaultCheckBoxName' => $column->GetFieldName() . '_def',
+                'Hint' => $GLOBALS['customParams']['Hints'][$column->GetFieldName()]
             );
         }
         return $columnViewDatas;

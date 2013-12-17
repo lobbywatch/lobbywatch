@@ -43,6 +43,14 @@ function dlXXX($msg) {
   // Disabled debug comment: do nothing
 }
 
+function df_clean() {
+  global $debug;
+  if ($debug !== true)
+    return;
+  $msg = 'Start logging';
+  file_put_contents(dirname(__FILE__) . "/../../logs/bearbeitung.log", date('c') . ': ' . $msg . "\n"/*, FILE_APPEND*/);
+}
+
 function df($msg) {
   global $debug;
   if ($debug !== true)
