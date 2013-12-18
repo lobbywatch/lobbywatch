@@ -92,8 +92,9 @@ function before_render(Page $page) {
   foreach($page->GetGrid()->GetViewColumns() as $column) {
     $raw_name = $column->GetName();
     $name = preg_replace('/^(.*?_id).*/', '\1', $raw_name);
+    $name = preg_replace('/_anzeige_name$/', '', $name);
     $hints[$name] = htmlspecialchars($column->GetDescription());
-//     df("Names: $raw_name -> $name");
+//      df("Names: $raw_name -> $name");
   }
   $GLOBALS['customParams'] = array( 'Hints' => $hints);
 }

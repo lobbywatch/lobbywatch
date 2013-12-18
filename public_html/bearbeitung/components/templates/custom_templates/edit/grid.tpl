@@ -55,12 +55,12 @@
 
             {foreach item=Column from=$Grid.Columns}
                 <div class="control-group">
-                    <div class="label-container" data-hint="{$Hints[$Column.FieldName]}" data-hinttitle="{$Column.Caption}"
-                    {*data-comment="{$Column.FieldName}: {$Column.Hint}" title="{$Column.FieldName}: {$Column.Hint}" *}>
+                    <div class="label-container"
+                    {*data-hint="{$Hints[$Column.FieldName]}" data-comment="{$Column.FieldName}: {$Column.Hint}" title="{$Column.FieldName}: {$Column.Hint}" *}>
                         <label class="control-label" for="{$Column.FieldName}_edit">
-                            <span {if $Hints[$Column.FieldName]}class="hint"{/if}>{$Column.Caption}</span>
+                            <span {* if $Column.Hint}class="hint"{/if *}>{$Column.Caption}</span>
                             {if $Column.Required}<span class="required-mark">*</span>{/if}
-                            {* if $Hints[$Column.FieldName]}<img src="img/icons/information.png" alt="Hinweis">{/if *}
+                            {if $Column.Hint}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Column.Hint}" data-hinttitle="{$Column.Caption}">{/if}
                         </label>
                         {include file="edit_field_options.tpl" Column=$Column}
                     </div>

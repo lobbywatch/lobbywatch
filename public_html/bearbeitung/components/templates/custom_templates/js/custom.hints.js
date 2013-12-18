@@ -13,7 +13,7 @@ define(function(require, exports, module) {
 //    alert("custom.hints loaded");
 
     // Copied from pgui.grid.js
-    $("div").each(function() {
+    $("div, img").each(function() {
       if ($(this).attr('data-hint')) {
           // Ref: http://getbootstrap.com/javascript/#popovers
           $(this).popover({
