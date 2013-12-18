@@ -3,7 +3,8 @@ define(function(require, exports) {
     var controls    = require('pgui.controls'),
         pv          = require('pgui.validation'),
         forms       = require('pgui.forms'),
-        hints       = require('custom.hints');
+        // Afterburner
+        hints       = require('../templates/custom_templates/js/custom.hints');
 
     $(function() {
         var $form = $('.pgui-edit-form form');

@@ -81,17 +81,53 @@ done
 #   > "$file";
 # done
 
-for file in $dir/components/page.php
+# for file in $dir/components/page.php
+# do
+#   echo "Process $file";
+#   mv "$file" "$file.bak";
+#   # Read file, process regex and write file
+#   cat "$file.bak" \
+#   | perl -0 -p -e's/(abstract class Page implements IPage, IVariableContainer)\s*?{/\1\n\{\n    public function getRawCaption\(\) \{dcXXX\("Get " . \$this->raw_caption\);return \$this->raw_caption;\}\n    protected \$raw_caption;/s' \
+#   | perl -p -e's/(?<=\$this->caption = \$value;)/\n        \$this->raw_caption = \$value;dcXXX\("Set " . \$this->raw_caption\);/' \
+#   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+#   > "$file";
+# done
+
+for file in $dir/components/grid/grid.php
 do
   echo "Process $file";
   mv "$file" "$file.bak";
   # Read file, process regex and write file
   cat "$file.bak" \
-  | perl -0 -p -e's/(abstract class Page implements IPage, IVariableContainer)\s*?{/\1\n\{\n    public function getRawCaption\(\) \{dcXXX\("Get " . \$this->raw_caption\);return \$this->raw_caption;\}\n    protected \$raw_caption;/s' \
-  | perl -p -e's/(?<=\$this->caption = \$value;)/\n        \$this->raw_caption = \$value;dcXXX\("Set " . \$this->raw_caption\);/' \
+  | perl -p -e's/('\''SetDefaultCheckBoxName'\'' => \$column->GetFieldName\(\) \. '\''_def'\'')/\1,\n                '\''Hint'\'' => isset(\$GLOBALS['\''customParams'\'']['\''Hints'\''][\$column->GetFieldName()]) ? \$GLOBALS['\''customParams'\'']['\''Hints'\''][\$column->GetFieldName()] : null, \/\/ Afterburner/' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
 done
+#  | perl -p -e's/('\''SetDefaultCheckBoxName'\'' => \$column->GetFieldName\(\) \. '\''_def'\'')/\1,\n                '\''Hint'\'' => \$GLOBALS['\''customParams'\'']['\''Hints'\''][\$column->GetFieldName()], \/\/ Afterburner/' \
+# \n        '\''Hint'\'' => $GLOBALS['\''customParams'\'']['\''Hints'\''][$column-X>GetFieldName()], \/\/ Afterburner/
+
+# 'Grid' => $this->Render($page->GetGrid()),
+for file in $dir/components/renderers/edit_renderer.php $dir/components/renderers/insert_renderer.php
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  # Read file, process regex and write file
+  cat "$file.bak" \
+  | perl -p -e's/\$this->Render\(\$page->GetGrid\(\)\)/\$this->Render(\$page->GetGrid(), true, true, \$GLOBALS['\''customParams'\''])  \/* Afterburner *\//' \
+  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+  > "$file";
+done
+
+for file in $dir/components/js/pgui.insert-page-main.js $dir/components/js/pgui.edit-page-main.js
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  # Read file, process regex and write file
+  cat "$file.bak" \
+  | perl -p -e's/(?<=require\('\''pgui.forms'\''\))/,\n        \/\/ Afterburner\n        hints       = require('\''..\/templates\/custom_templates\/js\/custom.hints'\'')/' \
+  > "$file";
+done
+
 
 for file in $dir/components/rss_feed_generator.php
 do

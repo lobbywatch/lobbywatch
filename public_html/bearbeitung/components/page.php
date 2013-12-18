@@ -1,7 +1,4 @@
 <?php
-// Processed by afterburner.sh
-
-
 
 // require_once 'libs/smartylibs/Smarty.class.php';
 include_once dirname(__FILE__) . '/' . '../libs/smartylibs/Smarty.class.php';
@@ -166,8 +163,6 @@ interface IPage
 
 abstract class Page implements IPage, IVariableContainer
 {
-    public function getRawCaption() {dcXXX("Get " . $this->raw_caption);return $this->raw_caption;}
-    protected $raw_caption;
     private $pageFileName;
     /** @var Renderer */
     protected $renderer;
@@ -724,8 +719,7 @@ abstract class Page implements IPage, IVariableContainer
 
     public function SetCaption($value)
     { 
-        $this->caption = $value;
-        $this->raw_caption = $value;dcXXX("Set " . $this->raw_caption); 
+        $this->caption = $value; 
     }
 
     public function GetHeader()

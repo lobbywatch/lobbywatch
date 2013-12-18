@@ -3303,18 +3303,6 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for updated_date field
-            //
-            $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
                 $grid->SetShowAddButton(true);
@@ -3719,6 +3707,14 @@
         {
             return ;
         }
+        public function in_kommissionGrid_OnGetCustomTemplate($part, $mode, &$result)
+        {
+        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
+          $result = 'edit/grid.tpl';
+        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
+          $result = 'insert/grid.tpl';
+        }
+        }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -3750,6 +3746,7 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $this->OnGetCustomTemplate->AddListener('in_kommissionGrid' . '_OnGetCustomTemplate', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

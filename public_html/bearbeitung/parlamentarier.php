@@ -26249,6 +26249,14 @@
         {
             return ;
         }
+        public function parlamentarierGrid_OnGetCustomTemplate($part, $mode, &$result)
+        {
+        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
+          $result = 'edit/grid.tpl';
+        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
+          $result = 'insert/grid.tpl';
+        }
+        }
         function parlamentarierGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             parlamentarier_remove_old_photo($page, $rowData, $cancel, $message, $tableName);
@@ -26364,6 +26372,7 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $this->OnGetCustomTemplate->AddListener('parlamentarierGrid' . '_OnGetCustomTemplate', $this);
             $result->BeforeUpdateRecord->AddListener('parlamentarierGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeDeleteRecord->AddListener('parlamentarierGrid' . '_' . 'BeforeDeleteRecord', $this);
             $result->BeforeInsertRecord->AddListener('parlamentarierGrid' . '_' . 'BeforeInsertRecord', $this);

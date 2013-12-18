@@ -9,12 +9,13 @@ define(function(require, exports, module) {
 //        _                   = require('underscore'),
 //        InputEvents         = require('pgui.events').InputEvents,
 //        setupInputEvents    = require('pgui.events').setupInputEvents;
-    
+
 //    alert("custom.hints loaded");
-    
-    // Copied from pgui.grid.js 
+
+    // Copied from pgui.grid.js
     $("div").each(function() {
       if ($(this).attr('data-hint')) {
+          // Ref: http://getbootstrap.com/javascript/#popovers
           $(this).popover({
               placement: 'right',
               title: $(this).attr('data-hinttitle'),

@@ -1,4 +1,7 @@
 <?php
+// Processed by afterburner.sh
+
+
 
 // require_once 'components/renderers/renderer.php';
 // require_once 'components/component.php';
@@ -2051,7 +2054,7 @@ class Grid {
                 'IsValueSetToDefault' => $column->IsValueSetToDefault(),
                 'SetNullCheckBoxName' => $column->GetFieldName() . '_null',
                 'SetDefaultCheckBoxName' => $column->GetFieldName() . '_def',
-                'Hint' => $GLOBALS['customParams']['Hints'][$column->GetFieldName()]
+                'Hint' => isset($GLOBALS['customParams']['Hints'][$column->GetFieldName()]) ? $GLOBALS['customParams']['Hints'][$column->GetFieldName()] : null, // Afterburner
             );
         }
         return $columnViewDatas;
@@ -2070,7 +2073,8 @@ class Grid {
                 'IsValueNull' => $column->IsValueNull(),
                 'IsValueSetToDefault' => $column->IsValueSetToDefault(),
                 'SetNullCheckBoxName' => $column->GetFieldName() . '_null',
-                'SetDefaultCheckBoxName' => $column->GetFieldName() . '_def'
+                'SetDefaultCheckBoxName' => $column->GetFieldName() . '_def',
+                'Hint' => isset($GLOBALS['customParams']['Hints'][$column->GetFieldName()]) ? $GLOBALS['customParams']['Hints'][$column->GetFieldName()] : null, // Afterburner
             );
         }
         return $columnViewDatas;

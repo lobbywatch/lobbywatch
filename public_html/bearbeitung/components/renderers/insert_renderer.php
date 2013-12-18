@@ -1,4 +1,7 @@
 <?php
+// Processed by afterburner.sh
+
+
 
 class InsertRenderer extends EditRenderer
 {
