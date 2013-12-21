@@ -50,38 +50,6 @@
                             {$Captions->GetMessageString('Refresh')}
                         </a>
                     {/if}
-                    
-                    {if $DataGrid.ActionsPanel.AuthorizeSelectedButton}
-                        <button class="btn authorize-selected">
-                            <i class="pg-icon-authorize-selected"></i>
-                            Autorisieren
-                            {* $Captions->GetMessageString('AuthorizeSelected') *}
-                        </button>
-                    {/if}
-
-                    {if $DataGrid.ActionsPanel.AuthorizeSelectedButton}
-                        <button class="btn de-authorize-selected">
-                            <i class="pg-icon-de-authorize-selected"></i>
-                            Ent-Autorisieren
-                            {* $Captions->GetMessageString('AuthorizeSelected') *}
-                        </button>
-                    {/if}
-
-                    {if $DataGrid.ActionsPanel.ReleaseSelectedButton}
-                        <button class="btn release-selected">
-                            <i class="pg-icon-release-selected"></i>
-                            Freigeben
-                            {* $Captions->GetMessageString('ReleaseSelected') *}
-                        </button>
-                    {/if}
-
-                    {if $DataGrid.ActionsPanel.ReleaseSelectedButton}
-                        <button class="btn de-release-selected">
-                            <i class="pg-icon-de-release-selected"></i>
-                            Ent-Freigeben
-                            {* $Captions->GetMessageString('ReleaseSelected') *}
-                        </button>
-                    {/if}
                 </div>
             </div>
 
@@ -320,7 +288,7 @@
         var gridId = '{/literal}{$DataGrid.Id}{literal}';
         var $gridContainer = $('#' + gridId);
 
-        require(['pgui.grid', 'pgui.advanced_filter', '../templates/custom_templates/js/pgui.grid.ops'], function(pggrid, fb, pgridops) {
+        require(['pgui.grid', 'pgui.advanced_filter'], function(pggrid, fb) {
 
             var grid = new pggrid.Grid($gridContainer);
 
@@ -341,8 +309,6 @@
             var activeFilter = new fb.Filter();
             activeFilter.fromJson(activeFilterJson);
             grid.setFilter(activeFilter);
-            
-            var gridops = new pgridops.GridOps($gridContainer);
         });
     });
     {/literal}
