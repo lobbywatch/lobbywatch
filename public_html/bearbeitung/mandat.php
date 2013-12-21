@@ -1884,6 +1884,8 @@
           $result = 'edit/grid.tpl';
         } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
           $result = 'insert/grid.tpl';
+        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
+          $result = 'list/grid.tpl';
         }
         }
         public function ShowEditButtonHandler(&$show)
