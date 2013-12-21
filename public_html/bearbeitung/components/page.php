@@ -883,6 +883,10 @@ abstract class Page implements IPage, IVariableContainer
                 break;
             case OPERATION_DELETE:
             case OPERATION_DELETE_SELECTED:
+            case OPERATION_AUTHORIZE_SELECTED:
+            case OPERATION_DE_AUTHORIZE_SELECTED:
+            case OPERATION_RELEASE_SELECTED:
+            case OPERATION_DE_RELEASE_SELECTED:
                 $this->RaiseSecurityError(!$this->securityInfo->HasDeleteGrant(), OPERATION_DELETE);
                 break;
             case OPERATION_INSERT:
@@ -940,6 +944,10 @@ abstract class Page implements IPage, IVariableContainer
                 $this->renderer = new PdfRenderer($this->GetLocalizerCaptions());
                 break;
             case OPERATION_DELETE_SELECTED:
+            case OPERATION_AUTHORIZE_SELECTED:
+            case OPERATION_DE_AUTHORIZE_SELECTED:
+            case OPERATION_RELEASE_SELECTED:
+            case OPERATION_DE_RELEASE_SELECTED:
                 $this->renderer = new ViewAllRenderer($this->GetLocalizerCaptions());
                 break;
             case OPERATION_AJAX_REQUERT_INLINE_EDIT:

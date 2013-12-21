@@ -1,6 +1,12 @@
 <?php
 
 require_once dirname(__FILE__) . "/../common/utils.php";
+require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_state.php';
+
+define('OPERATION_AUTHORIZE_SELECTED', 'autsel');
+define('OPERATION_DE_AUTHORIZE_SELECTED', 'deautsel');
+define('OPERATION_RELEASE_SELECTED', 'relsel');
+define('OPERATION_DE_RELEASE_SELECTED', 'derelsel');
 
 $edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version $build_date_short)</b>: Die Tabellen <i>In_kommission</i>, <i>Kommission</i>, <i>Partei</i>, <i>Branche</i> können bearbeitet werden. Die anderen Änderungen gehen wieder verloren.</div>";
 
@@ -182,3 +188,125 @@ function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, 
     $message = "Deleted old photo $old_file";
   }
 }
+
+abstract class SelectedOperationGridState extends GridState {
+  protected function DoCanChangeData(&$rowValues, &$message) {
+    $cancel = false;
+    $this->grid->BeforeUpdateRecord->Fire ( array (
+        $this->GetPage (),
+        &$rowValues,
+        &$cancel,
+        &$message,
+        $this->GetDataset ()->GetName ()
+    ) );
+    return ! $cancel;
+  }
+  protected function DoAfterChangeData($rowValues) {
+    $this->grid->AfterUpdateRecord->Fire ( array (
+        $this->GetPage (),
+        &$rowValues,
+        $this->GetDataset ()->GetName ()
+    ) );
+  }
+  protected abstract function DoOperation();
+  public function ProcessMessages() {
+    $primaryKeysArray = array ();
+    for($i = 0; $i < GetApplication ()->GetPOSTValue ( 'recordCount' ); $i ++) {
+      if (GetApplication ()->IsPOSTValueSet ( 'rec' . $i )) {
+        // TODO : move GetPrimaryKeyFieldNames function to private
+        $primaryKeys = array ();
+        $primaryKeyNames = $this->grid->GetDataset ()->GetPrimaryKeyFieldNames ();
+        for($j = 0; $j < count ( $primaryKeyNames ); $j ++)
+          $primaryKeys [] = GetApplication ()->GetPOSTValue ( 'rec' . $i . '_pk' . $j );
+        $primaryKeysArray [] = $primaryKeys;
+      }
+    }
+
+    // df($primaryKeysArray);
+
+    $inlineInsertedRecordPrimaryKeyNames = GetApplication ()->GetSuperGlobals ()->GetPostVariablesIf ( create_function ( '$str', 'return StringUtils::StartsWith($str, \'inline_inserted_rec_\') && !StringUtils::Contains($str, \'pk\');' ) );
+
+    // df($inlineInsertedRecordPrimaryKeyNames);
+
+    foreach ( $inlineInsertedRecordPrimaryKeyNames as $name => $value ) {
+      $primaryKeys = array ();
+      $primaryKeyNames = $this->grid->GetDataset ()->GetPrimaryKeyFieldNames ();
+      for($i = 0; $i < count ( $primaryKeyNames ); $i ++)
+        $primaryKeys [] = GetApplication ()->GetSuperGlobals ()->GetPostValue ( $name . '_pk' . $i );
+      $primaryKeysArray [] = $primaryKeys;
+    }
+
+    // df($primaryKeysArray);
+
+    foreach ( $primaryKeysArray as $primaryKeyValues ) {
+      $this->grid->GetDataset ()->SetSingleRecordState ( $primaryKeyValues );
+      $this->grid->GetDataset ()->Open ();
+      $this->grid->GetDataset ()->Edit ();
+
+      if ($this->grid->GetDataset ()->Next ()) {
+        $message = '';
+
+        $fieldValues = $this->grid->GetDataset ()->GetCurrentFieldValues ();
+        if ($this->CanChangeData ( $fieldValues, $message )) {
+          try {
+            $this->DoOperation ();
+            $this->grid->GetDataset ()->Post ();
+            // Refetch field values as the may have changed
+            $fieldValues = $this->grid->GetDataset ()->GetCurrentFieldValues ();
+            $this->DoAfterChangeData ( $fieldValues );
+          } catch ( Exception $e ) {
+            $this->grid->GetDataset ()->SetAllRecordsState ();
+            $this->ChangeState ( OPERATION_VIEWALL );
+            $this->SetGridErrorMessage ( $e );
+            return;
+          }
+        } else {
+          $this->grid->GetDataset ()->SetAllRecordsState ();
+          $this->ChangeState ( OPERATION_VIEWALL );
+          $this->SetGridSimpleErrorMessage ( $message );
+          return;
+        }
+      }
+      $this->grid->GetDataset ()->Close ();
+    }
+
+    $this->ApplyState ( OPERATION_VIEWALL );
+  }
+}
+class AuthorizeSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisiert_visa', $userName );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisiert_datum', $datetime );
+  }
+}
+class DeAuthorizeSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisiert_visa', null );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisiert_datum', null );
+  }
+}
+class ReleaseSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+
+    // RTODO freigabe_von
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_von', $userName );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_datum', $datetime );
+  }
+}
+class DeReleaseSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    // RTODO freigabe_von
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_von', null );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_datum', null );
+  }
+}
+

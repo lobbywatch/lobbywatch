@@ -75,3 +75,26 @@ function dc($msg) {
 function dcXXX($msg) {
   // Disabled debug comment: do nothing
 }
+
+//http://stackoverflow.com/questions/2476876/how-do-i-convert-an-object-to-an-array
+
+// http://stackoverflow.com/questions/11648396/php-search-for-a-value-in-an-array-which-contains-objects
+function search_objects($objects, $key, $value) {
+  $return = array();
+  foreach ($objects as $object) {
+    $objVars = get_object_vars($object);
+    if (isset($objVars[$key]) && $objVars[$key] == $value) {
+      $return[] = $object;
+    }
+  }
+  return $return;
+}
+
+function is_column_present($columns, $name) {
+  foreach ($columns as $column) {
+    if ($column->GetFieldName() == $name)
+      return true;
+  }
+
+  return false;
+}
