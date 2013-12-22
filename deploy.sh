@@ -30,7 +30,8 @@ echo -e "<?php\n\$deploy_date = '$NOW';" > $public_dir/common/deploy_date.php;
 VERSION=$(git describe --abbrev=0 --tags)
 echo -e "<?php\n\$version = '$VERSION';" >  $public_dir/common/version.php;
 
-fast="--include='user.css' --exclude-from ./rsync-fast-exclude"
+fast='--include=/* --include=/auswertung/** --include=/common/** --include=/custom/** --include=/settings/** --include=/bearbeitung/* --include=/bearbeitung/components/css/ --include=/bearbeitung/components/css/user.css --include=/bearbeitung/components/templates/ --include=/bearbeitung/components/templates/custom_templates/ --include=/bearbeitung/components/templates/custom_templates/** --exclude-from ./rsync-fast-exclude --exclude=* --prune-empty-dirs'
+
 dry_run="";
 #fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"
 #absolute_path=$(readlink -m /home/nohsib/dvc/../bop)

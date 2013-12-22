@@ -1,6 +1,6 @@
 <?php
-require_once '../settings/settings.php';
-require_once '../common/utils.php';
+  require_once '../settings/settings.php';
+  require_once '../common/utils.php';
 ?>
 <!DOCTYPE html >
 <html>

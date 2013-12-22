@@ -1,8 +1,8 @@
 # Excluded files of lobbycontrol deploy
 
-settings/settings.php
-oldauswertung/
-bearbeitung/templates_c/
+/settings/settings.php
+/oldauswertung/
+/bearbeitung/templates_c/
 *.bak
 .*
 bak/
