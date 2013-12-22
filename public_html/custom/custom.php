@@ -248,14 +248,14 @@ abstract class SelectedOperationGridState extends GridState {
 
     $input_date = GetApplication ()->GetPOSTValue ( 'date' );
     df('Dates:');
-    df($input_date);
-    df($this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' ));
+//     df($input_date);
+//     df($this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' ));
     if ($this->isValidDate($input_date)) {
       $this->date = $input_date;
     } else { // includes empty date
       $this->date = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
     }
-    df($this->date);
+//     df($this->date);
 
     foreach ( $primaryKeysArray as $primaryKeyValues ) {
       $this->grid->GetDataset ()->SetSingleRecordState ( $primaryKeyValues );
