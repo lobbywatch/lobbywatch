@@ -190,6 +190,8 @@ function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, 
 }
 
 abstract class SelectedOperationGridState extends GridState {
+  protected $date;
+
   protected function DoCanChangeData(&$rowValues, &$message) {
     $cancel = false;
     $this->grid->BeforeUpdateRecord->Fire ( array (
@@ -209,6 +211,12 @@ abstract class SelectedOperationGridState extends GridState {
     ) );
   }
   protected abstract function DoOperation();
+
+  protected function isValidDate($date) {
+    $date_array = date_parse($date);
+    return preg_match('/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(20)\d\d$/', $date) && checkdate($date_array["month"], $date_array["day"], $date_array["year"]);
+  }
+
   public function ProcessMessages() {
     $primaryKeysArray = array ();
     for($i = 0; $i < GetApplication ()->GetPOSTValue ( 'recordCount' ); $i ++) {
@@ -237,6 +245,17 @@ abstract class SelectedOperationGridState extends GridState {
     }
 
     // df($primaryKeysArray);
+
+    $input_date = GetApplication ()->GetPOSTValue ( 'date' );
+    df('Dates:');
+    df($input_date);
+    df($this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' ));
+    if ($this->isValidDate($input_date)) {
+      $this->date = $input_date;
+    } else { // includes empty date
+      $this->date = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+    }
+    df($this->date);
 
     foreach ( $primaryKeysArray as $primaryKeyValues ) {
       $this->grid->GetDataset ()->SetSingleRecordState ( $primaryKeyValues );
@@ -277,10 +296,9 @@ class AuthorizeSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
     // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
-    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
 
     $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisiert_visa', $userName );
-    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisiert_datum', $datetime );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisiert_datum', $this->date );
   }
 }
 class DeAuthorizeSelectedGridState extends SelectedOperationGridState {

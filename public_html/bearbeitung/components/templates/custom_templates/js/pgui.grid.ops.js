@@ -30,10 +30,19 @@ define(function(require, exports, module) {
             this._bindHandlers();
         },
 
+        countSelectedRows: function() {
+          var selectedRows = this.container
+            .find('.pg-row')
+            .filter(function() {
+              return $(this).find('td.row-selection input[type=checkbox]').prop('checked') ? true : false;
+            });
+          return selectedRows.length;
+        },
+
         /**
-         * See AuthorizeSelectedGridState::ProcessMessages
+         * See OperateSelectedGridState::ProcessMessages
          */
-        operateSelectRows: function(operation) {
+        operateSelectRows: function(operation, date) {
             var selectedRows = this.container
                 .find('.pg-row')
                 .filter(function() {
@@ -52,12 +61,20 @@ define(function(require, exports, module) {
             selectedRows.each(function() {
                 $(this).find('td.row-selection input').clone().appendTo($form);
             });
+            $form.append($('<input name="date" value="' + date + '">'));
             $form.submit();
         },
 
         getOperateSelectedAction: function() {
             // We can use the same action as for delete
             return this.container.attr('data-delete-selected-action');
+        },
+
+        // Ref: http://snipplr.com/view/13666/
+        isDateValid: function(date) {
+          //(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(19|20)\d\d
+          var regex = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(20)\d\d$/;
+          return date.match(regex) !== null;
         },
 
         _bindHandlers: function() {
@@ -67,22 +84,30 @@ define(function(require, exports, module) {
 
                 require(['bootbox.min'], function() {
 
+                    var nRows = self.countSelectedRows();
                     bootbox.animate(false);
-                    bootbox.confirm( 'Autorisieren?'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
-                        if (confirmed) {
-                            self.operateSelectRows('autsel');
+                    bootbox.prompt( nRows + ' markierte Einträge autorisieren?<small><br><br>Bitte Autorisierungsdatum eingeben (leer = heute):</small>'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(date) {
+//                         console.log(date);
+//                         console.log(self.isDateValid(date));
+                        if (date !== null) {
+                          if (date === '' || self.isDateValid(date)) {
+                              self.operateSelectRows('autsel', date);
+                            } else {
+                              bootbox.alert('Bitte Datum als DD.MM.YYYY eingeben');
+                            }
                         }
                     });
 
                 });
             });
-            
+
             this.$deauthorizeSelectedButton.click(function() {
 
               require(['bootbox.min'], function() {
 
+                  var nRows = self.countSelectedRows();
                   bootbox.animate(false);
-                  bootbox.confirm( 'Autorisierung entfernen?'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+                  bootbox.confirm( 'Autorisierung bei ' + nRows + ' Einträgen entfernen?'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                       if (confirmed) {
                           self.operateSelectRows('deautsel');
                       }
@@ -90,13 +115,14 @@ define(function(require, exports, module) {
 
               });
           });
-          
+
             this.$releaseSelectedButton.click(function() {
 
               require(['bootbox.min'], function() {
 
+                  var nRows = self.countSelectedRows();
                   bootbox.animate(false);
-                  bootbox.confirm( 'Freigeben?'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+                  bootbox.confirm( nRows + ' markierte Einträge freigeben?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                       if (confirmed) {
                           self.operateSelectRows('relsel');
                       }
@@ -109,8 +135,9 @@ define(function(require, exports, module) {
 
               require(['bootbox.min'], function() {
 
+                  var nRows = self.countSelectedRows();
                   bootbox.animate(false);
-                  bootbox.confirm( 'Freigabe entfernen?'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+                  bootbox.confirm( 'Freigabe bei ' + nRows + ' Einträgen entfernen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                       if (confirmed) {
                           self.operateSelectRows('derelsel');
                       }
@@ -119,7 +146,7 @@ define(function(require, exports, module) {
               });
           });
 
-            
+
         },
 
 
