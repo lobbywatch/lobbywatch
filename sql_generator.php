@@ -25,7 +25,7 @@ $tables = array('branche' => 'Branche',
 'parlamentarier' => 'Parlamentarier',
 'parlamentarier_anhang' => 'Parlamentarieranhang',
 'partei' => 'Partei',
-'zugangsberechtigung' => 'Zugangsberechtigung');
+'zutrittsberechtigung' => 'Zutrittsberechtigung');
 
 
 // $table_query = "(SELECT

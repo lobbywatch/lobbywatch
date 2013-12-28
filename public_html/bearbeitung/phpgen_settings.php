@@ -43,7 +43,7 @@ function GetPageInfos()
     $result[] = array('caption' => 'Parlamentarier', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier');
     $result[] = array('caption' => 'In Kommission', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission');
     $result[] = array('caption' => 'Interessenbindung', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung');
-    $result[] = array('caption' => 'Zugangsberechtigung', 'short_caption' => 'Zugangsberechtigung', 'filename' => 'zugangsberechtigung.php', 'name' => 'zugangsberechtigung');
+    $result[] = array('caption' => 'Zutrittsberechtigung', 'short_caption' => 'Zutrittsberechtigung', 'filename' => 'zutrittsberechtigung.php', 'name' => 'zutrittsberechtigung');
     $result[] = array('caption' => 'Mandat', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat');
     $result[] = array('caption' => 'Organisation Beziehung', 'short_caption' => 'Organisation Beziehung', 'filename' => 'organisation_beziehung.php', 'name' => 'organisation_beziehung');
     $result[] = array('caption' => 'Branche', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche');

@@ -72,13 +72,15 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('url');
             $this->dataset->AddField($field, false);
+            $field = new StringField('handelsregister_url');
+            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, false);
@@ -119,8 +121,8 @@
                 $result->AddPage(new PageLink($this->RenderText('In Kommission'), 'in_kommission.php', $this->RenderText('In Kommission'), $currentPageCaption == $this->RenderText('In Kommission')));
             if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessenbindung'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('Interessenbindung')));
-            if (GetCurrentUserGrantForDataSource('zugangsberechtigung')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Zugangsberechtigung'), 'zugangsberechtigung.php', $this->RenderText('Zugangsberechtigung'), $currentPageCaption == $this->RenderText('Zugangsberechtigung')));
+            if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Zutrittsberechtigung'), 'zutrittsberechtigung.php', $this->RenderText('Zutrittsberechtigung'), $currentPageCaption == $this->RenderText('Zutrittsberechtigung')));
             if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Mandat'), 'mandat.php', $this->RenderText('Mandat'), $currentPageCaption == $this->RenderText('Mandat')));
             if (GetCurrentUserGrantForDataSource('organisation_beziehung')->HasViewGrant())
@@ -200,7 +202,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -235,7 +237,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -532,7 +534,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -581,7 +583,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -641,7 +643,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -691,7 +693,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -1099,7 +1101,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -1147,7 +1149,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -1321,7 +1323,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -1369,7 +1371,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);

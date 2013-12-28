@@ -91,8 +91,8 @@ BEGIN
    INSERT INTO `partei_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `partei`;
 
-   INSERT INTO `zugangsberechtigung_log`
-     SELECT *, null, 'snapshot', null, ts, sid FROM `zugangsberechtigung`;
+   INSERT INTO `zutrittsberechtigung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung`;
 END
 //
 delimiter ;
@@ -378,7 +378,7 @@ ALTER TABLE `kommission_log`
 -- DROP TABLE IF EXISTS `mandat`;
 -- CREATE TABLE IF NOT EXISTS `mandat` (
 --   `id` int(11) NOT NULL AUTO_INCREMENT,
---   `zugangsberechtigung_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Zugangsberechtigung.',
+--   `zutrittsberechtigung_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Zugangsberechtigung.',
 --   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
 --   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat') DEFAULT NULL COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
 --   `verguetung` int(11) DEFAULT NULL COMMENT 'Monatliche Vergütung CHF für Tätigkeiten aus dieses Mandates, z.B. Entschädigung für Beiratsfunktion.',
@@ -393,8 +393,8 @@ ALTER TABLE `kommission_log`
 --   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
 --   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
 --   PRIMARY KEY (`id`),
---   UNIQUE KEY `mandat_zugangsberechtigung_organisation_art_unique` (`art`,`zugangsberechtigung_id`,`organisation_id`) COMMENT 'Fachlicher unique constraint',
---   KEY `zugangsberechtigung_id` (`zugangsberechtigung_id`),
+--   UNIQUE KEY `mandat_zutrittsberechtigung_organisation_art_unique` (`art`,`zutrittsberechtigung_id`,`organisation_id`) COMMENT 'Fachlicher unique constraint',
+--   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`),
 --   KEY `organisations_id` (`organisation_id`)
 -- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=4 ;
 
@@ -404,7 +404,7 @@ ALTER TABLE `mandat_log`
   CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  DROP INDEX `mandat_zugangsberechtigung_organisation_art_unique`,
+  DROP INDEX `mandat_zutrittsberechtigung_organisation_art_unique`,
   DROP PRIMARY KEY,
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
@@ -418,8 +418,8 @@ ALTER TABLE `mandat_log`
 -- RELATIONEN DER TABELLE `mandat`:
 --   `organisation_id`
 --       `organisation` -> `id`
---   `zugangsberechtigung_id`
---       `zugangsberechtigung` -> `id`
+--   `zutrittsberechtigung_id`
+--       `zutrittsberechtigung` -> `id`
 --
 
 -- --------------------------------------------------------
@@ -752,13 +752,13 @@ ALTER TABLE `partei_log`
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `zugangsberechtigung`
+-- Tabellenstruktur für Tabelle `zutrittsberechtigung`
 --
 -- Erzeugt am: 09. Dez 2013 um 21:58
 --
 
--- DROP TABLE IF EXISTS `zugangsberechtigung`;
--- CREATE TABLE IF NOT EXISTS `zugangsberechtigung` (
+-- DROP TABLE IF EXISTS `zutrittsberechtigung`;
+-- CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
 --   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Zugangsberechtigung',
 --   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel zu Parlamentarier',
 --   `nachname` varchar(100) NOT NULL COMMENT 'Nachname des berechtigten Persion',
@@ -775,19 +775,19 @@ ALTER TABLE `partei_log`
 --   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
 --   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
 --   PRIMARY KEY (`id`),
---   UNIQUE KEY `zugangsberechtigung_nachname_vorname_unique` (`nachname`,`vorname`,`parlamentarier_id`) COMMENT 'Fachlicher unique constraint',
+--   UNIQUE KEY `zutrittsberechtigung_nachname_vorname_unique` (`nachname`,`vorname`,`parlamentarier_id`) COMMENT 'Fachlicher unique constraint',
 --   KEY `idx_parlam` (`parlamentarier_id`),
 --   KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
 --   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`)
 -- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=63 ;
 
-DROP TABLE IF EXISTS `zugangsberechtigung_log`;
-CREATE TABLE IF NOT EXISTS `zugangsberechtigung_log` LIKE `zugangsberechtigung`;
-ALTER TABLE `zugangsberechtigung_log`
+DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
+CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` LIKE `zutrittsberechtigung`;
+ALTER TABLE `zutrittsberechtigung_log`
   CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  DROP INDEX `zugangsberechtigung_nachname_vorname_unique`,
+  DROP INDEX `zutrittsberechtigung_nachname_vorname_unique`,
   DROP PRIMARY KEY,
   ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
   ADD PRIMARY KEY (`log_id`),
@@ -795,10 +795,10 @@ ALTER TABLE `zugangsberechtigung_log`
   ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  ADD CONSTRAINT `fk_zugangsberechtigung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+  ADD CONSTRAINT `fk_zutrittsberechtigung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
--- RELATIONEN DER TABELLE `zugangsberechtigung`:
+-- RELATIONEN DER TABELLE `zutrittsberechtigung`:
 --   `beruf_interessengruppe_id`
 --       `interessengruppe` -> `id`
 --   `ALT_lobbyorganisation_id`
@@ -844,7 +844,7 @@ ALTER TABLE `zugangsberechtigung_log`
 -- --
 -- ALTER TABLE `mandat`
 --   ADD CONSTRAINT `fk_organisations_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
---   ADD CONSTRAINT `fk_zugangsberechtigung_id` FOREIGN KEY (`zugangsberechtigung_id`) REFERENCES `zugangsberechtigung` (`id`);
+--   ADD CONSTRAINT `fk_zutrittsberechtigung_id` FOREIGN KEY (`zutrittsberechtigung_id`) REFERENCES `zutrittsberechtigung` (`id`);
 --
 -- --
 -- -- Constraints der Tabelle `organisation`
@@ -874,9 +874,9 @@ ALTER TABLE `zugangsberechtigung_log`
 --   ADD CONSTRAINT `fk_parlam_anhang` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 --
 -- --
--- -- Constraints der Tabelle `zugangsberechtigung`
+-- -- Constraints der Tabelle `zutrittsberechtigung`
 -- --
--- ALTER TABLE `zugangsberechtigung`
+-- ALTER TABLE `zutrittsberechtigung`
 --   ADD CONSTRAINT `fk_zb_lg` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
 --   ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY (`ALT_lobbyorganisation_id`) REFERENCES `organisation` (`id`),
 --   ADD CONSTRAINT `fk_zb_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
@@ -1466,53 +1466,53 @@ end
 //
 delimiter ;
 
--- zugangsberechtigung triggers
+-- zutrittsberechtigung triggers
 
 -- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
-drop trigger if exists `trg_zugangsberechtigung_log_ins`;
+drop trigger if exists `trg_zutrittsberechtigung_log_ins`;
 delimiter //
-create trigger `trg_zugangsberechtigung_log_ins` after insert on `zugangsberechtigung`
+create trigger `trg_zutrittsberechtigung_log_ins` after insert on `zutrittsberechtigung`
 for each row
 thisTrigger: begin
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
-  INSERT INTO `zugangsberechtigung_log`
-    SELECT *, null, 'insert', null, NOW(), null FROM `zugangsberechtigung` WHERE id = NEW.id ;
+  INSERT INTO `zutrittsberechtigung_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = NEW.id ;
 end
 //
 delimiter ;
 
-drop trigger if exists `trg_zugangsberechtigung_log_upd`;
+drop trigger if exists `trg_zutrittsberechtigung_log_upd`;
 delimiter //
-create trigger `trg_zugangsberechtigung_log_upd` after update on `zugangsberechtigung`
+create trigger `trg_zutrittsberechtigung_log_upd` after update on `zutrittsberechtigung`
 for each row
 thisTrigger: begin
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
-  INSERT INTO `zugangsberechtigung_log`
-    SELECT *, null, 'update', null, NOW(), null FROM `zugangsberechtigung` WHERE id = NEW.id ;
+  INSERT INTO `zutrittsberechtigung_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = NEW.id ;
 end
 //
 delimiter ;
 
-drop trigger if exists `trg_zugangsberechtigung_log_del_before`;
+drop trigger if exists `trg_zutrittsberechtigung_log_del_before`;
 delimiter //
-create trigger `trg_zugangsberechtigung_log_del_before` before delete on `zugangsberechtigung`
+create trigger `trg_zutrittsberechtigung_log_del_before` before delete on `zutrittsberechtigung`
 for each row
 thisTrigger: begin
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
-  INSERT INTO `zugangsberechtigung_log`
-    SELECT *, null, 'delete', null, NOW(), null FROM `zugangsberechtigung` WHERE id = OLD.id ;
+  INSERT INTO `zutrittsberechtigung_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = OLD.id ;
 end
 //
 delimiter ;
 
 -- id and action = 'delete' are unique
-drop trigger if exists `trg_zugangsberechtigung_log_del_after`;
+drop trigger if exists `trg_zutrittsberechtigung_log_del_after`;
 delimiter //
-create trigger `trg_zugangsberechtigung_log_del_after` after delete on `zugangsberechtigung`
+create trigger `trg_zutrittsberechtigung_log_del_after` after delete on `zutrittsberechtigung`
 for each row
 thisTrigger: begin
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
-  UPDATE `zugangsberechtigung_log`
+  UPDATE `zutrittsberechtigung_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
@@ -1525,3 +1525,6 @@ SET FOREIGN_KEY_CHECKS=1;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- Take initial snapshot
+CALL `takeSnapshot` ('import' , 'Initial');

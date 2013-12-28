@@ -40,7 +40,8 @@
     {
         protected function DoBeforeCreate()
         {
-            $selectQuery = 'SELECT * FROM (
+            $selectQuery = '-- Last updated tables
+            SELECT * FROM (
             SELECT *
             FROM (
             (SELECT
@@ -187,14 +188,14 @@
               )
             UNION
             (SELECT
-              \'zugangsberechtigung\' table_name,
-              \'Zugangsberechtigung\' name,
-              (select count(*) from `zugangsberechtigung`) anzahl_eintraege,
+              \'zutrittsberechtigung\' table_name,
+              \'Zutrittsberechtigung\' name,
+              (select count(*) from `zutrittsberechtigung`) anzahl_eintraege,
               t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
               t.id last_updated_id
               FROM
-              `zugangsberechtigung` t
+              `zutrittsberechtigung` t
               ORDER BY t.`updated_date` DESC
               LIMIT 1
               )
@@ -219,7 +220,7 @@
             $field = new DateTimeField('last_updated');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('last_updated_id');
-            $this->dataset->AddField($field, false);
+            $this->dataset->AddField($field, true);
         }
     
         protected function CreatePageNavigator()
@@ -247,8 +248,8 @@
                 $result->AddPage(new PageLink($this->RenderText('In Kommission'), 'in_kommission.php', $this->RenderText('In Kommission'), $currentPageCaption == $this->RenderText('In Kommission')));
             if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessenbindung'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('Interessenbindung')));
-            if (GetCurrentUserGrantForDataSource('zugangsberechtigung')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Zugangsberechtigung'), 'zugangsberechtigung.php', $this->RenderText('Zugangsberechtigung'), $currentPageCaption == $this->RenderText('Zugangsberechtigung')));
+            if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Zutrittsberechtigung'), 'zutrittsberechtigung.php', $this->RenderText('Zutrittsberechtigung'), $currentPageCaption == $this->RenderText('Zutrittsberechtigung')));
             if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Mandat'), 'mandat.php', $this->RenderText('Mandat'), $currentPageCaption == $this->RenderText('Mandat')));
             if (GetCurrentUserGrantForDataSource('organisation_beziehung')->HasViewGrant())

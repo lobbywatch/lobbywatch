@@ -1454,8 +1454,7 @@ class Grid {
 
     function GetAllowReleaseSelected() { // Afterburner
       $columns = $this->GetEditColumns();
-      // RTODO freigabe_von // Afterburner
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'freigabe_datum') && (is_column_present($columns,'freigabe_von') || is_column_present($columns,'freigabe_visa')); // Afterburner
+      return $this->GetAllowDeleteSelected() && is_column_present($columns,'freigabe_datum') && is_column_present($columns,'freigabe_visa'); // Afterburner
     }
     function GetAllowDeleteSelected() {
         return $this->allowDeleteSelected;

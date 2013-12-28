@@ -73,6 +73,12 @@
             $this->dataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
             $this->dataset->AddField($field, false);
+            $field = new DateField('im_rat_bis');
+            $this->dataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_von');
+            $this->dataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_bis');
+            $this->dataset->AddField($field, false);
             $field = new StringField('beruf');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -97,7 +103,7 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('email');
             $this->dataset->AddField($field, false);
-            $field = new StringField('parlament_link');
+            $field = new StringField('parlament_url');
             $this->dataset->AddField($field, false);
             $field = new StringField('homepage');
             $this->dataset->AddField($field, false);
@@ -105,7 +111,7 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, false);
@@ -144,8 +150,8 @@
                 $result->AddPage(new PageLink($this->RenderText('In Kommission'), 'in_kommission.php', $this->RenderText('In Kommission'), $currentPageCaption == $this->RenderText('In Kommission')));
             if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessenbindung'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('Interessenbindung')));
-            if (GetCurrentUserGrantForDataSource('zugangsberechtigung')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Zugangsberechtigung'), 'zugangsberechtigung.php', $this->RenderText('Zugangsberechtigung'), $currentPageCaption == $this->RenderText('Zugangsberechtigung')));
+            if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Zutrittsberechtigung'), 'zutrittsberechtigung.php', $this->RenderText('Zutrittsberechtigung'), $currentPageCaption == $this->RenderText('Zutrittsberechtigung')));
             if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Mandat'), 'mandat.php', $this->RenderText('Mandat'), $currentPageCaption == $this->RenderText('Mandat')));
             if (GetCurrentUserGrantForDataSource('organisation_beziehung')->HasViewGrant())
@@ -178,8 +184,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('q_unvollstaendige_parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'geburtstag', 'photo_dateiname_voll', 'kleinbild', 'sitzplatz', 'email', 'parlament_link', 'homepage', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Geburtstag'), $this->RenderText('Photo Dateiname Voll'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Parlament Link'), $this->RenderText('Homepage'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'nachname', 'vorname', 'geburtstag', 'photo_dateiname_voll', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Geburtstag'), $this->RenderText('Photo Dateiname Voll'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -207,7 +213,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kleinbild', $this->RenderText('Kleinbild')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_link', $this->RenderText('Parlament Link')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
@@ -497,40 +502,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for parlament_link field
-            //
-            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for parlament_link field
-            //
-            $editor = new TextEdit('parlament_link_edit');
-            $editColumn = new CustomEditColumn('Parlament Link', 'parlament_link', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for parlament_link field
-            //
-            $editor = new TextEdit('parlament_link_edit');
-            $editColumn = new CustomEditColumn('Parlament Link', 'parlament_link', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -769,14 +740,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for parlament_link field
-            //
-            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -892,16 +855,6 @@
             //
             $editor = new TextEdit('email_edit');
             $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for parlament_link field
-            //
-            $editor = new TextEdit('parlament_link_edit');
-            $editColumn = new CustomEditColumn('Parlament Link', 'parlament_link', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1045,16 +998,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for parlament_link field
-            //
-            $editor = new TextEdit('parlament_link_edit');
-            $editColumn = new CustomEditColumn('Parlament Link', 'parlament_link', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for homepage field
             //
             $editor = new TextEdit('homepage_edit');
@@ -1181,14 +1124,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for parlament_link field
-            //
-            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -1286,14 +1221,6 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for parlament_link field
-            //
-            $column = new TextViewColumn('parlament_link', 'Parlament Link', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_link%' , '_blank');
             $grid->AddExportColumn($column);
             
             //

@@ -27,7 +27,7 @@ class LobbyOrgSuche {
   // Fortschreitende Suche
   function lobbyorgFinden($name) {
     //TODO a.ALT_parlam_verbindung; c.kommission noch nicht angepasst
-    $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.interessengruppe_id,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, c.nachname,c.vorname,c.ratstyp,c.abkuerzung as partei,c.kanton,c.kommission,d.name FROM organisation a,parlamentarier c LEFT JOIN partei p ON c.partei_id = p.id, interessenbindung b,branche d WHERE  b.parlamentarier_id=c.id  AND a.id=b.organisation_id AND a.branche_id=d.id  AND a.name LIKE :name ORDER BY a.id";
+    $sql = "SELECT a.id,a.name,a.beschreibung,a.typ,a.interessengruppe_id,a.url,a.vernehmlassung,a.ALT_parlam_verbindung, c.nachname,c.vorname,c.ratstyp,c.abkuerzung as partei,c.kanton,c.kommission,d.name FROM v_organisation a,parlamentarier c LEFT JOIN partei p ON c.partei_id = p.id, interessenbindung b,branche d WHERE  b.parlamentarier_id=c.id  AND a.id=b.organisation_id AND a.branche_id=d.id  AND a.name LIKE :name ORDER BY a.id";
     $suche = $this->db->prepare ( $sql );
     $suche->execute ( array(':name' => "%$name%") );
     $erg = $suche->fetchAll ( PDO::FETCH_ASSOC );

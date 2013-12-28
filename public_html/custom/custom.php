@@ -314,16 +314,14 @@ class ReleaseSelectedGridState extends SelectedOperationGridState {
     $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
     $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
 
-    // RTODO freigabe_von
-    $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_von', $userName );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_visa', $userName );
     $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_datum', $datetime );
   }
 }
 class DeReleaseSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
     // df($this->grid->GetDataset()->GetFieldValueByName('id'));
-    // RTODO freigabe_von
-    $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_von', null );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_visa', null );
     $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_datum', null );
   }
 }

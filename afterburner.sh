@@ -115,7 +115,7 @@ do
                 break;\n            case OPERATION_RELEASE_SELECTED: \/\/ Afterburner\n                \$this->gridState = new ReleaseSelectedGridState(\$this); \/\/ Afterburner\n                break;
             case OPERATION_DE_RELEASE_SELECTED: \/\/ Afterburner\n                \$this->gridState = new DeReleaseSelectedGridState(\$this); \/\/ Afterburner\n                break;\n            \1/' \
   | perl -p -e's/(function GetAllowDeleteSelected)/function GetAllowAuthorizeSelected() { \/\/ Afterburner\n      \$columns = \$this->GetEditColumns(); \/\/ Afterburner\n      return \$this->GetAllowDeleteSelected() && is_column_present(\$columns,'\''autorisiert_datum'\'') && is_column_present(\$columns,'\''autorisiert_visa'\''); \/\/ Afterburner\n    }\n\n    function GetAllowReleaseSelected() { \/\/ Afterburner\n      \$columns = \$this->GetEditColumns();
-      \/\/ RTODO freigabe_von \/\/ Afterburner\n      return \$this->GetAllowDeleteSelected() && is_column_present(\$columns,'\''freigabe_datum'\'') && (is_column_present(\$columns,'\''freigabe_von'\'') || is_column_present(\$columns,'\''freigabe_visa'\'')); \/\/ Afterburner\n    }\n    \1/' \
+      return \$this->GetAllowDeleteSelected() && is_column_present(\$columns,'\''freigabe_datum'\'') && is_column_present(\$columns,'\''freigabe_visa'\''); \/\/ Afterburner\n    }\n    \1/' \
   | perl -p -e's/('\''DeleteSelectedButton'\'' => \$this->GetAllowDeleteSelected\(\))/\1,\n                '\''AuthorizeSelectedButton'\'' => \$this->GetAllowAuthorizeSelected(), \/\/ Afterburner\n                '\''ReleaseSelectedButton'\'' => \$this->GetAllowReleaseSelected(), \/\/ Afterburner\n/' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";

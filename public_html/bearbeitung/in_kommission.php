@@ -61,9 +61,13 @@
             $field = new StringField('funktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new DateField('von');
+            $this->dataset->AddField($field, true);
+            $field = new DateField('bis');
+            $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
@@ -287,47 +291,6 @@
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for freigabe_von field
-            //
-            $column = new TextViewColumn('freigabe_von', 'Freigabe Von', $this->dataset);
-            $column->SetOrderable(false);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for freigabe_von field
-            //
-            $editor = new ComboBox('freigabe_von_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('otto', $this->RenderText('otto'));
-            $editor->AddValue('rebecca', $this->RenderText('rebecca'));
-            $editor->AddValue('thomas', $this->RenderText('thomas'));
-            $editor->AddValue('bane', $this->RenderText('bane'));
-            $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Von', 'freigabe_von', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for freigabe_von field
-            //
-            $editor = new ComboBox('freigabe_von_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('otto', $this->RenderText('otto'));
-            $editor->AddValue('rebecca', $this->RenderText('rebecca'));
-            $editor->AddValue('thomas', $this->RenderText('thomas'));
-            $editor->AddValue('bane', $this->RenderText('bane'));
-            $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Von', 'freigabe_von', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -612,9 +575,13 @@
             $field = new StringField('funktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new DateField('von');
+            $this->dataset->AddField($field, true);
+            $field = new DateField('bis');
+            $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
@@ -654,8 +621,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('v_in_kommission_parlamentarierDetailEdit0in_kommissionssearch', $this->dataset,
-                array('abkuerzung', 'id', 'parlamentarier_id', 'kommission_id', 'funktion', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Abkuerzung'), $this->RenderText('Id'), $this->RenderText('Parlamentarier Id'), $this->RenderText('Kommission Id'), $this->RenderText('Funktion'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('abkuerzung', 'id', 'parlamentarier_id', 'kommission_id', 'funktion', 'notizen', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Abkuerzung'), $this->RenderText('Id'), $this->RenderText('Parlamentarier Id'), $this->RenderText('Kommission Id'), $this->RenderText('Funktion'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -681,7 +648,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kommission_id', $this->RenderText('Kommission Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_von', $this->RenderText('Freigabe Von')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('freigabe_datum', $this->RenderText('Freigabe Datum')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
@@ -945,47 +911,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for freigabe_von field
-            //
-            $column = new TextViewColumn('freigabe_von', 'Freigabe Von', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for freigabe_von field
-            //
-            $editor = new ComboBox('freigabe_von_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('otto', $this->RenderText('otto'));
-            $editor->AddValue('rebecca', $this->RenderText('rebecca'));
-            $editor->AddValue('thomas', $this->RenderText('thomas'));
-            $editor->AddValue('bane', $this->RenderText('bane'));
-            $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Von', 'freigabe_von', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for freigabe_von field
-            //
-            $editor = new ComboBox('freigabe_von_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('otto', $this->RenderText('otto'));
-            $editor->AddValue('rebecca', $this->RenderText('rebecca'));
-            $editor->AddValue('thomas', $this->RenderText('thomas'));
-            $editor->AddValue('bane', $this->RenderText('bane'));
-            $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Von', 'freigabe_von', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
@@ -1215,13 +1140,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for freigabe_von field
-            //
-            $column = new TextViewColumn('freigabe_von', 'Freigabe Von', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
@@ -1323,20 +1241,6 @@
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for freigabe_von field
-            //
-            $editor = new ComboBox('freigabe_von_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('otto', $this->RenderText('otto'));
-            $editor->AddValue('rebecca', $this->RenderText('rebecca'));
-            $editor->AddValue('thomas', $this->RenderText('thomas'));
-            $editor->AddValue('bane', $this->RenderText('bane'));
-            $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Von', 'freigabe_von', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -1467,20 +1371,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for freigabe_von field
-            //
-            $editor = new ComboBox('freigabe_von_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('otto', $this->RenderText('otto'));
-            $editor->AddValue('rebecca', $this->RenderText('rebecca'));
-            $editor->AddValue('thomas', $this->RenderText('thomas'));
-            $editor->AddValue('bane', $this->RenderText('bane'));
-            $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Von', 'freigabe_von', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for freigabe_datum field
             //
             $editor = new DateTimeEdit('freigabe_datum_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
@@ -1595,13 +1485,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for freigabe_von field
-            //
-            $column = new TextViewColumn('freigabe_von', 'Freigabe Von', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
@@ -1683,13 +1566,6 @@
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for freigabe_von field
-            //
-            $column = new TextViewColumn('freigabe_von', 'Freigabe Von', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1877,9 +1753,13 @@
             $field = new StringField('funktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new DateField('von');
+            $this->dataset->AddField($field, false);
+            $field = new DateField('bis');
+            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, false);
@@ -1922,8 +1802,8 @@
                 $result->AddPage(new PageLink($this->RenderText('In Kommission'), 'in_kommission.php', $this->RenderText('In Kommission'), $currentPageCaption == $this->RenderText('In Kommission')));
             if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessenbindung'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('Interessenbindung')));
-            if (GetCurrentUserGrantForDataSource('zugangsberechtigung')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Zugangsberechtigung'), 'zugangsberechtigung.php', $this->RenderText('Zugangsberechtigung'), $currentPageCaption == $this->RenderText('Zugangsberechtigung')));
+            if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Zutrittsberechtigung'), 'zutrittsberechtigung.php', $this->RenderText('Zutrittsberechtigung'), $currentPageCaption == $this->RenderText('Zutrittsberechtigung')));
             if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Mandat'), 'mandat.php', $this->RenderText('Mandat'), $currentPageCaption == $this->RenderText('Mandat')));
             if (GetCurrentUserGrantForDataSource('organisation_beziehung')->HasViewGrant())
@@ -1956,8 +1836,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('in_kommissionssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'kommission_id_anzeige_name', 'funktion', 'notizen', 'freigabe_von', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Kommission'), $this->RenderText('Funktion'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Von'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'parlamentarier_id_anzeige_name', 'kommission_id_anzeige_name', 'funktion', 'von', 'bis', 'notizen', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Kommission'), $this->RenderText('Funktion'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -2016,8 +1896,13 @@
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -2041,7 +1926,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('parlament_link');
+            $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
@@ -2049,7 +1934,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -2089,13 +1974,13 @@
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('mutter_kommission');
+            $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('parlament_link');
+            $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -2111,8 +1996,10 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission_id', $this->RenderText('Kommission'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_von', $this->RenderText('Freigabe Von')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_visa', $this->RenderText('Freigabe Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('freigabe_datum', $this->RenderText('Freigabe Datum')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
@@ -2184,7 +2071,8 @@
             //
             // Edit column for parlamentarier_id field
             //
-            $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new AutocomleteComboBox('parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $editor->SetSize('250px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -2222,8 +2110,13 @@
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -2247,7 +2140,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('parlament_link');
+            $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
@@ -2255,7 +2148,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -2270,11 +2163,7 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Parlamentarier', 
-                'parlamentarier_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'inline_edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2285,7 +2174,8 @@
             //
             // Edit column for parlamentarier_id field
             //
-            $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new AutocomleteComboBox('parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $editor->SetSize('250px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -2323,8 +2213,13 @@
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -2348,7 +2243,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('parlament_link');
+            $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
@@ -2356,7 +2251,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -2371,11 +2266,7 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Parlamentarier', 
-                'parlamentarier_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'inline_insert_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2421,13 +2312,13 @@
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('mutter_kommission');
+            $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('parlament_link');
+            $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -2482,13 +2373,13 @@
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('mutter_kommission');
+            $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('parlament_link');
+            $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -2559,6 +2450,70 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for von field
+            //
+            $editor = new DateTimeEdit('von_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Von', 'von', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for von field
+            //
+            $editor = new DateTimeEdit('von_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Von', 'von', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Beginn der Kommissionszugehörigkeit, leer (NULL) = unbekannt'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for bis field
+            //
+            $editor = new DateTimeEdit('bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for bis field
+            //
+            $editor = new DateTimeEdit('bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Ende der Kommissionszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -2593,22 +2548,22 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for freigabe_von field
+            // View column for freigabe_visa field
             //
-            $column = new TextViewColumn('freigabe_von', 'Freigabe Von', $this->dataset);
+            $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for freigabe_von field
+            // Edit column for freigabe_visa field
             //
-            $editor = new ComboBox('freigabe_von_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('freigabe_visa_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('otto', $this->RenderText('otto'));
             $editor->AddValue('rebecca', $this->RenderText('rebecca'));
             $editor->AddValue('thomas', $this->RenderText('thomas'));
             $editor->AddValue('bane', $this->RenderText('bane'));
             $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Von', 'freigabe_von', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -2616,15 +2571,15 @@
             
             /* <inline insert column> */
             //
-            // Edit column for freigabe_von field
+            // Edit column for freigabe_visa field
             //
-            $editor = new ComboBox('freigabe_von_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('freigabe_visa_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('otto', $this->RenderText('otto'));
             $editor->AddValue('rebecca', $this->RenderText('rebecca'));
             $editor->AddValue('thomas', $this->RenderText('thomas'));
             $editor->AddValue('bane', $this->RenderText('bane'));
             $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Von', 'freigabe_von', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -2791,6 +2746,22 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -2801,9 +2772,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for freigabe_von field
+            // View column for freigabe_visa field
             //
-            $column = new TextViewColumn('freigabe_von', 'Freigabe Von', $this->dataset);
+            $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2851,7 +2822,8 @@
             //
             // Edit column for parlamentarier_id field
             //
-            $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new AutocomleteComboBox('parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $editor->SetSize('250px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -2889,8 +2861,13 @@
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -2914,7 +2891,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('parlament_link');
+            $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
@@ -2922,7 +2899,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -2937,11 +2914,7 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Parlamentarier', 
-                'parlamentarier_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2975,13 +2948,13 @@
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('mutter_kommission');
+            $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('parlament_link');
+            $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -3020,6 +2993,24 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for von field
+            //
+            $editor = new DateTimeEdit('von_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Von', 'von', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for bis field
+            //
+            $editor = new DateTimeEdit('bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -3029,15 +3020,15 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for freigabe_von field
+            // Edit column for freigabe_visa field
             //
-            $editor = new ComboBox('freigabe_von_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('freigabe_visa_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('otto', $this->RenderText('otto'));
             $editor->AddValue('rebecca', $this->RenderText('rebecca'));
             $editor->AddValue('thomas', $this->RenderText('thomas'));
             $editor->AddValue('bane', $this->RenderText('bane'));
             $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Von', 'freigabe_von', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3103,7 +3094,8 @@
             //
             // Edit column for parlamentarier_id field
             //
-            $editor = new ComboBox('parlamentarier_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new AutocomleteComboBox('parlamentarier_id_edit', $this->CreateLinkBuilder());
+            $editor->SetSize('250px');
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -3141,8 +3133,13 @@
             $field = new DateField('im_rat_seit');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_bis');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
@@ -3166,7 +3163,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('parlament_link');
+            $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
@@ -3174,7 +3171,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -3189,11 +3186,7 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Parlamentarier', 
-                'parlamentarier_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3227,13 +3220,13 @@
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('mutter_kommission');
+            $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('parlament_link');
+            $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_von');
+            $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
@@ -3273,6 +3266,24 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for von field
+            //
+            $editor = new DateTimeEdit('von_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Von', 'von', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for bis field
+            //
+            $editor = new DateTimeEdit('bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -3282,15 +3293,15 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for freigabe_von field
+            // Edit column for freigabe_visa field
             //
-            $editor = new ComboBox('freigabe_von_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('freigabe_visa_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('otto', $this->RenderText('otto'));
             $editor->AddValue('rebecca', $this->RenderText('rebecca'));
             $editor->AddValue('thomas', $this->RenderText('thomas'));
             $editor->AddValue('bane', $this->RenderText('bane'));
             $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Von', 'freigabe_von', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -3348,6 +3359,22 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -3355,9 +3382,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for freigabe_von field
+            // View column for freigabe_visa field
             //
-            $column = new TextViewColumn('freigabe_von', 'Freigabe Von', $this->dataset);
+            $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -3433,6 +3460,22 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -3440,9 +3483,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for freigabe_von field
+            // View column for freigabe_visa field
             //
-            $column = new TextViewColumn('freigabe_von', 'Freigabe Von', $this->dataset);
+            $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -3545,6 +3588,26 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Beginn der Kommissionszugehörigkeit, leer (NULL) = unbekannt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ende der Kommissionszugehörigkeit, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -3557,9 +3620,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for freigabe_von field
+            // View column for freigabe_visa field
             //
-            $column = new TextViewColumn('freigabe_von', 'Freigabe Von', $this->dataset);
+            $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Freigabe von (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
@@ -3644,6 +3707,22 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -3651,9 +3730,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for freigabe_von field
+            // View column for freigabe_visa field
             //
-            $column = new TextViewColumn('freigabe_von', 'Freigabe Von', $this->dataset);
+            $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -3792,6 +3871,193 @@
             $pageEdit->SetHttpHandlerName('v_in_kommission_parlamentarierDetailEdit0in_kommission_handler');
             $handler = new PageHTTPHandler('v_in_kommission_parlamentarierDetailEdit0in_kommission_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_parlamentarier`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('nachname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('vorname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('zweiter_vorname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('partei_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parteifunktion');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_seit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('geburtstag');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateiname_voll');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_mime_type');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kleinbild');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('sitzplatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ALT_kommission');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_edit_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null);
+            GetApplication()->RegisterHTTPHandler($handler);
+            
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_parlamentarier`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('nachname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('vorname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('zweiter_vorname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('partei_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parteifunktion');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_seit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('geburtstag');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateiname_voll');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_mime_type');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kleinbild');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('sitzplatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ALT_kommission');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_insert_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null);
+            GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
             //
@@ -3828,6 +4094,192 @@
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_parlamentarier`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('nachname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('vorname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('zweiter_vorname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('partei_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parteifunktion');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_seit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('geburtstag');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateiname_voll');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_mime_type');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kleinbild');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('sitzplatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ALT_kommission');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null);
+            GetApplication()->RegisterHTTPHandler($handler);
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_parlamentarier`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('nachname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('vorname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('zweiter_vorname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('partei_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parteifunktion');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktionsfunktion');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_seit');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratsunterbruch_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('geburtstag');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_dateiname_voll');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('photo_mime_type');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kleinbild');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('sitzplatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlament_url');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ALT_kommission');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
+            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_parlamentarier_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
