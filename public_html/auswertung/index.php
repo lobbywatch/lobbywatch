@@ -902,7 +902,7 @@ table td {
       </p>
        <p>
         <a href="<?php print "$env_dir";?>bearbeitung">Bearbeitungsseite Lobbywatch <?php print "$env";?></a>.<br>
-        <a href="<?php print "$env_dir";?>info.php">Infoseite Lobbywatch <?php print "$env";?></a>.
+        <a href="/">Startseite Lobbywatch</a>.
         </p>
         <p>Mode: <b><?php print "$env";?></b><br/>Version: <?php print $version;?><br/>Deploy date: <?php print $deploy_date;?><br/>Build date: <?php print $build_date;?></p>
     </div>
