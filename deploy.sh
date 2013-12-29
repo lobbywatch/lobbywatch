@@ -89,21 +89,23 @@ echo -e "<?php\n\$maintenance_mode = $maintenance_mode;" > $public_dir/settings/
 
 if [[ "$env" = "production" ]] ; then
   env_suffix=
-  env_dir_suffix=
+  env_dir=
+  env_dir2=
 else
   env_suffix=$env
-  env_dir_suffix=$env/
+  env_dir=$env/
+  env_dir2=/$env
 fi
 
 echo -e "Environment: $env"
 
 echo "## Prepare release"
-./prepare_release.sh $env_suffix
+./prepare_release.sh $env_suffix $env_dir $env_dir2
 
 # read -s -p "Password: " passw
 
 echo "## Deploying website via Rsync"
-rsync -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir_suffix
+rsync -avze "ssh -p $ssh_port" $exclude $fast $delete --backup --backup-dir=bak $dry_run $public_dir/ $ssh_user:$document_root$env_dir
 
 if $load_sql ; then
   echo "## Copy DB via Rsync"
