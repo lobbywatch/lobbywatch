@@ -50,7 +50,23 @@
                             {$Captions->GetMessageString('Refresh')}
                         </a>
                     {/if}
-                    
+
+                    {if $DataGrid.ActionsPanel.ImRatBisSelectedButton}
+                        <button class="btn set-imratbis-selected">
+                            <i class="pg-icon-set-imratbis-selected"></i>
+                            Setze &quot;im Rat bis&quot;
+                            {* $Captions->GetMessageString('AuthorizeSelected') *}
+                        </button>
+                    {/if}
+
+                    {if $DataGrid.ActionsPanel.ImRatBisSelectedButton}
+                        <button class="btn clear-imratbis-selected">
+                            <i class="pg-icon-clear-imratbis-selected"></i>
+                            Lösche &quot;im Rat bis&quot;
+                            {* $Captions->GetMessageString('AuthorizeSelected') *}
+                        </button>
+                    {/if}
+
                     {if $DataGrid.ActionsPanel.AuthorizeSelectedButton}
                         <button class="btn authorize-selected">
                             <i class="pg-icon-authorize-selected"></i>
@@ -132,7 +148,7 @@
     {if $DataGrid.ShowLineNumbers}
         <th>#</th>
     {/if}
-        
+
     <!-- <Grid Head Columns> -->
     {foreach item=Band from=$DataGrid.Bands}
         {if $Band.ConsolidateHeader and $Band.ColumnCount > 0}
@@ -341,7 +357,7 @@
             var activeFilter = new fb.Filter();
             activeFilter.fromJson(activeFilterJson);
             grid.setFilter(activeFilter);
-            
+
             var gridops = new pgridops.GridOps($gridContainer);
         });
     });

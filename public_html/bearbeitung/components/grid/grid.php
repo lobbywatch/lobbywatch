@@ -1288,6 +1288,12 @@ class Grid {
             case OPERATION_DE_RELEASE_SELECTED: // Afterburner
                 $this->gridState = new DeReleaseSelectedGridState($this); // Afterburner
                 break;
+            case OPERATION_SET_IMRATBIS_SELECTED: // Afterburner
+                $this->gridState = new SetImRatBisSelectedGridState($this); // Afterburner
+                break;
+            case OPERATION_CLEAR_IMRATBIS_SELECTED: // Afterburner
+                $this->gridState = new ClearImRatBisSelectedGridState($this); // Afterburner
+                break;
             case OPERATION_DELETE_SELECTED:
                 $this->gridState = new DeleteSelectedGridState($this);
                 break;
@@ -1455,6 +1461,11 @@ class Grid {
     function GetAllowReleaseSelected() { // Afterburner
       $columns = $this->GetEditColumns();
       return $this->GetAllowDeleteSelected() && is_column_present($columns,'freigabe_datum') && is_column_present($columns,'freigabe_visa'); // Afterburner
+    }
+
+    function GetAllowImRatBisSelected() { // Afterburner
+      $columns = $this->GetEditColumns();
+      return $this->GetAllowDeleteSelected() && is_column_present($columns,'im_rat_bis'); // Afterburner
     }
     function GetAllowDeleteSelected() {
         return $this->allowDeleteSelected;
@@ -2038,6 +2049,7 @@ class Grid {
                 'DeleteSelectedButton' => $this->GetAllowDeleteSelected(),
                 'AuthorizeSelectedButton' => $this->GetAllowAuthorizeSelected(), // Afterburner
                 'ReleaseSelectedButton' => $this->GetAllowReleaseSelected(), // Afterburner
+                'ImRatBisSelectedButton' => $this->GetAllowImRatBisSelected(), // Afterburner
 
             ),
 

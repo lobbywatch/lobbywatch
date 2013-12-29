@@ -7,6 +7,8 @@ define('OPERATION_AUTHORIZE_SELECTED', 'autsel');
 define('OPERATION_DE_AUTHORIZE_SELECTED', 'deautsel');
 define('OPERATION_RELEASE_SELECTED', 'relsel');
 define('OPERATION_DE_RELEASE_SELECTED', 'derelsel');
+define('OPERATION_SET_IMRATBIS_SELECTED', 'setimratbissel');
+define('OPERATION_CLEAR_IMRATBIS_SELECTED', 'clearimratbissel');
 
 $edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version $build_date_short)</b>: Die Tabellen <i>In_kommission</i>, <i>Kommission</i>, <i>Partei</i>, <i>Branche</i> können bearbeitet werden. Die anderen Änderungen gehen wieder verloren.</div>";
 
@@ -326,3 +328,13 @@ class DeReleaseSelectedGridState extends SelectedOperationGridState {
   }
 }
 
+class SetImRatBisSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'im_rat_bis', $this->date );
+  }
+}
+class ClearImRatBisSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'im_rat_bis', null );
+  }
+}

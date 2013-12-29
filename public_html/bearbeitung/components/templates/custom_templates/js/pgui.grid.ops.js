@@ -26,6 +26,8 @@ define(function(require, exports, module) {
             this.$deauthorizeSelectedButton = this.container.find('.de-authorize-selected');
             this.$releaseSelectedButton = this.container.find('.release-selected');
             this.$dereleaseSelectedButton = this.container.find('.de-release-selected');
+            this.$setImRatBisSelectedButton = this.container.find('.set-imratbis-selected');
+            this.$clearImRatBisSelectedButton = this.container.find('.clear-imratbis-selected');
 
             this._bindHandlers();
         },
@@ -113,8 +115,8 @@ define(function(require, exports, module) {
                       }
                   });
 
-              });
-          });
+                });
+            });
 
             this.$releaseSelectedButton.click(function() {
 
@@ -128,8 +130,8 @@ define(function(require, exports, module) {
                       }
                   });
 
-              });
-          });
+                });
+            });
 
             this.$dereleaseSelectedButton.click(function() {
 
@@ -143,8 +145,44 @@ define(function(require, exports, module) {
                       }
                   });
 
+                });
+            });
+
+            this.$setImRatBisSelectedButton.click(function() {
+
+              require(['bootbox.min'], function() {
+
+                var nRows = self.countSelectedRows();
+                bootbox.animate(false);
+                bootbox.prompt( '&quot;Im Rat bis&quot; bei ' + nRows + ' Parlamentarieren setzen?<small><br><br>Bitte &quot;Im Rat bis&quot; eingeben (leer = heute):</small>'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(date) {
+                  //                         console.log(date);
+                  //                         console.log(self.isDateValid(date));
+                  if (date !== null) {
+                    if (date === '' || self.isDateValid(date)) {
+                      self.operateSelectRows('setimratbissel', date);
+                    } else {
+                      bootbox.alert('Bitte Datum als DD.MM.YYYY eingeben');
+                    }
+                  }
+                });
+
               });
-          });
+            });
+
+            this.$clearImRatBisSelectedButton.click(function() {
+
+              require(['bootbox.min'], function() {
+
+                var nRows = self.countSelectedRows();
+                bootbox.animate(false);
+                bootbox.confirm( '&quot;Im Rat bis&quot; bei ' + nRows + ' Einträgen entfernen?'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+                  if (confirmed) {
+                    self.operateSelectRows('clearimratbissel');
+                  }
+                });
+
+              });
+            });
 
 
         },
