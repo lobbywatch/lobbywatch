@@ -34,6 +34,7 @@
 
 function parlamentarierGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
 {
+  parlamentarier_check_imRatBis($page, $rowData, $cancel, $message, $tableName);
   parlamentarier_remove_old_photo($page, $rowData, $cancel, $message, $tableName);
   parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);
 }
@@ -48,6 +49,15 @@ function parlamentarierGrid_BeforeDeleteRecord($page, &$rowData, &$cancel, &$mes
 }
 function parlamentarierGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
 {
+  parlamentarier_check_imRatBis($page, $rowData, $cancel, $message, $tableName);
   parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);
 }
 
+function interessenbindungGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
+{
+    check_bis_date($page, $rowData, $cancel, $message, $tableName);
+}
+function interessenbindungGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
+{
+    check_bis_date($page, $rowData, $cancel, $message, $tableName);
+}

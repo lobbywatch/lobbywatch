@@ -3796,6 +3796,14 @@
           $result = 'list/grid.tpl';
         }
         }
+        function in_kommissionGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            check_bis_date($page, $rowData, $cancel, $message, $tableName);
+        }
+        function in_kommissionGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            check_bis_date($page, $rowData, $cancel, $message, $tableName);
+        }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -3828,6 +3836,8 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('in_kommissionGrid' . '_OnGetCustomTemplate', $this);
+            $result->BeforeUpdateRecord->AddListener('in_kommissionGrid' . '_' . 'BeforeUpdateRecord', $this);
+            $result->BeforeInsertRecord->AddListener('in_kommissionGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

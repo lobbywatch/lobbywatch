@@ -191,6 +191,36 @@ function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, 
   }
 }
 
+function parlamentarier_check_imRatBis($page, &$rowData, &$cancel, &$message, $tableName)
+{
+  // df($rowData);
+  $imRatBis = $rowData['im_rat_bis'];
+
+    df($imRatBis);
+//    df($imRatBis === null);
+//    df($imRatBis === '');
+//   df($imRatBis->GetTimestamp());
+//   df($imRatBis->GetDateTime());
+  if ($imRatBis !== null && $imRatBis->GetTimestamp() > SMDateTime::Now()->GetTimestamp()) {
+    $cancel = true;
+    $message = '"Im Rat bis"-Datum darf nicht in der Zukunft liegen: ' . $imRatBis->ToString('d.m.Y');
+  }
+
+}
+
+function check_bis_date($page, &$rowData, &$cancel, &$message, $tableName)
+{
+  // df($rowData);
+  $bis = $rowData['bis'];
+//   df($bis);
+//   df($bis->GetTimestamp());
+  if ($bis !== null && $bis->GetTimestamp() > SMDateTime::Now()->GetTimestamp()) {
+    $cancel = true;
+    $message = 'Bis-Datum darf nicht in der Zukunft liegen: ' . $bis->ToString('d.m.Y');
+  }
+}
+
+
 abstract class SelectedOperationGridState extends GridState {
   protected $date;
 

@@ -57,6 +57,12 @@ function df($msg) {
     return;
   if (is_array($msg) || is_object($msg)) {
     $msg = print_r($msg, true);
+  } else if ($msg === null) {
+    $msg = 'null';
+  } else if (is_string($msg)) {
+    $msg = "'$msg'";
+  } else if (is_bool($msg)) {
+    $msg = $msg ? 'true' : 'false';
   }
   file_put_contents(dirname(__FILE__) . "/../../logs/bearbeitung.log", date('c') . ': ' . $msg . "\n", FILE_APPEND);
 }

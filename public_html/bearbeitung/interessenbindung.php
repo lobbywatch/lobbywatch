@@ -2426,6 +2426,14 @@
           $result = 'list/grid.tpl';
         }
         }
+        function interessenbindungGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            check_bis_date($page, $rowData, $cancel, $message, $tableName);
+        }
+        function interessenbindungGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            check_bis_date($page, $rowData, $cancel, $message, $tableName);
+        }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -2458,6 +2466,8 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('interessenbindungGrid' . '_OnGetCustomTemplate', $this);
+            $result->BeforeUpdateRecord->AddListener('interessenbindungGrid' . '_' . 'BeforeUpdateRecord', $this);
+            $result->BeforeInsertRecord->AddListener('interessenbindungGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

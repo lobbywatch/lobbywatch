@@ -10121,6 +10121,14 @@
           $result = 'list/grid.tpl';
         }
         }
+        function zutrittsberechtigungGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            check_bis_date($page, $rowData, $cancel, $message, $tableName);
+        }
+        function zutrittsberechtigungGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            check_bis_date($page, $rowData, $cancel, $message, $tableName);
+        }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -10153,6 +10161,8 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('zutrittsberechtigungGrid' . '_OnGetCustomTemplate', $this);
+            $result->BeforeUpdateRecord->AddListener('zutrittsberechtigungGrid' . '_' . 'BeforeUpdateRecord', $this);
+            $result->BeforeInsertRecord->AddListener('zutrittsberechtigungGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

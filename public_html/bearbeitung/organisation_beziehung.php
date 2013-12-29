@@ -1749,6 +1749,14 @@
           $result = 'list/grid.tpl';
         }
         }
+        function organisation_beziehungGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            check_bis_date($page, $rowData, $cancel, $message, $tableName);
+        }
+        function organisation_beziehungGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            check_bis_date($page, $rowData, $cancel, $message, $tableName);
+        }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -1781,6 +1789,8 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('organisation_beziehungGrid' . '_OnGetCustomTemplate', $this);
+            $result->BeforeUpdateRecord->AddListener('organisation_beziehungGrid' . '_' . 'BeforeUpdateRecord', $this);
+            $result->BeforeInsertRecord->AddListener('organisation_beziehungGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

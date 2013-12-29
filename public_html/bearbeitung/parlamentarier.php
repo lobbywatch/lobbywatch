@@ -18727,7 +18727,7 @@
             //
             // Edit column for geburtstag field
             //
-            $editor = new TimeEdit('geburtstag_edit');
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -18738,7 +18738,7 @@
             //
             // Edit column for geburtstag field
             //
-            $editor = new TimeEdit('geburtstag_edit');
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19727,7 +19727,7 @@
             //
             // Edit column for geburtstag field
             //
-            $editor = new TimeEdit('geburtstag_edit');
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20182,7 +20182,7 @@
             //
             // Edit column for geburtstag field
             //
-            $editor = new TimeEdit('geburtstag_edit');
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -24171,6 +24171,7 @@
         }
         function parlamentarierGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
+            parlamentarier_check_imRatBis($page, $rowData, $cancel, $message, $tableName);
             parlamentarier_remove_old_photo($page, $rowData, $cancel, $message, $tableName);
             parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);
         }
@@ -24185,6 +24186,7 @@
         }
         function parlamentarierGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
+            parlamentarier_check_imRatBis($page, $rowData, $cancel, $message, $tableName);
             parlamentarier_update_photo_metadata($page, $rowData, $cancel, $message, $tableName);
         }
         public function photo_Thumbnail_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
