@@ -687,7 +687,7 @@
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -719,14 +719,14 @@
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
             // Edit column for bis field
             //
-            $editor = new DateTimeEdit('bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -737,7 +737,7 @@
             //
             // Edit column for bis field
             //
-            $editor = new DateTimeEdit('bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -983,7 +983,7 @@
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -991,7 +991,7 @@
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1217,7 +1217,7 @@
             //
             // Edit column for bis field
             //
-            $editor = new DateTimeEdit('bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1468,7 +1468,7 @@
             //
             // Edit column for bis field
             //
-            $editor = new DateTimeEdit('bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Bis', 'bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1553,7 +1553,7 @@
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1561,7 +1561,7 @@
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1654,7 +1654,7 @@
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1662,7 +1662,7 @@
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

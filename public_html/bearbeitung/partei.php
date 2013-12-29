@@ -4588,14 +4588,14 @@
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
             // Edit column for gruendung field
             //
-            $editor = new DateTimeEdit('gruendung_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('gruendung_edit', false, 'Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Gruendung', 'gruendung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4606,7 +4606,7 @@
             //
             // Edit column for gruendung field
             //
-            $editor = new DateTimeEdit('gruendung_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('gruendung_edit', false, 'Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Gruendung', 'gruendung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4924,7 +4924,7 @@
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -5029,7 +5029,7 @@
             //
             // Edit column for gruendung field
             //
-            $editor = new DateTimeEdit('gruendung_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('gruendung_edit', false, 'Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Gruendung', 'gruendung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5166,7 +5166,7 @@
             //
             // Edit column for gruendung field
             //
-            $editor = new DateTimeEdit('gruendung_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('gruendung_edit', false, 'Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Gruendung', 'gruendung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5268,7 +5268,7 @@
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -5368,7 +5368,7 @@
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -5495,7 +5495,7 @@
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Gründungsjahr der Partei'));
             $column->SetFixedWidth(null);
@@ -5618,7 +5618,7 @@
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

@@ -18416,7 +18416,7 @@
             //
             // Edit column for im_rat_seit field
             //
-            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'd.m.Y', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -18428,7 +18428,7 @@
             //
             // Edit column for im_rat_seit field
             //
-            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'd.m.Y', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -18443,14 +18443,14 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
             // Edit column for im_rat_bis field
             //
-            $editor = new DateTimeEdit('im_rat_bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -18461,7 +18461,7 @@
             //
             // Edit column for im_rat_bis field
             //
-            $editor = new DateTimeEdit('im_rat_bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -18475,14 +18475,14 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
             // Edit column for ratsunterbruch_von field
             //
-            $editor = new DateTimeEdit('ratsunterbruch_von_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -18493,7 +18493,7 @@
             //
             // Edit column for ratsunterbruch_von field
             //
-            $editor = new DateTimeEdit('ratsunterbruch_von_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -18507,14 +18507,14 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
             // Edit column for ratsunterbruch_bis field
             //
-            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -18525,7 +18525,7 @@
             //
             // Edit column for ratsunterbruch_bis field
             //
-            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -18727,7 +18727,7 @@
             //
             // Edit column for geburtstag field
             //
-            $editor = new DateTimeEdit('geburtstag_edit', true, 'd.m.Y', GetFirstDayOfWeek());
+            $editor = new TimeEdit('geburtstag_edit');
             $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -18738,7 +18738,7 @@
             //
             // Edit column for geburtstag field
             //
-            $editor = new DateTimeEdit('geburtstag_edit', true, 'd.m.Y', GetFirstDayOfWeek());
+            $editor = new TimeEdit('geburtstag_edit');
             $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19281,7 +19281,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -19289,7 +19289,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -19297,7 +19297,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -19621,7 +19621,7 @@
             //
             // Edit column for im_rat_seit field
             //
-            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'd.m.Y', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -19631,7 +19631,7 @@
             //
             // Edit column for im_rat_bis field
             //
-            $editor = new DateTimeEdit('im_rat_bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19640,7 +19640,7 @@
             //
             // Edit column for ratsunterbruch_von field
             //
-            $editor = new DateTimeEdit('ratsunterbruch_von_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19649,7 +19649,7 @@
             //
             // Edit column for ratsunterbruch_bis field
             //
-            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19727,7 +19727,7 @@
             //
             // Edit column for geburtstag field
             //
-            $editor = new DateTimeEdit('geburtstag_edit', true, 'd.m.Y', GetFirstDayOfWeek());
+            $editor = new TimeEdit('geburtstag_edit');
             $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20075,7 +20075,7 @@
             //
             // Edit column for im_rat_seit field
             //
-            $editor = new DateTimeEdit('im_rat_seit_edit', true, 'd.m.Y', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -20085,7 +20085,7 @@
             //
             // Edit column for im_rat_bis field
             //
-            $editor = new DateTimeEdit('im_rat_bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20094,7 +20094,7 @@
             //
             // Edit column for ratsunterbruch_von field
             //
-            $editor = new DateTimeEdit('ratsunterbruch_von_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20103,7 +20103,7 @@
             //
             // Edit column for ratsunterbruch_bis field
             //
-            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20182,7 +20182,7 @@
             //
             // Edit column for geburtstag field
             //
-            $editor = new DateTimeEdit('geburtstag_edit', true, 'd.m.Y', GetFirstDayOfWeek());
+            $editor = new TimeEdit('geburtstag_edit');
             $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -20373,7 +20373,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -20381,7 +20381,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -20389,7 +20389,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -20610,7 +20610,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -20618,7 +20618,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -20626,7 +20626,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -20891,7 +20891,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
@@ -20901,7 +20901,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -20911,7 +20911,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -21176,7 +21176,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -21184,7 +21184,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -21192,7 +21192,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -21447,7 +21447,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
@@ -21457,7 +21457,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -21467,7 +21467,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -21732,7 +21732,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -21740,7 +21740,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -21748,7 +21748,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22003,7 +22003,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
@@ -22013,7 +22013,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -22023,7 +22023,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -22288,7 +22288,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22296,7 +22296,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22304,7 +22304,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22559,7 +22559,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
@@ -22569,7 +22569,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -22579,7 +22579,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -22844,7 +22844,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22852,7 +22852,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22860,7 +22860,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23115,7 +23115,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
@@ -23125,7 +23125,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -23135,7 +23135,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -23400,7 +23400,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23408,7 +23408,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23416,7 +23416,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23671,7 +23671,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
@@ -23681,7 +23681,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -23691,7 +23691,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
@@ -23956,7 +23956,7 @@
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23964,7 +23964,7 @@
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23972,7 +23972,7 @@
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
