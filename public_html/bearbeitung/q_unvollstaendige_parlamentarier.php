@@ -83,6 +83,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('militaerischer_grad');
+            $this->dataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $this->dataset->AddField($field, false);
             $field = new DateField('geburtstag');

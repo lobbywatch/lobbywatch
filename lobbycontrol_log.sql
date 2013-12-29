@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `snapshot` (
 
 -- DROP TABLE IF EXISTS `branche`;
 -- CREATE TABLE IF NOT EXISTS `branche` (
---   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Branche',
+--   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Live-Daten',
 --   `name` varchar(100) NOT NULL COMMENT 'Name der Branche, z.B. Gesundheit, Energie',
 --   `kommission_id` int(11) DEFAULT NULL COMMENT 'Zuständige Kommission im Parlament',
 --   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `snapshot` (
 DROP TABLE IF EXISTS `branche_log`;
 CREATE TABLE IF NOT EXISTS `branche_log` LIKE `branche`;
 ALTER TABLE `branche_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP INDEX `branche_name_unique`,
@@ -199,7 +199,7 @@ ALTER TABLE `branche_log`
 DROP TABLE IF EXISTS `interessenbindung_log`;
 CREATE TABLE IF NOT EXISTS `interessenbindung_log` LIKE `interessenbindung`;
 ALTER TABLE `interessenbindung_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP INDEX `interessenbindung_art_parlamentarier_organisation_unique`,
@@ -249,7 +249,7 @@ ALTER TABLE `interessenbindung_log`
 DROP TABLE IF EXISTS `interessengruppe_log`;
 CREATE TABLE IF NOT EXISTS `interessengruppe_log` LIKE `interessengruppe`;
 ALTER TABLE `interessengruppe_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP INDEX `interessengruppe_name_unique`,
@@ -298,7 +298,7 @@ ALTER TABLE `interessengruppe_log`
 DROP TABLE IF EXISTS `in_kommission_log`;
 CREATE TABLE IF NOT EXISTS `in_kommission_log` LIKE `in_kommission`;
 ALTER TABLE `in_kommission_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP INDEX `in_kommission_parlamentarier_kommission_funktion_unique`,
@@ -352,7 +352,7 @@ ALTER TABLE `in_kommission_log`
 DROP TABLE IF EXISTS `kommission_log`;
 CREATE TABLE IF NOT EXISTS `kommission_log` LIKE `kommission`;
 ALTER TABLE `kommission_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP INDEX `idx_ko_unique_name`,
@@ -401,7 +401,7 @@ ALTER TABLE `kommission_log`
 DROP TABLE IF EXISTS `mandat_log`;
 CREATE TABLE IF NOT EXISTS `mandat_log` LIKE `mandat`;
 ALTER TABLE `mandat_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP INDEX `mandat_zutrittsberechtigung_organisation_art_unique`,
@@ -461,7 +461,7 @@ ALTER TABLE `mandat_log`
 DROP TABLE IF EXISTS `organisation_log`;
 CREATE TABLE IF NOT EXISTS `organisation_log` LIKE `organisation`;
 ALTER TABLE `organisation_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP INDEX `organisation_name_de_unique`,
@@ -514,7 +514,7 @@ ALTER TABLE `organisation_log`
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
 CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` LIKE `organisation_beziehung`;
 ALTER TABLE `organisation_beziehung_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP INDEX `organisation_beziehung_organisation_zielorganisation_art_unique`,
@@ -585,7 +585,7 @@ ALTER TABLE `organisation_beziehung_log`
 DROP TABLE IF EXISTS `parlamentarier_log`;
 CREATE TABLE IF NOT EXISTS `parlamentarier_log` LIKE `parlamentarier`;
 ALTER TABLE `parlamentarier_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP INDEX `parlamentarier_nachname_vorname_unique`,
@@ -647,7 +647,7 @@ ALTER TABLE `parlamentarier_log`
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
 CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` LIKE `parlamentarier_anhang`;
 ALTER TABLE `parlamentarier_anhang_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP PRIMARY KEY,
@@ -701,7 +701,7 @@ ALTER TABLE `parlamentarier_anhang_log`
 DROP TABLE IF EXISTS `partei_log`;
 CREATE TABLE IF NOT EXISTS `partei_log` LIKE `partei`;
 ALTER TABLE `partei_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP INDEX `partei_abkuerzung_unique`,
@@ -784,7 +784,7 @@ ALTER TABLE `partei_log`
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
 CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` LIKE `zutrittsberechtigung`;
 ALTER TABLE `zutrittsberechtigung_log`
-  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
   DROP INDEX `zutrittsberechtigung_nachname_vorname_unique`,
@@ -806,6 +806,24 @@ ALTER TABLE `zutrittsberechtigung_log`
 --   `parlamentarier_id`
 --       `parlamentarier` -> `id`
 --
+
+DROP TABLE IF EXISTS `mil_grad_log`;
+CREATE TABLE IF NOT EXISTS `mil_grad_log` LIKE `mil_grad`;
+ALTER TABLE `mil_grad_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP INDEX `name_unique`,
+  DROP INDEX `abkuerzung_unique`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_mil_grad_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
 
 -- --------------------------------------------------------
 
@@ -1513,6 +1531,59 @@ for each row
 thisTrigger: begin
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   UPDATE `zutrittsberechtigung_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- mil_grad triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_mil_grad_log_ins`;
+delimiter //
+create trigger `trg_mil_grad_log_ins` after insert on `mil_grad`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mil_grad_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `mil_grad` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_mil_grad_log_upd`;
+delimiter //
+create trigger `trg_mil_grad_log_upd` after update on `mil_grad`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mil_grad_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `mil_grad` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_mil_grad_log_del_before`;
+delimiter //
+create trigger `trg_mil_grad_log_del_before` before delete on `mil_grad`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mil_grad_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `mil_grad` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_mil_grad_log_del_after`;
+delimiter //
+create trigger `trg_mil_grad_log_del_after` after delete on `mil_grad`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `mil_grad_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end

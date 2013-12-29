@@ -217,6 +217,9 @@ CREATE OR REPLACE VIEW `v_user` AS SELECT t.* FROM `user` t;
 
 CREATE OR REPLACE VIEW `v_user_permission` AS SELECT t.* FROM `user_permission` t;
 
+CREATE OR REPLACE VIEW `v_mil_grad` AS SELECT t.* FROM `mil_grad` t;
+
+
 -- Der der Kommissionen für Parlamenterier
 -- Connector: in_kommission.parlamentarier_id
 CREATE OR REPLACE VIEW `v_in_kommission_liste` AS
