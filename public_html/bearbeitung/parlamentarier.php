@@ -24520,7 +24520,7 @@
                 $result = -2;
                 if (FileUtils::FileExists($target))
                   $result = FileUtils::RemoveFile($target);
-                
+            
                 $message = "Delete file '$target'. Result $result";
         }
         function parlamentarierGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)

@@ -10,13 +10,13 @@ $debug = false;
 $env = "dev";
 $env_dir = "/";
 // $env_dir = "/test/";
-$public_files_dir = "/home/lobbycontrol/public_html/files";
-$private_files_dir = "/home/lobbycontrol/private_files/lobbycontrol_db_files";
+$public_files_dir = "/home/lobbywatch/public_html/files";
+$private_files_dir = "/home/lobbywatch/private_files/lobbywatch_db_files";
 
 $db_connection = array (
     'server' => 'localhost',
     'port' => '3306',
-    'database' => '',
+    'database' => 'lobbywatch',
     'username' => '',
     'password' => '',
     'reader_username' => '',

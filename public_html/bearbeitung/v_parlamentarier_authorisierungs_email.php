@@ -295,7 +295,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbycontrol.ch' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -337,7 +337,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_text_html_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbycontrol.ch' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -659,7 +659,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbycontrol.ch' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_text_html_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for parlamentarier_name field
@@ -682,7 +682,7 @@
             //
             $column = new TextViewColumn('email_text_html', 'Email Text Html', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbycontrol.ch' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_text_html_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
@@ -697,7 +697,7 @@
         {
             return '<div class="wiki-table-help">
         <p>E-Mail-Vorlagen für Autorisierungs-E-Mails an Parlamentarier.</p>
-        <p>Zur Autorisierung, siehe <a href="http://lobbycontrol.ch/wiki/tiki-index.php?page=Autorisierung&structure=Lobbycontrol-Wiki" target="_blank">Wiki Autorisierung</a>.</p>
+        <p>Zur Autorisierung, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Autorisierung&structure=Lobbywatch-Wiki" target="_blank">Wiki Autorisierung</a>.</p>
     </div>';
         }
     }

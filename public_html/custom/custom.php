@@ -12,7 +12,7 @@ define('OPERATION_CLEAR_IMRATBIS_SELECTED', 'clearimratbissel');
 
 $edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version $build_date_short)</b>: Die Tabellen <i>In_kommission</i>, <i>Kommission</i>, <i>Partei</i>, <i>Branche</i> können bearbeitet werden. Die anderen Änderungen gehen wieder verloren.</div>";
 
-$edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/book_open.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbycontrol.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbycontrol-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="' . $env_dir . 'lobbycontrol_datenmodell.pdf">Datenmodell</a> (PDF).</div></div>';
+$edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/book_open.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="' . $env_dir . 'lobbywatch_datenmodell.pdf">Datenmodell</a> (PDF).</div></div>';
 
 //df_clean();
 
@@ -77,7 +77,7 @@ function setupRSS($page, $dataset) {
     $rss_body .= "<br>$title ID %id%<br>Updated by %updated_visa% at %updated_date%";
 
   $base_url = "http://$_SERVER[HTTP_HOST]";
-  $generator = new DatasetRssGenerator ( $dataset, convert_utf8 ( $title . ' RSS' ), $base_url, convert_utf8('Änderungen der Lobbycontrol-Datenbank als RSS Feed'), convert_utf8 ($rss_title), $table . ' at %id%', convert_utf8 ($rss_body) );
+  $generator = new DatasetRssGenerator ( $dataset, convert_utf8 ( $title . ' RSS' ), $base_url, convert_utf8('Änderungen der Lobbywatch-Datenbank als RSS Feed'), convert_utf8 ($rss_title), $table . ' at %id%', convert_utf8 ($rss_body) );
   $generator->SetItemPublicationDateFieldName ( 'updated_date' );
   $generator->SetOrderByFieldName ( 'updated_date' );
   $generator->SetOrderType ( otDescending );
@@ -115,7 +115,7 @@ $result = <<<'EOD'
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    ga('create', 'UA-45624114-1', 'lobbycontrol.ch');
+    ga('create', 'UA-45624114-1', 'lobbywatch.ch');
     ga('send', 'pageview');
 
   </script>

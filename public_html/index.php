@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Lobbycontrol</title>
+    <title>Lobbywatch</title>
     <meta HTTP-EQUIV="REFRESH" content="0; url=auswertung">
   </head>
   <body></body>

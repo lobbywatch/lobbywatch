@@ -202,14 +202,14 @@ do
   > "$file";
 done
 
-for file in lobbycontrol_bearbeitung.pgtm
+for file in lobbywatch_bearbeitung.pgtm
 do
   echo "Process $file";
   cat "$file" \
   | perl -p -e's/(login\s*=\s*)".*?"/\1""/ig' \
   | perl -p -e's/(password\s*=\s*)".*?"/\1"hidden"/ig' \
   | perl -p -e's/(database\s*=\s*)".*?"/\1""/ig' \
-  > "lobbycontrol_bearbeitung_public.pgtm";
+  > "lobbywatch_bearbeitung_public.pgtm";
 done
 
 git st

@@ -16,7 +16,7 @@ $optionen = array (
     PDO::ATTR_PERSISTENT => true
 );
 // $db = new PDO('mysql:host=localhost;dbname=lobby','root','',$optionen);//usr_web369_4 web369,politnet || lobby root
-$db = new PDO ( 'mysql:host=localhost;dbname=lobbycontrol_db;charset=utf8', 'web369', 'D-UaQ1EDGjwwvBv7oB2X', $optionen ); // usr_web369_4 web369,politnet || lobby root
+$db = new PDO ( 'mysql:host=localhost;dbname=lobbywatch_db;charset=utf8', 'web369', 'D-UaQ1EDGjwwvBv7oB2X', $optionen ); // usr_web369_4 web369,politnet || lobby root
 /* Schnellsuche auf lobbyorg.htm */
 class LobbyOrgSuche {
   var $db = NULL;

@@ -16,7 +16,7 @@ remote_db_dir="/home/csvimsne/sql_scripts"
 
 ssh_user="csvimsne@csvi-ms.net"
 ssh_port="22"
-document_root="/home/csvimsne/public_html/lobbycontrol/"
+document_root="/home/csvimsne/public_html/lobbywatch/"
 rsync_delete=false
 deploy_default="rsync"
 load_sql=false
@@ -39,7 +39,7 @@ dry_run="";
 while test $# -gt 0; do
         case "$1" in
                 -h|--help)
-                        echo "deploy lobbycontrol"
+                        echo "deploy lobbywatch"
                         echo " "
                         echo "$0 [options]"
                         echo " "

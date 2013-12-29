@@ -85,31 +85,31 @@ ADD COLUMN `updated_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_
 ADD COLUMN `updated_date` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Abgäendert am';
 
 
-UPDATE `lobbycontrol`.`branche` SET
+UPDATE `lobbywatch`.`branche` SET
 `created_visa` = 'import',
 `updated_visa` = 'import';
 
-UPDATE `lobbycontrol`.`parlamentarier` SET
+UPDATE `lobbywatch`.`parlamentarier` SET
 `created_visa` = 'import',
 `updated_visa` = 'import';
 
-UPDATE `lobbycontrol`.`kommission` SET
+UPDATE `lobbywatch`.`kommission` SET
 `created_visa` = 'import',
 `updated_visa` = 'import';
 
-UPDATE `lobbycontrol`.`interessenbindung` SET
+UPDATE `lobbywatch`.`interessenbindung` SET
 `created_visa` = 'import',
 `updated_visa` = 'import';
 
-UPDATE `lobbycontrol`.`zugangsberechtigung` SET
+UPDATE `lobbywatch`.`zugangsberechtigung` SET
 `created_visa` = 'import',
 `updated_visa` = 'import';
 
-UPDATE `lobbycontrol`.`lobbyorganisation` SET
+UPDATE `lobbywatch`.`lobbyorganisation` SET
 `created_visa` = 'import',
 `updated_visa` = 'import';
 
-UPDATE `lobbycontrol`.`interessengruppe` SET
+UPDATE `lobbywatch`.`interessengruppe` SET
 `created_visa` = 'import',
 `updated_visa` = 'import';
 
@@ -143,16 +143,16 @@ AND count( `parlamentarier_id` ) >1
 AND count( `organisation_id` ) >1
 LIMIT 0 , 30;
 
-UPDATE `lobbycontrol`.`partei` SET `created_visa` = 'roland',`updated_visa` = 'roland' WHERE `partei`.`id` =3;
+UPDATE `lobbywatch`.`partei` SET `created_visa` = 'roland',`updated_visa` = 'roland' WHERE `partei`.`id` =3;
 
 UPDATE `parlamentarier` l LEFT JOIN partei p ON l.`ALT_partei` = p.abkuerzung SET l.`partei_id` = p.id,
 l.`updated_visa` = 'roland'
 
 SELECT p.abkuerzung, `ALT_partei` FROM `parlamentarier` l left join partei p on l.partei_id=p.id
 
-UPDATE lobbycontrol.`parlamentarier` n JOIN lobbycontrol_old.`parlamentarier` o ON o.id_parlam = n.id SET n.im_rat_seit = o.im_rat_seit;
+UPDATE lobbywatch.`parlamentarier` n JOIN lobbywatch_old.`parlamentarier` o ON o.id_parlam = n.id SET n.im_rat_seit = o.im_rat_seit;
 
-UPDATE lobbycontrol.`parlamentarier` n JOIN lobbycontrol_old.`parlamentarier` o ON o.id_parlam = n.id SET n.im_rat_seit = STR_TO_DATE(CONCAT('01.01.', o.im_rat_seit),'%d.%m.%Y')
+UPDATE lobbywatch.`parlamentarier` n JOIN lobbywatch_old.`parlamentarier` o ON o.id_parlam = n.id SET n.im_rat_seit = STR_TO_DATE(CONCAT('01.01.', o.im_rat_seit),'%d.%m.%Y')
 
 
 ALTER TABLE `t_partei`

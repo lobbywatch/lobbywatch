@@ -26,7 +26,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-45624114-1', 'lobbycontrol.ch');
+  ga('create', 'UA-45624114-1', 'lobbywatch.ch');
   ga('send', 'pageview');
 </script>
 <script type='text/javascript'>
@@ -891,18 +891,18 @@ table td {
 
   <div id='logo'>
     <p class='titel'>
-      <img src='lobbybilder/lobbycontrol.png' />
+      <img src='lobbybilder/lobbywatch.png' />
     </p>
     <p class='logobild'>
       <img src='lobbybilder/lobbyismus.png' />
     </p>
     <div>
      <p>
-        Auswertungsseite von Lobbycontrol <b><?php print "$env";?></b>.
+        Auswertungsseite von Lobbywatch <b><?php print "$env";?></b>.
       </p>
        <p>
-        <a href="<?php print "$env_dir";?>bearbeitung">Bearbeitungsseite Lobbycontrol <?php print "$env";?></a>.<br>
-        <a href="<?php print "$env_dir";?>info.php">Infoseite Lobbycontrol <?php print "$env";?></a>.
+        <a href="<?php print "$env_dir";?>bearbeitung">Bearbeitungsseite Lobbywatch <?php print "$env";?></a>.<br>
+        <a href="<?php print "$env_dir";?>info.php">Infoseite Lobbywatch <?php print "$env";?></a>.
         </p>
         <p>Mode: <b><?php print "$env";?></b><br/>Version: <?php print $version;?><br/>Deploy date: <?php print $deploy_date;?><br/>Build date: <?php print $build_date;?></p>
     </div>
@@ -916,7 +916,7 @@ table td {
       <li class='Kommissionen' data-typ='kommiss'><a href='#'>Kommissionen
           & Gesch&auml;fte</a></li>
       <li class='Statistik' data-typ='statistik'><a href='#'>Statistik</a></li>
-      <li class='Info Lobbycontrol' data-typ='konzept'><a href='#'><strike>Konzept</strike></a></li>
+      <li class='Info Lobbywatch' data-typ='konzept'><a href='#'><strike>Konzept</strike></a></li>
 
     </ul>
 

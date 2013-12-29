@@ -1,4 +1,4 @@
 #!/bin/bash
 
-./gen_lobbycontrol_edit.sh
+./gen_lobbywatch_edit.sh
 ./afterburner.sh

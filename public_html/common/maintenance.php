@@ -14,14 +14,14 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-45624114-1', 'lobbycontrol.ch');
+  ga('create', 'UA-45624114-1', 'lobbywatch.ch');
   ga('send', 'pageview');
 </script>
 </head>
 <body>
-  <h1>Lobbycontrol in Wartung</h1>
-  <p><b>Wartungsarbeiten werden an Lobbycontrol vorgenommen.</b></p>
-  <p><b>Lobbycontrol steht deshalb nicht zur Verfügung.</b></p>
+  <h1>Lobbywatch in Wartung</h1>
+  <p><b>Wartungsarbeiten werden an Lobbywatch vorgenommen.</b></p>
+  <p><b>Lobbywatch steht deshalb nicht zur Verfügung.</b></p>
   <p>
     <a href="/wiki">Wiki</a><br/>
   </p>

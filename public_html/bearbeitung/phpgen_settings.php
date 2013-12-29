@@ -59,13 +59,13 @@ function GetPageInfos()
 function GetPagesHeader()
 {
     return
-    '<h1>Lobbycontrol Datenbearbeitung ' . $GLOBALS["env"] . '</h1>';
+    '<h1>Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] . '</h1>';
 }
 
 function GetPagesFooter()
 {
     return
-        'Bearbeitungsseiten von <a href="' . $GLOBALS["env_dir"] . '">Lobbycontrol ' . $GLOBALS["env"] . '</a>.<br>
+        'Bearbeitungsseiten von <a href="' . $GLOBALS["env_dir"] . '">Lobbywatch ' . $GLOBALS["env"] . '</a>.<br>
 Mode: ' . $GLOBALS["env"] . ' / Version: ' . $GLOBALS["version"] . ' / Deploy date: ' . $GLOBALS["deploy_date"] . ' / Build date: ' . $GLOBALS["build_date"] . ''; 
     }
 

@@ -15,12 +15,12 @@ require_once 'common/utils.php';
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-45624114-1', 'lobbycontrol.ch');
+  ga('create', 'UA-45624114-1', 'lobbywatch.ch');
   ga('send', 'pageview');
 </script>
 </head>
 <body>
-  <h1>Lobbycontrol <?php print "$env";?></h1>
+  <h1>Lobbywatch <?php print "$env";?></h1>
   <?php if ($env === 'production' || $env === 'dev'): ?>
     <p><b>Dies ist die "stabile Seite" (production) zum Bearbeiten.</b></p>
     <p>Webseite und Datenmodell wurden teilweise zum Bearbeiten freigegeben.</p>
@@ -39,13 +39,13 @@ require_once 'common/utils.php';
   </p>
   <h2>Umgebung</h2>
   <p>
-    <a href="/">Lobbycontrol (Stabile Seite/Umgebung)</a>
+    <a href="/">Lobbywatch (Stabile Seite/Umgebung)</a>
     <br>
-    <a href="/test/">Lobbycontrol (Testseite/-umgebung &quot;/test&quot;)</a>
+    <a href="/test/">Lobbywatch (Testseite/-umgebung &quot;/test&quot;)</a>
   </p>
   <h2>Informationen</h2>
   <p>
-  <a href="<?php print "$env_dir";?>lobbycontrol_datenmodell.pdf">Datenmodell (PDF)</a><br/>
+  <a href="<?php print "$env_dir";?>lobbywatch_datenmodell.pdf">Datenmodell (PDF)</a><br/>
     <a href="/wiki/tiki-index.php?page=Wertebereiche">Wertebereiche auf Wiki</a><br/>
   </p>
   <p>
