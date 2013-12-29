@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 28. Dez 2013 um 20:53
+-- Erstellungszeit: 29. Dez 2013 um 09:59
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -233,12 +233,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:40
 --
 
 DROP TABLE IF EXISTS `branche_log`;
 CREATE TABLE IF NOT EXISTS `branche_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `name` varchar(100) NOT NULL COMMENT 'Name der Branche, z.B. Gesundheit, Energie',
   `kommission_id` int(11) DEFAULT NULL COMMENT 'Zuständige Kommission im Parlament',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
@@ -359,12 +359,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:40
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
 CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
@@ -482,12 +482,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessengruppe_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:40
 --
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
 CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `name` varchar(150) NOT NULL COMMENT 'Bezeichnung der Interessengruppe',
   `branche_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Branche',
   `beschreibung` text NOT NULL COMMENT 'Eingrenzung und Beschreibung zur Interessengruppe',
@@ -601,12 +601,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `in_kommission_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:41
 --
 
 DROP TABLE IF EXISTS `in_kommission_log`;
 CREATE TABLE IF NOT EXISTS `in_kommission_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
   `kommission_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Kommission',
   `funktion` enum('praesident','vizepraesident','mitglied') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Kommission',
@@ -724,12 +724,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:41
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
 CREATE TABLE IF NOT EXISTS `kommission_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
   `name` varchar(100) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
   `typ` enum('kommission','subkommission','spezialkommission') NOT NULL DEFAULT 'kommission' COMMENT 'Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne).',
@@ -851,12 +851,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mandat_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:41
 --
 
 DROP TABLE IF EXISTS `mandat_log`;
 CREATE TABLE IF NOT EXISTS `mandat_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `zutrittsberechtigung_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Zutrittsberechtigung.',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat') DEFAULT NULL COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
@@ -886,6 +886,107 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
 
 --
 -- RELATIONEN DER TABELLE `mandat_log`:
+--   `snapshot_id`
+--       `snapshot` -> `id`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `mil_grad`
+--
+-- Erzeugt am: 29. Dez 2013 um 08:25
+--
+
+DROP TABLE IF EXISTS `mil_grad`;
+CREATE TABLE IF NOT EXISTS `mil_grad` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel Militärischer Grad',
+  `name` varchar(30) NOT NULL COMMENT 'Name des militärischen Grades',
+  `abkuerzung` varchar(10) NOT NULL COMMENT 'Abkürzung des militärischen Grades',
+  `typ` enum('Mannschaft','Unteroffizier','Hoeherer Unteroffizier','Offizier','Hoeherer Stabsoffizier') NOT NULL COMMENT 'Stufe des militärischen Grades',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_unique` (`name`),
+  UNIQUE KEY `abkuerzung_unique` (`abkuerzung`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Militärische Grade (Armee XXI)' AUTO_INCREMENT=24 ;
+
+--
+-- Trigger `mil_grad`
+--
+DROP TRIGGER IF EXISTS `trg_mil_grad_log_del_after`;
+DELIMITER //
+CREATE TRIGGER `trg_mil_grad_log_del_after` AFTER DELETE ON `mil_grad`
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `mil_grad_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_mil_grad_log_del_before`;
+DELIMITER //
+CREATE TRIGGER `trg_mil_grad_log_del_before` BEFORE DELETE ON `mil_grad`
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mil_grad_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `mil_grad` WHERE id = OLD.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_mil_grad_log_ins`;
+DELIMITER //
+CREATE TRIGGER `trg_mil_grad_log_ins` AFTER INSERT ON `mil_grad`
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mil_grad_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `mil_grad` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+DROP TRIGGER IF EXISTS `trg_mil_grad_log_upd`;
+DELIMITER //
+CREATE TRIGGER `trg_mil_grad_log_upd` AFTER UPDATE ON `mil_grad`
+ FOR EACH ROW thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `mil_grad_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `mil_grad` WHERE id = NEW.id ;
+end
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `mil_grad_log`
+--
+-- Erzeugt am: 29. Dez 2013 um 08:41
+--
+
+DROP TABLE IF EXISTS `mil_grad_log`;
+CREATE TABLE IF NOT EXISTS `mil_grad_log` (
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  `name` varchar(30) NOT NULL COMMENT 'Name des militärischen Grades',
+  `abkuerzung` varchar(10) NOT NULL COMMENT 'Abkürzung des militärischen Grades',
+  `typ` enum('Mannschaft','Unteroffizier','Hoeherer Unteroffizier','Offizier','Hoeherer Stabsoffizier') NOT NULL COMMENT 'Stufe des militärischen Grades',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
+  `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  PRIMARY KEY (`log_id`),
+  KEY `fk_mil_grad_log_snapshot_id` (`snapshot_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Militärische Grade (Armee XXI)' AUTO_INCREMENT=1 ;
+
+--
+-- RELATIONEN DER TABELLE `mil_grad_log`:
 --   `snapshot_id`
 --       `snapshot` -> `id`
 --
@@ -1091,12 +1192,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:41
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
 CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation.',
   `ziel_organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Zielorganisation.',
   `art` enum('arbeitet fuer','mitglied von') NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation',
@@ -1131,12 +1232,12 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:41
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
 CREATE TABLE IF NOT EXISTS `organisation_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `name_de` varchar(150) NOT NULL COMMENT 'Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.',
   `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französischer Name',
   `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
@@ -1179,7 +1280,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 28. Dez 2013 um 16:07
+-- Erzeugt am: 29. Dez 2013 um 08:38
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -1199,6 +1300,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `ratsunterbruch_bis` date DEFAULT NULL COMMENT 'Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch',
   `beruf` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
+  `militaerischer_grad` int(11) DEFAULT NULL COMMENT 'Militärischer Grad, leer (NULL) = kein Militärdienst',
   `geschlecht` enum('M','F') DEFAULT 'M' COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau',
   `geburtstag` date DEFAULT NULL COMMENT 'Geburtstag des Parlamentariers',
   `photo` varchar(255) DEFAULT NULL COMMENT 'Photo des Parlamentariers (JPEG/jpg)',
@@ -1223,7 +1325,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   UNIQUE KEY `parlamentarier_nachname_vorname_unique` (`nachname`,`vorname`) COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `parlamentarier_rat_sitzplatz` (`ratstyp`,`sitzplatz`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_partei` (`partei_id`),
-  KEY `beruf_branche_id` (`beruf_interessengruppe_id`)
+  KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
+  KEY `militaerischer_grad` (`militaerischer_grad`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=39 ;
 
 --
@@ -1236,6 +1339,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier`:
+--   `militaerischer_grad`
+--       `mil_grad` -> `id`
 --   `beruf_interessengruppe_id`
 --       `interessengruppe` -> `id`
 --   `partei_id`
@@ -1378,12 +1483,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:41
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
 CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Parlamentariers',
   `datei` varchar(255) NOT NULL COMMENT 'Datei',
   `dateiname` varchar(255) NOT NULL COMMENT 'Dateiname ohne Erweiterung',
@@ -1419,12 +1524,12 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:41
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
 CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `nachname` varchar(100) NOT NULL COMMENT 'Nachname des Parlamentariers',
   `vorname` varchar(50) NOT NULL COMMENT 'Vornahme des Parlamentariers',
   `zweiter_vorname` varchar(50) DEFAULT NULL COMMENT 'Zweiter Vorname des Parlamentariers',
@@ -1439,6 +1544,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   `ratsunterbruch_bis` date DEFAULT NULL COMMENT 'Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch',
   `beruf` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
+  `militaerischer_grad` int(11) DEFAULT NULL COMMENT 'Militärischer Grad, leer (NULL) = kein Militärdienst',
   `geschlecht` enum('M','F') DEFAULT 'M' COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau',
   `geburtstag` date DEFAULT NULL COMMENT 'Geburtstag des Parlamentariers',
   `photo` varchar(255) DEFAULT NULL COMMENT 'Photo des Parlamentariers (JPEG/jpg)',
@@ -1467,8 +1573,9 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   PRIMARY KEY (`log_id`),
   KEY `idx_partei` (`partei_id`),
   KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
+  KEY `militaerischer_grad` (`militaerischer_grad`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=64 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=65 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -1554,12 +1661,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:41
 --
 
 DROP TABLE IF EXISTS `partei_log`;
 CREATE TABLE IF NOT EXISTS `partei_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Parteiabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
   `gruendung` year(4) DEFAULT NULL COMMENT 'Gründungsjahr der Partei',
@@ -1592,7 +1699,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
 --
 -- Tabellenstruktur für Tabelle `snapshot`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:40
 --
 
 DROP TABLE IF EXISTS `snapshot`;
@@ -2094,6 +2201,22 @@ CREATE TABLE IF NOT EXISTS `v_mandat` (
 -- --------------------------------------------------------
 
 --
+-- Stellvertreter-Struktur des Views `v_mil_grad`
+--
+DROP VIEW IF EXISTS `v_mil_grad`;
+CREATE TABLE IF NOT EXISTS `v_mil_grad` (
+`id` int(11)
+,`name` varchar(30)
+,`abkuerzung` varchar(10)
+,`typ` enum('Mannschaft','Unteroffizier','Hoeherer Unteroffizier','Offizier','Hoeherer Stabsoffizier')
+,`created_visa` varchar(10)
+,`created_date` timestamp
+,`updated_visa` varchar(10)
+,`updated_date` timestamp
+);
+-- --------------------------------------------------------
+
+--
 -- Stellvertreter-Struktur des Views `v_organisation`
 --
 DROP VIEW IF EXISTS `v_organisation`;
@@ -2313,6 +2436,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`ratsunterbruch_bis` date
 ,`beruf` varchar(150)
 ,`beruf_interessengruppe_id` int(11)
+,`militaerischer_grad` int(11)
 ,`geschlecht` enum('M','F')
 ,`geburtstag` date
 ,`photo` varchar(255)
@@ -2639,12 +2763,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_log`
 --
--- Erzeugt am: 28. Dez 2013 um 19:51
+-- Erzeugt am: 29. Dez 2013 um 08:41
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
 CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
-  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
+  `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel zu Parlamentarier',
   `nachname` varchar(100) NOT NULL COMMENT 'Nachname des berechtigten Persion',
   `vorname` varchar(50) NOT NULL COMMENT 'Vorname der berechtigten Person',
@@ -2908,6 +3032,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
+-- Struktur des Views `v_mil_grad`
+--
+DROP TABLE IF EXISTS `v_mil_grad`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_mil_grad` AS select `t`.`id` AS `id`,`t`.`name` AS `name`,`t`.`abkuerzung` AS `abkuerzung`,`t`.`typ` AS `typ`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `mil_grad` `t`;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur des Views `v_organisation`
 --
 DROP TABLE IF EXISTS `v_organisation`;
@@ -2984,7 +3117,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_parlamentarier`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`t`.`nachname`,', ',`t`.`vorname`) AS `anzeige_name`,concat(`t`.`vorname`,' ',`t`.`nachname`) AS `name`,`t`.`id` AS `id`,`t`.`nachname` AS `nachname`,`t`.`vorname` AS `vorname`,`t`.`zweiter_vorname` AS `zweiter_vorname`,`t`.`ratstyp` AS `ratstyp`,`t`.`kanton` AS `kanton`,`t`.`partei_id` AS `partei_id`,`t`.`parteifunktion` AS `parteifunktion`,`t`.`fraktionsfunktion` AS `fraktionsfunktion`,`t`.`im_rat_seit` AS `im_rat_seit`,`t`.`im_rat_bis` AS `im_rat_bis`,`t`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`t`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`t`.`beruf` AS `beruf`,`t`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`t`.`geschlecht` AS `geschlecht`,`t`.`geburtstag` AS `geburtstag`,`t`.`photo` AS `photo`,`t`.`photo_dateiname` AS `photo_dateiname`,`t`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`t`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`t`.`photo_mime_type` AS `photo_mime_type`,`t`.`kleinbild` AS `kleinbild`,`t`.`sitzplatz` AS `sitzplatz`,`t`.`email` AS `email`,`t`.`parlament_url` AS `parlament_url`,`t`.`homepage` AS `homepage`,`t`.`ALT_kommission` AS `ALT_kommission`,`t`.`notizen` AS `notizen`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `parlamentarier` `t`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`t`.`nachname`,', ',`t`.`vorname`) AS `anzeige_name`,concat(`t`.`vorname`,' ',`t`.`nachname`) AS `name`,`t`.`id` AS `id`,`t`.`nachname` AS `nachname`,`t`.`vorname` AS `vorname`,`t`.`zweiter_vorname` AS `zweiter_vorname`,`t`.`ratstyp` AS `ratstyp`,`t`.`kanton` AS `kanton`,`t`.`partei_id` AS `partei_id`,`t`.`parteifunktion` AS `parteifunktion`,`t`.`fraktionsfunktion` AS `fraktionsfunktion`,`t`.`im_rat_seit` AS `im_rat_seit`,`t`.`im_rat_bis` AS `im_rat_bis`,`t`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`t`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`t`.`beruf` AS `beruf`,`t`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`t`.`militaerischer_grad` AS `militaerischer_grad`,`t`.`geschlecht` AS `geschlecht`,`t`.`geburtstag` AS `geburtstag`,`t`.`photo` AS `photo`,`t`.`photo_dateiname` AS `photo_dateiname`,`t`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`t`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`t`.`photo_mime_type` AS `photo_mime_type`,`t`.`kleinbild` AS `kleinbild`,`t`.`sitzplatz` AS `sitzplatz`,`t`.`email` AS `email`,`t`.`parlament_url` AS `parlament_url`,`t`.`homepage` AS `homepage`,`t`.`ALT_kommission` AS `ALT_kommission`,`t`.`notizen` AS `notizen`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `parlamentarier` `t`;
 
 -- --------------------------------------------------------
 
@@ -3156,6 +3289,12 @@ ALTER TABLE `mandat_log`
   ADD CONSTRAINT `fk_mandat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
+-- Constraints der Tabelle `mil_grad_log`
+--
+ALTER TABLE `mil_grad_log`
+  ADD CONSTRAINT `fk_mil_grad_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
 -- Constraints der Tabelle `organisation`
 --
 ALTER TABLE `organisation`
@@ -3185,6 +3324,7 @@ ALTER TABLE `organisation_log`
 -- Constraints der Tabelle `parlamentarier`
 --
 ALTER TABLE `parlamentarier`
+  ADD CONSTRAINT `fk_mil_grad` FOREIGN KEY (`militaerischer_grad`) REFERENCES `mil_grad` (`id`),
   ADD CONSTRAINT `fk_beruf_interessengruppe_id` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
   ADD CONSTRAINT `fk_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`);
 
