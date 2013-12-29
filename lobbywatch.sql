@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 29. Dez 2013 um 09:59
+-- Erstellungszeit: 29. Dez 2013 um 19:22
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -155,7 +155,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche`
 --
--- Erzeugt am: 28. Dez 2013 um 08:13
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `branche`;
@@ -233,7 +233,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:40
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `branche_log`;
@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
   PRIMARY KEY (`log_id`),
   KEY `kommission_id` (`kommission_id`),
   KEY `fk_branche_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=19 ;
 
 --
 -- RELATIONEN DER TABELLE `branche_log`:
@@ -271,7 +271,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 28. Dez 2013 um 13:19
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
@@ -359,7 +359,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:40
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
@@ -392,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbyorg` (`organisation_id`),
   KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=512 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=321 ;
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung_log`:
@@ -405,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
 --
 -- Tabellenstruktur für Tabelle `interessengruppe`
 --
--- Erzeugt am: 28. Dez 2013 um 08:23
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `interessengruppe`;
@@ -482,7 +482,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessengruppe_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:40
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
@@ -506,7 +506,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
   PRIMARY KEY (`log_id`),
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `fk_interessengruppe_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=10 ;
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe_log`:
@@ -519,7 +519,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
 --
 -- Tabellenstruktur für Tabelle `in_kommission`
 --
--- Erzeugt am: 28. Dez 2013 um 15:21
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `in_kommission`;
@@ -601,7 +601,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `in_kommission_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:41
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `in_kommission_log`;
@@ -628,7 +628,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `kommissions_id` (`kommission_id`),
   KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=128 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=110 ;
 
 --
 -- RELATIONEN DER TABELLE `in_kommission_log`:
@@ -641,7 +641,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
--- Erzeugt am: 28. Dez 2013 um 16:01
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `kommission`;
@@ -724,7 +724,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:41
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
@@ -752,7 +752,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
   PRIMARY KEY (`log_id`),
   KEY `zugehoerige_kommission` (`mutter_kommission_id`),
   KEY `fk_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=28 ;
 
 --
 -- RELATIONEN DER TABELLE `kommission_log`:
@@ -765,7 +765,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 28. Dez 2013 um 18:36
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `mandat`;
@@ -851,7 +851,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mandat_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:41
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `mandat_log`;
@@ -895,7 +895,7 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
 --
 -- Tabellenstruktur für Tabelle `mil_grad`
 --
--- Erzeugt am: 29. Dez 2013 um 08:25
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `mil_grad`;
@@ -963,7 +963,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mil_grad_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:41
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `mil_grad_log`;
@@ -996,7 +996,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 28. Dez 2013 um 16:12
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1110,7 +1110,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung`
 --
--- Erzeugt am: 28. Dez 2013 um 15:23
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung`;
@@ -1192,7 +1192,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:41
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
@@ -1219,7 +1219,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
   KEY `organisation_id` (`organisation_id`),
   KEY `ziel_organisation_id` (`ziel_organisation_id`),
   KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=6 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung_log`:
@@ -1232,7 +1232,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:41
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1267,7 +1267,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `idx_lobbygroup` (`interessengruppe_id`),
   KEY `fk_organisation_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=512 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=346 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_log`:
@@ -1280,7 +1280,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 29. Dez 2013 um 08:38
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -1339,10 +1339,10 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier`:
---   `militaerischer_grad`
---       `mil_grad` -> `id`
 --   `beruf_interessengruppe_id`
 --       `interessengruppe` -> `id`
+--   `militaerischer_grad`
+--       `mil_grad` -> `id`
 --   `partei_id`
 --       `partei` -> `id`
 --
@@ -1397,7 +1397,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang`
 --
--- Erzeugt am: 28. Dez 2013 um 08:23
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang`;
@@ -1483,7 +1483,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:41
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
@@ -1524,7 +1524,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:41
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -1588,7 +1588,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
--- Erzeugt am: 28. Dez 2013 um 16:32
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `partei`;
@@ -1661,7 +1661,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:41
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `partei_log`;
@@ -1686,7 +1686,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_partei_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=9 ;
 
 --
 -- RELATIONEN DER TABELLE `partei_log`:
@@ -1699,7 +1699,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
 --
 -- Tabellenstruktur für Tabelle `snapshot`
 --
--- Erzeugt am: 29. Dez 2013 um 08:40
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `snapshot`;
@@ -1712,14 +1712,14 @@ CREATE TABLE IF NOT EXISTS `snapshot` (
   `updated_visa` varchar(10) NOT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Lobbywatch snapshots' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Lobbycontrol snapshots' AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `user`
 --
--- Erzeugt am: 02. Dez 2013 um 09:27
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `user`;
@@ -1735,7 +1735,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 -- Tabellenstruktur für Tabelle `user_permission`
 --
--- Erzeugt am: 02. Dez 2013 um 09:27
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `user_permission`;
@@ -2673,7 +2673,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mit_mandaten_indirekt` (
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung`
 --
--- Erzeugt am: 28. Dez 2013 um 17:14
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung`;
@@ -2763,7 +2763,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_log`
 --
--- Erzeugt am: 29. Dez 2013 um 08:41
+-- Erzeugt am: 29. Dez 2013 um 09:06
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
@@ -2796,7 +2796,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
   KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`),
   KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=64 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=62 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_log`:
@@ -3324,8 +3324,8 @@ ALTER TABLE `organisation_log`
 -- Constraints der Tabelle `parlamentarier`
 --
 ALTER TABLE `parlamentarier`
-  ADD CONSTRAINT `fk_mil_grad` FOREIGN KEY (`militaerischer_grad`) REFERENCES `mil_grad` (`id`),
   ADD CONSTRAINT `fk_beruf_interessengruppe_id` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
+  ADD CONSTRAINT `fk_mil_grad` FOREIGN KEY (`militaerischer_grad`) REFERENCES `mil_grad` (`id`),
   ADD CONSTRAINT `fk_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`);
 
 --
