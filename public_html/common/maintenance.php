@@ -4,7 +4,7 @@
 <!DOCTYPE html >
 <html>
 <head>
-<title>LobbyControl in Wartung</title>
+<title>Lobbywatch in Wartung</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="favicon.png" type="image/png" />
 <style></style>

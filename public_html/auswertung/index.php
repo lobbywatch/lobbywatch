@@ -5,7 +5,7 @@
 <!DOCTYPE html >
 <html>
 <head>
-<title>LobbyControl</title>
+<title>Lobbywatch</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="favicon.png" type="image/png" />
 <link href='http://fonts.googleapis.com/css?family=Amethysta'
@@ -339,7 +339,7 @@
                               });
                       return false;
                     });
-            //$('body').append("<div id='footer'>&copy;LobbyControl Otto Hostettler, Andreas Lutz 2012</div>");
+            //$('body').append("<div id='footer'>&copy;Lobbywatch Otto Hostettler, Andreas Lutz 2012</div>");
             //Fenster Sitzordnungen NR und SR
 
             $('.auswahl ,.auswahlsr').live('mouseover', function(e) {
@@ -945,6 +945,6 @@ table td {
     </table>
     <button id='reload'>Neue Abfrage</button>
   </div>
-  <!--<div id="footer">&copy;LobbyControl Otto Hostettler, Andreas Lutz 2012</div>-->
+  <!--<div id="footer">&copy;Lobbywatch Otto Hostettler, Andreas Lutz 2012</div>-->
 </body>
 </html>

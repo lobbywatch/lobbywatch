@@ -7,7 +7,7 @@ require_once "../../common/settings.php";
 // phpinfo();
 /**
  * *****************************************************************************************************************************************************************
- * /*Adminpage From LobbyControl
+ * /*Adminpage From Lobbywatch
  * /*
  * /*
  * /*
@@ -1189,8 +1189,8 @@ if (isset ( $_GET ['optionen'] ) and $_GET ['optionen'] != 'alle') {
  * *******************************************************************************************
  */
 if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'statistik') {
-  $html = "<div id='statistik'><h3>Statistisches Interface von LobbyControl </h3>";
-  $html .= "Das statistische Interface von LobbyControl sieht eine Vielzahl von Abfragem&ouml;glichkeiten f&uuml;r die journalistische Recherche oder rein informativen Charakters vor.";
+  $html = "<div id='statistik'><h3>Statistisches Interface von Lobbywatch </h3>";
+  $html .= "Das statistische Interface von Lobbywatch sieht eine Vielzahl von Abfragem&ouml;glichkeiten f&uuml;r die journalistische Recherche oder rein informativen Charakters vor.";
   // $html .="<h4>Sicht der Parlamentarier</h4>";
   $html .= "<table border='1' width='60%'>";
   $html .= "<tr><th colspan='4'>Parlamentarier</th></tr>";
@@ -1268,7 +1268,7 @@ if (isset ( $_GET ['abfid'] )) {
 
 /**
  * *****************************************************************************************************
- * Konzept LobbyControl: Datengrundlagen etc.
+ * Konzept Lobbywatch: Datengrundlagen etc.
  * ******************************************************************************************************
  */
 if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'konzept') {
@@ -1284,11 +1284,11 @@ if (isset ( $_GET ['datatyp'] ) and $_GET ['datatyp'] == 'konzept') {
   $html .= " Sie sind schwierig zu erheben und verlangen weitergehende Recherchen. Der gr&ouml;sste Teil davon sind im <b>Handelsregister</b> zu finden (z.B. teledata.ch), allerdings nur, wenn ein Handelsregistereintrag existiert. Verschiedene Organisationen (vor allem Vereine, Einzelfirmen etc.) haben keinen Handelsregistereintrag.<br>";
   $html .= "Eine weitere Datenquelle erschliesst sich aus dem <b>Zulassungssystem</b>, bestehend aus einer Liste von Personen, welche <b>Zutritt ins Parlamentsgeb&auml;ude</b> haben. Jeder Parlamentarier kann zwei Personen das Recht dazu geben. Das im Volksmund ('G&ouml;tti'-System) genannte Zulassungsverfahren wird jeden Monat neu erstellt.";
   $html .= "Aus dieser Liste ergeben sich ebenfalls aufschlussreiche Informationen, wer sich in der 'Lobby' des Parlaments frei bewegen kann.<br>Eine N&auml;here Analyse zeigt, dass das 'G&ouml;ttisystem' auch dazu verwendet wird, einzelnen Organisationsvertretern einen <b>Mehrfachstatus</b> an Zutritten zu verschaffen, welche mit den Interessenbindungen der einzelnen Ratsmitgliedern nichts zu tun haben.<br>";
-  $html .= "Eine weitere interessante Datenquelle ist die Organisation selbst, welche in den meisten F&auml;llen eine Webadresse hat. Auch diese Datenquelle wird von LobbyControl ausgewertet.";
+  $html .= "Eine weitere interessante Datenquelle ist die Organisation selbst, welche in den meisten F&auml;llen eine Webadresse hat. Auch diese Datenquelle wird von Lobbywatch ausgewertet.";
   $html .= "<h3>Von der Interessenbindung zur Lobbyorganisation</h3>";
   $html .= "Die Interessenbindung eines Ratsmitglieds zu einer bestimmten Organisation bedeutet f&uuml;r diese Organisation noch lange nicht, dass sie in der &ouml;ffentlichen Meinungsbildung einen <b>besonders bedeutsamen</b> Status erh&auml;lt. H&auml;ufig sind solche Interessenbindungen rein individuelle Vorlieben einzelner Parlamentarier, ohne jegliche Absicht, damit die Schweiz  nachhaltig zu ver&auml;ndern.<br> Viele Interessenbindungen sind also eher 'diffuse' Solidarit&auml;tsbekundungen von Parlamentariern, welche damit die Aufmerksamkeit f&uuml;r die  vertretene Organisation etwas erh&ouml;hen<br>";
 
-  $html .= "LobbyControl beurteilt jede Interessenverbindung nach einem transparenten, nachvollziehbaren Schema:";
+  $html .= "Lobbywatch beurteilt jede Interessenverbindung nach einem transparenten, nachvollziehbaren Schema:";
   $html .= "<ol><li>Der M&auml;chtigkeit im Meinungsbildungsprozess</li><li>Der Beziehungsdichte im Parlament</li></ol>";
   $html .= "Daraus ergibt sich die <b>Bedeutung</b> der jeweiligen Organisation.";
 

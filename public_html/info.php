@@ -5,7 +5,7 @@ require_once 'common/utils.php';
 <!DOCTYPE html >
 <html>
 <head>
-<title>LobbyControl <?php print "$env";?></title>
+<title>Lobbywatch <?php print "$env";?></title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <link rel="shortcut icon" href="favicon.png" type="image/png" />
 <style></style>
