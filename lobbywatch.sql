@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 30. Dez 2013 um 06:21
+-- Erstellungszeit: 30. Dez 2013 um 07:30
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -233,7 +233,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:14
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `branche_log`;
@@ -359,7 +359,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:14
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
@@ -482,7 +482,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessengruppe_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:14
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
@@ -601,7 +601,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `in_kommission_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:14
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `in_kommission_log`;
@@ -724,7 +724,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:14
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
@@ -851,7 +851,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mandat_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:14
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `mandat_log`;
@@ -965,7 +965,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mil_grad_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:15
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `mil_grad_log`;
@@ -975,7 +975,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
   `abkuerzung` varchar(10) NOT NULL COMMENT 'Abkürzung des militärischen Grades',
   `typ` enum('Mannschaft','Unteroffizier','Hoeherer Unteroffizier','Offizier','Hoeherer Stabsoffizier') NOT NULL COMMENT 'Stufe des militärischen Grades',
   `ranghoehe` int(11) NOT NULL COMMENT 'Ranghöhe des Grades',
-  `anzeigestufe` int(11) NOT NULL COMMENT 'Anzeigestufe, je höher desto selektiver, >=0 = alle werden angezeigt',
+  `anzeigestufe` int(11) NOT NULL COMMENT 'Anzeigestufe, je höher desto selektiver, >=0 = alle werden angezeigt, >0 = Standardanzeige',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
@@ -1196,7 +1196,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:15
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
@@ -1236,7 +1236,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:14
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1487,7 +1487,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:15
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
@@ -1528,7 +1528,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:15
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -1665,7 +1665,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:15
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `partei_log`;
@@ -1703,7 +1703,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
 --
 -- Tabellenstruktur für Tabelle `snapshot`
 --
--- Erzeugt am: 30. Dez 2013 um 05:14
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `snapshot`;
@@ -2769,7 +2769,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_log`
 --
--- Erzeugt am: 30. Dez 2013 um 05:15
+-- Erzeugt am: 30. Dez 2013 um 05:51
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
