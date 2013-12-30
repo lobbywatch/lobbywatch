@@ -75,6 +75,7 @@
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -474,6 +475,7 @@
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -615,6 +617,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -1184,6 +1187,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -1723,6 +1727,7 @@
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -2009,6 +2014,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -2084,6 +2090,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -2708,6 +2715,7 @@
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -2822,6 +2830,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -2924,6 +2933,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -3252,6 +3262,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -3327,6 +3338,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -4054,6 +4066,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -4244,6 +4257,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -4425,6 +4439,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -4618,6 +4633,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -5464,6 +5480,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -5532,6 +5549,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -5616,6 +5634,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -5690,6 +5709,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -6570,6 +6590,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -6625,6 +6646,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -6685,6 +6707,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -6945,6 +6968,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -7013,6 +7037,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -7097,6 +7122,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -7171,6 +7197,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -7960,6 +7987,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -8036,6 +8064,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -8108,6 +8137,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -8396,6 +8426,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -8473,6 +8504,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -8545,6 +8577,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -9359,6 +9392,7 @@
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -9497,6 +9531,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -9558,6 +9593,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -9980,6 +10016,7 @@
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -10075,6 +10112,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -10259,6 +10297,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -10320,6 +10359,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -10747,6 +10787,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -10910,6 +10951,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -11395,6 +11437,7 @@
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -11651,6 +11694,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -11726,6 +11770,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -12210,6 +12255,7 @@
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -12322,6 +12368,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -12627,6 +12674,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -12702,6 +12750,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -13246,6 +13295,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -13473,6 +13523,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -14258,6 +14309,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -14326,6 +14378,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -15243,6 +15296,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -15298,6 +15352,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -15521,6 +15576,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -15589,6 +15645,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -16408,6 +16465,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -16484,6 +16542,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -16775,6 +16834,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -16852,6 +16912,7 @@
             $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -17706,6 +17767,7 @@
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -17717,7 +17779,7 @@
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung', 'partei_id_abkuerzung', 'partei_id_abkuerzung_v_partei'), 'partei_id_abkuerzung_v_partei');
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'interessengruppe', new IntegerField('id', null, null, true), new StringField('name', 'beruf_interessengruppe_id_name', 'beruf_interessengruppe_id_name_interessengruppe'), 'beruf_interessengruppe_id_name_interessengruppe');
-            $this->dataset->AddLookupField('militaerischer_grad', 'mil_grad', new IntegerField('id', null, null, true), new StringField('name', 'militaerischer_grad_name', 'militaerischer_grad_name_mil_grad'), 'militaerischer_grad_name_mil_grad');
+            $this->dataset->AddLookupField('militaerischer_grad', 'v_mil_grad', new IntegerField('id'), new StringField('name', 'militaerischer_grad_name', 'militaerischer_grad_name_v_mil_grad'), 'militaerischer_grad_name_v_mil_grad');
         }
     
         protected function CreatePageNavigator()
@@ -17834,6 +17896,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -17875,6 +17938,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -17889,10 +17953,10 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`mil_grad`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_mil_grad`');
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -17902,7 +17966,14 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('ranghoehe');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzeigestufe');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -18305,6 +18376,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -18357,6 +18429,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -18661,6 +18734,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -18709,6 +18783,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -18747,10 +18822,10 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`mil_grad`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_mil_grad`');
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -18760,7 +18835,14 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('ranghoehe');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzeigestufe');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -18770,6 +18852,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
                 'Militaerischer Grad', 
                 'militaerischer_grad', 
@@ -18788,10 +18871,10 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`mil_grad`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_mil_grad`');
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -18801,7 +18884,14 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('ranghoehe');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzeigestufe');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -18811,6 +18901,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
                 'Militaerischer Grad', 
                 'militaerischer_grad', 
@@ -19725,6 +19816,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -19845,6 +19937,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -19871,10 +19964,10 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`mil_grad`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_mil_grad`');
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -19884,7 +19977,14 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('ranghoehe');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzeigestufe');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -19894,6 +19994,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
                 'Militaerischer Grad', 
                 'militaerischer_grad', 
@@ -20217,6 +20318,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -20338,6 +20440,7 @@
             $field = new DateTimeField('freigabe_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -20364,10 +20467,10 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`mil_grad`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_mil_grad`');
+            $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -20377,7 +20480,14 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('ranghoehe');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzeigestufe');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
@@ -20387,6 +20497,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
                 'Militaerischer Grad', 
                 'militaerischer_grad', 

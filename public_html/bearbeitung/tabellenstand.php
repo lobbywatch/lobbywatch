@@ -348,7 +348,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%table_name%.php?order=dupdated_date' , '');
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription($this->RenderText('Name der Tabelle'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -381,7 +381,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription($this->RenderText('Technischer Tabellenname in der Datenbank'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -389,6 +389,7 @@
             // View column for anzahl_eintraege field
             //
             $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
+            $grid->SetTotal($column, PredefinedAggregate::$Sum);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -414,7 +415,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription($this->RenderText('Anzahl Einträge in der Tabelle'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -448,7 +449,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription($this->RenderText('Zuletzt abgeändert am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -481,7 +482,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription($this->RenderText('Zuletzt abgeändert von'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -514,7 +515,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription($this->RenderText('ID des zuletzt abgeänderten Eintrages'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }

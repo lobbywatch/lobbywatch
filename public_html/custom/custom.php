@@ -121,7 +121,7 @@ function add_custom_header(&$page, &$result) {
 
 $result = <<<'EOD'
   <meta name="Generator" content="PHP Generator for MySQL (http://sqlmaestro.com)" />
-  <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+  <link rel="shortcut icon" href="favicon.png" type="image/png" />
 EOD;
 $result .= <<<EOD
   <link rel="alternate" type="application/rss+xml" title="{$page->GetCaption()} Update RSS" href="{$page->GetRssLink()}" />

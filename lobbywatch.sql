@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 29. Dez 2013 um 19:31
+-- Erstellungszeit: 30. Dez 2013 um 06:21
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -155,7 +155,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:28
 --
 
 DROP TABLE IF EXISTS `branche`;
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `branche` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
@@ -233,7 +233,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:14
 --
 
 DROP TABLE IF EXISTS `branche_log`;
@@ -246,7 +246,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
   PRIMARY KEY (`log_id`),
   KEY `kommission_id` (`kommission_id`),
   KEY `fk_branche_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=32 ;
 
 --
 -- RELATIONEN DER TABELLE `branche_log`:
@@ -271,7 +271,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:28
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
@@ -291,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
@@ -359,7 +359,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:14
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
@@ -379,7 +379,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -392,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbyorg` (`organisation_id`),
   KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=321 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=512 ;
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung_log`:
@@ -405,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
 --
 -- Tabellenstruktur für Tabelle `interessengruppe`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:28
 --
 
 DROP TABLE IF EXISTS `interessengruppe`;
@@ -417,7 +417,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
@@ -482,7 +482,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessengruppe_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:14
 --
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
@@ -494,7 +494,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -506,7 +506,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
   PRIMARY KEY (`log_id`),
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `fk_interessengruppe_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=16 ;
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe_log`:
@@ -519,7 +519,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
 --
 -- Tabellenstruktur für Tabelle `in_kommission`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:28
 --
 
 DROP TABLE IF EXISTS `in_kommission`;
@@ -533,7 +533,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
@@ -601,7 +601,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `in_kommission_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:14
 --
 
 DROP TABLE IF EXISTS `in_kommission_log`;
@@ -615,7 +615,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -628,7 +628,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `kommissions_id` (`kommission_id`),
   KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=110 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=128 ;
 
 --
 -- RELATIONEN DER TABELLE `in_kommission_log`:
@@ -641,7 +641,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:28
 --
 
 DROP TABLE IF EXISTS `kommission`;
@@ -657,7 +657,7 @@ CREATE TABLE IF NOT EXISTS `kommission` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
@@ -724,7 +724,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:14
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
@@ -740,7 +740,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -752,7 +752,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
   PRIMARY KEY (`log_id`),
   KEY `zugehoerige_kommission` (`mutter_kommission_id`),
   KEY `fk_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=32 ;
 
 --
 -- RELATIONEN DER TABELLE `kommission_log`:
@@ -765,7 +765,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:29
 --
 
 DROP TABLE IF EXISTS `mandat`;
@@ -783,7 +783,7 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
@@ -851,7 +851,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mandat_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:14
 --
 
 DROP TABLE IF EXISTS `mandat_log`;
@@ -869,7 +869,7 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -895,7 +895,7 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
 --
 -- Tabellenstruktur für Tabelle `mil_grad`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:16
 --
 
 DROP TABLE IF EXISTS `mil_grad`;
@@ -904,7 +904,9 @@ CREATE TABLE IF NOT EXISTS `mil_grad` (
   `name` varchar(30) NOT NULL COMMENT 'Name des militärischen Grades',
   `abkuerzung` varchar(10) NOT NULL COMMENT 'Abkürzung des militärischen Grades',
   `typ` enum('Mannschaft','Unteroffizier','Hoeherer Unteroffizier','Offizier','Hoeherer Stabsoffizier') NOT NULL COMMENT 'Stufe des militärischen Grades',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `ranghoehe` int(11) NOT NULL COMMENT 'Ranghöhe des Grades',
+  `anzeigestufe` int(11) NOT NULL COMMENT 'Anzeigestufe, je höher desto selektiver, >=0 = alle werden angezeigt, >0 = Standardanzeige',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
@@ -963,7 +965,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mil_grad_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:15
 --
 
 DROP TABLE IF EXISTS `mil_grad_log`;
@@ -972,7 +974,9 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
   `name` varchar(30) NOT NULL COMMENT 'Name des militärischen Grades',
   `abkuerzung` varchar(10) NOT NULL COMMENT 'Abkürzung des militärischen Grades',
   `typ` enum('Mannschaft','Unteroffizier','Hoeherer Unteroffizier','Offizier','Hoeherer Stabsoffizier') NOT NULL COMMENT 'Stufe des militärischen Grades',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `ranghoehe` int(11) NOT NULL COMMENT 'Ranghöhe des Grades',
+  `anzeigestufe` int(11) NOT NULL COMMENT 'Anzeigestufe, je höher desto selektiver, >=0 = alle werden angezeigt',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -996,7 +1000,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:29
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1018,7 +1022,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
@@ -1110,7 +1114,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:29
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung`;
@@ -1124,7 +1128,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
@@ -1192,7 +1196,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:15
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
@@ -1206,7 +1210,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -1219,7 +1223,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
   KEY `organisation_id` (`organisation_id`),
   KEY `ziel_organisation_id` (`ziel_organisation_id`),
   KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=8 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung_log`:
@@ -1232,7 +1236,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:14
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1254,7 +1258,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -1267,7 +1271,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `idx_lobbygroup` (`interessengruppe_id`),
   KEY `fk_organisation_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=346 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=512 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_log`:
@@ -1280,7 +1284,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:29
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -1317,7 +1321,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
@@ -1397,7 +1401,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:29
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang`;
@@ -1413,7 +1417,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
   `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Anhangs',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
@@ -1483,7 +1487,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:15
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
@@ -1499,7 +1503,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
   `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Anhangs',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -1524,7 +1528,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:15
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -1561,7 +1565,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -1575,7 +1579,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
   KEY `militaerischer_grad` (`militaerischer_grad`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=65 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=64 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -1588,7 +1592,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:29
 --
 
 DROP TABLE IF EXISTS `partei`;
@@ -1602,7 +1606,7 @@ CREATE TABLE IF NOT EXISTS `partei` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
@@ -1661,7 +1665,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:15
 --
 
 DROP TABLE IF EXISTS `partei_log`;
@@ -1675,7 +1679,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -1686,7 +1690,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_partei_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=16 ;
 
 --
 -- RELATIONEN DER TABELLE `partei_log`:
@@ -1699,7 +1703,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
 --
 -- Tabellenstruktur für Tabelle `snapshot`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:14
 --
 
 DROP TABLE IF EXISTS `snapshot`;
@@ -1712,7 +1716,7 @@ CREATE TABLE IF NOT EXISTS `snapshot` (
   `updated_visa` varchar(10) NOT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Lobbycontrol snapshots' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Lobbywatch snapshots' AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -2209,6 +2213,8 @@ CREATE TABLE IF NOT EXISTS `v_mil_grad` (
 ,`name` varchar(30)
 ,`abkuerzung` varchar(10)
 ,`typ` enum('Mannschaft','Unteroffizier','Hoeherer Unteroffizier','Offizier','Hoeherer Stabsoffizier')
+,`ranghoehe` int(11)
+,`anzeigestufe` int(11)
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
 ,`updated_visa` varchar(10)
@@ -2673,7 +2679,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mit_mandaten_indirekt` (
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 04:29
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung`;
@@ -2692,7 +2698,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `ALT_lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Wird später entfernt. Fremschlüssel zur Lobbyorganisation',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
@@ -2763,7 +2769,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_log`
 --
--- Erzeugt am: 29. Dez 2013 um 09:06
+-- Erzeugt am: 30. Dez 2013 um 05:15
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
@@ -2782,7 +2788,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
   `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `ALT_lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Wird später entfernt. Fremschlüssel zur Lobbyorganisation',
-  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Erstellt von',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -2796,7 +2802,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
   KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`),
   KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=64 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_log`:
@@ -3036,7 +3042,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_mil_grad`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_mil_grad` AS select `t`.`id` AS `id`,`t`.`name` AS `name`,`t`.`abkuerzung` AS `abkuerzung`,`t`.`typ` AS `typ`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `mil_grad` `t`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_mil_grad` AS select `t`.`id` AS `id`,`t`.`name` AS `name`,`t`.`abkuerzung` AS `abkuerzung`,`t`.`typ` AS `typ`,`t`.`ranghoehe` AS `ranghoehe`,`t`.`anzeigestufe` AS `anzeigestufe`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `mil_grad` `t` order by `t`.`ranghoehe`;
 
 -- --------------------------------------------------------
 

@@ -264,6 +264,21 @@ ALTER TABLE `partei` CHANGE `freigabe_von` `freigabe_visa` ENUM( 'otto', 'rebecc
 
 ALTER TABLE `zugangsberechtigung` CHANGE `freigabe_von` `freigabe_visa` ENUM( 'otto', 'rebecca', 'thomas', 'bane', 'roland' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)';
 
+-- created_visa NN
+ALTER TABLE `branche` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `interessenbindung` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `interessengruppe` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `in_kommission` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `kommission` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `mandat` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `organisation` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `organisation_beziehung` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `parlamentarier` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `parlamentarier_anhang` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `partei` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `zutrittsberechtigung` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+ALTER TABLE `mil_grad` CHANGE `created_visa` `created_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Datensatz erstellt von';
+
 -- von bis
 
 ALTER TABLE `interessenbindung` ADD `von` DATE NULL DEFAULT NULL COMMENT 'Beginn' AFTER `beschreibung` ,
