@@ -6,7 +6,7 @@
 <head>
 <title>Lobbywatch in Wartung</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<link rel="shortcut icon" href="favicon.png" type="image/png" />
+<link rel="shortcut icon" href="/favicon.png" type="image/png" />
 <style></style>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

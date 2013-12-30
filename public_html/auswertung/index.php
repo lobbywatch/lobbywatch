@@ -7,7 +7,7 @@
 <head>
 <title>Lobbywatch</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-<link rel="shortcut icon" href="favicon.png" type="image/png" />
+<link rel="shortcut icon" href="/favicon.png" type="image/png" />
 <link href='http://fonts.googleapis.com/css?family=Amethysta'
   rel='stylesheet' type='text/css'>
 <link
