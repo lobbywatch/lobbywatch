@@ -23,8 +23,10 @@
   <p><b>Wartungsarbeiten werden an Lobbywatch vorgenommen.</b></p>
   <p><b>Lobbywatch steht deshalb nicht zur Verfügung.</b></p>
   <p>
+    <a href="/">Startseite</a><br>
     <a href="/wiki">Wiki</a><br/>
+    <a href="/sites/lobbywatch.ch/app<?php print "$env_dir";?>lobbywatch_datenmodell_1page.pdf">Datenmodell (PDF)</a><br/>
   </p>
-  <footer><p>Build date: <?php print $build_date;?></p></footer>
+  <footer><p>Version: <?php print $version;?> / Deploy date: <?php print $deploy_date;?> / Build date: <?php print $build_date;?></p></footer>
   </body>
 </html>
