@@ -261,8 +261,8 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
-            $column->SetDescription($this->RenderText(''));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
+            $column->SetDescription($this->RenderText('E-Mail-Adresse. Ein Klick auf den Text öffnet das E-Mail-Programm mit einem unformtierten E-Mail. Ein formatiertes E-Mail kann vom Feld "Email Text HTML" kopiert werden. Bei diesem Feld auf "mehr" klicken.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -296,7 +296,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
-            $column->SetDescription($this->RenderText(''));
+            $column->SetDescription($this->RenderText('Formatiertes E-Mail zum Kopieren. Klick auf "mehr" zeigt das formatierte E-Mail. Ein Klick auf den Text öffnet das E-Mail-Programm mit einem unformtierten E-Mail.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
@@ -327,7 +327,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -629,7 +629,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -674,7 +674,7 @@
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -696,8 +696,14 @@
         protected function DoGetGridHeader()
         {
             return '<div class="wiki-table-help">
-        <p>E-Mail-Vorlagen für Autorisierungs-E-Mails an Parlamentarier.</p>
-        <p>Zur Autorisierung, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Autorisierung&structure=Lobbywatch-Wiki" target="_blank">Wiki Autorisierung</a>.</p>
+    <p>E-Mail-Vorlagen für Autorisierungs-E-Mails an Parlamentarier.
+    </p>
+    
+    <p>Zur Autorisierung, siehe <a class="wiki" href="/wiki/tiki-index.php?page=Autorisierung" rel="_blank ">Wiki Autorisierung</a>.
+    </p>
+    
+    <p>Via E-Mail-Link können im E-Mail-Programm nur unformatierte E-Mail geladen werden. Formatierte E-Mails können von der Spalte "Email Text HTML" kopiert werden. Dort auf "mehr" klicken und den Text kopieren.
+    </p>
     </div>';
         }
     }
