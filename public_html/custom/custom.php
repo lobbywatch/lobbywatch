@@ -199,11 +199,11 @@ function parlamentarier_check_imRatBis($page, &$rowData, &$cancel, &$message, $t
   $imRatSeit = $rowData['im_rat_seit'];
   $imRatBis = $rowData['im_rat_bis'];
 
-//     df($imRatBis);
-//    df($imRatBis === null);
-//    df($imRatBis === '');
-//   df($imRatBis->GetTimestamp());
-//   df($imRatBis->GetDateTime());
+// df($imRatBis);
+// df($imRatBis === null);
+// df($imRatBis === '');
+// df($imRatBis->GetTimestamp());
+// df($imRatBis->GetDateTime());
   if ($imRatBis !== null && $imRatBis->GetTimestamp() > SMDateTime::Now()->GetTimestamp()) {
     $cancel = true;
     $message = '"Im Rat bis"-Datum darf nicht in der Zukunft liegen: ' . $imRatBis->ToString('d.m.Y');
@@ -217,11 +217,11 @@ function parlamentarier_check_imRatBis($page, &$rowData, &$cancel, &$message, $t
 
 function check_bis_date($page, &$rowData, &$cancel, &$message, $tableName)
 {
-  // df($rowData);
+// df($rowData);
   $bis = $rowData['von'];
   $bis = $rowData['bis'];
-//   df($bis);
-//   df($bis->GetTimestamp());
+// df($bis);
+// df($bis->GetTimestamp());
   if ($bis !== null && $bis->GetTimestamp() > SMDateTime::Now()->GetTimestamp()) {
     $cancel = true;
     $message = 'Bis-Datum darf nicht in der Zukunft liegen: ' . $bis->ToString('d.m.Y');
@@ -230,6 +230,18 @@ function check_bis_date($page, &$rowData, &$cancel, &$message, $tableName)
     $cancel = true;
     $message = 'Bis-Datum darf nicht kleiner als Von-Datum sein: ' . $bis->ToString('d.m.Y');
   }
+}
+
+function clean_fields($page, &$rowData, &$cancel, &$message, $tableName)
+{
+//   df($rowData);
+  foreach($rowData as $name => &$value) {
+    if (is_string($value)) {
+      $value = trim($value);
+    }
+  }
+  unset($value);
+//   df($rowData);
 }
 
 

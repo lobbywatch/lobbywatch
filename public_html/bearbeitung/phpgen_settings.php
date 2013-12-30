@@ -106,6 +106,8 @@ $datetime = $page->GetEnvVar('CURRENT_DATETIME');
 //$rowData['created_date'] = $datetime;
 $rowData['updated_visa'] = $userName;
 $rowData['updated_date'] = $datetime;
+
+clean_fields($page, $rowData, $cancel, $message, $tableName);
 }
 
 function Global_BeforeDeleteHandler($page, &$rowData, &$cancel, &$message, $tableName)
@@ -138,6 +140,8 @@ $rowData['created_date'] = $datetime;
 
 $rowData['updated_visa'] = $userName;
 $rowData['updated_date'] = $datetime;
+
+clean_fields($page, $rowData, $cancel, $message, $tableName);
 }
 
 function GetDefaultDateFormat()
