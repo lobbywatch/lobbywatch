@@ -1,8 +1,16 @@
 -- Clean trailing whitespace
 
-UPDATE `zugangsberechtigung` SET `nachname`=TRIM(`nachname`),`vorname`=TRIM(`vorname`);
+UPDATE `zutrittsberechtigung` SET `nachname`=TRIM(`nachname`),`vorname`=TRIM(`vorname`);
 
 UPDATE `parlamentarier` SET `nachname`=TRIM(`nachname`),`vorname`=TRIM(`vorname`);
+
+UPDATE `organisation` SET `name_de`=TRIM(`name_de`);
+
+UPDATE `interessenbindung` SET `beschreibung`=TRIM(`beschreibung`);
+
+UPDATE `interessengruppe` SET `name`=TRIM(`name`),`beschreibung`=TRIM(`beschreibung`);
+
+UPDATE `branche` SET `name`=TRIM(`name`);
 
 -- DML
 
