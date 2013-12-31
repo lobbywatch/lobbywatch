@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 31. Dez 2013 um 10:11
+-- Erstellungszeit: 31. Dez 2013 um 11:37
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -1732,14 +1732,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `name` varchar(10) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator users' AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator users' AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `user_permission`
 --
--- Erzeugt am: 31. Dez 2013 um 09:05
+-- Erzeugt am: 31. Dez 2013 um 10:20
 --
 
 DROP TABLE IF EXISTS `user_permission`;
@@ -1747,10 +1747,10 @@ CREATE TABLE IF NOT EXISTS `user_permission` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel User Persmissions',
   `user_id` int(11) NOT NULL,
   `page_name` varchar(500) DEFAULT NULL,
-  `permission_name` varchar(6) DEFAULT NULL,
+  `permission_name` varchar(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions' AUTO_INCREMENT=131 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions' AUTO_INCREMENT=157 ;
 
 -- --------------------------------------------------------
 
