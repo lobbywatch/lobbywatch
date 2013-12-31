@@ -8,20 +8,17 @@ include_once dirname(__FILE__) . '/' . 'user_identity_cookie_storage.php';
 #region Auth utils functions
 // TODO : move to utils class
 
-$currentUser = null;
-
 function SetCurrentUser($userName)
 {
-    global $currentUser;
-    $currentUser = $userName;
+  // Ref: http://stackoverflow.com/questions/2179520/whats-the-best-way-to-do-user-authentication-in-php
+  $_SESSION['user'] = $userName;
 }
 
 function GetCurrentUser()
 {
     // TODO : use SuperGlobals
-    global $currentUser;
-    if (isset($currentUser))
-        return $currentUser;
+    if (isset($_SESSION['user']))
+        return $_SESSION['user'];
 
     if (function_exists('GetIdentityCheckStrategy')) {
         $identityCheckStrategy = GetIdentityCheckStrategy();

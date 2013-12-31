@@ -3,281 +3,20 @@
 
 
 
-require_once 'components/page.php';
-require_once 'components/security/datasource_security_info.php';
+require_once 'phpgen_settings.php';
 require_once 'components/security/security_info.php';
-require_once 'components/security/hardcoded_auth.php';
+require_once 'components/security/datasource_security_info.php';
+require_once 'components/security/tablebased_auth.php';
 require_once 'components/security/user_grants_manager.php';
+require_once 'components/security/table_based_user_grants_manager.php';
 
-// Custom modification: Use $users form settings.php
+require_once 'database_engine/mysql_engine.php';
 
-$usersIds = array('roland' => -1, 'bane' => -1, 'rebecca' => -1, 'otto' => -1, 'thomas' => -1, 'admin' => -1);
+$grants = array();
+
+$appGrants = array();
 
 $dataSourceRecordPermissions = array();
-
-$grants = array('guest' => 
-        array()
-    ,
-    'roland' => 
-        array('kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_auftraggeber_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_arbeitet_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglied_von' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglieder' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.v_zutrittsberechtigung_mandate' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_parlamentarier_authorisierungs_email' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
-    ,
-    'bane' => 
-        array('kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_auftraggeber_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_arbeitet_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglied_von' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglieder' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.v_zutrittsberechtigung_mandate' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_parlamentarier_authorisierungs_email' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
-    ,
-    'rebecca' => 
-        array('kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_auftraggeber_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_arbeitet_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglied_von' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglieder' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.v_zutrittsberechtigung_mandate' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_parlamentarier_authorisierungs_email' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
-    ,
-    'otto' => 
-        array('kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_auftraggeber_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_arbeitet_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglied_von' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglieder' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.v_zutrittsberechtigung_mandate' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_parlamentarier_authorisierungs_email' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
-    ,
-    'thomas' => 
-        array('kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_auftraggeber_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_arbeitet_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglied_von' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglieder' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.v_zutrittsberechtigung_mandate' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_parlamentarier_authorisierungs_email' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
-    ,
-    'admin' => 
-        array('kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'kommission.branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_auftraggeber_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_arbeitet_fuer' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglied_von' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_beziehung_mitglieder' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.v_organisation_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.parlamentarier_anhang' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_in_kommission_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_interessenbindung_liste' => new DataSourceSecurityInfo(false, false, false, false),
-        'parlamentarier.v_zutrittsberechtigung_mit_mandaten' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission' => new DataSourceSecurityInfo(false, false, false, false),
-        'in_kommission.v_in_kommission_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessenbindung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.v_zutrittsberechtigung_mandate' => new DataSourceSecurityInfo(false, false, false, false),
-        'zutrittsberechtigung.mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'mandat' => new DataSourceSecurityInfo(false, false, false, false),
-        'organisation_beziehung' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'branche.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei' => new DataSourceSecurityInfo(false, false, false, false),
-        'partei.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.organisation' => new DataSourceSecurityInfo(false, false, false, false),
-        'interessengruppe.parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_parlamentarier_authorisierungs_email' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_parlamentarier' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_unvollstaendige_organisationen' => new DataSourceSecurityInfo(false, false, false, false),
-        'v_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false),
-        'q_last_updated_tables' => new DataSourceSecurityInfo(false, false, false, false))
-    );
-
-$appGrants = array('guest' => new DataSourceSecurityInfo(false, false, false, false),
-    'roland' => new AdminDataSourceSecurityInfo(),
-    'bane' => new AdminDataSourceSecurityInfo(),
-    'rebecca' => new DataSourceSecurityInfo(true, true, true, true),
-    'otto' => new DataSourceSecurityInfo(true, true, true, true),
-    'thomas' => new DataSourceSecurityInfo(true, true, true, true),
-    'admin' => new AdminDataSourceSecurityInfo());
 
 $tableCaptions = array('kommission' => 'Kommission',
 'kommission.in_kommission' => 'Kommission.Parlamentarier in Kommission',
@@ -320,13 +59,33 @@ $tableCaptions = array('kommission' => 'Kommission',
 'v_last_updated_tables' => 'Tabellenstand',
 'q_last_updated_tables' => 'Tabellenstand');
 
+function CreateTableBasedGrantsManager()
+{
+    global $tableCaptions;
+    $usersTable = array('TableName' => 'user', 'UserName' => 'name', 'UserId' => 'id', 'Password' => 'password');
+    $userPermsTable = array('TableName' => 'user_permission', 'UserId' => 'user_id', 'PageName' => 'page_name', 'Grant' => 'permission_name');
+
+    $passwordHasher = HashUtils::CreateHasher('PHPass');
+    $connectionOptions = GetGlobalConnectionOptions();
+    $tableBasedGrantsManager = new TableBasedUserGrantsManager(new MyPDOConnectionFactory(), $connectionOptions,
+        $usersTable, $userPermsTable, $tableCaptions, $passwordHasher, true);
+    return $tableBasedGrantsManager;
+}
+
 function SetUpUserAuthorization()
 {
-    global $usersIds;
     global $grants;
     global $appGrants;
     global $dataSourceRecordPermissions;
-    $userAuthorizationStrategy = new HardCodedUserAuthorization(new HardCodedUserGrantsManager($grants, $appGrants), $usersIds);
+    $hardCodedGrantsManager = new HardCodedUserGrantsManager($grants, $appGrants);
+$tableBasedGrantsManager = CreateTableBasedGrantsManager();
+$grantsManager = new CompositeGrantsManager();
+$grantsManager->AddGrantsManager($hardCodedGrantsManager);
+if (!is_null($tableBasedGrantsManager)) {
+    $grantsManager->AddGrantsManager($tableBasedGrantsManager);
+    GetApplication()->SetUserManager($tableBasedGrantsManager);
+}
+$userAuthorizationStrategy = new TableBasedUserAuthorization(new MyPDOConnectionFactory(), GetGlobalConnectionOptions(), 'user', 'name', 'id', $grantsManager);
     GetApplication()->SetUserAuthorizationStrategy($userAuthorizationStrategy);
 
 GetApplication()->SetDataSourceRecordPermissionRetrieveStrategy(
@@ -335,6 +94,10 @@ GetApplication()->SetDataSourceRecordPermissionRetrieveStrategy(
 
 function GetIdentityCheckStrategy()
 {
-    global $users;
-    return new SimpleIdentityCheckStrategy($users, 'md5');
+    return new TableBasedIdentityCheckStrategy(new MyPDOConnectionFactory(), GetGlobalConnectionOptions(), 'user', 'name', 'password', 'PHPass');
+}
+
+function CanUserChangeOwnPassword()
+{
+    return true;
 }

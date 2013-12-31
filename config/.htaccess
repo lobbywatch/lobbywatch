@@ -140,6 +140,10 @@ AddCharset UTF-8 .csv .txt .diff .patch .md .markdown .mkd
 #  RewriteRule ^wiki/index\.php$ /lobbycontrol/index.php [PT]
 #   RewriteRule ^woki/(.*)$ /lobbycontrol/$1 [PT]
 
+  # favicon
+  RewriteCond %{HTTP_HOST} ^lobbywatch\.ch
+  RewriteRule ^/?(favicon\.(png|ico))$ /sites/lobbywatch.ch/$1 [PT,NC]
+
   # wiki
   RewriteCond %{HTTP_HOST} ^lobbywatch\.ch
   RewriteRule ^wiki/(.*)$ /sites/lobbywatch.ch/wiki/$1 [PT]

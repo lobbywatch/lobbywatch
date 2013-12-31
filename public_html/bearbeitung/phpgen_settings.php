@@ -32,7 +32,7 @@ function GetGlobalConnectionOptions(){
 
 function HasAdminPage()
 {
-    return false;
+    return true;
 }
 
 function GetPageInfos()

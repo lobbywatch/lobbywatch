@@ -30,7 +30,7 @@ function dtXXX($msg) {
   // Disabled debug comment: do nothing
 }
 
-function dl($msg) {
+function dlog($msg) {
   global $debug;
   if ($debug !== true)
     return;
@@ -39,7 +39,7 @@ function dl($msg) {
   }
   error_log($msg) ;
 }
-function dlXXX($msg) {
+function dlogXXX($msg) {
   // Disabled debug comment: do nothing
 }
 
@@ -51,7 +51,7 @@ function df_clean() {
   file_put_contents(dirname(__FILE__) . "/../../logs/bearbeitung.log", date('c') . ': ' . $msg . "\n"/*, FILE_APPEND*/);
 }
 
-function df($msg) {
+function df($msg, $text = null) {
   global $debug;
   if ($debug !== true)
     return;
@@ -64,9 +64,9 @@ function df($msg) {
   } else if (is_bool($msg)) {
     $msg = $msg ? 'true' : 'false';
   }
-  file_put_contents(dirname(__FILE__) . "/../../logs/bearbeitung.log", date('c') . ': ' . $msg . "\n", FILE_APPEND);
+  file_put_contents(dirname(__FILE__) . "/../../logs/bearbeitung.log", date('c') . ': ' . (is_string($text) ? $text . ' => ' : '') . $msg . "\n", FILE_APPEND);
 }
-function dfXXX($msg) {
+function dfXXX($msg, $text = null) {
   // Disabled debug comment: do nothing
 }
 
@@ -103,4 +103,53 @@ function is_column_present($columns, $name) {
   }
 
   return false;
+}
+
+// Ref: http://www.cafewebmaster.com/check-password-strength-safety-php-and-regex
+function checkPasswordStrengthOneMessage($pwd) {
+  if (preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#", $pwd)){
+    return true;
+  } else {
+    // return false;
+    throw new Exception("Password too weak!\n\nPassword must include numbers, special characters and lower and uppercase letters");
+  }
+}
+
+// Ref: http://www.cafewebmaster.com/check-password-strength-safety-php-and-regex
+function checkPasswordStrength($pwd) {
+  $error = '';
+  if( strlen($pwd) < 8 ) {
+    $error .= "Password too short!\n";
+  }
+
+  if( strlen($pwd) > 20 ) {
+    $error .= "Password too long!\n";
+  }
+
+  if( !preg_match("#[0-9]+#", $pwd) ) {
+    $error .= "Password must include at least one number!\n";
+  }
+
+
+  if( !preg_match("#[a-z]+#", $pwd) ) {
+    $error .= "Password must include at least one letter!\n";
+  }
+
+
+  if( !preg_match("#[A-Z]+#", $pwd) ) {
+    $error .= "Password must include at least one CAPS!\n";
+  }
+
+
+
+  if( !preg_match("#\W+#", $pwd) ) {
+    $error .= "Password must include at least one symbol!\n";
+  }
+
+
+  if($error !== '') {
+    throw new Exception("Password too weak:\n\n$error");
+  } else {
+    return true;
+  }
 }
