@@ -33,7 +33,7 @@ class UserSelfManagement
         if (!$this->CheckSecurityManagementObjects())
             throw new Exception('This configuration is not secure');
         $this->ValidateCurrentPassword($currentPassword);
-        checkPasswordStrength($newPassword);
+        checkPasswordStrength($newPassword); // Afterburned
         $this->ChangePassword($newPassword);
     }
 

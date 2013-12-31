@@ -52,9 +52,12 @@ do
   | perl -p -e's/<a id="plugin-edit-remarksbox.*?<\/a>//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" height="14" width="15">//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" width="15" height="14">//g' \
+  | perl -p -e's/^((\s*)\$this->userIdentityStorage->ClearUserIdentity\(\);)/\2session_unset(); \/\/ Afterburned\n\1/g' \
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
 done
+# // session_unset(): Ref: http://stackoverflow.com/questions/520237/how-do-i-expire-a-php-session-after-30-minutes
+
 # RSS
 #   | perl -p -e's/CanLoginAsGuest\(\)\s*\{\s*return true;\s*\}/CanLoginAsGuest\(\) \{ return false; \}/g' \
 #   | perl -p -e's/'\''guest'\''\s*=>\s*new\s+DataSourceSecurityInfo\(\s*true/'\''guest'\'' => new DataSourceSecurityInfo\(GetApplication\(\)->GetOperation\(\) === '\''rss'\''/g' \
@@ -184,12 +187,35 @@ do
   > "$file";
 done
 
+# Only for hardcoded auth
 for file in $dir/authorization.php
 do
   echo "Process $file";
   mv "$file" "$file.bak";
   cat "$file.bak" \
   | perl -0 -p -e's/\$users = array.*?;/\/\/ Custom modification: Use \$users form settings.php/s' \
+  > "$file";
+done
+
+# Ref: http://stackoverflow.com/questions/2179520/whats-the-best-way-to-do-user-authentication-in-php
+for file in $dir/components/security/security_info.php
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  cat "$file.bak" \
+  | perl -p -e's/^(\s*\$currentUser = null;)$/\/\/\1 Afterburned/' \
+  | perl -0 -p -e's/global \$currentUser;\s*\$currentUser = \$userName;/\$_SESSION['\''user'\''] = \$userName;/s' \
+  | perl -p -e's/^(\s*global \$currentUser;)$/\/\/\1 Afterburned/' \
+  | perl -0 -p -e's/isset\(\$currentUser\)\s*\)\s*return \$currentUser;/isset(\$_SESSION['\''user'\''])) \/\/ Afterburned\n     return \$_SESSION['\''user'\'']; \/\/ Afterburned/' \
+  > "$file";
+done
+
+for file in $dir/components/security/user_self_management.php
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  cat "$file.bak" \
+  | perl -p -e's/^((\s*)\$this->ChangePassword\(\$newPassword\);)$/\2checkPasswordStrength(\$newPassword); \/\/ Afterburned\n\1/' \
   > "$file";
 done
 

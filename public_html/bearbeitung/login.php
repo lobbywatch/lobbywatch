@@ -6,7 +6,7 @@
  *                                   ATTENTION!
  * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
  * this means that PHP is not properly installed on your web server. Please refer to the PHP manual
- * for more details: http://php.net/manual/install.php
+ * for more details: http://php.net/manual/install.php 
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
@@ -67,18 +67,18 @@
         public function GetLastUserName() { return $this->lastUserName; }
         public function GetLastSaveidentity() { return $this->lastSaveidentity; }
         public function CanLoginAsGuest() { return false; }
-
-        public function GetLoginAsGuestLink()
-        {
+        
+        public function GetLoginAsGuestLink() 
+        { 
             $pageInfos = GetPageInfos();
             foreach($pageInfos as $pageInfo)
             {
                 if (GetApplication()->GetUserRoles('guest', $pageInfo['name'])->HasViewGrant())
-                {
+                {   
                     return $pageInfo['filename'];
                 }
             }
-            return $this->urlToRedirectAfterLogin;
+            return $this->urlToRedirectAfterLogin; 
         }
 
         public function CheckUsernameAndPassword($username, $password, &$errorMessage)
@@ -105,9 +105,7 @@
 
         public function ClearUserIdentity()
         {
-            // Ref: http://stackoverflow.com/questions/520237/how-do-i-expire-a-php-session-after-30-minutes
-            session_unset();     // unset $_SESSION variable for the run-time
-//             session_destroy();   // destroy session data in storage
+            session_unset(); // Afterburned
             $this->userIdentityStorage->ClearUserIdentity();
         }
 
@@ -140,13 +138,13 @@
             foreach($pageInfos as $pageInfo)
             {
                 if (GetCurrentUserGrantForDataSource($pageInfo['name'])->HasViewGrant())
-                {
+                {   
                     return $pageInfo['filename'];
                 }
             }
             return $this->urlToRedirectAfterLogin;
         }
-
+        
         public function ProcessMessages()
         {
             if (isset($_GET[OPERATION_PARAMNAME]) && $_GET[OPERATION_PARAMNAME] == 'logout')
@@ -207,12 +205,12 @@
         }
 
         public function GetContentEncoding() { return 'UTF-8'; }
-
+        
         public function GetCaption() { return 'Login'; }
-
+        
         public function SetHeader($value) { $this->header = $value; }
         public function GetHeader() { return $this->RenderText($this->header); }
-
+        
         public function SetFooter($value) { $this->footer = $value; }
         public function GetFooter() { return $this->RenderText($this->footer); }
 
