@@ -24,7 +24,8 @@ maintenance_mode=false
 env="test"
 
 NOW=$(date +"%d.%m.%Y %H:%M");
-echo -e "<?php\n\$deploy_date = '$NOW';" > $public_dir/common/deploy_date.php;
+NOW_SHORT=$(date +"%d.%m.%Y");
+echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > $public_dir/common/deploy_date.php;
 
 # Also in afterburner.sh
 VERSION=$(git describe --abbrev=0 --tags)
