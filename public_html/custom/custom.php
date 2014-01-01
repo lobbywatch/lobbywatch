@@ -16,6 +16,13 @@ $edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version " . 
 
 $edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/book_open.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="' . $env_dir . 'lobbywatch_datenmodell.pdf">Datenmodell</a> (PDF).</div></div>';
 
+// $params = session_get_cookie_params();
+// df($params, "Session params");
+// df(__FILE__);
+// df(dirname(__FILE__));
+// df($_REQUEST, 'request');
+// df($_SERVER, 'server');
+
 //df_clean();
 
 function setupRSS($page, $dataset) {

@@ -23,6 +23,8 @@ $db_connection = array (
     'reader_password' => '',
 );
 
+session_set_cookie_params(3600 * 24 * 14, '/bearbeitung/');
+
 $users = array (
     'otto' => '',
     'roland' => '',
