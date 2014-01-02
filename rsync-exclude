@@ -6,5 +6,6 @@
 *.bak
 .*
 bak/
-wiki/
-files/
+/wiki/
+/files/
+/test/

@@ -5,23 +5,46 @@
 
 require_once dirname(__FILE__) . "/maintenance_mode.php";
 
+$stage = false;
+
 $debug = false;
 
-$env = "dev";
-$env_dir = "/";
-// $env_dir = "/test/";
-$public_files_dir = "/home/lobbywatch/public_html/files";
-$private_files_dir = "/home/lobbywatch/private_files/lobbywatch_db_files";
+if ($stage) {
+  $env = "STAGE";
 
-$db_connection = array (
-    'server' => 'localhost',
-    'port' => '3306',
-    'database' => 'lobbywatch',
-    'username' => '',
-    'password' => '',
-    'reader_username' => '',
-    'reader_password' => '',
-);
+  $env_dir = "/";
+  // $env_dir = "/test/";
+  $public_files_dir = "/home/lobbywatch/public_html/files";
+  $private_files_dir = "/home/lobbywatch/private_files/lobbywatch_db_files";
+
+  $db_connection = array (
+      'server' => 'localhost',
+      'port' => '3306',
+      'database' => 'lobbywatch',
+      'username' => '',
+      'password' => '',
+      'reader_username' => '',
+      'reader_password' => '',
+  );
+} else {
+  $env = "DEV";
+
+  $env_dir = "/";
+  // $env_dir = "/test/";
+  $public_files_dir = "/home/lobbywatch/public_html/test/files";
+  $private_files_dir = "/home/lobbywatch/private_files/lobbywatch_db_files/test";
+
+  $db_connection = array (
+      'server' => 'localhost',
+      'port' => '3306',
+      'database' => 'lobbywatchtest',
+      'username' => '',
+      'password' => '',
+      'reader_username' => '',
+      'reader_password' => '',
+  );
+
+}
 
 session_set_cookie_params(3600 * 24 * 14, '/bearbeitung/');
 
