@@ -3933,7 +3933,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('gruendung');
+            $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
             $lookupDataset->AddField($field, false);
@@ -3984,7 +3984,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('gruendung');
+            $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
             $lookupDataset->AddField($field, false);
@@ -5126,7 +5126,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('gruendung');
+            $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
             $lookupDataset->AddField($field, false);
@@ -5508,7 +5508,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('gruendung');
+            $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
             $lookupDataset->AddField($field, false);
@@ -5559,7 +5559,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('gruendung');
+            $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
             $lookupDataset->AddField($field, false);
@@ -6530,7 +6530,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('gruendung');
+            $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
             $lookupDataset->AddField($field, false);
@@ -6874,7 +6874,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('gruendung');
+            $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
             $lookupDataset->AddField($field, false);
