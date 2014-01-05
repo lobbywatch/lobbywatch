@@ -4616,7 +4616,7 @@
             //
             // Edit column for gruendung field
             //
-            $editor = new DateTimeEdit('gruendung_edit', false, 'Y', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('gruendung_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Gruendung', 'gruendung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4627,13 +4627,13 @@
             //
             // Edit column for gruendung field
             //
-            $editor = new DateTimeEdit('gruendung_edit', false, 'Y', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('gruendung_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Gruendung', 'gruendung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Gründungsjahr der Partei'));
+            $column->SetDescription($this->RenderText('Gründungsjahr der Partei. Wenn der genaue Tag unbekannt ist, den 1. Januar wählen.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -4800,7 +4800,7 @@
             //
             // Edit column for freigabe_datum field
             //
-            $editor = new DateTimeEdit('freigabe_datum_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('freigabe_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Freigabe Datum', 'freigabe_datum', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4811,7 +4811,7 @@
             //
             // Edit column for freigabe_datum field
             //
-            $editor = new DateTimeEdit('freigabe_datum_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('freigabe_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Freigabe Datum', 'freigabe_datum', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4855,7 +4855,7 @@
             //
             // Edit column for created_date field
             //
-            $editor = new DateTimeEdit('created_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('created_date_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -4901,7 +4901,7 @@
             //
             // Edit column for updated_date field
             //
-            $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('updated_date_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -5050,7 +5050,7 @@
             //
             // Edit column for gruendung field
             //
-            $editor = new DateTimeEdit('gruendung_edit', false, 'Y', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('gruendung_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Gruendung', 'gruendung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5106,7 +5106,7 @@
             //
             // Edit column for freigabe_datum field
             //
-            $editor = new DateTimeEdit('freigabe_datum_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('freigabe_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Freigabe Datum', 'freigabe_datum', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5127,7 +5127,7 @@
             //
             // Edit column for created_date field
             //
-            $editor = new DateTimeEdit('created_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('created_date_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -5150,7 +5150,7 @@
             //
             // Edit column for updated_date field
             //
-            $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('updated_date_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -5187,7 +5187,7 @@
             //
             // Edit column for gruendung field
             //
-            $editor = new DateTimeEdit('gruendung_edit', false, 'Y', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('gruendung_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Gruendung', 'gruendung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5243,7 +5243,7 @@
             //
             // Edit column for freigabe_datum field
             //
-            $editor = new DateTimeEdit('freigabe_datum_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('freigabe_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Freigabe Datum', 'freigabe_datum', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5518,7 +5518,7 @@
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Gründungsjahr der Partei'));
+            $column->SetDescription($this->RenderText('Gründungsjahr der Partei. Wenn der genaue Tag unbekannt ist, den 1. Januar wählen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
