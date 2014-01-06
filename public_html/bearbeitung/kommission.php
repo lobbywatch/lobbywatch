@@ -4716,7 +4716,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('mutter_kommission_id', 'v_kommission', new StringField('anzeige_name'), new StringField('abkuerzung', 'mutter_kommission_id_abkuerzung', 'mutter_kommission_id_abkuerzung_v_kommission'), 'mutter_kommission_id_abkuerzung_v_kommission');
+            $this->dataset->AddLookupField('mutter_kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'mutter_kommission_id_anzeige_name', 'mutter_kommission_id_anzeige_name_v_kommission'), 'mutter_kommission_id_anzeige_name_v_kommission');
         }
     
         protected function CreatePageNavigator()
@@ -4778,7 +4778,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('kommissionssearch', $this->dataset,
-                array('id', 'abkuerzung', 'name', 'typ', 'mutter_kommission_id_abkuerzung', 'beschreibung', 'sachbereiche', 'parlament_url', 'notizen', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array('id', 'abkuerzung', 'name', 'typ', 'mutter_kommission_id_anzeige_name', 'beschreibung', 'sachbereiche', 'parlament_url', 'notizen', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
                 array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Typ'), $this->RenderText('Mutter Kommission'), $this->RenderText('Beschreibung'), $this->RenderText('Sachbereiche'), $this->RenderText('Parlament Url'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -4849,7 +4849,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('mutter_kommission_id', $this->RenderText('Mutter Kommission'), $lookupDataset, 'anzeige_name', 'abkuerzung', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('mutter_kommission_id', $this->RenderText('Mutter Kommission'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sachbereiche', $this->RenderText('Sachbereiche')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_url', $this->RenderText('Parlament Url')));
@@ -5044,9 +5044,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mutter_kommission_id_abkuerzung', 'Mutter Kommission', $this->dataset);
+            $column = new TextViewColumn('mutter_kommission_id_anzeige_name', 'Mutter Kommission', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -5099,12 +5099,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Mutter Kommission', 
                 'mutter_kommission_id', 
                 $editor, 
-                $this->dataset, 'anzeige_name', 'abkuerzung', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -5160,12 +5160,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Mutter Kommission', 
                 'mutter_kommission_id', 
                 $editor, 
-                $this->dataset, 'anzeige_name', 'abkuerzung', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -5522,9 +5522,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mutter_kommission_id_abkuerzung', 'Mutter Kommission', $this->dataset);
+            $column = new TextViewColumn('mutter_kommission_id_anzeige_name', 'Mutter Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%mutter_kommission_id%' , '');
             $grid->AddSingleRecordViewColumn($column);
@@ -5703,12 +5703,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Mutter Kommission', 
                 'mutter_kommission_id', 
                 $editor, 
-                $this->dataset, 'anzeige_name', 'abkuerzung', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -5913,12 +5913,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Mutter Kommission', 
                 'mutter_kommission_id', 
                 $editor, 
-                $this->dataset, 'anzeige_name', 'abkuerzung', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -6031,9 +6031,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mutter_kommission_id_abkuerzung', 'Mutter Kommission', $this->dataset);
+            $column = new TextViewColumn('mutter_kommission_id_anzeige_name', 'Mutter Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%mutter_kommission_id%' , '');
             $grid->AddPrintColumn($column);
@@ -6145,9 +6145,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mutter_kommission_id_abkuerzung', 'Mutter Kommission', $this->dataset);
+            $column = new TextViewColumn('mutter_kommission_id_anzeige_name', 'Mutter Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%mutter_kommission_id%' , '');
             $grid->AddExportColumn($column);
@@ -6288,9 +6288,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mutter_kommission_id_abkuerzung', 'Mutter Kommission', $this->dataset);
+            $column = new TextViewColumn('mutter_kommission_id_anzeige_name', 'Mutter Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%mutter_kommission_id%' , '');
             $column->SetDescription($this->RenderText('Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die "Oberkommission".'));
@@ -6433,9 +6433,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mutter_kommission_id_abkuerzung', 'Mutter Kommission', $this->dataset);
+            $column = new TextViewColumn('mutter_kommission_id_anzeige_name', 'Mutter Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%mutter_kommission_id%' , '');
             $result->AddPrintColumn($column);
@@ -6566,9 +6566,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mutter_kommission_id_abkuerzung', 'Mutter Kommission', $this->dataset);
+            $column = new TextViewColumn('mutter_kommission_id_anzeige_name', 'Mutter Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%mutter_kommission_id%' , '');
             $column->SetDescription($this->RenderText('Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die "Oberkommission".'));
@@ -6711,9 +6711,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for abkuerzung field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('mutter_kommission_id_abkuerzung', 'Mutter Kommission', $this->dataset);
+            $column = new TextViewColumn('mutter_kommission_id_anzeige_name', 'Mutter Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%mutter_kommission_id%' , '');
             $result->AddPrintColumn($column);
