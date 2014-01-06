@@ -311,3 +311,13 @@ ADD `bis` DATE NULL DEFAULT NULL COMMENT 'Ende der Organisationsbeziehung, leer 
 ALTER TABLE `zugangsberechtigung` ADD `von` DATE NULL DEFAULT NULL COMMENT 'Beginn der Zugangsberechtigung, leer (NULL) = unbekannt',
 ADD `bis` DATE NULL DEFAULT NULL COMMENT 'Ende der Zugangsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag';
 
+-- Copy data from test to prod
+
+SELECT id, beschreibung, sachbereiche FROM `csvimsne_lobbywatchtest`.`kommission`
+
+UPDATE `csvimsne_lobbywatch`.`kommission` k
+INNER JOIN `csvimsne_lobbywatchtest`.`kommission` t
+ON k.`id` = t.`id`
+SET
+k.`beschreibung` = t.`beschreibung`,
+k.`sachbereiche` = t.`sachbereiche`
