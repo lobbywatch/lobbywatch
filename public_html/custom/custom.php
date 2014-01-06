@@ -10,7 +10,7 @@ define('OPERATION_DE_RELEASE_SELECTED', 'derelsel');
 define('OPERATION_SET_IMRATBIS_SELECTED', 'setimratbissel');
 define('OPERATION_CLEAR_IMRATBIS_SELECTED', 'clearimratbissel');
 
-$edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version " . ($deploy_date_short === $build_date_short ? "<span title=\"Generiert und Hochgeladen am\">$deploy_date_short</span>" : "D<span title=\"Hochgeladen am\">$deploy_date_short</span>/G<span title=\"Forumlare generiert am\">$build_date_short</span>") . ")</b> " . ($env !== 'PRODCUTION' ? "<span style=\"background-color:red\">$env</span>" : '') . ": Die Tabellen <i>In_kommission</i>, <i>Kommission</i>, <i>Partei</i>, <i>Branche</i> können bearbeitet werden. Mögliche Arbeiten:<ul>
+$edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version " . ($deploy_date_short === $build_date_short ? "<span title=\"Generiert und Hochgeladen am\">$deploy_date_short</span>" : "D<span title=\"Hochgeladen am\">$deploy_date_short</span>/G<span title=\"Forumlare generiert am\">$build_date_short</span>") . ")</b>" . ($env !== 'PRODUCTION' ? " <span style=\"background-color:red\">$env</span>" : '') . ": Die Tabellen <i>In_kommission</i>, <i>Kommission</i>, <i>Partei</i>, <i>Branche</i> können bearbeitet werden. Mögliche Arbeiten:<ul>
 <li>Sachbereiche und Beschreibungen bei Kommissionen eintragen/korrigieren
 <li>Parteien ergänzen</ul></div>";
 
