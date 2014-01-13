@@ -321,3 +321,106 @@ ON k.`id` = t.`id`
 SET
 k.`beschreibung` = t.`beschreibung`,
 k.`sachbereiche` = t.`sachbereiche`
+
+
+-- Workflow fields
+
+ALTER TABLE `branche` ADD `eingabe_abgeschlossen_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.' AFTER `notizen` ,
+ADD `eingabe_abgeschlossen_date` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)' AFTER `eingabe_abgeschlossen_visa` ,
+ADD `kontrolliert_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.' AFTER `eingabe_abgeschlossen_date` ,
+ADD `kontrolliert_date` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)' AFTER `kontrolliert_visa` ;
+
+ALTER TABLE `interessenbindung` ADD `eingabe_abgeschlossen_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.' AFTER `notizen` ,
+ADD `eingabe_abgeschlossen_date` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)' AFTER `eingabe_abgeschlossen_visa` ,
+ADD `kontrolliert_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.' AFTER `eingabe_abgeschlossen_date` ,
+ADD `kontrolliert_date` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)' AFTER `kontrolliert_visa` ;
+
+ALTER TABLE `interessengruppe` ADD `eingabe_abgeschlossen_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.' AFTER `notizen` ,
+ADD `eingabe_abgeschlossen_date` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)' AFTER `eingabe_abgeschlossen_visa` ,
+ADD `kontrolliert_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.' AFTER `eingabe_abgeschlossen_date` ,
+ADD `kontrolliert_date` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)' AFTER `kontrolliert_visa` ;
+
+ALTER TABLE `in_kommission` ADD `eingabe_abgeschlossen_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.' AFTER `notizen` ,
+ADD `eingabe_abgeschlossen_date` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)' AFTER `eingabe_abgeschlossen_visa` ,
+ADD `kontrolliert_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.' AFTER `eingabe_abgeschlossen_date` ,
+ADD `kontrolliert_date` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)' AFTER `kontrolliert_visa` ;
+
+ALTER TABLE `kommission` ADD `eingabe_abgeschlossen_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.' AFTER `notizen` ,
+ADD `eingabe_abgeschlossen_date` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)' AFTER `eingabe_abgeschlossen_visa` ,
+ADD `kontrolliert_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.' AFTER `eingabe_abgeschlossen_date` ,
+ADD `kontrolliert_date` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)' AFTER `kontrolliert_visa` ;
+
+ALTER TABLE `mandat` ADD `eingabe_abgeschlossen_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.' AFTER `notizen` ,
+ADD `eingabe_abgeschlossen_date` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)' AFTER `eingabe_abgeschlossen_visa` ,
+ADD `kontrolliert_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.' AFTER `eingabe_abgeschlossen_date` ,
+ADD `kontrolliert_date` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)' AFTER `kontrolliert_visa` ;
+
+ALTER TABLE `organisation` ADD `eingabe_abgeschlossen_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.' AFTER `notizen` ,
+ADD `eingabe_abgeschlossen_date` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)' AFTER `eingabe_abgeschlossen_visa` ,
+ADD `kontrolliert_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.' AFTER `eingabe_abgeschlossen_date` ,
+ADD `kontrolliert_date` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)' AFTER `kontrolliert_visa` ;
+
+ALTER TABLE `organisation_beziehung` ADD `eingabe_abgeschlossen_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.' AFTER `notizen` ,
+ADD `eingabe_abgeschlossen_date` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)' AFTER `eingabe_abgeschlossen_visa` ,
+ADD `kontrolliert_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.' AFTER `eingabe_abgeschlossen_date` ,
+ADD `kontrolliert_date` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)' AFTER `kontrolliert_visa` ;
+
+ALTER TABLE `parlamentarier` ADD `eingabe_abgeschlossen_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.' AFTER `notizen` ,
+ADD `eingabe_abgeschlossen_date` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)' AFTER `eingabe_abgeschlossen_visa` ,
+ADD `kontrolliert_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.' AFTER `eingabe_abgeschlossen_date` ,
+ADD `kontrolliert_date` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)' AFTER `kontrolliert_visa` ;
+
+ALTER TABLE `partei` ADD `eingabe_abgeschlossen_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.' AFTER `notizen` ,
+ADD `eingabe_abgeschlossen_date` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)' AFTER `eingabe_abgeschlossen_visa` ,
+ADD `kontrolliert_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.' AFTER `eingabe_abgeschlossen_date` ,
+ADD `kontrolliert_date` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)' AFTER `kontrolliert_visa` ;
+
+ALTER TABLE `zutrittsberechtigung` ADD `eingabe_abgeschlossen_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.' AFTER `notizen` ,
+ADD `eingabe_abgeschlossen_date` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)' AFTER `eingabe_abgeschlossen_visa` ,
+ADD `kontrolliert_visa` VARCHAR( 10 ) NULL DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.' AFTER `eingabe_abgeschlossen_date` ,
+ADD `kontrolliert_date` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)' AFTER `kontrolliert_visa` ;
+
+-- rename _date → _datum
+
+ALTER TABLE `branche` CHANGE `eingabe_abgeschlossen_date` `eingabe_abgeschlossen_datum` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+CHANGE `kontrolliert_date` `kontrolliert_datum` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)';
+
+ALTER TABLE `interessenbindung` CHANGE `eingabe_abgeschlossen_date` `eingabe_abgeschlossen_datum` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+CHANGE `kontrolliert_date` `kontrolliert_datum` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)';
+
+ALTER TABLE `interessengruppe` CHANGE `eingabe_abgeschlossen_date` `eingabe_abgeschlossen_datum` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+CHANGE `kontrolliert_date` `kontrolliert_datum` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)';
+
+ALTER TABLE `in_kommission` CHANGE `eingabe_abgeschlossen_date` `eingabe_abgeschlossen_datum` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+CHANGE `kontrolliert_date` `kontrolliert_datum` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)';
+
+ALTER TABLE `kommission` CHANGE `eingabe_abgeschlossen_date` `eingabe_abgeschlossen_datum` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+CHANGE `kontrolliert_date` `kontrolliert_datum` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)';
+
+ALTER TABLE `mandat` CHANGE `eingabe_abgeschlossen_date` `eingabe_abgeschlossen_datum` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+CHANGE `kontrolliert_date` `kontrolliert_datum` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)';
+
+ALTER TABLE `organisation` CHANGE `eingabe_abgeschlossen_date` `eingabe_abgeschlossen_datum` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+CHANGE `kontrolliert_date` `kontrolliert_datum` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)';
+
+ALTER TABLE `organisation_beziehung` CHANGE `eingabe_abgeschlossen_date` `eingabe_abgeschlossen_datum` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+CHANGE `kontrolliert_date` `kontrolliert_datum` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)';
+
+ALTER TABLE `parlamentarier` CHANGE `eingabe_abgeschlossen_date` `eingabe_abgeschlossen_datum` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+CHANGE `kontrolliert_date` `kontrolliert_datum` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)';
+
+ALTER TABLE `partei` CHANGE `eingabe_abgeschlossen_date` `eingabe_abgeschlossen_datum` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+CHANGE `kontrolliert_date` `kontrolliert_datum` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)';
+
+ALTER TABLE `zutrittsberechtigung` CHANGE `eingabe_abgeschlossen_date` `eingabe_abgeschlossen_datum` DATETIME NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+CHANGE `kontrolliert_date` `kontrolliert_datum` DATETIME NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)';
+
+-- autorisiert_datum
+
+ALTER TABLE `parlamentarier`
+ADD `autorisiert_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.' AFTER `kontrolliert_datum`,
+ADD `autorisiert_datum` DATE NULL DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.' AFTER `autorisiert_visa`;
+
+ALTER TABLE `zutrittsberechtigung`
+ADD `autorisiert_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.' AFTER `kontrolliert_visa`,
+ADD `autorisiert_datum` DATE NULL DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.' AFTER `autorisiert_visa`;

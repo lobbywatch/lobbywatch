@@ -14,7 +14,8 @@
  ORDER BY
  TABLES.`TABLE_NAME` ASC
  */
-$tables = array('branche' => 'Branche',
+$tables = array(
+'branche' => 'Branche',
 'interessenbindung' => 'Interessenbindung',
 'interessengruppe' => 'Interessengruppe',
 'in_kommission' => 'In Kommission',
@@ -25,7 +26,8 @@ $tables = array('branche' => 'Branche',
 'parlamentarier' => 'Parlamentarier',
 'parlamentarier_anhang' => 'Parlamentarieranhang',
 'partei' => 'Partei',
-'zutrittsberechtigung' => 'Zutrittsberechtigung');
+'zutrittsberechtigung' => 'Zutrittsberechtigung'
+);
 
 
 // $table_query = "(SELECT

@@ -355,7 +355,6 @@ ALTER TABLE `kommission_log`
   CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  DROP INDEX `idx_ko_unique_name`,
   DROP INDEX `kommission_abkuerzung_unique`,
   DROP INDEX `kommission_name_unique`,
   DROP PRIMARY KEY,
