@@ -147,8 +147,12 @@ EOD;
 
 function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$message, $tableName)
 {
-  // df($rowData);
-  $file = $rowData['photo'];
+//   df($rowData, 'parlamentarier_update_photo_metadata $rowData');
+  if (isset($rowData['photo'])) {
+    $file = $rowData['photo'];
+  } else {
+    return;
+  }
 
   // A photo filename ending with / means there was no photo
   if ($file !== null && !endsWith($file, '/')) {
@@ -181,10 +185,14 @@ function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$mess
 
 function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, $tableName)
 {
-//   df($rowData);
-//   df($tableName);
-  $file = $rowData['photo'];
-  $id = $rowData['id'];
+//    df($rowData, 'parlamentarier_remove_old_photo $rowData');
+//    df($tableName);
+  if (isset($rowData['photo']) && isset($rowData['id'])) {
+    $file = $rowData['photo'];
+    $id = $rowData['id'];
+  } else {
+    return;
+  }
 
   // prevent SQL injection
   if (!is_numeric($id)) {
@@ -210,9 +218,13 @@ function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, 
 
 function parlamentarier_check_imRatBis($page, &$rowData, &$cancel, &$message, $tableName)
 {
-  // df($rowData);
-  $imRatSeit = $rowData['im_rat_seit'];
-  $imRatBis = $rowData['im_rat_bis'];
+//   df($rowData, 'parlamentarier_check_imRatBis $rowData');
+  if (isset($rowData['im_rat_seit']) || isset($rowData['im_rat_bis'])) {
+    $imRatSeit = $rowData['im_rat_seit'];
+    $imRatBis = $rowData['im_rat_bis'];
+  } else {
+    return;
+  }
 
 // df($imRatBis);
 // df($imRatBis === null);
@@ -233,8 +245,12 @@ function parlamentarier_check_imRatBis($page, &$rowData, &$cancel, &$message, $t
 function check_bis_date($page, &$rowData, &$cancel, &$message, $tableName)
 {
 // df($rowData);
-  $bis = $rowData['von'];
-  $bis = $rowData['bis'];
+  if (isset($rowData['von']) || isset($rowData['bis'])) {
+    $von = $rowData['von'];
+    $bis = $rowData['bis'];
+  } else {
+    return;
+  }
 // df($bis);
 // df($bis->GetTimestamp());
   if ($bis !== null && $bis->GetTimestamp() > SMDateTime::Now()->GetTimestamp()) {
@@ -318,7 +334,7 @@ abstract class SelectedOperationGridState extends GridState {
     // df($primaryKeysArray);
 
     $input_date = GetApplication ()->GetPOSTValue ( 'date' );
-    df('Dates:');
+//     df('Dates:');
 //     df($input_date);
 //     df($this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' ));
     if ($this->isValidDate($input_date)) {
