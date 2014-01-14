@@ -582,6 +582,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -611,6 +615,22 @@
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -1152,6 +1172,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -1181,6 +1205,22 @@
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -1702,11 +1742,15 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('funktion');
+            $this->dataset->AddField($field, true);
             $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('status');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('behoerden_vertreter');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
@@ -1718,9 +1762,17 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new DateField('autorisiert_datum');
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('kontrolliert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('autorisiert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateField('autorisiert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
@@ -2009,6 +2061,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -2084,6 +2144,14 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -2690,11 +2758,15 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('funktion');
+            $this->dataset->AddField($field, true);
             $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('status');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('behoerden_vertreter');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
@@ -2706,9 +2778,17 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new DateField('autorisiert_datum');
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('kontrolliert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('autorisiert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateField('autorisiert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
@@ -2825,6 +2905,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -2898,6 +2986,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -2927,6 +3019,22 @@
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -3257,6 +3365,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -3332,6 +3448,14 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -4061,6 +4185,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -4222,6 +4354,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -4251,6 +4387,22 @@
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -4434,6 +4586,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -4598,6 +4758,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -4627,6 +4791,22 @@
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -5264,9 +5444,17 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new DateField('autorisiert_datum');
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('kontrolliert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('autorisiert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateField('autorisiert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
@@ -5473,6 +5661,18 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -5541,6 +5741,18 @@
             $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -5629,6 +5841,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -5703,6 +5923,14 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -6437,9 +6665,17 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new DateField('autorisiert_datum');
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('kontrolliert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('autorisiert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateField('autorisiert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
@@ -6555,6 +6791,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -6584,6 +6824,22 @@
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -6638,6 +6894,18 @@
             $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -6701,6 +6969,14 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -6961,6 +7237,18 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -7029,6 +7317,18 @@
             $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -7117,6 +7417,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -7191,6 +7499,14 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -7952,6 +8268,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -7981,6 +8301,22 @@
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -8057,6 +8393,18 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -8131,6 +8479,14 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -8391,6 +8747,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -8420,6 +8780,22 @@
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -8497,6 +8873,18 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -8571,6 +8959,14 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -9387,6 +9783,14 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('kontrolliert_datum');
+            $this->dataset->AddField($field, true);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('freigabe_datum');
@@ -9515,6 +9919,8 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('art');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sachbereiche');
@@ -9525,6 +9931,14 @@
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -9577,6 +9991,8 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('art');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sachbereiche');
@@ -9587,6 +10003,14 @@
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -10011,6 +10435,14 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('kontrolliert_datum');
+            $this->dataset->AddField($field, true);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('freigabe_datum');
@@ -10096,6 +10528,8 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('art');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sachbereiche');
@@ -10106,6 +10540,14 @@
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -10281,6 +10723,8 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('art');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sachbereiche');
@@ -10291,6 +10735,14 @@
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -10343,6 +10795,8 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('art');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sachbereiche');
@@ -10353,6 +10807,14 @@
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -10771,6 +11233,8 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('art');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sachbereiche');
@@ -10781,6 +11245,14 @@
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -10935,6 +11407,8 @@
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('art');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('sachbereiche');
@@ -10945,6 +11419,14 @@
             $field = new StringField('parlament_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -11412,11 +11894,15 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('funktion');
+            $this->dataset->AddField($field, true);
             $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('status');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('behoerden_vertreter');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
@@ -11428,9 +11914,17 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new DateField('autorisiert_datum');
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('kontrolliert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('autorisiert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateField('autorisiert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
@@ -11689,6 +12183,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -11764,6 +12266,14 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -12230,11 +12740,15 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('funktion');
+            $this->dataset->AddField($field, true);
             $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('status');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('behoerden_vertreter');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
@@ -12246,9 +12760,17 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new DateField('autorisiert_datum');
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('kontrolliert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('autorisiert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateField('autorisiert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
@@ -12362,6 +12884,14 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -12669,6 +13199,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -12744,6 +13282,14 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -13290,6 +13836,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -13517,6 +14071,14 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -14132,9 +14694,17 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new DateField('autorisiert_datum');
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('kontrolliert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('autorisiert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateField('autorisiert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
@@ -14302,6 +14872,18 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -14370,6 +14952,18 @@
             $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -15145,9 +15739,17 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
-            $field = new DateField('autorisiert_datum');
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('kontrolliert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('autorisiert_visa');
+            $this->dataset->AddField($field, true);
+            $field = new DateField('autorisiert_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, true);
@@ -15261,6 +15863,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -15290,6 +15896,22 @@
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -15344,6 +15966,18 @@
             $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -15569,6 +16203,18 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -15637,6 +16283,18 @@
             $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -16430,6 +17088,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -16459,6 +17121,22 @@
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -16534,6 +17212,18 @@
             $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -16799,6 +17489,10 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -16828,6 +17522,22 @@
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -16904,6 +17614,18 @@
             $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -17732,6 +18454,10 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('zivilstand');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('anzahl_kinder');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('militaerischer_grad');
             $this->dataset->AddField($field, false);
             $field = new StringField('geschlecht');
@@ -17761,6 +18487,22 @@
             $field = new StringField('ALT_kommission');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
             $this->dataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, false);
@@ -17841,8 +18583,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'militaerischer_grad_name', 'geschlecht', 'geburtstag', 'photo', 'kleinbild', 'sitzplatz', 'email', 'parlament_url', 'homepage', 'ALT_kommission', 'notizen', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'photo_dateiname_voll'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Militaerischer Grad'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Parlament Url'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Photo Dateiname')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_name', 'photo', 'kleinbild', 'sitzplatz', 'email', 'parlament_url', 'homepage', 'ALT_kommission', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'autorisiert_visa', 'autorisiert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'photo_dateiname_voll'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Parlament Url'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Autorisierung Verschickt Visa'), $this->RenderText('Autorisierung Verschickt Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Photo Dateiname')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -17889,7 +18631,17 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -17933,6 +18685,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -17949,6 +18709,10 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Interessengruppe'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('geschlecht', $this->RenderText('Geschlecht')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('geburtstag', $this->RenderText('Geburtstag')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zivilstand', $this->RenderText('Zivilstand')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_kinder', $this->RenderText('Anzahl Kinder')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -17984,8 +18748,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('militaerischer_grad', $this->RenderText('Militaerischer Grad'), $lookupDataset, 'id', 'name', false));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('geschlecht', $this->RenderText('Geschlecht')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('geburtstag', $this->RenderText('Geburtstag')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo', $this->RenderText('Photo')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kleinbild', $this->RenderText('Kleinbild')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
@@ -17994,6 +18756,14 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_kommission', $this->RenderText('ALT Kommission')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kontrolliert_visa', $this->RenderText('Kontrolliert Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('kontrolliert_datum', $this->RenderText('Kontrolliert Datum')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('autorisierung_verschickt_visa', $this->RenderText('Autorisierung Verschickt Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisierung_verschickt_datum', $this->RenderText('Autorisierung Verschickt Datum')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('autorisiert_visa', $this->RenderText('Autorisiert Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_visa', $this->RenderText('Freigabe Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('freigabe_datum', $this->RenderText('Freigabe Datum')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
@@ -18369,7 +19139,17 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -18422,7 +19202,17 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -18729,6 +19519,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -18778,6 +19576,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -18805,6 +19611,144 @@
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for geschlecht field
+            //
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('M', $this->RenderText('M'));
+            $editor->AddValue('F', $this->RenderText('F'));
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for geschlecht field
+            //
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('M', $this->RenderText('M'));
+            $editor->AddValue('F', $this->RenderText('F'));
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('M'));
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Geschlecht des Parlamentariers, M=Mann, F=Frau'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for zivilstand field
+            //
+            $editor = new ComboBox('zivilstand_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('ledig', $this->RenderText('ledig'));
+            $editor->AddValue('verheirated', $this->RenderText('verheirated'));
+            $editor->AddValue('geschieden', $this->RenderText('geschieden'));
+            $editor->AddValue('eingetragene partnerschaft', $this->RenderText('eingetragene partnerschaft'));
+            $editColumn = new CustomEditColumn('Zivilstand', 'zivilstand', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for zivilstand field
+            //
+            $editor = new ComboBox('zivilstand_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('ledig', $this->RenderText('ledig'));
+            $editor->AddValue('verheirated', $this->RenderText('verheirated'));
+            $editor->AddValue('geschieden', $this->RenderText('geschieden'));
+            $editor->AddValue('eingetragene partnerschaft', $this->RenderText('eingetragene partnerschaft'));
+            $editColumn = new CustomEditColumn('Zivilstand', 'zivilstand', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Zivilstand'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for anzahl_kinder field
+            //
+            $editor = new TextEdit('anzahl_kinder_edit');
+            $editColumn = new CustomEditColumn('Anzahl Kinder', 'anzahl_kinder', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for anzahl_kinder field
+            //
+            $editor = new TextEdit('anzahl_kinder_edit');
+            $editColumn = new CustomEditColumn('Anzahl Kinder', 'anzahl_kinder', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Anzahl der Kinder'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -18912,74 +19856,6 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for geschlecht field
-            //
-            $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for geschlecht field
-            //
-            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('M', $this->RenderText('M'));
-            $editor->AddValue('F', $this->RenderText('F'));
-            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for geschlecht field
-            //
-            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('M', $this->RenderText('M'));
-            $editor->AddValue('F', $this->RenderText('F'));
-            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetInsertDefaultValue($this->RenderText('M'));
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Geschlecht des Parlamentariers, M=Mann, F=Frau'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for geburtstag field
-            //
-            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -19268,6 +20144,198 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for eingabe_abgeschlossen_visa field
+            //
+            $editor = new TextEdit('eingabe_abgeschlossen_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Visa', 'eingabe_abgeschlossen_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for eingabe_abgeschlossen_datum field
+            //
+            $editor = new DateTimeEdit('eingabe_abgeschlossen_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum', 'eingabe_abgeschlossen_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for eingabe_abgeschlossen_datum field
+            //
+            $editor = new DateTimeEdit('eingabe_abgeschlossen_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum', 'eingabe_abgeschlossen_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for kontrolliert_visa field
+            //
+            $editor = new TextEdit('kontrolliert_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Kontrolliert Visa', 'kontrolliert_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for kontrolliert_datum field
+            //
+            $editor = new DateTimeEdit('kontrolliert_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Kontrolliert Datum', 'kontrolliert_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for autorisierung_verschickt_visa field
+            //
+            $editor = new TextEdit('autorisierung_verschickt_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Autorisierung Verschickt Visa', 'autorisierung_verschickt_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for autorisierung_verschickt_datum field
+            //
+            $editor = new DateTimeEdit('autorisierung_verschickt_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Autorisierung Verschickt Datum', 'autorisierung_verschickt_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for autorisiert_visa field
+            //
+            $editor = new TextEdit('autorisiert_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Autorisiert Visa', 'autorisiert_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for autorisiert_datum field
+            //
+            $editor = new DateTimeEdit('autorisiert_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Autorisiert Datum', 'autorisiert_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
@@ -19284,26 +20352,11 @@
             $editor->AddValue('bane', $this->RenderText('bane'));
             $editor->AddValue('roland', $this->RenderText('roland'));
             $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for freigabe_visa field
-            //
-            $editor = new ComboBox('freigabe_visa_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('otto', $this->RenderText('otto'));
-            $editor->AddValue('rebecca', $this->RenderText('rebecca'));
-            $editor->AddValue('thomas', $this->RenderText('thomas'));
-            $editor->AddValue('bane', $this->RenderText('bane'));
-            $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
             $column->SetDescription($this->RenderText('Freigabe von (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -19321,21 +20374,11 @@
             //
             $editor = new DateTimeEdit('freigabe_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Freigabe Datum', 'freigabe_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for freigabe_datum field
-            //
-            $editor = new DateTimeEdit('freigabe_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Freigabe Datum', 'freigabe_datum', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
             $column->SetDescription($this->RenderText('Freigabedatum (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -19554,13 +20597,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -19572,6 +20608,27 @@
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -19643,6 +20700,66 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $column->SetReplaceLFByBR(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -19809,7 +20926,17 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -19932,6 +21059,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -19953,6 +21088,48 @@
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for geschlecht field
+            //
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('M', $this->RenderText('M'));
+            $editor->AddValue('F', $this->RenderText('F'));
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for zivilstand field
+            //
+            $editor = new ComboBox('zivilstand_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('ledig', $this->RenderText('ledig'));
+            $editor->AddValue('verheirated', $this->RenderText('verheirated'));
+            $editor->AddValue('geschieden', $this->RenderText('geschieden'));
+            $editor->AddValue('eingetragene partnerschaft', $this->RenderText('eingetragene partnerschaft'));
+            $editColumn = new CustomEditColumn('Zivilstand', 'zivilstand', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for anzahl_kinder field
+            //
+            $editor = new TextEdit('anzahl_kinder_edit');
+            $editColumn = new CustomEditColumn('Anzahl Kinder', 'anzahl_kinder', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -20000,26 +21177,6 @@
                 'militaerischer_grad', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for geschlecht field
-            //
-            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('M', $this->RenderText('M'));
-            $editor->AddValue('F', $this->RenderText('F'));
-            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -20122,6 +21279,94 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for eingabe_abgeschlossen_visa field
+            //
+            $editor = new TextEdit('eingabe_abgeschlossen_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Visa', 'eingabe_abgeschlossen_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for eingabe_abgeschlossen_datum field
+            //
+            $editor = new DateTimeEdit('eingabe_abgeschlossen_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Eingabe Abgeschlossen Datum', 'eingabe_abgeschlossen_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for kontrolliert_visa field
+            //
+            $editor = new TextEdit('kontrolliert_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Kontrolliert Visa', 'kontrolliert_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for kontrolliert_datum field
+            //
+            $editor = new DateTimeEdit('kontrolliert_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Kontrolliert Datum', 'kontrolliert_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_verschickt_visa field
+            //
+            $editor = new TextEdit('autorisierung_verschickt_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Autorisierung Verschickt Visa', 'autorisierung_verschickt_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisierung_verschickt_datum field
+            //
+            $editor = new DateTimeEdit('autorisierung_verschickt_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Autorisierung Verschickt Datum', 'autorisierung_verschickt_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisiert_visa field
+            //
+            $editor = new TextEdit('autorisiert_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Autorisiert Visa', 'autorisiert_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisiert_datum field
+            //
+            $editor = new DateTimeEdit('autorisiert_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Autorisiert Datum', 'autorisiert_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for freigabe_visa field
             //
             $editor = new ComboBox('freigabe_visa_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -20131,6 +21376,7 @@
             $editor->AddValue('bane', $this->RenderText('bane'));
             $editor->AddValue('roland', $this->RenderText('roland'));
             $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -20140,6 +21386,7 @@
             //
             $editor = new DateTimeEdit('freigabe_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Freigabe Datum', 'freigabe_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -20311,7 +21558,17 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
@@ -20435,6 +21692,14 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
@@ -20456,6 +21721,49 @@
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for geschlecht field
+            //
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('M', $this->RenderText('M'));
+            $editor->AddValue('F', $this->RenderText('F'));
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('M'));
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for zivilstand field
+            //
+            $editor = new ComboBox('zivilstand_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('ledig', $this->RenderText('ledig'));
+            $editor->AddValue('verheirated', $this->RenderText('verheirated'));
+            $editor->AddValue('geschieden', $this->RenderText('geschieden'));
+            $editor->AddValue('eingetragene partnerschaft', $this->RenderText('eingetragene partnerschaft'));
+            $editColumn = new CustomEditColumn('Zivilstand', 'zivilstand', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for anzahl_kinder field
+            //
+            $editor = new TextEdit('anzahl_kinder_edit');
+            $editColumn = new CustomEditColumn('Anzahl Kinder', 'anzahl_kinder', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -20503,27 +21811,6 @@
                 'militaerischer_grad', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for geschlecht field
-            //
-            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('M', $this->RenderText('M'));
-            $editor->AddValue('F', $this->RenderText('F'));
-            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetInsertDefaultValue($this->RenderText('M'));
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for geburtstag field
-            //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -20597,29 +21884,6 @@
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for freigabe_visa field
-            //
-            $editor = new ComboBox('freigabe_visa_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('otto', $this->RenderText('otto'));
-            $editor->AddValue('rebecca', $this->RenderText('rebecca'));
-            $editor->AddValue('thomas', $this->RenderText('thomas'));
-            $editor->AddValue('bane', $this->RenderText('bane'));
-            $editor->AddValue('roland', $this->RenderText('roland'));
-            $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for freigabe_datum field
-            //
-            $editor = new DateTimeEdit('freigabe_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Freigabe Datum', 'freigabe_datum', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -20749,13 +22013,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -20767,6 +22024,27 @@
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -20823,6 +22101,66 @@
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -20993,13 +22331,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -21011,6 +22342,27 @@
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -21067,6 +22419,66 @@
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -21293,15 +22705,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -21317,6 +22720,33 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Zivilstand'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Anzahl der Kinder'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -21403,6 +22833,82 @@
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -21575,13 +23081,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -21593,6 +23092,27 @@
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -21649,6 +23169,66 @@
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -21865,15 +23445,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -21889,6 +23460,33 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Zivilstand'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Anzahl der Kinder'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -21975,6 +23573,82 @@
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -22147,13 +23821,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -22165,6 +23832,27 @@
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22221,6 +23909,66 @@
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22437,15 +24185,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -22461,6 +24200,33 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Zivilstand'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Anzahl der Kinder'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -22547,6 +24313,82 @@
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -22719,13 +24561,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -22737,6 +24572,27 @@
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -22793,6 +24649,66 @@
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23009,15 +24925,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -23033,6 +24940,33 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Zivilstand'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Anzahl der Kinder'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -23119,6 +25053,82 @@
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -23291,13 +25301,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -23309,6 +25312,27 @@
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23365,6 +25389,66 @@
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23581,15 +25665,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -23605,6 +25680,33 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Zivilstand'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Anzahl der Kinder'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -23691,6 +25793,82 @@
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -23863,13 +26041,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -23881,6 +26052,27 @@
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -23937,6 +26129,66 @@
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24153,15 +26405,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -24177,6 +26420,33 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Zivilstand'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Anzahl der Kinder'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24263,6 +26533,82 @@
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24435,13 +26781,6 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name field
-            //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
@@ -24453,6 +26792,27 @@
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zivilstand field
+            //
+            $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_kinder field
+            //
+            $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -24509,6 +26869,66 @@
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
