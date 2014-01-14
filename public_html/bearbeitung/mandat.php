@@ -936,14 +936,14 @@
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
             // Edit column for autorisiert_datum field
             //
-            $editor = new DateTimeEdit('autorisiert_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('autorisiert_datum_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Autorisiert Datum', 'autorisiert_datum', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
@@ -1287,7 +1287,7 @@
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1822,7 +1822,7 @@
             //
             // Edit column for autorisiert_datum field
             //
-            $editor = new DateTimeEdit('autorisiert_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editor = new DateTimeEdit('autorisiert_datum_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Autorisiert Datum', 'autorisiert_datum', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
@@ -2043,7 +2043,7 @@
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -2204,7 +2204,7 @@
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
