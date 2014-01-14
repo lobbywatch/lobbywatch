@@ -67,6 +67,54 @@
                         </button>
                     {/if}
 
+                    {if $DataGrid.ActionsPanel.InputFinishedSelectedButton}
+                        <button class="btn input-finished-selected">
+                            <i class="pg-icon-input-finished-selected"></i>
+                            Eingabe abgeschlossen
+                            {* $Captions->GetMessageString('AuthorizeSelected') *}
+                        </button>
+                    {/if}
+
+                    {if $DataGrid.ActionsPanel.InputFinishedSelectedButton}
+                        <button class="btn de-input-finished-selected">
+                            <i class="pg-icon-de-input-finished-selected"></i>
+                            Ent-Eingabe abgeschlossen
+                            {* $Captions->GetMessageString('AuthorizeSelected') *}
+                        </button>
+                    {/if}
+
+                    {if $DataGrid.ActionsPanel.ControlledSelectedButton}
+                        <button class="btn controlled-selected">
+                            <i class="pg-icon-controlled-selected"></i>
+                            Kontrolliert
+                            {* $Captions->GetMessageString('AuthorizeSelected') *}
+                        </button>
+                    {/if}
+
+                    {if $DataGrid.ActionsPanel.ControlledSelectedButton}
+                        <button class="btn de-controlled-selected">
+                            <i class="pg-icon-de-controlled-selected"></i>
+                            Ent-Kontrolliert
+                            {* $Captions->GetMessageString('AuthorizeSelected') *}
+                        </button>
+                    {/if}
+
+                    {if $DataGrid.ActionsPanel.AuthorizationSentSelectedButton}
+                        <button class="btn authorization-sent-selected">
+                            <i class="pg-icon-authorization-sent-selected"></i>
+                            Autorisierung verschickt
+                            {* $Captions->GetMessageString('AuthorizeSelected') *}
+                        </button>
+                    {/if}
+
+                    {if $DataGrid.ActionsPanel.AuthorizationSentSelectedButton}
+                        <button class="btn de-authorization-sent-selected">
+                            <i class="pg-icon-de-authorization-sent-selected"></i>
+                            Ent-Autorisierung verschickt
+                            {* $Captions->GetMessageString('AuthorizeSelected') *}
+                        </button>
+                    {/if}
+
                     {if $DataGrid.ActionsPanel.AuthorizeSelectedButton}
                         <button class="btn authorize-selected">
                             <i class="pg-icon-authorize-selected"></i>

@@ -886,6 +886,12 @@ abstract class Page implements IPage, IVariableContainer
                 break;
             case OPERATION_DELETE:
             case OPERATION_DELETE_SELECTED:
+            case OPERATION_INPUT_FINISHED_SELECTED: // Afterburner
+            case OPERATION_DE_INPUT_FINISHED_SELECTED: // Afterburner
+            case OPERATION_CONTROLLED_SELECTED: // Afterburner
+            case OPERATION_DE_CONTROLLED_SELECTED: // Afterburner
+            case OPERATION_AUTHORIZATION_SENT_SELECTED: // Afterburner
+            case OPERATION_DE_AUTHORIZATION_SENT_SELECTED: // Afterburner
             case OPERATION_AUTHORIZE_SELECTED: // Afterburner
             case OPERATION_DE_AUTHORIZE_SELECTED: // Afterburner
             case OPERATION_RELEASE_SELECTED: // Afterburner
@@ -947,6 +953,12 @@ abstract class Page implements IPage, IVariableContainer
                 $this->renderer = new PdfRenderer($this->GetLocalizerCaptions());
                 break;
             case OPERATION_DELETE_SELECTED:
+            case OPERATION_INPUT_FINISHED_SELECTED: // Afterburner
+            case OPERATION_DE_INPUT_FINISHED_SELECTED: // Afterburner
+            case OPERATION_CONTROLLED_SELECTED: // Afterburner
+            case OPERATION_DE_CONTROLLED_SELECTED: // Afterburner
+            case OPERATION_AUTHORIZATION_SENT_SELECTED: // Afterburner
+            case OPERATION_DE_AUTHORIZATION_SENT_SELECTED: // Afterburner
             case OPERATION_AUTHORIZE_SELECTED: // Afterburner
             case OPERATION_DE_AUTHORIZE_SELECTED: // Afterburner
             case OPERATION_RELEASE_SELECTED: // Afterburner

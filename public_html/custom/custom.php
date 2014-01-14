@@ -3,6 +3,12 @@
 require_once dirname(__FILE__) . "/../common/utils.php";
 require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_state.php';
 
+define('OPERATION_INPUT_FINISHED_SELECTED', 'finsel');
+define('OPERATION_DE_INPUT_FINISHED_SELECTED', 'definsel');
+define('OPERATION_CONTROLLED_SELECTED', 'consel');
+define('OPERATION_DE_CONTROLLED_SELECTED', 'deconsel');
+define('OPERATION_AUTHORIZATION_SENT_SELECTED', 'sndsel');
+define('OPERATION_DE_AUTHORIZATION_SENT_SELECTED', 'desndsel');
 define('OPERATION_AUTHORIZE_SELECTED', 'autsel');
 define('OPERATION_DE_AUTHORIZE_SELECTED', 'deautsel');
 define('OPERATION_RELEASE_SELECTED', 'relsel');
@@ -357,6 +363,61 @@ abstract class SelectedOperationGridState extends GridState {
     $this->ApplyState ( OPERATION_VIEWALL );
   }
 }
+
+class InputFinishedSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'eingabe_abgeschlossen_visa', $userName );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'eingabe_abgeschlossen_datum', $datetime );
+  }
+}
+class DeInputFinishedSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'eingabe_abgeschlossen_visa', null );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'eingabe_abgeschlossen_datum', null );
+      }
+}
+
+class ControlledSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'kontrolliert_visa', $userName );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'kontrolliert_datum', $datetime );
+  }
+}
+class DeControlledSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'kontrolliert_visa', null );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'kontrolliert_datum', null );
+  }
+}
+
+class AuthorizationSentSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisierung_verschickt_visa', $userName );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisierung_verschickt_datum', $datetime );
+  }
+}
+class DeAuthorizationSentSelectedGridState extends SelectedOperationGridState {
+  protected function DoOperation() {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisierung_verschickt_visa', null );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisierung_verschickt_datum', null );
+  }
+}
+
 class AuthorizeSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
     // df($this->grid->GetDataset()->GetFieldValueByName('id'));
@@ -373,14 +434,14 @@ class DeAuthorizeSelectedGridState extends SelectedOperationGridState {
     $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisiert_datum', null );
   }
 }
+
 class ReleaseSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
     // df($this->grid->GetDataset()->GetFieldValueByName('id'));
     $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
-    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
 
     $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_visa', $userName );
-    $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_datum', $datetime );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'freigabe_datum', $this->date );
   }
 }
 class DeReleaseSelectedGridState extends SelectedOperationGridState {

@@ -207,3 +207,7 @@ h3.box-title,
 .hint {
   border-bottom: 1px dotted black;
 }
+
+.pg-icon-set-imratbis-selected {
+  background-image: url("../../img/icons/fugue/calendar-day.png");
+}

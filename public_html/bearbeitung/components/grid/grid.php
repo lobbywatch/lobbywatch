@@ -1276,6 +1276,24 @@ class Grid {
             case OPERATION_COMMIT_DELETE:
                 $this->gridState = new CommitDeleteGridState($this);
                 break;
+            case OPERATION_INPUT_FINISHED_SELECTED: // Afterburner
+                $this->gridState = new InputFinishedSelectedGridState($this); // Afterburner
+                break;
+            case OPERATION_DE_INPUT_FINISHED_SELECTED: // Afterburner
+                $this->gridState = new DeInputFinishedSelectedGridState($this);
+                break;
+            case OPERATION_CONTROLLED_SELECTED: // Afterburner
+                $this->gridState = new ControlledSelectedGridState($this); // Afterburner
+                break;
+            case OPERATION_DE_CONTROLLED_SELECTED: // Afterburner
+                $this->gridState = new DeControlledSelectedGridState($this);
+                break;
+            case OPERATION_AUTHORIZATION_SENT_SELECTED: // Afterburner
+                $this->gridState = new AuthorizationSentSelectedGridState($this); // Afterburner
+                break;
+            case OPERATION_DE_AUTHORIZATION_SENT_SELECTED: // Afterburner
+                $this->gridState = new DeAuthorizationSentSelectedGridState($this);
+                break;
             case OPERATION_AUTHORIZE_SELECTED: // Afterburner
                 $this->gridState = new AuthorizeSelectedGridState($this); // Afterburner
                 break;
@@ -1451,6 +1469,21 @@ class Grid {
 
     function SetAllowDeleteSelected($value) {
         $this->allowDeleteSelected = $value;
+    }
+
+    function GetAllowInputFinishedSelected() { // Afterburner
+      $columns = $this->GetEditColumns(); // Afterburner
+      return $this->GetAllowDeleteSelected() && is_column_present($columns,'eingabe_abgeschlossen_datum') && is_column_present($columns,'eingabe_abgeschlossen_visa'); // Afterburner
+    }
+
+    function GetAllowControlledSelected() { // Afterburner
+      $columns = $this->GetEditColumns(); // Afterburner
+      return $this->GetAllowDeleteSelected() && is_column_present($columns,'kontrolliert_datum') && is_column_present($columns,'kontrolliert_visa'); // Afterburner
+    }
+
+    function GetAllowAuthorizationSentSelected() { // Afterburner
+      $columns = $this->GetEditColumns(); // Afterburner
+      return $this->GetAllowDeleteSelected() && is_column_present($columns,'autorisierung_verschickt_datum') && is_column_present($columns,'autorisierung_verschickt_visa'); // Afterburner
     }
 
     function GetAllowAuthorizeSelected() { // Afterburner
@@ -2047,6 +2080,9 @@ class Grid {
                 'AddNewButton' => $this->GetShowAddButton() ? ($this->GetUseModalInserting() ? 'modal' : 'simple') : null,
                 'RefreshButton' => $this->GetShowUpdateLink(),
                 'DeleteSelectedButton' => $this->GetAllowDeleteSelected(),
+                'InputFinishedSelectedButton' => $this->GetAllowInputFinishedSelected(), // Afterburner
+                'ControlledSelectedButton' => $this->GetAllowControlledSelected(), // Afterburner
+                'AuthorizationSentSelectedButton' => $this->GetAllowAuthorizationSentSelected(), // Afterburner
                 'AuthorizeSelectedButton' => $this->GetAllowAuthorizeSelected(), // Afterburner
                 'ReleaseSelectedButton' => $this->GetAllowReleaseSelected(), // Afterburner
                 'ImRatBisSelectedButton' => $this->GetAllowImRatBisSelected(), // Afterburner

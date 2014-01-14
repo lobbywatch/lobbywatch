@@ -22,6 +22,12 @@ define(function(require, exports, module) {
             this.container = container;
             this.container.data('grid-class', this);
 
+            this.$inputFinishedSelectedButton = this.container.find('.input-finished-selected');
+            this.$deinputFinishedSelectedButton = this.container.find('.de-input-finished-selected');
+            this.$controlledSelectedButton = this.container.find('.controlled-selected');
+            this.$decontrolledSelectedButton = this.container.find('.de-controlled-selected');
+            this.$authorizationSentSelectedButton = this.container.find('.authorization-sent-selected');
+            this.$deauthorizationSentSelectedButton = this.container.find('.de-authorization-sent-selected');
             this.$authorizeSelectedButton = this.container.find('.authorize-selected');
             this.$deauthorizeSelectedButton = this.container.find('.de-authorize-selected');
             this.$releaseSelectedButton = this.container.find('.release-selected');
@@ -82,6 +88,96 @@ define(function(require, exports, module) {
         _bindHandlers: function() {
             var self = this;
 
+            this.$inputFinishedSelectedButton.click(function() {
+
+              require(['bootbox.min'], function() {
+
+                  var nRows = self.countSelectedRows();
+                  bootbox.animate(false);
+                  bootbox.confirm( nRows + ' markierte Einträge abschliessen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+                      if (confirmed) {
+                          self.operateSelectRows('finsel');
+                      }
+                  });
+
+                });
+            });
+
+            this.$deinputFinishedSelectedButton.click(function() {
+
+              require(['bootbox.min'], function() {
+
+                  var nRows = self.countSelectedRows();
+                  bootbox.animate(false);
+                  bootbox.confirm( '"Eingabe abgeschlossen" bei ' + nRows + ' Einträgen entfernen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+                      if (confirmed) {
+                          self.operateSelectRows('definsel');
+                      }
+                  });
+
+                });
+            });
+
+            this.$controlledSelectedButton.click(function() {
+
+              require(['bootbox.min'], function() {
+
+                  var nRows = self.countSelectedRows();
+                  bootbox.animate(false);
+                  bootbox.confirm( nRows + ' markierte Einträge kontrolliert?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+                      if (confirmed) {
+                          self.operateSelectRows('consel');
+                      }
+                  });
+
+                });
+            });
+
+            this.$decontrolledSelectedButton.click(function() {
+
+              require(['bootbox.min'], function() {
+
+                  var nRows = self.countSelectedRows();
+                  bootbox.animate(false);
+                  bootbox.confirm( '"Kontrolliert" bei ' + nRows + ' Einträgen entfernen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+                      if (confirmed) {
+                          self.operateSelectRows('deconsel');
+                      }
+                  });
+
+                });
+            });
+
+            this.$authorizationSentSelectedButton.click(function() {
+
+              require(['bootbox.min'], function() {
+
+                  var nRows = self.countSelectedRows();
+                  bootbox.animate(false);
+                  bootbox.confirm( 'Bei ' + nRows + ' markierten Einträgen eine Autorisierungsanfrage verschickt?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+                      if (confirmed) {
+                          self.operateSelectRows('sndsel');
+                      }
+                  });
+
+                });
+            });
+
+            this.$deauthorizationSentSelectedButton.click(function() {
+
+              require(['bootbox.min'], function() {
+
+                  var nRows = self.countSelectedRows();
+                  bootbox.animate(false);
+                  bootbox.confirm( '"Autorisierungsanfrage verschickt" bei ' + nRows + ' Einträgen entfernen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+                      if (confirmed) {
+                          self.operateSelectRows('desndsel');
+                      }
+                  });
+
+                });
+            });
+
             this.$authorizeSelectedButton.click(function() {
 
                 require(['bootbox.min'], function() {
@@ -95,7 +191,7 @@ define(function(require, exports, module) {
                           if (date === '' || self.isDateValid(date)) {
                               self.operateSelectRows('autsel', date);
                             } else {
-                              bootbox.alert('Bitte Datum als DD.MM.YYYY eingeben');
+                              bootbox.alert('Bitte Datum als TT.MM.JJJJ eingeben');
                             }
                         }
                     });
@@ -122,15 +218,21 @@ define(function(require, exports, module) {
 
               require(['bootbox.min'], function() {
 
-                  var nRows = self.countSelectedRows();
-                  bootbox.animate(false);
-                  bootbox.confirm( nRows + ' markierte Einträge freigeben?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
-                      if (confirmed) {
-                          self.operateSelectRows('relsel');
-                      }
-                  });
-
+                var nRows = self.countSelectedRows();
+                bootbox.animate(false);
+                bootbox.prompt( nRows + ' markierte Einträge freigeben?<small><br><br>Bitte Freigabedatum eingeben (leer = heute):</small>'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(date) {
+//                     console.log(date);
+//                     console.log(self.isDateValid(date));
+                    if (date !== null) {
+                      if (date === '' || self.isDateValid(date)) {
+                          self.operateSelectRows('relsel', date);
+                        } else {
+                          bootbox.alert('Bitte Datum als TT.MM.JJJJ eingeben');
+                        }
+                    }
                 });
+
+              });
             });
 
             this.$dereleaseSelectedButton.click(function() {
@@ -161,7 +263,7 @@ define(function(require, exports, module) {
                     if (date === '' || self.isDateValid(date)) {
                       self.operateSelectRows('setimratbissel', date);
                     } else {
-                      bootbox.alert('Bitte Datum als DD.MM.YYYY eingeben');
+                      bootbox.alert('Bitte Datum als TT.MM.JJJJ eingeben');
                     }
                   }
                 });
