@@ -222,6 +222,10 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('autorisiert_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateField('autorisiert_datum');
@@ -434,6 +438,10 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('autorisiert_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateField('autorisiert_datum');
@@ -512,6 +520,10 @@
             $field = new StringField('kontrolliert_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('autorisiert_visa');
             $lookupDataset->AddField($field, false);
@@ -1425,6 +1437,10 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('autorisiert_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateField('autorisiert_datum');
@@ -1647,6 +1663,10 @@
             $field = new StringField('kontrolliert_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('autorisiert_visa');
             $lookupDataset->AddField($field, false);
@@ -2435,6 +2455,10 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('autorisiert_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateField('autorisiert_datum');
@@ -2504,6 +2528,10 @@
             $field = new StringField('kontrolliert_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('autorisiert_visa');
             $lookupDataset->AddField($field, false);
@@ -2796,6 +2824,10 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('autorisiert_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateField('autorisiert_datum');
@@ -2935,6 +2967,10 @@
             $field = new StringField('kontrolliert_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
             $lookupDataset->AddField($field, false);
             $field = new StringField('autorisiert_visa');
             $lookupDataset->AddField($field, false);
