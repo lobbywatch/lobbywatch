@@ -18854,6 +18854,13 @@
         {
             $result = new CompositePageNavigator($this);
             
+            $partitionNavigator = new CustomPageNavigator('partition', $this, $this->GetDataset(), $this->RenderText('De Name beginnt mit'), $result, 'partition');
+            $partitionNavigator->OnGetPartitions->AddListener('partition_OnGetPartitions', $this);
+            $partitionNavigator->OnGetPartitionCondition->AddListener('partition_OnGetPartitionCondition', $this);
+            $partitionNavigator->SetAllowViewAllRecords(true);
+            $partitionNavigator->SetNavigationStyle(NS_LIST);
+            $result->AddPageNavigator($partitionNavigator);
+            
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
             $partitionNavigator->SetRowsPerPage(100);
             $result->AddPageNavigator($partitionNavigator);
@@ -24980,6 +24987,26 @@
         
         public function GetModalGridDeleteHandler() { return 'organisation_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
+        
+        function partition_OnGetPartitions(&$partitions)
+        {
+            $tmp = array();
+            $this->GetConnection()->ExecQueryToArray("
+            SELECT DISTINCT
+            left(o.name_de, 1) as first_letter
+            FROM v_organisation o
+            ORDER BY first_letter", $tmp
+            );
+            
+            foreach($tmp as $letter) {
+              $partitions[$letter['first_letter']] = $letter['first_letter'];
+            }
+        }
+        
+        function partition_OnGetPartitionCondition($partitionKey, &$condition)
+        {
+            $condition = "left(name_de, 1) = '$partitionKey'";
+        }
     
         protected function CreateGrid()
         {
