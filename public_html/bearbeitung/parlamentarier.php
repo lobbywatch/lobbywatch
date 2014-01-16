@@ -19015,41 +19015,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for zweiter_vorname field
-            //
-            $editor = new TextEdit('zweiter_vorname_edit');
-            $editor->SetSize(50);
-            $editor->SetMaxLength(50);
-            $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for zweiter_vorname field
-            //
-            $editor = new TextEdit('zweiter_vorname_edit');
-            $editor->SetSize(50);
-            $editor->SetMaxLength(50);
-            $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Zweiter Vorname des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
@@ -22652,15 +22617,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Zweiter Vorname des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
@@ -23388,15 +23344,6 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Zweiter Vorname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24132,15 +24079,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Zweiter Vorname des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
@@ -24868,15 +24806,6 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Zweiter Vorname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -25612,15 +25541,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Zweiter Vorname des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
@@ -26348,15 +26268,6 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Zweiter Vorname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
