@@ -429,11 +429,27 @@ CONCAT(
   '<ul>',
   GROUP_CONCAT(DISTINCT
     CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion)
-    ORDER BY organisation.anzeige_name
+    ORDER BY zutrittsberechtigung.name
     SEPARATOR ' '
   ),
   '</ul>',
-  '<p>Mit freundlichen Grüssen,<br></p>'
+  '<p><b>Mandate</b> der Gäste:</p>',
+  '<ul>',
+  GROUP_CONCAT(DISTINCT
+    CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion,
+    IF (organisation2.id IS NOT NULL,
+      CONCAT(', ',
+        organisation2.anzeige_name
+        , IF(organisation2.rechtsform IS NULL OR TRIM(organisation2.rechtsform) = '', '', CONCAT(', ', organisation2.rechtsform)), IF(organisation2.ort IS NULL OR TRIM(organisation2.ort) = '', '', CONCAT(', ', organisation2.ort)), ', '
+        , IFNULL(mandat.art, ''), ', ', IFNULL(mandat.beschreibung, '')
+      ),
+      '')
+    )
+    ORDER BY zutrittsberechtigung.name, organisation2.anzeige_name
+    SEPARATOR ' '
+  ),
+  '</ul>',
+  '<p>Freundliche Grüsse<br></p>'
 ) email_text_html,
 UTF8_URLENCODE(CONCAT(
   CASE parlamentarier.geschlecht
@@ -463,4 +479,13 @@ LEFT JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
 LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
+LEFT JOIN v_mandat mandat
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id
+LEFT JOIN v_organisation organisation2
+  ON mandat.organisation_id = organisation2.id
+WHERE
+parlamentarier.im_rat_bis IS NULL
+AND interessenbindung.bis IS NULL
+AND zutrittsberechtigung.bis IS NULL
+AND mandat.bis IS NULL
 GROUP BY parlamentarier.id;
