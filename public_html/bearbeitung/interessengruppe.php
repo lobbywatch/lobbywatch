@@ -8215,6 +8215,13 @@
         {
             $result = new CompositePageNavigator($this);
             
+            $partitionNavigator = new CustomPageNavigator('partition', $this, $this->GetDataset(), $this->RenderText('Name beginnt mit'), $result, 'partition');
+            $partitionNavigator->OnGetPartitions->AddListener('partition_OnGetPartitions', $this);
+            $partitionNavigator->OnGetPartitionCondition->AddListener('partition_OnGetPartitionCondition', $this);
+            $partitionNavigator->SetAllowViewAllRecords(true);
+            $partitionNavigator->SetNavigationStyle(NS_LIST);
+            $result->AddPageNavigator($partitionNavigator);
+            
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
             $partitionNavigator->SetRowsPerPage(100);
             $result->AddPageNavigator($partitionNavigator);
@@ -10130,6 +10137,26 @@
         
         public function GetModalGridDeleteHandler() { return 'interessengruppe_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
+        
+        function partition_OnGetPartitions(&$partitions)
+        {
+            $tmp = array();
+            $this->GetConnection()->ExecQueryToArray("
+            SELECT DISTINCT
+            upper(left(i.name, 1)) as first_letter
+            FROM v_interessengruppe i
+            ORDER BY first_letter", $tmp
+            );
+            
+            foreach($tmp as $letter) {
+              $partitions[$letter['first_letter']] = convert_ansi($letter['first_letter']);
+            }
+        }
+        
+        function partition_OnGetPartitionCondition($partitionKey, &$condition)
+        {
+            $condition = "upper(left(interessengruppe.name, 1)) = '$partitionKey'";
+        }
     
         protected function CreateGrid()
         {

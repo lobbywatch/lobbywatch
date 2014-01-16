@@ -18584,6 +18584,13 @@
         {
             $result = new CompositePageNavigator($this);
             
+            $partitionNavigator = new CustomPageNavigator('partition', $this, $this->GetDataset(), $this->RenderText('Name beginnt mit '), $result, 'partition');
+            $partitionNavigator->OnGetPartitions->AddListener('partition_OnGetPartitions', $this);
+            $partitionNavigator->OnGetPartitionCondition->AddListener('partition_OnGetPartitionCondition', $this);
+            $partitionNavigator->SetAllowViewAllRecords(true);
+            $partitionNavigator->SetNavigationStyle(NS_LIST);
+            $result->AddPageNavigator($partitionNavigator);
+            
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
             $partitionNavigator->SetRowsPerPage(100);
             $result->AddPageNavigator($partitionNavigator);
@@ -27194,6 +27201,26 @@
         
         public function GetModalGridDeleteHandler() { return 'parlamentarier_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
+        
+        function partition_OnGetPartitions(&$partitions)
+        {
+            $tmp = array();
+            $this->GetConnection()->ExecQueryToArray("
+            SELECT DISTINCT
+            upper(left(p.nachname, 1)) as first_letter
+            FROM v_parlamentarier p
+            ORDER BY first_letter", $tmp
+            );
+            
+            foreach($tmp as $letter) {
+              $partitions[$letter['first_letter']] = convert_ansi($letter['first_letter']);
+            }
+        }
+        
+        function partition_OnGetPartitionCondition($partitionKey, &$condition)
+        {
+            $condition = "upper(left(nachname, 1)) = '$partitionKey'";
+        }
     
         protected function CreateGrid()
         {
