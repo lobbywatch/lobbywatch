@@ -2936,6 +2936,8 @@
             ApplyCommonPageSettings($this, $result);
             
             $result->SetUseImagesForActions(true);
+            $result->SetDefaultOrdering('parlamentarier_id_anzeige_name', otAscending);
+            
             $result->SetUseFixedHeader(false);
             
             $result->SetShowLineNumbers(false);

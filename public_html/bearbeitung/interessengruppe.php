@@ -10142,6 +10142,8 @@
             ApplyCommonPageSettings($this, $result);
             
             $result->SetUseImagesForActions(true);
+            $result->SetDefaultOrdering('name', otAscending);
+            
             $result->SetUseFixedHeader(false);
             
             $result->SetShowLineNumbers(false);

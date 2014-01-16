@@ -24992,6 +24992,8 @@
             ApplyCommonPageSettings($this, $result);
             
             $result->SetUseImagesForActions(true);
+            $result->SetDefaultOrdering('name_de', otAscending);
+            
             $result->SetUseFixedHeader(false);
             
             $result->SetShowLineNumbers(false);

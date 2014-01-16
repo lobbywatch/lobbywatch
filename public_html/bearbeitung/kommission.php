@@ -7651,6 +7651,8 @@
             ApplyCommonPageSettings($this, $result);
             
             $result->SetUseImagesForActions(true);
+            $result->SetDefaultOrdering('abkuerzung', otAscending);
+            
             $result->SetUseFixedHeader(false);
             
             $result->SetShowLineNumbers(false);
