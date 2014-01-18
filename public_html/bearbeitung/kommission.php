@@ -5100,8 +5100,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('kommissionssearch', $this->dataset,
-                array('id', 'abkuerzung', 'name', 'typ', 'art', 'mutter_kommission_id_anzeige_name', 'beschreibung', 'sachbereiche', 'parlament_url', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Typ'), $this->RenderText('Art'), $this->RenderText('Mutter Kommission'), $this->RenderText('Beschreibung'), $this->RenderText('Sachbereiche'), $this->RenderText('Parlament Url'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'abkuerzung', 'name', 'typ', 'art', 'mutter_kommission_id_anzeige_name', 'beschreibung', 'sachbereiche', 'parlament_url', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Typ'), $this->RenderText('Art'), $this->RenderText('Mutter Kommission'), $this->RenderText('Beschreibung'), $this->RenderText('Sachbereiche'), $this->RenderText('Parlament Url'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
