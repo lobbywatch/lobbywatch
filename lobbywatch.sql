@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 16. Jan 2014 um 21:30
+-- Erstellungszeit: 18. Jan 2014 um 06:52
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -266,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
   PRIMARY KEY (`log_id`),
   KEY `kommission_id` (`kommission_id`),
   KEY `fk_branche_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=19 ;
 
 --
 -- RELATIONEN DER TABELLE `branche_log`:
@@ -412,7 +412,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbyorg` (`organisation_id`),
   KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=512 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=321 ;
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung_log`:
@@ -534,7 +534,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
   PRIMARY KEY (`log_id`),
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `fk_interessengruppe_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=10 ;
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe_log`:
@@ -664,7 +664,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `kommissions_id` (`kommission_id`),
   KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=128 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=110 ;
 
 --
 -- RELATIONEN DER TABELLE `in_kommission_log`:
@@ -797,7 +797,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
   PRIMARY KEY (`log_id`),
   KEY `zugehoerige_kommission` (`mutter_kommission_id`),
   KEY `fk_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=32 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=29 ;
 
 --
 -- RELATIONEN DER TABELLE `kommission_log`:
@@ -1053,7 +1053,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 13. Jan 2014 um 21:01
+-- Erzeugt am: 18. Jan 2014 um 05:24
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1071,7 +1071,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `url` varchar(255) DEFAULT NULL COMMENT 'Link zur Webseite',
   `handelsregister_url` varchar(255) DEFAULT NULL COMMENT 'Link zum Eintrag im Handelsregister',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Lobbyorganisation',
-  `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL COMMENT 'Bisherige Verbindung der Organisation ins Parlament',
+  `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') DEFAULT NULL COMMENT 'Einschätzung der Verbindung der Organisation ins Parlament',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` datetime DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
@@ -1288,7 +1288,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
   KEY `organisation_id` (`organisation_id`),
   KEY `ziel_organisation_id` (`ziel_organisation_id`),
   KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=6 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung_log`:
@@ -1301,7 +1301,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 14. Jan 2014 um 22:15
+-- Erzeugt am: 18. Jan 2014 um 05:25
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1319,7 +1319,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `url` varchar(255) DEFAULT NULL COMMENT 'Link zur Webseite',
   `handelsregister_url` varchar(255) DEFAULT NULL COMMENT 'Link zum Eintrag im Handelsregister',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Lobbyorganisation',
-  `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') NOT NULL COMMENT 'Bisherige Verbindung der Organisation ins Parlament',
+  `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') DEFAULT NULL COMMENT 'Einschätzung der Verbindung der Organisation ins Parlament',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` datetime DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
@@ -1340,7 +1340,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `idx_lobbygroup` (`interessengruppe_id`),
   KEY `fk_organisation_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=512 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=346 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_log`:
@@ -1668,7 +1668,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
   KEY `militaerischer_grad` (`militaerischer_grad`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=64 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=39 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -1789,7 +1789,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_partei_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=17 ;
 
 --
 -- RELATIONEN DER TABELLE `partei_log`:
@@ -3035,7 +3035,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
   KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`),
   KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=64 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=62 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_log`:
