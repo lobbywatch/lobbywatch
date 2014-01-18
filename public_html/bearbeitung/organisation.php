@@ -13254,7 +13254,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -13338,7 +13337,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -14183,7 +14181,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -14594,7 +14591,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -14678,7 +14674,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -15441,7 +15436,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -15783,7 +15777,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -16480,7 +16473,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -16564,7 +16556,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -17242,7 +17233,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -17384,7 +17374,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -17468,7 +17457,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -18048,7 +18036,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -18250,7 +18237,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -18819,7 +18805,6 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -19828,15 +19813,14 @@
             // Edit column for ALT_parlam_verbindung field
             //
             $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->SetDisplayMode(CheckBoxGroup::InlineMode);
             $editor->AddValue('einzel', $this->RenderText('einzel'));
             $editor->AddValue('mehrere', $this->RenderText('mehrere'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
             $editor->AddValue('kommission', $this->RenderText('kommission'));
             $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -19846,15 +19830,14 @@
             // Edit column for ALT_parlam_verbindung field
             //
             $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->SetDisplayMode(CheckBoxGroup::InlineMode);
             $editor->AddValue('einzel', $this->RenderText('einzel'));
             $editor->AddValue('mehrere', $this->RenderText('mehrere'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
             $editor->AddValue('kommission', $this->RenderText('kommission'));
             $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -20577,15 +20560,14 @@
             // Edit column for ALT_parlam_verbindung field
             //
             $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->SetDisplayMode(CheckBoxGroup::InlineMode);
             $editor->AddValue('einzel', $this->RenderText('einzel'));
             $editor->AddValue('mehrere', $this->RenderText('mehrere'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
             $editor->AddValue('kommission', $this->RenderText('kommission'));
             $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -20957,15 +20939,14 @@
             // Edit column for ALT_parlam_verbindung field
             //
             $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
+            $editor->SetDisplayMode(CheckBoxGroup::InlineMode);
             $editor->AddValue('einzel', $this->RenderText('einzel'));
             $editor->AddValue('mehrere', $this->RenderText('mehrere'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
             $editor->AddValue('kommission', $this->RenderText('kommission'));
             $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
