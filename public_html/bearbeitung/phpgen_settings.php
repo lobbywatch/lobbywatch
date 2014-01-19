@@ -59,7 +59,7 @@ function GetPageInfos()
 function GetPagesHeader()
 {
     return
-    '<h1>Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] . '</h1>';
+    '<h1 id="site-name"><a href="/">Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] . '</a></h1>';
 }
 
 function GetPagesFooter()

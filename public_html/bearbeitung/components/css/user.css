@@ -305,3 +305,14 @@ h3.box-title,
   padding-left: 20px;
   margin-left: -20px;
 }
+
+/* Header */
+
+#site-name a {
+  /*color: rgb(153, 153, 153);*/
+  color: inherit;
+}
+
+#site-name a:hover {
+  text-decoration: none;
+}
