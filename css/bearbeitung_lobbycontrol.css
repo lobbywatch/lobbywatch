@@ -268,10 +268,40 @@ h3.box-title,
   background-position: 0;
 }
 
+/* naviation */
+
 .important-entity {
   font-weight: 700;
 }
 
 .relation {
   font-style: italic;
+}
+
+.pg-page-list > li > a > .page-list-icon {
+  background-image:none;
+}
+
+.pg-page-list > li > a .entity {
+  background-image: url("../../img/icons/fugue/database.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
+.pg-page-list > li > a .relation {
+  background-image: url("../../img/icons/fugue/databases-relation.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
+.pg-page-list > li > a .view {
+  background-image: url("../../img/icons/fugue/document.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
 }
