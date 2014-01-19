@@ -306,19 +306,8 @@ h3.box-title,
   padding-left: 20px;
   margin-left: -20px;
 }
-
-/* Header */
-
-#site-name a {
-  /*color: rgb(153, 153, 153);*/
-  color: inherit;
-}
-
-#site-name a:hover {
-  text-decoration: none;
-}
-
-.pg-page-list > li > a .website {
+.pg-page-list > li > a .website,
+.pg-page-list > li > a .auswertung {
   background-image: url("/favicon.png");
   background-position: left;
   background-repeat: no-repeat;
@@ -332,4 +321,22 @@ h3.box-title,
   background-repeat: no-repeat;
   padding-left: 20px;
   margin-left: -20px;
+}
+
+/* Header */
+#site-name {
+  display: inline;
+}
+
+#site-name a {
+  /*color: rgb(153, 153, 153);*/
+  color: inherit;
+}
+
+#site-name a:hover {
+  text-decoration: none;
+}
+
+#site-logo {
+  vertical-align: top;
 }

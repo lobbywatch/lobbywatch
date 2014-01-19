@@ -307,7 +307,8 @@ h3.box-title,
   margin-left: -20px;
 }
 
-.pg-page-list > li > a .website {
+.pg-page-list > li > a .website,
+.pg-page-list > li > a .auswertung {
   background-image: url("/favicon.png");
   background-position: left;
   background-repeat: no-repeat;
@@ -324,6 +325,9 @@ h3.box-title,
 }
 
 /* Header */
+#site-name {
+  display: inline;
+}
 
 #site-name a {
   /*color: rgb(153, 153, 153);*/
@@ -332,4 +336,8 @@ h3.box-title,
 
 #site-name a:hover {
   text-decoration: none;
+}
+
+#site-logo {
+  vertical-align: top;
 }
