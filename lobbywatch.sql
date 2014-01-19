@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 19. Jan 2014 um 08:34
+-- Erstellungszeit: 19. Jan 2014 um 09:31
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -155,7 +155,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche`
 --
--- Erzeugt am: 19. Jan 2014 um 06:57
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `branche`;
@@ -170,7 +170,7 @@ CREATE TABLE IF NOT EXISTS `branche` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -237,7 +237,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `branche_log`;
@@ -252,7 +252,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
@@ -279,7 +279,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 19. Jan 2014 um 07:32
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') DEFAULT 'mitglied' COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
-  `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Art. 11 Offenlegungspflichten: 1. Beim Amtsantritt und jeweils auf Jahresbeginn unterrichtet jedes Ratsmitglied das Büro schriftlich über seine: a. beruflichen Tätigkeiten; b. Tätigkeiten in Führungs- und Aufsichtsgremien sowie Beiräten und ähnlichen Gremien von schweizerischen und ausländischen Körperschaften, Anstalten und Stiftungen des privaten und des öffentlichen Rechts; c. Beratungs- oder Expertentätigkeiten für Bundesstellen; d. dauernden Leitungs- oder Beratungstätigkeiten für schweizerische und ausländische Interessengruppen; e. Mitwirkung in Kommissionen und anderen Organen des Bundes. | 2.  Die Parlamentsdienste erstellen ein öffentliches Register über die Angaben der Ratsmitglieder. | 3.  Ratsmitglieder, die durch einen Beratungsgegenstand in ihren persönlichen Interessen unmittelbar betroffen sind, weisen auf diese Interessenbindung hin, wenn sie sich im Rat oder in einer Kommission äussern. | 4. Das Berufsgeheimnis im Sinne des Strafgesetzbuche',
+  `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
   `behoerden_vertreter` enum('J','N') DEFAULT NULL COMMENT 'Enstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.',
   `verguetung` int(11) DEFAULT NULL COMMENT 'Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.',
@@ -303,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -373,7 +373,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
@@ -383,11 +383,11 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') DEFAULT 'mitglied' COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
-  `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Art. 11 Offenlegungspflichten: 1. Beim Amtsantritt und jeweils auf Jahresbeginn unterrichtet jedes Ratsmitglied das Büro schriftlich über seine: a. beruflichen Tätigkeiten; b. Tätigkeiten in Führungs- und Aufsichtsgremien sowie Beiräten und ähnlichen Gremien von schweizerischen und ausländischen Körperschaften, Anstalten und Stiftungen des privaten und des öffentlichen Rechts; c. Beratungs- oder Expertentätigkeiten für Bundesstellen; d. dauernden Leitungs- oder Beratungstätigkeiten für schweizerische und ausländische Interessengruppen; e. Mitwirkung in Kommissionen und anderen Organen des Bundes. | 2.  Die Parlamentsdienste erstellen ein öffentliches Register über die Angaben der Ratsmitglieder. | 3.  Ratsmitglieder, die durch einen Beratungsgegenstand in ihren persönlichen Interessen unmittelbar betroffen sind, weisen auf diese Interessenbindung hin, wenn sie sich im Rat oder in einer Kommission äussern. | 4. Das Berufsgeheimnis im Sinne des Strafgesetzbuche',
+  `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
   `behoerden_vertreter` enum('J','N') DEFAULT NULL COMMENT 'Enstand diese Interessenbindung als Behoerdenvertreter von amteswegen? Beispielsweise weil ein Regierungsrat in einem Verwaltungsrat von amteswegen einsitz nimmt.',
   `verguetung` int(11) DEFAULT NULL COMMENT 'Jährliche Vergütung CHF für Tätigkeiten aus dieser Interessenbindung, z.B. Entschädigung für Beiratsfunktion.',
-  `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt. ',
+  `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `von` date DEFAULT NULL COMMENT 'Beginn der Interessenbindung, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Interessenbindung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -397,7 +397,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
@@ -425,7 +425,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
 --
 -- Tabellenstruktur für Tabelle `interessengruppe`
 --
--- Erzeugt am: 19. Jan 2014 um 07:00
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `interessengruppe`;
@@ -439,7 +439,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -506,7 +506,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessengruppe_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
@@ -520,7 +520,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
@@ -547,7 +547,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
 --
 -- Tabellenstruktur für Tabelle `in_kommission`
 --
--- Erzeugt am: 19. Jan 2014 um 07:00
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `in_kommission`;
@@ -563,7 +563,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -633,7 +633,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `in_kommission_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `in_kommission_log`;
@@ -649,7 +649,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
@@ -677,7 +677,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
--- Erzeugt am: 19. Jan 2014 um 07:00
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `kommission`;
@@ -696,7 +696,7 @@ CREATE TABLE IF NOT EXISTS `kommission` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -764,7 +764,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
@@ -783,7 +783,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
@@ -810,7 +810,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 19. Jan 2014 um 06:52
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `mandat`;
@@ -825,12 +825,12 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   `bis` date DEFAULT NULL COMMENT 'Ende des Mandates, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
-  `eingabe_abgeschlossen_datum` datetime DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
-  `kontrolliert_datum` datetime DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -900,7 +900,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mandat_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `mandat_log`;
@@ -915,12 +915,12 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
   `bis` date DEFAULT NULL COMMENT 'Ende des Mandates, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
-  `eingabe_abgeschlossen_datum` datetime DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
-  `kontrolliert_datum` datetime DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
@@ -1018,7 +1018,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mil_grad_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:24
 --
 
 DROP TABLE IF EXISTS `mil_grad_log`;
@@ -1053,7 +1053,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 19. Jan 2014 um 07:00
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1077,7 +1077,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -1171,7 +1171,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung`
 --
--- Erzeugt am: 19. Jan 2014 um 07:00
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung`;
@@ -1187,7 +1187,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -1257,7 +1257,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
@@ -1273,7 +1273,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
@@ -1301,7 +1301,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1325,7 +1325,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
@@ -1353,7 +1353,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 19. Jan 2014 um 07:01
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -1398,7 +1398,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `autorisierung_verschickt_datum` timestamp NULL DEFAULT NULL COMMENT 'Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -1480,7 +1480,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang`
 --
--- Erzeugt am: 30. Dez 2013 um 04:29
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang`;
@@ -1494,7 +1494,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
   `mime_type` varchar(100) NOT NULL COMMENT 'MIME Type der Datei',
   `encoding` varchar(20) NOT NULL COMMENT 'Encoding der Datei',
   `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Anhangs',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -1566,7 +1566,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
@@ -1580,7 +1580,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
   `mime_type` varchar(100) NOT NULL COMMENT 'MIME Type der Datei',
   `encoding` varchar(20) NOT NULL COMMENT 'Encoding der Datei',
   `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Anhangs',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
@@ -1607,7 +1607,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -1652,7 +1652,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   `autorisierung_verschickt_datum` timestamp NULL DEFAULT NULL COMMENT 'Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
@@ -1681,7 +1681,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
--- Erzeugt am: 19. Jan 2014 um 07:00
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `partei`;
@@ -1698,7 +1698,7 @@ CREATE TABLE IF NOT EXISTS `partei` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
@@ -1759,7 +1759,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `partei_log`;
@@ -1776,7 +1776,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
   `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
   `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
@@ -1802,7 +1802,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
 --
 -- Tabellenstruktur für Tabelle `snapshot`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:23
 --
 
 DROP TABLE IF EXISTS `snapshot`;
@@ -1868,7 +1868,7 @@ CREATE TABLE IF NOT EXISTS `v_branche` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -1901,7 +1901,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung` (
 ,`kontrolliert_datum` timestamp
 ,`autorisiert_visa` varchar(10)
 ,`autorisiert_datum` date
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -1950,7 +1950,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung_liste` (
 ,`kontrolliert_datum` timestamp
 ,`autorisiert_visa` varchar(10)
 ,`autorisiert_datum` date
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -1985,7 +1985,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung_liste_indirekt` (
 ,`kontrolliert_datum` timestamp
 ,`autorisiert_visa` varchar(10)
 ,`autorisiert_datum` date
-,`freigabe_visa` varchar(7)
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2008,7 +2008,7 @@ CREATE TABLE IF NOT EXISTS `v_interessengruppe` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2033,7 +2033,7 @@ CREATE TABLE IF NOT EXISTS `v_in_kommission` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2060,7 +2060,7 @@ CREATE TABLE IF NOT EXISTS `v_in_kommission_liste` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2087,7 +2087,7 @@ CREATE TABLE IF NOT EXISTS `v_in_kommission_parlamentarier` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2116,7 +2116,7 @@ CREATE TABLE IF NOT EXISTS `v_kommission` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2336,12 +2336,12 @@ CREATE TABLE IF NOT EXISTS `v_mandat` (
 ,`bis` date
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
-,`eingabe_abgeschlossen_datum` datetime
+,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
-,`kontrolliert_datum` datetime
+,`kontrolliert_datum` timestamp
 ,`autorisiert_visa` varchar(10)
 ,`autorisiert_datum` date
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2394,7 +2394,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2419,7 +2419,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2445,7 +2445,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_arbeitet_fuer` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2471,7 +2471,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_auftraggeber_fuer` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2497,7 +2497,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglieder` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2523,7 +2523,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglied_von` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2557,7 +2557,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_parlamentarier` (
 ,`kontrolliert_datum` timestamp
 ,`autorisiert_visa` varchar(10)
 ,`autorisiert_datum` date
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2592,7 +2592,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_parlamentarier_indirekt` (
 ,`kontrolliert_datum` timestamp
 ,`autorisiert_visa` varchar(10)
 ,`autorisiert_datum` date
-,`freigabe_visa` varchar(7)
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2649,7 +2649,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`autorisierung_verschickt_datum` timestamp
 ,`autorisiert_visa` varchar(10)
 ,`autorisiert_datum` date
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2673,7 +2673,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier_anhang` (
 ,`mime_type` varchar(100)
 ,`encoding` varchar(20)
 ,`beschreibung` varchar(150)
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2713,7 +2713,7 @@ CREATE TABLE IF NOT EXISTS `v_partei` (
 ,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
 ,`kontrolliert_datum` timestamp
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2773,7 +2773,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung` (
 ,`autorisierung_verschickt_datum` timestamp
 ,`autorisiert_visa` varchar(10)
 ,`autorisiert_datum` date
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`ALT_lobbyorganisation_id` int(11)
 ,`created_visa` varchar(10)
@@ -2814,12 +2814,12 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mandate` (
 ,`bis` date
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
-,`eingabe_abgeschlossen_datum` datetime
+,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
-,`kontrolliert_datum` datetime
+,`kontrolliert_datum` timestamp
 ,`autorisiert_visa` varchar(10)
 ,`autorisiert_datum` date
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2847,12 +2847,12 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mit_mandaten` (
 ,`bis` date
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
-,`eingabe_abgeschlossen_datum` datetime
+,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
-,`kontrolliert_datum` datetime
+,`kontrolliert_datum` timestamp
 ,`autorisiert_visa` varchar(10)
 ,`autorisiert_datum` date
-,`freigabe_visa` enum('otto','rebecca','thomas','bane','roland')
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2881,12 +2881,12 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mit_mandaten_indirekt` (
 ,`bis` date
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
-,`eingabe_abgeschlossen_datum` datetime
+,`eingabe_abgeschlossen_datum` timestamp
 ,`kontrolliert_visa` varchar(10)
-,`kontrolliert_datum` datetime
+,`kontrolliert_datum` timestamp
 ,`autorisiert_visa` varchar(10)
 ,`autorisiert_datum` date
-,`freigabe_visa` varchar(7)
+,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
 ,`created_visa` varchar(10)
 ,`created_date` timestamp
@@ -2898,7 +2898,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mit_mandaten_indirekt` (
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung`
 --
--- Erzeugt am: 19. Jan 2014 um 07:22
+-- Erzeugt am: 19. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung`;
@@ -2924,7 +2924,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
   `autorisierung_verschickt_datum` timestamp NULL DEFAULT NULL COMMENT 'Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `ALT_lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Wird später entfernt. Fremschlüssel zur Lobbyorganisation',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
@@ -3001,7 +3001,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_log`
 --
--- Erzeugt am: 19. Jan 2014 um 07:23
+-- Erzeugt am: 19. Jan 2014 um 08:24
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
@@ -3027,7 +3027,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
   `autorisierung_verschickt_datum` timestamp NULL DEFAULT NULL COMMENT 'Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)',
   `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
   `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.',
-  `freigabe_visa` enum('otto','rebecca','thomas','bane','roland') DEFAULT NULL COMMENT 'Freigabe von (Freigabe = Daten sind fertig)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `ALT_lobbyorganisation_id` int(11) DEFAULT NULL COMMENT 'Wird später entfernt. Fremschlüssel zur Lobbyorganisation',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
