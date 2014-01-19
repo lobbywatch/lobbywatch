@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 19. Jan 2014 um 10:47
+-- Erstellungszeit: 19. Jan 2014 um 16:56
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -1707,7 +1707,7 @@ CREATE TABLE IF NOT EXISTS `partei` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `partei_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `partei_name_unique` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=13 ;
 
 --
 -- Trigger `partei`
@@ -1789,7 +1789,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_partei_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=20 ;
 
 --
 -- RELATIONEN DER TABELLE `partei_log`:
