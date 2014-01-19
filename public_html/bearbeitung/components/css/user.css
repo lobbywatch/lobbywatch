@@ -267,3 +267,10 @@ h3.box-title,
   background-image: url("../../img/icons/fugue/clapperboard--minus.png");
   background-position: 0;
 }
+.important-entity {
+  font-weight: 700;
+}
+
+.relation {
+  font-style: italic;
+}

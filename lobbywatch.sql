@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 19. Jan 2014 um 09:31
+-- Erstellungszeit: 19. Jan 2014 um 10:47
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -237,7 +237,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `branche_log`;
@@ -373,7 +373,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
@@ -506,7 +506,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessengruppe_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
@@ -633,7 +633,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `in_kommission_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `in_kommission_log`;
@@ -764,7 +764,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
@@ -900,7 +900,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mandat_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `mandat_log`;
@@ -1018,7 +1018,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mil_grad_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:24
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `mil_grad_log`;
@@ -1257,7 +1257,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
@@ -1301,7 +1301,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1353,7 +1353,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 19. Jan 2014 um 08:22
+-- Erzeugt am: 19. Jan 2014 um 09:41
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -1387,7 +1387,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `sitzplatz` int(11) DEFAULT NULL COMMENT 'Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch',
   `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Parlamentariers',
   `parlament_url` varchar(255) DEFAULT NULL COMMENT 'Link zur Biographie auf Parlament.ch',
-  `homepage` varchar(150) DEFAULT NULL COMMENT 'Homepage des Parlamentariers',
+  `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage des Parlamentariers',
   `ALT_kommission` varchar(255) DEFAULT NULL COMMENT 'Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
@@ -1566,7 +1566,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
@@ -1607,7 +1607,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -1641,7 +1641,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   `sitzplatz` int(11) DEFAULT NULL COMMENT 'Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch',
   `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Parlamentariers',
   `parlament_url` varchar(255) DEFAULT NULL COMMENT 'Link zur Biographie auf Parlament.ch',
-  `homepage` varchar(150) DEFAULT NULL COMMENT 'Homepage des Parlamentariers',
+  `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage des Parlamentariers',
   `ALT_kommission` varchar(255) DEFAULT NULL COMMENT 'Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
@@ -1759,7 +1759,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `partei_log`;
@@ -1802,7 +1802,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
 --
 -- Tabellenstruktur für Tabelle `snapshot`
 --
--- Erzeugt am: 19. Jan 2014 um 08:23
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `snapshot`;
@@ -2638,7 +2638,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`sitzplatz` int(11)
 ,`email` varchar(100)
 ,`parlament_url` varchar(255)
-,`homepage` varchar(150)
+,`homepage` varchar(255)
 ,`ALT_kommission` varchar(255)
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
@@ -2762,6 +2762,8 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung` (
 ,`beruf_interessengruppe_id` int(11)
 ,`partei_id` int(11)
 ,`geschlecht` enum('M','F')
+,`email` varchar(100)
+,`homepage` varchar(255)
 ,`von` date
 ,`bis` date
 ,`notizen` text
@@ -2898,7 +2900,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mit_mandaten_indirekt` (
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung`
 --
--- Erzeugt am: 19. Jan 2014 um 08:22
+-- Erzeugt am: 19. Jan 2014 um 09:40
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung`;
@@ -2913,6 +2915,8 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Interessengruppe für den Beruf',
   `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.',
   `geschlecht` enum('M','F') DEFAULT 'M' COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau',
+  `email` varchar(100) DEFAULT NULL COMMENT 'Kontakt E-Mail-Adresse der zutrittsberechtigen Person',
+  `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage der zutrittsberechtigen Person',
   `von` date DEFAULT NULL COMMENT 'Beginn der Zugangsberechtigung, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Zugangsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -3001,7 +3005,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_log`
 --
--- Erzeugt am: 19. Jan 2014 um 08:24
+-- Erzeugt am: 19. Jan 2014 um 09:43
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
@@ -3016,6 +3020,8 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremschlüssel zur Interessengruppe für den Beruf',
   `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.',
   `geschlecht` enum('M','F') DEFAULT 'M' COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau',
+  `email` varchar(100) DEFAULT NULL COMMENT 'Kontakt E-Mail-Adresse der zutrittsberechtigen Person',
+  `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage der zutrittsberechtigen Person',
   `von` date DEFAULT NULL COMMENT 'Beginn der Zugangsberechtigung, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Zugangsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -3420,7 +3426,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_zutrittsberechtigung`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung` AS select concat(`t`.`nachname`,', ',`t`.`vorname`) AS `anzeige_name`,concat(`t`.`vorname`,' ',`t`.`nachname`) AS `name`,`t`.`id` AS `id`,`t`.`parlamentarier_id` AS `parlamentarier_id`,`t`.`nachname` AS `nachname`,`t`.`vorname` AS `vorname`,`t`.`zweiter_vorname` AS `zweiter_vorname`,`t`.`funktion` AS `funktion`,`t`.`beruf` AS `beruf`,`t`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`t`.`partei_id` AS `partei_id`,`t`.`geschlecht` AS `geschlecht`,`t`.`von` AS `von`,`t`.`bis` AS `bis`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`t`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`t`.`autorisiert_visa` AS `autorisiert_visa`,`t`.`autorisiert_datum` AS `autorisiert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`ALT_lobbyorganisation_id` AS `ALT_lobbyorganisation_id`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `zutrittsberechtigung` `t`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung` AS select concat(`t`.`nachname`,', ',`t`.`vorname`) AS `anzeige_name`,concat(`t`.`vorname`,' ',`t`.`nachname`) AS `name`,`t`.`id` AS `id`,`t`.`parlamentarier_id` AS `parlamentarier_id`,`t`.`nachname` AS `nachname`,`t`.`vorname` AS `vorname`,`t`.`zweiter_vorname` AS `zweiter_vorname`,`t`.`funktion` AS `funktion`,`t`.`beruf` AS `beruf`,`t`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`t`.`partei_id` AS `partei_id`,`t`.`geschlecht` AS `geschlecht`,`t`.`email` AS `email`,`t`.`homepage` AS `homepage`,`t`.`von` AS `von`,`t`.`bis` AS `bis`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`t`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`t`.`autorisiert_visa` AS `autorisiert_visa`,`t`.`autorisiert_datum` AS `autorisiert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`ALT_lobbyorganisation_id` AS `ALT_lobbyorganisation_id`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `zutrittsberechtigung` `t`;
 
 -- --------------------------------------------------------
 
