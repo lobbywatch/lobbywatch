@@ -56,7 +56,7 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new StringField('funktion');
+            $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, false);
             $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
@@ -166,8 +166,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessenbindungssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion', 'deklarationstyp', 'status', 'behoerden_vertreter', 'von', 'bis', 'verguetung', 'beschreibung', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion'), $this->RenderText('Deklarationstyp'), $this->RenderText('Status'), $this->RenderText('Behoerden Vertreter'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
+                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'deklarationstyp', 'status', 'behoerden_vertreter', 'von', 'bis', 'verguetung', 'beschreibung', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion Im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Status'), $this->RenderText('Behoerden Vertreter'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -371,7 +371,7 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion_im_gremium', $this->RenderText('Funktion Im Gremium')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('deklarationstyp', $this->RenderText('Deklarationstyp')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('status', $this->RenderText('Status')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('behoerden_vertreter', $this->RenderText('Behoerden Vertreter')));
@@ -916,20 +916,20 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for funktion field
+            // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for funktion field
+            // Edit column for funktion_im_gremium field
             //
-            $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('funktion_im_gremium_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -937,18 +937,18 @@
             
             /* <inline insert column> */
             //
-            // Edit column for funktion field
+            // Edit column for funktion_im_gremium field
             //
-            $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('funktion_im_gremium_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Funktion innerhalt des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.'));
+            $column->SetDescription($this->RenderText('Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -985,7 +985,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Ist diese Interessenbindung deklarationspflichtig?'));
+            $column->SetDescription($this->RenderText('Ist diese Interessenbindung deklarationspflichtig? Art. 11 Offenlegungspflichten:<ol><li>Beim Amtsantritt und jeweils auf Jahresbeginn unterrichtet jedes Ratsmitglied das Büro schriftlich über seine:<ol><li>beruflichen Tätigkeiten;<li>Tätigkeiten in Führungs- und Aufsichtsgremien sowie Beiräten und ähnlichen Gremien von schweizerischen und ausländischen Körperschaften, Anstalten und Stiftungen des privaten und des öffentlichen Rechts;<li>Beratungs- oder Expertentätigkeiten für Bundesstellen;<li>dauernden Leitungs- oder Beratungstätigkeiten für schweizerische und ausländische Interessengruppen; <li>e. Mitwirkung in Kommissionen und anderen Organen des Bundes.</ol></ol>'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1198,7 +1198,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Bezeichung der Interessenbindung. Möglichst kurz. Bezeichnung wird zur Auswertung wahrscheinlich nicht gebraucht.'));
+            $column->SetDescription($this->RenderText('Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1545,9 +1545,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for funktion field
+            // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1927,13 +1927,13 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for funktion field
+            // Edit column for funktion_im_gremium field
             //
-            $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('funktion_im_gremium_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2382,13 +2382,13 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for funktion field
+            // Edit column for funktion_im_gremium field
             //
-            $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('funktion_im_gremium_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2523,9 +2523,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for funktion field
+            // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -2712,9 +2712,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for funktion field
+            // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

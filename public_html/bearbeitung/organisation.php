@@ -62,7 +62,7 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new StringField('funktion');
+            $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, true);
             $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
@@ -1072,7 +1072,7 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new StringField('funktion');
+            $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, true);
             $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
@@ -9511,7 +9511,7 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new StringField('funktion');
+            $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, true);
             $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
@@ -10530,7 +10530,7 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
-            $field = new StringField('funktion');
+            $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, true);
             $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
@@ -12873,7 +12873,7 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new StringField('funktion');
+            $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, false);
             $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
@@ -13929,7 +13929,7 @@
             $field = new StringField('art');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new StringField('funktion');
+            $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, false);
             $field = new StringField('deklarationstyp');
             $field->SetIsNotNull(true);
@@ -19432,7 +19432,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Häufigkeit der Vernehmlassungsteilnahme'));
+            $column->SetDescription($this->RenderText('Häufigkeit der Teilname an nationalen Vernehmlassungen'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -21439,7 +21439,7 @@
             //
             $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Häufigkeit der Vernehmlassungsteilnahme'));
+            $column->SetDescription($this->RenderText('Häufigkeit der Teilname an nationalen Vernehmlassungen'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -21887,7 +21887,7 @@
             //
             $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Häufigkeit der Vernehmlassungsteilnahme'));
+            $column->SetDescription($this->RenderText('Häufigkeit der Teilname an nationalen Vernehmlassungen'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -22335,7 +22335,7 @@
             //
             $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Häufigkeit der Vernehmlassungsteilnahme'));
+            $column->SetDescription($this->RenderText('Häufigkeit der Teilname an nationalen Vernehmlassungen'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -22783,7 +22783,7 @@
             //
             $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Häufigkeit der Vernehmlassungsteilnahme'));
+            $column->SetDescription($this->RenderText('Häufigkeit der Teilname an nationalen Vernehmlassungen'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -23231,7 +23231,7 @@
             //
             $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Häufigkeit der Vernehmlassungsteilnahme'));
+            $column->SetDescription($this->RenderText('Häufigkeit der Teilname an nationalen Vernehmlassungen'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -23679,7 +23679,7 @@
             //
             $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Häufigkeit der Vernehmlassungsteilnahme'));
+            $column->SetDescription($this->RenderText('Häufigkeit der Teilname an nationalen Vernehmlassungen'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24127,7 +24127,7 @@
             //
             $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Häufigkeit der Vernehmlassungsteilnahme'));
+            $column->SetDescription($this->RenderText('Häufigkeit der Teilname an nationalen Vernehmlassungen'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24575,7 +24575,7 @@
             //
             $column = new TextViewColumn('vernehmlassung', 'Vernehmlassung', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Häufigkeit der Vernehmlassungsteilnahme'));
+            $column->SetDescription($this->RenderText('Häufigkeit der Teilname an nationalen Vernehmlassungen'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
