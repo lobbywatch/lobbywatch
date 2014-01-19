@@ -209,62 +209,62 @@ h3.box-title,
 }
 
 .pg-icon-set-imratbis-selected {
-  background-image: url("../../bearbeitung/img/icons/fugue/calendar-day.png");
+  background-image: url("../../../../img/icons/fugue/calendar-day.png");
   background-position: 0;
 }
 
 .pg-icon-clear-imratbis-selected {
-  background-image: url("../../bearbeitung/img/icons/fugue/calendar--minus.png");
+  background-image: url("../../../../img/icons/fugue/calendar--minus.png");
   background-position: 0;
 }
 
 .pg-icon-input-finished-selected {
-  background-image: url("../../bearbeitung/img/icons/fugue/tick.png");
+  background-image: url("../../../../img/icons/fugue/tick.png");
   background-position: 0;
 }
 
 .pg-icon-de-input-finished-selected {
-  background-image: url("../../bearbeitung/img/icons/fugue/cross.png");
+  background-image: url("../../../../img/icons/fugue/cross.png");
   background-position: 0;
 }
 
 .pg-icon-controlled-selected {
-  background-image: url("../../bearbeitung/img/icons/fugue/eye.png");
+  background-image: url("../../../../img/icons/fugue/eye.png");
   background-position: 0;
 }
 
 .pg-icon-de-controlled-selected{
-  background-image: url("../../bearbeitung/img/icons/fugue/eye--minus.png");
+  background-image: url("../../../../img/icons/fugue/eye--minus.png");
   background-position: 0;
 }
 
 .pg-icon-authorization-sent-selected {
-  background-image: url("../../bearbeitung/img/icons/fugue/drill.png");
+  background-image: url("../../../../img/icons/fugue/drill.png");
   background-position: 0;
 }
 
 .pg-icon-de-authorization-sent-selected {
-  background-image: url("../../bearbeitung/img/icons/fugue/drill--minus.png");
+  background-image: url("../../../../img/icons/fugue/drill--minus.png");
   background-position: 0;
 }
 
 .pg-icon-authorize-selected {
-  background-image: url("../../bearbeitung/img/icons/fugue/stamp.png");
+  background-image: url("../../../../img/icons/fugue/stamp.png");
   background-position: 0;
 }
 
 .pg-icon-de-authorize-selected{
-  background-image: url("../../bearbeitung/img/icons/fugue/stamp--minus.png");
+  background-image: url("../../../../img/icons/fugue/stamp--minus.png");
   background-position: 0;
 }
 
 .pg-icon-release-selected {
-  background-image: url("../../bearbeitung/img/icons/fugue/clapperboard.png");
+  background-image: url("../../../../img/icons/fugue/clapperboard.png");
   background-position: 0;
 }
 
 .pg-icon-de-release-selected {
-  background-image: url("../../bearbeitung/img/icons/fugue/clapperboard--minus.png");
+  background-image: url("../../../../img/icons/fugue/clapperboard--minus.png");
   background-position: 0;
 }
 
@@ -284,7 +284,7 @@ h3.box-title,
 }
 
 .pg-page-list > li > a .entity {
-  background-image: url("../../bearbeitung/img/icons/fugue/database.png");
+  background-image: url("../../../../img/icons/fugue/database.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;
@@ -292,7 +292,7 @@ h3.box-title,
 }
 
 .pg-page-list > li > a .relation {
-  background-image: url("../../bearbeitung/img/icons/fugue/databases-relation.png");
+  background-image: url("../../../../img/icons/fugue/databases-relation.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;
@@ -300,7 +300,7 @@ h3.box-title,
 }
 
 .pg-page-list > li > a .view {
-  background-image: url("../../bearbeitung/img/icons/fugue/document.png");
+  background-image: url("../../../../img/icons/fugue/document.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;

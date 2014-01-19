@@ -59,7 +59,7 @@ function GetPageInfos()
 function GetPagesHeader()
 {
     return
-    '<a href="/"><img id="site-logo" width="30px" height="auto" typeof="foaf:Image" src="../lobbywatch-eye-transparent-bg-cut-75px-tiny.png" alt="Lobbywatch"></a> <h1 id="site-name"><a href="/">Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] . '</a></h1>';
+    '<a href="/"><img id="site-logo" width="30px" height="auto" typeof="foaf:Image" src="lobbywatch-eye-transparent-bg-cut-75px-tiny.png" alt="Lobbywatch"></a> <h1 id="site-name"><a href="/">Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] . '</a></h1>';
 }
 
 function GetPagesFooter()
