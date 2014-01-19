@@ -943,6 +943,8 @@
             // Edit column for freigabe_visa field
             //
             $editor = new TextEdit('freigabe_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
@@ -1447,6 +1449,8 @@
             // Edit column for freigabe_visa field
             //
             $editor = new TextEdit('freigabe_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
