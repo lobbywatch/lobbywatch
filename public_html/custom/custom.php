@@ -1,5 +1,6 @@
 <?php
 
+require_once dirname(__FILE__) . "/../settings/settings.php";
 require_once dirname(__FILE__) . "/../common/utils.php";
 require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_state.php';
 
@@ -478,4 +479,10 @@ class ClearImRatBisSelectedGridState extends SelectedOperationGridState {
   protected function DoOperation() {
     $this->grid->GetDataset ()->SetFieldValueByName ( 'im_rat_bis', null );
   }
+}
+
+function add_more_navigation_links(&$result) {
+  $result->AddPage(new PageLink('Website', '/', 'Homepage', false, true));
+  $result->AddPage(new PageLink('Wiki', '/wiki', 'Wiki', false, false));
+  $result->AddPage(new PageLink('Auswertung', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false));
 }
