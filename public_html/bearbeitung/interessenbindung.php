@@ -122,28 +122,28 @@
         {
             $currentPageCaption = $this->GetShortCaption();
             $result = new PageList($this);
-            if (GetCurrentUserGrantForDataSource('kommission')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Kommission'), 'kommission.php', $this->RenderText('Kommission'), $currentPageCaption == $this->RenderText('Kommission')));
             if (GetCurrentUserGrantForDataSource('organisation')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Organisation'), 'organisation.php', $this->RenderText('Organisation'), $currentPageCaption == $this->RenderText('Organisation')));
+                $result->AddPage(new PageLink($this->RenderText('<b>Organisation</b>'), 'organisation.php', $this->RenderText('Organisation'), $currentPageCaption == $this->RenderText('<b>Organisation</b>')));
             if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Parlamentarier'), 'parlamentarier.php', $this->RenderText('Parlamentarier'), $currentPageCaption == $this->RenderText('Parlamentarier')));
-            if (GetCurrentUserGrantForDataSource('in_kommission')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('In Kommission'), 'in_kommission.php', $this->RenderText('In Kommission'), $currentPageCaption == $this->RenderText('In Kommission')));
-            if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Interessenbindung'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('Interessenbindung')));
+                $result->AddPage(new PageLink($this->RenderText('<b>Parlamentarier</b>'), 'parlamentarier.php', $this->RenderText('Parlamentarier'), $currentPageCaption == $this->RenderText('<b>Parlamentarier</b>')));
             if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Zutrittsberechtigung'), 'zutrittsberechtigung.php', $this->RenderText('Zutrittsberechtigung'), $currentPageCaption == $this->RenderText('Zutrittsberechtigung')));
+            if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<i>Interessenbindung</i>'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('<i>Interessenbindung</i>')));
             if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Mandat'), 'mandat.php', $this->RenderText('Mandat'), $currentPageCaption == $this->RenderText('Mandat')));
+                $result->AddPage(new PageLink($this->RenderText('<i>Mandat</i>'), 'mandat.php', $this->RenderText('Mandat'), $currentPageCaption == $this->RenderText('<i>Mandat</i>')));
+            if (GetCurrentUserGrantForDataSource('in_kommission')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<i>In Kommission</i>'), 'in_kommission.php', $this->RenderText('In Kommission'), $currentPageCaption == $this->RenderText('<i>In Kommission</i>')));
             if (GetCurrentUserGrantForDataSource('organisation_beziehung')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Organisation Beziehung'), 'organisation_beziehung.php', $this->RenderText('Organisation Beziehung'), $currentPageCaption == $this->RenderText('Organisation Beziehung')));
-            if (GetCurrentUserGrantForDataSource('branche')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Branche'), 'branche.php', $this->RenderText('Branche'), $currentPageCaption == $this->RenderText('Branche')));
-            if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('Partei'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('Partei')));
+                $result->AddPage(new PageLink($this->RenderText('<i>Organisation Beziehung</i>'), 'organisation_beziehung.php', $this->RenderText('Organisation Beziehung'), $currentPageCaption == $this->RenderText('<i>Organisation Beziehung</i>')));
             if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Interessengruppe'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('Interessengruppe')));
+            if (GetCurrentUserGrantForDataSource('branche')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Branche'), 'branche.php', $this->RenderText('Branche'), $currentPageCaption == $this->RenderText('Branche')));
+            if (GetCurrentUserGrantForDataSource('kommission')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Kommission'), 'kommission.php', $this->RenderText('Kommission'), $currentPageCaption == $this->RenderText('Kommission')));
+            if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('Partei'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('Partei')));
             if (GetCurrentUserGrantForDataSource('v_parlamentarier_authorisierungs_email')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('Parlamentarier Email'), 'v_parlamentarier_authorisierungs_email.php', $this->RenderText('Parlamentarier Email'), $currentPageCaption == $this->RenderText('Parlamentarier Email')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
@@ -167,7 +167,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessenbindungssearch', $this->dataset,
                 array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'deklarationstyp', 'status', 'behoerden_vertreter', 'von', 'bis', 'verguetung', 'beschreibung', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion Im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Status'), $this->RenderText('Behoerden Vertreter'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Status'), $this->RenderText('Behoerden Vertreter'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -371,7 +371,7 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion_im_gremium', $this->RenderText('Funktion Im Gremium')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion_im_gremium', $this->RenderText('Funktion im Gremium')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('deklarationstyp', $this->RenderText('Deklarationstyp')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('status', $this->RenderText('Status')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('behoerden_vertreter', $this->RenderText('Behoerden Vertreter')));
@@ -918,7 +918,7 @@
             //
             // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -929,7 +929,7 @@
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -943,7 +943,7 @@
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -1544,7 +1544,7 @@
             //
             // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1930,7 +1930,7 @@
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2382,7 +2382,7 @@
             $editor->AddValue('praesident', $this->RenderText('praesident'));
             $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2519,7 +2519,7 @@
             //
             // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -2708,7 +2708,7 @@
             //
             // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -3819,7 +3819,7 @@
     try
     {
         $Page = new interessenbindungPage("interessenbindung.php", "interessenbindung", GetCurrentUserGrantForDataSource("interessenbindung"), 'UTF-8');
-        $Page->SetShortCaption('Interessenbindung');
+        $Page->SetShortCaption('<i>Interessenbindung</i>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
         $Page->SetCaption('Interessenbindung');

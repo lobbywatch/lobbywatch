@@ -38,17 +38,17 @@ function HasAdminPage()
 function GetPageInfos()
 {
     $result = array();
-    $result[] = array('caption' => 'Kommission', 'short_caption' => 'Kommission', 'filename' => 'kommission.php', 'name' => 'kommission');
-    $result[] = array('caption' => 'Organisation', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation');
-    $result[] = array('caption' => 'Parlamentarier', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier');
-    $result[] = array('caption' => 'In Kommission', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission');
-    $result[] = array('caption' => 'Interessenbindung', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung');
+    $result[] = array('caption' => '<b>Organisation</b>', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation');
+    $result[] = array('caption' => '<b>Parlamentarier</b>', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier');
     $result[] = array('caption' => 'Zutrittsberechtigung', 'short_caption' => 'Zutrittsberechtigung', 'filename' => 'zutrittsberechtigung.php', 'name' => 'zutrittsberechtigung');
-    $result[] = array('caption' => 'Mandat', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat');
-    $result[] = array('caption' => 'Organisation Beziehung', 'short_caption' => 'Organisation Beziehung', 'filename' => 'organisation_beziehung.php', 'name' => 'organisation_beziehung');
-    $result[] = array('caption' => 'Branche', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche');
-    $result[] = array('caption' => 'Partei', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei');
+    $result[] = array('caption' => '<i>Interessenbindung</i>', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung');
+    $result[] = array('caption' => '<i>Mandat</i>', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat');
+    $result[] = array('caption' => '<i>In Kommission</i>', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission');
+    $result[] = array('caption' => '<i>Organisation Beziehung</i>', 'short_caption' => 'Organisation Beziehung', 'filename' => 'organisation_beziehung.php', 'name' => 'organisation_beziehung');
     $result[] = array('caption' => 'Interessengruppe', 'short_caption' => 'Interessengruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe');
+    $result[] = array('caption' => 'Branche', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche');
+    $result[] = array('caption' => 'Kommission', 'short_caption' => 'Kommission', 'filename' => 'kommission.php', 'name' => 'kommission');
+    $result[] = array('caption' => 'Partei', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei');
     $result[] = array('caption' => 'Parlamentarier Email', 'short_caption' => 'Parlamentarier Email', 'filename' => 'v_parlamentarier_authorisierungs_email.php', 'name' => 'v_parlamentarier_authorisierungs_email');
     $result[] = array('caption' => 'Unvollständige Parlamentarier', 'short_caption' => 'Unvollständige Parlamentarier', 'filename' => 'q_unvollstaendige_parlamentarier.php', 'name' => 'q_unvollstaendige_parlamentarier');
     $result[] = array('caption' => 'Unvollständige Organisationen', 'short_caption' => 'Unvollständige Organisationen', 'filename' => 'q_unvollstaendige_organisationen.php', 'name' => 'q_unvollstaendige_organisationen');
