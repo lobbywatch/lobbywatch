@@ -482,7 +482,7 @@ class ClearImRatBisSelectedGridState extends SelectedOperationGridState {
 }
 
 function add_more_navigation_links(&$result) {
-  $result->AddPage(new PageLink('Website', '/', 'Homepage', false, true));
-  $result->AddPage(new PageLink('Wiki', '/wiki', 'Wiki', false, false));
-  $result->AddPage(new PageLink('Auswertung', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false));
+  $result->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, true));
+  $result->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false));
+  $result->AddPage(new PageLink('<span class="auswertung">Auswertung</span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false));
 }

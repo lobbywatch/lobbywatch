@@ -59,7 +59,7 @@ function GetPageInfos()
 function GetPagesHeader()
 {
     return
-    '<h1 id="site-name"><a href="/">Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] . '</a></h1>';
+    '<a href="/"><img class="site-logo" width="30px" height="30px" typeof="foaf:Image" src="/sites/lobbywatch.ch/lobbywatch-eye-transparent-bg-cut-75px-tiny.png" alt="Lobbywatch"></a> <h1 id="site-name"><a href="/">Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] . '</a></h1>';
 }
 
 function GetPagesFooter()

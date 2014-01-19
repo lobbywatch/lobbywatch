@@ -307,6 +307,22 @@ h3.box-title,
   margin-left: -20px;
 }
 
+.pg-page-list > li > a .website {
+  background-image: url("/favicon.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
+.pg-page-list > li > a .wiki {
+  background-image: url("/sites/lobbywatch.ch/wiki/favicon.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
 /* Header */
 
 #site-name a {
