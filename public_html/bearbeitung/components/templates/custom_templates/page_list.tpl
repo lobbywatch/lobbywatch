@@ -9,7 +9,7 @@
             {if $PageListPage.IsCurrent}
                 <li class="active">
 
-                    <a href="#" title="{$PageListPage.Hint}" onclick="return false;" style="cursor: default;">
+                    <a href="{$PageListPage.Href|escapeurl}" title="{$PageListPage.Hint}" {*onclick="return false;" style="cursor: default;"*}>
                         <i class="page-list-icon"></i>
                         {$PageListPage.Caption}
                         {if $List.RSSLink}

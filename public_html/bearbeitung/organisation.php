@@ -24949,6 +24949,8 @@
           $result = 'insert/grid.tpl';
         } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
           $result = 'list/grid.tpl';
+        } else if ($part == PagePart::PageList) {
+          $result = 'page_list.tpl';
         }
         }
         public function ShowEditButtonHandler(&$show)

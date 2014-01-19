@@ -2907,6 +2907,8 @@
           $result = 'insert/grid.tpl';
         } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
           $result = 'list/grid.tpl';
+        } else if ($part == PagePart::PageList) {
+          $result = 'page_list.tpl';
         }
         }
         function interessenbindungGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
