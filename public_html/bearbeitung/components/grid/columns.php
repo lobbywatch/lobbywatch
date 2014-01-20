@@ -1,4 +1,7 @@
 <?php
+// Processed by afterburner.sh
+
+
 
 include_once dirname(__FILE__) . '/' . '../utils/system_utils.php';
 // require_once 'components/utils/system_utils.php';
@@ -596,7 +599,7 @@ class TextViewColumn extends CustomDatasetFieldViewColumn
 
     public function SetFullTextWindowHandlerName($value)
     { 
-        $this->fullTextWindowHandlerName = $value; 
+        $this->fullTextWindowHandlerName = clean_non_ascii($this->GetDataset()->GetName()) . "-" . $value; // Afterburner 
     }
 
     public function GetFullTextWindowHandlerName()

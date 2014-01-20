@@ -486,3 +486,7 @@ function add_more_navigation_links(&$result) {
   $result->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false));
   $result->AddPage(new PageLink('<span class="auswertung">Auswertung</span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false));
 }
+
+function clean_non_ascii($str) {
+  return preg_replace('/[^\w\d_-]*/','', $str);
+}
