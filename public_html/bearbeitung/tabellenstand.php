@@ -417,7 +417,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new NumberFormatValueViewColumnDecorator($column, 2, '\'', '.');
+            $column = new NumberFormatValueViewColumnDecorator($column, 0, '\'', '.');
             $column->SetDescription($this->RenderText('Anzahl Einträge in der Tabelle'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -545,7 +545,7 @@
             //
             $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
             $column->SetOrderable(true);
-            $column = new NumberFormatValueViewColumnDecorator($column, 2, '\'', '.');
+            $column = new NumberFormatValueViewColumnDecorator($column, 0, '\'', '.');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -729,7 +729,7 @@
             //
             $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
             $column->SetOrderable(true);
-            $column = new NumberFormatValueViewColumnDecorator($column, 2, '\'', '.');
+            $column = new NumberFormatValueViewColumnDecorator($column, 0, '\'', '.');
             $grid->AddPrintColumn($column);
             
             //
@@ -777,7 +777,7 @@
             //
             $column = new TextViewColumn('anzahl_eintraege', 'Anzahl Eintraege', $this->dataset);
             $column->SetOrderable(true);
-            $column = new NumberFormatValueViewColumnDecorator($column, 2, '\'', '.');
+            $column = new NumberFormatValueViewColumnDecorator($column, 0, '\'', '.');
             $grid->AddExportColumn($column);
             
             //
