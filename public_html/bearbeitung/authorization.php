@@ -99,5 +99,5 @@ function GetIdentityCheckStrategy()
 
 function CanUserChangeOwnPassword()
 {
-    return false;
+    return true;
 }
