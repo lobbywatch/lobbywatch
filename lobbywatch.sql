@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 19. Jan 2014 um 16:56
+-- Erstellungszeit: 20. Jan 2014 um 10:47
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -1053,7 +1053,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 19. Jan 2014 um 08:22
+-- Erzeugt am: 20. Jan 2014 um 08:21
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1063,7 +1063,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französischer Name',
   `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
@@ -1301,7 +1301,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 19. Jan 2014 um 09:43
+-- Erzeugt am: 20. Jan 2014 um 08:22
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1311,7 +1311,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französischer Name',
   `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
@@ -1353,7 +1353,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 19. Jan 2014 um 09:41
+-- Erzeugt am: 20. Jan 2014 um 09:20
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -1386,8 +1386,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `kleinbild` varchar(80) DEFAULT 'leer.png' COMMENT 'Bild 44x62 px oder leer.png',
   `sitzplatz` int(11) DEFAULT NULL COMMENT 'Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch',
   `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Parlamentariers',
-  `parlament_url` varchar(255) DEFAULT NULL COMMENT 'Link zur Biographie auf Parlament.ch',
   `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage des Parlamentariers',
+  `parlament_biografie_id` int(11) DEFAULT NULL COMMENT 'Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.',
   `ALT_kommission` varchar(255) DEFAULT NULL COMMENT 'Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
@@ -1410,7 +1410,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   KEY `idx_partei` (`partei_id`),
   KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
   KEY `militaerischer_grad` (`militaerischer_grad`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=39 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=247 ;
 
 --
 -- MIME TYPEN DER TABELLE `parlamentarier`:
@@ -1607,7 +1607,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 19. Jan 2014 um 09:43
+-- Erzeugt am: 20. Jan 2014 um 09:20
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -1640,8 +1640,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   `kleinbild` varchar(80) DEFAULT 'leer.png' COMMENT 'Bild 44x62 px oder leer.png',
   `sitzplatz` int(11) DEFAULT NULL COMMENT 'Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch',
   `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Parlamentariers',
-  `parlament_url` varchar(255) DEFAULT NULL COMMENT 'Link zur Biographie auf Parlament.ch',
   `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage des Parlamentariers',
+  `parlament_biografie_id` int(11) DEFAULT NULL COMMENT 'Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.',
   `ALT_kommission` varchar(255) DEFAULT NULL COMMENT 'Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
@@ -1668,7 +1668,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
   KEY `militaerischer_grad` (`militaerischer_grad`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=64 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=516 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -2380,7 +2380,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`name_fr` varchar(150)
 ,`name_it` varchar(150)
 ,`ort` varchar(100)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -2637,8 +2637,8 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`kleinbild` varchar(80)
 ,`sitzplatz` int(11)
 ,`email` varchar(100)
-,`parlament_url` varchar(255)
 ,`homepage` varchar(255)
+,`parlament_biografie_id` int(11)
 ,`ALT_kommission` varchar(255)
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
@@ -3372,7 +3372,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_parlamentarier`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`t`.`nachname`,', ',`t`.`vorname`) AS `anzeige_name`,concat(`t`.`vorname`,' ',`t`.`nachname`) AS `name`,`t`.`id` AS `id`,`t`.`nachname` AS `nachname`,`t`.`vorname` AS `vorname`,`t`.`zweiter_vorname` AS `zweiter_vorname`,`t`.`ratstyp` AS `ratstyp`,`t`.`kanton` AS `kanton`,`t`.`partei_id` AS `partei_id`,`t`.`parteifunktion` AS `parteifunktion`,`t`.`fraktionsfunktion` AS `fraktionsfunktion`,`t`.`im_rat_seit` AS `im_rat_seit`,`t`.`im_rat_bis` AS `im_rat_bis`,`t`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`t`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`t`.`beruf` AS `beruf`,`t`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`t`.`zivilstand` AS `zivilstand`,`t`.`anzahl_kinder` AS `anzahl_kinder`,`t`.`militaerischer_grad` AS `militaerischer_grad`,`t`.`geschlecht` AS `geschlecht`,`t`.`geburtstag` AS `geburtstag`,`t`.`photo` AS `photo`,`t`.`photo_dateiname` AS `photo_dateiname`,`t`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`t`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`t`.`photo_mime_type` AS `photo_mime_type`,`t`.`kleinbild` AS `kleinbild`,`t`.`sitzplatz` AS `sitzplatz`,`t`.`email` AS `email`,`t`.`parlament_url` AS `parlament_url`,`t`.`homepage` AS `homepage`,`t`.`ALT_kommission` AS `ALT_kommission`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`t`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`t`.`autorisiert_visa` AS `autorisiert_visa`,`t`.`autorisiert_datum` AS `autorisiert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `parlamentarier` `t`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`t`.`nachname`,', ',`t`.`vorname`) AS `anzeige_name`,concat(`t`.`vorname`,' ',`t`.`nachname`) AS `name`,`t`.`id` AS `id`,`t`.`nachname` AS `nachname`,`t`.`vorname` AS `vorname`,`t`.`zweiter_vorname` AS `zweiter_vorname`,`t`.`ratstyp` AS `ratstyp`,`t`.`kanton` AS `kanton`,`t`.`partei_id` AS `partei_id`,`t`.`parteifunktion` AS `parteifunktion`,`t`.`fraktionsfunktion` AS `fraktionsfunktion`,`t`.`im_rat_seit` AS `im_rat_seit`,`t`.`im_rat_bis` AS `im_rat_bis`,`t`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`t`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`t`.`beruf` AS `beruf`,`t`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`t`.`zivilstand` AS `zivilstand`,`t`.`anzahl_kinder` AS `anzahl_kinder`,`t`.`militaerischer_grad` AS `militaerischer_grad`,`t`.`geschlecht` AS `geschlecht`,`t`.`geburtstag` AS `geburtstag`,`t`.`photo` AS `photo`,`t`.`photo_dateiname` AS `photo_dateiname`,`t`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`t`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`t`.`photo_mime_type` AS `photo_mime_type`,`t`.`kleinbild` AS `kleinbild`,`t`.`sitzplatz` AS `sitzplatz`,`t`.`email` AS `email`,`t`.`homepage` AS `homepage`,`t`.`parlament_biografie_id` AS `parlament_biografie_id`,`t`.`ALT_kommission` AS `ALT_kommission`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`t`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`t`.`autorisiert_visa` AS `autorisiert_visa`,`t`.`autorisiert_datum` AS `autorisiert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `parlamentarier` `t`;
 
 -- --------------------------------------------------------
 
