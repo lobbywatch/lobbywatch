@@ -18739,8 +18739,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Notizen')),
+                array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'fraktionsfunktion', 'parlament_biografie_id', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_name', 'sitzplatz', 'email', 'homepage', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -18817,6 +18817,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('partei_id', $this->RenderText('Partei'), $lookupDataset, 'id', 'abkuerzung', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parteifunktion', $this->RenderText('Parteifunktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('fraktionsfunktion', $this->RenderText('Fraktionsfunktion')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_biografie_id', $this->RenderText('Parlament.ch Biografie ID')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_bis', $this->RenderText('Im Rat Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratsunterbruch_von', $this->RenderText('Ratsunterbruch Von')));
@@ -18909,7 +18910,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_biografie_id', $this->RenderText('Parlament.ch Biografie ID')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_kommission', $this->RenderText('ALT Kommission')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
@@ -19439,6 +19439,42 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for parlament_biografie_id field
+            //
+            $editor = new TextEdit('parlament_biografie_id_edit');
+            $editColumn = new CustomEditColumn('Parlament.ch Biografie ID', 'parlament_biografie_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for parlament_biografie_id field
+            //
+            $editor = new TextEdit('parlament_biografie_id_edit');
+            $editColumn = new CustomEditColumn('Parlament.ch Biografie ID', 'parlament_biografie_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -20169,42 +20205,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for parlament_biografie_id field
-            //
-            $editor = new TextEdit('parlament_biografie_id_edit');
-            $editColumn = new CustomEditColumn('Parlament.ch Biografie ID', 'parlament_biografie_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for parlament_biografie_id field
-            //
-            $editor = new TextEdit('parlament_biografie_id_edit');
-            $editColumn = new CustomEditColumn('Parlament.ch Biografie ID', 'parlament_biografie_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
-            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
@@ -20664,6 +20664,14 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -20787,14 +20795,6 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('homepage_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -21103,6 +21103,17 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for parlament_biografie_id field
+            //
+            $editor = new TextEdit('parlament_biografie_id_edit');
+            $editColumn = new CustomEditColumn('Parlament.ch Biografie ID', 'parlament_biografie_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for im_rat_seit field
             //
             $editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y', GetFirstDayOfWeek());
@@ -21357,17 +21368,6 @@
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for parlament_biografie_id field
-            //
-            $editor = new TextEdit('parlament_biografie_id_edit');
-            $editColumn = new CustomEditColumn('Parlament.ch Biografie ID', 'parlament_biografie_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -21733,6 +21733,17 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for parlament_biografie_id field
+            //
+            $editor = new TextEdit('parlament_biografie_id_edit');
+            $editColumn = new CustomEditColumn('Parlament.ch Biografie ID', 'parlament_biografie_id', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for im_rat_seit field
             //
             $editor = new DateTimeEdit('im_rat_seit_edit', false, 'd.m.Y', GetFirstDayOfWeek());
@@ -21980,17 +21991,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for parlament_biografie_id field
-            //
-            $editor = new TextEdit('parlament_biografie_id_edit');
-            $editColumn = new CustomEditColumn('Parlament.ch Biografie ID', 'parlament_biografie_id', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -22074,6 +22074,14 @@
             //
             $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $grid->AddPrintColumn($column);
             
             //
@@ -22192,14 +22200,6 @@
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $grid->AddPrintColumn($column);
             
             //
@@ -22396,6 +22396,14 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -22511,14 +22519,6 @@
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $grid->AddExportColumn($column);
             
             //
@@ -22748,6 +22748,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -22902,16 +22912,6 @@
             $column->SetFullTextWindowHandlerName('homepage_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
-            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -23136,6 +23136,14 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -23251,14 +23259,6 @@
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -23478,6 +23478,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -23632,16 +23642,6 @@
             $column->SetFullTextWindowHandlerName('homepage_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
-            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -23866,6 +23866,14 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -23981,14 +23989,6 @@
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -24208,6 +24208,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -24362,16 +24372,6 @@
             $column->SetFullTextWindowHandlerName('homepage_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
-            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24596,6 +24596,14 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -24711,14 +24719,6 @@
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -24938,6 +24938,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -25092,16 +25102,6 @@
             $column->SetFullTextWindowHandlerName('homepage_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
-            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -25326,6 +25326,14 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -25441,14 +25449,6 @@
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -25668,6 +25668,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -25822,16 +25832,6 @@
             $column->SetFullTextWindowHandlerName('homepage_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
-            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -26056,6 +26056,14 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -26171,14 +26179,6 @@
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -26398,6 +26398,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -26552,16 +26562,6 @@
             $column->SetFullTextWindowHandlerName('homepage_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
-            $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -26786,6 +26786,14 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlament_biografie_id field
+            //
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
@@ -26901,14 +26909,6 @@
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for parlament_biografie_id field
-            //
-            $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
