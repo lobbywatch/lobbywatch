@@ -342,3 +342,9 @@ h3.box-title,
   vertical-align: top;
   margin-right: 15px;
 }
+
+/**/
+
+#quick-filter-toolbar {
+  margin-right: 1em;
+}

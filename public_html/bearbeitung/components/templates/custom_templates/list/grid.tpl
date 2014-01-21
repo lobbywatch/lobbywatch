@@ -11,31 +11,41 @@
     {if $DataGrid.ActionsPanelAvailable}
     <tr>
         <td colspan="{$DataGrid.ColumnCount}" class="header-panel">
+            {if $DataGrid.AllowQuickFilter}
+            <div id="quick-filter-toolbar" class="btn-toolbar pull-left">
+                <div class="btn-group">
+                    <div class="input-append" style="float: left; margin-bottom: 0;">
+                        <input placeholder="{$Captions->GetMessageString('QuickSearch')}" type="text" size="16" class="quick-filter-text" value="{$DataGrid.QuickFilter.Value|escape:html}"><button type="button" class="btn quick-filter-go"><i class="pg-icon-quick-find"></i></button><button type="button" class="btn quick-filter-reset"><i class="pg-icon-filter-reset"></i></button>
+                    </div>
+                </div>
+            </div>
+            {/if}
             <div class="btn-toolbar pull-left">
                 <div class="btn-group">
-                {if $DataGrid.ActionsPanel.InlineAdd}
-                    <button class="btn inline_add_button" href="#">
-                        <i class="pg-icon-add-record"></i>
-                        {$Captions->GetMessageString('AddNewRecord')}
-                    </button>
-                {/if}
 
-                {if $DataGrid.ActionsPanel.AddNewButton}
-                    {if $DataGrid.ActionsPanel.AddNewButton eq 'modal'}
-                        <button class="btn"
-                                dialog-title="{$Captions->GetMessageString('AddNewRecord')}"
-                                content-link="{$DataGrid.Links.ModalInsertDialog}"
-                                modal-insert="true">
-                            <i class="pg-icon-add-record"></i>
-                            {$Captions->GetMessageString('AddNewRecord')}
-                        </button>
-                    {else}
-                        <a class="btn" href="{$DataGrid.Links.SimpleAddNewRow|escapeurl}">
-                            <i class="pg-icon-add-record"></i>
-                            {$Captions->GetMessageString('AddNewRecord')}
-                        </a>
-                    {/if}
-                {/if}
+                  {if $DataGrid.ActionsPanel.InlineAdd}
+                      <button class="btn inline_add_button" href="#">
+                          <i class="pg-icon-add-record"></i>
+                          {$Captions->GetMessageString('AddNewRecord')}
+                      </button>
+                  {/if}
+
+                  {if $DataGrid.ActionsPanel.AddNewButton}
+                      {if $DataGrid.ActionsPanel.AddNewButton eq 'modal'}
+                          <button class="btn"
+                                  dialog-title="{$Captions->GetMessageString('AddNewRecord')}"
+                                  content-link="{$DataGrid.Links.ModalInsertDialog}"
+                                  modal-insert="true">
+                              <i class="pg-icon-add-record"></i>
+                              {$Captions->GetMessageString('AddNewRecord')}
+                          </button>
+                      {else}
+                          <a class="btn" href="{$DataGrid.Links.SimpleAddNewRow|escapeurl}">
+                              <i class="pg-icon-add-record"></i>
+                              {$Captions->GetMessageString('AddNewRecord')}
+                          </a>
+                      {/if}
+                  {/if}
 
                     {if $DataGrid.ActionsPanel.DeleteSelectedButton}
                         <button class="btn delete-selected">
@@ -148,16 +158,6 @@
                     {/if}
                 </div>
             </div>
-
-            {if $DataGrid.AllowQuickFilter}
-            <div id="quick-filter-toolbar" class="btn-toolbar pull-right">
-                <div class="btn-group">
-                    <div class="input-append" style="float: left; margin-bottom: 0;">
-                        <input placeholder="{$Captions->GetMessageString('QuickSearch')}" type="text" size="16" class="quick-filter-text" value="{$DataGrid.QuickFilter.Value|escape:html}"><button type="button" class="btn quick-filter-go"><i class="pg-icon-quick-find"></i></button><button type="button" class="btn quick-filter-reset"><i class="pg-icon-filter-reset"></i></button>
-                    </div>
-                </div>
-            </div>
-            {/if}
         </td>
     </tr>
     {/if}
