@@ -6,7 +6,7 @@
  *                                   ATTENTION!
  * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
  * this means that PHP is not properly installed on your web server. Please refer to the PHP manual
- * for more details: http://php.net/manual/install.php
+ * for more details: http://php.net/manual/install.php 
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  */
@@ -30,12 +30,12 @@
         return $result;
     }
 
-
-
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class parlamentarier_anhangDetailView0parlamentarierPage extends DetailPage
     {
         protected function DoBeforeCreate()
@@ -87,7 +87,7 @@
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -98,12 +98,12 @@
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentarieranhangs'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for datei field
             //
             $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
-
+            
             /* <inline edit column> */
             //
             // Edit column for datei field
@@ -116,7 +116,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for datei field
@@ -132,7 +132,7 @@
             $column->SetDescription($this->RenderText('Datei'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for dateiname_voll field
             //
@@ -140,7 +140,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for dateiname_voll field
@@ -158,7 +158,7 @@
             $column->SetDescription($this->RenderText('Dateiname inkl. Erweiterung'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -166,7 +166,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -180,7 +180,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -197,13 +197,13 @@
             $column->SetDescription($this->RenderText('Beschreibung des Anhangs'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -220,14 +220,14 @@
             $column->SetDescription($this->RenderText('Erstellt von'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -243,13 +243,13 @@
             $column->SetDescription($this->RenderText('Erstellt am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -266,14 +266,14 @@
             $column->SetDescription($this->RenderText('Abgäendert von'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -290,12 +290,12 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+        
         public function datei_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
         FileUtils::ForceDirectories($targetFolder);
-
+        
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
             array(
                 'original_file_name' => $original_file_name,
@@ -304,15 +304,15 @@
             )
         );
         $filepath = Path::Combine($targetFolder, $filename);
-
+        
         $handled = true;
         }
-
+        
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
@@ -323,18 +323,18 @@
             $result = -2;
             if (FileUtils::FileExists($target))
                $result = FileUtils::RemoveFile($target);
-
+            
             $message = "Delete file '$target'. Result $result";
         }
         function parlamentarier_anhangDetailViewGrid0parlamentarier_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             $file = $rowData['datei'];
-
+            
             $path_parts = pathinfo($file);
-
+            
             $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
             $finfo_encoding = new finfo(FILEINFO_MIME_ENCODING); // return mime encoding
-
+            
             $rowData['dateiname'] = $path_parts['filename'];
             if (isset($path_parts['extension'])) {
                $rowData['dateierweiterung'] = $path_parts['extension'];
@@ -343,25 +343,25 @@
             $rowData['mime_type'] = $finfo_mime->file($file);
             $rowData['encoding'] = $finfo_encoding->file($file);
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
         }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'parlamentarier_anhangDetailViewGrid0parlamentarier');
             $result->SetAllowDeleteSelected(false);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $result->BeforeDeleteRecord->AddListener('parlamentarier_anhangDetailViewGrid0parlamentarier' . '_' . 'BeforeDeleteRecord', $this);
@@ -374,7 +374,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for dateiname_voll field
@@ -396,7 +396,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -410,7 +410,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -429,13 +429,13 @@
             return $result;
         }
     }
-
-
-
+    
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class parlamentarier_anhangDetailEdit0parlamentarierPage extends DetailPageEdit
     {
         protected function DoBeforeCreate()
@@ -487,27 +487,27 @@
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
         }
-
+    
         protected function CreatePageNavigator()
         {
             $result = new CompositePageNavigator($this);
-
+            
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
             $partitionNavigator->SetRowsPerPage(100);
             $result->AddPageNavigator($partitionNavigator);
-
+            
             return $result;
         }
-
+    
         public function GetPageList()
         {
             return null;
         }
-
+    
         protected function CreateRssGenerator() {
             return setupRSS($this, $this->dataset);
         }
-
+    
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
@@ -528,13 +528,13 @@
                     ), $this->GetLocalizerCaptions(), $this, 'CONTAINS'
                 );
         }
-
+    
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('parlamentarier_anhangDetailEdit0parlamentarierasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -659,12 +659,12 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function AddOperationsColumns(Grid $grid)
         {
             $actionsBandName = 'actions';
@@ -698,7 +698,7 @@
                 $column->SetImagePath('images/copy_action.png');
             }
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -709,12 +709,12 @@
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentarieranhangs'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for datei field
             //
             $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
-
+            
             /* <inline edit column> */
             //
             // Edit column for datei field
@@ -727,7 +727,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for datei field
@@ -743,7 +743,7 @@
             $column->SetDescription($this->RenderText('Datei'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for dateiname_voll field
             //
@@ -751,7 +751,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for dateiname_voll field
@@ -769,7 +769,7 @@
             $column->SetDescription($this->RenderText('Dateiname inkl. Erweiterung'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -777,7 +777,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -791,7 +791,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -808,13 +808,13 @@
             $column->SetDescription($this->RenderText('Beschreibung des Anhangs'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -831,14 +831,14 @@
             $column->SetDescription($this->RenderText('Erstellt von'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -854,13 +854,13 @@
             $column->SetDescription($this->RenderText('Erstellt am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -877,14 +877,14 @@
             $column->SetDescription($this->RenderText('Abgäendert von'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -901,7 +901,7 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+    
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
@@ -910,20 +910,20 @@
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for datei field
             //
             $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for dateiname_voll field
             //
@@ -932,7 +932,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -941,14 +941,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for dateierweiterung field
             //
             $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for mime_type field
             //
@@ -957,21 +957,21 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('mime_type_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for encoding field
             //
             $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -979,14 +979,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -995,7 +995,7 @@
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
-
+    
         protected function AddEditColumns(Grid $grid)
         {
             //
@@ -1008,7 +1008,7 @@
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for dateiname_voll field
             //
@@ -1021,7 +1021,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for beschreibung field
             //
@@ -1033,7 +1033,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for dateierweiterung field
             //
@@ -1045,7 +1045,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for mime_type field
             //
@@ -1058,7 +1058,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for encoding field
             //
@@ -1071,7 +1071,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -1083,7 +1083,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -1094,7 +1094,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -1106,7 +1106,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -1118,7 +1118,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
-
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -1239,15 +1239,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Parlamentarier',
-                'parlamentarier_id',
-                $editor,
+                'Parlamentarier', 
+                'parlamentarier_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for datei field
             //
@@ -1258,7 +1258,7 @@
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for beschreibung field
             //
@@ -1281,7 +1281,7 @@
                 $grid->SetShowAddButton(false);
             }
         }
-
+    
         protected function AddPrintColumns(Grid $grid)
         {
             //
@@ -1290,63 +1290,63 @@
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for datei field
             //
             $column = new TextViewColumn('datei', 'Datei', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for dateiname_voll field
             //
             $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for dateierweiterung field
             //
             $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for mime_type field
             //
             $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for encoding field
             //
             $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -1354,14 +1354,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -1370,7 +1370,7 @@
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
-
+    
         protected function AddExportColumns(Grid $grid)
         {
             //
@@ -1379,63 +1379,63 @@
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for datei field
             //
             $column = new TextViewColumn('datei', 'Datei', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for dateiname_voll field
             //
             $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for dateierweiterung field
             //
             $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for mime_type field
             //
             $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for encoding field
             //
             $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -1443,14 +1443,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -1459,18 +1459,18 @@
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
     	$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
-
+    
         public function datei_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
         FileUtils::ForceDirectories($targetFolder);
-
+        
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
             array(
                 'original_file_name' => $original_file_name,
@@ -1479,15 +1479,15 @@
             )
         );
         $filepath = Path::Combine($targetFolder, $filename);
-
+        
         $handled = true;
         }
-
+        
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
@@ -1498,18 +1498,18 @@
             $result = -2;
             if (FileUtils::FileExists($target))
                $result = FileUtils::RemoveFile($target);
-
+            
             $message = "Delete file '$target'. Result $result";
         }
         function parlamentarier_anhangDetailEditGrid0parlamentarier_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             $file = $rowData['datei'];
-
+            
             $path_parts = pathinfo($file);
-
+            
             $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
             $finfo_encoding = new finfo(FILEINFO_MIME_ENCODING); // return mime encoding
-
+            
             $rowData['dateiname'] = $path_parts['filename'];
             if (isset($path_parts['extension'])) {
                $rowData['dateierweiterung'] = $path_parts['extension'];
@@ -1522,7 +1522,7 @@
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
         FileUtils::ForceDirectories($targetFolder);
-
+        
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
             array(
                 'original_file_name' => $original_file_name,
@@ -1531,14 +1531,14 @@
             )
         );
         $filepath = Path::Combine($targetFolder, $filename);
-
+        
         $handled = true;
         }
         public function datei_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
         FileUtils::ForceDirectories($targetFolder);
-
+        
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
             array(
                 'original_file_name' => $original_file_name,
@@ -1547,7 +1547,7 @@
             )
         );
         $filepath = Path::Combine($targetFolder, $filename);
-
+        
         $handled = true;
         }
         public function ShowEditButtonHandler(&$show)
@@ -1560,10 +1560,10 @@
             if ($this->GetRecordPermission() != null)
                 $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
         }
-
+        
         public function GetModalGridDeleteHandler() { return 'parlamentarier_anhangDetailEdit0parlamentarier_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'parlamentarier_anhangDetailEditGrid0parlamentarier');
@@ -1574,9 +1574,9 @@
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $result->BeforeDeleteRecord->AddListener('parlamentarier_anhangDetailEditGrid0parlamentarier' . '_' . 'BeforeDeleteRecord', $this);
@@ -1590,7 +1590,7 @@
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
-
+    
             $this->SetShowPageList(true);
             $this->SetHidePageListByDefault(false);
             $this->SetExportToExcelAvailable(true);
@@ -1605,7 +1605,7 @@
             $this->SetVisualEffectsEnabled(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
-
+    
             //
             // Http Handlers
             //
@@ -1616,7 +1616,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for dateiname_voll field
@@ -1638,7 +1638,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -1652,7 +1652,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -1692,31 +1692,31 @@
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
-
+        
         public function OpenAdvancedSearchByDefault()
         {
             return false;
         }
-
+    
         protected function DoGetGridHeader()
         {
             return '' . $GLOBALS["edit_header_message"] . '
-
+    
     <div class="wiki-table-help">
     <p>Innerhalb der Bearbeitungsmaske Parlamentarier können Dateien als Anhang gespeichert werden. z.B. Autorisierungs-E-Mails (als pdf), Korrespondenzen, wichtige Hinweise, Quellen, die der Rückverfolgbarkeit und der Beweisführung für verwendete Informationen dienen.
     </p>
     </div>
-
+    
     ' . $GLOBALS["edit_general_hint"] . '';
-        }
+        }    
     }
-
-
-
+    
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class v_interessenbindung_liste_indirektDetailView1parlamentarierPage extends DetailPage
     {
         protected function DoBeforeCreate()
@@ -1792,7 +1792,7 @@
             $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation'), 'organisation_id_name_v_organisation');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -1800,7 +1800,7 @@
             //
             $column = new TextViewColumn('beziehung', 'Beziehung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beziehung field
@@ -1814,7 +1814,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beziehung field
@@ -1831,7 +1831,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for organisation_name field
             //
@@ -1839,7 +1839,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -1850,7 +1850,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -1865,13 +1865,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for art field
@@ -1885,7 +1885,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for art field
@@ -1902,13 +1902,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for status field
@@ -1922,7 +1922,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for status field
@@ -1939,13 +1939,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for verguetung field
@@ -1956,7 +1956,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for verguetung field
@@ -1970,7 +1970,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -1978,7 +1978,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -1990,7 +1990,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -2005,13 +2005,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('organisation_id_name', 'Organisation', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_id field
@@ -2085,16 +2085,16 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_id field
@@ -2168,9 +2168,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToDefault(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2182,14 +2182,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_datum field
@@ -2200,7 +2200,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_datum field
@@ -2214,13 +2214,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_visa field
@@ -2233,7 +2233,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_visa field
@@ -2249,7 +2249,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -2257,7 +2257,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -2268,7 +2268,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -2282,14 +2282,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_datum field
@@ -2300,7 +2300,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_datum field
@@ -2314,13 +2314,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -2334,7 +2334,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_visa field
@@ -2351,14 +2351,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -2371,7 +2371,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_date field
@@ -2388,13 +2388,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -2408,7 +2408,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_visa field
@@ -2425,14 +2425,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -2445,7 +2445,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_date field
@@ -2462,13 +2462,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for deklarationstyp field
             //
             $column = new TextViewColumn('deklarationstyp', 'Deklarationstyp', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for deklarationstyp field
@@ -2482,7 +2482,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for deklarationstyp field
@@ -2499,14 +2499,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for von field
@@ -2517,7 +2517,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for von field
@@ -2531,14 +2531,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for bis field
@@ -2549,7 +2549,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for bis field
@@ -2563,13 +2563,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_visa field
@@ -2582,7 +2582,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_visa field
@@ -2599,35 +2599,35 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+        
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
         }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_interessenbindung_liste_indirektDetailViewGrid1parlamentarier');
             $result->SetAllowDeleteSelected(false);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->AddFieldColumns($result);
@@ -2636,7 +2636,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -2647,7 +2647,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -2666,7 +2666,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -2678,7 +2678,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -2697,7 +2697,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -2708,7 +2708,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -2724,13 +2724,13 @@
             return $result;
         }
     }
-
-
-
+    
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class v_interessenbindung_liste_indirektDetailEdit1parlamentarierPage extends DetailPageEdit
     {
         protected function DoBeforeCreate()
@@ -2806,27 +2806,27 @@
             $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation'), 'organisation_id_name_v_organisation');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
         }
-
+    
         protected function CreatePageNavigator()
         {
             $result = new CompositePageNavigator($this);
-
+            
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
             $partitionNavigator->SetRowsPerPage(100);
             $result->AddPageNavigator($partitionNavigator);
-
+            
             return $result;
         }
-
+    
         public function GetPageList()
         {
             return null;
         }
-
+    
         protected function CreateRssGenerator() {
             return setupRSS($this, $this->dataset);
         }
-
+    
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
@@ -2847,7 +2847,7 @@
                     ), $this->GetLocalizerCaptions(), $this, 'CONTAINS'
                 );
         }
-
+    
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('v_interessenbindung_liste_indirektDetailEdit1parlamentarierasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
@@ -2858,7 +2858,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('status', $this->RenderText('Status')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -2935,7 +2935,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -3054,12 +3054,12 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_visa', $this->RenderText('Freigabe Visa')));
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function AddOperationsColumns(Grid $grid)
         {
             $actionsBandName = 'actions';
@@ -3093,7 +3093,7 @@
                 $column->SetImagePath('images/copy_action.png');
             }
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -3101,7 +3101,7 @@
             //
             $column = new TextViewColumn('beziehung', 'Beziehung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beziehung field
@@ -3115,7 +3115,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beziehung field
@@ -3132,7 +3132,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for organisation_name field
             //
@@ -3140,7 +3140,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -3151,7 +3151,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -3166,13 +3166,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for art field
@@ -3186,7 +3186,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for art field
@@ -3203,13 +3203,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for status field
@@ -3223,7 +3223,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for status field
@@ -3240,13 +3240,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for verguetung field
@@ -3257,7 +3257,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for verguetung field
@@ -3271,7 +3271,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -3279,7 +3279,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -3291,7 +3291,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -3306,13 +3306,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('organisation_id_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_id field
@@ -3386,16 +3386,16 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_id field
@@ -3469,9 +3469,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToDefault(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3483,14 +3483,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_datum field
@@ -3501,7 +3501,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_datum field
@@ -3515,13 +3515,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_visa field
@@ -3534,7 +3534,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_visa field
@@ -3550,7 +3550,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -3558,7 +3558,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -3569,7 +3569,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -3583,14 +3583,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_datum field
@@ -3601,7 +3601,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_datum field
@@ -3615,13 +3615,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -3635,7 +3635,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_visa field
@@ -3652,14 +3652,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -3672,7 +3672,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_date field
@@ -3689,13 +3689,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -3709,7 +3709,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_visa field
@@ -3726,14 +3726,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -3746,7 +3746,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_date field
@@ -3763,13 +3763,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for deklarationstyp field
             //
             $column = new TextViewColumn('deklarationstyp', 'Deklarationstyp', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for deklarationstyp field
@@ -3783,7 +3783,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for deklarationstyp field
@@ -3800,14 +3800,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for von field
@@ -3818,7 +3818,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for von field
@@ -3832,14 +3832,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for bis field
@@ -3850,7 +3850,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for bis field
@@ -3864,13 +3864,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_visa field
@@ -3883,7 +3883,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_visa field
@@ -3900,7 +3900,7 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+    
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
@@ -3909,7 +3909,7 @@
             $column = new TextViewColumn('beziehung', 'Beziehung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for organisation_name field
             //
@@ -3919,28 +3919,28 @@
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -3949,7 +3949,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -3957,7 +3957,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -3965,14 +3965,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -3981,7 +3981,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -3989,14 +3989,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -4004,14 +4004,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -4019,14 +4019,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for parlamentarier_id field
             //
@@ -4034,14 +4034,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for deklarationstyp field
             //
             $column = new TextViewColumn('deklarationstyp', 'Deklarationstyp', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for von field
             //
@@ -4049,7 +4049,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for bis field
             //
@@ -4057,7 +4057,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
@@ -4065,7 +4065,7 @@
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
-
+    
         protected function AddEditColumns(Grid $grid)
         {
             //
@@ -4079,7 +4079,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for organisation_name field
             //
@@ -4088,7 +4088,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for art field
             //
@@ -4100,7 +4100,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for status field
             //
@@ -4112,7 +4112,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for verguetung field
             //
@@ -4121,7 +4121,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for beschreibung field
             //
@@ -4131,7 +4131,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for organisation_id field
             //
@@ -4204,15 +4204,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_datum field
             //
@@ -4221,7 +4221,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_visa field
             //
@@ -4232,7 +4232,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -4241,7 +4241,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_datum field
             //
@@ -4250,7 +4250,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -4262,7 +4262,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -4273,7 +4273,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -4285,7 +4285,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -4296,7 +4296,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for parlamentarier_id field
             //
@@ -4415,15 +4415,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Parlamentarier',
-                'parlamentarier_id',
-                $editor,
+                'Parlamentarier', 
+                'parlamentarier_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for deklarationstyp field
             //
@@ -4435,7 +4435,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for von field
             //
@@ -4444,7 +4444,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for bis field
             //
@@ -4453,7 +4453,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_visa field
             //
@@ -4465,7 +4465,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
-
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -4479,7 +4479,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for organisation_name field
             //
@@ -4488,7 +4488,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for art field
             //
@@ -4500,7 +4500,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for status field
             //
@@ -4512,7 +4512,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for verguetung field
             //
@@ -4521,7 +4521,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for beschreibung field
             //
@@ -4531,7 +4531,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for organisation_id field
             //
@@ -4604,16 +4604,16 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToDefault(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_datum field
             //
@@ -4622,7 +4622,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_visa field
             //
@@ -4633,7 +4633,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -4642,7 +4642,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_datum field
             //
@@ -4651,7 +4651,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -4663,7 +4663,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -4675,7 +4675,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -4687,7 +4687,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -4699,7 +4699,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for parlamentarier_id field
             //
@@ -4818,15 +4818,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Parlamentarier',
-                'parlamentarier_id',
-                $editor,
+                'Parlamentarier', 
+                'parlamentarier_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for deklarationstyp field
             //
@@ -4838,7 +4838,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for von field
             //
@@ -4847,7 +4847,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for bis field
             //
@@ -4856,7 +4856,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_visa field
             //
@@ -4878,7 +4878,7 @@
                 $grid->SetShowAddButton(false);
             }
         }
-
+    
         protected function AddPrintColumns(Grid $grid)
         {
             //
@@ -4887,42 +4887,42 @@
             $column = new TextViewColumn('beziehung', 'Beziehung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for organisation_name field
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -4930,7 +4930,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -4938,21 +4938,21 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -4960,14 +4960,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -4975,14 +4975,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -4990,14 +4990,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for parlamentarier_id field
             //
@@ -5005,14 +5005,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for deklarationstyp field
             //
             $column = new TextViewColumn('deklarationstyp', 'Deklarationstyp', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for von field
             //
@@ -5020,7 +5020,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for bis field
             //
@@ -5028,7 +5028,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
@@ -5036,7 +5036,7 @@
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
-
+    
         protected function AddExportColumns(Grid $grid)
         {
             //
@@ -5045,42 +5045,42 @@
             $column = new TextViewColumn('beziehung', 'Beziehung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for organisation_name field
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -5088,7 +5088,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -5096,21 +5096,21 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -5118,14 +5118,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -5133,14 +5133,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -5148,14 +5148,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for parlamentarier_id field
             //
@@ -5163,14 +5163,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for deklarationstyp field
             //
             $column = new TextViewColumn('deklarationstyp', 'Deklarationstyp', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for von field
             //
@@ -5178,7 +5178,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for bis field
             //
@@ -5186,7 +5186,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
@@ -5194,18 +5194,18 @@
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
     	$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
-
+    
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
@@ -5220,10 +5220,10 @@
             if ($this->GetRecordPermission() != null)
                 $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
         }
-
+        
         public function GetModalGridDeleteHandler() { return 'v_interessenbindung_liste_indirektDetailEdit1parlamentarier_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_interessenbindung_liste_indirektDetailEditGrid1parlamentarier');
@@ -5234,9 +5234,9 @@
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->CreateGridSearchControl($result);
@@ -5248,7 +5248,7 @@
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
-
+    
             $this->SetShowPageList(true);
             $this->SetHidePageListByDefault(false);
             $this->SetExportToExcelAvailable(true);
@@ -5263,7 +5263,7 @@
             $this->SetVisualEffectsEnabled(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
-
+    
             //
             // Http Handlers
             //
@@ -5272,7 +5272,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -5283,7 +5283,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -5302,7 +5302,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -5314,7 +5314,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -5333,7 +5333,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -5344,7 +5344,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -5380,24 +5380,24 @@
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
-
+        
         public function OpenAdvancedSearchByDefault()
         {
             return false;
         }
-
+    
         protected function DoGetGridHeader()
         {
             return '';
-        }
+        }    
     }
-
-
-
+    
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class v_zutrittsberechtigung_mit_mandaten_indirektDetailView2parlamentarierPage extends DetailPage
     {
         protected function DoBeforeCreate()
@@ -5465,7 +5465,7 @@
             $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('anzeige_name', 'organisation_id_anzeige_name', 'organisation_id_anzeige_name_v_organisation'), 'organisation_id_anzeige_name_v_organisation');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -5473,7 +5473,7 @@
             //
             $column = new TextViewColumn('beziehung', 'Beziehung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beziehung field
@@ -5487,7 +5487,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beziehung field
@@ -5504,7 +5504,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for organisation_name field
             //
@@ -5512,7 +5512,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -5523,7 +5523,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -5537,7 +5537,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for zutrittsberechtigung_name field
             //
@@ -5545,7 +5545,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigung_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -5557,7 +5557,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -5573,7 +5573,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for funktion field
             //
@@ -5581,7 +5581,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('funktion_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for funktion field
@@ -5592,7 +5592,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for funktion field
@@ -5606,13 +5606,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_id field
@@ -5697,15 +5697,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_id field
@@ -5790,9 +5790,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5802,13 +5802,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_id field
@@ -5882,15 +5882,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_id field
@@ -5964,9 +5964,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -5976,13 +5976,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for art field
@@ -5995,7 +5995,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for art field
@@ -6011,13 +6011,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for verguetung field
@@ -6028,7 +6028,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for verguetung field
@@ -6042,7 +6042,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -6051,7 +6051,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
             $column->SetReplaceLFByBR(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -6062,7 +6062,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -6076,14 +6076,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for von field
@@ -6094,7 +6094,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for von field
@@ -6108,14 +6108,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for bis field
@@ -6126,7 +6126,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for bis field
@@ -6140,7 +6140,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -6148,7 +6148,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -6159,7 +6159,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -6173,14 +6173,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_datum field
@@ -6191,7 +6191,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_datum field
@@ -6205,13 +6205,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_visa field
@@ -6224,7 +6224,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_visa field
@@ -6240,13 +6240,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_visa field
@@ -6259,7 +6259,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_visa field
@@ -6275,14 +6275,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_datum field
@@ -6293,7 +6293,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_datum field
@@ -6307,13 +6307,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -6327,7 +6327,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_visa field
@@ -6344,14 +6344,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -6363,7 +6363,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_date field
@@ -6378,13 +6378,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -6398,7 +6398,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_visa field
@@ -6415,14 +6415,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -6434,7 +6434,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_date field
@@ -6450,35 +6450,35 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+        
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
         }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mit_mandaten_indirektDetailViewGrid2parlamentarier');
             $result->SetAllowDeleteSelected(false);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->AddFieldColumns($result);
@@ -6487,7 +6487,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -6498,7 +6498,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -6516,7 +6516,7 @@
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -6528,7 +6528,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -6548,7 +6548,7 @@
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for funktion field
@@ -6559,7 +6559,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for funktion field
@@ -6578,7 +6578,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetReplaceLFByBR(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -6589,7 +6589,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -6607,7 +6607,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -6618,7 +6618,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -6634,13 +6634,13 @@
             return $result;
         }
     }
-
-
-
+    
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarierPage extends DetailPageEdit
     {
         protected function DoBeforeCreate()
@@ -6708,27 +6708,27 @@
             $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('anzeige_name', 'organisation_id_anzeige_name', 'organisation_id_anzeige_name_v_organisation'), 'organisation_id_anzeige_name_v_organisation');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
         }
-
+    
         protected function CreatePageNavigator()
         {
             $result = new CompositePageNavigator($this);
-
+            
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
             $partitionNavigator->SetRowsPerPage(100);
             $result->AddPageNavigator($partitionNavigator);
-
+            
             return $result;
         }
-
+    
         public function GetPageList()
         {
             return null;
         }
-
+    
         protected function CreateRssGenerator() {
             return setupRSS($this, $this->dataset);
         }
-
+    
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
@@ -6749,7 +6749,7 @@
                     ), $this->GetLocalizerCaptions(), $this, 'CONTAINS'
                 );
         }
-
+    
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarierasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
@@ -6758,7 +6758,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('organisation_name', $this->RenderText('Organisation Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zutrittsberechtigung_name', $this->RenderText('Zutrittsberechtigung Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -6873,7 +6873,7 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -6952,7 +6952,7 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -7035,12 +7035,12 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function AddOperationsColumns(Grid $grid)
         {
             $actionsBandName = 'actions';
@@ -7074,7 +7074,7 @@
                 $column->SetImagePath('images/copy_action.png');
             }
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -7082,7 +7082,7 @@
             //
             $column = new TextViewColumn('beziehung', 'Beziehung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beziehung field
@@ -7096,7 +7096,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beziehung field
@@ -7113,7 +7113,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for organisation_name field
             //
@@ -7121,7 +7121,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -7132,7 +7132,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -7146,7 +7146,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for zutrittsberechtigung_name field
             //
@@ -7154,7 +7154,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigung_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -7166,7 +7166,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -7182,7 +7182,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for funktion field
             //
@@ -7190,7 +7190,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('funktion_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for funktion field
@@ -7201,7 +7201,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for funktion field
@@ -7215,13 +7215,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_id field
@@ -7306,15 +7306,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_id field
@@ -7399,9 +7399,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7411,13 +7411,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_id field
@@ -7491,15 +7491,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_id field
@@ -7573,9 +7573,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7585,13 +7585,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for art field
@@ -7604,7 +7604,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for art field
@@ -7620,13 +7620,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for verguetung field
@@ -7637,7 +7637,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for verguetung field
@@ -7651,7 +7651,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -7660,7 +7660,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
             $column->SetReplaceLFByBR(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -7671,7 +7671,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -7685,14 +7685,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for von field
@@ -7703,7 +7703,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for von field
@@ -7717,14 +7717,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for bis field
@@ -7735,7 +7735,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for bis field
@@ -7749,7 +7749,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -7757,7 +7757,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -7768,7 +7768,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -7782,14 +7782,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_datum field
@@ -7800,7 +7800,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_datum field
@@ -7814,13 +7814,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_visa field
@@ -7833,7 +7833,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_visa field
@@ -7849,13 +7849,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_visa field
@@ -7868,7 +7868,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_visa field
@@ -7884,14 +7884,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_datum field
@@ -7902,7 +7902,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_datum field
@@ -7916,13 +7916,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -7936,7 +7936,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_visa field
@@ -7953,14 +7953,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -7972,7 +7972,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_date field
@@ -7987,13 +7987,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -8007,7 +8007,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_visa field
@@ -8024,14 +8024,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -8043,7 +8043,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_date field
@@ -8059,7 +8059,7 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+    
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
@@ -8068,7 +8068,7 @@
             $column = new TextViewColumn('beziehung', 'Beziehung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for organisation_name field
             //
@@ -8077,7 +8077,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for zutrittsberechtigung_name field
             //
@@ -8087,7 +8087,7 @@
             $column->SetFullTextWindowHandlerName('zutrittsberechtigung_name_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for funktion field
             //
@@ -8096,7 +8096,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('funktion_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -8104,7 +8104,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -8112,21 +8112,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -8136,7 +8136,7 @@
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for von field
             //
@@ -8144,7 +8144,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for bis field
             //
@@ -8152,7 +8152,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -8161,7 +8161,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -8169,21 +8169,21 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -8191,14 +8191,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -8206,14 +8206,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -8222,7 +8222,7 @@
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
-
+    
         protected function AddEditColumns(Grid $grid)
         {
             //
@@ -8236,7 +8236,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for organisation_name field
             //
@@ -8245,7 +8245,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for zutrittsberechtigung_name field
             //
@@ -8255,7 +8255,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for funktion field
             //
@@ -8264,7 +8264,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for parlamentarier_id field
             //
@@ -8383,15 +8383,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Parlamentarier',
-                'parlamentarier_id',
-                $editor,
+                'Parlamentarier', 
+                'parlamentarier_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for id field
             //
@@ -8400,7 +8400,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for zutrittsberechtigung_id field
             //
@@ -8484,14 +8484,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for organisation_id field
             //
@@ -8564,14 +8564,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for art field
             //
@@ -8582,7 +8582,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for verguetung field
             //
@@ -8591,7 +8591,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for beschreibung field
             //
@@ -8600,7 +8600,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for von field
             //
@@ -8609,7 +8609,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for bis field
             //
@@ -8618,7 +8618,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -8627,7 +8627,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_datum field
             //
@@ -8636,7 +8636,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_visa field
             //
@@ -8647,7 +8647,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_visa field
             //
@@ -8658,7 +8658,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_datum field
             //
@@ -8667,7 +8667,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -8679,7 +8679,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -8689,7 +8689,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -8701,7 +8701,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -8712,7 +8712,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
-
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -8726,7 +8726,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for organisation_name field
             //
@@ -8735,7 +8735,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for zutrittsberechtigung_name field
             //
@@ -8745,7 +8745,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for funktion field
             //
@@ -8754,7 +8754,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for parlamentarier_id field
             //
@@ -8873,16 +8873,16 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Parlamentarier',
-                'parlamentarier_id',
-                $editor,
+                'Parlamentarier', 
+                'parlamentarier_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToDefault(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for id field
             //
@@ -8891,7 +8891,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for zutrittsberechtigung_id field
             //
@@ -8975,14 +8975,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for organisation_id field
             //
@@ -9055,14 +9055,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for art field
             //
@@ -9073,7 +9073,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for verguetung field
             //
@@ -9082,7 +9082,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for beschreibung field
             //
@@ -9091,7 +9091,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for von field
             //
@@ -9100,7 +9100,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for bis field
             //
@@ -9109,7 +9109,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -9118,7 +9118,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_datum field
             //
@@ -9127,7 +9127,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_visa field
             //
@@ -9138,7 +9138,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_visa field
             //
@@ -9149,7 +9149,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_datum field
             //
@@ -9158,7 +9158,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -9170,7 +9170,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -9180,7 +9180,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -9192,7 +9192,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -9213,7 +9213,7 @@
                 $grid->SetShowAddButton(false);
             }
         }
-
+    
         protected function AddPrintColumns(Grid $grid)
         {
             //
@@ -9222,42 +9222,42 @@
             $column = new TextViewColumn('beziehung', 'Beziehung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for organisation_name field
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for zutrittsberechtigung_name field
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -9265,7 +9265,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -9273,28 +9273,28 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for von field
             //
@@ -9302,7 +9302,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for bis field
             //
@@ -9310,14 +9310,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -9325,21 +9325,21 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -9347,14 +9347,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -9362,14 +9362,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -9378,7 +9378,7 @@
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
-
+    
         protected function AddExportColumns(Grid $grid)
         {
             //
@@ -9387,42 +9387,42 @@
             $column = new TextViewColumn('beziehung', 'Beziehung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for organisation_name field
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for zutrittsberechtigung_name field
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -9430,7 +9430,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -9438,28 +9438,28 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for von field
             //
@@ -9467,7 +9467,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for bis field
             //
@@ -9475,14 +9475,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -9490,21 +9490,21 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -9512,14 +9512,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -9527,14 +9527,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -9543,18 +9543,18 @@
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
     	$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
-
+    
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
@@ -9569,10 +9569,10 @@
             if ($this->GetRecordPermission() != null)
                 $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
         }
-
+        
         public function GetModalGridDeleteHandler() { return 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarier_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEditGrid2parlamentarier');
@@ -9583,9 +9583,9 @@
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->CreateGridSearchControl($result);
@@ -9597,7 +9597,7 @@
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
-
+    
             $this->SetShowPageList(true);
             $this->SetHidePageListByDefault(false);
             $this->SetExportToExcelAvailable(true);
@@ -9612,7 +9612,7 @@
             $this->SetVisualEffectsEnabled(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
-
+    
             //
             // Http Handlers
             //
@@ -9621,7 +9621,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -9632,7 +9632,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -9650,7 +9650,7 @@
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -9662,7 +9662,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -9682,7 +9682,7 @@
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for funktion field
@@ -9693,7 +9693,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for funktion field
@@ -9712,7 +9712,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -9723,7 +9723,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -9741,7 +9741,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -9752,7 +9752,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -9803,24 +9803,24 @@
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
-
+        
         public function OpenAdvancedSearchByDefault()
         {
             return false;
         }
-
+    
         protected function DoGetGridHeader()
         {
             return '';
-        }
+        }    
     }
-
-
-
+    
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class v_in_kommission_listeDetailView3parlamentarierPage extends DetailPage
     {
         protected function DoBeforeCreate()
@@ -9878,7 +9878,7 @@
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'kommission_id_anzeige_name', 'kommission_id_anzeige_name_v_kommission'), 'kommission_id_anzeige_name_v_kommission');
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -9886,7 +9886,7 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for abkuerzung field
@@ -9900,7 +9900,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for abkuerzung field
@@ -9918,7 +9918,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -9926,7 +9926,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for name field
@@ -9940,7 +9940,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for name field
@@ -9958,13 +9958,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for kommission_id field
@@ -10027,16 +10027,16 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission',
-                'kommission_id',
-                $editor,
+                'Kommission', 
+                'kommission_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for kommission_id field
@@ -10099,9 +10099,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission',
-                'kommission_id',
-                $editor,
+                'Kommission', 
+                'kommission_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -10112,13 +10112,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for funktion field
@@ -10133,7 +10133,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for funktion field
@@ -10152,7 +10152,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -10160,7 +10160,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -10171,7 +10171,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -10185,14 +10185,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_datum field
@@ -10203,7 +10203,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_datum field
@@ -10217,13 +10217,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -10237,7 +10237,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_visa field
@@ -10254,14 +10254,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -10274,7 +10274,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_date field
@@ -10291,13 +10291,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -10311,7 +10311,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_visa field
@@ -10328,14 +10328,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -10348,7 +10348,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_date field
@@ -10366,35 +10366,35 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+        
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
         }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_in_kommission_listeDetailViewGrid3parlamentarier');
             $result->SetAllowDeleteSelected(false);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->AddFieldColumns($result);
@@ -10403,7 +10403,7 @@
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for name field
@@ -10417,7 +10417,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for name field
@@ -10439,7 +10439,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -10450,7 +10450,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -10466,13 +10466,13 @@
             return $result;
         }
     }
-
-
-
+    
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class v_in_kommission_listeDetailEdit3parlamentarierPage extends DetailPageEdit
     {
         protected function DoBeforeCreate()
@@ -10530,27 +10530,27 @@
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'kommission_id_anzeige_name', 'kommission_id_anzeige_name_v_kommission'), 'kommission_id_anzeige_name_v_kommission');
         }
-
+    
         protected function CreatePageNavigator()
         {
             $result = new CompositePageNavigator($this);
-
+            
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
             $partitionNavigator->SetRowsPerPage(100);
             $result->AddPageNavigator($partitionNavigator);
-
+            
             return $result;
         }
-
+    
         public function GetPageList()
         {
             return null;
         }
-
+    
         protected function CreateRssGenerator() {
             return setupRSS($this, $this->dataset);
         }
-
+    
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
@@ -10571,14 +10571,14 @@
                     ), $this->GetLocalizerCaptions(), $this, 'CONTAINS'
                 );
         }
-
+    
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('v_in_kommission_listeDetailEdit3parlamentarierasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('abkuerzung', $this->RenderText('Abkuerzung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -10643,12 +10643,12 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function AddOperationsColumns(Grid $grid)
         {
             $actionsBandName = 'actions';
@@ -10682,7 +10682,7 @@
                 $column->SetImagePath('images/copy_action.png');
             }
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -10690,7 +10690,7 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for abkuerzung field
@@ -10704,7 +10704,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for abkuerzung field
@@ -10722,7 +10722,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -10730,7 +10730,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for name field
@@ -10744,7 +10744,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for name field
@@ -10762,13 +10762,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for kommission_id field
@@ -10831,16 +10831,16 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission',
-                'kommission_id',
-                $editor,
+                'Kommission', 
+                'kommission_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for kommission_id field
@@ -10903,9 +10903,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission',
-                'kommission_id',
-                $editor,
+                'Kommission', 
+                'kommission_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -10916,13 +10916,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for funktion field
@@ -10937,7 +10937,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for funktion field
@@ -10956,7 +10956,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -10964,7 +10964,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -10975,7 +10975,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -10989,14 +10989,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_datum field
@@ -11007,7 +11007,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_datum field
@@ -11021,13 +11021,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -11041,7 +11041,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_visa field
@@ -11058,14 +11058,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -11078,7 +11078,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_date field
@@ -11095,13 +11095,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -11115,7 +11115,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_visa field
@@ -11132,14 +11132,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -11152,7 +11152,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_date field
@@ -11170,7 +11170,7 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+    
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
@@ -11180,7 +11180,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -11190,7 +11190,7 @@
             $column->SetFullTextWindowHandlerName('name_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -11198,14 +11198,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -11214,7 +11214,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -11222,14 +11222,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -11237,14 +11237,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -11253,7 +11253,7 @@
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
-
+    
         protected function AddEditColumns(Grid $grid)
         {
             //
@@ -11267,7 +11267,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for name field
             //
@@ -11279,7 +11279,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for kommission_id field
             //
@@ -11341,15 +11341,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission',
-                'kommission_id',
-                $editor,
+                'Kommission', 
+                'kommission_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for funktion field
             //
@@ -11362,7 +11362,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -11371,7 +11371,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_datum field
             //
@@ -11380,7 +11380,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -11392,7 +11392,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -11403,7 +11403,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -11415,7 +11415,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -11427,7 +11427,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
-
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -11441,7 +11441,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for name field
             //
@@ -11453,7 +11453,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for kommission_id field
             //
@@ -11515,15 +11515,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kommission',
-                'kommission_id',
-                $editor,
+                'Kommission', 
+                'kommission_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for funktion field
             //
@@ -11537,7 +11537,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -11546,7 +11546,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_datum field
             //
@@ -11555,7 +11555,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -11567,7 +11567,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -11579,7 +11579,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -11591,7 +11591,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -11614,7 +11614,7 @@
                 $grid->SetShowAddButton(false);
             }
         }
-
+    
         protected function AddPrintColumns(Grid $grid)
         {
             //
@@ -11624,14 +11624,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -11639,21 +11639,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -11661,14 +11661,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -11676,14 +11676,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -11692,7 +11692,7 @@
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
-
+    
         protected function AddExportColumns(Grid $grid)
         {
             //
@@ -11702,14 +11702,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -11717,21 +11717,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kommission.php?operation=view&pk0=%kommission_id%' , '_self');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -11739,14 +11739,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -11754,14 +11754,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -11770,18 +11770,18 @@
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
     	$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
-
+    
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
@@ -11796,10 +11796,10 @@
             if ($this->GetRecordPermission() != null)
                 $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
         }
-
+        
         public function GetModalGridDeleteHandler() { return 'v_in_kommission_listeDetailEdit3parlamentarier_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_in_kommission_listeDetailEditGrid3parlamentarier');
@@ -11810,9 +11810,9 @@
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->CreateGridSearchControl($result);
@@ -11824,7 +11824,7 @@
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
-
+    
             $this->SetShowPageList(true);
             $this->SetHidePageListByDefault(false);
             $this->SetExportToExcelAvailable(true);
@@ -11839,7 +11839,7 @@
             $this->SetVisualEffectsEnabled(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
-
+    
             //
             // Http Handlers
             //
@@ -11848,7 +11848,7 @@
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for name field
@@ -11862,7 +11862,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for name field
@@ -11884,7 +11884,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -11895,7 +11895,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -11924,24 +11924,24 @@
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
-
+        
         public function OpenAdvancedSearchByDefault()
         {
             return false;
         }
-
+    
         protected function DoGetGridHeader()
         {
             return '';
-        }
+        }    
     }
-
-
-
+    
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class v_interessenbindung_listeDetailView4parlamentarierPage extends DetailPage
     {
         protected function DoBeforeCreate()
@@ -12013,7 +12013,7 @@
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation'), 'organisation_id_name_v_organisation');
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -12023,7 +12023,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -12034,7 +12034,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -12049,13 +12049,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for art field
@@ -12072,7 +12072,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for art field
@@ -12093,13 +12093,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for status field
@@ -12113,7 +12113,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for status field
@@ -12131,13 +12131,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for verguetung field
@@ -12148,7 +12148,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for verguetung field
@@ -12162,7 +12162,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -12170,7 +12170,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -12182,7 +12182,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -12197,13 +12197,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('organisation_id_name', 'Organisation', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_id field
@@ -12277,16 +12277,16 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_id field
@@ -12360,9 +12360,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -12373,14 +12373,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_datum field
@@ -12391,7 +12391,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_datum field
@@ -12405,13 +12405,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_visa field
@@ -12424,7 +12424,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_visa field
@@ -12440,7 +12440,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -12448,7 +12448,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -12459,7 +12459,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -12473,14 +12473,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_datum field
@@ -12491,7 +12491,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_datum field
@@ -12505,13 +12505,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -12525,7 +12525,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_visa field
@@ -12542,14 +12542,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -12562,7 +12562,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_date field
@@ -12579,13 +12579,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -12599,7 +12599,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_visa field
@@ -12616,14 +12616,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -12636,7 +12636,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_date field
@@ -12654,35 +12654,35 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+        
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
         }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_interessenbindung_listeDetailViewGrid4parlamentarier');
             $result->SetAllowDeleteSelected(false);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->AddFieldColumns($result);
@@ -12691,7 +12691,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -12702,7 +12702,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -12721,7 +12721,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -12733,7 +12733,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -12752,7 +12752,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -12763,7 +12763,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -12779,13 +12779,13 @@
             return $result;
         }
     }
-
-
-
+    
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class v_interessenbindung_listeDetailEdit4parlamentarierPage extends DetailPageEdit
     {
         protected function DoBeforeCreate()
@@ -12857,27 +12857,27 @@
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation'), 'organisation_id_name_v_organisation');
         }
-
+    
         protected function CreatePageNavigator()
         {
             $result = new CompositePageNavigator($this);
-
+            
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
             $partitionNavigator->SetRowsPerPage(100);
             $result->AddPageNavigator($partitionNavigator);
-
+            
             return $result;
         }
-
+    
         public function GetPageList()
         {
             return null;
         }
-
+    
         protected function CreateRssGenerator() {
             return setupRSS($this, $this->dataset);
         }
-
+    
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
@@ -12898,7 +12898,7 @@
                     ), $this->GetLocalizerCaptions(), $this, 'CONTAINS'
                 );
         }
-
+    
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('v_interessenbindung_listeDetailEdit4parlamentarierasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
@@ -12908,7 +12908,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('status', $this->RenderText('Status')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -12987,12 +12987,12 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier Id')));
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function AddOperationsColumns(Grid $grid)
         {
             $actionsBandName = 'actions';
@@ -13026,7 +13026,7 @@
                 $column->SetImagePath('images/copy_action.png');
             }
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -13036,7 +13036,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -13047,7 +13047,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -13062,13 +13062,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for art field
@@ -13085,7 +13085,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for art field
@@ -13106,13 +13106,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for status field
@@ -13126,7 +13126,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for status field
@@ -13144,13 +13144,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for verguetung field
@@ -13161,7 +13161,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for verguetung field
@@ -13175,7 +13175,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -13183,7 +13183,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -13195,7 +13195,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -13210,13 +13210,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('organisation_id_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_id field
@@ -13290,16 +13290,16 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_id field
@@ -13373,9 +13373,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -13386,14 +13386,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_datum field
@@ -13404,7 +13404,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_datum field
@@ -13418,13 +13418,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_visa field
@@ -13437,7 +13437,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_visa field
@@ -13453,7 +13453,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -13461,7 +13461,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -13472,7 +13472,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -13486,14 +13486,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_datum field
@@ -13504,7 +13504,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_datum field
@@ -13518,13 +13518,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -13538,7 +13538,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_visa field
@@ -13555,14 +13555,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -13575,7 +13575,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_date field
@@ -13592,13 +13592,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -13612,7 +13612,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_visa field
@@ -13629,14 +13629,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -13649,7 +13649,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_date field
@@ -13667,7 +13667,7 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+    
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
@@ -13679,28 +13679,28 @@
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -13709,7 +13709,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -13717,7 +13717,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -13725,14 +13725,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -13741,7 +13741,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -13749,14 +13749,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -13764,14 +13764,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -13779,14 +13779,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for parlamentarier_id field
             //
@@ -13795,7 +13795,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
         }
-
+    
         protected function AddEditColumns(Grid $grid)
         {
             //
@@ -13806,7 +13806,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for art field
             //
@@ -13821,7 +13821,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for status field
             //
@@ -13833,7 +13833,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for verguetung field
             //
@@ -13842,7 +13842,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for beschreibung field
             //
@@ -13852,7 +13852,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for organisation_id field
             //
@@ -13925,15 +13925,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_datum field
             //
@@ -13942,7 +13942,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_visa field
             //
@@ -13953,7 +13953,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -13962,7 +13962,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_datum field
             //
@@ -13971,7 +13971,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -13983,7 +13983,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -13994,7 +13994,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -14006,7 +14006,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -14017,7 +14017,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for parlamentarier_id field
             //
@@ -14028,7 +14028,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
-
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -14039,7 +14039,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for art field
             //
@@ -14055,7 +14055,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for status field
             //
@@ -14068,7 +14068,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for verguetung field
             //
@@ -14077,7 +14077,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for beschreibung field
             //
@@ -14087,7 +14087,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for organisation_id field
             //
@@ -14160,15 +14160,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Organisation',
-                'organisation_id',
-                $editor,
+                'Organisation', 
+                'organisation_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_datum field
             //
@@ -14177,7 +14177,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_visa field
             //
@@ -14188,7 +14188,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -14197,7 +14197,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_datum field
             //
@@ -14206,7 +14206,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -14218,7 +14218,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -14230,7 +14230,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -14242,7 +14242,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -14254,7 +14254,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for parlamentarier_id field
             //
@@ -14275,7 +14275,7 @@
                 $grid->SetShowAddButton(false);
             }
         }
-
+    
         protected function AddPrintColumns(Grid $grid)
         {
             //
@@ -14284,35 +14284,35 @@
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -14320,7 +14320,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -14328,21 +14328,21 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -14350,14 +14350,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -14365,14 +14365,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -14380,14 +14380,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for parlamentarier_id field
             //
@@ -14396,7 +14396,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddPrintColumn($column);
         }
-
+    
         protected function AddExportColumns(Grid $grid)
         {
             //
@@ -14405,35 +14405,35 @@
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for status field
             //
             $column = new TextViewColumn('status', 'Status', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -14441,7 +14441,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -14449,21 +14449,21 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -14471,14 +14471,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -14486,14 +14486,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -14501,14 +14501,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for parlamentarier_id field
             //
@@ -14517,18 +14517,18 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddExportColumn($column);
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
     	$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
-
+    
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
@@ -14543,10 +14543,10 @@
             if ($this->GetRecordPermission() != null)
                 $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
         }
-
+        
         public function GetModalGridDeleteHandler() { return 'v_interessenbindung_listeDetailEdit4parlamentarier_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_interessenbindung_listeDetailEditGrid4parlamentarier');
@@ -14557,9 +14557,9 @@
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->CreateGridSearchControl($result);
@@ -14571,7 +14571,7 @@
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
-
+    
             $this->SetShowPageList(true);
             $this->SetHidePageListByDefault(false);
             $this->SetExportToExcelAvailable(true);
@@ -14586,7 +14586,7 @@
             $this->SetVisualEffectsEnabled(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
-
+    
             //
             // Http Handlers
             //
@@ -14595,7 +14595,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -14606,7 +14606,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -14625,7 +14625,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -14637,7 +14637,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -14656,7 +14656,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -14667,7 +14667,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -14703,24 +14703,24 @@
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
-
+        
         public function OpenAdvancedSearchByDefault()
         {
             return false;
         }
-
+    
         protected function DoGetGridHeader()
         {
             return '';
-        }
+        }    
     }
-
-
-
+    
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class v_zutrittsberechtigung_mit_mandatenDetailView5parlamentarierPage extends DetailPage
     {
         protected function DoBeforeCreate()
@@ -14784,7 +14784,7 @@
             $this->dataset->AddLookupField('zutrittsberechtigung_id', 'v_zutrittsberechtigung', new IntegerField('id'), new StringField('anzeige_name', 'zutrittsberechtigung_id_anzeige_name', 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung'), 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -14794,7 +14794,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -14805,7 +14805,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -14819,7 +14819,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for zutrittsberechtigung_name field
             //
@@ -14827,7 +14827,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigung_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -14839,7 +14839,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -14854,7 +14854,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for funktion field
             //
@@ -14862,7 +14862,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('funktion_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for funktion field
@@ -14873,7 +14873,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for funktion field
@@ -14887,13 +14887,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_id field
@@ -14978,15 +14978,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_id field
@@ -15071,9 +15071,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -15083,13 +15083,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for organisation_id field
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_id field
@@ -15100,7 +15100,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_id field
@@ -15114,13 +15114,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for art field
@@ -15136,7 +15136,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for art field
@@ -15155,13 +15155,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for verguetung field
@@ -15172,7 +15172,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for verguetung field
@@ -15186,7 +15186,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -15194,7 +15194,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -15205,7 +15205,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -15219,14 +15219,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for von field
@@ -15237,7 +15237,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for von field
@@ -15251,14 +15251,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for bis field
@@ -15269,7 +15269,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for bis field
@@ -15283,7 +15283,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -15291,7 +15291,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -15302,7 +15302,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -15316,14 +15316,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_datum field
@@ -15334,7 +15334,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_datum field
@@ -15348,13 +15348,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_visa field
@@ -15367,7 +15367,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_visa field
@@ -15383,13 +15383,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_visa field
@@ -15405,7 +15405,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_visa field
@@ -15424,14 +15424,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_datum field
@@ -15442,7 +15442,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_datum field
@@ -15456,13 +15456,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -15476,7 +15476,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_visa field
@@ -15493,14 +15493,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -15512,7 +15512,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_date field
@@ -15528,13 +15528,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -15548,7 +15548,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_visa field
@@ -15565,14 +15565,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -15584,7 +15584,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_date field
@@ -15601,35 +15601,35 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+        
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
         }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mit_mandatenDetailViewGrid5parlamentarier');
             $result->SetAllowDeleteSelected(false);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->AddFieldColumns($result);
@@ -15638,7 +15638,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -15649,7 +15649,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -15667,7 +15667,7 @@
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -15679,7 +15679,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -15698,7 +15698,7 @@
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for funktion field
@@ -15709,7 +15709,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for funktion field
@@ -15727,7 +15727,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -15738,7 +15738,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -15756,7 +15756,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -15767,7 +15767,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -15783,13 +15783,13 @@
             return $result;
         }
     }
-
-
-
+    
+    
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class v_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarierPage extends DetailPageEdit
     {
         protected function DoBeforeCreate()
@@ -15853,27 +15853,27 @@
             $this->dataset->AddLookupField('zutrittsberechtigung_id', 'v_zutrittsberechtigung', new IntegerField('id'), new StringField('anzeige_name', 'zutrittsberechtigung_id_anzeige_name', 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung'), 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
         }
-
+    
         protected function CreatePageNavigator()
         {
             $result = new CompositePageNavigator($this);
-
+            
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
             $partitionNavigator->SetRowsPerPage(100);
             $result->AddPageNavigator($partitionNavigator);
-
+            
             return $result;
         }
-
+    
         public function GetPageList()
         {
             return null;
         }
-
+    
         protected function CreateRssGenerator() {
             return setupRSS($this, $this->dataset);
         }
-
+    
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
@@ -15894,7 +15894,7 @@
                     ), $this->GetLocalizerCaptions(), $this, 'CONTAINS'
                 );
         }
-
+    
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('v_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarierasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
@@ -15902,7 +15902,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('organisation_name', $this->RenderText('Organisation Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zutrittsberechtigung_name', $this->RenderText('Zutrittsberechtigung Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -16017,7 +16017,7 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -16112,12 +16112,12 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function AddOperationsColumns(Grid $grid)
         {
             $actionsBandName = 'actions';
@@ -16151,7 +16151,7 @@
                 $column->SetImagePath('images/copy_action.png');
             }
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             //
@@ -16161,7 +16161,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -16172,7 +16172,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -16186,7 +16186,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for zutrittsberechtigung_name field
             //
@@ -16194,7 +16194,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigung_name_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -16206,7 +16206,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -16221,7 +16221,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for funktion field
             //
@@ -16229,7 +16229,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('funktion_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for funktion field
@@ -16240,7 +16240,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for funktion field
@@ -16254,13 +16254,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_id field
@@ -16345,15 +16345,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_id field
@@ -16438,9 +16438,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -16450,13 +16450,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for organisation_id field
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_id field
@@ -16467,7 +16467,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_id field
@@ -16481,13 +16481,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for art field
@@ -16503,7 +16503,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for art field
@@ -16522,13 +16522,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for verguetung field
@@ -16539,7 +16539,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for verguetung field
@@ -16553,7 +16553,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -16561,7 +16561,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -16572,7 +16572,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -16586,14 +16586,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for von field
@@ -16604,7 +16604,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for von field
@@ -16618,14 +16618,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for bis field
@@ -16636,7 +16636,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for bis field
@@ -16650,7 +16650,7 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -16658,7 +16658,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -16669,7 +16669,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -16683,14 +16683,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_datum field
@@ -16701,7 +16701,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_datum field
@@ -16715,13 +16715,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_visa field
@@ -16734,7 +16734,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for autorisiert_visa field
@@ -16750,13 +16750,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_visa field
@@ -16772,7 +16772,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_visa field
@@ -16791,14 +16791,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_datum field
@@ -16809,7 +16809,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for freigabe_datum field
@@ -16823,13 +16823,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -16843,7 +16843,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_visa field
@@ -16860,14 +16860,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -16879,7 +16879,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for created_date field
@@ -16895,13 +16895,13 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -16915,7 +16915,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_visa field
@@ -16932,14 +16932,14 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -16951,7 +16951,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for updated_date field
@@ -16968,7 +16968,7 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+    
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
@@ -16979,7 +16979,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('organisation_name_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for zutrittsberechtigung_name field
             //
@@ -16988,7 +16988,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigung_name_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for funktion field
             //
@@ -16997,7 +16997,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('funktion_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -17005,7 +17005,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -17013,28 +17013,28 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for organisation_id field
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
@@ -17043,7 +17043,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for von field
             //
@@ -17051,7 +17051,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for bis field
             //
@@ -17059,7 +17059,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -17068,7 +17068,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -17076,21 +17076,21 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -17098,14 +17098,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -17113,14 +17113,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -17129,7 +17129,7 @@
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
-
+    
         protected function AddEditColumns(Grid $grid)
         {
             //
@@ -17140,7 +17140,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for zutrittsberechtigung_name field
             //
@@ -17150,7 +17150,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for funktion field
             //
@@ -17159,7 +17159,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for parlamentarier_id field
             //
@@ -17278,15 +17278,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Parlamentarier',
-                'parlamentarier_id',
-                $editor,
+                'Parlamentarier', 
+                'parlamentarier_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for id field
             //
@@ -17295,7 +17295,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for zutrittsberechtigung_id field
             //
@@ -17379,14 +17379,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for organisation_id field
             //
@@ -17395,7 +17395,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for art field
             //
@@ -17409,7 +17409,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for verguetung field
             //
@@ -17418,7 +17418,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for beschreibung field
             //
@@ -17427,7 +17427,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for von field
             //
@@ -17436,7 +17436,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for bis field
             //
@@ -17445,7 +17445,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -17454,7 +17454,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_datum field
             //
@@ -17463,7 +17463,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_visa field
             //
@@ -17474,7 +17474,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_visa field
             //
@@ -17488,7 +17488,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_datum field
             //
@@ -17497,7 +17497,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -17509,7 +17509,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -17519,7 +17519,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -17531,7 +17531,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -17542,7 +17542,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
-
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -17553,7 +17553,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for zutrittsberechtigung_name field
             //
@@ -17563,7 +17563,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for funktion field
             //
@@ -17572,7 +17572,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for parlamentarier_id field
             //
@@ -17691,15 +17691,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Parlamentarier',
-                'parlamentarier_id',
-                $editor,
+                'Parlamentarier', 
+                'parlamentarier_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for id field
             //
@@ -17709,7 +17709,7 @@
             $editColumn->SetAllowSetToDefault(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for zutrittsberechtigung_id field
             //
@@ -17793,14 +17793,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Zutrittsberechtigung',
-                'zutrittsberechtigung_id',
-                $editor,
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for organisation_id field
             //
@@ -17809,7 +17809,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for art field
             //
@@ -17823,7 +17823,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for verguetung field
             //
@@ -17832,7 +17832,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for beschreibung field
             //
@@ -17841,7 +17841,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for von field
             //
@@ -17850,7 +17850,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for bis field
             //
@@ -17859,7 +17859,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -17868,7 +17868,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_datum field
             //
@@ -17877,7 +17877,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_visa field
             //
@@ -17888,7 +17888,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_visa field
             //
@@ -17902,7 +17902,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_datum field
             //
@@ -17911,7 +17911,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -17923,7 +17923,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -17934,7 +17934,7 @@
             $editColumn->SetAllowSetToDefault(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -17946,7 +17946,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -17968,7 +17968,7 @@
                 $grid->SetShowAddButton(false);
             }
         }
-
+    
         protected function AddPrintColumns(Grid $grid)
         {
             //
@@ -17977,21 +17977,21 @@
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for zutrittsberechtigung_name field
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -17999,14 +17999,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -18014,35 +18014,35 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for organisation_id field
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for von field
             //
@@ -18050,7 +18050,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for bis field
             //
@@ -18058,14 +18058,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -18073,21 +18073,21 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -18095,14 +18095,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -18110,14 +18110,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -18126,7 +18126,7 @@
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
-
+    
         protected function AddExportColumns(Grid $grid)
         {
             //
@@ -18135,21 +18135,21 @@
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for zutrittsberechtigung_name field
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -18157,14 +18157,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for anzeige_name field
             //
@@ -18172,35 +18172,35 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for organisation_id field
             //
             $column = new TextViewColumn('organisation_id', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for art field
             //
             $column = new TextViewColumn('art', 'Art', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for verguetung field
             //
             $column = new TextViewColumn('verguetung', 'Verguetung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for von field
             //
@@ -18208,7 +18208,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for bis field
             //
@@ -18216,14 +18216,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -18231,21 +18231,21 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -18253,14 +18253,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -18268,14 +18268,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -18284,18 +18284,18 @@
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
     	$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
-
+    
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
@@ -18310,10 +18310,10 @@
             if ($this->GetRecordPermission() != null)
                 $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
         }
-
+        
         public function GetModalGridDeleteHandler() { return 'v_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarier_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mit_mandatenDetailEditGrid5parlamentarier');
@@ -18324,9 +18324,9 @@
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->CreateGridSearchControl($result);
@@ -18338,7 +18338,7 @@
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
-
+    
             $this->SetShowPageList(true);
             $this->SetHidePageListByDefault(false);
             $this->SetExportToExcelAvailable(true);
@@ -18353,7 +18353,7 @@
             $this->SetVisualEffectsEnabled(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
-
+    
             //
             // Http Handlers
             //
@@ -18362,7 +18362,7 @@
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for organisation_name field
@@ -18373,7 +18373,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for organisation_name field
@@ -18391,7 +18391,7 @@
             //
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -18403,7 +18403,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zutrittsberechtigung_name field
@@ -18422,7 +18422,7 @@
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for funktion field
@@ -18433,7 +18433,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for funktion field
@@ -18451,7 +18451,7 @@
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beschreibung field
@@ -18462,7 +18462,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beschreibung field
@@ -18480,7 +18480,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -18491,7 +18491,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -18540,22 +18540,22 @@
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
-
+        
         public function OpenAdvancedSearchByDefault()
         {
             return false;
         }
-
+    
         protected function DoGetGridHeader()
         {
             return '';
-        }
+        }    
     }
-
+    
     // OnBeforePageExecute event handler
-
-
-
+    
+    
+    
     class parlamentarierPage extends Page
     {
         protected function DoBeforeCreate()
@@ -18670,25 +18670,25 @@
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'interessengruppe', new IntegerField('id', null, null, true), new StringField('name', 'beruf_interessengruppe_id_name', 'beruf_interessengruppe_id_name_interessengruppe'), 'beruf_interessengruppe_id_name_interessengruppe');
             $this->dataset->AddLookupField('militaerischer_grad', 'v_mil_grad', new IntegerField('id'), new StringField('name', 'militaerischer_grad_name', 'militaerischer_grad_name_v_mil_grad'), 'militaerischer_grad_name_v_mil_grad');
         }
-
+    
         protected function CreatePageNavigator()
         {
             $result = new CompositePageNavigator($this);
-
+            
             $partitionNavigator = new CustomPageNavigator('partition', $this, $this->GetDataset(), $this->RenderText('Name beginnt mit'), $result, 'partition');
             $partitionNavigator->OnGetPartitions->AddListener('partition_OnGetPartitions', $this);
             $partitionNavigator->OnGetPartitionCondition->AddListener('partition_OnGetPartitionCondition', $this);
             $partitionNavigator->SetAllowViewAllRecords(true);
             $partitionNavigator->SetNavigationStyle(NS_LIST);
             $result->AddPageNavigator($partitionNavigator);
-
+            
             $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
             $partitionNavigator->SetRowsPerPage(100);
             $result->AddPageNavigator($partitionNavigator);
-
+            
             return $result;
         }
-
+    
         public function GetPageList()
         {
             $currentPageCaption = $this->GetShortCaption();
@@ -18723,18 +18723,18 @@
                 $result->AddPage(new PageLink($this->RenderText('<span class="view">Unvollständige Organisationen</span>'), 'q_unvollstaendige_organisationen.php', $this->RenderText('Unvollständige Organisationen'), $currentPageCaption == $this->RenderText('<span class="view">Unvollständige Organisationen</span>')));
             if (GetCurrentUserGrantForDataSource('q_last_updated_tables')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="view">Tabellenstand</span>'), 'tabellenstand.php', $this->RenderText('Tabellenstand'), $currentPageCaption == $this->RenderText('<span class="view">Tabellenstand</span>')));
-
+            
             if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() )
               $result->AddPage(new PageLink($this->GetLocalizerCaptions()->GetMessageString('AdminPage'), 'phpgen_admin.php', $this->GetLocalizerCaptions()->GetMessageString('AdminPage'), false, true));
 
             add_more_navigation_links($result); // Afterburned
             return $result;
         }
-
+    
         protected function CreateRssGenerator() {
             return setupRSS($this, $this->dataset);
         }
-
+    
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
@@ -18755,7 +18755,7 @@
                     ), $this->GetLocalizerCaptions(), $this, 'CONTAINS'
                 );
         }
-
+    
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
             $this->AdvancedSearchControl = new AdvancedSearchControl('parlamentarierasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
@@ -18766,7 +18766,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zweiter_vorname', $this->RenderText('Zweiter Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ratstyp', $this->RenderText('Ratstyp')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kanton', $this->RenderText('Kanton')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -18822,7 +18822,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratsunterbruch_von', $this->RenderText('Ratsunterbruch Von')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratsunterbruch_bis', $this->RenderText('Ratsunterbruch Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf', $this->RenderText('Beruf')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -18869,7 +18869,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('geburtstag', $this->RenderText('Geburtstag')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zivilstand', $this->RenderText('Zivilstand')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_kinder', $this->RenderText('Anzahl Kinder')));
-
+            
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -18928,7 +18928,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo_dateiname_voll', $this->RenderText('Photo Dateiname')));
         }
-
+    
         protected function AddOperationsColumns(Grid $grid)
         {
             $actionsBandName = 'actions';
@@ -18962,7 +18962,7 @@
                 $column->SetImagePath('images/copy_action.png');
             }
         }
-
+    
         protected function AddFieldColumns(Grid $grid)
         {
             if (GetCurrentUserGrantForDataSource('parlamentarier.parlamentarier_anhang')->HasViewGrant())
@@ -18973,7 +18973,7 @@
             $column = new DetailColumn(array('id'), 'detail0parlamentarier', 'parlamentarier_anhangDetailEdit0parlamentarier_handler', 'parlamentarier_anhangDetailView0parlamentarier_handler', $this->dataset, 'Parlamentarier Anhang', $this->RenderText('Parlamentarier Anhang'));
               $grid->AddViewColumn($column);
             }
-
+            
             if (GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste_indirekt')->HasViewGrant())
             {
               //
@@ -18982,7 +18982,7 @@
             $column = new DetailColumn(array('id'), 'detail1parlamentarier', 'v_interessenbindung_liste_indirektDetailEdit1parlamentarier_handler', 'v_interessenbindung_liste_indirektDetailView1parlamentarier_handler', $this->dataset, 'V Interessenbindung Liste Indirekt', $this->RenderText('V Interessenbindung Liste Indirekt'));
               $grid->AddViewColumn($column);
             }
-
+            
             if (GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt')->HasViewGrant())
             {
               //
@@ -18991,7 +18991,7 @@
             $column = new DetailColumn(array('id'), 'detail2parlamentarier', 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarier_handler', 'v_zutrittsberechtigung_mit_mandaten_indirektDetailView2parlamentarier_handler', $this->dataset, 'V Zutrittsberechtigung Mit Mandaten Indirekt', $this->RenderText('V Zutrittsberechtigung Mit Mandaten Indirekt'));
               $grid->AddViewColumn($column);
             }
-
+            
             if (GetCurrentUserGrantForDataSource('parlamentarier.v_in_kommission_liste')->HasViewGrant())
             {
               //
@@ -19000,7 +19000,7 @@
             $column = new DetailColumn(array('id'), 'detail3parlamentarier', 'v_in_kommission_listeDetailEdit3parlamentarier_handler', 'v_in_kommission_listeDetailView3parlamentarier_handler', $this->dataset, 'In Kommission Liste', $this->RenderText('In Kommission Liste'));
               $grid->AddViewColumn($column);
             }
-
+            
             if (GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste')->HasViewGrant())
             {
               //
@@ -19009,7 +19009,7 @@
             $column = new DetailColumn(array('id'), 'detail4parlamentarier', 'v_interessenbindung_listeDetailEdit4parlamentarier_handler', 'v_interessenbindung_listeDetailView4parlamentarier_handler', $this->dataset, 'V Interessenbindung Liste', $this->RenderText('V Interessenbindung Liste'));
               $grid->AddViewColumn($column);
             }
-
+            
             if (GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten')->HasViewGrant())
             {
               //
@@ -19018,7 +19018,7 @@
             $column = new DetailColumn(array('id'), 'detail5parlamentarier', 'v_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarier_handler', 'v_zutrittsberechtigung_mit_mandatenDetailView5parlamentarier_handler', $this->dataset, 'V Zutrittsberechtigung Mit Mandaten', $this->RenderText('V Zutrittsberechtigung Mit Mandaten'));
               $grid->AddViewColumn($column);
             }
-
+            
             //
             // View column for id field
             //
@@ -19027,7 +19027,7 @@
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for nachname field
             //
@@ -19035,7 +19035,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('nachname_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for nachname field
@@ -19049,7 +19049,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for nachname field
@@ -19069,13 +19069,13 @@
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for vorname field
@@ -19089,7 +19089,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for vorname field
@@ -19106,13 +19106,13 @@
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for ratstyp field
@@ -19126,7 +19126,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for ratstyp field
@@ -19143,13 +19143,13 @@
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for kanton field
@@ -19187,7 +19187,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for kanton field
@@ -19228,13 +19228,13 @@
             $column->SetDescription($this->RenderText('Kantonskürzel'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
             $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for partei_id field
@@ -19289,15 +19289,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Partei',
-                'partei_id',
-                $editor,
+                'Partei', 
+                'partei_id', 
+                $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for partei_id field
@@ -19352,9 +19352,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Partei',
-                'partei_id',
-                $editor,
+                'Partei', 
+                'partei_id', 
+                $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19364,13 +19364,13 @@
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for parteifunktion field
@@ -19385,7 +19385,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for parteifunktion field
@@ -19404,13 +19404,13 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Partei'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
             $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for fraktionsfunktion field
@@ -19424,7 +19424,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for fraktionsfunktion field
@@ -19441,14 +19441,14 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
             $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for im_rat_seit field
@@ -19460,7 +19460,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for im_rat_seit field
@@ -19475,14 +19475,14 @@
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for im_rat_bis field
@@ -19493,7 +19493,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for im_rat_bis field
@@ -19507,14 +19507,14 @@
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for ratsunterbruch_von field
@@ -19525,7 +19525,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for ratsunterbruch_von field
@@ -19539,14 +19539,14 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
             $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for ratsunterbruch_bis field
@@ -19557,7 +19557,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for ratsunterbruch_bis field
@@ -19571,7 +19571,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for beruf field
             //
@@ -19579,7 +19579,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beruf_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for beruf field
@@ -19593,7 +19593,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beruf field
@@ -19610,13 +19610,13 @@
             $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beruf_interessengruppe_id field
@@ -19665,15 +19665,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe',
-                'beruf_interessengruppe_id',
-                $editor,
+                'Beruf Interessengruppe', 
+                'beruf_interessengruppe_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beruf_interessengruppe_id field
@@ -19722,9 +19722,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe',
-                'beruf_interessengruppe_id',
-                $editor,
+                'Beruf Interessengruppe', 
+                'beruf_interessengruppe_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19734,13 +19734,13 @@
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for geschlecht field
@@ -19753,7 +19753,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for geschlecht field
@@ -19770,14 +19770,14 @@
             $column->SetDescription($this->RenderText('Geschlecht des Parlamentariers, M=Mann, F=Frau'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for geburtstag field
@@ -19788,7 +19788,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for geburtstag field
@@ -19802,13 +19802,13 @@
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for zivilstand field
@@ -19823,7 +19823,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for zivilstand field
@@ -19841,13 +19841,13 @@
             $column->SetDescription($this->RenderText('Zivilstand'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
             $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for anzahl_kinder field
@@ -19858,7 +19858,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for anzahl_kinder field
@@ -19872,13 +19872,13 @@
             $column->SetDescription($this->RenderText('Anzahl der Kinder'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for militaerischer_grad field
@@ -19919,15 +19919,15 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
-                'Militaerischer Grad',
-                'militaerischer_grad',
-                $editor,
+                'Militaerischer Grad', 
+                'militaerischer_grad', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for militaerischer_grad field
@@ -19968,9 +19968,9 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
-                'Militaerischer Grad',
-                'militaerischer_grad',
-                $editor,
+                'Militaerischer Grad', 
+                'militaerischer_grad', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -19979,12 +19979,12 @@
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for photo field
             //
             $column = new DownloadDataColumn('photo', 'Photo', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
-
+            
             /* <inline edit column> */
             //
             // Edit column for photo field
@@ -20004,7 +20004,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for photo field
@@ -20027,14 +20027,14 @@
             $column->SetDescription($this->RenderText('Photo des Parlamentariers (JPEG/jpg)'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
             $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
             $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
             $column->SetSourceSuffix('');
-
+            
             /* <inline edit column> */
             //
             // Edit column for kleinbild field
@@ -20052,13 +20052,13 @@
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
             $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for sitzplatz field
@@ -20069,7 +20069,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for sitzplatz field
@@ -20083,7 +20083,7 @@
             $column->SetDescription($this->RenderText('Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for email field
             //
@@ -20091,7 +20091,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for email field
@@ -20106,7 +20106,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for email field
@@ -20125,7 +20125,7 @@
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for homepage field
             //
@@ -20133,7 +20133,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('homepage_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for homepage field
@@ -20148,7 +20148,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for homepage field
@@ -20167,13 +20167,13 @@
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for parlament_biografie_id field
@@ -20186,7 +20186,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for parlament_biografie_id field
@@ -20203,7 +20203,7 @@
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
@@ -20211,7 +20211,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('ALT_kommission_handler');
-
+            
             /* <inline edit column> */
             //
             // Edit column for ALT_kommission field
@@ -20227,7 +20227,7 @@
             $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -20236,7 +20236,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $column->SetReplaceLFByBR(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -20247,7 +20247,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -20261,13 +20261,13 @@
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for eingabe_abgeschlossen_visa field
@@ -20284,14 +20284,14 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
             $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for eingabe_abgeschlossen_datum field
@@ -20303,7 +20303,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for eingabe_abgeschlossen_datum field
@@ -20318,13 +20318,13 @@
             $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for kontrolliert_visa field
@@ -20341,14 +20341,14 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
             $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for kontrolliert_datum field
@@ -20363,13 +20363,13 @@
             $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
             $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisierung_verschickt_visa field
@@ -20386,14 +20386,14 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
             $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisierung_verschickt_datum field
@@ -20408,13 +20408,13 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_visa field
@@ -20431,14 +20431,14 @@
             $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
             $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for autorisiert_datum field
@@ -20453,13 +20453,13 @@
             $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_visa field
@@ -20476,14 +20476,14 @@
             $column->SetDescription($this->RenderText('Freigabe von (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for freigabe_datum field
@@ -20498,13 +20498,13 @@
             $column->SetDescription($this->RenderText('Freigabedatum (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_visa field
@@ -20521,14 +20521,14 @@
             $column->SetDescription($this->RenderText('Erstellt von'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
             $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for created_date field
@@ -20544,13 +20544,13 @@
             $column->SetDescription($this->RenderText('Erstellt am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_visa field
@@ -20567,14 +20567,14 @@
             $column->SetDescription($this->RenderText('Abgeändert von'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for updated_date field
@@ -20591,7 +20591,7 @@
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
         }
-
+    
         protected function AddSingleRecordViewColumns(Grid $grid)
         {
             //
@@ -20600,7 +20600,7 @@
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for nachname field
             //
@@ -20612,35 +20612,35 @@
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -20648,21 +20648,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
             $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -20670,7 +20670,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -20678,7 +20678,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -20686,7 +20686,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -20694,7 +20694,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for beruf field
             //
@@ -20703,7 +20703,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beruf_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -20711,14 +20711,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -20726,34 +20726,34 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
             $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for photo field
             //
             $column = new DownloadDataColumn('photo', 'Photo', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
@@ -20761,14 +20761,14 @@
             $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
             $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
             $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for email field
             //
@@ -20778,7 +20778,7 @@
             $column->SetFullTextWindowHandlerName('email_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for homepage field
             //
@@ -20788,7 +20788,7 @@
             $column->SetFullTextWindowHandlerName('homepage_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -20796,7 +20796,7 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
@@ -20805,7 +20805,7 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('ALT_kommission_handler');
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -20815,14 +20815,14 @@
             $column->SetFullTextWindowHandlerName('notizen_handler');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -20830,14 +20830,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -20845,14 +20845,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
             $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -20860,14 +20860,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -20875,14 +20875,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -20890,14 +20890,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -20905,14 +20905,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -20920,7 +20920,7 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-
+            
             //
             // View column for photo_dateiname_voll field
             //
@@ -20930,7 +20930,7 @@
             $column->SetFullTextWindowHandlerName('photo_dateiname_voll_handler');
             $grid->AddSingleRecordViewColumn($column);
         }
-
+    
         protected function AddEditColumns(Grid $grid)
         {
             //
@@ -20944,7 +20944,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for vorname field
             //
@@ -20956,7 +20956,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for zweiter_vorname field
             //
@@ -20967,7 +20967,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for ratstyp field
             //
@@ -20979,7 +20979,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for kanton field
             //
@@ -21015,7 +21015,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for partei_id field
             //
@@ -21069,14 +21069,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Partei',
-                'partei_id',
-                $editor,
+                'Partei', 
+                'partei_id', 
+                $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for parteifunktion field
             //
@@ -21089,7 +21089,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for fraktionsfunktion field
             //
@@ -21101,7 +21101,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for im_rat_seit field
             //
@@ -21111,7 +21111,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for im_rat_bis field
             //
@@ -21120,7 +21120,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for ratsunterbruch_von field
             //
@@ -21129,7 +21129,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for ratsunterbruch_bis field
             //
@@ -21138,7 +21138,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for beruf field
             //
@@ -21150,7 +21150,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for beruf_interessengruppe_id field
             //
@@ -21198,14 +21198,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe',
-                'beruf_interessengruppe_id',
-                $editor,
+                'Beruf Interessengruppe', 
+                'beruf_interessengruppe_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for geschlecht field
             //
@@ -21216,7 +21216,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for geburtstag field
             //
@@ -21225,7 +21225,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for zivilstand field
             //
@@ -21238,7 +21238,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for anzahl_kinder field
             //
@@ -21247,7 +21247,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for militaerischer_grad field
             //
@@ -21287,14 +21287,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
-                'Militaerischer Grad',
-                'militaerischer_grad',
-                $editor,
+                'Militaerischer Grad', 
+                'militaerischer_grad', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for photo field
             //
@@ -21312,7 +21312,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for kleinbild field
             //
@@ -21325,7 +21325,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for sitzplatz field
             //
@@ -21334,7 +21334,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for email field
             //
@@ -21347,7 +21347,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for homepage field
             //
@@ -21360,7 +21360,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for parlament_biografie_id field
             //
@@ -21371,7 +21371,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for ALT_kommission field
             //
@@ -21382,7 +21382,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -21391,7 +21391,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for eingabe_abgeschlossen_visa field
             //
@@ -21403,7 +21403,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for eingabe_abgeschlossen_datum field
             //
@@ -21413,7 +21413,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for kontrolliert_visa field
             //
@@ -21425,7 +21425,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for kontrolliert_datum field
             //
@@ -21435,7 +21435,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisierung_verschickt_visa field
             //
@@ -21447,7 +21447,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisierung_verschickt_datum field
             //
@@ -21457,7 +21457,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_visa field
             //
@@ -21469,7 +21469,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for autorisiert_datum field
             //
@@ -21479,7 +21479,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_visa field
             //
@@ -21491,7 +21491,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for freigabe_datum field
             //
@@ -21501,7 +21501,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_visa field
             //
@@ -21513,7 +21513,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for created_date field
             //
@@ -21524,7 +21524,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_visa field
             //
@@ -21536,7 +21536,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for updated_date field
             //
@@ -21547,7 +21547,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-
+            
             //
             // Edit column for photo_dateiname_voll field
             //
@@ -21559,7 +21559,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
-
+    
         protected function AddInsertColumns(Grid $grid)
         {
             //
@@ -21573,7 +21573,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for vorname field
             //
@@ -21585,7 +21585,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for zweiter_vorname field
             //
@@ -21596,7 +21596,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for ratstyp field
             //
@@ -21608,7 +21608,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for kanton field
             //
@@ -21644,7 +21644,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for partei_id field
             //
@@ -21698,14 +21698,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Partei',
-                'partei_id',
-                $editor,
+                'Partei', 
+                'partei_id', 
+                $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for parteifunktion field
             //
@@ -21719,7 +21719,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for fraktionsfunktion field
             //
@@ -21731,7 +21731,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for im_rat_seit field
             //
@@ -21741,7 +21741,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for im_rat_bis field
             //
@@ -21750,7 +21750,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for ratsunterbruch_von field
             //
@@ -21759,7 +21759,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for ratsunterbruch_bis field
             //
@@ -21768,7 +21768,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for beruf field
             //
@@ -21780,7 +21780,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for beruf_interessengruppe_id field
             //
@@ -21828,14 +21828,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe',
-                'beruf_interessengruppe_id',
-                $editor,
+                'Beruf Interessengruppe', 
+                'beruf_interessengruppe_id', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for geschlecht field
             //
@@ -21847,7 +21847,7 @@
             $editColumn->SetInsertDefaultValue($this->RenderText('M'));
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for geburtstag field
             //
@@ -21856,7 +21856,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for zivilstand field
             //
@@ -21869,7 +21869,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for anzahl_kinder field
             //
@@ -21878,7 +21878,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for militaerischer_grad field
             //
@@ -21918,14 +21918,14 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
-                'Militaerischer Grad',
-                'militaerischer_grad',
-                $editor,
+                'Militaerischer Grad', 
+                'militaerischer_grad', 
+                $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for photo field
             //
@@ -21943,7 +21943,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for sitzplatz field
             //
@@ -21952,7 +21952,7 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for email field
             //
@@ -21965,7 +21965,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for homepage field
             //
@@ -21978,7 +21978,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for parlament_biografie_id field
             //
@@ -21989,7 +21989,7 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-
+            
             //
             // Edit column for notizen field
             //
@@ -22009,7 +22009,7 @@
                 $grid->SetShowAddButton(false);
             }
         }
-
+    
         protected function AddPrintColumns(Grid $grid)
         {
             //
@@ -22018,42 +22018,42 @@
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -22061,21 +22061,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
             $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -22083,7 +22083,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -22091,7 +22091,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -22099,7 +22099,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -22107,14 +22107,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -22122,14 +22122,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -22137,63 +22137,63 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
             $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
             $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -22201,28 +22201,28 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -22230,14 +22230,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -22245,14 +22245,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
             $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -22260,14 +22260,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -22275,14 +22275,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -22290,14 +22290,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -22305,14 +22305,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -22320,7 +22320,7 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
-
+            
             //
             // View column for photo_dateiname_voll field
             //
@@ -22328,7 +22328,7 @@
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
-
+    
         protected function AddExportColumns(Grid $grid)
         {
             //
@@ -22337,42 +22337,42 @@
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -22380,21 +22380,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
             $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -22402,7 +22402,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -22410,7 +22410,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -22418,7 +22418,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -22426,14 +22426,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -22441,14 +22441,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -22456,63 +22456,63 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
             $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
             $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -22520,28 +22520,28 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -22549,14 +22549,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -22564,14 +22564,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
             $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -22579,14 +22579,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -22594,14 +22594,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -22609,14 +22609,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -22624,14 +22624,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -22639,7 +22639,7 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
-
+            
             //
             // View column for photo_dateiname_voll field
             //
@@ -22647,18 +22647,18 @@
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
-
+    
         public function GetPageDirection()
         {
             return null;
         }
-
+    
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
         {
             $column->SetShowSetToNullCheckBox(false);
     		$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
-
+    
         function CreateMasterDetailRecordGridForparlamentarier_anhangDetailEdit0parlamentarierGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForparlamentarier_anhangDetailEdit0parlamentarier');
@@ -22677,7 +22677,7 @@
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for nachname field
             //
@@ -22691,7 +22691,7 @@
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for vorname field
             //
@@ -22700,7 +22700,7 @@
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
@@ -22709,7 +22709,7 @@
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kanton field
             //
@@ -22718,7 +22718,7 @@
             $column->SetDescription($this->RenderText('Kantonskürzel'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -22728,7 +22728,7 @@
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
@@ -22737,7 +22737,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Partei'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
@@ -22746,7 +22746,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -22756,7 +22756,7 @@
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -22766,7 +22766,7 @@
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -22776,7 +22776,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -22786,7 +22786,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for beruf field
             //
@@ -22797,7 +22797,7 @@
             $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -22807,7 +22807,7 @@
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
@@ -22816,7 +22816,7 @@
             $column->SetDescription($this->RenderText('Geschlecht des Parlamentariers, M=Mann, F=Frau'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -22826,7 +22826,7 @@
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
@@ -22835,7 +22835,7 @@
             $column->SetDescription($this->RenderText('Zivilstand'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
@@ -22844,7 +22844,7 @@
             $column->SetDescription($this->RenderText('Anzahl der Kinder'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -22853,7 +22853,7 @@
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for photo field
             //
@@ -22861,7 +22861,7 @@
             $column->SetDescription($this->RenderText('Photo des Parlamentariers (JPEG/jpg)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
@@ -22871,7 +22871,7 @@
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
@@ -22880,7 +22880,7 @@
             $column->SetDescription($this->RenderText('Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for email field
             //
@@ -22892,7 +22892,7 @@
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for homepage field
             //
@@ -22904,7 +22904,7 @@
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -22914,7 +22914,7 @@
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
@@ -22925,7 +22925,7 @@
             $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -22937,7 +22937,7 @@
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
@@ -22946,7 +22946,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -22956,7 +22956,7 @@
             $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
@@ -22965,7 +22965,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -22975,7 +22975,7 @@
             $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
@@ -22984,7 +22984,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -22994,7 +22994,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
@@ -23003,7 +23003,7 @@
             $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -23013,7 +23013,7 @@
             $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
@@ -23022,7 +23022,7 @@
             $column->SetDescription($this->RenderText('Freigabe von (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -23032,7 +23032,7 @@
             $column->SetDescription($this->RenderText('Freigabedatum (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
@@ -23041,7 +23041,7 @@
             $column->SetDescription($this->RenderText('Erstellt von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -23051,7 +23051,7 @@
             $column->SetDescription($this->RenderText('Erstellt am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
@@ -23060,7 +23060,7 @@
             $column->SetDescription($this->RenderText('Abgeändert von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -23070,49 +23070,49 @@
             $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -23120,21 +23120,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
             $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -23142,7 +23142,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -23150,7 +23150,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -23158,7 +23158,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -23166,14 +23166,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -23181,14 +23181,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -23196,63 +23196,63 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
             $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
             $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -23260,28 +23260,28 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -23289,14 +23289,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -23304,14 +23304,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
             $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -23319,14 +23319,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -23334,14 +23334,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -23349,14 +23349,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -23364,14 +23364,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -23379,14 +23379,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             return $result;
         }
         function CreateMasterDetailRecordGridForv_interessenbindung_liste_indirektDetailEdit1parlamentarierGrid()
@@ -23407,7 +23407,7 @@
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for nachname field
             //
@@ -23421,7 +23421,7 @@
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for vorname field
             //
@@ -23430,7 +23430,7 @@
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
@@ -23439,7 +23439,7 @@
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kanton field
             //
@@ -23448,7 +23448,7 @@
             $column->SetDescription($this->RenderText('Kantonskürzel'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -23458,7 +23458,7 @@
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
@@ -23467,7 +23467,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Partei'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
@@ -23476,7 +23476,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -23486,7 +23486,7 @@
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -23496,7 +23496,7 @@
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -23506,7 +23506,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -23516,7 +23516,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for beruf field
             //
@@ -23527,7 +23527,7 @@
             $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -23537,7 +23537,7 @@
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
@@ -23546,7 +23546,7 @@
             $column->SetDescription($this->RenderText('Geschlecht des Parlamentariers, M=Mann, F=Frau'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -23556,7 +23556,7 @@
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
@@ -23565,7 +23565,7 @@
             $column->SetDescription($this->RenderText('Zivilstand'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
@@ -23574,7 +23574,7 @@
             $column->SetDescription($this->RenderText('Anzahl der Kinder'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -23583,7 +23583,7 @@
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for photo field
             //
@@ -23591,7 +23591,7 @@
             $column->SetDescription($this->RenderText('Photo des Parlamentariers (JPEG/jpg)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
@@ -23601,7 +23601,7 @@
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
@@ -23610,7 +23610,7 @@
             $column->SetDescription($this->RenderText('Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for email field
             //
@@ -23622,7 +23622,7 @@
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for homepage field
             //
@@ -23634,7 +23634,7 @@
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -23644,7 +23644,7 @@
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
@@ -23655,7 +23655,7 @@
             $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -23667,7 +23667,7 @@
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
@@ -23676,7 +23676,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -23686,7 +23686,7 @@
             $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
@@ -23695,7 +23695,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -23705,7 +23705,7 @@
             $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
@@ -23714,7 +23714,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -23724,7 +23724,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
@@ -23733,7 +23733,7 @@
             $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -23743,7 +23743,7 @@
             $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
@@ -23752,7 +23752,7 @@
             $column->SetDescription($this->RenderText('Freigabe von (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -23762,7 +23762,7 @@
             $column->SetDescription($this->RenderText('Freigabedatum (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
@@ -23771,7 +23771,7 @@
             $column->SetDescription($this->RenderText('Erstellt von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -23781,7 +23781,7 @@
             $column->SetDescription($this->RenderText('Erstellt am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
@@ -23790,7 +23790,7 @@
             $column->SetDescription($this->RenderText('Abgeändert von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -23800,49 +23800,49 @@
             $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -23850,21 +23850,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
             $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -23872,7 +23872,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -23880,7 +23880,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -23888,7 +23888,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -23896,14 +23896,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -23911,14 +23911,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -23926,63 +23926,63 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
             $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
             $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -23990,28 +23990,28 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -24019,14 +24019,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -24034,14 +24034,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
             $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -24049,14 +24049,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -24064,14 +24064,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -24079,14 +24079,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -24094,14 +24094,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -24109,14 +24109,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             return $result;
         }
         function CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarierGrid()
@@ -24137,7 +24137,7 @@
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for nachname field
             //
@@ -24151,7 +24151,7 @@
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for vorname field
             //
@@ -24160,7 +24160,7 @@
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
@@ -24169,7 +24169,7 @@
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kanton field
             //
@@ -24178,7 +24178,7 @@
             $column->SetDescription($this->RenderText('Kantonskürzel'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -24188,7 +24188,7 @@
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
@@ -24197,7 +24197,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Partei'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
@@ -24206,7 +24206,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -24216,7 +24216,7 @@
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -24226,7 +24226,7 @@
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -24236,7 +24236,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -24246,7 +24246,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for beruf field
             //
@@ -24257,7 +24257,7 @@
             $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -24267,7 +24267,7 @@
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
@@ -24276,7 +24276,7 @@
             $column->SetDescription($this->RenderText('Geschlecht des Parlamentariers, M=Mann, F=Frau'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -24286,7 +24286,7 @@
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
@@ -24295,7 +24295,7 @@
             $column->SetDescription($this->RenderText('Zivilstand'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
@@ -24304,7 +24304,7 @@
             $column->SetDescription($this->RenderText('Anzahl der Kinder'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -24313,7 +24313,7 @@
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for photo field
             //
@@ -24321,7 +24321,7 @@
             $column->SetDescription($this->RenderText('Photo des Parlamentariers (JPEG/jpg)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
@@ -24331,7 +24331,7 @@
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
@@ -24340,7 +24340,7 @@
             $column->SetDescription($this->RenderText('Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for email field
             //
@@ -24352,7 +24352,7 @@
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for homepage field
             //
@@ -24364,7 +24364,7 @@
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -24374,7 +24374,7 @@
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
@@ -24385,7 +24385,7 @@
             $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -24397,7 +24397,7 @@
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
@@ -24406,7 +24406,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -24416,7 +24416,7 @@
             $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
@@ -24425,7 +24425,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -24435,7 +24435,7 @@
             $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
@@ -24444,7 +24444,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -24454,7 +24454,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
@@ -24463,7 +24463,7 @@
             $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -24473,7 +24473,7 @@
             $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
@@ -24482,7 +24482,7 @@
             $column->SetDescription($this->RenderText('Freigabe von (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -24492,7 +24492,7 @@
             $column->SetDescription($this->RenderText('Freigabedatum (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
@@ -24501,7 +24501,7 @@
             $column->SetDescription($this->RenderText('Erstellt von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -24511,7 +24511,7 @@
             $column->SetDescription($this->RenderText('Erstellt am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
@@ -24520,7 +24520,7 @@
             $column->SetDescription($this->RenderText('Abgeändert von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -24530,49 +24530,49 @@
             $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -24580,21 +24580,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
             $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -24602,7 +24602,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -24610,7 +24610,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -24618,7 +24618,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -24626,14 +24626,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -24641,14 +24641,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -24656,63 +24656,63 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
             $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
             $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -24720,28 +24720,28 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -24749,14 +24749,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -24764,14 +24764,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
             $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -24779,14 +24779,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -24794,14 +24794,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -24809,14 +24809,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -24824,14 +24824,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -24839,14 +24839,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             return $result;
         }
         function CreateMasterDetailRecordGridForv_in_kommission_listeDetailEdit3parlamentarierGrid()
@@ -24867,7 +24867,7 @@
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for nachname field
             //
@@ -24881,7 +24881,7 @@
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for vorname field
             //
@@ -24890,7 +24890,7 @@
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
@@ -24899,7 +24899,7 @@
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kanton field
             //
@@ -24908,7 +24908,7 @@
             $column->SetDescription($this->RenderText('Kantonskürzel'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -24918,7 +24918,7 @@
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
@@ -24927,7 +24927,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Partei'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
@@ -24936,7 +24936,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -24946,7 +24946,7 @@
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -24956,7 +24956,7 @@
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -24966,7 +24966,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -24976,7 +24976,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for beruf field
             //
@@ -24987,7 +24987,7 @@
             $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -24997,7 +24997,7 @@
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
@@ -25006,7 +25006,7 @@
             $column->SetDescription($this->RenderText('Geschlecht des Parlamentariers, M=Mann, F=Frau'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -25016,7 +25016,7 @@
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
@@ -25025,7 +25025,7 @@
             $column->SetDescription($this->RenderText('Zivilstand'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
@@ -25034,7 +25034,7 @@
             $column->SetDescription($this->RenderText('Anzahl der Kinder'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -25043,7 +25043,7 @@
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for photo field
             //
@@ -25051,7 +25051,7 @@
             $column->SetDescription($this->RenderText('Photo des Parlamentariers (JPEG/jpg)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
@@ -25061,7 +25061,7 @@
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
@@ -25070,7 +25070,7 @@
             $column->SetDescription($this->RenderText('Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for email field
             //
@@ -25082,7 +25082,7 @@
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for homepage field
             //
@@ -25094,7 +25094,7 @@
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -25104,7 +25104,7 @@
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
@@ -25115,7 +25115,7 @@
             $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -25127,7 +25127,7 @@
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
@@ -25136,7 +25136,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -25146,7 +25146,7 @@
             $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
@@ -25155,7 +25155,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -25165,7 +25165,7 @@
             $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
@@ -25174,7 +25174,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -25184,7 +25184,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
@@ -25193,7 +25193,7 @@
             $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -25203,7 +25203,7 @@
             $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
@@ -25212,7 +25212,7 @@
             $column->SetDescription($this->RenderText('Freigabe von (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -25222,7 +25222,7 @@
             $column->SetDescription($this->RenderText('Freigabedatum (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
@@ -25231,7 +25231,7 @@
             $column->SetDescription($this->RenderText('Erstellt von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -25241,7 +25241,7 @@
             $column->SetDescription($this->RenderText('Erstellt am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
@@ -25250,7 +25250,7 @@
             $column->SetDescription($this->RenderText('Abgeändert von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -25260,49 +25260,49 @@
             $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -25310,21 +25310,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
             $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -25332,7 +25332,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -25340,7 +25340,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -25348,7 +25348,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -25356,14 +25356,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -25371,14 +25371,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -25386,63 +25386,63 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
             $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
             $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -25450,28 +25450,28 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -25479,14 +25479,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -25494,14 +25494,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
             $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -25509,14 +25509,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -25524,14 +25524,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -25539,14 +25539,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -25554,14 +25554,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -25569,14 +25569,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             return $result;
         }
         function CreateMasterDetailRecordGridForv_interessenbindung_listeDetailEdit4parlamentarierGrid()
@@ -25597,7 +25597,7 @@
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for nachname field
             //
@@ -25611,7 +25611,7 @@
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for vorname field
             //
@@ -25620,7 +25620,7 @@
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
@@ -25629,7 +25629,7 @@
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kanton field
             //
@@ -25638,7 +25638,7 @@
             $column->SetDescription($this->RenderText('Kantonskürzel'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -25648,7 +25648,7 @@
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
@@ -25657,7 +25657,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Partei'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
@@ -25666,7 +25666,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -25676,7 +25676,7 @@
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -25686,7 +25686,7 @@
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -25696,7 +25696,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -25706,7 +25706,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for beruf field
             //
@@ -25717,7 +25717,7 @@
             $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -25727,7 +25727,7 @@
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
@@ -25736,7 +25736,7 @@
             $column->SetDescription($this->RenderText('Geschlecht des Parlamentariers, M=Mann, F=Frau'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -25746,7 +25746,7 @@
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
@@ -25755,7 +25755,7 @@
             $column->SetDescription($this->RenderText('Zivilstand'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
@@ -25764,7 +25764,7 @@
             $column->SetDescription($this->RenderText('Anzahl der Kinder'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -25773,7 +25773,7 @@
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for photo field
             //
@@ -25781,7 +25781,7 @@
             $column->SetDescription($this->RenderText('Photo des Parlamentariers (JPEG/jpg)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
@@ -25791,7 +25791,7 @@
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
@@ -25800,7 +25800,7 @@
             $column->SetDescription($this->RenderText('Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for email field
             //
@@ -25812,7 +25812,7 @@
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for homepage field
             //
@@ -25824,7 +25824,7 @@
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -25834,7 +25834,7 @@
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
@@ -25845,7 +25845,7 @@
             $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -25857,7 +25857,7 @@
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
@@ -25866,7 +25866,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -25876,7 +25876,7 @@
             $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
@@ -25885,7 +25885,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -25895,7 +25895,7 @@
             $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
@@ -25904,7 +25904,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -25914,7 +25914,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
@@ -25923,7 +25923,7 @@
             $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -25933,7 +25933,7 @@
             $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
@@ -25942,7 +25942,7 @@
             $column->SetDescription($this->RenderText('Freigabe von (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -25952,7 +25952,7 @@
             $column->SetDescription($this->RenderText('Freigabedatum (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
@@ -25961,7 +25961,7 @@
             $column->SetDescription($this->RenderText('Erstellt von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -25971,7 +25971,7 @@
             $column->SetDescription($this->RenderText('Erstellt am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
@@ -25980,7 +25980,7 @@
             $column->SetDescription($this->RenderText('Abgeändert von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -25990,49 +25990,49 @@
             $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -26040,21 +26040,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
             $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -26062,7 +26062,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -26070,7 +26070,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -26078,7 +26078,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -26086,14 +26086,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -26101,14 +26101,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -26116,63 +26116,63 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
             $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
             $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -26180,28 +26180,28 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -26209,14 +26209,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -26224,14 +26224,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
             $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -26239,14 +26239,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -26254,14 +26254,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -26269,14 +26269,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -26284,14 +26284,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -26299,14 +26299,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             return $result;
         }
         function CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarierGrid()
@@ -26327,7 +26327,7 @@
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for nachname field
             //
@@ -26341,7 +26341,7 @@
             $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for vorname field
             //
@@ -26350,7 +26350,7 @@
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
@@ -26359,7 +26359,7 @@
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kanton field
             //
@@ -26368,7 +26368,7 @@
             $column->SetDescription($this->RenderText('Kantonskürzel'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -26378,7 +26378,7 @@
             $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Leer bedeutet parteilos.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
@@ -26387,7 +26387,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Partei'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
@@ -26396,7 +26396,7 @@
             $column->SetDescription($this->RenderText('Funktion des Parlamentariers in der Fraktion'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -26406,7 +26406,7 @@
             $column->SetDescription($this->RenderText('Jahr der Zugehörigkeit zum Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -26416,7 +26416,7 @@
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -26426,7 +26426,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -26436,7 +26436,7 @@
             $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for beruf field
             //
@@ -26447,7 +26447,7 @@
             $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -26457,7 +26457,7 @@
             $column->SetDescription($this->RenderText('Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
@@ -26466,7 +26466,7 @@
             $column->SetDescription($this->RenderText('Geschlecht des Parlamentariers, M=Mann, F=Frau'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -26476,7 +26476,7 @@
             $column->SetDescription($this->RenderText('Geburtstag des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
@@ -26485,7 +26485,7 @@
             $column->SetDescription($this->RenderText('Zivilstand'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
@@ -26494,7 +26494,7 @@
             $column->SetDescription($this->RenderText('Anzahl der Kinder'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -26503,7 +26503,7 @@
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for photo field
             //
@@ -26511,7 +26511,7 @@
             $column->SetDescription($this->RenderText('Photo des Parlamentariers (JPEG/jpg)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
@@ -26521,7 +26521,7 @@
             $column->SetDescription($this->RenderText('Bild 44x62 px oder leer.png'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
@@ -26530,7 +26530,7 @@
             $column->SetDescription($this->RenderText('Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for email field
             //
@@ -26542,7 +26542,7 @@
             $column->SetDescription($this->RenderText('E-Mail-Adresse des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for homepage field
             //
@@ -26554,7 +26554,7 @@
             $column->SetDescription($this->RenderText('Homepage des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -26564,7 +26564,7 @@
             $column->SetDescription($this->RenderText('Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
@@ -26575,7 +26575,7 @@
             $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for notizen field
             //
@@ -26587,7 +26587,7 @@
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
@@ -26596,7 +26596,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -26606,7 +26606,7 @@
             $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
@@ -26615,7 +26615,7 @@
             $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -26625,7 +26625,7 @@
             $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
@@ -26634,7 +26634,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -26644,7 +26644,7 @@
             $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
@@ -26653,7 +26653,7 @@
             $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -26663,7 +26663,7 @@
             $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
@@ -26672,7 +26672,7 @@
             $column->SetDescription($this->RenderText('Freigabe von (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -26682,7 +26682,7 @@
             $column->SetDescription($this->RenderText('Freigabedatum (Freigabe = Daten sind fertig)'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_visa field
             //
@@ -26691,7 +26691,7 @@
             $column->SetDescription($this->RenderText('Erstellt von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -26701,7 +26701,7 @@
             $column->SetDescription($this->RenderText('Erstellt am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
@@ -26710,7 +26710,7 @@
             $column->SetDescription($this->RenderText('Abgeändert von'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -26720,49 +26720,49 @@
             $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
-
+            
             //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zweiter_vorname field
             //
             $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratstyp field
             //
             $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for abkuerzung field
             //
@@ -26770,21 +26770,21 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parteifunktion field
             //
             $column = new TextViewColumn('parteifunktion', 'Parteifunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for fraktionsfunktion field
             //
             $column = new TextViewColumn('fraktionsfunktion', 'Fraktionsfunktion', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_seit field
             //
@@ -26792,7 +26792,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for im_rat_bis field
             //
@@ -26800,7 +26800,7 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_von field
             //
@@ -26808,7 +26808,7 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ratsunterbruch_bis field
             //
@@ -26816,14 +26816,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
@@ -26831,14 +26831,14 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengrupe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for geburtstag field
             //
@@ -26846,63 +26846,63 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for zivilstand field
             //
             $column = new TextViewColumn('zivilstand', 'Zivilstand', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for anzahl_kinder field
             //
             $column = new TextViewColumn('anzahl_kinder', 'Anzahl Kinder', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for name field
             //
             $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kleinbild field
             //
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for sitzplatz field
             //
             $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for parlament_biografie_id field
             //
@@ -26910,28 +26910,28 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_visa field
             //
             $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for eingabe_abgeschlossen_datum field
             //
@@ -26939,14 +26939,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_visa field
             //
             $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for kontrolliert_datum field
             //
@@ -26954,14 +26954,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_visa field
             //
             $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisierung_verschickt_datum field
             //
@@ -26969,14 +26969,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for autorisiert_datum field
             //
@@ -26984,14 +26984,14 @@
             $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_visa field
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for freigabe_datum field
             //
@@ -26999,14 +26999,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for created_date field
             //
@@ -27014,14 +27014,14 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_visa field
             //
             $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for updated_date field
             //
@@ -27029,21 +27029,21 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
-
+            
             return $result;
         }
         public function photo_Thumbnail_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '../auswertung/parlamentarierBilder');
         FileUtils::ForceDirectories($targetFolder);
-
+        
         $filename = ApplyVarablesMapToTemplate('%original_file_name%_44x62.%original_file_extension%',
             array(
                 'original_file_name' => $original_file_name,
@@ -27052,15 +27052,15 @@
             )
         );
         $filepath = Path::Combine($targetFolder, $filename);
-
+        
         $handled = true;
         }
-
+        
         public function photo_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir"] . '/parlamentarier_photos/%id%');
         FileUtils::ForceDirectories($targetFolder);
-
+        
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
             array(
                 'original_file_name' => $original_file_name,
@@ -27069,15 +27069,15 @@
             )
         );
         $filepath = Path::Combine($targetFolder, $filename);
-
+        
         $handled = true;
         }
-
+        
         function GetCustomClientScript()
         {
             return ;
         }
-
+        
         function GetOnPageLoadedClientScript()
         {
             return ;
@@ -27106,7 +27106,7 @@
                 $result = -2;
                 if (FileUtils::FileExists($target))
                   $result = FileUtils::RemoveFile($target);
-
+            
                 $message = "Delete file '$target'. Result $result";
         }
         function parlamentarierGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
@@ -27118,7 +27118,7 @@
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '../auswertung/parlamentarierBilder');
         FileUtils::ForceDirectories($targetFolder);
-
+        
         $filename = ApplyVarablesMapToTemplate('%original_file_name%_44x62.%original_file_extension%',
             array(
                 'original_file_name' => $original_file_name,
@@ -27127,15 +27127,15 @@
             )
         );
         $filepath = Path::Combine($targetFolder, $filename);
-
+        
         $handled = true;
         }
-
+        
         public function photo_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir"] . '/parlamentarier_photos/%id%');
         FileUtils::ForceDirectories($targetFolder);
-
+        
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
             array(
                 'original_file_name' => $original_file_name,
@@ -27144,14 +27144,14 @@
             )
         );
         $filepath = Path::Combine($targetFolder, $filename);
-
+        
         $handled = true;
         }
         public function photo_Thumbnail_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '../auswertung/parlamentarierBilder');
         FileUtils::ForceDirectories($targetFolder);
-
+        
         $filename = ApplyVarablesMapToTemplate('%original_file_name%_44x62.%original_file_extension%',
             array(
                 'original_file_name' => $original_file_name,
@@ -27160,15 +27160,15 @@
             )
         );
         $filepath = Path::Combine($targetFolder, $filename);
-
+        
         $handled = true;
         }
-
+        
         public function photo_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir"] . '/parlamentarier_photos/%id%');
         FileUtils::ForceDirectories($targetFolder);
-
+        
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
             array(
                 'original_file_name' => $original_file_name,
@@ -27177,7 +27177,7 @@
             )
         );
         $filepath = Path::Combine($targetFolder, $filename);
-
+        
         $handled = true;
         }
         public function ShowEditButtonHandler(&$show)
@@ -27190,10 +27190,10 @@
             if ($this->GetRecordPermission() != null)
                 $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
         }
-
+        
         public function GetModalGridDeleteHandler() { return 'parlamentarier_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
-
+        
         function partition_OnGetPartitions(&$partitions)
         {
             $tmp = array();
@@ -27203,34 +27203,34 @@
             FROM v_parlamentarier p
             ORDER BY first_letter", $tmp
             );
-
+            
             foreach($tmp as $letter) {
               $partitions[$letter['first_letter']] = convert_ansi($letter['first_letter']);
             }
         }
-
+        
         function partition_OnGetPartitionCondition($partitionKey, &$condition)
         {
             $condition = "upper(left(nachname, 1)) = '$partitionKey'";
         }
-
+    
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'parlamentarierGrid');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
                $result->SetAllowDeleteSelected(true);
             else
-               $result->SetAllowDeleteSelected(false);
-
+               $result->SetAllowDeleteSelected(false);   
+            
             ApplyCommonPageSettings($this, $result);
-
+            
             $result->SetUseImagesForActions(true);
             $result->SetDefaultOrdering('nachname', otAscending);
-
+            
             $result->SetUseFixedHeader(false);
-
+            
             $result->SetShowLineNumbers(false);
-
+            
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('parlamentarierGrid' . '_OnGetCustomTemplate', $this);
@@ -27246,7 +27246,7 @@
             $this->AddInsertColumns($result);
             $this->AddPrintColumns($result);
             $this->AddExportColumns($result);
-
+    
             $this->SetShowPageList(true);
             $this->SetHidePageListByDefault(false);
             $this->SetExportToExcelAvailable(true);
@@ -27261,17 +27261,17 @@
             $this->SetVisualEffectsEnabled(true);
             $this->SetShowTopPageNavigator(true);
             $this->SetShowBottomPageNavigator(true);
-
+    
             //
             // Http Handlers
             //
             $pageView = new parlamentarier_anhangDetailView0parlamentarierPage($this, 'Parlamentarier Anhang', 'Parlamentarier Anhang', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.parlamentarier_anhang'), 'UTF-8', 20, 'parlamentarier_anhangDetailEdit0parlamentarier_handler');
-
+            
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.parlamentarier_anhang'));
             $handler = new PageHTTPHandler('parlamentarier_anhangDetailView0parlamentarier_handler', $pageView);
             GetApplication()->RegisterHTTPHandler($handler);
             $pageEdit = new parlamentarier_anhangDetailEdit0parlamentarierPage($this, array('parlamentarier_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForparlamentarier_anhangDetailEdit0parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.parlamentarier_anhang'), 'UTF-8');
-
+            
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.parlamentarier_anhang'));
             $pageEdit->SetShortCaption('Parlamentarier Anhang');
             $pageEdit->SetHeader(GetPagesHeader());
@@ -27281,12 +27281,12 @@
             $handler = new PageHTTPHandler('parlamentarier_anhangDetailEdit0parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
             $pageView = new v_interessenbindung_liste_indirektDetailView1parlamentarierPage($this, 'V Interessenbindung Liste Indirekt', 'V Interessenbindung Liste Indirekt', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste_indirekt'), 'UTF-8', 20, 'v_interessenbindung_liste_indirektDetailEdit1parlamentarier_handler');
-
+            
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_interessenbindung_liste_indirekt'));
             $handler = new PageHTTPHandler('v_interessenbindung_liste_indirektDetailView1parlamentarier_handler', $pageView);
             GetApplication()->RegisterHTTPHandler($handler);
             $pageEdit = new v_interessenbindung_liste_indirektDetailEdit1parlamentarierPage($this, array('parlamentarier_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_interessenbindung_liste_indirektDetailEdit1parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste_indirekt'), 'UTF-8');
-
+            
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_interessenbindung_liste_indirekt'));
             $pageEdit->SetShortCaption('V Interessenbindung Liste Indirekt');
             $pageEdit->SetHeader(GetPagesHeader());
@@ -27296,12 +27296,12 @@
             $handler = new PageHTTPHandler('v_interessenbindung_liste_indirektDetailEdit1parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
             $pageView = new v_zutrittsberechtigung_mit_mandaten_indirektDetailView2parlamentarierPage($this, 'V Zutrittsberechtigung Mit Mandaten Indirekt', 'V Zutrittsberechtigung Mit Mandaten Indirekt', array('zutrittsberechtigung_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'), 'UTF-8', 20, 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarier_handler');
-
+            
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'));
             $handler = new PageHTTPHandler('v_zutrittsberechtigung_mit_mandaten_indirektDetailView2parlamentarier_handler', $pageView);
             GetApplication()->RegisterHTTPHandler($handler);
             $pageEdit = new v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarierPage($this, array('zutrittsberechtigung_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'), 'UTF-8');
-
+            
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'));
             $pageEdit->SetShortCaption('V Zutrittsberechtigung Mit Mandaten Indirekt');
             $pageEdit->SetHeader(GetPagesHeader());
@@ -27311,12 +27311,12 @@
             $handler = new PageHTTPHandler('v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
             $pageView = new v_in_kommission_listeDetailView3parlamentarierPage($this, 'In Kommission Liste', 'In Kommission Liste', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_in_kommission_liste'), 'UTF-8', 20, 'v_in_kommission_listeDetailEdit3parlamentarier_handler');
-
+            
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_in_kommission_liste'));
             $handler = new PageHTTPHandler('v_in_kommission_listeDetailView3parlamentarier_handler', $pageView);
             GetApplication()->RegisterHTTPHandler($handler);
             $pageEdit = new v_in_kommission_listeDetailEdit3parlamentarierPage($this, array('parlamentarier_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_in_kommission_listeDetailEdit3parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_in_kommission_liste'), 'UTF-8');
-
+            
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_in_kommission_liste'));
             $pageEdit->SetShortCaption('In Kommission Liste');
             $pageEdit->SetHeader(GetPagesHeader());
@@ -27326,12 +27326,12 @@
             $handler = new PageHTTPHandler('v_in_kommission_listeDetailEdit3parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
             $pageView = new v_interessenbindung_listeDetailView4parlamentarierPage($this, 'V Interessenbindung Liste', 'V Interessenbindung Liste', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste'), 'UTF-8', 20, 'v_interessenbindung_listeDetailEdit4parlamentarier_handler');
-
+            
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_interessenbindung_liste'));
             $handler = new PageHTTPHandler('v_interessenbindung_listeDetailView4parlamentarier_handler', $pageView);
             GetApplication()->RegisterHTTPHandler($handler);
             $pageEdit = new v_interessenbindung_listeDetailEdit4parlamentarierPage($this, array('parlamentarier_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_interessenbindung_listeDetailEdit4parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste'), 'UTF-8');
-
+            
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_interessenbindung_liste'));
             $pageEdit->SetShortCaption('V Interessenbindung Liste');
             $pageEdit->SetHeader(GetPagesHeader());
@@ -27341,12 +27341,12 @@
             $handler = new PageHTTPHandler('v_interessenbindung_listeDetailEdit4parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
             $pageView = new v_zutrittsberechtigung_mit_mandatenDetailView5parlamentarierPage($this, 'V Zutrittsberechtigung Mit Mandaten', 'V Zutrittsberechtigung Mit Mandaten', array('zutrittsberechtigung_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'), 'UTF-8', 20, 'v_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarier_handler');
-
+            
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'));
             $handler = new PageHTTPHandler('v_zutrittsberechtigung_mit_mandatenDetailView5parlamentarier_handler', $pageView);
             GetApplication()->RegisterHTTPHandler($handler);
             $pageEdit = new v_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarierPage($this, array('zutrittsberechtigung_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'), 'UTF-8');
-
+            
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'));
             $pageEdit->SetShortCaption('V Zutrittsberechtigung Mit Mandaten');
             $pageEdit->SetHeader(GetPagesHeader());
@@ -27360,7 +27360,7 @@
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for nachname field
@@ -27374,7 +27374,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for nachname field
@@ -27398,7 +27398,7 @@
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for beruf field
@@ -27412,7 +27412,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for beruf field
@@ -27435,7 +27435,7 @@
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for email field
@@ -27450,7 +27450,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for email field
@@ -27473,7 +27473,7 @@
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for homepage field
@@ -27488,7 +27488,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for homepage field
@@ -27511,7 +27511,7 @@
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for ALT_kommission field
@@ -27532,7 +27532,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-
+            
             /* <inline edit column> */
             //
             // Edit column for notizen field
@@ -27543,7 +27543,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
-
+            
             /* <inline insert column> */
             //
             // Edit column for notizen field
@@ -27614,34 +27614,34 @@
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
-
+        
         public function OpenAdvancedSearchByDefault()
         {
             return false;
         }
-
+    
         protected function DoGetGridHeader()
         {
             return '' . $GLOBALS["edit_header_message"] . '
-
+    
     <div class="wiki-table-help">
     <p><a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx" rel="_blank external nofollow">Parlamentarier</a> des Parlamentes.
     </p>
-
+    
     <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Ohne Zuordnung einer Partei, gilt ein Parlamentarier als parteilos.</div></div>
     <p>
     <br>Partei erfassen, deshalb nicht vergessen.
     </p>
-
+    
     <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Tip</span></div><div class="rbox-data">Der Sitzplatz eines Parlamentariers kann auf <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/NATIONALRAT/SITZORDNUNG/Seiten/default.aspx" rel="external nofollow">Parlament.ch Sitzordnung</a> und das Photo kann auf der Biographie des jeweiligen <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/NATIONALRAT/Seiten/default.aspx" rel="_blank external nofollow">Parlamentariers</a> abgerufen werden.</div></div>
     </div>
-
+    
     <b>Parlamentarieranhang</b>
     <div class="wiki-table-help">
     <p>Innerhalb der Bearbeitungsmaske Parlamentarier können Dateien als Anhang gespeichert werden. z.B. Autorisierungs-E-Mails (als pdf), Korrespondenzen, wichtige Hinweise, Quellen, die der Rückverfolgbarkeit und der Beweisführung für verwendete Informationen dienen.
     </p>
     </div>
-
+    
     ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
