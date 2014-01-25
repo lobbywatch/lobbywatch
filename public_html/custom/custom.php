@@ -3,6 +3,7 @@
 require_once dirname(__FILE__) . "/../settings/settings.php";
 require_once dirname(__FILE__) . "/../common/utils.php";
 require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_state.php';
+require_once dirname(__FILE__) . '/../bearbeitung/components/common.php';
 
 define('OPERATION_INPUT_FINISHED_SELECTED', 'finsel');
 define('OPERATION_DE_INPUT_FINISHED_SELECTED', 'definsel');
@@ -489,4 +490,67 @@ function add_more_navigation_links(&$result) {
 
 function clean_non_ascii($str) {
   return preg_replace('/[^\w\d_-]*/','', $str);
+}
+
+/** Copied from DownloadHTTPHandler*/
+class PrivateFileDownloadHTTPHandler extends HTTPHandler
+{
+  private $dataset;
+  private $fieldName;
+  private $contentType;
+  private $downloadFileName;
+
+  public function __construct($dataset, $fieldName, $name, $contentType, $downloadFileName, $forceDownload = true)
+  {
+    parent::__construct($name);
+    $this->dataset = $dataset;
+    $this->fieldName = $fieldName;
+    $this->contentType = $contentType;
+    $this->downloadFileName = $downloadFileName;
+    $this->forceDownload = $forceDownload;
+  }
+
+  public function Render(Renderer $renderer)
+  {
+    $primaryKeyValues = array();
+    ExtractPrimaryKeyValues($primaryKeyValues, METHOD_GET);
+
+    $this->dataset->SetSingleRecordState($primaryKeyValues);
+    $this->dataset->Open();
+    $private_file = '';
+    $private_file_name = '';
+    if ($this->dataset->Next()) {
+      $private_file = $this->dataset->GetFieldValueByName($this->fieldName);
+      $private_file_name = basename($private_file);
+    } else {
+      $this->dataset->Close();
+      return false;
+    }
+    $this->dataset->Close();
+    //df($private_file, '$private_file');
+
+    header('Content-type: ' . FormatDatasetFieldsTemplate($this->dataset, $this->contentType));
+    if ($this->forceDownload)
+      header('Content-Disposition: attachment; filename="' . FormatDatasetFieldsTemplate($this->dataset, $private_file_name) . '"');
+
+//     echo $result;
+//     http://ch1.php.net/file_get_contents
+
+//     https://api.drupal.org/api/drupal/includes!file.inc/function/file_transfer/7
+
+    // http://www.php.net/manual/en/wrappers.php
+    $uri = 'file://' . $private_file;
+
+    // Transfer file in 1024 byte chunks to save memory usage.
+    if (/*$scheme && file_stream_wrapper_valid_scheme($scheme) &&*/ $fd = fopen($uri, 'rb')) {
+      while (!feof($fd)) {
+        print fread($fd, 1024);
+      }
+      fclose($fd);
+    }
+    else {
+      //drupal_not_found();
+      // error handling
+    }
+  }
 }
