@@ -251,7 +251,7 @@ function lobbywatch_parlamentarier_list() {
   return $build;
 }
 
-function lobbywatch_parlamentarier_fetch_url_name($id) {
+function lobbywatch_anzeige_name_for_url($table, $id) {
 
   $url_name = '';
 
@@ -259,7 +259,7 @@ function lobbywatch_parlamentarier_fetch_url_name($id) {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $sql = "SELECT * FROM v_parlamentarier parlamentarier WHERE parlamentarier.id=:id";
+  $sql = "SELECT * FROM v_$table WHERE id=:id";
   $result = db_query($sql, array(':id' => $id));
 
   if ($result) {
@@ -282,7 +282,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
 
 //   dpm($id, 'id');
 
-  $url_name = lobbywatch_parlamentarier_fetch_url_name($id);
+  $url_name = lobbywatch_anzeige_name_for_url('parlamentarier', $id);
   if ($name !== $url_name) {
     drupal_goto("parlamentarier/$id/$url_name");
   }
@@ -295,7 +295,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
 
   $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email,
   GROUP_CONCAT(DISTINCT
-  CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art, ', ', interessenbindung.beschreibung)
+  CONCAT('<li><a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>', IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art, ', ', interessenbindung.beschreibung)
   ORDER BY organisation.anzeige_name
   SEPARATOR ' '
   ) interessenbindungen,
@@ -439,9 +439,14 @@ function lobbywatch_organisation_list() {
     return $build;
 }
 
-function lobbywatch_organisation_id($id) {
+function lobbywatch_organisation_id($id, $name = '') {
 
   //   dpm($id, 'id');
+
+  $url_name = lobbywatch_anzeige_name_for_url('organisation', $id);
+  if ($name !== $url_name) {
+    drupal_goto("organisation/$id/$url_name");
+  }
 
   $markup = t('<p>Organisation</p>');
 
@@ -463,7 +468,7 @@ function lobbywatch_organisation_id($id) {
   // otherwise Drupal will not be able to access it's own data later on.
   db_set_active();
 
-  $markup .= '<h2>' . $record["anzeige_name"] . '</h2>';
+  $markup .= '<h2>' . $record["anzeige_name"] . '</h2><p>Hier kommen Infos zur Organisation</p>';
 
   $build = array();
   $build['terms'] = array(
