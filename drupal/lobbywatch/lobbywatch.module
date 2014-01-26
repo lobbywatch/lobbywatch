@@ -4,7 +4,37 @@
  * Implements hook_menu().
  */
 function lobbywatch_menu() {
+  dpm('passed');
   $items = array();
+
+  $items['autocomplete/parlamentarier'] = array(
+     'title' => 'Autocomplete (simple)',
+//     'page callback' => 'drupal_get_form',
+//     'page arguments' => array('ajax_example_simple_autocomplete'),
+//     'access arguments' => array('access user profiles'),
+//     'file' => 'ajax_example_autocomplete.inc',
+//     'weight' => 10,
+//     'path' => 'parlamentarier/autocomplete',
+    'page callback' => 'lobbywatch_parlamentarier_autocomplete',
+//     'callback' => 'lobbywatch_parlamentarier_autocomplete',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('access content'),
+  );
+
+  $items['autocomplete_parlamentarier'] = array(
+    'title' => 'Autocomplete (simple)',
+    //     'page callback' => 'drupal_get_form',
+    //     'page arguments' => array('ajax_example_simple_autocomplete'),
+    //     'access arguments' => array('access user profiles'),
+    //     'file' => 'ajax_example_autocomplete.inc',
+    //     'weight' => 10,
+    //     'path' => 'parlamentarier/autocomplete',
+    'page callback' => 'lobbywatch_parlamentarier_autocomplete',
+    //     'callback' => 'lobbywatch_parlamentarier_autocomplete',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('access content'),
+    );
+
 
   $items['parlamentarier'] = array(
     'title' => 'Parlamentarier',
@@ -37,6 +67,146 @@ function lobbywatch_menu() {
     );
 
     return $items;
+}
+
+/**
+ * Blocks of ibex utils.
+ *
+ * Implements hook_block_info().
+ */
+function lobbywatch_block_info() {
+  $blocks['search'] = array(
+    'info' => t('Search'),
+    'cache' => DRUPAL_NO_CACHE,
+    'weight' => 40,
+    );
+
+    return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function lobbywatch_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'search':
+      $block['subject'] = t('Search');
+      $block['content'] = drupal_get_form('lobbywatch_form');
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Define the form to be returned.
+ *
+ * Note that drupal passes in two parameters,
+ * $form - which holds all of the elements of the form
+ * $form_state - a special array of settings & values needed by Drupal
+ */
+function lobbywatch_form($form, &$form_state) {
+  // Now the fun begins. For this simple example,
+  // we will only provide two form elements.
+  // 1. an input for the friend's email address
+  // 2. a submit button
+  // You can add as much or as little to this form as
+  // needed. See the forms api for all possible elements.
+
+  $form['search_field'] = array(
+    // #type tells drupal what kind of element to build
+    '#type' => 'textfield',
+    // we want this field to be required
+    '#required' => TRUE,
+    // The "label" for this field
+    '#title' => t("Parlamentariername"),
+    // Optional description
+    '#description' => t('Parlamentariername zur Anzeige'),
+    '#autocomplete_path' => 'autocomplete/parlamentarier',
+    );
+
+    $form['submit'] = array(
+      '#type' => 'submit',
+      // #value is the text to display inside the button
+      '#value' => t('Submit'),
+      );
+
+      return $form;
+}
+
+/*
+ * Define a validation function that drupal will
+ * automatically call when the submit button is pressed.
+ *
+ * For this example, I will use the valid_email_address()
+ * function to verify that the email address looks
+ * proper. If it's not, we'll use form_set_error()
+ * function to tell drupal we didn't pass validation.
+ */
+function lobbywatch_form_validate($form, &$form_state) {
+  // Drupal stows away all of the form elements into
+  // $form_state['values']. We find our 'friends_email'
+  // element and assign it to a variable for easy
+  // reference.
+  $name = $form_state['values']['search_field'];
+
+//   // If it's not a valid email, set an error.
+//   if(valid_email_address($email) == 0) {
+//     // form_set_error() tells drupal that it should not proceed.
+//     // The first parameter is the form element that didn't pass
+//     // validation. The second is the message to tell the user.
+//     form_set_error('friends_email', t('Not a valid email address'));
+//   }
+}
+
+/*
+ * Define a submit funciton that drupal will
+ * automatically call when submit is pressed (and all validators pass)
+ */
+function lobbywatch_form_submit($form, &$form_state) {
+  // Get the email value again
+  $email = $form_state['values']['search_field'];
+  // Now we call drupal_mail() to send a message to this person.
+  // Note that this basically tells drupal to call tellafriend_mail().
+//   $message = drupal_mail('tellafriend', 'notify', $email, language_default());
+  // Check the message results and let the user know if php was able to sent the email.
+  if(!empty($message['result'])) {
+    // TODO drupal goto
+    drupal_set_message(t('You just told your friend about us!'));
+  } else {
+    drupal_set_message(t('There was a problem sending your message', 'error'));
+  }
+}
+
+// Ref https://api.drupal.org/api/examples/ajax_example!ajax_example_autocomplete.inc/7
+function lobbywatch_parlamentarier_autocomplete($str = '') {
+
+//   return lobbywatch_parlamentarier_list();
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  $items = array();
+  $sql = "SELECT parlamentarier.anzeige_name, parlamentarier.id FROM v_parlamentarier parlamentarier WHERE parlamentarier.im_rat_bis IS NULL AND parlamentarier.anzeige_name LIKE :str";
+  $result = db_query($sql, array(':str' => "%$str%"));
+
+  dpm($result, 'result');
+
+  while($record = $result->fetchAssoc()) {
+    $items[check_plain($record['anzeige_name']) . " [" . $record['id'] . "]"] = check_plain($record['anzeige_name']) . " (pid=" . $record['id'] . ")";
+  }
+
+  // Go back to the default database,
+  // otherwise Drupal will not be able to access it's own data later on.
+  db_set_active();
+
+  dpm($items, 'items');
+
+  drupal_json_output($items);
+
+  // TODO exit required? it's not in examples
+   exit();
 }
 
 /**
