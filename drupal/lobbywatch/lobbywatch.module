@@ -4,7 +4,7 @@
  * Implements hook_menu().
  */
 function lobbywatch_menu() {
-  dpm('passed');
+//   dpm('passed');
   $items = array();
 
   $items['autocomplete/parlamentarier'] = array(
@@ -35,6 +35,15 @@ function lobbywatch_menu() {
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
     );
+
+  $items['parlamentarier/%/%'] = array(
+    'title' => 'Parlamentarier',
+    'page callback' => 'lobbywatch_parlamentarier_id',
+    'page arguments' => array(1, 2),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+    );
+
 
   $items['organisation'] = array(
     'title' => 'Organisationen',
@@ -222,7 +231,7 @@ function lobbywatch_parlamentarier_list() {
   $result = db_query("SELECT * FROM v_parlamentarier parlamentarier WHERE parlamentarier.im_rat_bis IS NULL ORDER BY parlamentarier.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
-    $markup .= '<li><a href="/parlamentarier/' . $record['id'] . '">' . $record['anzeige_name'] . '</a>';
+    $markup .= '<li><a href="/parlamentarier/' . $record['id'] . '/' . lobbywatch_clean_for_url($record['anzeige_name']) . '">' . $record['anzeige_name'] . '</a>';
   }
 
   $markup .= '</ul>';
@@ -242,9 +251,41 @@ function lobbywatch_parlamentarier_list() {
   return $build;
 }
 
-function lobbywatch_parlamentarier_id($id) {
+function lobbywatch_parlamentarier_fetch_url_name($id) {
+
+  $url_name = '';
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  $sql = "SELECT * FROM v_parlamentarier parlamentarier WHERE parlamentarier.id=:id";
+  $result = db_query($sql, array(':id' => $id));
+
+  if ($result) {
+    $record = $result->fetchAssoc();
+    $url_name = lobbywatch_clean_for_url($record['anzeige_name']);
+  }
+
+  // Go back to the default database,
+  // otherwise Drupal will not be able to access it's own data later on.
+  db_set_active();
+  return $url_name;
+}
+
+function lobbywatch_clean_for_url($name){
+  $url_name = preg_replace('/[.,]/i', '', $name);
+  return check_plain($url_name);
+}
+
+function lobbywatch_parlamentarier_id($id, $name='') {
 
 //   dpm($id, 'id');
+
+  $url_name = lobbywatch_parlamentarier_fetch_url_name($id);
+  if ($name !== $url_name) {
+    drupal_goto("parlamentarier/$id/$url_name");
+  }
 
   $markup = t('<p>Parlamentarier</p>');
 
