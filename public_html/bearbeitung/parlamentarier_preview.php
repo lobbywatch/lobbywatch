@@ -76,8 +76,8 @@
         $eng_con = $con_factory->CreateConnection($options);
         $eng_con->Connect();
         $con = $eng_con->GetConnectionHandle();
-        df($eng_con->Connected(), 'connected');
-        df($con, 'con');
+//         df($eng_con->Connected(), 'connected');
+//         df($con, 'con');
         $cmd = $con_factory->CreateEngCommandImp();
         $sql = convert_utf8("SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email,
 GROUP_CONCAT(DISTINCT
@@ -160,22 +160,25 @@ parlamentarier.im_rat_bis IS NULL
 AND interessenbindung.bis IS NULL
 AND zutrittsberechtigung.bis IS NULL
 AND mandat.bis IS NULL
-AND parlamentarier.id=" .
-$cmd->GetFieldValueAsSQL(new FieldInfo('table', 'fieldname', ftNumber, 'alias'), $id) .
-" GROUP BY parlamentarier.id;");
+AND parlamentarier.id=:id
+GROUP BY parlamentarier.id;");
 //         df($sql);
         $result = array();
-        $eng_con->ExecQueryToArray($sql, $result);
-         df($eng_con->LastError(), 'last error');
-        $eng_con->Disconnect();
-        df($result, 'result');
-        $preview = $result[0]['email_text_html'];
+//         $eng_con->ExecQueryToArray($sql, $result);
+//          df($eng_con->LastError(), 'last error');
+//         $eng_con->Disconnect();
+//         df($result, 'result');
+//         $preview = $result[0]['email_text_html'];
 
 //         $q = $con->query($sql);
+//         $result2 = $q->fetchAll();
 //         df($eng_con->LastError(), 'last error');
 //         df($q, 'q');
-//         $result2 = $q->fetchAll();
 //         df($result2, 'result2');
+
+        $sth = $con->prepare($sql);
+        $sth->execute(array(':id' => $id));
+        $result = $sth->fetchAll();
 
         ShowPreviewPage('<h4>Preview</h4><h3>' .$result[0]["parlamentarier_name"] . '</h3>' .
         '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
