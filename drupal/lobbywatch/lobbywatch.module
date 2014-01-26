@@ -173,7 +173,7 @@ function lobbywatch_parlamentarier_id($id) {
 
     $record = $result->fetchAssoc();
 
-    dpm($record, '$record');
+//     dpm($record, '$record');
 
     // Go back to the default database,
     // otherwise Drupal will not be able to access it's own data later on.
@@ -181,8 +181,79 @@ function lobbywatch_parlamentarier_id($id) {
 
     $markup .= '<h2>' . $record["parlamentarier_name"] . '</h2>' .
     '<h4>Interessenbindungen</h4><ul>' . $record['interessenbindungen'] . '</ul>' .
-    '<h4>Gaeste</h4><ul>' . $record['zutrittsberechtigungen'] . '</ul>' .
+    '<h4>Gäste</h4><ul>' . $record['zutrittsberechtigungen'] . '</ul>' .
     '<h4>Mandate</h4><ul>' . $record['mandate'] . '</ul>';
+
+  $build = array();
+  $build['terms'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="lobbywatch">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+    );
+
+    return $build;
+}
+
+/**
+ * TODO
+ */
+function lobbywatch_organisation_list() {
+  $markup = t('<p>Liste der Parlamentarier</p>');
+  $markup .= '<ul>';
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  $result = db_query("SELECT * FROM v_organisation organisation ORDER BY organisation.anzeige_name");
+
+  while ($record = $result->fetchAssoc()) {
+    $markup .= '<li><a href="/organisation/' . $record['id'] . '">' . $record['anzeige_name'] . '</a>';
+  }
+
+  $markup .= '</ul>';
+
+  // Go back to the default database,
+  // otherwise Drupal will not be able to access it's own data later on.
+  db_set_active();
+
+  $build = array();
+  $build['terms'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="lobbywatch">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+    );
+
+    return $build;
+}
+
+function lobbywatch_organisation_id($id) {
+
+  //   dpm($id, 'id');
+
+  $markup = t('<p>Organisation</p>');
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  $sql = "SELECT organisation.anzeige_name FROM v_organisation organisation WHERE organisation.id=:id";
+
+  $result = db_query($sql, array(':id' => $id));
+
+  //     dpm($result, 'result');
+
+  $record = $result->fetchAssoc();
+
+//   dpm($record, '$record');
+
+  // Go back to the default database,
+  // otherwise Drupal will not be able to access it's own data later on.
+  db_set_active();
+
+  $markup .= '<h2>' . $record["anzeige_name"] . '</h2>';
 
   $build = array();
   $build['terms'] = array(
