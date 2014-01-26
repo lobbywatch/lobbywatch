@@ -81,6 +81,29 @@
         df($con, 'con');
         $cmd = $con_factory->CreateEngCommandImp();
         $sql = convert_utf8("SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email,
+GROUP_CONCAT(DISTINCT
+    CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art, ', ', interessenbindung.beschreibung)
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ' '
+) interessenbindungen,
+  GROUP_CONCAT(DISTINCT
+    CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion)
+    ORDER BY zutrittsberechtigung.name
+    SEPARATOR ' '
+  ) zutrittsberechtigungen,
+  GROUP_CONCAT(DISTINCT
+    CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion,
+    IF (organisation2.id IS NOT NULL,
+      CONCAT(', ',
+        organisation2.anzeige_name
+        , IF(organisation2.rechtsform IS NULL OR TRIM(organisation2.rechtsform) = '', '', CONCAT(', ', organisation2.rechtsform)), IF(organisation2.ort IS NULL OR TRIM(organisation2.ort) = '', '', CONCAT(', ', organisation2.ort)), ', '
+        , IFNULL(mandat.art, ''), ', ', IFNULL(mandat.beschreibung, '')
+      ),
+      '')
+    )
+    ORDER BY zutrittsberechtigung.name, organisation2.anzeige_name
+    SEPARATOR ' '
+  ) mandate,
 CONCAT(
   CASE parlamentarier.geschlecht
     WHEN 'M' THEN CONCAT('<p>Sehr geehrter Herr ', parlamentarier.nachname, '</p>')
@@ -121,28 +144,7 @@ CONCAT(
   ),
   '</ul>',
   '<p>Freundliche Grüsse<br></p>'
-) email_text_html,
-CONCAT(
-  CASE parlamentarier.geschlecht
-    WHEN 'M' THEN CONCAT('Sehr geehrter Herr ', parlamentarier.nachname, '\r\n')
-    WHEN 'F' THEN CONCAT('Sehr geehrte Frau ', parlamentarier.nachname, '\r\n')
-    ELSE CONCAT('Sehr geehrte(r) Herr/Frau ', parlamentarier.nachname, '\r\n')
-  END,
-  '\r\n[Ersetze Text mit HTML-Vorlage]\r\n',
-  'Ihre Interessenbindungen:\r\n',
-  GROUP_CONCAT(DISTINCT
-    CONCAT('* ', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art, ', ', interessenbindung.beschreibung, '\r\n')
-    ORDER BY organisation.anzeige_name
-    SEPARATOR ' '
-  ),
-  '\r\nIhre Gäste:\r\n',
-  GROUP_CONCAT(DISTINCT
-    CONCAT('* ', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion, '\r\n')
-    ORDER BY organisation.anzeige_name
-    SEPARATOR ' '
-  ),
-  '\r\nMit freundlichen Grüssen,\r\n'
-) email_text_for_url
+) email_text_html
 FROM v_parlamentarier parlamentarier
 LEFT JOIN v_interessenbindung interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id
@@ -176,7 +178,10 @@ $cmd->GetFieldValueAsSQL(new FieldInfo('table', 'fieldname', ftNumber, 'alias'),
 //         $result2 = $q->fetchAll();
 //         df($result2, 'result2');
 
-        ShowPreviewPage('<h3>Preview</h3>' . $preview);
+        ShowPreviewPage('<h4>Preview</h4><h3>' .$result[0]["parlamentarier_name"] . '</h3>' .
+        '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
+        '<h4>Gaeste</h4><ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>' .
+        '<h4>Mandate</h4><ul>' . $result[0]['mandate'] . '</ul>');
     }
     catch(Exception $e)
     {
