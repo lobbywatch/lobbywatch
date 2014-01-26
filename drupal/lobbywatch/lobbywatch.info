@@ -1,7 +1,7 @@
 name = Lobbywatch
 description = "Lobbywatch extensions"
 
-package = ""
+package = "Lobbywatch"
 dependencies[] = ibexutils
 
 core = "7.x"

@@ -44,7 +44,6 @@ function lobbywatch_menu() {
     'type' => MENU_CALLBACK,
     );
 
-
   $items['organisation'] = array(
     'title' => 'Organisationen',
     'page callback' => 'lobbywatch_organisation_list',
