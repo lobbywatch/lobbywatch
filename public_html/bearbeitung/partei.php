@@ -66,6 +66,8 @@
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $this->dataset->AddField($field, false);
             $field = new StringField('fraktionsfunktion');
             $this->dataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
@@ -1523,6 +1525,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('parteifunktion');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('fraktionsfunktion');
             $this->dataset->AddField($field, false);

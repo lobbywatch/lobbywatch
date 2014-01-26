@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 26. Jan 2014 um 11:59
+-- Erstellungszeit: 26. Jan 2014 um 12:30
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -244,7 +244,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:00
+-- Erzeugt am: 26. Jan 2014 um 11:27
 --
 
 DROP TABLE IF EXISTS `branche_log`;
@@ -363,7 +363,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `fraktion_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:01
+-- Erzeugt am: 26. Jan 2014 um 11:28
 --
 
 DROP TABLE IF EXISTS `fraktion_log`;
@@ -499,7 +499,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:00
+-- Erzeugt am: 26. Jan 2014 um 11:27
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
@@ -632,7 +632,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessengruppe_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:00
+-- Erzeugt am: 26. Jan 2014 um 11:27
 --
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
@@ -759,7 +759,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `in_kommission_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:00
+-- Erzeugt am: 26. Jan 2014 um 11:27
 --
 
 DROP TABLE IF EXISTS `in_kommission_log`;
@@ -890,7 +890,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:00
+-- Erzeugt am: 26. Jan 2014 um 11:27
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
@@ -1026,7 +1026,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mandat_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:00
+-- Erzeugt am: 26. Jan 2014 um 11:27
 --
 
 DROP TABLE IF EXISTS `mandat_log`;
@@ -1144,7 +1144,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mil_grad_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:01
+-- Erzeugt am: 26. Jan 2014 um 11:28
 --
 
 DROP TABLE IF EXISTS `mil_grad_log`;
@@ -1391,7 +1391,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:00
+-- Erzeugt am: 26. Jan 2014 um 11:28
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
@@ -1435,7 +1435,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:00
+-- Erzeugt am: 26. Jan 2014 um 11:27
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1491,7 +1491,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 20. Jan 2014 um 09:20
+-- Erzeugt am: 26. Jan 2014 um 11:26
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -1504,6 +1504,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') NOT NULL COMMENT 'Kantonskürzel',
   `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Leer bedeutet parteilos.',
   `parteifunktion` enum('mitglied','praesident','vizepraesident') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
+  `fraktion_id` int(11) DEFAULT NULL COMMENT 'Fraktionszugehörigkeit im nationalen Parlament. Fremdschlüssel.',
   `fraktionsfunktion` enum('mitglied','praesident','vizepraesident') DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Fraktion',
   `im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
   `im_rat_bis` date DEFAULT NULL COMMENT 'Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag',
@@ -1547,7 +1548,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   UNIQUE KEY `parlamentarier_rat_sitzplatz` (`ratstyp`,`sitzplatz`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_partei` (`partei_id`),
   KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
-  KEY `militaerischer_grad` (`militaerischer_grad`)
+  KEY `militaerischer_grad` (`militaerischer_grad`),
+  KEY `fraktion_id` (`fraktion_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=247 ;
 
 --
@@ -1560,6 +1562,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier`:
+--   `fraktion_id`
+--       `fraktion` -> `id`
 --   `beruf_interessengruppe_id`
 --       `interessengruppe` -> `id`
 --   `militaerischer_grad`
@@ -1704,7 +1708,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:01
+-- Erzeugt am: 26. Jan 2014 um 11:28
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
@@ -1745,7 +1749,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:01
+-- Erzeugt am: 26. Jan 2014 um 11:28
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -1758,6 +1762,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') NOT NULL COMMENT 'Kantonskürzel',
   `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Leer bedeutet parteilos.',
   `parteifunktion` enum('mitglied','praesident','vizepraesident') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
+  `fraktion_id` int(11) DEFAULT NULL COMMENT 'Fraktionszugehörigkeit im nationalen Parlament. Fremdschlüssel.',
   `fraktionsfunktion` enum('mitglied','praesident','vizepraesident') DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Fraktion',
   `im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
   `im_rat_bis` date DEFAULT NULL COMMENT 'Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag',
@@ -1805,6 +1810,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   KEY `idx_partei` (`partei_id`),
   KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
   KEY `militaerischer_grad` (`militaerischer_grad`),
+  KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=256 ;
 
@@ -1905,7 +1911,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:01
+-- Erzeugt am: 26. Jan 2014 um 11:28
 --
 
 DROP TABLE IF EXISTS `partei_log`;
@@ -1950,7 +1956,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
 --
 -- Tabellenstruktur für Tabelle `snapshot`
 --
--- Erzeugt am: 26. Jan 2014 um 10:00
+-- Erzeugt am: 26. Jan 2014 um 11:27
 --
 
 DROP TABLE IF EXISTS `snapshot`;
@@ -2823,6 +2829,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH')
 ,`partei_id` int(11)
 ,`parteifunktion` enum('mitglied','praesident','vizepraesident')
+,`fraktion_id` int(11)
 ,`fraktionsfunktion` enum('mitglied','praesident','vizepraesident')
 ,`im_rat_seit` date
 ,`im_rat_bis` date
@@ -3310,7 +3317,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_anhang_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:01
+-- Erzeugt am: 26. Jan 2014 um 11:28
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_anhang_log`;
@@ -3351,7 +3358,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_log`
 --
--- Erzeugt am: 26. Jan 2014 um 10:01
+-- Erzeugt am: 26. Jan 2014 um 11:28
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
@@ -3745,7 +3752,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_parlamentarier`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`t`.`nachname`,', ',`t`.`vorname`) AS `anzeige_name`,concat(`t`.`vorname`,' ',`t`.`nachname`) AS `name`,`t`.`id` AS `id`,`t`.`nachname` AS `nachname`,`t`.`vorname` AS `vorname`,`t`.`zweiter_vorname` AS `zweiter_vorname`,`t`.`ratstyp` AS `ratstyp`,`t`.`kanton` AS `kanton`,`t`.`partei_id` AS `partei_id`,`t`.`parteifunktion` AS `parteifunktion`,`t`.`fraktionsfunktion` AS `fraktionsfunktion`,`t`.`im_rat_seit` AS `im_rat_seit`,`t`.`im_rat_bis` AS `im_rat_bis`,`t`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`t`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`t`.`beruf` AS `beruf`,`t`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`t`.`zivilstand` AS `zivilstand`,`t`.`anzahl_kinder` AS `anzahl_kinder`,`t`.`militaerischer_grad` AS `militaerischer_grad`,`t`.`geschlecht` AS `geschlecht`,`t`.`geburtstag` AS `geburtstag`,`t`.`photo` AS `photo`,`t`.`photo_dateiname` AS `photo_dateiname`,`t`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`t`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`t`.`photo_mime_type` AS `photo_mime_type`,`t`.`kleinbild` AS `kleinbild`,`t`.`sitzplatz` AS `sitzplatz`,`t`.`email` AS `email`,`t`.`homepage` AS `homepage`,`t`.`parlament_biografie_id` AS `parlament_biografie_id`,`t`.`ALT_kommission` AS `ALT_kommission`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`t`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`t`.`autorisiert_visa` AS `autorisiert_visa`,`t`.`autorisiert_datum` AS `autorisiert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `parlamentarier` `t`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`t`.`nachname`,', ',`t`.`vorname`) AS `anzeige_name`,concat(`t`.`vorname`,' ',`t`.`nachname`) AS `name`,`t`.`id` AS `id`,`t`.`nachname` AS `nachname`,`t`.`vorname` AS `vorname`,`t`.`zweiter_vorname` AS `zweiter_vorname`,`t`.`ratstyp` AS `ratstyp`,`t`.`kanton` AS `kanton`,`t`.`partei_id` AS `partei_id`,`t`.`parteifunktion` AS `parteifunktion`,`t`.`fraktion_id` AS `fraktion_id`,`t`.`fraktionsfunktion` AS `fraktionsfunktion`,`t`.`im_rat_seit` AS `im_rat_seit`,`t`.`im_rat_bis` AS `im_rat_bis`,`t`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`t`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`t`.`beruf` AS `beruf`,`t`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`t`.`zivilstand` AS `zivilstand`,`t`.`anzahl_kinder` AS `anzahl_kinder`,`t`.`militaerischer_grad` AS `militaerischer_grad`,`t`.`geschlecht` AS `geschlecht`,`t`.`geburtstag` AS `geburtstag`,`t`.`photo` AS `photo`,`t`.`photo_dateiname` AS `photo_dateiname`,`t`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`t`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`t`.`photo_mime_type` AS `photo_mime_type`,`t`.`kleinbild` AS `kleinbild`,`t`.`sitzplatz` AS `sitzplatz`,`t`.`email` AS `email`,`t`.`homepage` AS `homepage`,`t`.`parlament_biografie_id` AS `parlament_biografie_id`,`t`.`ALT_kommission` AS `ALT_kommission`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`t`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`t`.`autorisiert_visa` AS `autorisiert_visa`,`t`.`autorisiert_datum` AS `autorisiert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `parlamentarier` `t`;
 
 -- --------------------------------------------------------
 
@@ -3969,6 +3976,7 @@ ALTER TABLE `organisation_log`
 -- Constraints der Tabelle `parlamentarier`
 --
 ALTER TABLE `parlamentarier`
+  ADD CONSTRAINT `fk_parlamentarier_fraktion_id` FOREIGN KEY (`fraktion_id`) REFERENCES `fraktion` (`id`),
   ADD CONSTRAINT `fk_beruf_interessengruppe_id` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
   ADD CONSTRAINT `fk_mil_grad` FOREIGN KEY (`militaerischer_grad`) REFERENCES `mil_grad` (`id`),
   ADD CONSTRAINT `fk_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`);
