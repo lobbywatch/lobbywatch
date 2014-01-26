@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 26. Jan 2014 um 12:30
+-- Erstellungszeit: 26. Jan 2014 um 13:11
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -286,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
 --
 -- Tabellenstruktur für Tabelle `fraktion`
 --
--- Erzeugt am: 26. Jan 2014 um 09:19
+-- Erzeugt am: 26. Jan 2014 um 11:58
 --
 
 DROP TABLE IF EXISTS `fraktion`;
@@ -294,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `fraktion` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Fraktion',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Fraktionsabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Fraktion',
-  `position` enum('links','rechts','mitte','') DEFAULT NULL COMMENT 'Politische Position der Fraktion',
+  `position` enum('links','rechts','mitte') DEFAULT NULL COMMENT 'Politische Position der Fraktion',
   `von` date DEFAULT NULL COMMENT 'Beginn der Fraktion, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Fraktion, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -311,7 +311,7 @@ CREATE TABLE IF NOT EXISTS `fraktion` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `fraktion_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `fraktion_name_unique` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Fraktionen des Parlamentes' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Fraktionen des Parlamentes' AUTO_INCREMENT=8 ;
 
 --
 -- Trigger `fraktion`
@@ -392,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `fraktion_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_fraktion_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Fraktionen des Parlamentes' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Fraktionen des Parlamentes' AUTO_INCREMENT=8 ;
 
 --
 -- RELATIONEN DER TABELLE `fraktion_log`:
@@ -1812,7 +1812,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   KEY `militaerischer_grad` (`militaerischer_grad`),
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=256 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=580 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -1825,7 +1825,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
--- Erzeugt am: 26. Jan 2014 um 09:28
+-- Erzeugt am: 26. Jan 2014 um 11:58
 --
 
 DROP TABLE IF EXISTS `partei`;
@@ -1835,7 +1835,7 @@ CREATE TABLE IF NOT EXISTS `partei` (
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
   `fraktion_id` int(11) DEFAULT NULL COMMENT 'Fraktionszugehörigkeit der Partei im nationalen Parlament',
   `gruendung` date DEFAULT NULL COMMENT 'Gründungsjahr der Partei. Wenn der genaue Tag unbekannt ist, den 1. Januar wählen.',
-  `position` enum('links','rechts','mitte','') DEFAULT NULL COMMENT 'Politische Position der Partei',
+  `position` enum('links','rechts','mitte') DEFAULT NULL COMMENT 'Politische Position der Partei',
   `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage der Partei',
   `email` varchar(100) DEFAULT NULL COMMENT 'Kontakt E-Mail-Adresse der Partei',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -2041,7 +2041,7 @@ CREATE TABLE IF NOT EXISTS `v_fraktion` (
 ,`id` int(11)
 ,`abkuerzung` varchar(20)
 ,`name` varchar(100)
-,`position` enum('links','rechts','mitte','')
+,`position` enum('links','rechts','mitte')
 ,`von` date
 ,`bis` date
 ,`notizen` text
@@ -2919,7 +2919,7 @@ CREATE TABLE IF NOT EXISTS `v_partei` (
 ,`name` varchar(100)
 ,`fraktion_id` int(11)
 ,`gruendung` date
-,`position` enum('links','rechts','mitte','')
+,`position` enum('links','rechts','mitte')
 ,`homepage` varchar(255)
 ,`email` varchar(100)
 ,`notizen` text

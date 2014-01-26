@@ -246,11 +246,11 @@
         }
         function zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            datei_anhang_delete($page, &$rowData, &$cancel, &$message, $tableName);
+            datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
         }
         function zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            datei_anhang_insert($page, &$rowData, &$cancel, &$message, $tableName);
+            datei_anhang_insert($page, $rowData, $cancel, $message, $tableName);
         }
     
         public function GetPageDirection()
@@ -1190,11 +1190,11 @@
         }
         function zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            datei_anhang_delete($page, &$rowData, &$cancel, &$message, $tableName);
+            datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
         }
         function zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            datei_anhang_insert($page, &$rowData, &$cancel, &$message, $tableName);
+            datei_anhang_insert($page, $rowData, $cancel, $message, $tableName);
         }
         public function datei_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {

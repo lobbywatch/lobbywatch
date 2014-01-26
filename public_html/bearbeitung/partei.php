@@ -6685,7 +6685,6 @@
             $editor->AddValue('links', $this->RenderText('links'));
             $editor->AddValue('rechts', $this->RenderText('rechts'));
             $editor->AddValue('mitte', $this->RenderText('mitte'));
-            $editor->AddValue('\'\'', $this->RenderText('\'\''));
             $editColumn = new CustomEditColumn('Position', 'position', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6700,7 +6699,6 @@
             $editor->AddValue('links', $this->RenderText('links'));
             $editor->AddValue('rechts', $this->RenderText('rechts'));
             $editor->AddValue('mitte', $this->RenderText('mitte'));
-            $editor->AddValue('\'\'', $this->RenderText('\'\''));
             $editColumn = new CustomEditColumn('Position', 'position', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7379,7 +7377,6 @@
             $editor->AddValue('links', $this->RenderText('links'));
             $editor->AddValue('rechts', $this->RenderText('rechts'));
             $editor->AddValue('mitte', $this->RenderText('mitte'));
-            $editor->AddValue('\'\'', $this->RenderText('\'\''));
             $editColumn = new CustomEditColumn('Position', 'position', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7629,7 +7626,6 @@
             $editor->AddValue('links', $this->RenderText('links'));
             $editor->AddValue('rechts', $this->RenderText('rechts'));
             $editor->AddValue('mitte', $this->RenderText('mitte'));
-            $editor->AddValue('\'\'', $this->RenderText('\'\''));
             $editColumn = new CustomEditColumn('Position', 'position', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);

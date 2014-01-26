@@ -304,11 +304,11 @@
         }
         function parlamentarier_anhangDetailViewGrid0parlamentarier_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            datei_anhang_delete($page, &$rowData, &$cancel, &$message, $tableName);
+            datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
         }
         function parlamentarier_anhangDetailViewGrid0parlamentarier_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            datei_anhang_insert($page, &$rowData, &$cancel, &$message, $tableName);
+            datei_anhang_insert($page, $rowData, $cancel, $message, $tableName);
         }
     
         public function GetPageDirection()
@@ -1435,11 +1435,11 @@
         }
         function parlamentarier_anhangDetailEditGrid0parlamentarier_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            datei_anhang_delete($page, &$rowData, &$cancel, &$message, $tableName);
+            datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
         }
         function parlamentarier_anhangDetailEditGrid0parlamentarier_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            datei_anhang_insert($page, &$rowData, &$cancel, &$message, $tableName);
+            datei_anhang_insert($page, $rowData, $cancel, $message, $tableName);
         }
         public function datei_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
