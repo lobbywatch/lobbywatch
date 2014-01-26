@@ -36,7 +36,1340 @@
     
     
     
-    class v_zutrittsberechtigung_mandateDetailView0zutrittsberechtigungPage extends DetailPage
+    class zutrittsberechtigung_anhangDetailView0zutrittsberechtigungPage extends DetailPage
+    {
+        protected function DoBeforeCreate()
+        {
+            $this->dataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`zutrittsberechtigung_anhang`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('zutrittsberechtigung_id');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('datei');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('dateiname');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('dateierweiterung');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('dateiname_voll');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('mime_type');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('encoding');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $this->dataset->AddLookupField('zutrittsberechtigung_id', 'v_zutrittsberechtigung', new IntegerField('id'), new StringField('anzeige_name', 'zutrittsberechtigung_id_anzeige_name', 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung'), 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung');
+        }
+    
+        protected function AddFieldColumns(Grid $grid)
+        {
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(false);
+            $column->SetDescription($this->RenderText('Technischer Schlüssel des Zutrittsberechtigunganhangs'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for datei field
+            //
+            $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
+            
+            /* <inline edit column> */
+            //
+            // Edit column for datei field
+            //
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for datei field
+            //
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Datei'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for dateiname_voll field
+            //
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column->SetOrderable(false);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
+            $column->SetDescription($this->RenderText('Dateiname inkl. Erweiterung'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(false);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Beschreibung des Anhangs'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for created_visa field
+            //
+            $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
+            $column->SetOrderable(false);
+            $column->SetDescription($this->RenderText('Datensatz erstellt von'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for created_date field
+            //
+            $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(false);
+            $column->SetDescription($this->RenderText('Erstellt am'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for updated_visa field
+            //
+            $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
+            $column->SetOrderable(false);
+            $column->SetDescription($this->RenderText('Abgeändert von'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for updated_date field
+            //
+            $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(false);
+            $column->SetDescription($this->RenderText('Abgäendert am'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+        }
+        
+        public function datei_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        
+        function GetCustomClientScript()
+        {
+            return ;
+        }
+        
+        function GetOnPageLoadedClientScript()
+        {
+            return ;
+        }
+        function zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            datei_anhang_delete($page, &$rowData, &$cancel, &$message, $tableName);
+        }
+        function zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            datei_anhang_insert($page, &$rowData, &$cancel, &$message, $tableName);
+        }
+    
+        public function GetPageDirection()
+        {
+            return null;
+        }
+    
+        protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
+        {
+            $column->SetShowSetToNullCheckBox(false);
+        }
+    
+        protected function CreateGrid()
+        {
+            $result = new Grid($this, $this->dataset, 'zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung');
+            $result->SetAllowDeleteSelected(false);
+            $result->SetUseFixedHeader(false);
+            
+            $result->SetShowLineNumbers(false);
+            
+            $result->SetHighlightRowAtHover(false);
+            $result->SetWidth('');
+            $result->BeforeDeleteRecord->AddListener('zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung' . '_' . 'BeforeDeleteRecord', $this);
+            $result->BeforeInsertRecord->AddListener('zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung' . '_' . 'BeforeInsertRecord', $this);
+            $this->AddFieldColumns($result);
+            $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for dateiname_voll field
+            //
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column->SetOrderable(false);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'dateiname_voll_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(false);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            return $result;
+        }
+    }
+    
+    
+    
+    // OnBeforePageExecute event handler
+    
+    
+    
+    class zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigungPage extends DetailPageEdit
+    {
+        protected function DoBeforeCreate()
+        {
+            $this->dataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`zutrittsberechtigung_anhang`');
+            $field = new IntegerField('id', null, null, true);
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('zutrittsberechtigung_id');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('datei');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('dateiname');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('dateierweiterung');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('dateiname_voll');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('mime_type');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('encoding');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $this->dataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $this->dataset->AddLookupField('zutrittsberechtigung_id', 'v_zutrittsberechtigung', new IntegerField('id'), new StringField('anzeige_name', 'zutrittsberechtigung_id_anzeige_name', 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung'), 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung');
+        }
+    
+        protected function CreatePageNavigator()
+        {
+            $result = new CompositePageNavigator($this);
+            
+            $partitionNavigator = new PageNavigator('pnav', $this, $this->dataset);
+            $partitionNavigator->SetRowsPerPage(100);
+            $result->AddPageNavigator($partitionNavigator);
+            
+            return $result;
+        }
+    
+        public function GetPageList()
+        {
+            return null;
+        }
+    
+        protected function CreateRssGenerator() {
+            return setupRSS($this, $this->dataset);
+        }
+    
+        protected function CreateGridSearchControl(Grid $grid)
+        {
+            $grid->UseFilter = true;
+            $grid->SearchControl = new SimpleSearch('zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigungssearch', $this->dataset,
+                array('id', 'zutrittsberechtigung_id_anzeige_name', 'datei', 'dateierweiterung', 'dateiname_voll', 'mime_type', 'encoding', 'beschreibung', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Zutrittsberechtigung'), $this->RenderText('Datei'), $this->RenderText('Dateierweiterung'), $this->RenderText('Dateiname Voll'), $this->RenderText('Mime Type'), $this->RenderText('Encoding'), $this->RenderText('Beschreibung'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array(
+                    '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
+                    '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
+                    '<' => $this->GetLocalizerCaptions()->GetMessageString('isLessThan'),
+                    '<=' => $this->GetLocalizerCaptions()->GetMessageString('isLessThanOrEqualsTo'),
+                    '>' => $this->GetLocalizerCaptions()->GetMessageString('isGreaterThan'),
+                    '>=' => $this->GetLocalizerCaptions()->GetMessageString('isGreaterThanOrEqualsTo'),
+                    'ILIKE' => $this->GetLocalizerCaptions()->GetMessageString('Like'),
+                    'STARTS' => $this->GetLocalizerCaptions()->GetMessageString('StartsWith'),
+                    'ENDS' => $this->GetLocalizerCaptions()->GetMessageString('EndsWith'),
+                    'CONTAINS' => $this->GetLocalizerCaptions()->GetMessageString('Contains')
+                    ), $this->GetLocalizerCaptions(), $this, 'CONTAINS'
+                );
+        }
+    
+        protected function CreateGridAdvancedSearchControl(Grid $grid)
+        {
+            $this->AdvancedSearchControl = new AdvancedSearchControl('zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigungasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
+            $this->AdvancedSearchControl->setTimerInterval(1000);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
+            
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_zutrittsberechtigung`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlamentarier_id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('nachname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('vorname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('zweiter_vorname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('funktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('partei_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('ALT_lobbyorganisation_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('datei', $this->RenderText('Datei')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateierweiterung', $this->RenderText('Dateierweiterung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateiname_voll', $this->RenderText('Dateiname Voll')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('mime_type', $this->RenderText('Mime Type')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('encoding', $this->RenderText('Encoding')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
+        }
+    
+        public function GetPageDirection()
+        {
+            return null;
+        }
+    
+        protected function AddOperationsColumns(Grid $grid)
+        {
+            $actionsBandName = 'actions';
+            $grid->AddBandToBegin($actionsBandName, $this->GetLocalizerCaptions()->GetMessageString('Actions'), true);
+            if ($this->GetSecurityInfo()->HasViewGrant())
+            {
+                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('View'), OPERATION_VIEW, $this->dataset);
+                $grid->AddViewColumn($column, $actionsBandName);
+                $column->SetImagePath('images/view_action.png');
+            }
+            if ($this->GetSecurityInfo()->HasEditGrant())
+            {
+                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Edit'), OPERATION_EDIT, $this->dataset);
+                $grid->AddViewColumn($column, $actionsBandName);
+                $column->SetImagePath('images/edit_action.png');
+                $column->OnShow->AddListener('ShowEditButtonHandler', $this);
+            }
+            if ($this->GetSecurityInfo()->HasDeleteGrant())
+            {
+                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Delete'), OPERATION_DELETE, $this->dataset);
+                $grid->AddViewColumn($column, $actionsBandName);
+                $column->SetImagePath('images/delete_action.png');
+                $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
+            $column->SetAdditionalAttribute("data-modal-delete", "true");
+            $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
+            }
+            if ($this->GetSecurityInfo()->HasAddGrant())
+            {
+                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Copy'), OPERATION_COPY, $this->dataset);
+                $grid->AddViewColumn($column, $actionsBandName);
+                $column->SetImagePath('images/copy_action.png');
+            }
+        }
+    
+        protected function AddFieldColumns(Grid $grid)
+        {
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Technischer Schlüssel des Zutrittsberechtigunganhangs'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for datei field
+            //
+            $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
+            
+            /* <inline edit column> */
+            //
+            // Edit column for datei field
+            //
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for datei field
+            //
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Datei'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for dateiname_voll field
+            //
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
+            $column->SetDescription($this->RenderText('Dateiname inkl. Erweiterung'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Beschreibung des Anhangs'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for created_visa field
+            //
+            $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datensatz erstellt von'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for created_date field
+            //
+            $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Erstellt am'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for updated_visa field
+            //
+            $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abgeändert von'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for updated_date field
+            //
+            $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abgäendert am'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+        }
+    
+        protected function AddSingleRecordViewColumns(Grid $grid)
+        {
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittssberechtigung.php?operation=edit&pk0=%zutrittsberechtigung_id%' , '_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for datei field
+            //
+            $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for dateierweiterung field
+            //
+            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for dateiname_voll field
+            //
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for mime_type field
+            //
+            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('mime_type_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for encoding field
+            //
+            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for created_visa field
+            //
+            $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for created_date field
+            //
+            $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for updated_visa field
+            //
+            $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for updated_date field
+            //
+            $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+        }
+    
+        protected function AddEditColumns(Grid $grid)
+        {
+            //
+            // Edit column for datei field
+            //
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for created_visa field
+            //
+            $editor = new TextEdit('created_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Created Visa', 'created_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for created_date field
+            //
+            $editor = new DateTimeEdit('created_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_visa field
+            //
+            $editor = new TextEdit('updated_visa_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for updated_date field
+            //
+            $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+        }
+    
+        protected function AddInsertColumns(Grid $grid)
+        {
+            //
+            // Edit column for zutrittsberechtigung_id field
+            //
+            $editor = new ComboBox('zutrittsberechtigung_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_zutrittsberechtigung`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('parlamentarier_id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('nachname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('vorname');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('zweiter_vorname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('funktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beruf');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('beruf_interessengruppe_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('partei_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('geschlecht');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('von');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('bis');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisierung_verschickt_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('autorisierung_verschickt_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('autorisiert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('autorisiert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('ALT_lobbyorganisation_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Zutrittsberechtigung', 
+                'zutrittsberechtigung_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for datei field
+            //
+            $editor = new ImageUploader('datei_edit');
+            $editor->SetShowImage(false);
+            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
+            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            if ($this->GetSecurityInfo()->HasAddGrant())
+            {
+                $grid->SetShowAddButton(true);
+                $grid->SetShowInlineAddButton(false);
+            }
+            else
+            {
+                $grid->SetShowInlineAddButton(false);
+                $grid->SetShowAddButton(false);
+            }
+        }
+    
+        protected function AddPrintColumns(Grid $grid)
+        {
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittssberechtigung.php?operation=edit&pk0=%zutrittsberechtigung_id%' , '_self');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for datei field
+            //
+            $column = new TextViewColumn('datei', 'Datei', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for dateierweiterung field
+            //
+            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for dateiname_voll field
+            //
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for mime_type field
+            //
+            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for encoding field
+            //
+            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for created_visa field
+            //
+            $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for created_date field
+            //
+            $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for updated_visa field
+            //
+            $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for updated_date field
+            //
+            $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+        }
+    
+        protected function AddExportColumns(Grid $grid)
+        {
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittssberechtigung.php?operation=edit&pk0=%zutrittsberechtigung_id%' , '_self');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for datei field
+            //
+            $column = new TextViewColumn('datei', 'Datei', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for dateierweiterung field
+            //
+            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for dateiname_voll field
+            //
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for mime_type field
+            //
+            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for encoding field
+            //
+            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for created_visa field
+            //
+            $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for created_date field
+            //
+            $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for updated_visa field
+            //
+            $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for updated_date field
+            //
+            $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+        }
+    
+        protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
+        {
+            $column->SetShowSetToNullCheckBox(false);
+    	$column->SetVariableContainer($this->GetColumnVariableContainer());
+        }
+    
+        public function datei_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        
+        function GetCustomClientScript()
+        {
+            return ;
+        }
+        
+        function GetOnPageLoadedClientScript()
+        {
+            return ;
+        }
+        function zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            datei_anhang_delete($page, &$rowData, &$cancel, &$message, $tableName);
+        }
+        function zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            datei_anhang_insert($page, &$rowData, &$cancel, &$message, $tableName);
+        }
+        public function datei_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        public function datei_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        public function ShowEditButtonHandler(&$show)
+        {
+            if ($this->GetRecordPermission() != null)
+                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
+        }
+        public function ShowDeleteButtonHandler(&$show)
+        {
+            if ($this->GetRecordPermission() != null)
+                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
+        }
+        
+        public function GetModalGridDeleteHandler() { return 'zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_modal_delete'; }
+        protected function GetEnableModalGridDelete() { return true; }
+    
+        protected function CreateGrid()
+        {
+            $result = new Grid($this, $this->dataset, 'zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung');
+            if ($this->GetSecurityInfo()->HasDeleteGrant())
+                $result->SetAllowDeleteSelected(true);
+            else
+                $result->SetAllowDeleteSelected(false);
+            ApplyCommonPageSettings($this, $result);
+            $result->SetUseImagesForActions(true);
+            $result->SetUseFixedHeader(false);
+            
+            $result->SetShowLineNumbers(false);
+            
+            $result->SetHighlightRowAtHover(false);
+            $result->SetWidth('');
+            $result->BeforeDeleteRecord->AddListener('zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung' . '_' . 'BeforeDeleteRecord', $this);
+            $result->BeforeInsertRecord->AddListener('zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung' . '_' . 'BeforeInsertRecord', $this);
+            $this->CreateGridSearchControl($result);
+            $this->CreateGridAdvancedSearchControl($result);
+            $this->AddOperationsColumns($result);
+            $this->AddFieldColumns($result);
+            $this->AddSingleRecordViewColumns($result);
+            $this->AddEditColumns($result);
+            $this->AddInsertColumns($result);
+            $this->AddPrintColumns($result);
+            $this->AddExportColumns($result);
+    
+            $this->SetShowPageList(true);
+            $this->SetHidePageListByDefault(false);
+            $this->SetExportToExcelAvailable(true);
+            $this->SetExportToWordAvailable(true);
+            $this->SetExportToXmlAvailable(true);
+            $this->SetExportToCsvAvailable(true);
+            $this->SetExportToPdfAvailable(false);
+            $this->SetPrinterFriendlyAvailable(true);
+            $this->SetSimpleSearchAvailable(true);
+            $this->SetAdvancedSearchAvailable(true);
+            $this->SetFilterRowAvailable(true);
+            $this->SetVisualEffectsEnabled(true);
+            $this->SetShowTopPageNavigator(true);
+            $this->SetShowBottomPageNavigator(true);
+    
+            //
+            // Http Handlers
+            //
+            $handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for dateiname_voll field
+            //
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'dateiname_voll_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for beschreibung field
+            //
+            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);$handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for dateiname_voll field
+            //
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'dateiname_voll_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for mime_type field
+            //
+            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mime_type_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            return $result;
+        }
+        
+        public function OpenAdvancedSearchByDefault()
+        {
+            return false;
+        }
+    
+        protected function DoGetGridHeader()
+        {
+            return '';
+        }    
+    }
+    
+    
+    
+    // OnBeforePageExecute event handler
+    
+    
+    
+    class v_zutrittsberechtigung_mandateDetailView1zutrittsberechtigungPage extends DetailPage
     {
         protected function DoBeforeCreate()
         {
@@ -1058,7 +2391,7 @@
     
         protected function CreateGrid()
         {
-            $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mandateDetailViewGrid0zutrittsberechtigung');
+            $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung');
             $result->SetAllowDeleteSelected(false);
             $result->SetUseFixedHeader(false);
             
@@ -1225,7 +2558,7 @@
     
     
     
-    class v_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigungPage extends DetailPageEdit
+    class v_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigungPage extends DetailPageEdit
     {
         protected function DoBeforeCreate()
         {
@@ -1317,7 +2650,7 @@
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
-            $grid->SearchControl = new SimpleSearch('v_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigungssearch', $this->dataset,
+            $grid->SearchControl = new SimpleSearch('v_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigungssearch', $this->dataset,
                 array('parlamentarier_id_anzeige_name', 'organisation_name', 'zutrittsberechtigung_name', 'funktion', 'id', 'zutrittsberechtigung_id', 'organisation_id', 'art', 'verguetung', 'beschreibung', 'von', 'bis', 'notizen', 'autorisiert_datum', 'autorisiert_visa', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
                 array($this->RenderText('Parlamentarier'), $this->RenderText('Organisation Name'), $this->RenderText('Zutrittsberechtigung Name'), $this->RenderText('Funktion'), $this->RenderText('Id'), $this->RenderText('Zutrittsberechtigung Id'), $this->RenderText('Organisation Id'), $this->RenderText('Art'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
@@ -1337,7 +2670,7 @@
     
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
-            $this->AdvancedSearchControl = new AdvancedSearchControl('v_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigungasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
+            $this->AdvancedSearchControl = new AdvancedSearchControl('v_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigungasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -3636,12 +4969,12 @@
                 $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
         }
         
-        public function GetModalGridDeleteHandler() { return 'v_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigung_modal_delete'; }
+        public function GetModalGridDeleteHandler() { return 'v_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigung_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
         {
-            $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mandateDetailEditGrid0zutrittsberechtigung');
+            $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
                 $result->SetAllowDeleteSelected(true);
             else
@@ -3885,7 +5218,7 @@
     
     
     
-    class mandatDetailView1zutrittsberechtigungPage extends DetailPage
+    class mandatDetailView2zutrittsberechtigungPage extends DetailPage
     {
         protected function DoBeforeCreate()
         {
@@ -4195,14 +5528,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -4278,14 +5614,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -4844,7 +6183,7 @@
     
         protected function CreateGrid()
         {
-            $result = new Grid($this, $this->dataset, 'mandatDetailViewGrid1zutrittsberechtigung');
+            $result = new Grid($this, $this->dataset, 'mandatDetailViewGrid2zutrittsberechtigung');
             $result->SetAllowDeleteSelected(false);
             $result->SetUseFixedHeader(false);
             
@@ -4922,7 +6261,7 @@
     
     
     
-    class mandatDetailEdit1zutrittsberechtigungPage extends DetailPageEdit
+    class mandatDetailEdit2zutrittsberechtigungPage extends DetailPageEdit
     {
         protected function DoBeforeCreate()
         {
@@ -5005,7 +6344,7 @@
         protected function CreateGridSearchControl(Grid $grid)
         {
             $grid->UseFilter = true;
-            $grid->SearchControl = new SimpleSearch('mandatDetailEdit1zutrittsberechtigungssearch', $this->dataset,
+            $grid->SearchControl = new SimpleSearch('mandatDetailEdit2zutrittsberechtigungssearch', $this->dataset,
                 array('id', 'zutrittsberechtigung_id_parlamentarier_id', 'organisation_id_anzeige_name', 'art', 'verguetung', 'beschreibung', 'von', 'bis', 'notizen', 'autorisiert_datum', 'autorisiert_visa', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
                 array($this->RenderText('Id'), $this->RenderText('Zutrittsberechtigung Id'), $this->RenderText('Organisation Id'), $this->RenderText('Art'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
@@ -5025,7 +6364,7 @@
     
         protected function CreateGridAdvancedSearchControl(Grid $grid)
         {
-            $this->AdvancedSearchControl = new AdvancedSearchControl('mandatDetailEdit1zutrittsberechtigungasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
+            $this->AdvancedSearchControl = new AdvancedSearchControl('mandatDetailEdit2zutrittsberechtigungasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             
@@ -5138,14 +6477,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -5480,14 +6822,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -5563,14 +6908,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -6370,14 +7718,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -6694,14 +8045,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -7188,12 +8542,12 @@
                 $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
         }
         
-        public function GetModalGridDeleteHandler() { return 'mandatDetailEdit1zutrittsberechtigung_modal_delete'; }
+        public function GetModalGridDeleteHandler() { return 'mandatDetailEdit2zutrittsberechtigung_modal_delete'; }
         protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
         {
-            $result = new Grid($this, $this->dataset, 'mandatDetailEditGrid1zutrittsberechtigung');
+            $result = new Grid($this, $this->dataset, 'mandatDetailEditGrid2zutrittsberechtigung');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
                 $result->SetAllowDeleteSelected(true);
             else
@@ -7450,6 +8804,8 @@
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Kommission</span>'), 'kommission.php', $this->RenderText('Kommission'), $currentPageCaption == $this->RenderText('<span class="entity">Kommission</span>')));
             if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Partei</span>'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('<span class="entity">Partei</span>')));
+            if (GetCurrentUserGrantForDataSource('fraktion')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Fraktion</span>'), 'fraktion.php', $this->RenderText('Fraktion'), $currentPageCaption == $this->RenderText('<span class="entity">Fraktion</span>')));
             if (GetCurrentUserGrantForDataSource('v_parlamentarier_authorisierungs_email')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="view">Parlamentarier Email</span>'), 'v_parlamentarier_authorisierungs_email.php', $this->RenderText('Parlamentarier Email'), $currentPageCaption == $this->RenderText('<span class="view">Parlamentarier Email</span>')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
@@ -7619,6 +8975,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -7671,6 +9030,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
             $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
@@ -7749,14 +9110,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -7829,21 +9193,30 @@
     
         protected function AddFieldColumns(Grid $grid)
         {
+            if (GetCurrentUserGrantForDataSource('zutrittsberechtigung.zutrittsberechtigung_anhang')->HasViewGrant())
+            {
+              //
+            // View column for zutrittsberechtigung_anhangDetailView0zutrittsberechtigung detail
+            //
+            $column = new DetailColumn(array('id'), 'detail0zutrittsberechtigung', 'zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_handler', 'zutrittsberechtigung_anhangDetailView0zutrittsberechtigung_handler', $this->dataset, 'Zutrittsberechtigung Anhang', $this->RenderText('Zutrittsberechtigung Anhang'));
+              $grid->AddViewColumn($column);
+            }
+            
             if (GetCurrentUserGrantForDataSource('zutrittsberechtigung.v_zutrittsberechtigung_mandate')->HasViewGrant())
             {
               //
-            // View column for v_zutrittsberechtigung_mandateDetailView0zutrittsberechtigung detail
+            // View column for v_zutrittsberechtigung_mandateDetailView1zutrittsberechtigung detail
             //
-            $column = new DetailColumn(array('id'), 'detail0zutrittsberechtigung', 'v_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigung_handler', 'v_zutrittsberechtigung_mandateDetailView0zutrittsberechtigung_handler', $this->dataset, 'V Zutrittsberechtigung Mandate', $this->RenderText('V Zutrittsberechtigung Mandate'));
+            $column = new DetailColumn(array('id'), 'detail1zutrittsberechtigung', 'v_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigung_handler', 'v_zutrittsberechtigung_mandateDetailView1zutrittsberechtigung_handler', $this->dataset, 'V Zutrittsberechtigung Mandate', $this->RenderText('V Zutrittsberechtigung Mandate'));
               $grid->AddViewColumn($column);
             }
             
             if (GetCurrentUserGrantForDataSource('zutrittsberechtigung.mandat')->HasViewGrant())
             {
               //
-            // View column for mandatDetailView1zutrittsberechtigung detail
+            // View column for mandatDetailView2zutrittsberechtigung detail
             //
-            $column = new DetailColumn(array('id'), 'detail1zutrittsberechtigung', 'mandatDetailEdit1zutrittsberechtigung_handler', 'mandatDetailView1zutrittsberechtigung_handler', $this->dataset, 'Mandat', $this->RenderText('Mandat'));
+            $column = new DetailColumn(array('id'), 'detail2zutrittsberechtigung', 'mandatDetailEdit2zutrittsberechtigung_handler', 'mandatDetailView2zutrittsberechtigung_handler', $this->dataset, 'Mandat', $this->RenderText('Mandat'));
               $grid->AddViewColumn($column);
             }
             
@@ -8285,6 +9658,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8342,6 +9718,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8419,6 +9798,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
@@ -8481,6 +9862,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
             $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
@@ -9007,14 +10390,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -9607,6 +10993,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -9671,6 +11060,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
             $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
@@ -9917,14 +11308,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -10201,6 +11595,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -10265,6 +11662,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
             $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
@@ -10856,9 +12255,9 @@
     		$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
     
-        function CreateMasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigungGrid()
+        function CreateMasterDetailRecordGridForzutrittsberechtigung_anhangDetailEdit0zutrittsberechtigungGrid()
         {
-            $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigung');
+            $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForzutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung');
             $result->SetAllowDeleteSelected(false);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
@@ -11389,9 +12788,542 @@
             
             return $result;
         }
-        function CreateMasterDetailRecordGridFormandatDetailEdit1zutrittsberechtigungGrid()
+        function CreateMasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigungGrid()
         {
-            $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridFormandatDetailEdit1zutrittsberechtigung');
+            $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigung');
+            $result->SetAllowDeleteSelected(false);
+            $result->SetShowFilterBuilder(false);
+            $result->SetAdvancedSearchAvailable(false);
+            $result->SetFilterRowAvailable(false);
+            $result->SetShowUpdateLink(false);
+            $result->SetEnabledInlineEditing(false);
+            $result->SetName('master_grid');
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Technischer Schlüssel der Zugangsberechtigung'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
+            $column->SetDescription($this->RenderText('Fremdschlüssel zu Parlamentarier'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for nachname field
+            //
+            $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column = new DivTagViewColumnDecorator($column);
+            $column->Bold = true;
+            $column->SetDescription($this->RenderText('Nachname des berechtigten Persion'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for vorname field
+            //
+            $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Vorname der berechtigten Person'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for funktion field
+            //
+            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('funktion_handler');
+            $column->SetDescription($this->RenderText('Funktion der zugangsberechtigen Person.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for beruf field
+            //
+            $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
+            $column->SetDescription($this->RenderText('Fremschlüssel zur Interessengruppe für den Beruf'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for abkuerzung field
+            //
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
+            $column->SetDescription($this->RenderText('Fremdschlüssel Partei. Parteimitgliedschaft der zutrittsberechtigten Person.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Geschlecht des Parlamentariers, M=Mann, F=Frau'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for email field
+            //
+            $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('email_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
+            $column->SetDescription($this->RenderText('Kontakt E-Mail-Adresse der zutrittsberechtigen Person'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for homepage field
+            //
+            $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
+            $column->SetDescription($this->RenderText('Homepage der zutrittsberechtigen Person'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Beginn der Zugangsberechtigung, leer (NULL) = unbekannt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Ende der Zugangsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for notizen field
+            //
+            $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetReplaceLFByBR(true);
+            $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe abgeschlossen hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Kürzel der Person, welche die Eingabe kontrolliert hat.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt durch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for freigabe_visa field
+            //
+            $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Freigabe von (Freigabe = Daten sind fertig)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for freigabe_datum field
+            //
+            $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Freigabedatum (Freigabe = Daten sind fertig)'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for name_de field
+            //
+            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Wird später entfernt. Fremschlüssel zur Lobbyorganisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for created_visa field
+            //
+            $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Erstellt von'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for created_date field
+            //
+            $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Erstellt am'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for updated_visa field
+            //
+            $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abgeändert von'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for updated_date field
+            //
+            $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abgeändert am'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for zweiter_vorname field
+            //
+            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Zweiter Vorname der zutrittsberechtigten Person'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for nachname field
+            //
+            $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for vorname field
+            //
+            $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for funktion field
+            //
+            $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for beruf field
+            //
+            $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for name field
+            //
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for abkuerzung field
+            //
+            $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for email field
+            //
+            $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for homepage field
+            //
+            $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for von field
+            //
+            $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for bis field
+            //
+            $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for notizen field
+            //
+            $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_visa field
+            //
+            $column = new TextViewColumn('eingabe_abgeschlossen_visa', 'Eingabe Abgeschlossen Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for eingabe_abgeschlossen_datum field
+            //
+            $column = new DateTimeViewColumn('eingabe_abgeschlossen_datum', 'Eingabe Abgeschlossen Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_visa field
+            //
+            $column = new TextViewColumn('kontrolliert_visa', 'Kontrolliert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kontrolliert_datum field
+            //
+            $column = new DateTimeViewColumn('kontrolliert_datum', 'Kontrolliert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_visa field
+            //
+            $column = new TextViewColumn('autorisierung_verschickt_visa', 'Autorisierung Verschickt Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisierung_verschickt_datum field
+            //
+            $column = new DateTimeViewColumn('autorisierung_verschickt_datum', 'Autorisierung Verschickt Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_visa field
+            //
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for freigabe_visa field
+            //
+            $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for freigabe_datum field
+            //
+            $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for name_de field
+            //
+            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for created_visa field
+            //
+            $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for created_date field
+            //
+            $column = new DateTimeViewColumn('created_date', 'Created Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for updated_visa field
+            //
+            $column = new TextViewColumn('updated_visa', 'Updated Visa', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for updated_date field
+            //
+            $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zweiter_vorname field
+            //
+            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            return $result;
+        }
+        function CreateMasterDetailRecordGridFormandatDetailEdit2zutrittsberechtigungGrid()
+        {
+            $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridFormandatDetailEdit2zutrittsberechtigung');
             $result->SetAllowDeleteSelected(false);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
@@ -12036,35 +13968,50 @@
             //
             // Http Handlers
             //
-            $pageView = new v_zutrittsberechtigung_mandateDetailView0zutrittsberechtigungPage($this, 'V Zutrittsberechtigung Mandate', 'V Zutrittsberechtigung Mandate', array('zutrittsberechtigung_id'), GetCurrentUserGrantForDataSource('zutrittsberechtigung.v_zutrittsberechtigung_mandate'), 'UTF-8', 20, 'v_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigung_handler');
+            $pageView = new zutrittsberechtigung_anhangDetailView0zutrittsberechtigungPage($this, 'Zutrittsberechtigung Anhang', 'Zutrittsberechtigung Anhang', array('zutrittsberechtigung_id'), GetCurrentUserGrantForDataSource('zutrittsberechtigung.zutrittsberechtigung_anhang'), 'UTF-8', 20, 'zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_handler');
+            
+            $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('zutrittsberechtigung.zutrittsberechtigung_anhang'));
+            $handler = new PageHTTPHandler('zutrittsberechtigung_anhangDetailView0zutrittsberechtigung_handler', $pageView);
+            GetApplication()->RegisterHTTPHandler($handler);
+            $pageEdit = new zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigungPage($this, array('zutrittsberechtigung_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForzutrittsberechtigung_anhangDetailEdit0zutrittsberechtigungGrid(), $this->dataset, GetCurrentUserGrantForDataSource('zutrittsberechtigung.zutrittsberechtigung_anhang'), 'UTF-8');
+            
+            $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('zutrittsberechtigung.zutrittsberechtigung_anhang'));
+            $pageEdit->SetShortCaption('Zutrittsberechtigung Anhang');
+            $pageEdit->SetHeader(GetPagesHeader());
+            $pageEdit->SetFooter(GetPagesFooter());
+            $pageEdit->SetCaption('Zutrittsberechtigung Anhang');
+            $pageEdit->SetHttpHandlerName('zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_handler');
+            $handler = new PageHTTPHandler('zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_handler', $pageEdit);
+            GetApplication()->RegisterHTTPHandler($handler);
+            $pageView = new v_zutrittsberechtigung_mandateDetailView1zutrittsberechtigungPage($this, 'V Zutrittsberechtigung Mandate', 'V Zutrittsberechtigung Mandate', array('zutrittsberechtigung_id'), GetCurrentUserGrantForDataSource('zutrittsberechtigung.v_zutrittsberechtigung_mandate'), 'UTF-8', 20, 'v_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigung_handler');
             
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('zutrittsberechtigung.v_zutrittsberechtigung_mandate'));
-            $handler = new PageHTTPHandler('v_zutrittsberechtigung_mandateDetailView0zutrittsberechtigung_handler', $pageView);
+            $handler = new PageHTTPHandler('v_zutrittsberechtigung_mandateDetailView1zutrittsberechtigung_handler', $pageView);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageEdit = new v_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigungPage($this, array('zutrittsberechtigung_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigungGrid(), $this->dataset, GetCurrentUserGrantForDataSource('zutrittsberechtigung.v_zutrittsberechtigung_mandate'), 'UTF-8');
+            $pageEdit = new v_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigungPage($this, array('zutrittsberechtigung_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigungGrid(), $this->dataset, GetCurrentUserGrantForDataSource('zutrittsberechtigung.v_zutrittsberechtigung_mandate'), 'UTF-8');
             
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('zutrittsberechtigung.v_zutrittsberechtigung_mandate'));
             $pageEdit->SetShortCaption('V Zutrittsberechtigung Mandate');
             $pageEdit->SetHeader(GetPagesHeader());
             $pageEdit->SetFooter(GetPagesFooter());
             $pageEdit->SetCaption('V Zutrittsberechtigung Mandate');
-            $pageEdit->SetHttpHandlerName('v_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigung_handler');
-            $handler = new PageHTTPHandler('v_zutrittsberechtigung_mandateDetailEdit0zutrittsberechtigung_handler', $pageEdit);
+            $pageEdit->SetHttpHandlerName('v_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigung_handler');
+            $handler = new PageHTTPHandler('v_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigung_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageView = new mandatDetailView1zutrittsberechtigungPage($this, 'Mandat', 'Mandat', array('zutrittsberechtigung_id'), GetCurrentUserGrantForDataSource('zutrittsberechtigung.mandat'), 'UTF-8', 20, 'mandatDetailEdit1zutrittsberechtigung_handler');
+            $pageView = new mandatDetailView2zutrittsberechtigungPage($this, 'Mandat', 'Mandat', array('zutrittsberechtigung_id'), GetCurrentUserGrantForDataSource('zutrittsberechtigung.mandat'), 'UTF-8', 20, 'mandatDetailEdit2zutrittsberechtigung_handler');
             
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('zutrittsberechtigung.mandat'));
-            $handler = new PageHTTPHandler('mandatDetailView1zutrittsberechtigung_handler', $pageView);
+            $handler = new PageHTTPHandler('mandatDetailView2zutrittsberechtigung_handler', $pageView);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageEdit = new mandatDetailEdit1zutrittsberechtigungPage($this, array('zutrittsberechtigung_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridFormandatDetailEdit1zutrittsberechtigungGrid(), $this->dataset, GetCurrentUserGrantForDataSource('zutrittsberechtigung.mandat'), 'UTF-8');
+            $pageEdit = new mandatDetailEdit2zutrittsberechtigungPage($this, array('zutrittsberechtigung_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridFormandatDetailEdit2zutrittsberechtigungGrid(), $this->dataset, GetCurrentUserGrantForDataSource('zutrittsberechtigung.mandat'), 'UTF-8');
             
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('zutrittsberechtigung.mandat'));
             $pageEdit->SetShortCaption('Mandat');
             $pageEdit->SetHeader(GetPagesHeader());
             $pageEdit->SetFooter(GetPagesFooter());
             $pageEdit->SetCaption('Mandat');
-            $pageEdit->SetHttpHandlerName('mandatDetailEdit1zutrittsberechtigung_handler');
-            $handler = new PageHTTPHandler('mandatDetailEdit1zutrittsberechtigung_handler', $pageEdit);
+            $pageEdit->SetHttpHandlerName('mandatDetailEdit2zutrittsberechtigung_handler');
+            $handler = new PageHTTPHandler('mandatDetailEdit2zutrittsberechtigung_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),

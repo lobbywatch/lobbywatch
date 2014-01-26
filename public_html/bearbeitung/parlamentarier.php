@@ -140,21 +140,6 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for dateiname_voll field
-            //
-            $editor = new TextEdit('dateiname_voll_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Dateiname', 'dateiname_voll', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
             $column->SetDescription($this->RenderText('Dateiname inkl. Erweiterung'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -319,29 +304,11 @@
         }
         function parlamentarier_anhangDetailViewGrid0parlamentarier_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            $target = $rowData['datei'];
-            $result = -2;
-            if (FileUtils::FileExists($target))
-               $result = FileUtils::RemoveFile($target);
-            
-            $message = "Delete file '$target'. Result $result";
+            datei_anhang_delete($page, &$rowData, &$cancel, &$message, $tableName);
         }
         function parlamentarier_anhangDetailViewGrid0parlamentarier_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            $file = $rowData['datei'];
-            
-            $path_parts = pathinfo($file);
-            
-            $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-            $finfo_encoding = new finfo(FILEINFO_MIME_ENCODING); // return mime encoding
-            
-            $rowData['dateiname'] = $path_parts['filename'];
-            if (isset($path_parts['extension'])) {
-               $rowData['dateierweiterung'] = $path_parts['extension'];
-            }
-            $rowData['dateiname_voll'] = $path_parts['basename'];
-            $rowData['mime_type'] = $finfo_mime->file($file);
-            $rowData['encoding'] = $finfo_encoding->file($file);
+            datei_anhang_insert($page, &$rowData, &$cancel, &$message, $tableName);
         }
     
         public function GetPageDirection()
@@ -374,21 +341,6 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(false);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for dateiname_voll field
-            //
-            $editor = new TextEdit('dateiname_voll_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Dateiname', 'dateiname_voll', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'dateiname_voll_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -751,21 +703,6 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for dateiname_voll field
-            //
-            $editor = new TextEdit('dateiname_voll_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Dateiname', 'dateiname_voll', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
             $column->SetDescription($this->RenderText('Dateiname inkl. Erweiterung'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1494,29 +1431,11 @@
         }
         function parlamentarier_anhangDetailEditGrid0parlamentarier_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            $target = $rowData['datei'];
-            $result = -2;
-            if (FileUtils::FileExists($target))
-               $result = FileUtils::RemoveFile($target);
-            
-            $message = "Delete file '$target'. Result $result";
+            datei_anhang_delete($page, &$rowData, &$cancel, &$message, $tableName);
         }
         function parlamentarier_anhangDetailEditGrid0parlamentarier_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
-            $file = $rowData['datei'];
-            
-            $path_parts = pathinfo($file);
-            
-            $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
-            $finfo_encoding = new finfo(FILEINFO_MIME_ENCODING); // return mime encoding
-            
-            $rowData['dateiname'] = $path_parts['filename'];
-            if (isset($path_parts['extension'])) {
-               $rowData['dateierweiterung'] = $path_parts['extension'];
-            }
-            $rowData['dateiname_voll'] = $path_parts['basename'];
-            $rowData['mime_type'] = $finfo_mime->file($file);
-            $rowData['encoding'] = $finfo_encoding->file($file);
+            datei_anhang_insert($page, &$rowData, &$cancel, &$message, $tableName);
         }
         public function datei_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
@@ -1616,21 +1535,6 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for dateiname_voll field
-            //
-            $editor = new TextEdit('dateiname_voll_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Dateiname', 'dateiname_voll', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'dateiname_voll_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -2047,14 +1951,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -2130,14 +2037,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -2889,14 +2799,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -3348,14 +3261,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -3431,14 +3347,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -4166,14 +4085,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -4566,14 +4488,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -5844,14 +5769,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -5926,14 +5854,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -6983,14 +6914,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -7453,14 +7387,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -7535,14 +7472,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -8526,14 +8466,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -9017,14 +8960,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -12239,14 +12185,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -12322,14 +12271,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -12939,14 +12891,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -13252,14 +13207,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -13335,14 +13293,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -13887,14 +13848,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -14122,14 +14086,17 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -18715,6 +18682,8 @@
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Kommission</span>'), 'kommission.php', $this->RenderText('Kommission'), $currentPageCaption == $this->RenderText('<span class="entity">Kommission</span>')));
             if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Partei</span>'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('<span class="entity">Partei</span>')));
+            if (GetCurrentUserGrantForDataSource('fraktion')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Fraktion</span>'), 'fraktion.php', $this->RenderText('Fraktion'), $currentPageCaption == $this->RenderText('<span class="entity">Fraktion</span>')));
             if (GetCurrentUserGrantForDataSource('v_parlamentarier_authorisierungs_email')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="view">Parlamentarier Email</span>'), 'v_parlamentarier_authorisierungs_email.php', $this->RenderText('Parlamentarier Email'), $currentPageCaption == $this->RenderText('<span class="view">Parlamentarier Email</span>')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
@@ -18780,6 +18749,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
             $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
@@ -19254,6 +19225,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
@@ -19316,6 +19289,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
             $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
@@ -21034,6 +21009,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
@@ -21662,6 +21639,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
             $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);

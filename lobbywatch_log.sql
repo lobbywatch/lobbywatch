@@ -91,8 +91,15 @@ BEGIN
    INSERT INTO `partei_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `partei`;
 
+   INSERT INTO `fraktion_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `fraktion`;
+
    INSERT INTO `zutrittsberechtigung_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung`;
+
+   INSERT INTO `zutrittsberechtigung_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung_anhang`;
+
 END
 //
 delimiter ;
@@ -714,6 +721,24 @@ ALTER TABLE `partei_log`
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_partei_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
+
+DROP TABLE IF EXISTS `fraktion_log`;
+CREATE TABLE IF NOT EXISTS `fraktion_log` LIKE `fraktion`;
+ALTER TABLE `fraktion_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP INDEX `fraktion_abkuerzung_unique`,
+  DROP INDEX `fraktion_name_unique`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_fraktion_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
 -- --------------------------------------------------------
 
 --
@@ -795,6 +820,22 @@ ALTER TABLE `zutrittsberechtigung_log`
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_zutrittsberechtigung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+
+DROP TABLE IF EXISTS `zutrittsberechtigung_anhang_log`;
+CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang_log` LIKE `zutrittsberechtigung_anhang`;
+ALTER TABLE `zutrittsberechtigung_anhang_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_zutrittsberechtigung_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung`:
@@ -1483,6 +1524,59 @@ end
 //
 delimiter ;
 
+-- fraktion triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_fraktion_log_ins`;
+delimiter //
+create trigger `trg_fraktion_log_ins` after insert on `fraktion`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `fraktion_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `fraktion` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_fraktion_log_upd`;
+delimiter //
+create trigger `trg_fraktion_log_upd` after update on `fraktion`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `fraktion_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `fraktion` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_fraktion_log_del_before`;
+delimiter //
+create trigger `trg_fraktion_log_del_before` before delete on `fraktion`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `fraktion_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `fraktion` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_fraktion_log_del_after`;
+delimiter //
+create trigger `trg_fraktion_log_del_after` after delete on `fraktion`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `fraktion_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
 -- zutrittsberechtigung triggers
 
 -- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
@@ -1530,6 +1624,59 @@ for each row
 thisTrigger: begin
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   UPDATE `zutrittsberechtigung_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- zutrittsberechtigung_anhang  triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_zutrittsberechtigung_anhang_log_ins`;
+delimiter //
+create trigger `trg_zutrittsberechtigung_anhang_log_ins` after insert on `zutrittsberechtigung_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zutrittsberechtigung_anhang_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `zutrittsberechtigung_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_zutrittsberechtigung_anhang_log_upd`;
+delimiter //
+create trigger `trg_zutrittsberechtigung_anhang_log_upd` after update on `zutrittsberechtigung_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zutrittsberechtigung_anhang_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `zutrittsberechtigung_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_zutrittsberechtigung_anhang_log_del_before`;
+delimiter //
+create trigger `trg_zutrittsberechtigung_anhang_log_del_before` before delete on `zutrittsberechtigung_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zutrittsberechtigung_anhang_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `zutrittsberechtigung_anhang` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_zutrittsberechtigung_anhang_log_del_after`;
+delimiter //
+create trigger `trg_zutrittsberechtigung_anhang_log_del_after` after delete on `zutrittsberechtigung_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `zutrittsberechtigung_anhang_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end

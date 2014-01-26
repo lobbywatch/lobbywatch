@@ -66,14 +66,17 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $this->dataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $this->dataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, false);
@@ -631,39 +634,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for url field
-            //
-            $column = new TextViewColumn('url', 'Url', $this->dataset);
-            $column->SetOrderable(false);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('url_handler');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for url field
-            //
-            $editor = new TextAreaEdit('url_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for url field
-            //
-            $editor = new TextAreaEdit('url_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Link zur Webseite'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -1107,35 +1077,6 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'ort_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for url field
-            //
-            $column = new TextViewColumn('url', 'Url', $this->dataset);
-            $column->SetOrderable(false);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for url field
-            //
-            $editor = new TextAreaEdit('url_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for url field
-            //
-            $editor = new TextAreaEdit('url_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'url_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -1235,14 +1176,17 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe2_id');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('interessengruppe3_id');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $this->dataset->AddField($field, false);
-            $field = new StringField('url');
+            $field = new StringField('homepage');
             $this->dataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, false);
@@ -1299,8 +1243,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationDetailEdit0interessengruppessearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'typ', 'vernehmlassung', 'interessengruppe_id_name', 'branche_id_name', 'url', 'beschreibung', 'ALT_parlam_verbindung', 'notizen', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe Id'), $this->RenderText('Branche Id'), $this->RenderText('Url'), $this->RenderText('Beschreibung'), $this->RenderText('ALT Parlam Verbindung'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'typ', 'vernehmlassung', 'interessengruppe_id_name', 'branche_id_name', 'beschreibung', 'ALT_parlam_verbindung', 'notizen', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe Id'), $this->RenderText('Branche Id'), $this->RenderText('Beschreibung'), $this->RenderText('ALT Parlam Verbindung'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -1415,7 +1359,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche Id'), $lookupDataset, 'id', 'name', false));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('url', $this->RenderText('Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_parlam_verbindung', $this->RenderText('ALT Parlam Verbindung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
@@ -1990,39 +1933,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for url field
-            //
-            $column = new TextViewColumn('url', 'Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('url_handler');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for url field
-            //
-            $editor = new TextAreaEdit('url_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for url field
-            //
-            $editor = new TextAreaEdit('url_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Link zur Webseite'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -2397,15 +2307,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for url field
-            //
-            $column = new TextViewColumn('url', 'Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('url_handler');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -2661,15 +2562,6 @@
                 'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for url field
-            //
-            $editor = new TextAreaEdit('url_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2962,15 +2854,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for url field
-            //
-            $editor = new TextAreaEdit('url_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
@@ -3146,13 +3029,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for url field
-            //
-            $column = new TextViewColumn('url', 'Url', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -3281,13 +3157,6 @@
             // View column for name field
             //
             $column = new TextViewColumn('branche_id_name', 'Branche Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for url field
-            //
-            $column = new TextViewColumn('url', 'Url', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -3542,35 +3411,6 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'ort_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for url field
-            //
-            $column = new TextViewColumn('url', 'Url', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for url field
-            //
-            $editor = new TextAreaEdit('url_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for url field
-            //
-            $editor = new TextAreaEdit('url_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Url', 'url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'url_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -3656,13 +3496,6 @@
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'ort_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for url field
-            //
-            $column = new TextViewColumn('url', 'Url', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'url_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -4079,6 +3912,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
@@ -4139,6 +3974,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
             $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
@@ -5328,6 +5165,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
@@ -5728,6 +5567,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
@@ -5788,6 +5629,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
             $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
@@ -6786,6 +6629,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
@@ -7147,6 +6992,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
             $lookupDataset->AddField($field, false);
             $field = new DateField('gruendung');
             $lookupDataset->AddField($field, false);
@@ -8206,7 +8053,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('branche_id', 'v_branche', new IntegerField('id'), new StringField('name', 'branche_id_name', 'branche_id_name_v_branche'), 'branche_id_name_v_branche');
+            $this->dataset->AddLookupField('branche_id', 'v_branche', new IntegerField('id'), new StringField('anzeige_name', 'branche_id_anzeige_name', 'branche_id_anzeige_name_v_branche'), 'branche_id_anzeige_name_v_branche');
         }
     
         protected function CreatePageNavigator()
@@ -8253,6 +8100,8 @@
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Kommission</span>'), 'kommission.php', $this->RenderText('Kommission'), $currentPageCaption == $this->RenderText('<span class="entity">Kommission</span>')));
             if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Partei</span>'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('<span class="entity">Partei</span>')));
+            if (GetCurrentUserGrantForDataSource('fraktion')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Fraktion</span>'), 'fraktion.php', $this->RenderText('Fraktion'), $currentPageCaption == $this->RenderText('<span class="entity">Fraktion</span>')));
             if (GetCurrentUserGrantForDataSource('v_parlamentarier_authorisierungs_email')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="view">Parlamentarier Email</span>'), 'v_parlamentarier_authorisierungs_email.php', $this->RenderText('Parlamentarier Email'), $currentPageCaption == $this->RenderText('<span class="view">Parlamentarier Email</span>')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
@@ -8277,7 +8126,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessengruppessearch', $this->dataset,
-                array('id', 'name', 'branche_id_name', 'beschreibung', 'notizen'),
+                array('id', 'name', 'branche_id_anzeige_name', 'beschreibung', 'notizen'),
                 array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Branche'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -8305,6 +8154,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8343,7 +8195,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
@@ -8463,9 +8315,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -8477,6 +8329,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8515,12 +8370,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Branche', 
                 'branche_id', 
                 $editor, 
-                $this->dataset, 'id', 'name', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8536,6 +8391,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -8574,12 +8432,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Branche', 
                 'branche_id', 
                 $editor, 
-                $this->dataset, 'id', 'name', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8909,9 +8767,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -9034,6 +8892,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -9072,12 +8933,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Branche', 
                 'branche_id', 
                 $editor, 
-                $this->dataset, 'id', 'name', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -9237,6 +9098,9 @@
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -9275,12 +9139,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Branche', 
                 'branche_id', 
                 $editor, 
-                $this->dataset, 'id', 'name', $lookupDataset);
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -9333,9 +9197,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -9447,9 +9311,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -9588,9 +9452,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche'));
@@ -9731,9 +9595,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -9862,9 +9726,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Branche'));
@@ -10005,9 +9869,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for name field
+            // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
+            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
             $result->AddPrintColumn($column);

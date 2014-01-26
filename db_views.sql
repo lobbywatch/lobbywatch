@@ -132,6 +132,19 @@ CREATE OR REPLACE VIEW `v_last_updated_parlamentarier_anhang` AS
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
+CREATE OR REPLACE VIEW `v_last_updated_zutrittsberechtigung_anhang` AS
+  (SELECT
+  'zutrittsberechtigung_anhang' table_name,
+  'Zutrittsberechtigunganhang' name,
+  (select count(*) from `zutrittsberechtigung_anhang`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `zutrittsberechtigung_anhang` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
 CREATE OR REPLACE VIEW `v_last_updated_partei` AS
   (SELECT
   'partei' table_name,
@@ -142,6 +155,19 @@ CREATE OR REPLACE VIEW `v_last_updated_partei` AS
   t.id last_updated_id
   FROM
   `partei` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_fraktion` AS
+  (SELECT
+  'fraktion' table_name,
+  'Fraktion' name,
+  (select count(*) from `fraktion`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `fraktion` t
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
@@ -179,7 +205,11 @@ SELECT * FROM v_last_updated_parlamentarier
 UNION
 SELECT * FROM v_last_updated_parlamentarier_anhang
 UNION
+SELECT * FROM v_last_updated_zutrittsberechtigung_anhang
+UNION
 SELECT * FROM v_last_updated_partei
+UNION
+SELECT * FROM v_last_updated_fraktion
 UNION
 SELECT * FROM v_last_updated_zutrittsberechtigung;
 
@@ -195,15 +225,17 @@ CREATE OR REPLACE VIEW `v_kommission` AS SELECT CONCAT(t.name, ' (', t.abkuerzun
 
 CREATE OR REPLACE VIEW `v_partei` AS SELECT CONCAT(t.name, ' (', t.abkuerzung, ')') AS anzeige_name, t.* FROM `partei` t;
 
+CREATE OR REPLACE VIEW `v_fraktion` AS SELECT CONCAT(t.name, ' (', t.abkuerzung, ')') AS anzeige_name, t.* FROM `fraktion` t;
+
 CREATE OR REPLACE VIEW `v_interessenbindung` AS SELECT t.* FROM `interessenbindung` t;
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung` AS SELECT CONCAT(t.nachname, ', ', t.vorname) AS anzeige_name, CONCAT(t.vorname, ' ', t.nachname) AS name, t.* FROM `zutrittsberechtigung` t;
 
 CREATE OR REPLACE VIEW `v_organisation` AS SELECT CONCAT_WS('; ', t.name_de , t.name_fr, t.name_it) AS anzeige_name, CONCAT_WS('; ', t.name_de , t.name_fr, t.name_it) AS name, t.* FROM `organisation` t;
 
-CREATE OR REPLACE VIEW `v_interessengruppe` AS SELECT t.* FROM `interessengruppe` t;
+CREATE OR REPLACE VIEW `v_interessengruppe` AS SELECT CONCAT(t.name) AS anzeige_name, t.* FROM `interessengruppe` t;
 
-CREATE OR REPLACE VIEW `v_branche` AS SELECT t.* FROM `branche` t;
+CREATE OR REPLACE VIEW `v_branche` AS SELECT CONCAT(t.name) AS anzeige_name,  t.* FROM `branche` t;
 
 CREATE OR REPLACE VIEW `v_mandat` AS SELECT t.* FROM `mandat` t;
 
@@ -212,6 +244,8 @@ CREATE OR REPLACE VIEW `v_in_kommission` AS SELECT t.* FROM `in_kommission` t;
 CREATE OR REPLACE VIEW `v_organisation_beziehung` AS SELECT t.* FROM `organisation_beziehung` t;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS SELECT t.parlamentarier_id as parlamentarier_id2, t.* FROM `parlamentarier_anhang` t;
+
+CREATE OR REPLACE VIEW `v_zutrittsberechtigung_anhang` AS SELECT t.zutrittsberechtigung_id as zutrittsberechtigung_id2, t.* FROM `zutrittsberechtigung_anhang` t;
 
 CREATE OR REPLACE VIEW `v_user` AS SELECT t.* FROM `user` t;
 

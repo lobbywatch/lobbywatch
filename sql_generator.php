@@ -26,7 +26,9 @@ $tables = array(
 'parlamentarier' => 'Parlamentarier',
 'parlamentarier_anhang' => 'Parlamentarieranhang',
 'partei' => 'Partei',
-'zutrittsberechtigung' => 'Zutrittsberechtigung'
+'fraktion' => 'Fraktion',
+'zutrittsberechtigung' => 'Zutrittsberechtigung',
+'zutrittsberechtigung_anhang' => 'Zutrittsberechtigunganhang',
 );
 
 
