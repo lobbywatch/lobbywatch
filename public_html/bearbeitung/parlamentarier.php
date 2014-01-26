@@ -18785,6 +18785,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -18939,6 +18941,8 @@
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -19307,6 +19311,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -19371,6 +19377,8 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -20665,6 +20673,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('bis');
@@ -20725,6 +20735,8 @@
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -21230,6 +21242,8 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -21768,6 +21782,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('bis');
@@ -21920,6 +21936,8 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -22268,6 +22286,8 @@
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('position');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);

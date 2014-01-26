@@ -225,7 +225,7 @@ CREATE OR REPLACE VIEW `v_kommission` AS SELECT CONCAT(t.name, ' (', t.abkuerzun
 
 CREATE OR REPLACE VIEW `v_partei` AS SELECT CONCAT(t.name, ' (', t.abkuerzung, ')') AS anzeige_name, t.* FROM `partei` t;
 
-CREATE OR REPLACE VIEW `v_fraktion` AS SELECT CONCAT(t.name, ' (', t.abkuerzung, ')') AS anzeige_name, t.* FROM `fraktion` t;
+CREATE OR REPLACE VIEW `v_fraktion` AS SELECT CONCAT_WS(', ', t.abkuerzung, t.name) AS anzeige_name, t.* FROM `fraktion` t;
 
 CREATE OR REPLACE VIEW `v_interessenbindung` AS SELECT t.* FROM `interessenbindung` t;
 
