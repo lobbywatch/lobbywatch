@@ -27754,12 +27754,12 @@
             $pageEdit->SetHttpHandlerName('v_interessenbindung_liste_indirektDetailEdit1parlamentarier_handler');
             $handler = new PageHTTPHandler('v_interessenbindung_liste_indirektDetailEdit1parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageView = new v_zutrittsberechtigung_mit_mandaten_indirektDetailView2parlamentarierPage($this, 'V Zutrittsberechtigung Mit Mandaten Indirekt', 'V Zutrittsberechtigung Mit Mandaten Indirekt', array('zutrittsberechtigung_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'), 'UTF-8', 20, 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarier_handler');
+            $pageView = new v_zutrittsberechtigung_mit_mandaten_indirektDetailView2parlamentarierPage($this, 'V Zutrittsberechtigung Mit Mandaten Indirekt', 'V Zutrittsberechtigung Mit Mandaten Indirekt', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'), 'UTF-8', 20, 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarier_handler');
             
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'));
             $handler = new PageHTTPHandler('v_zutrittsberechtigung_mit_mandaten_indirektDetailView2parlamentarier_handler', $pageView);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageEdit = new v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarierPage($this, array('zutrittsberechtigung_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'), 'UTF-8');
+            $pageEdit = new v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarierPage($this, array('parlamentarier_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandaten_indirektDetailEdit2parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'), 'UTF-8');
             
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'));
             $pageEdit->SetShortCaption('V Zutrittsberechtigung Mit Mandaten Indirekt');
@@ -27799,12 +27799,12 @@
             $pageEdit->SetHttpHandlerName('v_interessenbindung_listeDetailEdit4parlamentarier_handler');
             $handler = new PageHTTPHandler('v_interessenbindung_listeDetailEdit4parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageView = new v_zutrittsberechtigung_mit_mandatenDetailView5parlamentarierPage($this, 'V Zutrittsberechtigung Mit Mandaten', 'V Zutrittsberechtigung Mit Mandaten', array('zutrittsberechtigung_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'), 'UTF-8', 20, 'v_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarier_handler');
+            $pageView = new v_zutrittsberechtigung_mit_mandatenDetailView5parlamentarierPage($this, 'V Zutrittsberechtigung Mit Mandaten', 'V Zutrittsberechtigung Mit Mandaten', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'), 'UTF-8', 20, 'v_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarier_handler');
             
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'));
             $handler = new PageHTTPHandler('v_zutrittsberechtigung_mit_mandatenDetailView5parlamentarier_handler', $pageView);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageEdit = new v_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarierPage($this, array('zutrittsberechtigung_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'), 'UTF-8');
+            $pageEdit = new v_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarierPage($this, array('parlamentarier_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandatenDetailEdit5parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'), 'UTF-8');
             
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'));
             $pageEdit->SetShortCaption('V Zutrittsberechtigung Mit Mandaten');
