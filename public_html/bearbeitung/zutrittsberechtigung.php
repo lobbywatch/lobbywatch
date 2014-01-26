@@ -156,7 +156,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -168,7 +170,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -295,7 +299,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -307,7 +313,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -622,7 +630,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -634,7 +644,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -795,7 +807,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -958,7 +972,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1306,7 +1322,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1318,7 +1336,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
