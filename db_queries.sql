@@ -146,6 +146,19 @@ UNION
   )
 UNION
 (SELECT
+  'fraktion' table_name,
+  'Fraktion' name,
+  (select count(*) from `fraktion`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `fraktion` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
   'zutrittsberechtigung' table_name,
   'Zutrittsberechtigung' name,
   (select count(*) from `zutrittsberechtigung`) anzahl_eintraege,
@@ -154,6 +167,19 @@ UNION
   t.id last_updated_id
   FROM
   `zutrittsberechtigung` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  )
+UNION
+(SELECT
+  'zutrittsberechtigung_anhang' table_name,
+  'Zutrittsberechtigunganhang' name,
+  (select count(*) from `zutrittsberechtigung_anhang`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `zutrittsberechtigung_anhang` t
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   )
