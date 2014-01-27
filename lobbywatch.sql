@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 26. Jan 2014 um 13:11
+-- Erstellungszeit: 27. Jan 2014 um 08:04
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -244,7 +244,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:27
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `branche_log`;
@@ -286,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
 --
 -- Tabellenstruktur für Tabelle `fraktion`
 --
--- Erzeugt am: 26. Jan 2014 um 11:58
+-- Erzeugt am: 26. Jan 2014 um 12:28
 --
 
 DROP TABLE IF EXISTS `fraktion`;
@@ -295,6 +295,7 @@ CREATE TABLE IF NOT EXISTS `fraktion` (
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Fraktionsabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Fraktion',
   `position` enum('links','rechts','mitte') DEFAULT NULL COMMENT 'Politische Position der Fraktion',
+  `beschreibung` text COMMENT 'Beschreibung der Fraktion',
   `von` date DEFAULT NULL COMMENT 'Beginn der Fraktion, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Fraktion, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -363,7 +364,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `fraktion_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:28
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `fraktion_log`;
@@ -371,7 +372,8 @@ CREATE TABLE IF NOT EXISTS `fraktion_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Fraktionsabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Fraktion',
-  `position` enum('links','rechts','mitte','') DEFAULT NULL COMMENT 'Politische Position der Fraktion',
+  `position` enum('links','rechts','mitte') DEFAULT NULL COMMENT 'Politische Position der Fraktion',
+  `beschreibung` text COMMENT 'Beschreibung der Fraktion',
   `von` date DEFAULT NULL COMMENT 'Beginn der Fraktion, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Fraktion, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -499,7 +501,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:27
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
@@ -632,7 +634,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessengruppe_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:27
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
@@ -759,7 +761,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `in_kommission_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:27
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `in_kommission_log`;
@@ -890,7 +892,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:27
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
@@ -1026,7 +1028,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mandat_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:27
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `mandat_log`;
@@ -1144,7 +1146,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mil_grad_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:28
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `mil_grad_log`;
@@ -1391,7 +1393,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:28
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
@@ -1435,7 +1437,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:27
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1708,7 +1710,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:28
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
@@ -1749,7 +1751,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:28
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -1812,7 +1814,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   KEY `militaerischer_grad` (`militaerischer_grad`),
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=580 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=256 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -1825,7 +1827,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
--- Erzeugt am: 26. Jan 2014 um 11:58
+-- Erzeugt am: 26. Jan 2014 um 12:27
 --
 
 DROP TABLE IF EXISTS `partei`;
@@ -1838,6 +1840,7 @@ CREATE TABLE IF NOT EXISTS `partei` (
   `position` enum('links','rechts','mitte') DEFAULT NULL COMMENT 'Politische Position der Partei',
   `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage der Partei',
   `email` varchar(100) DEFAULT NULL COMMENT 'Kontakt E-Mail-Adresse der Partei',
+  `beschreibung` text COMMENT 'Beschreibung der Partei',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
@@ -1911,7 +1914,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:28
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `partei_log`;
@@ -1921,9 +1924,10 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
   `fraktion_id` int(11) DEFAULT NULL COMMENT 'Fraktionszugehörigkeit der Partei im nationalen Parlament',
   `gruendung` date DEFAULT NULL COMMENT 'Gründungsjahr der Partei. Wenn der genaue Tag unbekannt ist, den 1. Januar wählen.',
-  `position` enum('links','rechts','mitte','') DEFAULT NULL COMMENT 'Politische Position der Partei',
+  `position` enum('links','rechts','mitte') DEFAULT NULL COMMENT 'Politische Position der Partei',
   `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage der Partei',
   `email` varchar(100) DEFAULT NULL COMMENT 'Kontakt E-Mail-Adresse der Partei',
+  `beschreibung` text COMMENT 'Beschreibung der Partei',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
@@ -1956,7 +1960,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
 --
 -- Tabellenstruktur für Tabelle `snapshot`
 --
--- Erzeugt am: 26. Jan 2014 um 11:27
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `snapshot`;
@@ -2037,11 +2041,12 @@ CREATE TABLE IF NOT EXISTS `v_branche` (
 --
 DROP VIEW IF EXISTS `v_fraktion`;
 CREATE TABLE IF NOT EXISTS `v_fraktion` (
-`anzeige_name` varchar(123)
+`anzeige_name` varchar(122)
 ,`id` int(11)
 ,`abkuerzung` varchar(20)
 ,`name` varchar(100)
 ,`position` enum('links','rechts','mitte')
+,`beschreibung` text
 ,`von` date
 ,`bis` date
 ,`notizen` text
@@ -2922,6 +2927,7 @@ CREATE TABLE IF NOT EXISTS `v_partei` (
 ,`position` enum('links','rechts','mitte')
 ,`homepage` varchar(255)
 ,`email` varchar(100)
+,`beschreibung` text
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
 ,`eingabe_abgeschlossen_datum` timestamp
@@ -3243,7 +3249,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_anhang`
 --
--- Erzeugt am: 26. Jan 2014 um 09:34
+-- Erzeugt am: 27. Jan 2014 um 06:59
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_anhang`;
@@ -3265,7 +3271,13 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=2 ;
+
+--
+-- RELATIONEN DER TABELLE `zutrittsberechtigung_anhang`:
+--   `zutrittsberechtigung_id`
+--       `zutrittsberechtigung` -> `id`
+--
 
 --
 -- Trigger `zutrittsberechtigung_anhang`
@@ -3317,7 +3329,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_anhang_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:28
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_anhang_log`;
@@ -3358,7 +3370,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_log`
 --
--- Erzeugt am: 26. Jan 2014 um 11:28
+-- Erzeugt am: 27. Jan 2014 um 07:02
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
@@ -3428,7 +3440,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_fraktion`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_fraktion` AS select concat(`t`.`name`,' (',`t`.`abkuerzung`,')') AS `anzeige_name`,`t`.`id` AS `id`,`t`.`abkuerzung` AS `abkuerzung`,`t`.`name` AS `name`,`t`.`position` AS `position`,`t`.`von` AS `von`,`t`.`bis` AS `bis`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `fraktion` `t`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_fraktion` AS select concat_ws(', ',`t`.`abkuerzung`,`t`.`name`) AS `anzeige_name`,`t`.`id` AS `id`,`t`.`abkuerzung` AS `abkuerzung`,`t`.`name` AS `name`,`t`.`position` AS `position`,`t`.`beschreibung` AS `beschreibung`,`t`.`von` AS `von`,`t`.`bis` AS `bis`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `fraktion` `t`;
 
 -- --------------------------------------------------------
 
@@ -3779,7 +3791,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_partei`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_partei` AS select concat(`t`.`name`,' (',`t`.`abkuerzung`,')') AS `anzeige_name`,`t`.`id` AS `id`,`t`.`abkuerzung` AS `abkuerzung`,`t`.`name` AS `name`,`t`.`fraktion_id` AS `fraktion_id`,`t`.`gruendung` AS `gruendung`,`t`.`position` AS `position`,`t`.`homepage` AS `homepage`,`t`.`email` AS `email`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `partei` `t`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_partei` AS select concat(`t`.`name`,' (',`t`.`abkuerzung`,')') AS `anzeige_name`,`t`.`id` AS `id`,`t`.`abkuerzung` AS `abkuerzung`,`t`.`name` AS `name`,`t`.`fraktion_id` AS `fraktion_id`,`t`.`gruendung` AS `gruendung`,`t`.`position` AS `position`,`t`.`homepage` AS `homepage`,`t`.`email` AS `email`,`t`.`beschreibung` AS `beschreibung`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `partei` `t`;
 
 -- --------------------------------------------------------
 
@@ -4019,6 +4031,12 @@ ALTER TABLE `zutrittsberechtigung`
   ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY (`ALT_lobbyorganisation_id`) REFERENCES `organisation` (`id`),
   ADD CONSTRAINT `fk_zb_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`),
   ADD CONSTRAINT `fk_zutrittsberechtigung_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`);
+
+--
+-- Constraints der Tabelle `zutrittsberechtigung_anhang`
+--
+ALTER TABLE `zutrittsberechtigung_anhang`
+  ADD CONSTRAINT `fk_zutrittsberechtigung_anhang_zutrittsberechtigung_id` FOREIGN KEY (`zutrittsberechtigung_id`) REFERENCES `zutrittsberechtigung` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `zutrittsberechtigung_anhang_log`
