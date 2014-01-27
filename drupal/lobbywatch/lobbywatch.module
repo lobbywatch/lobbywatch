@@ -24,7 +24,7 @@ function lobbywatch_menu() {
   $items['parlamentarier'] = array(
     'title' => 'Parlamentarier',
     'page callback' => 'lobbywatch_parlamentarier_list',
-    'access arguments' => array('access content'),
+    'access arguments' => array('access lobbywatch general content'),
     'type' => MENU_CALLBACK,
     );
 
@@ -32,7 +32,7 @@ function lobbywatch_menu() {
     'title' => 'Parlamentarier',
     'page callback' => 'lobbywatch_parlamentarier_id',
     'page arguments' => array(1),
-    'access arguments' => array('access content'),
+    'access arguments' => array('access lobbywatch general content'),
     'type' => MENU_CALLBACK,
     );
 
@@ -40,14 +40,14 @@ function lobbywatch_menu() {
     'title' => 'Parlamentarier',
     'page callback' => 'lobbywatch_parlamentarier_id',
     'page arguments' => array(1, 2),
-    'access arguments' => array('access content'),
+    'access arguments' => array('access lobbywatch general content'),
     'type' => MENU_CALLBACK,
     );
 
   $items['organisation'] = array(
     'title' => 'Organisationen',
     'page callback' => 'lobbywatch_organisation_list',
-    'access arguments' => array('access content'),
+    'access arguments' => array('access lobbywatch general content'),
     'type' => MENU_CALLBACK,
     );
 
@@ -55,11 +55,22 @@ function lobbywatch_menu() {
     'title' => 'Organisation',
     'page callback' => 'lobbywatch_organisation_id',
     'page arguments' => array(1),
-    'access arguments' => array('access content'),
+    'access arguments' => array('access lobbywatch general content'),
     'type' => MENU_CALLBACK,
     );
 
     return $items;
+}
+
+/**
+* Implements hook_permission().
+*/
+function lobbywatch_permission() {
+  return array(
+    'access lobbywatch general content' => array(
+      'title' => t('Access general content of the lobbywatch module'),
+    )
+  );
 }
 
 /**
