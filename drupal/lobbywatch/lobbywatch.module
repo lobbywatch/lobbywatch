@@ -86,6 +86,7 @@ function lobbywatch_block_view($delta = '') {
   switch ($delta) {
     case 'search':
       $block['subject'] = t('Search');
+      // Form in a block: http://zerotodrupal.com/content/creating-form-block-drupal-7
       $block['content'] = drupal_get_form('lobbywatch_form');
       break;
   }

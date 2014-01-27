@@ -32,6 +32,10 @@ done
 
 for file in $dir/*.php
 do
+  if [[ $file == public_html/bearbeitung/parlamentarier_preview.php ]]; then
+    echo "Skip $file"
+    continue
+  fi
   echo "Process $file";
   mv "$file" "$file.bak";
   # Read file, process regex and write file
