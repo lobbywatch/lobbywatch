@@ -25970,6 +25970,14 @@
           $result = 'page_list.tpl';
         }
         }
+        function organisationGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            check_organisation_interessengruppe_order($page, $rowData, $cancel, $message, $tableName);
+        }
+        function organisationGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            check_organisation_interessengruppe_order($page, $rowData, $cancel, $message, $tableName);
+        }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -26024,6 +26032,8 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('organisationGrid' . '_OnGetCustomTemplate', $this);
+            $result->BeforeUpdateRecord->AddListener('organisationGrid' . '_' . 'BeforeUpdateRecord', $this);
+            $result->BeforeInsertRecord->AddListener('organisationGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

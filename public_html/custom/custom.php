@@ -292,6 +292,18 @@ function check_bis_date($page, &$rowData, &$cancel, &$message, $tableName)
   }
 }
 
+function check_organisation_interessengruppe_order($page, &$rowData, &$cancel, &$message, $tableName)
+{
+//   df($rowData, 'check_organisation_interessengruppe_order $rowData');
+
+  if ((isset($rowData['interessengruppe2_id']) && !isset($rowData['interessengruppe_id'])) ||
+    (isset($rowData['interessengruppe3_id']) && !isset($rowData['interessengruppe2_id']))) {
+    $cancel = true;
+    $message = 'Lücke in den Interessengruppen. Bitte zuerst Interessengruppe 1, dann 2 und 3 einfüllen.';
+  }
+}
+
+
 function clean_fields($page, &$rowData, &$cancel, &$message, $tableName)
 {
 //   df($rowData);
