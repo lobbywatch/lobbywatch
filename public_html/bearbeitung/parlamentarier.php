@@ -103,32 +103,6 @@
             // View column for datei field
             //
             $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
-            
-            /* <inline edit column> */
-            //
-            // Edit column for datei field
-            //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for datei field
-            //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
             $column->SetDescription($this->RenderText('Datei'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -274,23 +248,6 @@
             $column->SetDescription($this->RenderText('Abgäendert am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-        }
-        
-        public function datei_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
-        FileUtils::ForceDirectories($targetFolder);
-        
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
         }
         
         function GetCustomClientScript()
@@ -668,32 +625,6 @@
             // View column for datei field
             //
             $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
-            
-            /* <inline edit column> */
-            //
-            // Edit column for datei field
-            //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for datei field
-            //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
             $column->SetDescription($this->RenderText('Datei'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -937,17 +868,6 @@
     
         protected function AddEditColumns(Grid $grid)
         {
-            //
-            // Edit column for datei field
-            //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_edit', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
             //
             // Edit column for dateiname_voll field
             //
@@ -1407,23 +1327,6 @@
     	$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
     
-        public function datei_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
-        FileUtils::ForceDirectories($targetFolder);
-        
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
-        }
-        
         function GetCustomClientScript()
         {
             return ;
@@ -1440,22 +1343,6 @@
         function parlamentarier_anhangDetailEditGrid0parlamentarier_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             datei_anhang_insert($page, $rowData, $cancel, $message, $tableName);
-        }
-        public function datei_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
-        FileUtils::ForceDirectories($targetFolder);
-        
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
         }
         public function datei_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {

@@ -103,32 +103,6 @@
             // View column for datei field
             //
             $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
-            
-            /* <inline edit column> */
-            //
-            // Edit column for datei field
-            //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for datei field
-            //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
             $column->SetDescription($this->RenderText('Datei'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -220,23 +194,6 @@
             $column->SetDescription($this->RenderText('Abgäendert am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-        }
-        
-        public function datei_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
-        FileUtils::ForceDirectories($targetFolder);
-        
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
         }
         
         function GetCustomClientScript()
@@ -410,8 +367,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigungssearch', $this->dataset,
-                array('id', 'zutrittsberechtigung_id_anzeige_name', 'datei', 'dateierweiterung', 'dateiname_voll', 'mime_type', 'encoding', 'beschreibung', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Zutrittsberechtigung'), $this->RenderText('Datei'), $this->RenderText('Dateierweiterung'), $this->RenderText('Dateiname Voll'), $this->RenderText('Mime Type'), $this->RenderText('Encoding'), $this->RenderText('Beschreibung'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'zutrittsberechtigung_id_anzeige_name', 'datei', 'dateiname_voll', 'beschreibung', 'dateierweiterung', 'mime_type', 'encoding', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Zutrittsberechtigung'), $this->RenderText('Datei'), $this->RenderText('Dateiname Voll'), $this->RenderText('Beschreibung'), $this->RenderText('Dateierweiterung'), $this->RenderText('Mime Type'), $this->RenderText('Encoding'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -512,11 +469,11 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('datei', $this->RenderText('Datei')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateierweiterung', $this->RenderText('Dateierweiterung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateiname_voll', $this->RenderText('Dateiname Voll')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateierweiterung', $this->RenderText('Dateierweiterung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('mime_type', $this->RenderText('Mime Type')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('encoding', $this->RenderText('Encoding')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
@@ -577,32 +534,6 @@
             // View column for datei field
             //
             $column = new DownloadDataColumn('datei', 'Datei', $this->dataset, $this->GetLocalizerCaptions()->GetMessageString('Download'));
-            
-            /* <inline edit column> */
-            //
-            // Edit column for datei field
-            //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_edit', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for datei field
-            //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_inline_insert', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
             $column->SetDescription($this->RenderText('Datei'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -720,19 +651,28 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for dateierweiterung field
-            //
-            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for dateiname_voll field
             //
             $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung field
+            //
+            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for dateierweiterung field
+            //
+            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -749,15 +689,6 @@
             //
             $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -794,13 +725,13 @@
         protected function AddEditColumns(Grid $grid)
         {
             //
-            // Edit column for datei field
+            // Edit column for dateiname_voll field
             //
-            $editor = new ImageUploader('datei_edit');
-            $editor->SetShowImage(false);
-            $editColumn = new UploadFileToFolderColumn('Datei', 'datei', $editor, $this->dataset, false, false, '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
-            $editColumn->OnCustomFileName->AddListener('datei_GenerateFileName_edit', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editor = new TextAreaEdit('dateiname_voll_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Dateiname Voll', 'dateiname_voll', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -811,6 +742,44 @@
             $editor->SetSize(80);
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for dateierweiterung field
+            //
+            $editor = new TextEdit('dateierweiterung_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Dateierweiterung', 'dateierweiterung', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for mime_type field
+            //
+            $editor = new TextEdit('mime_type_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Mime Type', 'mime_type', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for encoding field
+            //
+            $editor = new TextEdit('encoding_edit');
+            $editor->SetSize(20);
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Encoding', 'encoding', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1017,16 +986,23 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for dateierweiterung field
+            // View column for dateiname_voll field
             //
-            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
-            // View column for dateiname_voll field
+            // View column for beschreibung field
             //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for dateierweiterung field
+            //
+            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1041,13 +1017,6 @@
             // View column for encoding field
             //
             $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -1107,16 +1076,23 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for dateierweiterung field
+            // View column for dateiname_voll field
             //
-            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
+            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
-            // View column for dateiname_voll field
+            // View column for beschreibung field
             //
-            $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
+            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for dateierweiterung field
+            //
+            $column = new TextViewColumn('dateierweiterung', 'Dateierweiterung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1131,13 +1107,6 @@
             // View column for encoding field
             //
             $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for beschreibung field
-            //
-            $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -1178,23 +1147,6 @@
     	$column->SetVariableContainer($this->GetColumnVariableContainer());
         }
     
-        public function datei_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
-        FileUtils::ForceDirectories($targetFolder);
-        
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
-        }
-        
         function GetCustomClientScript()
         {
             return ;
@@ -1211,22 +1163,6 @@
         function zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             datei_anhang_insert($page, $rowData, $cancel, $message, $tableName);
-        }
-        public function datei_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/zutrittsberechtigung_anhang/%zutrittsberechtigung_id%');
-        FileUtils::ForceDirectories($targetFolder);
-        
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
         }
         public function datei_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
@@ -1356,18 +1292,18 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'dateiname_voll_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for mime_type field
-            //
-            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mime_type_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for mime_type field
+            //
+            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mime_type_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
