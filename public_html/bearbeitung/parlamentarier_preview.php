@@ -48,6 +48,52 @@
       header('Content-Type: text/html; charset=utf-8');
     }
 
+    function GetPageList()
+    {
+      $currentPageCaption = 'Preview';
+      $result = new PageList(null);
+      if (GetCurrentUserGrantForDataSource('organisation')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="entity important-entity">Organisation</span>'), 'organisation.php', ('Organisation'), $currentPageCaption == ('<span class="entity important-entity">Organisation</span>')));
+      if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="entity important-entity">Parlamentarier</span>'), 'parlamentarier.php', ('Parlamentarier'), $currentPageCaption == ('<span class="entity important-entity">Parlamentarier</span>')));
+      if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="entity">Zutrittsberechtigung</span>'), 'zutrittsberechtigung.php', ('Zutrittsberechtigung'), $currentPageCaption == ('<span class="entity">Zutrittsberechtigung</span>')));
+      if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="relation">Interessenbindung</span>'), 'interessenbindung.php', ('Interessenbindung'), $currentPageCaption == ('<span class="relation">Interessenbindung</span>')));
+      if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="relation">Mandat</span>'), 'mandat.php', ('Mandat'), $currentPageCaption == ('<span class="relation">Mandat</span>')));
+      if (GetCurrentUserGrantForDataSource('in_kommission')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="relation">In Kommission</span>'), 'in_kommission.php', ('In Kommission'), $currentPageCaption == ('<span class="relation">In Kommission</span>')));
+      if (GetCurrentUserGrantForDataSource('organisation_beziehung')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="relation">Organisation Beziehung</span>'), 'organisation_beziehung.php', ('Organisation Beziehung'), $currentPageCaption == ('<span class="relation">Organisation Beziehung</span>')));
+      if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="entity">Interessengruppe</span>'), 'interessengruppe.php', ('Interessengruppe'), $currentPageCaption == ('<span class="entity">Interessengruppe</span>')));
+      if (GetCurrentUserGrantForDataSource('branche')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="entity">Branche</span>'), 'branche.php', ('Branche'), $currentPageCaption == ('<span class="entity">Branche</span>')));
+      if (GetCurrentUserGrantForDataSource('kommission')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="entity">Kommission</span>'), 'kommission.php', ('Kommission'), $currentPageCaption == ('<span class="entity">Kommission</span>')));
+      if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="entity">Partei</span>'), 'partei.php', ('Partei'), $currentPageCaption == ('<span class="entity">Partei</span>')));
+      if (GetCurrentUserGrantForDataSource('fraktion')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="entity">Fraktion</span>'), 'fraktion.php', ('Fraktion'), $currentPageCaption == ('<span class="entity">Fraktion</span>')));
+      if (GetCurrentUserGrantForDataSource('v_parlamentarier_authorisierungs_email')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="view">Parlamentarier Email</span>'), 'v_parlamentarier_authorisierungs_email.php', ('Parlamentarier Email'), $currentPageCaption == ('<span class="view">Parlamentarier Email</span>')));
+      if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="view">Unvollständige Parlamentarier</span>'), 'q_unvollstaendige_parlamentarier.php', ('Unvollständige Parlamentarier'), $currentPageCaption == ('<span class="view">Unvollständige Parlamentarier</span>')));
+      if (GetCurrentUserGrantForDataSource('q_unvollstaendige_organisationen')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="view">Unvollständige Organisationen</span>'), 'q_unvollstaendige_organisationen.php', ('Unvollständige Organisationen'), $currentPageCaption == ('<span class="view">Unvollständige Organisationen</span>')));
+      if (GetCurrentUserGrantForDataSource('q_last_updated_tables')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="view">Tabellenstand</span>'), 'tabellenstand.php', ('Tabellenstand'), $currentPageCaption == ('<span class="view">Tabellenstand</span>')));
+
+      if ( HasAdminPage() && GetApplication()->HasAdminGrantForCurrentUser() )
+        $result->AddPage(new PageLink(('AdminPage'), 'phpgen_admin.php', ('AdminPage'), false, true));
+
+      add_more_navigation_links($result); // Was once Afterburned
+      return $result;
+    }
+
+    // Main
+
     SetUpUserAuthorization(GetApplication());
 
     try
@@ -59,8 +105,8 @@
 //         $Page->SetCaption('Partei');
 //         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("partei"));
 //         GetApplication()->SetEnableLessRunTimeCompile(GetEnableLessFilesRunTimeCompilation());
-//         GetApplication()->SetCanUserChangeOwnPassword(
-//             !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
+        GetApplication()->SetCanUserChangeOwnPassword(
+            !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
 //         GetApplication()->SetMainPage($Page);
 //         before_render($Page);
 //         GetApplication()->Run();
@@ -69,7 +115,15 @@
           exit(1);
         }
 //         print "Say hello";
-        $id = GetApplication()->GetGETValue('pk0');
+
+        $param = 'pk0';
+        if (GetApplication()->IsGETValueSet($param)){
+          if (!($id = GetApplication()->GetGETValue($param))) {
+            throw new Exception('ID missing');
+          }
+        } else {
+          throw new Exception('ID parameter missing');
+       }
 
         $con_factory = new MyPDOConnectionFactory();
         $options = GetConnectionOptions();
@@ -118,7 +172,7 @@ CONCAT(
     SEPARATOR ' '
   ),
   '</ul>',
-  '<p>Ihre <b>G�ste</b>:</p>',
+  '<p>Ihre <b>Gäste</b>:</p>',
   '<ul>',
   GROUP_CONCAT(DISTINCT
     CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion)
@@ -126,7 +180,7 @@ CONCAT(
     SEPARATOR ' '
   ),
   '</ul>',
-  '<p><b>Mandate</b> der G�ste:</p>',
+  '<p><b>Mandate</b> der Gäste:</p>',
   '<ul>',
   GROUP_CONCAT(DISTINCT
     CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion,
@@ -142,7 +196,7 @@ CONCAT(
     SEPARATOR ' '
   ),
   '</ul>',
-  '<p>Freundliche Gr�sse<br></p>'
+  '<p>Freundliche Grüsse<br></p>'
 ) email_text_html
 FROM v_parlamentarier parlamentarier
 LEFT JOIN v_interessenbindung interessenbindung
@@ -180,10 +234,46 @@ GROUP BY parlamentarier.id;");
         $sth->execute(array(':id' => $id));
         $result = $sth->fetchAll();
 
-        ShowPreviewPage('<h4>Preview</h4><h3>' .$result[0]["parlamentarier_name"] . '</h3>' .
-        '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
-        '<h4>Gaeste</h4><ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>' .
-        '<h4>Mandate</h4><ul>' . $result[0]['mandate'] . '</ul>');
+        if (!$result) {
+          throw new Exception('ID not found');
+        }
+
+//         ShowPreviewPage('<h4>Preview</h4><h3>' .$result[0]["parlamentarier_name"] . '</h3>' .
+//         '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
+//         '<h4>Gäste</h4><ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>' .
+//         '<h4>Mandate</h4><ul>' . $result[0]['mandate'] . '</ul>');
+        DisplayTemplateSimple('custom_templates/parlamentarier_preview_page.tpl',
+          array(
+          ),
+          array(
+            'App' => array(
+              'ContentEncoding' => 'UTF-8',
+              'PageCaption' => 'Vorschau: ' . $result[0]["parlamentarier_name"],
+              'Header' => GetPagesHeader(),
+              'Direction' => 'ltr',
+          ),
+            'Footer' => GetPagesFooter(),
+            'Parlamentarier' => array(
+                'Title' => 'Vorschau: ' . $result[0]["parlamentarier_name"],
+                'Preview' => '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
+              '<h4>Gäste</h4><ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>' .
+              '<h4>Mandate</h4><ul>' . $result[0]['mandate'] . '</ul>',
+             ),
+            'Authentication' => array(
+                'Enabled' => true,
+                'LoggedIn' => GetApplication()->IsCurrentUserLoggedIn(),
+                'CurrentUser' => array(
+                    'Name' => GetApplication()->GetCurrentUser(),
+                    'Id' => GetApplication()->GetCurrentUserId(),
+                ),
+                'CanChangeOwnPassword' => GetApplication()->GetUserManager()->CanChangeUserPassword() &&
+                        GetApplication()->CanUserChangeOwnPassword(),
+            ),
+            'HideSideBarByDefault' => true,
+            'PageList' => GetPageList()->GetViewData(),
+            'Variables' => '',
+          )
+        );
     }
     catch(Exception $e)
     {

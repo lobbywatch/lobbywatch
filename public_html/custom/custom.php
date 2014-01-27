@@ -580,3 +580,28 @@ class PrivateFileDownloadHTTPHandler extends HTTPHandler
     }
   }
 }
+
+function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $display = true) {
+  $captions = GetCaptions('UTF-8');
+  $smarty = new Smarty();
+  $smarty->template_dir = '/components/templates';
+  foreach($InputObjects as $ObjectName => &$Object)
+    $smarty->assign_by_ref($ObjectName, $Object);
+  //       $smarty->assign_by_ref('Renderer', $this);
+  $smarty->assign_by_ref('Captions', $captions);
+  //       $smarty->assign('RenderScripts', $this->renderScripts);
+  //       $smarty->assign('RenderText', $this->renderText);
+
+//   if (isset($this->additionalParams))
+//   {
+//     foreach($this->additionalParams as $ValueName => $Value)
+//     {
+//       $smarty->assign($ValueName, $Value);
+//     }
+//   }
+
+  foreach($InputValues as $ValueName => $Value)
+    $smarty->assign($ValueName, $Value);
+
+  $rendered = $smarty->fetch($TemplateName, null, null, $display);
+}

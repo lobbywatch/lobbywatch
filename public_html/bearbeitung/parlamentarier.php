@@ -18964,6 +18964,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -19043,6 +19044,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -20683,6 +20685,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -20702,6 +20705,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -22239,6 +22243,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $grid->AddPrintColumn($column);
             
             //
@@ -22253,6 +22258,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $grid->AddPrintColumn($column);
             
             //
@@ -22566,6 +22572,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $grid->AddExportColumn($column);
             
             //
@@ -22580,6 +22587,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $grid->AddExportColumn($column);
             
             //
@@ -22912,6 +22920,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22935,6 +22944,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23324,6 +23334,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -23338,6 +23349,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -23660,6 +23672,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23683,6 +23696,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -24072,6 +24086,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -24086,6 +24101,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -24408,6 +24424,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -24431,6 +24448,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -24820,6 +24838,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -24834,6 +24853,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -25156,6 +25176,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -25179,6 +25200,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -25568,6 +25590,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -25582,6 +25605,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -25904,6 +25928,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -25927,6 +25952,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -26316,6 +26342,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -26330,6 +26357,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -26652,6 +26680,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -26675,6 +26704,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -27064,6 +27094,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -27078,6 +27109,7 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //

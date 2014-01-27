@@ -202,7 +202,7 @@ function lobbywatch_parlamentarier_autocomplete($str = '') {
   //   dpm($result, 'result');
 
     while($record = $result->fetchAssoc()) {
-      $item = check_plain($record['anzeige_name']) . " [" . $record['id'] . "]";
+      $item = check_plain($record['anzeige_name']) . " [" . check_plain($record['id']) . "]";
       $items[$item] = $item;
     }
   } finally {
@@ -234,7 +234,7 @@ function lobbywatch_parlamentarier_list() {
     $result = db_query("SELECT parlamentarier.*, partei.abkuerzung FROM v_parlamentarier parlamentarier RIGHT JOIN v_partei partei ON parlamentarier.partei_id = partei.id WHERE parlamentarier.im_rat_bis IS NULL ORDER BY parlamentarier.anzeige_name");
 
     while ($record = $result->fetchAssoc()) {
-      $markup .= '<li><a href="/parlamentarier/' . $record['id'] . '/' . lobbywatch_clean_for_url($record['anzeige_name']) . '">' . $record['anzeige_name'] . '</a>, ' . $record['abkuerzung'] . ', ' . $record['ratstyp'] . ', ' . $record['kanton'];
+      $markup .= '<li><a href="/parlamentarier/' . check_plain($record['id']) . '/' . lobbywatch_clean_for_url($record['anzeige_name']) . '">' . check_plain($record['anzeige_name']) . '</a>, ' . check_plain($record['abkuerzung']) . ', ' . check_plain($record['ratstyp']) . ', ' . check_plain($record['kanton']);
     }
 
     $markup .= '</ul>';
@@ -266,11 +266,11 @@ function lobbywatch_anzeige_name_for_url($table, $id) {
 
   try {
     $sql = "SELECT * FROM v_$table WHERE id=:id";
-    $result = db_query($sql, array(':id' => $id));
+    $result = db_query($sql, array(':id' => check_plain($id)));
 
     if ($result) {
       $record = $result->fetchAssoc();
-      $url_name = lobbywatch_clean_for_url($record['anzeige_name']);
+      $url_name = lobbywatch_clean_for_url(check_plain($record['anzeige_name']));
     }
   } finally {
     // Go back to the default database,
@@ -400,7 +400,8 @@ function lobbywatch_parlamentarier_id($id, $name='') {
   }
 
   if ($record) {
-      $markup .= '<h2>' . $record["parlamentarier_name"] . '</h2>' .
+      // TODO security, check content
+      $markup .= '<h2>' . check_plain($record["parlamentarier_name"]) . '</h2>' .
       '<p>Lobbyfaktor: <b>XY</b></p>' .
       '<h4>Interessenbindungen</h4><ul>' . $record['interessenbindungen'] . '</ul>' .
       '<h4>Gäste</h4><ul>' . $record['zutrittsberechtigungen'] . '</ul>' .
@@ -434,7 +435,7 @@ function lobbywatch_organisation_list() {
   $result = db_query("SELECT * FROM v_organisation organisation ORDER BY organisation.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
-    $markup .= '<li><a href="/organisation/' . $record['id'] . '">' . $record['anzeige_name'] . '</a>';
+    $markup .= '<li><a href="/organisation/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
   }
 
   $markup .= '</ul>';
@@ -484,10 +485,10 @@ function lobbywatch_organisation_id($id, $name = '') {
     db_set_active();
   }
   if ($record) {
-    $markup .= '<h2>' . $record["anzeige_name"] . '</h2>'
+    $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
     . '<ul>'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
-    . '<li>Rechtsform: ' . $record['rechtsform']
+    . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
     . '</ul>';
 
     $build = array();
