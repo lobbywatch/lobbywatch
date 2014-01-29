@@ -19,6 +19,8 @@ $appGrants = array();
 $dataSourceRecordPermissions = array();
 
 $tableCaptions = array('organisation' => '<span class="entity important-entity">Organisation</span>',
+'organisation.v_organisation_parlamentarier_beide_indirekt' => '<span class="entity important-entity">Organisation</span>.V Organisation Parlamentarier Beide Indirekt',
+'organisation.v_organisation_parlamentarier_beide' => '<span class="entity important-entity">Organisation</span>.V Organisation Parlamentarier Beide',
 'organisation.v_organisation_parlamentarier_indirekt' => '<span class="entity important-entity">Organisation</span>.V Organisation Parlamentarier Indirekt',
 'organisation.v_organisation_beziehung_auftraggeber_fuer' => '<span class="entity important-entity">Organisation</span>.V Organisation Beziehung Auftraggeber Fuer',
 'organisation.v_organisation_beziehung_arbeitet_fuer' => '<span class="entity important-entity">Organisation</span>.V Organisation Beziehung Arbeitet Fuer',
