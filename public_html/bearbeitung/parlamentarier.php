@@ -18964,7 +18964,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -19007,7 +19006,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Nachname des Parlamentariers. In der Übersicht zeigt der Link auf die Biographie des Parlamenteriers auf parlament.ch.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -19045,7 +19044,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. In ter Übersicht zeigt der Link des Vornamens  eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -20685,7 +20684,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -22243,7 +22241,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $grid->AddPrintColumn($column);
             
             //
@@ -22572,7 +22569,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $grid->AddExportColumn($column);
             
             //
@@ -22920,7 +22916,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -22935,7 +22930,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Nachname des Parlamentariers. In der Übersicht zeigt der Link auf die Biographie des Parlamenteriers auf parlament.ch.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -22945,7 +22940,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. In ter Übersicht zeigt der Link des Vornamens  eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -23334,7 +23329,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -23672,7 +23666,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -23687,7 +23680,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Nachname des Parlamentariers. In der Übersicht zeigt der Link auf die Biographie des Parlamenteriers auf parlament.ch.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -23697,7 +23690,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. In ter Übersicht zeigt der Link des Vornamens  eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24086,7 +24079,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -24424,7 +24416,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -24439,7 +24430,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Nachname des Parlamentariers. In der Übersicht zeigt der Link auf die Biographie des Parlamenteriers auf parlament.ch.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24449,7 +24440,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. In ter Übersicht zeigt der Link des Vornamens  eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -24838,7 +24829,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -25176,7 +25166,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -25191,7 +25180,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Nachname des Parlamentariers. In der Übersicht zeigt der Link auf die Biographie des Parlamenteriers auf parlament.ch.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -25201,7 +25190,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. In ter Übersicht zeigt der Link des Vornamens  eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -25590,7 +25579,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -25928,7 +25916,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -25943,7 +25930,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Nachname des Parlamentariers. In der Übersicht zeigt der Link auf die Biographie des Parlamenteriers auf parlament.ch.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -25953,7 +25940,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. In ter Übersicht zeigt der Link des Vornamens  eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -26342,7 +26329,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -26680,7 +26666,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $column->SetDescription($this->RenderText('Technischer Schlüssel des Parlamentariers'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -26695,7 +26680,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Nachname des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Nachname des Parlamentariers. In der Übersicht zeigt der Link auf die Biographie des Parlamenteriers auf parlament.ch.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -26705,7 +26690,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. In ter Übersicht zeigt der Link des Vornamens  eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -27094,7 +27079,6 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
