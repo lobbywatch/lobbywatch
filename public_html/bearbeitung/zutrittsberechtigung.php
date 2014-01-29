@@ -228,7 +228,7 @@
         {
             $result = new Grid($this, $this->dataset, 'zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -1203,7 +1203,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -2353,7 +2353,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -4951,7 +4951,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -6155,7 +6155,7 @@
         {
             $result = new Grid($this, $this->dataset, 'mandatDetailViewGrid2zutrittsberechtigung');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -8524,7 +8524,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -13921,7 +13921,7 @@
             $result->SetUseImagesForActions(true);
             $result->SetDefaultOrdering('nachname', otAscending);
             
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             

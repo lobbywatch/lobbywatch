@@ -802,7 +802,7 @@
         {
             $result = new Grid($this, $this->dataset, 'in_kommissionDetailViewGrid0kommission');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -2697,7 +2697,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -3337,7 +3337,7 @@
         {
             $result = new Grid($this, $this->dataset, 'brancheDetailViewGrid1kommission');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -4793,7 +4793,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -7667,7 +7667,7 @@
             $result->SetUseImagesForActions(true);
             $result->SetDefaultOrdering('abkuerzung', otAscending);
             
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             

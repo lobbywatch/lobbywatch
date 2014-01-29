@@ -282,7 +282,7 @@
         {
             $result = new Grid($this, $this->dataset, 'parlamentarier_anhangDetailViewGrid0parlamentarier');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -1383,7 +1383,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -2425,7 +2425,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_interessenbindung_liste_indirektDetailViewGrid1parlamentarier');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -5055,7 +5055,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -6304,7 +6304,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mit_mandaten_indirektDetailViewGrid2parlamentarier');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -9435,7 +9435,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -10246,7 +10246,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_in_kommission_listeDetailViewGrid3parlamentarier');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -11664,7 +11664,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -12540,7 +12540,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_interessenbindung_listeDetailViewGrid4parlamentarier');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -14432,7 +14432,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -15502,7 +15502,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mit_mandatenDetailViewGrid5parlamentarier');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -18205,7 +18205,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -27605,7 +27605,7 @@
             $result->SetUseImagesForActions(true);
             $result->SetDefaultOrdering('nachname', otAscending);
             
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             

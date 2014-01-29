@@ -951,7 +951,7 @@
         {
             $result = new Grid($this, $this->dataset, 'organisationDetailViewGrid0interessengruppe');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -3258,7 +3258,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -4719,7 +4719,7 @@
         {
             $result = new Grid($this, $this->dataset, 'parlamentarierDetailViewGrid1interessengruppe');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -7662,7 +7662,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -10054,7 +10054,7 @@
             $result->SetUseImagesForActions(true);
             $result->SetDefaultOrdering('name', otAscending);
             
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             

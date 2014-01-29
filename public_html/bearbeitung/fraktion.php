@@ -315,7 +315,7 @@
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(false);
             
             /* <inline edit column> */
@@ -607,7 +607,7 @@
             $result->SetAllowDeleteSelected(false);
             $result->SetDefaultOrdering('abkuerzung', otAscending);
             
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -1178,7 +1178,7 @@
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -1483,7 +1483,7 @@
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2029,7 +2029,7 @@
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -2174,7 +2174,7 @@
             // View column for gruendung field
             //
             $column = new DateTimeViewColumn('gruendung', 'Gruendung', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -2334,7 +2334,7 @@
             $result->SetUseImagesForActions(true);
             $result->SetDefaultOrdering('abkuerzung', otAscending);
             
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -2896,7 +2896,7 @@
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -2928,7 +2928,7 @@
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -3131,7 +3131,7 @@
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3139,7 +3139,7 @@
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3540,7 +3540,7 @@
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -3548,7 +3548,7 @@
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -3676,7 +3676,7 @@
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -3684,7 +3684,7 @@
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -3846,7 +3846,7 @@
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Beginn der Fraktion, leer (NULL) = unbekannt'));
             $column->SetFixedWidth(null);
@@ -3856,7 +3856,7 @@
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Ende der Fraktion, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag'));
             $column->SetFixedWidth(null);
@@ -4007,7 +4007,7 @@
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -4015,7 +4015,7 @@
             // View column for bis field
             //
             $column = new DateTimeViewColumn('bis', 'Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -4152,7 +4152,7 @@
             $result->SetUseImagesForActions(true);
             $result->SetDefaultOrdering('abkuerzung', otAscending);
             
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             

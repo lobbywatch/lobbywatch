@@ -2989,7 +2989,7 @@
             $result->SetUseImagesForActions(true);
             $result->SetDefaultOrdering('parlamentarier_id_anzeige_name', otAscending);
             
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             

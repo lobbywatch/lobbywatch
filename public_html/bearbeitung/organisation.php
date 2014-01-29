@@ -941,7 +941,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_organisation_parlamentarier_indirektDetailViewGrid0organisation');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -3215,7 +3215,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -3746,7 +3746,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_organisation_beziehung_auftraggeber_fuerDetailViewGrid1organisation');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -4785,7 +4785,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -5276,7 +5276,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_organisation_beziehung_arbeitet_fuerDetailViewGrid2organisation');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -6315,7 +6315,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -6806,7 +6806,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_organisation_beziehung_mitglied_vonDetailViewGrid3organisation');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -7845,7 +7845,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -8336,7 +8336,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_organisation_beziehung_mitgliederDetailViewGrid4organisation');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -9375,7 +9375,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -10416,7 +10416,7 @@
         {
             $result = new Grid($this, $this->dataset, 'v_organisation_parlamentarierDetailViewGrid5organisation');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -12714,7 +12714,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -13870,7 +13870,7 @@
         {
             $result = new Grid($this, $this->dataset, 'interessenbindungDetailViewGrid6organisation');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -16288,7 +16288,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -17079,7 +17079,7 @@
         {
             $result = new Grid($this, $this->dataset, 'mandatDetailViewGrid7organisation');
             $result->SetAllowDeleteSelected(false);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -18724,7 +18724,7 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
@@ -26021,7 +26021,7 @@
             $result->SetUseImagesForActions(true);
             $result->SetDefaultOrdering('name_de', otAscending);
             
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(false);
             
