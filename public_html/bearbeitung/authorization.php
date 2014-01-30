@@ -31,6 +31,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'organisation.mandat' => '<span class="entity important-entity">Organisation</span>.Mandat',
 'parlamentarier' => '<span class="entity important-entity">Parlamentarier</span>',
 'parlamentarier.parlamentarier_anhang' => '<span class="entity important-entity">Parlamentarier</span>.Parlamentarier Anhang',
+'parlamentarier.v_organisation_parlamentarier_beide_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.V Organisation Parlamentarier Beide Indirekt',
 'parlamentarier.v_interessenbindung_liste_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.V Interessenbindung Liste Indirekt',
 'parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.V Zutrittsberechtigung Mit Mandaten Indirekt',
 'parlamentarier.v_in_kommission_liste' => '<span class="entity important-entity">Parlamentarier</span>.In Kommission Liste',

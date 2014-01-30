@@ -409,7 +409,7 @@ WHERE
 ORDER BY beziehung, parlamentarier_name;
 
 -- Parlamenterier, die eine Zutrittsberechtiung mit Mandant oder Interessenbindung zu dieser Organisation haben.
--- Connector: mandat.organisation_id
+-- Connector: organisation_id oder parlamentarier_id
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier_beide` AS
 SELECT 'interessenbindung' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, NULL as zutrittsberechtigung_id, NULL as zutrittsberechtigter, interessenbindung.art, interessenbindung.von, interessenbindung.bis,  interessenbindung.organisation_id
 FROM v_interessenbindung interessenbindung
@@ -424,7 +424,7 @@ INNER JOIN v_parlamentarier parlamentarier
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id;
 
 -- Parlamenterier, die eine indirekte Interessenbindung oder indirekte Zutrittsberechtiung mit Mandat zu dieser Organisation haben.
--- Connector: connector_organisation_id
+-- Connector: connector_organisation_id oder parlamentarier_id
 -- Reverse Beziehung
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier_beide_indirekt` AS
 SELECT 'direkt' as beziehung, organisation_parlamentarier.verbindung, organisation_parlamentarier.parlamentarier_id, organisation_parlamentarier.parlamentarier_name, organisation_parlamentarier.zutrittsberechtigung_id, organisation_parlamentarier.zutrittsberechtigter, organisation_parlamentarier.art, organisation_parlamentarier.von, organisation_parlamentarier.bis, NULL as zwischenorganisation_id, organisation_parlamentarier.organisation_id as connector_organisation_id FROM v_organisation_parlamentarier_beide organisation_parlamentarier
