@@ -239,7 +239,7 @@ CREATE OR REPLACE VIEW `v_branche` AS SELECT CONCAT(t.name) AS anzeige_name,  t.
 
 CREATE OR REPLACE VIEW `v_mandat` AS SELECT t.* FROM `mandat` t;
 
-CREATE OR REPLACE VIEW `v_in_kommission` AS SELECT t.* FROM `in_kommission` t;
+CREATE OR REPLACE VIEW `v_in_kommission` AS SELECT t.*, parlamentarier.ratstyp FROM `in_kommission` t INNER JOIN parlamentarier ON t.parlamentarier_id = parlamentarier.id;
 
 CREATE OR REPLACE VIEW `v_organisation_beziehung` AS SELECT t.* FROM `organisation_beziehung` t;
 

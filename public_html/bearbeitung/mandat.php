@@ -2458,7 +2458,7 @@
             
             $result->SetUseFixedHeader(true);
             
-            $result->SetShowLineNumbers(false);
+            $result->SetShowLineNumbers(true);
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');

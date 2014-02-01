@@ -539,7 +539,7 @@
             $result->SetAllowDeleteSelected(false);
             $result->SetUseFixedHeader(true);
             
-            $result->SetShowLineNumbers(false);
+            $result->SetShowLineNumbers(true);
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
@@ -1846,7 +1846,7 @@
             $result->SetUseImagesForActions(true);
             $result->SetUseFixedHeader(true);
             
-            $result->SetShowLineNumbers(false);
+            $result->SetShowLineNumbers(true);
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
@@ -2928,7 +2928,7 @@
             $result->SetAllowDeleteSelected(false);
             $result->SetUseFixedHeader(true);
             
-            $result->SetShowLineNumbers(false);
+            $result->SetShowLineNumbers(true);
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
@@ -5235,7 +5235,7 @@
             $result->SetUseImagesForActions(true);
             $result->SetUseFixedHeader(true);
             
-            $result->SetShowLineNumbers(false);
+            $result->SetShowLineNumbers(true);
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
@@ -7661,7 +7661,7 @@
             
             $result->SetUseFixedHeader(true);
             
-            $result->SetShowLineNumbers(false);
+            $result->SetShowLineNumbers(true);
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
