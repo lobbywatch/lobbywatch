@@ -3040,36 +3040,7 @@
     
         protected function AddOperationsColumns(Grid $grid)
         {
-            $actionsBandName = 'actions';
-            $grid->AddBandToBegin($actionsBandName, $this->GetLocalizerCaptions()->GetMessageString('Actions'), true);
-            if ($this->GetSecurityInfo()->HasViewGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('View'), OPERATION_VIEW, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/view_action.png');
-            }
-            if ($this->GetSecurityInfo()->HasEditGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Edit'), OPERATION_EDIT, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/edit_action.png');
-                $column->OnShow->AddListener('ShowEditButtonHandler', $this);
-            }
-            if ($this->GetSecurityInfo()->HasDeleteGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Delete'), OPERATION_DELETE, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/delete_action.png');
-                $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
-            $column->SetAdditionalAttribute("data-modal-delete", "true");
-            $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
-            }
-            if ($this->GetSecurityInfo()->HasAddGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Copy'), OPERATION_COPY, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/copy_action.png');
-            }
+    
         }
     
         protected function AddFieldColumns(Grid $grid)
@@ -5040,7 +5011,7 @@
             $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
-                $grid->SetShowAddButton(true);
+                $grid->SetShowAddButton(false);
                 $grid->SetShowInlineAddButton(false);
             }
             else
@@ -5209,25 +5180,12 @@
         {
             return ;
         }
-        public function ShowEditButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
-        }
-        public function ShowDeleteButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
-        }
-        
-        public function GetModalGridDeleteHandler() { return 'v_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarier_modal_delete'; }
-        protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_organisation_parlamentarier_beide_indirektDetailEditGrid1parlamentarier');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
-                $result->SetAllowDeleteSelected(true);
+                $result->SetAllowDeleteSelected(false);
             else
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
@@ -5636,6 +5594,7 @@
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
             //
@@ -6074,6 +6033,40 @@
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(false);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for id field
+            //
+            $editor = new TextEdit('id_edit');
+            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for id field
+            //
+            $editor = new TextEdit('id_edit');
+            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'in_kommission.php?operation=view&pk0=%id%' , '_self');
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
         
         function GetCustomClientScript()
@@ -6148,6 +6141,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
+            $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
             //
@@ -6274,8 +6268,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('v_in_kommission_listeDetailEdit2parlamentarierssearch', $this->dataset,
-                array('abkuerzung', 'name', 'kommission_id_anzeige_name', 'funktion', 'notizen', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'von', 'bis', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa'),
-                array($this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Kommission'), $this->RenderText('Funktion'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa')),
+                array('abkuerzung', 'name', 'kommission_id_anzeige_name', 'funktion', 'notizen', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'von', 'bis', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa', 'id'),
+                array($this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Kommission'), $this->RenderText('Funktion'), $this->RenderText('Notizen'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Id')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -6368,6 +6362,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kontrolliert_visa', $this->RenderText('Kontrolliert Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('kontrolliert_datum', $this->RenderText('Kontrolliert Datum')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_visa', $this->RenderText('Freigabe Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
         }
     
         public function GetPageDirection()
@@ -6377,36 +6372,7 @@
     
         protected function AddOperationsColumns(Grid $grid)
         {
-            $actionsBandName = 'actions';
-            $grid->AddBandToBegin($actionsBandName, $this->GetLocalizerCaptions()->GetMessageString('Actions'), true);
-            if ($this->GetSecurityInfo()->HasViewGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('View'), OPERATION_VIEW, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/view_action.png');
-            }
-            if ($this->GetSecurityInfo()->HasEditGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Edit'), OPERATION_EDIT, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/edit_action.png');
-                $column->OnShow->AddListener('ShowEditButtonHandler', $this);
-            }
-            if ($this->GetSecurityInfo()->HasDeleteGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Delete'), OPERATION_DELETE, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/delete_action.png');
-                $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
-            $column->SetAdditionalAttribute("data-modal-delete", "true");
-            $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
-            }
-            if ($this->GetSecurityInfo()->HasAddGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Copy'), OPERATION_COPY, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/copy_action.png');
-            }
+    
         }
     
         protected function AddFieldColumns(Grid $grid)
@@ -6690,6 +6656,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
             //
@@ -7125,6 +7092,40 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for id field
+            //
+            $editor = new TextEdit('id_edit');
+            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for id field
+            //
+            $editor = new TextEdit('id_edit');
+            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'in_kommission.php?operation=view&pk0=%id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -7172,6 +7173,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -7263,6 +7265,14 @@
             //
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'in_kommission.php?operation=view&pk0=%id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -7505,6 +7515,16 @@
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Freigabe Visa', 'freigabe_visa', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for id field
+            //
+            $editor = new TextEdit('id_edit');
+            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
@@ -7753,9 +7773,19 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for id field
+            //
+            $editor = new TextEdit('id_edit');
+            $editColumn = new CustomEditColumn('Id', 'id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
-                $grid->SetShowAddButton(true);
+                $grid->SetShowAddButton(false);
                 $grid->SetShowInlineAddButton(false);
             }
             else
@@ -7894,6 +7924,14 @@
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'in_kommission.php?operation=view&pk0=%id%' , '_self');
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -8025,6 +8063,14 @@
             $column = new TextViewColumn('freigabe_visa', 'Freigabe Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
+            
+            //
+            // View column for id field
+            //
+            $column = new TextViewColumn('id', 'Id', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'in_kommission.php?operation=view&pk0=%id%' , '_self');
+            $grid->AddExportColumn($column);
         }
     
         protected function ApplyCommonColumnEditProperties(CustomEditColumn $column)
@@ -8042,25 +8088,12 @@
         {
             return ;
         }
-        public function ShowEditButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
-        }
-        public function ShowDeleteButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
-        }
-        
-        public function GetModalGridDeleteHandler() { return 'v_in_kommission_listeDetailEdit2parlamentarier_modal_delete'; }
-        protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_in_kommission_listeDetailEditGrid2parlamentarier');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
-                $result->SetAllowDeleteSelected(true);
+                $result->SetAllowDeleteSelected(false);
             else
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
@@ -8140,6 +8173,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
             //
@@ -8176,6 +8210,7 @@
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
@@ -9764,36 +9799,7 @@
     
         protected function AddOperationsColumns(Grid $grid)
         {
-            $actionsBandName = 'actions';
-            $grid->AddBandToBegin($actionsBandName, $this->GetLocalizerCaptions()->GetMessageString('Actions'), true);
-            if ($this->GetSecurityInfo()->HasViewGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('View'), OPERATION_VIEW, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/view_action.png');
-            }
-            if ($this->GetSecurityInfo()->HasEditGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Edit'), OPERATION_EDIT, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/edit_action.png');
-                $column->OnShow->AddListener('ShowEditButtonHandler', $this);
-            }
-            if ($this->GetSecurityInfo()->HasDeleteGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Delete'), OPERATION_DELETE, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/delete_action.png');
-                $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
-            $column->SetAdditionalAttribute("data-modal-delete", "true");
-            $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
-            }
-            if ($this->GetSecurityInfo()->HasAddGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Copy'), OPERATION_COPY, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/copy_action.png');
-            }
+    
         }
     
         protected function AddFieldColumns(Grid $grid)
@@ -11959,7 +11965,7 @@
             $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
-                $grid->SetShowAddButton(true);
+                $grid->SetShowAddButton(false);
                 $grid->SetShowInlineAddButton(false);
             }
             else
@@ -12388,25 +12394,12 @@
         {
             return ;
         }
-        public function ShowEditButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
-        }
-        public function ShowDeleteButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
-        }
-        
-        public function GetModalGridDeleteHandler() { return 'v_interessenbindung_liste_indirektDetailEdit3parlamentarier_modal_delete'; }
-        protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_interessenbindung_liste_indirektDetailEditGrid3parlamentarier');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
-                $result->SetAllowDeleteSelected(true);
+                $result->SetAllowDeleteSelected(false);
             else
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
@@ -14372,36 +14365,7 @@
     
         protected function AddOperationsColumns(Grid $grid)
         {
-            $actionsBandName = 'actions';
-            $grid->AddBandToBegin($actionsBandName, $this->GetLocalizerCaptions()->GetMessageString('Actions'), true);
-            if ($this->GetSecurityInfo()->HasViewGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('View'), OPERATION_VIEW, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/view_action.png');
-            }
-            if ($this->GetSecurityInfo()->HasEditGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Edit'), OPERATION_EDIT, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/edit_action.png');
-                $column->OnShow->AddListener('ShowEditButtonHandler', $this);
-            }
-            if ($this->GetSecurityInfo()->HasDeleteGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Delete'), OPERATION_DELETE, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/delete_action.png');
-                $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
-            $column->SetAdditionalAttribute("data-modal-delete", "true");
-            $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
-            }
-            if ($this->GetSecurityInfo()->HasAddGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Copy'), OPERATION_COPY, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/copy_action.png');
-            }
+    
         }
     
         protected function AddFieldColumns(Grid $grid)
@@ -16795,7 +16759,7 @@
             $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
-                $grid->SetShowAddButton(true);
+                $grid->SetShowAddButton(false);
                 $grid->SetShowInlineAddButton(false);
             }
             else
@@ -17210,25 +17174,12 @@
         {
             return ;
         }
-        public function ShowEditButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
-        }
-        public function ShowDeleteButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
-        }
-        
-        public function GetModalGridDeleteHandler() { return 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarier_modal_delete'; }
-        protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEditGrid4parlamentarier');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
-                $result->SetAllowDeleteSelected(true);
+                $result->SetAllowDeleteSelected(false);
             else
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
@@ -18888,36 +18839,7 @@
     
         protected function AddOperationsColumns(Grid $grid)
         {
-            $actionsBandName = 'actions';
-            $grid->AddBandToBegin($actionsBandName, $this->GetLocalizerCaptions()->GetMessageString('Actions'), true);
-            if ($this->GetSecurityInfo()->HasViewGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('View'), OPERATION_VIEW, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/view_action.png');
-            }
-            if ($this->GetSecurityInfo()->HasEditGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Edit'), OPERATION_EDIT, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/edit_action.png');
-                $column->OnShow->AddListener('ShowEditButtonHandler', $this);
-            }
-            if ($this->GetSecurityInfo()->HasDeleteGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Delete'), OPERATION_DELETE, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/delete_action.png');
-                $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
-            $column->SetAdditionalAttribute("data-modal-delete", "true");
-            $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
-            }
-            if ($this->GetSecurityInfo()->HasAddGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Copy'), OPERATION_COPY, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/copy_action.png');
-            }
+    
         }
     
         protected function AddFieldColumns(Grid $grid)
@@ -20795,7 +20717,7 @@
             $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
-                $grid->SetShowAddButton(true);
+                $grid->SetShowAddButton(false);
                 $grid->SetShowInlineAddButton(false);
             }
             else
@@ -21210,25 +21132,12 @@
         {
             return ;
         }
-        public function ShowEditButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
-        }
-        public function ShowDeleteButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
-        }
-        
-        public function GetModalGridDeleteHandler() { return 'v_interessenbindung_listeDetailEdit5parlamentarier_modal_delete'; }
-        protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_interessenbindung_listeDetailEditGrid5parlamentarier');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
-                $result->SetAllowDeleteSelected(true);
+                $result->SetAllowDeleteSelected(false);
             else
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
@@ -22937,36 +22846,7 @@
     
         protected function AddOperationsColumns(Grid $grid)
         {
-            $actionsBandName = 'actions';
-            $grid->AddBandToBegin($actionsBandName, $this->GetLocalizerCaptions()->GetMessageString('Actions'), true);
-            if ($this->GetSecurityInfo()->HasViewGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('View'), OPERATION_VIEW, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/view_action.png');
-            }
-            if ($this->GetSecurityInfo()->HasEditGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Edit'), OPERATION_EDIT, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/edit_action.png');
-                $column->OnShow->AddListener('ShowEditButtonHandler', $this);
-            }
-            if ($this->GetSecurityInfo()->HasDeleteGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Delete'), OPERATION_DELETE, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/delete_action.png');
-                $column->OnShow->AddListener('ShowDeleteButtonHandler', $this);
-            $column->SetAdditionalAttribute("data-modal-delete", "true");
-            $column->SetAdditionalAttribute("data-delete-handler-name", $this->GetModalGridDeleteHandler());
-            }
-            if ($this->GetSecurityInfo()->HasAddGrant())
-            {
-                $column = new RowOperationByLinkColumn($this->GetLocalizerCaptions()->GetMessageString('Copy'), OPERATION_COPY, $this->dataset);
-                $grid->AddViewColumn($column, $actionsBandName);
-                $column->SetImagePath('images/copy_action.png');
-            }
+    
         }
     
         protected function AddFieldColumns(Grid $grid)
@@ -25024,7 +24904,7 @@
             $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
-                $grid->SetShowAddButton(true);
+                $grid->SetShowAddButton(false);
                 $grid->SetShowInlineAddButton(false);
             }
             else
@@ -25425,25 +25305,12 @@
         {
             return ;
         }
-        public function ShowEditButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasEditGrant($this->GetDataset());
-        }
-        public function ShowDeleteButtonHandler(&$show)
-        {
-            if ($this->GetRecordPermission() != null)
-                $show = $this->GetRecordPermission()->HasDeleteGrant($this->GetDataset());
-        }
-        
-        public function GetModalGridDeleteHandler() { return 'v_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarier_modal_delete'; }
-        protected function GetEnableModalGridDelete() { return true; }
     
         protected function CreateGrid()
         {
             $result = new Grid($this, $this->dataset, 'v_zutrittsberechtigung_mit_mandatenDetailEditGrid6parlamentarier');
             if ($this->GetSecurityInfo()->HasDeleteGrant())
-                $result->SetAllowDeleteSelected(true);
+                $result->SetAllowDeleteSelected(false);
             else
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
@@ -26162,7 +26029,7 @@
               //
             // View column for v_organisation_parlamentarier_beide_indirektDetailView1parlamentarier detail
             //
-            $column = new DetailColumn(array('id'), 'detail1parlamentarier', 'v_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarier_handler', 'v_organisation_parlamentarier_beide_indirektDetailView1parlamentarier_handler', $this->dataset, 'V Organisation Parlamentarier Beide Indirekt', $this->RenderText('V Organisation Parlamentarier Beide Indirekt'));
+            $column = new DetailColumn(array('id'), 'detail1parlamentarier', 'v_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarier_handler', 'v_organisation_parlamentarier_beide_indirektDetailView1parlamentarier_handler', $this->dataset, 'Organisation Parlamentarier Beide Indirekt', $this->RenderText('Organisation Parlamentarier Beide Indirekt'));
               $grid->AddViewColumn($column);
             }
             
@@ -26180,7 +26047,7 @@
               //
             // View column for v_interessenbindung_liste_indirektDetailView3parlamentarier detail
             //
-            $column = new DetailColumn(array('id'), 'detail3parlamentarier', 'v_interessenbindung_liste_indirektDetailEdit3parlamentarier_handler', 'v_interessenbindung_liste_indirektDetailView3parlamentarier_handler', $this->dataset, 'V Interessenbindung Liste Indirekt', $this->RenderText('V Interessenbindung Liste Indirekt'));
+            $column = new DetailColumn(array('id'), 'detail3parlamentarier', 'v_interessenbindung_liste_indirektDetailEdit3parlamentarier_handler', 'v_interessenbindung_liste_indirektDetailView3parlamentarier_handler', $this->dataset, '<s>V Interessenbindung Liste Indirekt</s>', $this->RenderText('<s>V Interessenbindung Liste Indirekt</s>'));
               $grid->AddViewColumn($column);
             }
             
@@ -26189,7 +26056,7 @@
               //
             // View column for v_zutrittsberechtigung_mit_mandaten_indirektDetailView4parlamentarier detail
             //
-            $column = new DetailColumn(array('id'), 'detail4parlamentarier', 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarier_handler', 'v_zutrittsberechtigung_mit_mandaten_indirektDetailView4parlamentarier_handler', $this->dataset, 'V Zutrittsberechtigung Mit Mandaten Indirekt', $this->RenderText('V Zutrittsberechtigung Mit Mandaten Indirekt'));
+            $column = new DetailColumn(array('id'), 'detail4parlamentarier', 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarier_handler', 'v_zutrittsberechtigung_mit_mandaten_indirektDetailView4parlamentarier_handler', $this->dataset, '<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>', $this->RenderText('<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>'));
               $grid->AddViewColumn($column);
             }
             
@@ -26198,7 +26065,7 @@
               //
             // View column for v_interessenbindung_listeDetailView5parlamentarier detail
             //
-            $column = new DetailColumn(array('id'), 'detail5parlamentarier', 'v_interessenbindung_listeDetailEdit5parlamentarier_handler', 'v_interessenbindung_listeDetailView5parlamentarier_handler', $this->dataset, 'V Interessenbindung Liste', $this->RenderText('V Interessenbindung Liste'));
+            $column = new DetailColumn(array('id'), 'detail5parlamentarier', 'v_interessenbindung_listeDetailEdit5parlamentarier_handler', 'v_interessenbindung_listeDetailView5parlamentarier_handler', $this->dataset, '<s>V Interessenbindung Liste</s>', $this->RenderText('<s>V Interessenbindung Liste</s>'));
               $grid->AddViewColumn($column);
             }
             
@@ -26207,7 +26074,7 @@
               //
             // View column for v_zutrittsberechtigung_mit_mandatenDetailView6parlamentarier detail
             //
-            $column = new DetailColumn(array('id'), 'detail6parlamentarier', 'v_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarier_handler', 'v_zutrittsberechtigung_mit_mandatenDetailView6parlamentarier_handler', $this->dataset, 'V Zutrittsberechtigung Mit Mandaten', $this->RenderText('V Zutrittsberechtigung Mit Mandaten'));
+            $column = new DetailColumn(array('id'), 'detail6parlamentarier', 'v_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarier_handler', 'v_zutrittsberechtigung_mit_mandatenDetailView6parlamentarier_handler', $this->dataset, '<s>V Zutrittsberechtigung Mit Mandaten</s>', $this->RenderText('<s>V Zutrittsberechtigung Mit Mandaten</s>'));
               $grid->AddViewColumn($column);
             }
             
@@ -35644,7 +35511,7 @@
             $pageEdit->SetHttpHandlerName('parlamentarier_anhangDetailEdit0parlamentarier_handler');
             $handler = new PageHTTPHandler('parlamentarier_anhangDetailEdit0parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageView = new v_organisation_parlamentarier_beide_indirektDetailView1parlamentarierPage($this, 'V Organisation Parlamentarier Beide Indirekt', 'V Organisation Parlamentarier Beide Indirekt', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_organisation_parlamentarier_beide_indirekt'), 'UTF-8', 20, 'v_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarier_handler');
+            $pageView = new v_organisation_parlamentarier_beide_indirektDetailView1parlamentarierPage($this, 'Organisation Parlamentarier Beide Indirekt', 'Organisation Parlamentarier Beide Indirekt', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_organisation_parlamentarier_beide_indirekt'), 'UTF-8', 20, 'v_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarier_handler');
             
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_organisation_parlamentarier_beide_indirekt'));
             $handler = new PageHTTPHandler('v_organisation_parlamentarier_beide_indirektDetailView1parlamentarier_handler', $pageView);
@@ -35652,10 +35519,10 @@
             $pageEdit = new v_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarierPage($this, array('parlamentarier_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_organisation_parlamentarier_beide_indirekt'), 'UTF-8');
             
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_organisation_parlamentarier_beide_indirekt'));
-            $pageEdit->SetShortCaption('V Organisation Parlamentarier Beide Indirekt');
+            $pageEdit->SetShortCaption('Organisation Parlamentarier Beide Indirekt');
             $pageEdit->SetHeader(GetPagesHeader());
             $pageEdit->SetFooter(GetPagesFooter());
-            $pageEdit->SetCaption('V Organisation Parlamentarier Beide Indirekt');
+            $pageEdit->SetCaption('Organisation Parlamentarier Beide Indirekt');
             $pageEdit->SetHttpHandlerName('v_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarier_handler');
             $handler = new PageHTTPHandler('v_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -35674,7 +35541,7 @@
             $pageEdit->SetHttpHandlerName('v_in_kommission_listeDetailEdit2parlamentarier_handler');
             $handler = new PageHTTPHandler('v_in_kommission_listeDetailEdit2parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageView = new v_interessenbindung_liste_indirektDetailView3parlamentarierPage($this, 'V Interessenbindung Liste Indirekt', 'V Interessenbindung Liste Indirekt', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste_indirekt'), 'UTF-8', 20, 'v_interessenbindung_liste_indirektDetailEdit3parlamentarier_handler');
+            $pageView = new v_interessenbindung_liste_indirektDetailView3parlamentarierPage($this, '<s>V Interessenbindung Liste Indirekt</s>', '<s>V Interessenbindung Liste Indirekt</s>', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste_indirekt'), 'UTF-8', 20, 'v_interessenbindung_liste_indirektDetailEdit3parlamentarier_handler');
             
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_interessenbindung_liste_indirekt'));
             $handler = new PageHTTPHandler('v_interessenbindung_liste_indirektDetailView3parlamentarier_handler', $pageView);
@@ -35682,14 +35549,14 @@
             $pageEdit = new v_interessenbindung_liste_indirektDetailEdit3parlamentarierPage($this, array('parlamentarier_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_interessenbindung_liste_indirektDetailEdit3parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste_indirekt'), 'UTF-8');
             
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_interessenbindung_liste_indirekt'));
-            $pageEdit->SetShortCaption('V Interessenbindung Liste Indirekt');
+            $pageEdit->SetShortCaption('<s>V Interessenbindung Liste Indirekt</s>');
             $pageEdit->SetHeader(GetPagesHeader());
             $pageEdit->SetFooter(GetPagesFooter());
-            $pageEdit->SetCaption('V Interessenbindung Liste Indirekt');
+            $pageEdit->SetCaption('<s>V Interessenbindung Liste Indirekt</s>');
             $pageEdit->SetHttpHandlerName('v_interessenbindung_liste_indirektDetailEdit3parlamentarier_handler');
             $handler = new PageHTTPHandler('v_interessenbindung_liste_indirektDetailEdit3parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageView = new v_zutrittsberechtigung_mit_mandaten_indirektDetailView4parlamentarierPage($this, 'V Zutrittsberechtigung Mit Mandaten Indirekt', 'V Zutrittsberechtigung Mit Mandaten Indirekt', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'), 'UTF-8', 20, 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarier_handler');
+            $pageView = new v_zutrittsberechtigung_mit_mandaten_indirektDetailView4parlamentarierPage($this, '<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>', '<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'), 'UTF-8', 20, 'v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarier_handler');
             
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'));
             $handler = new PageHTTPHandler('v_zutrittsberechtigung_mit_mandaten_indirektDetailView4parlamentarier_handler', $pageView);
@@ -35697,14 +35564,14 @@
             $pageEdit = new v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarierPage($this, array('parlamentarier_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'), 'UTF-8');
             
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt'));
-            $pageEdit->SetShortCaption('V Zutrittsberechtigung Mit Mandaten Indirekt');
+            $pageEdit->SetShortCaption('<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>');
             $pageEdit->SetHeader(GetPagesHeader());
             $pageEdit->SetFooter(GetPagesFooter());
-            $pageEdit->SetCaption('V Zutrittsberechtigung Mit Mandaten Indirekt');
+            $pageEdit->SetCaption('<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>');
             $pageEdit->SetHttpHandlerName('v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarier_handler');
             $handler = new PageHTTPHandler('v_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageView = new v_interessenbindung_listeDetailView5parlamentarierPage($this, 'V Interessenbindung Liste', 'V Interessenbindung Liste', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste'), 'UTF-8', 20, 'v_interessenbindung_listeDetailEdit5parlamentarier_handler');
+            $pageView = new v_interessenbindung_listeDetailView5parlamentarierPage($this, '<s>V Interessenbindung Liste</s>', '<s>V Interessenbindung Liste</s>', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste'), 'UTF-8', 20, 'v_interessenbindung_listeDetailEdit5parlamentarier_handler');
             
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_interessenbindung_liste'));
             $handler = new PageHTTPHandler('v_interessenbindung_listeDetailView5parlamentarier_handler', $pageView);
@@ -35712,14 +35579,14 @@
             $pageEdit = new v_interessenbindung_listeDetailEdit5parlamentarierPage($this, array('parlamentarier_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_interessenbindung_listeDetailEdit5parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_interessenbindung_liste'), 'UTF-8');
             
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_interessenbindung_liste'));
-            $pageEdit->SetShortCaption('V Interessenbindung Liste');
+            $pageEdit->SetShortCaption('<s>V Interessenbindung Liste</s>');
             $pageEdit->SetHeader(GetPagesHeader());
             $pageEdit->SetFooter(GetPagesFooter());
-            $pageEdit->SetCaption('V Interessenbindung Liste');
+            $pageEdit->SetCaption('<s>V Interessenbindung Liste</s>');
             $pageEdit->SetHttpHandlerName('v_interessenbindung_listeDetailEdit5parlamentarier_handler');
             $handler = new PageHTTPHandler('v_interessenbindung_listeDetailEdit5parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
-            $pageView = new v_zutrittsberechtigung_mit_mandatenDetailView6parlamentarierPage($this, 'V Zutrittsberechtigung Mit Mandaten', 'V Zutrittsberechtigung Mit Mandaten', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'), 'UTF-8', 20, 'v_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarier_handler');
+            $pageView = new v_zutrittsberechtigung_mit_mandatenDetailView6parlamentarierPage($this, '<s>V Zutrittsberechtigung Mit Mandaten</s>', '<s>V Zutrittsberechtigung Mit Mandaten</s>', array('parlamentarier_id'), GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'), 'UTF-8', 20, 'v_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarier_handler');
             
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'));
             $handler = new PageHTTPHandler('v_zutrittsberechtigung_mit_mandatenDetailView6parlamentarier_handler', $pageView);
@@ -35727,10 +35594,10 @@
             $pageEdit = new v_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarierPage($this, array('parlamentarier_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarierGrid(), $this->dataset, GetCurrentUserGrantForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'), 'UTF-8');
             
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('parlamentarier.v_zutrittsberechtigung_mit_mandaten'));
-            $pageEdit->SetShortCaption('V Zutrittsberechtigung Mit Mandaten');
+            $pageEdit->SetShortCaption('<s>V Zutrittsberechtigung Mit Mandaten</s>');
             $pageEdit->SetHeader(GetPagesHeader());
             $pageEdit->SetFooter(GetPagesFooter());
-            $pageEdit->SetCaption('V Zutrittsberechtigung Mit Mandaten');
+            $pageEdit->SetCaption('<s>V Zutrittsberechtigung Mit Mandaten</s>');
             $pageEdit->SetHttpHandlerName('v_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarier_handler');
             $handler = new PageHTTPHandler('v_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarier_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
