@@ -90,6 +90,9 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
         }
     
         protected function AddFieldColumns(Grid $grid)
@@ -611,6 +614,9 @@
             $field = new StringField('updated_visa');
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('ratstyp');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
         }
