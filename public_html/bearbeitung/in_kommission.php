@@ -93,6 +93,13 @@
             $field = new StringField('ratstyp');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new IntegerField('partei_id');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('fraktion_id');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
         }
     
         protected function AddFieldColumns(Grid $grid)
@@ -617,6 +624,13 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('partei_id');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('fraktion_id');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
         }

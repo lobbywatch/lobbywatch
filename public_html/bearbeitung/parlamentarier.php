@@ -5345,6 +5345,13 @@
             $field = new StringField('ratstyp');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new IntegerField('partei_id');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('fraktion_id');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'kommission_id_anzeige_name', 'kommission_id_anzeige_name_v_kommission'), 'kommission_id_anzeige_name_v_kommission');
         }
     
@@ -6231,6 +6238,13 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('partei_id');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('fraktion_id');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'kommission_id_anzeige_name', 'kommission_id_anzeige_name_v_kommission'), 'kommission_id_anzeige_name_v_kommission');
