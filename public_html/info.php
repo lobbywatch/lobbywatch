@@ -51,6 +51,7 @@ require_once 'common/utils.php';
   <p>
     <a href="/wiki">Wiki</a><br/>
   </p>
+  <?php //phpinfo(); ?>
   <footer><p>Version: <?php print $version;?> / Deploy date: <?php print $deploy_date;?> / Build date: <?php print $build_date;?></p></footer>
   </body>
 </html>

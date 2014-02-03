@@ -46,7 +46,9 @@ if ($stage) {
 
 }
 
-session_set_cookie_params(3600 * 24 * 14, '/bearbeitung/');
+session_set_cookie_params(3600 * 24 * 30, '/bearbeitung/');
+ini_set('session.gc_maxlifetime', 200000);
+ini_set('session.cookie_httponly', true);
 
 $users = array (
     'otto' => '',
