@@ -1111,9 +1111,12 @@ thisTrigger: begin
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `in_kommission_log`
     SELECT *, null, 'insert', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+  -- Fill parlamentarier.kommissionen on change
+  SET @disable_table_logging = 1;
   UPDATE `parlamentarier` p
     SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id)
     WHERE p.id=NEW.parlamentarier_id;
+  SET @disable_table_logging = NULL;
 end
 //
 delimiter ;
@@ -1126,9 +1129,12 @@ thisTrigger: begin
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `in_kommission_log`
     SELECT *, null, 'update', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+  -- Fill parlamentarier.kommissionen on change
+  SET @disable_table_logging = 1;
   UPDATE `parlamentarier` p
     SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id)
-    WHERE p.id=NEW.parlamentarier_id;
+    WHERE p.id=NEW.parlamentarier_id OR p.id=OLD.parlamentarier_id;
+  SET @disable_table_logging = NULL;
 end
 //
 delimiter ;
@@ -1155,9 +1161,12 @@ thisTrigger: begin
   UPDATE `in_kommission_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+  -- Fill parlamentarier.kommissionen on change
+  SET @disable_table_logging = 1;
   UPDATE `parlamentarier` p
     SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id)
     WHERE p.id=OLD.parlamentarier_id;
+  SET @disable_table_logging = NULL;
 end
 //
 delimiter ;
