@@ -1750,6 +1750,20 @@
         {
             return ;
         }
+        public function q_unvollstaendige_organisationenGrid_OnGetCustomTemplate($part, $mode, &$result)
+        {
+        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
+          $result = 'edit/grid.tpl';
+        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
+          $result = 'insert/grid.tpl';
+        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
+          $result = 'view/grid.tpl';
+        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
+          $result = 'list/grid.tpl';
+        } else if ($part == PagePart::PageList) {
+          $result = 'page_list.tpl';
+        }
+        }
     
         protected function CreateGrid()
         {
@@ -1768,6 +1782,7 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $this->OnGetCustomTemplate->AddListener('q_unvollstaendige_organisationenGrid' . '_OnGetCustomTemplate', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

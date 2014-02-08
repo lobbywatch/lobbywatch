@@ -849,6 +849,20 @@
         {
             return ;
         }
+        public function q_last_updated_tablesGrid_OnGetCustomTemplate($part, $mode, &$result)
+        {
+        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
+          $result = 'edit/grid.tpl';
+        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
+          $result = 'insert/grid.tpl';
+        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
+          $result = 'view/grid.tpl';
+        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
+          $result = 'list/grid.tpl';
+        } else if ($part == PagePart::PageList) {
+          $result = 'page_list.tpl';
+        }
+        }
     
         protected function CreateGrid()
         {
@@ -869,6 +883,7 @@
             
             $result->SetHighlightRowAtHover(true);
             $result->SetWidth('');
+            $this->OnGetCustomTemplate->AddListener('q_last_updated_tablesGrid' . '_OnGetCustomTemplate', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

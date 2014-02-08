@@ -14796,6 +14796,8 @@
           $result = 'edit/grid.tpl';
         } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
           $result = 'insert/grid.tpl';
+        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
+          $result = 'view/grid.tpl';
         } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
           $result = 'list/grid.tpl';
         } else if ($part == PagePart::PageList) {
