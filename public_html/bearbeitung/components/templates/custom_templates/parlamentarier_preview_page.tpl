@@ -51,23 +51,43 @@
 </div>
 
 <script type="text/javascript">{literal}
-function selectText(element) {
-    var doc = document
-        , text = doc.getElementById(element)
-        , range, selection
-    ;    
-    if (doc.body.createTextRange) { //ms
-        range = doc.body.createTextRange();
-        range.moveToElementText(text);
-        range.select();
-    } else if (window.getSelection) { //all others
-        selection = window.getSelection();        
-        range = doc.createRange();
-        range.selectNodeContents(text);
-        selection.removeAllRanges();
-        selection.addRange(range);
-    }
-}
+  //http://stackoverflow.com/questions/985272/jquery-selecting-text-in-an-element-akin-to-highlighting-with-your-mouse
+  function selectText(element) {
+      var doc = document
+          , text = doc.getElementById(element)
+          , range, selection
+      ;    
+      if (doc.body.createTextRange) { //ms
+          range = doc.body.createTextRange();
+          range.moveToElementText(text);
+          range.select();
+      } else if (window.getSelection) { //all others
+          selection = window.getSelection();        
+          range = doc.createRange();
+          range.selectNodeContents(text);
+          selection.removeAllRanges();
+          selection.addRange(range);
+      }
+  }
+  
+  jQuery.fn.selectText = function(){
+      var doc = document
+          , element = this[0]
+          , range, selection
+      ;
+      if (doc.body.createTextRange) {
+          range = document.body.createTextRange();
+          range.moveToElementText(element);
+          range.select();
+      } else if (window.getSelection) {
+          selection = window.getSelection();        
+          range = document.createRange();
+          range.selectNodeContents(element);
+          selection.removeAllRanges();
+          selection.addRange(range);
+      }
+  };
+
   // perform JavaScript after the document is scriptable.
   $(function() {
       // setup ul.tabs to work as tabs for each div directly under div.panes
@@ -78,7 +98,8 @@ function selectText(element) {
       //});
 
       $("#email-select-button").click(function() {
-        selectText('email-content');
+        //selectText('email-content');
+        $('#email-content').selectText();
       });
   });
 {/literal}</script>
