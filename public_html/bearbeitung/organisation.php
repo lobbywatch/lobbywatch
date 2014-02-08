@@ -56,6 +56,20 @@
             $field = new StringField('parlamentarier_name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('partei_id');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('partei');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommissionen');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('parlament_biografie_id');
+            $this->dataset->AddField($field, true);
             $field = new IntegerField('zutrittsberechtigung_id');
             $this->dataset->AddField($field, true);
             $field = new StringField('zutrittsberechtigter');
@@ -72,6 +86,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
+            $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('anzeige_name', 'partei_id_anzeige_name', 'partei_id_anzeige_name_v_partei'), 'partei_id_anzeige_name_v_partei');
             $this->dataset->AddLookupField('zutrittsberechtigung_id', 'v_zutrittsberechtigung', new IntegerField('id'), new StringField('anzeige_name', 'zutrittsberechtigung_id_anzeige_name', 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung'), 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung');
             $this->dataset->AddLookupField('zwischenorganisation_id', 'v_organisation', new IntegerField('id'), new StringField('anzeige_name', 'zwischenorganisation_id_anzeige_name', 'zwischenorganisation_id_anzeige_name_v_organisation'), 'zwischenorganisation_id_anzeige_name_v_organisation');
             $this->dataset->AddLookupField('connector_organisation_id', 'v_organisation', new IntegerField('id'), new StringField('anzeige_name', 'connector_organisation_id_anzeige_name', 'connector_organisation_id_anzeige_name_v_organisation'), 'connector_organisation_id_anzeige_name_v_organisation');
@@ -219,7 +234,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -281,6 +296,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -354,7 +375,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -417,6 +438,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier', 
@@ -429,6 +456,259 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for ratstyp field
+            //
+            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column->SetOrderable(false);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for ratstyp field
+            //
+            $editor = new TextEdit('ratstyp_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for ratstyp field
+            //
+            $editor = new TextEdit('ratstyp_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('partei_id_anzeige_name', 'Partei', $this->dataset);
+            $column->SetOrderable(false);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for partei_id field
+            //
+            $editor = new ComboBox('partei_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_partei`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('gruendung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('position');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Partei', 
+                'partei_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for partei_id field
+            //
+            $editor = new ComboBox('partei_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_partei`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('gruendung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('position');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Partei', 
+                'partei_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(false);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for kanton field
+            //
+            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(false);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for kanton field
+            //
+            $editor = new TextEdit('kanton_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for kanton field
+            //
+            $editor = new TextEdit('kanton_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -520,6 +800,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -613,6 +895,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1154,6 +1438,20 @@
             $field = new StringField('parlamentarier_name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('partei_id');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('partei');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommissionen');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('parlament_biografie_id');
+            $this->dataset->AddField($field, true);
             $field = new IntegerField('zutrittsberechtigung_id');
             $this->dataset->AddField($field, true);
             $field = new StringField('zutrittsberechtigter');
@@ -1170,6 +1468,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
+            $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('anzeige_name', 'partei_id_anzeige_name', 'partei_id_anzeige_name_v_partei'), 'partei_id_anzeige_name_v_partei');
             $this->dataset->AddLookupField('zutrittsberechtigung_id', 'v_zutrittsberechtigung', new IntegerField('id'), new StringField('anzeige_name', 'zutrittsberechtigung_id_anzeige_name', 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung'), 'zutrittsberechtigung_id_anzeige_name_v_zutrittsberechtigung');
             $this->dataset->AddLookupField('zwischenorganisation_id', 'v_organisation', new IntegerField('id'), new StringField('anzeige_name', 'zwischenorganisation_id_anzeige_name', 'zwischenorganisation_id_anzeige_name_v_organisation'), 'zwischenorganisation_id_anzeige_name_v_organisation');
             $this->dataset->AddLookupField('connector_organisation_id', 'v_organisation', new IntegerField('id'), new StringField('anzeige_name', 'connector_organisation_id_anzeige_name', 'connector_organisation_id_anzeige_name_v_organisation'), 'connector_organisation_id_anzeige_name_v_organisation');
@@ -1199,8 +1498,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('v_organisation_parlamentarier_beide_indirektDetailEdit0organisationssearch', $this->dataset,
-                array('beziehung', 'verbindung', 'parlamentarier_id_anzeige_name', 'zutrittsberechtigung_id_anzeige_name', 'art', 'von', 'bis', 'zwischenorganisation_id_anzeige_name', 'connector_organisation_id_anzeige_name'),
-                array($this->RenderText('Beziehung'), $this->RenderText('Verbindung'), $this->RenderText('Parlamentarier'), $this->RenderText('Zutrittsberechtigung'), $this->RenderText('Art'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Zwischenorganisation'), $this->RenderText('Connector Organisation Id')),
+                array('beziehung', 'verbindung', 'parlamentarier_id_anzeige_name', 'ratstyp', 'partei_id_anzeige_name', 'kommissionen', 'kanton', 'zutrittsberechtigung_id_anzeige_name', 'art', 'von', 'bis', 'zwischenorganisation_id_anzeige_name', 'connector_organisation_id_anzeige_name'),
+                array($this->RenderText('Beziehung'), $this->RenderText('Verbindung'), $this->RenderText('Parlamentarier'), $this->RenderText('Ratstyp'), $this->RenderText('Partei'), $this->RenderText('Kommissionen'), $this->RenderText('Kanton'), $this->RenderText('Zutrittsberechtigung'), $this->RenderText('Art'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Zwischenorganisation'), $this->RenderText('Connector Organisation Id')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -1278,7 +1577,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -1341,7 +1640,69 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
+            $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ratstyp', $this->RenderText('Ratstyp')));
+            
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_partei`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('gruendung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('position');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('partei_id', $this->RenderText('Partei'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kommissionen', $this->RenderText('Kommissionen')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kanton', $this->RenderText('Kanton')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -1419,6 +1780,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
@@ -1720,7 +2083,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -1782,6 +2145,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1855,7 +2224,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -1918,6 +2287,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier', 
@@ -1930,6 +2305,259 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for ratstyp field
+            //
+            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for ratstyp field
+            //
+            $editor = new TextEdit('ratstyp_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for ratstyp field
+            //
+            $editor = new TextEdit('ratstyp_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('partei_id_anzeige_name', 'Partei', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for partei_id field
+            //
+            $editor = new ComboBox('partei_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_partei`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('gruendung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('position');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Partei', 
+                'partei_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for partei_id field
+            //
+            $editor = new ComboBox('partei_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_partei`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('gruendung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('position');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Partei', 
+                'partei_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for kanton field
+            //
+            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for kanton field
+            //
+            $editor = new TextEdit('kanton_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for kanton field
+            //
+            $editor = new TextEdit('kanton_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -2021,6 +2649,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2114,6 +2744,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2618,6 +3250,35 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for ratstyp field
+            //
+            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('partei_id_anzeige_name', 'Partei', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for kanton field
+            //
+            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
@@ -2750,7 +3411,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -2813,12 +3474,118 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier', 
                 'parlamentarier_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for ratstyp field
+            //
+            $editor = new TextEdit('ratstyp_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for partei_id field
+            //
+            $editor = new ComboBox('partei_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_partei`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('gruendung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('position');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Partei', 
+                'partei_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for kanton field
+            //
+            $editor = new TextEdit('kanton_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2904,6 +3671,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -3197,7 +3966,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -3260,12 +4029,118 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Parlamentarier', 
                 'parlamentarier_id', 
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for ratstyp field
+            //
+            $editor = new TextEdit('ratstyp_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for partei_id field
+            //
+            $editor = new ComboBox('partei_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_partei`');
+            $field = new StringField('anzeige_name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('fraktion_id');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('gruendung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('position');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('email');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Partei', 
+                'partei_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for kanton field
+            //
+            $editor = new TextEdit('kanton_edit');
+            $editor->SetSize(2);
+            $editor->SetMaxLength(2);
+            $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3351,6 +4226,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -3595,6 +4472,35 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for ratstyp field
+            //
+            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('partei_id_anzeige_name', 'Partei', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for kanton field
+            //
+            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('zutrittsberechtigung_id_anzeige_name', 'Zutrittsberechtigung', $this->dataset);
@@ -3664,6 +4570,35 @@
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=view&pk0=%parlamentarier_id%' , '_self');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for ratstyp field
+            //
+            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('partei_id_anzeige_name', 'Partei', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'partei.php?operation=view&pk0=%partei_id%' , '_self');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for kanton field
+            //
+            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -14816,7 +15751,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -14878,6 +15813,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -14951,7 +15892,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -15013,6 +15954,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -15659,7 +16606,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -15721,6 +16668,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
@@ -16319,7 +17272,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -16381,6 +17334,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -16454,7 +17413,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -16516,6 +17475,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -17258,7 +18223,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -17320,6 +18285,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -17655,7 +18626,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -17717,6 +18688,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -19099,7 +20076,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -19161,6 +20138,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -19234,7 +20217,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -19296,6 +20279,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -19982,7 +20971,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -20044,6 +21033,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
@@ -20665,7 +21660,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -20727,6 +21722,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -20800,7 +21801,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -20862,6 +21863,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -21656,7 +22663,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -21718,6 +22725,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -22067,7 +23080,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -22129,6 +23142,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -22892,6 +23911,20 @@
             $field = new StringField('parlamentarier_name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('partei_id');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('partei');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommissionen');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('parlament_biografie_id');
+            $this->dataset->AddField($field, true);
             $field = new IntegerField('zutrittsberechtigung_id');
             $this->dataset->AddField($field, true);
             $field = new StringField('zutrittsberechtigter');
@@ -23015,7 +24048,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -23077,6 +24110,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -23150,7 +24189,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -23212,6 +24251,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -23317,6 +24362,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -23409,6 +24456,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -23767,6 +24816,20 @@
             $field = new StringField('parlamentarier_name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('partei_id');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('partei');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommissionen');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('parlament_biografie_id');
+            $this->dataset->AddField($field, true);
             $field = new IntegerField('zutrittsberechtigung_id');
             $this->dataset->AddField($field, true);
             $field = new StringField('zutrittsberechtigter');
@@ -23887,7 +24950,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -23949,6 +25012,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -24028,6 +25097,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
@@ -24221,7 +25292,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -24283,6 +25354,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24356,7 +25433,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -24418,6 +25495,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24523,6 +25606,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -24615,6 +25700,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25044,7 +26131,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -25106,6 +26193,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25198,6 +26291,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25396,7 +26491,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -25458,6 +26553,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25550,6 +26651,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -26028,7 +27131,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -26090,6 +27193,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -26163,7 +27272,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -26225,6 +27334,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -27469,7 +28584,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -27531,6 +28646,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -27715,7 +28836,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -27777,6 +28898,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -27850,7 +28977,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -27912,6 +29039,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -29135,7 +30268,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -29197,6 +30330,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -29589,7 +30728,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -29651,6 +30790,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(

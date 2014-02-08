@@ -499,7 +499,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -561,6 +561,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier Id'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('datei', $this->RenderText('Datei')));
@@ -1043,7 +1049,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -1105,6 +1111,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1539,6 +1551,20 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('parlamentarier_name');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('partei_id');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('partei');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommissionen');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('parlament_biografie_id');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('zutrittsberechtigung_id');
             $this->dataset->AddField($field, true);
@@ -2088,6 +2114,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -2180,6 +2208,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2361,7 +2391,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -2423,6 +2453,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2496,7 +2532,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -2558,6 +2594,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2638,6 +2680,20 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('parlamentarier_name');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('ratstyp');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kanton');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('partei_id');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('partei');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommissionen');
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('parlament_biografie_id');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('zutrittsberechtigung_id');
             $this->dataset->AddField($field, true);
@@ -2927,6 +2983,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von')));
@@ -2987,7 +3045,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -3049,6 +3107,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
         }
@@ -3590,6 +3654,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -3682,6 +3748,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -3863,7 +3931,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -3925,6 +3993,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -3998,7 +4072,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -4060,6 +4134,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -4425,6 +4505,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -4523,7 +4605,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -4585,6 +4667,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -4873,6 +4961,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -4971,7 +5061,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -5033,6 +5123,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -9756,7 +9852,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -9818,6 +9914,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('deklarationstyp', $this->RenderText('Deklarationstyp')));
@@ -11361,7 +11463,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -11423,6 +11525,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -11835,7 +11943,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -11897,6 +12005,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -12915,6 +13029,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -13007,6 +13123,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -14175,7 +14293,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -14237,6 +14355,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
@@ -14317,6 +14441,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -14650,6 +14776,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -14742,6 +14870,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -15841,7 +15971,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -15903,6 +16033,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -16004,6 +16140,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -16380,7 +16518,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -16442,6 +16580,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -16544,6 +16688,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -21622,6 +21768,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -21714,6 +21862,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -22738,7 +22888,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -22800,6 +22950,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
@@ -22880,6 +23036,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('organisation_id', $this->RenderText('Organisation Id')));
@@ -23104,6 +23262,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -23196,6 +23356,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24144,7 +24306,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -24206,6 +24368,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24307,6 +24475,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24603,7 +24773,7 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $lookupDataset->AddField($field, false);
@@ -24665,6 +24835,12 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('fraktion');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24767,6 +24943,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25673,7 +25851,7 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $this->dataset->AddField($field, false);
@@ -25737,7 +25915,7 @@
             $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung', 'partei_id_abkuerzung', 'partei_id_abkuerzung_v_partei'), 'partei_id_abkuerzung_v_partei');
             $this->dataset->AddLookupField('fraktion_id', 'v_fraktion', new IntegerField('id'), new StringField('anzeige_name', 'fraktion_id_anzeige_name', 'fraktion_id_anzeige_name_v_fraktion'), 'fraktion_id_anzeige_name_v_fraktion');
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'interessengruppe', new IntegerField('id', null, null, true), new StringField('name', 'beruf_interessengruppe_id_name', 'beruf_interessengruppe_id_name_interessengruppe'), 'beruf_interessengruppe_id_name_interessengruppe');
-            $this->dataset->AddLookupField('militaerischer_grad', 'v_mil_grad', new IntegerField('id'), new StringField('name', 'militaerischer_grad_name', 'militaerischer_grad_name_v_mil_grad'), 'militaerischer_grad_name_v_mil_grad');
+            $this->dataset->AddLookupField('militaerischer_grad_id', 'v_mil_grad', new IntegerField('id'), new StringField('name', 'militaerischer_grad_id_name', 'militaerischer_grad_id_name_v_mil_grad'), 'militaerischer_grad_id_name_v_mil_grad');
         }
     
         protected function CreatePageNavigator()
@@ -25810,8 +25988,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_anzeige_name', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Notizen')),
+                array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_anzeige_name', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -26028,7 +26206,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('militaerischer_grad', $this->RenderText('Militaerischer Grad'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('militaerischer_grad_id', $this->RenderText('Militärischer Grad'), $lookupDataset, 'id', 'name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo', $this->RenderText('Photo')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kleinbild', $this->RenderText('Kleinbild')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
@@ -27192,14 +27370,14 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for militaerischer_grad field
+            // Edit column for militaerischer_grad_id field
             //
-            $editor = new ComboBox('militaerischer_grad_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('militaerischer_grad_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -27235,8 +27413,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
-                'Militaerischer Grad', 
-                'militaerischer_grad', 
+                'Militärischer Grad', 
+                'militaerischer_grad_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -27246,9 +27424,9 @@
             
             /* <inline insert column> */
             //
-            // Edit column for militaerischer_grad field
+            // Edit column for militaerischer_grad_id field
             //
-            $editor = new ComboBox('militaerischer_grad_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('militaerischer_grad_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -27284,8 +27462,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
-                'Militaerischer Grad', 
-                'militaerischer_grad', 
+                'Militärischer Grad', 
+                'militaerischer_grad_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -28076,7 +28254,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -28658,9 +28836,9 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for militaerischer_grad field
+            // Edit column for militaerischer_grad_id field
             //
-            $editor = new ComboBox('militaerischer_grad_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('militaerischer_grad_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -28696,8 +28874,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
-                'Militaerischer Grad', 
-                'militaerischer_grad', 
+                'Militärischer Grad', 
+                'militaerischer_grad_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -29366,9 +29544,9 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for militaerischer_grad field
+            // Edit column for militaerischer_grad_id field
             //
-            $editor = new ComboBox('militaerischer_grad_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor = new ComboBox('militaerischer_grad_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
@@ -29404,8 +29582,8 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'anzeigestufe > 0'));
             $editColumn = new LookUpEditColumn(
-                'Militaerischer Grad', 
-                'militaerischer_grad', 
+                'Militärischer Grad', 
+                'militaerischer_grad_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
@@ -29657,7 +29835,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -29992,7 +30170,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -30386,7 +30564,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
@@ -30768,7 +30946,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31152,7 +31330,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
@@ -31534,7 +31712,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31918,7 +32096,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
@@ -32300,7 +32478,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32684,7 +32862,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
@@ -33066,7 +33244,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33450,7 +33628,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
@@ -33832,7 +34010,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34216,7 +34394,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
@@ -34598,7 +34776,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34982,7 +35160,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Militärischer Grad, leer (NULL) = kein Militärdienst'));
             $column->SetFixedWidth(null);
@@ -35364,7 +35542,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('militaerischer_grad_name', 'Militaerischer Grad', $this->dataset);
+            $column = new TextViewColumn('militaerischer_grad_id_name', 'Militärischer Grad', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

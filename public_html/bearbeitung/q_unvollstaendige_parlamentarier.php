@@ -91,7 +91,7 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('anzahl_kinder');
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('militaerischer_grad');
+            $field = new IntegerField('militaerischer_grad_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $this->dataset->AddField($field, false);

@@ -260,3 +260,7 @@ ALTER TABLE `organisation`
 ALTER TABLE `parlamentarier` ADD `kommissionen` VARCHAR( 75 ) NULL DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])' AFTER `kanton` ;
 
 ALTER TABLE `parlamentarier_log` ADD `kommissionen` VARCHAR( 75 ) NULL DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])' AFTER `kanton` ;
+
+ALTER TABLE `parlamentarier` CHANGE `militaerischer_grad` `militaerischer_grad_id` INT( 11 ) NULL DEFAULT NULL COMMENT 'Militärischer Grad, leer (NULL) = kein Militärdienst';
+
+ALTER TABLE `parlamentarier_log` CHANGE `militaerischer_grad` `militaerischer_grad_id` INT( 11 ) NULL DEFAULT NULL COMMENT 'Militärischer Grad, leer (NULL) = kein Militärdienst';
