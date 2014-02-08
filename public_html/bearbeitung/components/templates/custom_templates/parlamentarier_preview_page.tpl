@@ -38,8 +38,9 @@
 
         <div class="email">
             <h3>{$Parlamentarier.EmailTitle}</h3>
-            {*<p><small>Doppelklick im E-Mail markiert das ganze E-Mail</small></p>*}
+            <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen.</small></p>
             <button id="email-select-button">E-Mail selektieren</button>
+            <button id="email-open">E-Mail öffnen</button>
 
             <div id="email-content" style="padding-left: 20px;" class="email-content">
                 {$Parlamentarier.EmailText}
@@ -100,6 +101,11 @@
       $("#email-select-button").click(function() {
         //selectText('email-content');
         $('#email-content').selectText();
+      });
+
+      $("#email-open").click(function() {
+        window.open("{/literal}{$Parlamentarier.MailTo}{literal}", 'Mailer');
+        return false;
       });
   });
 {/literal}</script>

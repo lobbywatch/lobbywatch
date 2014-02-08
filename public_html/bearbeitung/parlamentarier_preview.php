@@ -189,6 +189,8 @@ GROUP BY parlamentarier.id;";
           throw new Exception('ID not found');
         }
 
+        $mailto = 'mailto:' . urlencode($result[0]["email"]) . '?subject=' . urlencode('Interessenbindungen') . '&body=' . urlencode('[Kopiere von Vorlage]') . '&bcc=info@lobbywatch.ch';
+
 //         ShowPreviewPage('<h4>Preview</h4><h3>' .$result[0]["parlamentarier_name"] . '</h3>' .
 //         '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
 //         '<h4>Gäste</h4><ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>' .
@@ -209,10 +211,11 @@ GROUP BY parlamentarier.id;";
               'Preview' => '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
                 '<h4>Gäste</h4>' . ($result[0]['zutrittsberechtigungen'] ? '<ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
                 '<h4>Mandate der Gäste</h4>' . gaesteMitMandaten($con, $id),
-              'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="mailto:' . urlencode($result[0]["email"]) . '?subject=' . urlencode('Interessenbindungen') . '&body=' . urlencode('[Kopiere von Vorlage]') . '&bcc=info@lobbywatch.ch" target="_blank">' . $result[0]["parlamentarier_name"] . '</a>',
+              'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailto. '" target="_blank">' . $result[0]["parlamentarier_name"] . '</a>',
               'EmailText' => '<p>' . $result[0]['anrede'] . '</p>' .'<p>[Einleitung]</p>' . '<p>Ihre <b>Interessenbindungen</b>:</p><ul>' . $result[0]['interessenbindungen_for_email'] . '</ul>' .
                 '<p>Ihre <b>Gäste</b>:</p>' . ($result[0]['zutrittsberechtigungen'] ? '<ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
                 '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id) . '<p>Freundliche Grüsse<br>' . getFullUsername(Application::Instance()->GetCurrentUser()) . '</p>',
+               'MailTo' => $mailto,
           ),
             'Authentication' => array(
                 'Enabled' => true,
