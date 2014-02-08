@@ -46,7 +46,7 @@
         var curUrl = window.location.href;
         var editUrl = curUrl.replace(/operation=view&/, 'operation=edit&');
         if (curUrl != editUrl) {
-          window.location = editUrl;
+          window.location.href = editUrl;
         }
         return false;
       });
