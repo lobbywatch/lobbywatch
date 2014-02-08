@@ -248,7 +248,7 @@ CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS SELECT t.parlamentarier_id a
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_anhang` AS SELECT t.zutrittsberechtigung_id as zutrittsberechtigung_id2, t.* FROM `zutrittsberechtigung_anhang` t;
 
-CREATE OR REPLACE VIEW `v_user` AS SELECT t.* FROM `user` t;
+CREATE OR REPLACE VIEW `v_user` AS SELECT CONCAT_WS(' ', u.vorname, u.nachname ) as anzeige_name, u.* FROM `user` u;
 
 CREATE OR REPLACE VIEW `v_user_permission` AS SELECT t.* FROM `user_permission` t;
 
