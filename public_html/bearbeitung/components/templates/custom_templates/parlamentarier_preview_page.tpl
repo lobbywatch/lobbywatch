@@ -38,8 +38,10 @@
 
         <div class="email">
             <h3>{$Parlamentarier.EmailTitle}</h3>
+            {*<p><small>Doppelklick im E-Mail markiert das ganze E-Mail</small></p>*}
+            <button id="email-select-button">E-Mail selektieren</button>
 
-            <div style="padding-left: 20px;" class="email-content">
+            <div id="email-content" style="padding-left: 20px;" class="email-content">
                 {$Parlamentarier.EmailText}
             </div>
 
@@ -49,13 +51,34 @@
 </div>
 
 <script type="text/javascript">{literal}
+function selectText(element) {
+    var doc = document
+        , text = doc.getElementById(element)
+        , range, selection
+    ;    
+    if (doc.body.createTextRange) { //ms
+        range = doc.body.createTextRange();
+        range.moveToElementText(text);
+        range.select();
+    } else if (window.getSelection) { //all others
+        selection = window.getSelection();        
+        range = doc.createRange();
+        range.selectNodeContents(text);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+}
   // perform JavaScript after the document is scriptable.
   $(function() {
       // setup ul.tabs to work as tabs for each div directly under div.panes
       $(".css-tabs:first").tabs(".css-panes:first > div", { history: true });
       
-      $(".email-content").dblclick(function() {
-        $(this).select();
+      //$(".email-content").dblclick(function() {
+      //  selectText('email-content');
+      //});
+
+      $("#email-select-button").click(function() {
+        selectText('email-content');
       });
   });
 {/literal}</script>
