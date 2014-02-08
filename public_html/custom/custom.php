@@ -625,7 +625,7 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
 function gaesteMitMandaten($con, $parlamentarier_id) {
   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
 GROUP_CONCAT(DISTINCT
-    CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)), IF(TRUE OR mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT(', ', mandat.beschreibung)))
+    CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)), IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT(', ', mandat.beschreibung)))
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
 ) mandate
@@ -662,7 +662,7 @@ GROUP BY zutrittsberechtigung.id;";
 function mandateList($con, $zutrittsberechtigte_id) {
   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
 GROUP_CONCAT(DISTINCT
-    CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)), IF(TRUE OR mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT(', ', mandat.beschreibung)))
+    CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)), IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT(', ', mandat.beschreibung)))
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
 ) mandate
