@@ -559,18 +559,15 @@ UTF8_URLENCODE(CONCAT(
 )) email_text_for_url
 FROM v_parlamentarier parlamentarier
 LEFT JOIN v_interessenbindung interessenbindung
-  ON interessenbindung.parlamentarier_id = parlamentarier.id
+  ON interessenbindung.parlamentarier_id = parlamentarier.id AND interessenbindung.bis IS NULL
 LEFT JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
 LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
-  ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
+  ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND zutrittsberechtigung.bis IS NULL
 LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id AND mandat.bis IS NULL
 LEFT JOIN v_organisation organisation2
   ON mandat.organisation_id = organisation2.id
 WHERE
-parlamentarier.im_rat_bis IS NULL
-AND interessenbindung.bis IS NULL
-AND zutrittsberechtigung.bis IS NULL
-AND mandat.bis IS NULL
+  parlamentarier.im_rat_bis IS NULL
 GROUP BY parlamentarier.id;

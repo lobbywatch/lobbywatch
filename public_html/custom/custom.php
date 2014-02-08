@@ -621,3 +621,84 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
 
   $rendered = $smarty->fetch($TemplateName, null, null, $display);
 }
+
+function gaesteMitMandaten($con, $parlamentarier_id) {
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
+GROUP_CONCAT(DISTINCT
+    CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', mandat.art, IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT(', ', mandat.beschreibung)))
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ' '
+) mandate
+FROM v_zutrittsberechtigung zutrittsberechtigung
+LEFT JOIN v_mandat mandat
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id AND mandat.bis IS NULL
+LEFT JOIN v_organisation organisation
+  ON mandat.organisation_id = organisation.id
+WHERE
+  zutrittsberechtigung.bis IS NULL
+  AND zutrittsberechtigung.parlamentarier_id=:id
+GROUP BY zutrittsberechtigung.id;";
+
+  $gaeste = array();
+  $sth = $con->prepare($sql);
+  $sth->execute(array(':id' => $parlamentarier_id));
+  $gaeste = $sth->fetchAll();
+
+  if (!$gaeste) {
+    return '<p>keine</p>';
+//      throw new Exception('Parlamentarier ID not found');
+  }
+
+  $res = '';
+  foreach($gaeste as $gast) {
+    $res .= '<h5>' . $gast['zutrittsberechtigung_name'] . '</h5>';
+    //$res .= mandateList($con, $gast['id']);
+    $res .= "<ul>\n" . $gast['mandate'] . "\n</ul>";
+  }
+
+  return $res;
+}
+
+function mandateList($con, $zutrittsberechtigte_id) {
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
+GROUP_CONCAT(DISTINCT
+    CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', mandat.art, IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT(', ', mandat.beschreibung)))
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ' '
+) mandate
+FROM v_zutrittsberechtigung zutrittsberechtigung
+LEFT JOIN v_mandat mandat
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id AND mandat.bis IS NULL
+LEFT JOIN v_organisation organisation
+  ON mandat.organisation_id = organisation.id
+WHERE
+  zutrittsberechtigung.bis IS NULL
+  AND zutrittsberechtigung.id=:id
+GROUP BY zutrittsberechtigung.id;";
+
+  $result = array();
+  $sth = $con->prepare($sql);
+  $sth->execute(array(':id' => $zutrittsberechtigte_id));
+  $result = $sth->fetchAll();
+
+  if (!$result) {
+    return '<p>keine</p>';
+  }
+
+  return "<ul>\n" . $result[0]['mandate'] . "\n</ul>";
+}
+
+function getFullUsername($user) {
+  switch($user) {
+  	case 'otto' :
+  	  return 'Otto Hostettler';
+  	case 'roland' :
+  	  return 'Roland Kurmann';
+    case 'thomas' :
+  	  return 'Thomas Angeli';
+    case 'rebecca' :
+  	  return 'Rebecca Wyss';
+    default:
+  	  return '';
+  }
+}
