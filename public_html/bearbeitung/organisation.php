@@ -191,6 +191,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -277,6 +279,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -322,6 +326,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -408,6 +414,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1242,6 +1250,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -1328,6 +1338,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -1680,6 +1692,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -1766,6 +1780,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1811,6 +1827,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -1897,6 +1915,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2702,6 +2722,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -2788,6 +2810,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -3145,6 +3169,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -3231,6 +3257,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -14760,6 +14788,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -14846,6 +14876,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -14891,6 +14923,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -14977,6 +15011,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -15595,6 +15631,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -15681,6 +15719,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
@@ -16251,6 +16291,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -16337,6 +16379,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -16382,6 +16426,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -16468,6 +16514,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -17182,6 +17230,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -17268,6 +17318,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -17575,6 +17627,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -17661,6 +17715,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -19015,6 +19071,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -19101,6 +19159,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -19146,6 +19206,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -19232,6 +19294,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -19890,6 +19954,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -19976,6 +20042,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
@@ -20569,6 +20637,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -20655,6 +20725,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -20700,6 +20772,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -20786,6 +20860,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -21552,6 +21628,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -21638,6 +21716,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -21959,6 +22039,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -22045,6 +22127,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -22903,6 +22987,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -22989,6 +23075,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -23034,6 +23122,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -23120,6 +23210,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -23767,6 +23859,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -23853,6 +23947,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -24097,6 +24193,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -24183,6 +24281,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24228,6 +24328,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -24314,6 +24416,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24912,6 +25016,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -24998,6 +25104,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25260,6 +25368,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -25346,6 +25456,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25888,6 +26000,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -25974,6 +26088,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -26019,6 +26135,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -26105,6 +26223,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -27321,6 +27441,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -27407,6 +27529,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -27563,6 +27687,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -27649,6 +27775,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -27694,6 +27822,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -27780,6 +27910,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -28975,6 +29107,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -29061,6 +29195,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -29425,6 +29561,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -29511,6 +29649,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(

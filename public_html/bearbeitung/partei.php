@@ -61,6 +61,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -2390,6 +2392,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, false);
+            $field = new StringField('kommissionen');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, false);

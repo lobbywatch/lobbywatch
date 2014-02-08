@@ -219,7 +219,7 @@ ORDER BY last_updated DESC;
 
 -- VIEWS
 
-CREATE OR REPLACE VIEW `v_parlamentarier` AS SELECT CONCAT(t.nachname, ', ', t.vorname) AS anzeige_name, CONCAT(t.vorname, ' ', t.nachname) AS name, t.*  FROM `parlamentarier` t;
+CREATE OR REPLACE VIEW `v_parlamentarier` AS SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name, CONCAT(p.vorname, ' ', p.nachname) AS name, p.*, GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen2  FROM `parlamentarier` p LEFT JOIN v_in_kommission ik ON p.id = ik.parlamentarier_id AND ik.bis IS NULL LEFT JOIN v_kommission k ON ik.kommission_id=k.id GROUP BY p.id;
 
 CREATE OR REPLACE VIEW `v_kommission` AS SELECT CONCAT(t.name, ' (', t.abkuerzung, ')') AS anzeige_name, t.* FROM `kommission` t;
 

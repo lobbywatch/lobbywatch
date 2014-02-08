@@ -471,6 +471,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -557,6 +559,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier Id'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('datei', $this->RenderText('Datei')));
@@ -1011,6 +1015,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -1097,6 +1103,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2325,6 +2333,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -2411,6 +2421,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2456,6 +2468,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -2542,6 +2556,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2943,6 +2959,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -3029,6 +3047,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
         }
@@ -3815,6 +3835,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -3901,6 +3923,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -3946,6 +3970,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -4032,6 +4058,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -4467,6 +4495,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -4553,6 +4583,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -4911,6 +4943,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -4997,6 +5031,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -9692,6 +9728,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -9778,6 +9816,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('deklarationstyp', $this->RenderText('Deklarationstyp')));
@@ -11293,6 +11333,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -11379,6 +11421,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -11763,6 +11807,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -11849,6 +11895,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -14099,6 +14147,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -14185,6 +14235,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
@@ -15761,6 +15813,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -15847,6 +15901,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -16296,6 +16352,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -16382,6 +16440,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -22650,6 +22710,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -22736,6 +22798,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
@@ -24052,6 +24116,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -24138,6 +24204,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24507,6 +24575,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -24593,6 +24663,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25573,6 +25645,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -25736,8 +25810,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_anzeige_name', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Notizen')),
+                array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_anzeige_name', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -25763,6 +25837,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zweiter_vorname', $this->RenderText('Zweiter Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ratstyp', $this->RenderText('Ratstyp')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kanton', $this->RenderText('Kanton')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kommissionen', $this->RenderText('Kommissionen')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -26286,6 +26361,43 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Kantonskürzel'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -27847,6 +27959,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for abkuerzung field
             //
             $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
@@ -28226,6 +28345,18 @@
             $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -28924,6 +29055,18 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for partei_id field
             //
             $editor = new ComboBox('partei_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -29399,6 +29542,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for abkuerzung field
             //
             $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
@@ -29723,6 +29873,13 @@
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -30082,6 +30239,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung field
             //
             $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
@@ -30483,6 +30649,13 @@
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30832,6 +31005,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung field
             //
             $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
@@ -31233,6 +31415,13 @@
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31582,6 +31771,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung field
             //
             $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
@@ -31983,6 +32181,13 @@
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32332,6 +32537,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung field
             //
             $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
@@ -32733,6 +32947,13 @@
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33082,6 +33303,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung field
             //
             $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
@@ -33483,6 +33713,13 @@
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33832,6 +34069,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung field
             //
             $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
@@ -34233,6 +34479,13 @@
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34582,6 +34835,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for abkuerzung field
             //
             $column = new TextViewColumn('partei_id_abkuerzung', 'Partei', $this->dataset);
@@ -34983,6 +35245,13 @@
             // View column for kanton field
             //
             $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

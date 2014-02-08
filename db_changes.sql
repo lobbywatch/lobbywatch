@@ -254,3 +254,9 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang` (
 ALTER TABLE `organisation`
   ADD `interessengruppe2_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. 2. Interessengruppe der Organisation.' AFTER `interessengruppe_id`,
   ADD `interessengruppe3_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. 3. Interessengruppe der Organisation.' AFTER `interessengruppe2_id`;
+
+-- 08.02.2014
+
+ALTER TABLE `parlamentarier` ADD `kommissionen` VARCHAR( 75 ) NULL DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])' AFTER `kanton` ;
+
+ALTER TABLE `parlamentarier_log` ADD `kommissionen` VARCHAR( 75 ) NULL DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])' AFTER `kanton` ;

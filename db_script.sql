@@ -430,3 +430,9 @@ ADD `autorisiert_datum` DATE NULL DEFAULT NULL COMMENT 'Autorisiert am. Leer/NUL
 ALTER TABLE `zutrittsberechtigung`
 ADD `autorisierung_verschickt_visa` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Autorisierungsanfrage verschickt durch' AFTER `kontrolliert_datum`,
 ADD `autorisierung_verschickt_datum` DATETIME NULL DEFAULT NULL COMMENT 'Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)' AFTER `autorisierung_verschickt_visa`;
+
+-- 08.02.2014
+
+UPDATE `parlamentarier` p
+    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+p.updated_visa='roland';

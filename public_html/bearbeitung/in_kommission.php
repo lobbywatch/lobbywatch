@@ -202,6 +202,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -288,6 +290,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -447,6 +451,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -533,6 +539,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'inline_edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
@@ -575,6 +583,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -661,6 +671,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'inline_insert_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
@@ -1362,6 +1374,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -1448,6 +1462,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'edit_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
@@ -1713,6 +1729,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -1799,6 +1817,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Parlamentarier', 'parlamentarier_id', 'parlamentarier_id_anzeige_name', 'insert_parlamentarier_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
@@ -2322,6 +2342,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -2408,6 +2430,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
@@ -2441,6 +2465,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -2527,6 +2553,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
@@ -2596,6 +2624,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -2682,6 +2712,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
@@ -2714,6 +2746,8 @@
             $field = new StringField('kanton');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parteifunktion');
@@ -2800,6 +2834,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
