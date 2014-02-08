@@ -207,6 +207,7 @@ GROUP BY parlamentarier.id;";
           ),
             'Footer' => GetPagesFooter(),
             'Parlamentarier' => array(
+              'Id'  => $id,
               'Title' => 'Vorschau: ' . $result[0]["parlamentarier_name"],
               'Preview' => '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
                 '<h4>Gäste</h4>' . ($result[0]['zutrittsberechtigungen'] ? '<ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .

@@ -350,7 +350,9 @@ abstract class SelectedOperationGridState extends GridState {
   }
 
   public function ProcessMessages() {
+    // df(GetApplication ()->GetPOSTValue ( 'recordCount' ), 'recCount');
     $primaryKeysArray = array ();
+    // df($_POST, 'post');
     for($i = 0; $i < GetApplication ()->GetPOSTValue ( 'recordCount' ); $i ++) {
       if (GetApplication ()->IsPOSTValueSet ( 'rec' . $i )) {
         // TODO : move GetPrimaryKeyFieldNames function to private

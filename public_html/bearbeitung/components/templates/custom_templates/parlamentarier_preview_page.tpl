@@ -31,6 +31,13 @@
   </div>
   <!-- Second tab content.-->
   <div class="row-fluid">
+    
+    <div id="ops" class="hide">
+      <div class="pg-row-selected-sim">
+        <input name="rec0" type="checkbox" checked>
+        <input name="rec0_pk0" value="{$Parlamentarier.Id}" type="hidden">
+      </div>
+    </div>
 
     {*<div class="span2"></div>*}
 
@@ -38,9 +45,10 @@
 
         <div class="email">
             <h3>{$Parlamentarier.EmailTitle}</h3>
-            <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen.</small></p>
+            <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen und 5. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
             <button id="email-select-button">E-Mail selektieren</button>
             <button id="email-open">E-Mail öffnen</button>
+            <button id="email-sent">Autorisierungsanfrage verschickt</button>
 
             <div id="email-content" style="padding-left: 20px;" class="email-content">
                 {$Parlamentarier.EmailText}
@@ -88,6 +96,41 @@
           selection.addRange(range);
       }
   };
+  
+  // Adapted from pgui.grid.ops.js
+  function operateRowAsSelected(action, operation, date) {
+    var selectedRows = $('#ops')
+        .find('.pg-row-selected-sim')
+        .filter(function() {
+            return true;
+            //return $(this).find('input[type=checkbox]').prop('checked') ? true : false;
+        });
+    var $form = $('<form>')
+        .addClass('hide')
+        .attr('method', 'post')
+        .attr('action', action)
+        .append($('<input name="operation" value="' + operation + '">'))
+        .append(
+            $('<input name="recordCount">')
+                .attr('value', $('#ops').find('.pg-row-selected-sim').length))
+        .appendTo($('body'));
+
+    selectedRows.each(function() {
+        $(this).find('input').clone().appendTo($form);
+    });
+    $form.append($('<input name="date" value="' + date + '">'));
+    $form.submit();
+  }
+  
+  function countSelectedRows() {
+    var selectedRows = $('#ops')
+      .find('.pg-row-selected-sim')
+      .filter(function() {
+          return true;
+         //return $(this).find('input[type=checkbox]').prop('checked') ? true : false;
+      });
+    return selectedRows.length;
+  }
 
   // perform JavaScript after the document is scriptable.
   $(function() {
@@ -106,6 +149,20 @@
       $("#email-open").click(function() {
         window.open("{/literal}{$Parlamentarier.MailTo}{literal}", 'Mailer');
         return false;
+      });
+
+      $("#email-sent").click(function() {
+        require(['bootbox.min'], function() {
+    
+          var nRows = countSelectedRows();
+          bootbox.animate(false);
+          bootbox.confirm( 'Bei ' + nRows + ' markierten Einträgen eine "Autorisierungsanfrage verschickt" setzen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+              if (confirmed) {
+                //self.operateSelectRows('sndsel');
+                operateRowAsSelected('parlamentarier.php', 'sndsel', '');
+              }
+          });
+        });  
       });
   });
 {/literal}</script>
