@@ -39,7 +39,7 @@
         <div class="email">
             <h3>{$Parlamentarier.EmailTitle}</h3>
 
-            <div style="padding-left: 20px;">
+            <div style="padding-left: 20px;" class="email-content">
                 {$Parlamentarier.EmailText}
             </div>
 
@@ -53,6 +53,10 @@
   $(function() {
       // setup ul.tabs to work as tabs for each div directly under div.panes
       $(".css-tabs:first").tabs(".css-panes:first > div", { history: true });
+      
+      $(".email-content").dblclick(function() {
+        $(this).select();
+      });
   });
 {/literal}</script>
 

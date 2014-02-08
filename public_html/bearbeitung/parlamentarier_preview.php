@@ -131,9 +131,11 @@
 //         df($eng_con->Connected(), 'connected');
 //         df($con, 'con');
         $cmd = $con_factory->CreateEngCommandImp();
+
         $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email, parlamentarier.geschlecht,
   GROUP_CONCAT(DISTINCT
-      CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art, IF(interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung)))
+      CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)), IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung))
+)
       ORDER BY organisation.anzeige_name
       SEPARATOR ' '
   ) interessenbindungen,
@@ -199,7 +201,7 @@ GROUP BY parlamentarier.id;";
             'Parlamentarier' => array(
               'Title' => 'Vorschau: ' . $result[0]["parlamentarier_name"],
               'Preview' => '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
-                '<h4>Gäste</h4><ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>' .
+                '<h4>Gäste</h4>' . ($result[0]['zutrittsberechtigungen'] ? '<ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
                 '<h4>Mandate der Gäste</h4>' . gaesteMitMandaten($con, $id),
               'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="mailto:' . urlencode($result[0]["email"]) . '?subject=' . urlencode('Interessenbindungen') . '&body=' . urlencode('[Kopiere von Vorlage]') . '&bcc=info@lobbywatch.ch" target="_blank">' . $result[0]["parlamentarier_name"] . '</a>',
               'EmailText' => '<p>' . $result[0]['anrede'] . '</p>' .'<p>[Einleitung]</p>' . '<p>Ihre <b>Interessenbindungen</b>:</p><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
