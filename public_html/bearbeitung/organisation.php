@@ -463,7 +463,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(false);
             
             /* <inline edit column> */
@@ -473,7 +473,7 @@
             $editor = new TextEdit('ratstyp_edit');
             $editor->SetSize(2);
             $editor->SetMaxLength(2);
-            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -487,7 +487,7 @@
             $editor = new TextEdit('ratstyp_edit');
             $editor->SetSize(2);
             $editor->SetMaxLength(2);
-            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1499,7 +1499,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('v_organisation_parlamentarier_beide_indirektDetailEdit0organisationssearch', $this->dataset,
                 array('beziehung', 'verbindung', 'parlamentarier_id_anzeige_name', 'ratstyp', 'partei_id_anzeige_name', 'kommissionen', 'kanton', 'zutrittsberechtigung_id_anzeige_name', 'art', 'von', 'bis', 'zwischenorganisation_id_anzeige_name', 'connector_organisation_id_anzeige_name'),
-                array($this->RenderText('Beziehung'), $this->RenderText('Verbindung'), $this->RenderText('Parlamentarier'), $this->RenderText('Ratstyp'), $this->RenderText('Partei'), $this->RenderText('Kommissionen'), $this->RenderText('Kanton'), $this->RenderText('Zutrittsberechtigung'), $this->RenderText('Art'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Zwischenorganisation'), $this->RenderText('Connector Organisation Id')),
+                array($this->RenderText('Beziehung'), $this->RenderText('Verbindung'), $this->RenderText('Parlamentarier'), $this->RenderText('Rat'), $this->RenderText('Partei'), $this->RenderText('Kommissionen'), $this->RenderText('Kanton'), $this->RenderText('Zutrittsberechtigung'), $this->RenderText('Art'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Zwischenorganisation'), $this->RenderText('Connector Organisation Id')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -1647,7 +1647,7 @@
             $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ratstyp', $this->RenderText('Ratstyp')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ratstyp', $this->RenderText('Rat')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -2312,7 +2312,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -2322,7 +2322,7 @@
             $editor = new TextEdit('ratstyp_edit');
             $editor->SetSize(2);
             $editor->SetMaxLength(2);
-            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2336,7 +2336,7 @@
             $editor = new TextEdit('ratstyp_edit');
             $editor->SetSize(2);
             $editor->SetMaxLength(2);
-            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -3252,7 +3252,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3497,7 +3497,7 @@
             $editor = new TextEdit('ratstyp_edit');
             $editor->SetSize(2);
             $editor->SetMaxLength(2);
-            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4052,7 +4052,7 @@
             $editor = new TextEdit('ratstyp_edit');
             $editor->SetSize(2);
             $editor->SetMaxLength(2);
-            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4474,7 +4474,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -4575,7 +4575,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

@@ -59,6 +59,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'partei.fraktion' => '<span class="entity">Partei</span>.Fraktion',
 'fraktion' => '<span class="entity">Fraktion</span>',
 'fraktion.partei' => '<span class="entity">Fraktion</span>.Partei',
+'fraktion.parlamentarier' => '<span class="entity">Fraktion</span>.Parlamentarier',
 'v_parlamentarier_authorisierungs_email' => '<span class="view">Parlamentarier Email</span>',
 'q_unvollstaendige_parlamentarier' => '<span class="view">Unvollständige Parlamentarier</span>',
 'q_unvollstaendige_organisationen' => '<span class="view">Unvollständige Organisationen</span>',

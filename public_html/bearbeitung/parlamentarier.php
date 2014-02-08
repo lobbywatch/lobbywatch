@@ -25989,7 +25989,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
                 array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_anzeige_name', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Ratstyp'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Notizen')),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -26013,7 +26013,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('nachname', $this->RenderText('Nachname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vorname', $this->RenderText('Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zweiter_vorname', $this->RenderText('Zweiter Vorname')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ratstyp', $this->RenderText('Ratstyp')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ratstyp', $this->RenderText('Rat')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kanton', $this->RenderText('Kanton')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kommissionen', $this->RenderText('Kommissionen')));
             
@@ -26423,7 +26423,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -26433,7 +26433,7 @@
             $editor = new ComboBox('ratstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('NR', $this->RenderText('NR'));
             $editor->AddValue('SR', $this->RenderText('SR'));
-            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -26447,7 +26447,7 @@
             $editor = new ComboBox('ratstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('NR', $this->RenderText('NR'));
             $editor->AddValue('SR', $this->RenderText('SR'));
-            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -28125,7 +28125,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -28484,7 +28484,7 @@
             $editor = new ComboBox('ratstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('NR', $this->RenderText('NR'));
             $editor->AddValue('SR', $this->RenderText('SR'));
-            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -29190,7 +29190,7 @@
             $editor = new ComboBox('ratstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('NR', $this->RenderText('NR'));
             $editor->AddValue('SR', $this->RenderText('SR'));
-            $editColumn = new CustomEditColumn('Ratstyp', 'ratstyp', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -29708,7 +29708,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -30043,7 +30043,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -30401,7 +30401,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
@@ -30819,7 +30819,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31167,7 +31167,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
@@ -31585,7 +31585,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -31933,7 +31933,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
@@ -32351,7 +32351,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32699,7 +32699,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
@@ -33117,7 +33117,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33465,7 +33465,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
@@ -33883,7 +33883,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34231,7 +34231,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
@@ -34649,7 +34649,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34997,7 +34997,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('National- oder Ständerat?'));
             $column->SetFixedWidth(null);
@@ -35415,7 +35415,7 @@
             //
             // View column for ratstyp field
             //
-            $column = new TextViewColumn('ratstyp', 'Ratstyp', $this->dataset);
+            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
