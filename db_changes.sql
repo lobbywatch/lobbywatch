@@ -264,3 +264,63 @@ ALTER TABLE `parlamentarier_log` ADD `kommissionen` VARCHAR( 75 ) NULL DEFAULT N
 ALTER TABLE `parlamentarier` CHANGE `militaerischer_grad` `militaerischer_grad_id` INT( 11 ) NULL DEFAULT NULL COMMENT 'Militärischer Grad, leer (NULL) = kein Militärdienst';
 
 ALTER TABLE `parlamentarier_log` CHANGE `militaerischer_grad` `militaerischer_grad_id` INT( 11 ) NULL DEFAULT NULL COMMENT 'Militärischer Grad, leer (NULL) = kein Militärdienst';
+
+-- 09.02.2014
+
+drop trigger if exists `trg_parlamentarier_log_upd`;
+delimiter //
+create trigger `trg_parlamentarier_log_upd` after update on `parlamentarier`
+for each row
+thisTrigger: begin
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate authorization from parlamentarier to his interessenbindungen
+  IF OLD.autorisiert_datum <> NEW.autorisiert_datum
+    OR (OLD.autorisiert_datum IS NULL AND NEW.autorisiert_datum IS NOT NULL)
+    OR (OLD.autorisiert_datum IS NOT NULL AND NEW.autorisiert_datum IS NULL) THEN
+    UPDATE `interessenbindung`
+      SET
+        autorisiert_datum = NEW.autorisiert_datum,
+        autorisiert_visa = NEW.autorisiert_visa,
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+        parlamentarier_id=NEW.id AND bis IS NULL;
+  END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_zutrittsberechtigung_log_upd`;
+delimiter //
+create trigger `trg_zutrittsberechtigung_log_upd` after update on `zutrittsberechtigung`
+for each row
+thisTrigger: begin
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate authorization from zutrittsberechtigung to his mandate
+  IF OLD.autorisiert_datum <> NEW.autorisiert_datum
+    OR (OLD.autorisiert_datum IS NULL AND NEW.autorisiert_datum IS NOT NULL)
+    OR (OLD.autorisiert_datum IS NOT NULL AND NEW.autorisiert_datum IS NULL) THEN
+    UPDATE `mandat`
+      SET
+        autorisiert_datum = NEW.autorisiert_datum,
+        autorisiert_visa = NEW.autorisiert_visa,
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+        zutrittsberechtigung_id=NEW.id AND bis IS NULL;
+  END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zutrittsberechtigung_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
