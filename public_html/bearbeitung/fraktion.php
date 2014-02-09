@@ -11054,6 +11054,7 @@
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForparteiDetailEdit0fraktion');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForparteiDetailEdit0fraktion' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -11371,10 +11372,16 @@
             
             return $result;
         }
+        
+        public function MasterDetailRecordGridForparteiDetailEdit0fraktion_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('fraktion', $rowData, $rowCellStyles, $rowStyles);
+        }
         function CreateMasterDetailRecordGridForparlamentarierDetailEdit1fraktionGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForparlamentarierDetailEdit1fraktion');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForparlamentarierDetailEdit1fraktion' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -11691,6 +11698,11 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForparlamentarierDetailEdit1fraktion_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('fraktion', $rowData, $rowCellStyles, $rowStyles);
         }
         
         function GetCustomClientScript()
@@ -11715,6 +11727,10 @@
         } else if ($part == PagePart::PageList) {
           $result = 'page_list.tpl';
         }
+        }
+        public function fraktionGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('fraktion', $rowData, $rowCellStyles, $rowStyles);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -11750,6 +11766,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('fraktionGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('fraktionGrid' . '_OnCustomDrawRow', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

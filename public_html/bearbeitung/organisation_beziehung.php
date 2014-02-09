@@ -2050,6 +2050,10 @@
           $result = 'page_list.tpl';
         }
         }
+        public function organisation_beziehungGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation_beziehung', $rowData, $rowCellStyles, $rowStyles);
+        }
         function organisation_beziehungGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             check_bis_date($page, $rowData, $cancel, $message, $tableName);
@@ -2092,6 +2096,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('organisation_beziehungGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('organisation_beziehungGrid' . '_OnCustomDrawRow', $this);
             $result->BeforeUpdateRecord->AddListener('organisation_beziehungGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeInsertRecord->AddListener('organisation_beziehungGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);

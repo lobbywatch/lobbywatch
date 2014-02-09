@@ -2273,6 +2273,10 @@
           $result = 'page_list.tpl';
         }
         }
+        public function in_kommissionGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('in_kommission', $rowData, $rowCellStyles, $rowStyles);
+        }
         function in_kommissionGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             check_bis_date($page, $rowData, $cancel, $message, $tableName);
@@ -2315,6 +2319,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('in_kommissionGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('in_kommissionGrid' . '_OnCustomDrawRow', $this);
             $result->BeforeUpdateRecord->AddListener('in_kommissionGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeInsertRecord->AddListener('in_kommissionGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);

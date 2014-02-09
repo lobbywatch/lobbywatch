@@ -38074,6 +38074,7 @@
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_organisation_parlamentarier_beide_indirektDetailEdit0organisation');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_organisation_parlamentarier_beide_indirektDetailEdit0organisation' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -38553,11 +38554,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_organisation_parlamentarier_beide_indirektDetailEdit0organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_organisation_beziehung_auftraggeber_fuerDetailEdit1organisationGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_organisation_beziehung_auftraggeber_fuerDetailEdit1organisation');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_organisation_beziehung_auftraggeber_fuerDetailEdit1organisation' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -39037,11 +39044,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_organisation_beziehung_auftraggeber_fuerDetailEdit1organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_organisation_beziehung_arbeitet_fuerDetailEdit2organisationGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_organisation_beziehung_arbeitet_fuerDetailEdit2organisation');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_organisation_beziehung_arbeitet_fuerDetailEdit2organisation' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -39521,11 +39534,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_organisation_beziehung_arbeitet_fuerDetailEdit2organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_organisation_beziehung_mitglied_vonDetailEdit3organisationGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_organisation_beziehung_mitglied_vonDetailEdit3organisation');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_organisation_beziehung_mitglied_vonDetailEdit3organisation' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -40005,11 +40024,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_organisation_beziehung_mitglied_vonDetailEdit3organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_organisation_beziehung_mitgliederDetailEdit4organisationGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_organisation_beziehung_mitgliederDetailEdit4organisation');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_organisation_beziehung_mitgliederDetailEdit4organisation' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -40489,11 +40514,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_organisation_beziehung_mitgliederDetailEdit4organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_organisation_parlamentarierDetailEdit5organisationGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_organisation_parlamentarierDetailEdit5organisation');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_organisation_parlamentarierDetailEdit5organisation' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -40973,11 +41004,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_organisation_parlamentarierDetailEdit5organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_organisation_parlamentarier_indirektDetailEdit6organisationGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_organisation_parlamentarier_indirektDetailEdit6organisation');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_organisation_parlamentarier_indirektDetailEdit6organisation' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -41457,11 +41494,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_organisation_parlamentarier_indirektDetailEdit6organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_organisation_parlamentarier_beideDetailEdit7organisationGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_organisation_parlamentarier_beideDetailEdit7organisation');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_organisation_parlamentarier_beideDetailEdit7organisation' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -41941,11 +41984,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_organisation_parlamentarier_beideDetailEdit7organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForinteressenbindungDetailEdit8organisationGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForinteressenbindungDetailEdit8organisation');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForinteressenbindungDetailEdit8organisation' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -42426,10 +42475,16 @@
             
             return $result;
         }
+        
+        public function MasterDetailRecordGridForinteressenbindungDetailEdit8organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);
+        }
         function CreateMasterDetailRecordGridFormandatDetailEdit9organisationGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridFormandatDetailEdit9organisation');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridFormandatDetailEdit9organisation' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -42909,6 +42964,11 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridFormandatDetailEdit9organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);
         }
         
         function GetCustomClientScript()
@@ -42933,6 +42993,10 @@
         } else if ($part == PagePart::PageList) {
           $result = 'page_list.tpl';
         }
+        }
+        public function organisationGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation', $rowData, $rowCellStyles, $rowStyles);
         }
         function organisationGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
@@ -42996,6 +43060,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('organisationGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('organisationGrid' . '_OnCustomDrawRow', $this);
             $result->BeforeUpdateRecord->AddListener('organisationGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeInsertRecord->AddListener('organisationGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);

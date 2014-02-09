@@ -8918,6 +8918,7 @@
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_in_kommissionDetailEdit0kommission');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_in_kommissionDetailEdit0kommission' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -9276,10 +9277,16 @@
             
             return $result;
         }
+        
+        public function MasterDetailRecordGridForv_in_kommissionDetailEdit0kommission_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('kommission', $rowData, $rowCellStyles, $rowStyles);
+        }
         function CreateMasterDetailRecordGridForbrancheDetailEdit1kommissionGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForbrancheDetailEdit1kommission');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForbrancheDetailEdit1kommission' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -9637,6 +9644,11 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForbrancheDetailEdit1kommission_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('kommission', $rowData, $rowCellStyles, $rowStyles);
         }
         
         function GetCustomClientScript()
@@ -9661,6 +9673,10 @@
         } else if ($part == PagePart::PageList) {
           $result = 'page_list.tpl';
         }
+        }
+        public function kommissionGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('kommission', $rowData, $rowCellStyles, $rowStyles);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -9696,6 +9712,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('kommissionGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('kommissionGrid' . '_OnCustomDrawRow', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

@@ -30357,6 +30357,7 @@
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForparlamentarier_anhangDetailEdit0parlamentarier');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForparlamentarier_anhangDetailEdit0parlamentarier' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -31118,11 +31119,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForparlamentarier_anhangDetailEdit0parlamentarier_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarierGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarier');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarier' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -31884,11 +31891,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_organisation_parlamentarier_beide_indirektDetailEdit1parlamentarier_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_in_kommission_listeDetailEdit2parlamentarierGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_in_kommission_listeDetailEdit2parlamentarier');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_in_kommission_listeDetailEdit2parlamentarier' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -32650,11 +32663,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_in_kommission_listeDetailEdit2parlamentarier_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_interessenbindung_liste_indirektDetailEdit3parlamentarierGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_interessenbindung_liste_indirektDetailEdit3parlamentarier');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_interessenbindung_liste_indirektDetailEdit3parlamentarier' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -33416,11 +33435,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_interessenbindung_liste_indirektDetailEdit3parlamentarier_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarierGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarier');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarier' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -34182,11 +34207,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_zutrittsberechtigung_mit_mandaten_indirektDetailEdit4parlamentarier_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_interessenbindung_listeDetailEdit5parlamentarierGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_interessenbindung_listeDetailEdit5parlamentarier');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_interessenbindung_listeDetailEdit5parlamentarier' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -34949,10 +34980,16 @@
             
             return $result;
         }
+        
+        public function MasterDetailRecordGridForv_interessenbindung_listeDetailEdit5parlamentarier_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
+        }
         function CreateMasterDetailRecordGridForv_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarierGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarier');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarier' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -35714,6 +35751,11 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForv_zutrittsberechtigung_mit_mandatenDetailEdit6parlamentarier_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
         }
         public function photo_Thumbnail_GenerateFileName_inline_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
@@ -35771,6 +35813,10 @@
         } else if ($part == PagePart::PageList) {
           $result = 'page_list.tpl';
         }
+        }
+        public function parlamentarierGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
         }
         function parlamentarierGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
@@ -35912,6 +35958,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('parlamentarierGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('parlamentarierGrid' . '_OnCustomDrawRow', $this);
             $result->BeforeUpdateRecord->AddListener('parlamentarierGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeDeleteRecord->AddListener('parlamentarierGrid' . '_' . 'BeforeDeleteRecord', $this);
             $result->BeforeInsertRecord->AddListener('parlamentarierGrid' . '_' . 'BeforeInsertRecord', $this);

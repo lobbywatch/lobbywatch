@@ -11240,6 +11240,7 @@
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForparlamentarierDetailEdit0partei');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForparlamentarierDetailEdit0partei' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -11600,10 +11601,16 @@
             
             return $result;
         }
+        
+        public function MasterDetailRecordGridForparlamentarierDetailEdit0partei_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('partei', $rowData, $rowCellStyles, $rowStyles);
+        }
         function CreateMasterDetailRecordGridForfraktionDetailEdit1parteiGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForfraktionDetailEdit1partei');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForfraktionDetailEdit1partei' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -11963,6 +11970,11 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForfraktionDetailEdit1partei_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('partei', $rowData, $rowCellStyles, $rowStyles);
         }
         
         function GetCustomClientScript()
@@ -11987,6 +11999,10 @@
         } else if ($part == PagePart::PageList) {
           $result = 'page_list.tpl';
         }
+        }
+        public function parteiGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('partei', $rowData, $rowCellStyles, $rowStyles);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -12022,6 +12038,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('parteiGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('parteiGrid' . '_OnCustomDrawRow', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

@@ -13185,6 +13185,7 @@
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForzutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForzutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -13713,11 +13714,17 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForzutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);
         }
         function CreateMasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigungGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigung');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigung' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -14247,10 +14254,16 @@
             
             return $result;
         }
+        
+        public function MasterDetailRecordGridForv_zutrittsberechtigung_mandateDetailEdit1zutrittsberechtigung_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);
+        }
         function CreateMasterDetailRecordGridFormandatDetailEdit2zutrittsberechtigungGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridFormandatDetailEdit2zutrittsberechtigung');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridFormandatDetailEdit2zutrittsberechtigung' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -14779,6 +14792,11 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridFormandatDetailEdit2zutrittsberechtigung_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);
         }
         
         function GetCustomClientScript()
@@ -14803,6 +14821,10 @@
         } else if ($part == PagePart::PageList) {
           $result = 'page_list.tpl';
         }
+        }
+        public function zutrittsberechtigungGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('zutrittsberechtigung', $rowData, $rowCellStyles, $rowStyles);
         }
         function zutrittsberechtigungGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
@@ -14866,6 +14888,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('zutrittsberechtigungGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('zutrittsberechtigungGrid' . '_OnCustomDrawRow', $this);
             $result->BeforeUpdateRecord->AddListener('zutrittsberechtigungGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeInsertRecord->AddListener('zutrittsberechtigungGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);

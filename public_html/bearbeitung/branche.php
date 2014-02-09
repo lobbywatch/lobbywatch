@@ -9393,6 +9393,7 @@
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForinteressengruppeDetailEdit0branche');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForinteressengruppeDetailEdit0branche' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -9680,10 +9681,16 @@
             
             return $result;
         }
+        
+        public function MasterDetailRecordGridForinteressengruppeDetailEdit0branche_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('branche', $rowData, $rowCellStyles, $rowStyles);
+        }
         function CreateMasterDetailRecordGridFororganisationDetailEdit1brancheGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridFororganisationDetailEdit1branche');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridFororganisationDetailEdit1branche' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -9970,6 +9977,11 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridFororganisationDetailEdit1branche_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('branche', $rowData, $rowCellStyles, $rowStyles);
         }
         
         function GetCustomClientScript()
@@ -9994,6 +10006,10 @@
         } else if ($part == PagePart::PageList) {
           $result = 'page_list.tpl';
         }
+        }
+        public function brancheGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('branche', $rowData, $rowCellStyles, $rowStyles);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -10029,6 +10045,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('brancheGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('brancheGrid' . '_OnCustomDrawRow', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

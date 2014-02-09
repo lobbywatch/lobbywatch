@@ -14398,6 +14398,7 @@
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridFororganisationDetailEdit0interessengruppe');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridFororganisationDetailEdit0interessengruppe' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -14668,10 +14669,16 @@
             
             return $result;
         }
+        
+        public function MasterDetailRecordGridFororganisationDetailEdit0interessengruppe_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('interessengruppe', $rowData, $rowCellStyles, $rowStyles);
+        }
         function CreateMasterDetailRecordGridForparlamentarierDetailEdit1interessengruppeGrid()
         {
             $result = new Grid($this, $this->dataset, 'MasterDetailRecordGridForparlamentarierDetailEdit1interessengruppe');
             $result->SetAllowDeleteSelected(false);
+            $result->OnCustomDrawCell->AddListener('MasterDetailRecordGridForparlamentarierDetailEdit1interessengruppe' . '_OnCustomDrawRow', $this);
             $result->SetShowFilterBuilder(false);
             $result->SetAdvancedSearchAvailable(false);
             $result->SetFilterRowAvailable(false);
@@ -14941,6 +14948,11 @@
             $result->AddPrintColumn($column);
             
             return $result;
+        }
+        
+        public function MasterDetailRecordGridForparlamentarierDetailEdit1interessengruppe_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('interessengruppe', $rowData, $rowCellStyles, $rowStyles);
         }
         
         function GetCustomClientScript()
@@ -14965,6 +14977,10 @@
         } else if ($part == PagePart::PageList) {
           $result = 'page_list.tpl';
         }
+        }
+        public function interessengruppeGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('interessengruppe', $rowData, $rowCellStyles, $rowStyles);
         }
         public function ShowEditButtonHandler(&$show)
         {
@@ -15020,6 +15036,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('interessengruppeGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('interessengruppeGrid' . '_OnCustomDrawRow', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

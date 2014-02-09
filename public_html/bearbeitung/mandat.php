@@ -2411,6 +2411,10 @@
           $result = 'page_list.tpl';
         }
         }
+        public function mandatGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('mandat', $rowData, $rowCellStyles, $rowStyles);
+        }
         function mandatGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             check_bis_date($page, $rowData, $cancel, $message, $tableName);
@@ -2473,6 +2477,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('mandatGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('mandatGrid' . '_OnCustomDrawRow', $this);
             $result->BeforeUpdateRecord->AddListener('mandatGrid' . '_' . 'BeforeUpdateRecord', $this);
             $result->BeforeInsertRecord->AddListener('mandatGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
