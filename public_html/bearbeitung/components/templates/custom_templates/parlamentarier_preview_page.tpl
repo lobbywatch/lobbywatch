@@ -214,6 +214,7 @@
       $("#email-select-button").click(function() {
         //selectText('email-content');
         $('#email-content').selectText();
+        return false;
       });
 
       $("#email-open").click(function() {
@@ -232,7 +233,8 @@
                 operateRowAsSelected('parlamentarier.php', 'sndsel', '');
               }
           });
-        });  
+        });
+        return false;
       });
   });
 {/literal}</script>
