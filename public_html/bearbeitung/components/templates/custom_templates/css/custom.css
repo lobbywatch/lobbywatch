@@ -420,3 +420,9 @@ ul.css-tabs a.current {
 {
   margin-bottom: 0.7em;
 }
+
+.preview h3, .preview h4, .preview h5,
+.email h3, .email h4, .email h5
+{
+  margin-top: 0.7em;
+}

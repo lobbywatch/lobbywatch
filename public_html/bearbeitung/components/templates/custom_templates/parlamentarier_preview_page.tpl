@@ -12,17 +12,39 @@
  
 <!-- tab "panes" -->
 <div class="css-panes">
+
   <!-- First tab content.-->
-  <div class="row-fluid">
+  <div {*class="row-fluid"*}>
 
     {*<div class="span2"></div>*}
 
-    <div class="span8">
+    <div class="row-fluid" {*class="span8"*}>
 
         <div class="preview">
             <h3>{$Parlamentarier.Title}</h3>
+            
+                        <div class="container-fluid">
 
-            <div style="padding-left: 20px;">
+              <div class="row-fluid">
+                  <div class="btn-toolbar">
+                               
+                      <div class="btn-group">
+                          <a class="btn" href="parlamentarier.php?operation=edit&pk0={$Parlamentarier.Id}">Bearbeiten</a>
+                      </div>
+          
+                      <div class="btn-group">
+                          <a class="btn" href="parlamentarier.php?operation=view&pk0={$Parlamentarier.Id}">Ansehen</a>
+                      </div>
+                      
+                      <div class="btn-group">
+                          <a class="btn btn-primary" href="parlamentarier.php?operation=return">{$Captions->GetMessageString('BackToList')}</a>
+                      </div>
+                      
+                  </div>
+              </div>
+            </div> {*container-fluid*}
+
+            <div {*style="padding-left: 20px;"*} class="preview-content span8">
                 {$Parlamentarier.Preview}
             </div>
 
@@ -30,7 +52,7 @@
     </div>
   </div>
   <!-- Second tab content.-->
-  <div class="row-fluid">
+  <div {*class="row-fluid"*}>
     
     <div id="ops" class="hide">
       <div class="pg-row-selected-sim">
@@ -41,43 +63,64 @@
 
     {*<div class="span2"></div>*}
 
-    <div class="span8">
+    <div class="row-fluid" {*class="span8"*}>
 
         <div class="email">
             <h3>{$Parlamentarier.EmailTitle}</h3>
-            <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen und 5. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
             
             <div class="container-fluid">
 
-    <div class="row-fluid">
-        <div class="btn-toolbar">
-        
-            <div class="btn-group">
-                <a id="email-select-button" class="btn" href="#">
-                    E-Mail selektieren
-                </a>
-            </div>
-
-            <div class="btn-group">
-                <a id="email-open" class="btn" href="#">
-                    E-Mail öffnen
-                </a>
-            </div>
-
-            <div class="btn-group">
-                <a id="email-sent" class="btn" href="#">
-                    Autorisierungsanfrage verschickt
-                </a>
-            </div>
-            
-        </div>
-   </div>
+              <div class="row-fluid">
+                  <div class="btn-toolbar">
+          
+                      <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen und 5. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
+                  
+                      <div class="btn-group">
+                          <a id="email-select-button" class="btn btn-primary" href="#">
+                              E-Mail selektieren
+                          </a>
+                      </div>
+          
+                      <div class="btn-group">
+                          <a id="email-open" class="btn" href="#">
+                              E-Mail öffnen
+                          </a>
+                      </div>
+          
+                      <div class="btn-group">
+                          <a id="email-sent" class="btn" href="#">
+                              Autorisierungsanfrage verschickt
+                          </a>
+                      </div>
+          
+          {*        </div>
+             </div>
+                      
+              <div class="row-fluid">
+                  <div class="btn-toolbar">
+          *}
+                      
+                      <div class="btn-group">
+                          <a class="btn" href="parlamentarier.php?operation=edit&pk0={$Parlamentarier.Id}">Bearbeiten</a>
+                      </div>
+          
+                      <div class="btn-group">
+                          <a class="btn" href="parlamentarier.php?operation=view&pk0={$Parlamentarier.Id}">Ansehen</a>
+                      </div>
+                      
+                      <div class="btn-group">
+                          <a class="btn" href="parlamentarier.php?operation=return">{$Captions->GetMessageString('BackToList')}</a>
+                      </div>
+                      
+                  </div>
+              </div>
+            </div> {*container-fluid*}
             
             {* <button id="email-select-button">E-Mail selektieren</button>
             <button id="email-open">E-Mail öffnen</button>
             <button id="email-sent">Autorisierungsanfrage verschickt</button> *} 
 
-            <div id="email-content" style="padding-left: 20px;" class="email-content">
+            <div id="email-content" {*style="padding-left: 20px;"*} class="email-content span8">
                 {$Parlamentarier.EmailText}
             </div>
 
