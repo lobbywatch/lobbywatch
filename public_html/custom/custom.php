@@ -789,10 +789,16 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
     // Check completeness
     $completeness_styles = '';
 
-    if (isset($rowData['sitzplatz']) && isset($rowData['email'])) {
-      $completeness_styles .= 'background-color: greenyellow;';
-    } elseif (isset($rowData['sitzplatz']) || isset($rowData['email'])){
-      $completeness_styles .= 'background-color: orange;';
+    if ($table_name === 'parlamentarier') {
+      if (isset($rowData['sitzplatz']) && isset($rowData['email'])) {
+        $completeness_styles .= 'background-color: greenyellow;';
+      } elseif (isset($rowData['sitzplatz']) || isset($rowData['email'])){
+        $completeness_styles .= 'background-color: orange;';
+      }
+    } elseif ($table_name === 'zutrittsberechtigung') {
+      if (isset($rowData['email'])) {
+        $completeness_styles .= 'background-color: greenyellow;';
+      }
     }
 
     // Write styles
