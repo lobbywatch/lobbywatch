@@ -732,8 +732,8 @@ function getTimestamp($date_str) {
 
 function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
-  $date_threshold = SMDateTime::Parse('2014-01-01', 'Y-m-d');
-  $timestamp_threshold = $date_threshold->GetTimestamp();
+  $update_threshold = SMDateTime::Parse('2014-01-01', 'Y-m-d');
+  $update_threshold_ts = $update_threshold->GetTimestamp();
 
   if ($table_name === 'parlamentarier' || $table_name === 'zutrittsberechtigung') {
     //df($rowData, '$rowData');
@@ -747,17 +747,17 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
 
     // Check inconsistencies
-    if ((getTimestamp($rowData['freigabe_datum']) >= $timestamp_threshold
+    if ((getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts
           && (!getTimestamp($rowData['autorisierung_verschickt_datum'])
               || !getTimestamp($rowData['kontrolliert_datum'])
               || !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
-        || (getTimestamp($rowData['autorisierung_verschickt_datum']) >= $timestamp_threshold
-          && !(getTimestamp($rowData['freigabe_datum']) >= $timestamp_threshold)
+        || (getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts
+          && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
           && (!getTimestamp($rowData['kontrolliert_datum'])
               || !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
-        || (getTimestamp($rowData['kontrolliert_datum']) >= $timestamp_threshold
-          && !(getTimestamp($rowData['freigabe_datum']) >= $timestamp_threshold)
-          && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $timestamp_threshold)
+        || (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
+          && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
+          && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
           && !getTimestamp($rowData['eingabe_abgeschlossen_datum']))
     ) {
 //       df($rowData, '$rowData');
@@ -770,15 +770,15 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       $workflow_styles .= 'background-color: red;';
     }
     // Color states
-    else if (getTimestamp($rowData['freigabe_datum']) >= $timestamp_threshold) {
+    else if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: greenyellow;';
-    } else if (getTimestamp($rowData['autorisiert_datum']) >= $timestamp_threshold) {
+    } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: lightblue;';
-    } else if (getTimestamp($rowData['autorisierung_verschickt_datum']) >= $timestamp_threshold) {
+    } else if (getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: blue;';
-    } else if (getTimestamp($rowData['kontrolliert_datum']) >= $timestamp_threshold) {
+    } else if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: orange';
-    } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $timestamp_threshold) {
+    } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: yellow;';
     }
 
@@ -823,11 +823,11 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
 
     // Check inconsistencies
-    if ((getTimestamp($rowData['freigabe_datum']) >= $timestamp_threshold
+    if ((getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts
           && (!getTimestamp($rowData['kontrolliert_datum'])
               || !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
-        || (getTimestamp($rowData['kontrolliert_datum']) >= $timestamp_threshold
-          && !(getTimestamp($rowData['freigabe_datum']) >= $timestamp_threshold)
+        || (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
+          && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
           && !getTimestamp($rowData['eingabe_abgeschlossen_datum']))
     ) {
 //       df($rowData, '$rowData');
@@ -840,13 +840,13 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       $workflow_styles .= 'background-color: red;';
     }
     // Color states
-    else if (getTimestamp($rowData['freigabe_datum']) >= $timestamp_threshold) {
+    else if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: greenyellow;';
-//     } else if (getTimestamp($rowData['autorisiert_datum']) >= $timestamp_threshold) {
+//     } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
 //       $rowCellStyles['id'] .= 'background-color: lightblue;';
-    } else if (getTimestamp($rowData['kontrolliert_datum']) >= $timestamp_threshold) {
+    } else if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: orange';
-    } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $timestamp_threshold) {
+    } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: yellow;';
     }
 
