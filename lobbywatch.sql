@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 08. Feb 2014 um 12:52
+-- Erstellungszeit: 09. Feb 2014 um 19:18
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -1631,6 +1631,23 @@ DROP TRIGGER IF EXISTS `trg_parlamentarier_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_parlamentarier_log_upd` AFTER UPDATE ON `parlamentarier`
  FOR EACH ROW thisTrigger: begin
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate authorization from parlamentarier to his interessenbindungen
+  IF OLD.autorisiert_datum <> NEW.autorisiert_datum
+    OR (OLD.autorisiert_datum IS NULL AND NEW.autorisiert_datum IS NOT NULL)
+    OR (OLD.autorisiert_datum IS NOT NULL AND NEW.autorisiert_datum IS NULL) THEN
+    UPDATE `interessenbindung`
+      SET
+        autorisiert_datum = NEW.autorisiert_datum,
+        autorisiert_visa = NEW.autorisiert_visa,
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+        parlamentarier_id=NEW.id AND bis IS NULL;
+  END IF;
+
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `parlamentarier_log`
     SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
@@ -3328,6 +3345,23 @@ DROP TRIGGER IF EXISTS `trg_zutrittsberechtigung_log_upd`;
 DELIMITER //
 CREATE TRIGGER `trg_zutrittsberechtigung_log_upd` AFTER UPDATE ON `zutrittsberechtigung`
  FOR EACH ROW thisTrigger: begin
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate authorization from zutrittsberechtigung to his mandate
+  IF OLD.autorisiert_datum <> NEW.autorisiert_datum
+    OR (OLD.autorisiert_datum IS NULL AND NEW.autorisiert_datum IS NOT NULL)
+    OR (OLD.autorisiert_datum IS NOT NULL AND NEW.autorisiert_datum IS NULL) THEN
+    UPDATE `mandat`
+      SET
+        autorisiert_datum = NEW.autorisiert_datum,
+        autorisiert_visa = NEW.autorisiert_visa,
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+        zutrittsberechtigung_id=NEW.id AND bis IS NULL;
+  END IF;
+
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `zutrittsberechtigung_log`
     SELECT *, null, 'update', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = NEW.id ;
