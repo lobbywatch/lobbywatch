@@ -142,12 +142,12 @@
                 * For Edit shortkey see in bergamotte-mgmt.js.
                 */
                 // Key codes: http://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
-                console.log("Ctrl-S activated");
+                //console.log("Ctrl-S activated");
                 $(window).keypress(function(event) {
                   //console.log( event );
                   if ((event.ctrlKey && event.which == 115) || (event.which == 19)) {
                     event.preventDefault();
-                    console.log("Save");
+                    //console.log("Save");
                     // Save is with Save as Draft module always at first position
                     $('#submit-action').val('save');
                     $('#submit-button').click();
