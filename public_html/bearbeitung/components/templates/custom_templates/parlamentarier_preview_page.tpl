@@ -2,7 +2,7 @@
 
 {* http://jquerytools.org/demos/tabs/index.html *}
 {*<script src="http://cdn.jquerytools.org/1.2.7/full/jquery.tools.min.js"></script>*}
-<script src="components/templates/custom_templates/js/jquery.tools.min.js"></script>
+<script src="components/templates/custom_templates/js/jquery.tools.tabs.min.js"></script>
 
 <!-- the tabs -->
 <ul class="css-tabs">
@@ -46,9 +46,36 @@
         <div class="email">
             <h3>{$Parlamentarier.EmailTitle}</h3>
             <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen und 5. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
-            <button id="email-select-button">E-Mail selektieren</button>
+            
+            <div class="container-fluid">
+
+    <div class="row-fluid">
+        <div class="btn-toolbar">
+        
+            <div class="btn-group">
+                <a id="email-select-button" class="btn" href="#">
+                    E-Mail selektieren
+                </a>
+            </div>
+
+            <div class="btn-group">
+                <a id="email-open" class="btn" href="#">
+                    E-Mail öffnen
+                </a>
+            </div>
+
+            <div class="btn-group">
+                <a id="email-sent" class="btn" href="#">
+                    Autorisierungsanfrage verschickt
+                </a>
+            </div>
+            
+        </div>
+   </div>
+            
+            {* <button id="email-select-button">E-Mail selektieren</button>
             <button id="email-open">E-Mail öffnen</button>
-            <button id="email-sent">Autorisierungsanfrage verschickt</button>
+            <button id="email-sent">Autorisierungsanfrage verschickt</button> *} 
 
             <div id="email-content" style="padding-left: 20px;" class="email-content">
                 {$Parlamentarier.EmailText}
