@@ -308,7 +308,7 @@ function check_organisation_interessengruppe_order($page, &$rowData, &$cancel, &
 }
 
 
-function clean_fields($page, &$rowData, &$cancel, &$message, $tableName)
+function clean_fields(/*$page,*/ &$rowData /*, &$cancel, &$message, $tableName*/)
 {
 //   df($rowData);
   foreach($rowData as $name => &$value) {
@@ -347,6 +347,16 @@ abstract class SelectedOperationGridState extends GridState {
   protected function isValidDate($date) {
     $date_array = date_parse($date);
     return preg_match('/^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[012])\.(20)\d\d$/', $date) && checkdate($date_array["month"], $date_array["day"], $date_array["year"]);
+  }
+
+  // Similar to globalOnBeforeUpdate
+  protected function setUpdatedMetaData() {
+    // df($this->grid->GetDataset()->GetFieldValueByName('id'));
+    $userName = $this->GetPage ()->GetEnvVar ( 'CURRENT_USER_NAME' );
+    $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
+
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'updated_visa', $userName );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'updated_date', $datetime );
   }
 
   public function ProcessMessages() {
@@ -403,6 +413,7 @@ abstract class SelectedOperationGridState extends GridState {
         if ($this->CanChangeData ( $fieldValues, $message )) {
           try {
             $this->DoOperation ();
+            $this->setUpdatedMetaData();
             $this->grid->GetDataset ()->Post ();
             // Refetch field values as the may have changed
             $fieldValues = $this->grid->GetDataset ()->GetCurrentFieldValues ();
@@ -889,4 +900,63 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
   }
+}
+
+function globalOnBeforeUpdate($page, &$rowData, &$cancel, &$message, $tableName) {
+  // Set in project option
+
+  // Ref for events: http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_page_editor_events/
+
+  // CURRENT_DATETIME = 24-11-2013 23:42:09
+  // CURRENT_DATETIME_ISO_8601 = 2013-11-24T23:42:09+01:00
+  // CURRENT_DATETIME_RFC_2822 = 2013-11-24T23:42:09+01:00
+  // CURRENT_UNIX_TIMESTAMP = 1385332929
+  // CURRENT_USER_NAME
+  // CURRENT_USER_ID
+  // PAGE_SHORT_CAPTION
+  // PAGE_CAPTION
+
+  $userName = $page->GetEnvVar('CURRENT_USER_NAME');
+  $datetime = $page->GetEnvVar('CURRENT_DATETIME');
+
+  //if ($userName != 'admin')
+
+  //$rowData['created_visa'] = $userName;
+  //$rowData['created_date'] = $datetime;
+  $rowData['updated_visa'] = $userName;
+  $rowData['updated_date'] = $datetime;
+
+  clean_fields(/*$page,*/ $rowData/*, $cancel, $message, $tableName*/);
+}
+
+function globalOnBeforeDelete($page, &$rowData, &$cancel, &$message, $tableName) {
+
+}
+
+function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName) {
+  // Set in project option
+
+  // Ref for events: http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_page_editor_events/
+
+  // CURRENT_DATETIME = 24-11-2013 23:42:09
+  // CURRENT_DATETIME_ISO_8601 = 2013-11-24T23:42:09+01:00
+  // CURRENT_DATETIME_RFC_2822 = 2013-11-24T23:42:09+01:00
+  // CURRENT_UNIX_TIMESTAMP = 1385332929
+  // CURRENT_USER_NAME
+  // CURRENT_USER_ID
+  // PAGE_SHORT_CAPTION
+  // PAGE_CAPTION
+
+  $userName = $page->GetEnvVar('CURRENT_USER_NAME');
+  $datetime = $page->GetEnvVar('CURRENT_DATETIME');
+
+  //if ($userName != 'admin')
+
+  $rowData['created_visa'] = $userName;
+  $rowData['created_date'] = $datetime;
+
+  $rowData['updated_visa'] = $userName;
+  $rowData['updated_date'] = $datetime;
+
+  clean_fields(/*$page,*/ $rowData/*, $cancel, $message, $tableName*/);
 }

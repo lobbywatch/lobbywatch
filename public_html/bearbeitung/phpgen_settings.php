@@ -84,64 +84,17 @@ function GetAnsiEncoding() { return 'windows-1252'; }
 
 function Global_BeforeUpdateHandler($page, &$rowData, &$cancel, &$message, $tableName)
 {
-// Set in project option
-
-// Ref for events: http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_page_editor_events/
-
-// CURRENT_DATETIME = 24-11-2013 23:42:09
-// CURRENT_DATETIME_ISO_8601 = 2013-11-24T23:42:09+01:00
-// CURRENT_DATETIME_RFC_2822 = 2013-11-24T23:42:09+01:00
-// CURRENT_UNIX_TIMESTAMP = 1385332929
-// CURRENT_USER_NAME
-// CURRENT_USER_ID
-// PAGE_SHORT_CAPTION
-// PAGE_CAPTION
-
-$userName = $page->GetEnvVar('CURRENT_USER_NAME');
-$datetime = $page->GetEnvVar('CURRENT_DATETIME');
-
-//if ($userName != 'admin')
-
-//$rowData['created_visa'] = $userName;
-//$rowData['created_date'] = $datetime;
-$rowData['updated_visa'] = $userName;
-$rowData['updated_date'] = $datetime;
-
-clean_fields($page, $rowData, $cancel, $message, $tableName);
+globalOnBeforeUpdate($page, $rowData, $cancel, $message, $tableName);
 }
 
 function Global_BeforeDeleteHandler($page, &$rowData, &$cancel, &$message, $tableName)
 {
-
+globalOnBeforeDelete($page, $rowData, $cancel, $message, $tableName);
 }
 
 function Global_BeforeInsertHandler($page, &$rowData, &$cancel, &$message, $tableName)
 {
-// Set in project option
-
-// Ref for events: http://www.sqlmaestro.com/products/mysql/phpgenerator/help/01_03_04_page_editor_events/
-
-// CURRENT_DATETIME = 24-11-2013 23:42:09
-// CURRENT_DATETIME_ISO_8601 = 2013-11-24T23:42:09+01:00
-// CURRENT_DATETIME_RFC_2822 = 2013-11-24T23:42:09+01:00
-// CURRENT_UNIX_TIMESTAMP = 1385332929
-// CURRENT_USER_NAME
-// CURRENT_USER_ID
-// PAGE_SHORT_CAPTION
-// PAGE_CAPTION
-
-$userName = $page->GetEnvVar('CURRENT_USER_NAME');
-$datetime = $page->GetEnvVar('CURRENT_DATETIME');
-
-//if ($userName != 'admin')
-
-$rowData['created_visa'] = $userName;
-$rowData['created_date'] = $datetime;
-
-$rowData['updated_visa'] = $userName;
-$rowData['updated_date'] = $datetime;
-
-clean_fields($page, $rowData, $cancel, $message, $tableName);
+globalOnBeforeInsert($page, $rowData, $cancel, $message, $tableName);
 }
 
 function GetDefaultDateFormat()
