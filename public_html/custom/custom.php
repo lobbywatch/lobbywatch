@@ -481,7 +481,7 @@ class AuthorizationSentSelectedGridState extends SelectedOperationGridState {
     $datetime = $this->GetPage ()->GetEnvVar ( 'CURRENT_DATETIME' );
 
     $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisierung_verschickt_visa', $userName );
-    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisierung_verschickt_datum', $datetime );
+    $this->grid->GetDataset ()->SetFieldValueByName ( 'autorisierung_verschickt_datum', $this->date );
   }
 }
 class DeAuthorizationSentSelectedGridState extends SelectedOperationGridState {

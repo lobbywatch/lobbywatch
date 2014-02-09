@@ -76,7 +76,7 @@
                       <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen und 5. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
                   
                       <div class="btn-group">
-                          <a id="email-select-button" class="btn btn-primary" href="#">
+                          <a id="email-select-button" class="btn" href="#">
                               E-Mail selektieren
                           </a>
                       </div>
@@ -109,7 +109,7 @@
                       </div>
                       
                       <div class="btn-group">
-                          <a class="btn" href="parlamentarier.php?operation=return">{$Captions->GetMessageString('BackToList')}</a>
+                          <a class="btn btn-primary" href="parlamentarier.php?operation=return">{$Captions->GetMessageString('BackToList')}</a>
                       </div>
                       
                   </div>

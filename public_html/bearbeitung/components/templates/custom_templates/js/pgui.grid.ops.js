@@ -153,10 +153,22 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                   var nRows = self.countSelectedRows();
+//                  bootbox.animate(false);
+//                  bootbox.confirm( 'Bei ' + nRows + ' markierten Einträgen eine Autorisierungsanfrage verschickt?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+//                      if (confirmed) {
+//                          self.operateSelectRows('sndsel');
+//                      }
+//                  });
                   bootbox.animate(false);
-                  bootbox.confirm( 'Bei ' + nRows + ' markierten Einträgen eine Autorisierungsanfrage verschickt?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
-                      if (confirmed) {
-                          self.operateSelectRows('sndsel');
+                  bootbox.prompt( 'Bei ' + nRows + ' markierten Einträgen eine Autorisierungsanfrage verschickt?<small><br><br>Bitte Sendedatum eingeben (leer = heute):</small>'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(date) {
+//                       console.log(date);
+//                       console.log(self.isDateValid(date));
+                      if (date !== null) {
+                        if (date === '' || self.isDateValid(date)) {
+                            self.operateSelectRows('sndsel', date);
+                          } else {
+                            bootbox.alert('Bitte Datum als TT.MM.JJJJ eingeben');
+                          }
                       }
                   });
 
