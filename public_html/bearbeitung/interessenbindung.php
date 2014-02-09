@@ -408,8 +408,8 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kontrolliert_visa', $this->RenderText('Kontrolliert Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('kontrolliert_datum', $this->RenderText('Kontrolliert Datum')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('autorisiert_visa', $this->RenderText('Autorisiert Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_visa', $this->RenderText('Freigabe Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('freigabe_datum', $this->RenderText('Freigabe Datum')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
@@ -1381,28 +1381,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for autorisiert_datum field
-            //
-            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for autorisiert_datum field
-            //
-            $editor = new DateTimeEdit('autorisiert_datum_edit', true, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Autorisiert Datum', 'autorisiert_datum', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            $column->SetDescription($this->RenderText('Autorisiert am'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for autorisiert_visa field
             //
             $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
@@ -1422,6 +1400,28 @@
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
             $column->SetDescription($this->RenderText('Autorisiert durch. Sonstige Angaben als Notiz erfassen.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for autorisiert_datum field
+            //
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for autorisiert_datum field
+            //
+            $editor = new DateTimeEdit('autorisiert_datum_edit', true, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Autorisiert Datum', 'autorisiert_datum', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            $column->SetDescription($this->RenderText('Autorisiert am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1700,17 +1700,17 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for autorisiert_datum field
+            // View column for autorisiert_visa field
             //
-            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for autorisiert_visa field
+            // View column for autorisiert_datum field
             //
-            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2135,22 +2135,22 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for autorisiert_datum field
-            //
-            $editor = new DateTimeEdit('autorisiert_datum_edit', true, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Autorisiert Datum', 'autorisiert_datum', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for autorisiert_visa field
             //
             $editor = new TextEdit('autorisiert_visa_edit');
             $editor->SetSize(10);
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Autorisiert Visa', 'autorisiert_visa', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for autorisiert_datum field
+            //
+            $editor = new DateTimeEdit('autorisiert_datum_edit', true, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Autorisiert Datum', 'autorisiert_datum', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2699,17 +2699,17 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for autorisiert_datum field
+            // View column for autorisiert_visa field
             //
-            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
-            // View column for autorisiert_visa field
+            // View column for autorisiert_datum field
             //
-            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -2890,17 +2890,17 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for autorisiert_datum field
+            // View column for autorisiert_visa field
             //
-            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
+            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
-            // View column for autorisiert_visa field
+            // View column for autorisiert_datum field
             //
-            $column = new TextViewColumn('autorisiert_visa', 'Autorisiert Visa', $this->dataset);
+            $column = new DateTimeViewColumn('autorisiert_datum', 'Autorisiert Datum', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
