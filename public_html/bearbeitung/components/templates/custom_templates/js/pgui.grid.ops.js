@@ -93,6 +93,11 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                   var nRows = self.countSelectedRows();
+                  if (nRows == 0) {
+                    bootbox.animate(false);
+                    bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                    return false;
+                  }
                   bootbox.animate(false);
                   bootbox.confirm( nRows + ' markierte Einträge abschliessen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                       if (confirmed) {
@@ -108,6 +113,11 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                   var nRows = self.countSelectedRows();
+                  if (nRows == 0) {
+                    bootbox.animate(false);
+                    bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                    return false;
+                  }
                   bootbox.animate(false);
                   bootbox.confirm( '"Eingabe abgeschlossen" bei ' + nRows + ' Einträgen entfernen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                       if (confirmed) {
@@ -123,6 +133,11 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                   var nRows = self.countSelectedRows();
+                  if (nRows == 0) {
+                    bootbox.animate(false);
+                    bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                    return false;
+                  }
                   bootbox.animate(false);
                   bootbox.confirm( nRows + ' markierte Einträge kontrolliert?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                       if (confirmed) {
@@ -138,6 +153,11 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                   var nRows = self.countSelectedRows();
+                  if (nRows == 0) {
+                    bootbox.animate(false);
+                    bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                    return false;
+                  }
                   bootbox.animate(false);
                   bootbox.confirm( '"Kontrolliert" bei ' + nRows + ' Einträgen entfernen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                       if (confirmed) {
@@ -153,6 +173,11 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                   var nRows = self.countSelectedRows();
+                  if (nRows == 0) {
+                    bootbox.animate(false);
+                    bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                    return false;
+                  }
 //                  bootbox.animate(false);
 //                  bootbox.confirm( 'Bei ' + nRows + ' markierten Einträgen eine Autorisierungsanfrage verschickt?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
 //                      if (confirmed) {
@@ -180,6 +205,11 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                   var nRows = self.countSelectedRows();
+                  if (nRows == 0) {
+                    bootbox.animate(false);
+                    bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                    return false;
+                  }
                   bootbox.animate(false);
                   bootbox.confirm( '"Autorisierungsanfrage verschickt" bei ' + nRows + ' Einträgen entfernen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                       if (confirmed) {
@@ -195,6 +225,11 @@ define(function(require, exports, module) {
                 require(['bootbox.min'], function() {
 
                     var nRows = self.countSelectedRows();
+                    if (nRows == 0) {
+                      bootbox.animate(false);
+                      bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                      return false;
+                    }
                     bootbox.animate(false);
                     bootbox.prompt( nRows + ' markierte Einträge autorisieren?<small><br><br>Bitte Autorisierungsdatum eingeben (leer = heute):</small>'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(date) {
 //                         console.log(date);
@@ -216,6 +251,11 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                   var nRows = self.countSelectedRows();
+                  if (nRows == 0) {
+                    bootbox.animate(false);
+                    bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                    return false;
+                  }
                   bootbox.animate(false);
                   bootbox.confirm( 'Autorisierung bei ' + nRows + ' Einträgen entfernen?'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                       if (confirmed) {
@@ -231,6 +271,11 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                 var nRows = self.countSelectedRows();
+                if (nRows == 0) {
+                  bootbox.animate(false);
+                  bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                  return false;
+                }
                 bootbox.animate(false);
                 bootbox.prompt( nRows + ' markierte Einträge freigeben?<small><br><br>Bitte Freigabedatum eingeben (leer = heute):</small>'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(date) {
 //                     console.log(date);
@@ -252,6 +297,11 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                   var nRows = self.countSelectedRows();
+                  if (nRows == 0) {
+                    bootbox.animate(false);
+                    bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                    return false;
+                  }
                   bootbox.animate(false);
                   bootbox.confirm( 'Freigabe bei ' + nRows + ' Einträgen entfernen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                       if (confirmed) {
@@ -267,6 +317,11 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                 var nRows = self.countSelectedRows();
+                if (nRows == 0) {
+                  bootbox.animate(false);
+                  bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                  return false;
+                }
                 bootbox.animate(false);
                 bootbox.prompt( '&quot;Im Rat bis&quot; bei ' + nRows + ' Parlamentarieren setzen?<small><br><br>Bitte &quot;Im Rat bis&quot; eingeben (leer = heute):</small>'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(date) {
                   //                         console.log(date);
@@ -288,6 +343,11 @@ define(function(require, exports, module) {
               require(['bootbox.min'], function() {
 
                 var nRows = self.countSelectedRows();
+                if (nRows == 0) {
+                  bootbox.animate(false);
+                  bootbox.alert('Nichts selektiert.<br>Bitte Einträge selektieren.');
+                  return false;
+                }
                 bootbox.animate(false);
                 bootbox.confirm( '&quot;Im Rat bis&quot; bei ' + nRows + ' Einträgen entfernen?'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                   if (confirmed) {
