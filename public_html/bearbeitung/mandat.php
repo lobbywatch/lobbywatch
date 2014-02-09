@@ -790,7 +790,7 @@
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('geschaeftsfuehrend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
+            $editor->AddValue('vorstand', $this->RenderText('vorstand/verwaltungsrat/stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('taetig'));
             $editor->AddValue('beirat', $this->RenderText('beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
@@ -806,7 +806,7 @@
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('geschaeftsfuehrend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
+            $editor->AddValue('vorstand', $this->RenderText('vorstand/verwaltungsrat/stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('taetig'));
             $editor->AddValue('beirat', $this->RenderText('beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
@@ -1610,7 +1610,7 @@
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('geschaeftsfuehrend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
+            $editor->AddValue('vorstand', $this->RenderText('vorstand/verwaltungsrat/stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('taetig'));
             $editor->AddValue('beirat', $this->RenderText('beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
@@ -1983,7 +1983,7 @@
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('mitglied', $this->RenderText('mitglied'));
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('geschaeftsfuehrend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand'));
+            $editor->AddValue('vorstand', $this->RenderText('vorstand/verwaltungsrat/stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('taetig'));
             $editor->AddValue('beirat', $this->RenderText('beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
