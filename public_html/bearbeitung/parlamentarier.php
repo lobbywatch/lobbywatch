@@ -26141,7 +26141,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung', 'partei_id_abkuerzung', 'partei_id_abkuerzung_v_partei'), 'partei_id_abkuerzung_v_partei');
-            $this->dataset->AddLookupField('fraktion_id', 'v_fraktion', new IntegerField('id'), new StringField('anzeige_name', 'fraktion_id_anzeige_name', 'fraktion_id_anzeige_name_v_fraktion'), 'fraktion_id_anzeige_name_v_fraktion');
+            $this->dataset->AddLookupField('fraktion_id', 'v_fraktion', new IntegerField('id'), new StringField('abkuerzung', 'fraktion_id_abkuerzung', 'fraktion_id_abkuerzung_v_fraktion'), 'fraktion_id_abkuerzung_v_fraktion');
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'interessengruppe', new IntegerField('id', null, null, true), new StringField('name', 'beruf_interessengruppe_id_name', 'beruf_interessengruppe_id_name_interessengruppe'), 'beruf_interessengruppe_id_name_interessengruppe');
             $this->dataset->AddLookupField('militaerischer_grad_id', 'v_mil_grad', new IntegerField('id'), new StringField('name', 'militaerischer_grad_id_name', 'militaerischer_grad_id_name_v_mil_grad'), 'militaerischer_grad_id_name_v_mil_grad');
         }
@@ -26214,7 +26214,7 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_anzeige_name', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'arbeitssprache', 'adresse_plz', 'adresse_ort', 'notizen'),
+                array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'arbeitssprache', 'adresse_plz', 'adresse_ort', 'notizen'),
                 array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Arbeitssprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
@@ -26344,7 +26344,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('fraktion_id', $this->RenderText('Fraktion'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('fraktion_id', $this->RenderText('Fraktion'), $lookupDataset, 'id', 'abkuerzung', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('fraktionsfunktion', $this->RenderText('Fraktionsfunktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_bis', $this->RenderText('Im Rat Bis')));
@@ -26996,9 +26996,9 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -27053,12 +27053,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Fraktion', 
                 'fraktion_id', 
                 $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -27116,12 +27116,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Fraktion', 
                 'fraktion_id', 
                 $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -28448,9 +28448,9 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -29006,12 +29006,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Fraktion', 
                 'fraktion_id', 
                 $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -29786,12 +29786,12 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Fraktion', 
                 'fraktion_id', 
                 $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -30227,9 +30227,9 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -30604,9 +30604,9 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -31015,9 +31015,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $column->SetDescription($this->RenderText('Fraktionszugehörigkeit im nationalen Parlament. Leer bedeutet in keiner Fraktion. Fremdschlüssel.'));
@@ -31432,9 +31432,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -31838,9 +31838,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $column->SetDescription($this->RenderText('Fraktionszugehörigkeit im nationalen Parlament. Leer bedeutet in keiner Fraktion. Fremdschlüssel.'));
@@ -32255,9 +32255,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -32661,9 +32661,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $column->SetDescription($this->RenderText('Fraktionszugehörigkeit im nationalen Parlament. Leer bedeutet in keiner Fraktion. Fremdschlüssel.'));
@@ -33078,9 +33078,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -33484,9 +33484,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $column->SetDescription($this->RenderText('Fraktionszugehörigkeit im nationalen Parlament. Leer bedeutet in keiner Fraktion. Fremdschlüssel.'));
@@ -33901,9 +33901,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -34307,9 +34307,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $column->SetDescription($this->RenderText('Fraktionszugehörigkeit im nationalen Parlament. Leer bedeutet in keiner Fraktion. Fremdschlüssel.'));
@@ -34724,9 +34724,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -35130,9 +35130,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $column->SetDescription($this->RenderText('Fraktionszugehörigkeit im nationalen Parlament. Leer bedeutet in keiner Fraktion. Fremdschlüssel.'));
@@ -35547,9 +35547,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -35953,9 +35953,9 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $column->SetDescription($this->RenderText('Fraktionszugehörigkeit im nationalen Parlament. Leer bedeutet in keiner Fraktion. Fremdschlüssel.'));
@@ -36370,9 +36370,9 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for anzeige_name field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('fraktion_id_anzeige_name', 'Fraktion', $this->dataset);
+            $column = new TextViewColumn('fraktion_id_abkuerzung', 'Fraktion', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'fraktion.php?operation=edit&pk0=%fraktion_id%' , '_self');
             $result->AddPrintColumn($column);
