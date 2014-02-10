@@ -10,7 +10,7 @@
         <div class="form-actions top-actions">
 
             <div class="btn-toolbar">
-                <div class="btn-group">
+                <div class="btn-group" title="Ctrl-S: Speichern">
                     <button class="btn btn-primary submit-button"
                             onclick="$(this).closest('form').submit(); return false;"
                             >{$Captions->GetMessageString('Save')}
@@ -35,6 +35,7 @@
                 </div>
 
             </div>
+            <p style="margin: 0"><small>Tipp: Ctrl-S = Speichern</small></p>
         </div>
 
 

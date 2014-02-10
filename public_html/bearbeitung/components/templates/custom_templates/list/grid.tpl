@@ -1,3 +1,4 @@
+<p><small>Tipp: Spalten sortieren = Klick auf Spaltenköpfe, Umgekehrte Sortierung = nochmals klicken</small></p>
 <table
     id="{$DataGrid.Id}"
     class="pgui-grid grid legacy {$DataGrid.Classes}"
