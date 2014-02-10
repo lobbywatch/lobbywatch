@@ -117,6 +117,18 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $this->dataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');

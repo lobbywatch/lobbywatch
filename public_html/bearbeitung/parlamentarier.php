@@ -525,6 +525,18 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -1074,6 +1086,18 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
@@ -2417,6 +2441,18 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -2557,6 +2593,18 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
@@ -3070,6 +3118,18 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
@@ -3957,6 +4017,18 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -4097,6 +4169,18 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
@@ -4631,6 +4715,18 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -5086,6 +5182,18 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
@@ -9878,6 +9986,18 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -11489,6 +11609,18 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -11968,6 +12100,18 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
@@ -14319,6 +14463,18 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -15997,6 +16153,18 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -16543,6 +16711,18 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
@@ -22914,6 +23094,18 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -24332,6 +24524,18 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -24798,6 +25002,18 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $lookupDataset->AddField($field, false);
@@ -25877,6 +26093,18 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_firma');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_ort');
+            $this->dataset->AddField($field, false);
             $field = new StringField('ALT_kommission');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -25986,8 +26214,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_anzeige_name', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Notizen')),
+                array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_anzeige_name', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'arbeitssprache', 'adresse_plz', 'adresse_ort', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Arbeitssprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -26211,6 +26439,12 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_biografie_id', $this->RenderText('Parlament.ch Biografie ID')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('arbeitssprache', $this->RenderText('Arbeitssprache')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_firma', $this->RenderText('Adresse Firma')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_strasse', $this->RenderText('Adresse Strasse')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_zusatz', $this->RenderText('Adresse Zusatz')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_plz', $this->RenderText('Adresse PLZ')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_ort', $this->RenderText('Adresse Ort')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_kommission', $this->RenderText('ALT Kommission')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
@@ -27697,6 +27931,127 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for arbeitssprache field
+            //
+            $editor = new ComboBox('arbeitssprache_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('d', $this->RenderText('d'));
+            $editor->AddValue('f', $this->RenderText('f'));
+            $editor->AddValue('i', $this->RenderText('i'));
+            $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for arbeitssprache field
+            //
+            $editor = new ComboBox('arbeitssprache_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('d', $this->RenderText('d'));
+            $editor->AddValue('f', $this->RenderText('f'));
+            $editor->AddValue('i', $this->RenderText('i'));
+            $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for adresse_plz field
+            //
+            $editor = new TextEdit('adresse_plz_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new MaxLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxlengthValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinlengthValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for adresse_plz field
+            //
+            $editor = new TextEdit('adresse_plz_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new MaxLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxlengthValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinlengthValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for adresse_ort field
+            //
+            $editor = new TextEdit('adresse_ort_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for adresse_ort field
+            //
+            $editor = new TextEdit('adresse_ort_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
@@ -28303,6 +28658,56 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_firma_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -28954,6 +29359,79 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for arbeitssprache field
+            //
+            $editor = new ComboBox('arbeitssprache_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('d', $this->RenderText('d'));
+            $editor->AddValue('f', $this->RenderText('f'));
+            $editor->AddValue('i', $this->RenderText('i'));
+            $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_firma field
+            //
+            $editor = new TextEdit('adresse_firma_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Firma', 'adresse_firma', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_plz field
+            //
+            $editor = new TextEdit('adresse_plz_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new MaxLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxlengthValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinlengthValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_ort field
+            //
+            $editor = new TextEdit('adresse_ort_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -29653,6 +30131,79 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for arbeitssprache field
+            //
+            $editor = new ComboBox('arbeitssprache_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('d', $this->RenderText('d'));
+            $editor->AddValue('f', $this->RenderText('f'));
+            $editor->AddValue('i', $this->RenderText('i'));
+            $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_firma field
+            //
+            $editor = new TextEdit('adresse_firma_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Firma', 'adresse_firma', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_plz field
+            //
+            $editor = new TextEdit('adresse_plz_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new MaxLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxlengthValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinLengthValidator(4, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinlengthValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_ort field
+            //
+            $editor = new TextEdit('adresse_ort_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -29878,6 +30429,48 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -30213,6 +30806,48 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -30631,6 +31266,35 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
@@ -30990,6 +31654,48 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -31403,6 +32109,35 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
@@ -31762,6 +32497,48 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -32175,6 +32952,35 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
@@ -32534,6 +33340,48 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -32947,6 +33795,35 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
@@ -33306,6 +34183,48 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -33719,6 +34638,35 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
@@ -34078,6 +35026,48 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -34491,6 +35481,35 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
@@ -34850,6 +35869,48 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -35263,6 +36324,35 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
+            $column->SetDescription($this->RenderText('Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
@@ -35622,6 +36712,48 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse PLZ', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -36247,6 +37379,39 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for adresse_ort field
+            //
+            $editor = new TextEdit('adresse_ort_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for adresse_ort field
+            //
+            $editor = new TextEdit('adresse_ort_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_ort_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
@@ -36329,6 +37494,34 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_firma_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_strasse_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_zusatz_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for adresse_ort field
+            //
+            $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_ort_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ALT_kommission field
