@@ -436,3 +436,7 @@ ADD `autorisierung_verschickt_datum` DATETIME NULL DEFAULT NULL COMMENT 'Autoris
 UPDATE `parlamentarier` p
     SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
 p.updated_visa='roland';
+
+-- 10.02.2014
+
+SELECT * FROM `COLUMNS` WHERE `TABLE_NAME`='parlamentarier' and `TABLE_SCHEMA`='lobbywatch';
