@@ -27914,7 +27914,7 @@
             // Edit column for adresse_plz field
             //
             $editor = new TextEdit('adresse_plz_edit');
-            $editor->SetSize(10);
+            $editor->SetSize(4);
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -27933,7 +27933,7 @@
             // Edit column for adresse_plz field
             //
             $editor = new TextEdit('adresse_plz_edit');
-            $editor->SetSize(10);
+            $editor->SetSize(4);
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -27963,7 +27963,7 @@
             // Edit column for adresse_ort field
             //
             $editor = new TextEdit('adresse_ort_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -27976,7 +27976,7 @@
             // Edit column for adresse_ort field
             //
             $editor = new TextEdit('adresse_ort_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -29314,7 +29314,7 @@
             // Edit column for adresse_firma field
             //
             $editor = new TextEdit('adresse_firma_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Firma', 'adresse_firma', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -29325,7 +29325,7 @@
             // Edit column for adresse_strasse field
             //
             $editor = new TextEdit('adresse_strasse_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -29336,7 +29336,7 @@
             // Edit column for adresse_zusatz field
             //
             $editor = new TextEdit('adresse_zusatz_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -29347,7 +29347,7 @@
             // Edit column for adresse_plz field
             //
             $editor = new TextEdit('adresse_plz_edit');
-            $editor->SetSize(10);
+            $editor->SetSize(4);
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -29364,7 +29364,7 @@
             // Edit column for adresse_ort field
             //
             $editor = new TextEdit('adresse_ort_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -30082,7 +30082,7 @@
             // Edit column for adresse_firma field
             //
             $editor = new TextEdit('adresse_firma_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Firma', 'adresse_firma', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -30093,7 +30093,7 @@
             // Edit column for adresse_strasse field
             //
             $editor = new TextEdit('adresse_strasse_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -30104,7 +30104,7 @@
             // Edit column for adresse_zusatz field
             //
             $editor = new TextEdit('adresse_zusatz_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -30115,7 +30115,7 @@
             // Edit column for adresse_plz field
             //
             $editor = new TextEdit('adresse_plz_edit');
-            $editor->SetSize(10);
+            $editor->SetSize(4);
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse PLZ', 'adresse_plz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -30132,7 +30132,7 @@
             // Edit column for adresse_ort field
             //
             $editor = new TextEdit('adresse_ort_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -37185,7 +37185,7 @@
             // Edit column for adresse_ort field
             //
             $editor = new TextEdit('adresse_ort_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
@@ -37198,7 +37198,7 @@
             // Edit column for adresse_ort field
             //
             $editor = new TextEdit('adresse_ort_edit');
-            $editor->SetSize(100);
+            $editor->SetSize(80);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
