@@ -27235,70 +27235,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ratsunterbruch_von field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ratsunterbruch_von field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ratsunterbruch_bis field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ratsunterbruch_bis field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -31118,26 +31054,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -31957,26 +31873,6 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32804,26 +32700,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -33643,26 +33519,6 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -34490,26 +34346,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -35333,26 +35169,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -36172,26 +35988,6 @@
             $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
