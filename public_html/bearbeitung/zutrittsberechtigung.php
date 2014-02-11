@@ -9770,8 +9770,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('zutrittsberechtigungssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'nachname', 'vorname', 'funktion', 'beruf', 'beruf_interessengruppe_id_name', 'partei_id_abkuerzung', 'geschlecht', 'email', 'homepage', 'von', 'bis', 'notizen', 'zweiter_vorname'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Funktion'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Partei'), $this->RenderText('Geschlecht'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen'), $this->RenderText('Zweiter Vorname')),
+                array('id', 'parlamentarier_id_anzeige_name', 'nachname', 'vorname', 'funktion', 'beruf', 'beruf_interessengruppe_id_name', 'partei_id_abkuerzung', 'geschlecht', 'email', 'homepage', 'von', 'bis', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Funktion'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Partei'), $this->RenderText('Geschlecht'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -9932,6 +9932,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('nachname', $this->RenderText('Nachname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vorname', $this->RenderText('Vorname')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zweiter_vorname', $this->RenderText('Zweiter Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf', $this->RenderText('Beruf')));
             
@@ -10120,7 +10121,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zweiter_vorname', $this->RenderText('Zweiter Vorname')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -11552,41 +11552,6 @@
             $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
-            //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for zweiter_vorname field
-            //
-            $editor = new TextEdit('zweiter_vorname_edit');
-            $editor->SetSize(50);
-            $editor->SetMaxLength(50);
-            $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for zweiter_vorname field
-            //
-            $editor = new TextEdit('zweiter_vorname_edit');
-            $editor->SetSize(50);
-            $editor->SetMaxLength(50);
-            $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Zweiter Vorname der zutrittsberechtigten Person'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -11621,6 +11586,13 @@
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for zweiter_vorname field
+            //
+            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -11822,13 +11794,6 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
@@ -12002,6 +11967,17 @@
             $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for zweiter_vorname field
+            //
+            $editor = new TextEdit('zweiter_vorname_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -12446,17 +12422,6 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for zweiter_vorname field
-            //
-            $editor = new TextEdit('zweiter_vorname_edit');
-            $editor->SetSize(50);
-            $editor->SetMaxLength(50);
-            $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -12630,6 +12595,17 @@
             $editColumn = new CustomEditColumn('Vorname', 'vorname', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for zweiter_vorname field
+            //
+            $editor = new TextEdit('zweiter_vorname_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -12841,17 +12817,6 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for zweiter_vorname field
-            //
-            $editor = new TextEdit('zweiter_vorname_edit');
-            $editor->SetSize(50);
-            $editor->SetMaxLength(50);
-            $editColumn = new CustomEditColumn('Zweiter Vorname', 'zweiter_vorname', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
                 $grid->SetShowAddButton(true);
@@ -12896,6 +12861,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for zweiter_vorname field
+            //
+            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
@@ -13078,13 +13050,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -13121,6 +13086,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for zweiter_vorname field
+            //
+            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
@@ -13303,13 +13275,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -13627,15 +13592,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Zweiter Vorname der zutrittsberechtigten Person'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
@@ -13661,6 +13617,13 @@
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zweiter_vorname field
+            //
+            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -13847,13 +13810,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -14166,15 +14122,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Zweiter Vorname der zutrittsberechtigten Person'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
@@ -14200,6 +14147,13 @@
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zweiter_vorname field
+            //
+            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -14386,13 +14340,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -14705,15 +14652,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Zweiter Vorname der zutrittsberechtigten Person'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
@@ -14739,6 +14677,13 @@
             // View column for vorname field
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for zweiter_vorname field
+            //
+            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -14925,13 +14870,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for zweiter_vorname field
-            //
-            $column = new TextViewColumn('zweiter_vorname', 'Zweiter Vorname', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
