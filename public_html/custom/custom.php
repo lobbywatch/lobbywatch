@@ -778,10 +778,14 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //       df(!getTimestamp($rowData['kontrolliert_datum']), '!getTimestamp($rowData[kontrolliert_datum]');
 //       df(getTimestamp($rowData['eingabe_abgeschlossen_datum']), 'getTimestamp($rowData[eingabe_abgeschlossen_datum]');
 //       df(!getTimestamp($rowData['eingabe_abgeschlossen_datum']), '!getTimestamp($rowData[eingabe_abgeschlossen_datum]');
-      $workflow_styles .= 'background-color: red;';
+
+//       $workflow_styles .= 'background-color: red;';
+          $workflow_styles .= 'background-image: url(img/icons/warning.gif); background-repeat: no-repeat;';
+
     }
     // Color states
-    else if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
+    //else
+    if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: greenyellow;';
     } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: lightblue;';
@@ -848,10 +852,14 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //       df(!getTimestamp($rowData['kontrolliert_datum']), '!getTimestamp($rowData[kontrolliert_datum]');
 //       df(getTimestamp($rowData['eingabe_abgeschlossen_datum']), 'getTimestamp($rowData[eingabe_abgeschlossen_datum]');
 //       df(!getTimestamp($rowData['eingabe_abgeschlossen_datum']), '!getTimestamp($rowData[eingabe_abgeschlossen_datum]');
-      $workflow_styles .= 'background-color: red;';
+
+//           $workflow_styles .= 'background-color: red;';
+          $workflow_styles .= 'background-image: url(img/icons/warning.gif); background-repeat: no-repeat;';
     }
     // Color states
-    else if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
+
+    //else
+    if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: greenyellow;';
 //     } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
 //       $rowCellStyles['id'] .= 'background-color: lightblue;';
