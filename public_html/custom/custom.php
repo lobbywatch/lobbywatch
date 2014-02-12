@@ -743,7 +743,7 @@ function getTimestamp($date_str) {
 
 function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
-  $update_threshold = SMDateTime::Parse('2014-01-01', 'Y-m-d');
+  $update_threshold = SMDateTime::Parse('2012-01-01', 'Y-m-d');
   $update_threshold_ts = $update_threshold->GetTimestamp();
 
   if ($table_name === 'parlamentarier' || $table_name === 'zutrittsberechtigung') {
