@@ -386,8 +386,9 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
-            $editor->AddValue('arbeitet fuer', $this->RenderText('arbeitet fuer'));
+            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
+            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -400,8 +401,9 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
-            $editor->AddValue('arbeitet fuer', $this->RenderText('arbeitet fuer'));
+            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
+            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1230,8 +1232,9 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
-            $editor->AddValue('arbeitet fuer', $this->RenderText('arbeitet fuer'));
+            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
+            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1546,8 +1549,9 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied von', $this->RenderText('mitglied von'));
-            $editor->AddValue('arbeitet fuer', $this->RenderText('arbeitet fuer'));
+            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
+            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
