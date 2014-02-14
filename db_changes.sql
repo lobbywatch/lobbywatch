@@ -356,3 +356,7 @@ ALTER TABLE `mandat_log` ADD `funktion_im_gremium` ENUM( 'praesident', 'vizeprae
 ALTER TABLE `interessenbindung` CHANGE `funktion_im_gremium` `funktion_im_gremium` ENUM( 'praesident', 'vizepraesident', 'mitglied' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.';
 
 ALTER TABLE `interessenbindung_log` CHANGE `funktion_im_gremium` `funktion_im_gremium` ENUM( 'praesident', 'vizepraesident', 'mitglied' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.';
+
+ALTER TABLE `mandat` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation';
+
+ALTER TABLE `mandat_log` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation';

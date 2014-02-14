@@ -54,6 +54,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('art');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, false);
@@ -797,7 +798,8 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -813,7 +815,8 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -1661,7 +1664,8 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -2046,7 +2050,8 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             

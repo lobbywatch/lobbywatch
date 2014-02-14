@@ -1595,6 +1595,7 @@
             $field = new StringField('zutrittsberechtigter');
             $this->dataset->AddField($field, true);
             $field = new StringField('art');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
@@ -2748,6 +2749,7 @@
             $field = new StringField('zutrittsberechtigter');
             $this->dataset->AddField($field, true);
             $field = new StringField('art');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);

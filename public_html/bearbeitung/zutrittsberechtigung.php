@@ -1357,6 +1357,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('art');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, true);
@@ -2730,6 +2731,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('art');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, true);
@@ -5768,6 +5770,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('art');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, false);
@@ -6951,6 +6954,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('art');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, false);
