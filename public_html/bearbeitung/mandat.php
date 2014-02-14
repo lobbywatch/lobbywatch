@@ -851,6 +851,7 @@
             $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
             $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('mitglied'));
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -2059,6 +2060,7 @@
             $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
             $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('mitglied'));
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             

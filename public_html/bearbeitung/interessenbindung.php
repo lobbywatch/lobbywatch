@@ -974,11 +974,11 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('geschaeftsfuehrend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand/verwaltungsrat/stiftungsrat'));
-            $editor->AddValue('taetig', $this->RenderText('taetig'));
-            $editor->AddValue('beirat', $this->RenderText('beirat'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
+            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
+            $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
+            $editor->AddValue('taetig', $this->RenderText('Tätig'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -991,13 +991,14 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('geschaeftsfuehrend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand/verwaltungsrat/stiftungsrat'));
-            $editor->AddValue('taetig', $this->RenderText('taetig'));
-            $editor->AddValue('beirat', $this->RenderText('beirat'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
+            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
+            $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
+            $editor->AddValue('taetig', $this->RenderText('Tätig'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('mitglied'));
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2031,11 +2032,11 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('geschaeftsfuehrend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand/verwaltungsrat/stiftungsrat'));
-            $editor->AddValue('taetig', $this->RenderText('taetig'));
-            $editor->AddValue('beirat', $this->RenderText('beirat'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
+            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
+            $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
+            $editor->AddValue('taetig', $this->RenderText('Tätig'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -2508,13 +2509,14 @@
             // Edit column for art field
             //
             $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('geschaeftsfuehrend'));
-            $editor->AddValue('vorstand', $this->RenderText('vorstand/verwaltungsrat/stiftungsrat'));
-            $editor->AddValue('taetig', $this->RenderText('taetig'));
-            $editor->AddValue('beirat', $this->RenderText('beirat'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
+            $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
+            $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
+            $editor->AddValue('taetig', $this->RenderText('Tätig'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('mitglied'));
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
