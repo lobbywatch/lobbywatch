@@ -167,7 +167,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('mandatssearch', $this->dataset,
                 array('id', 'zutrittsberechtigung_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'von', 'bis', 'beschreibung', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Zutrittsberechtigung'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion Im Gremium'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
+                array($this->RenderText('Id'), $this->RenderText('Zutrittsberechtigung'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion im Gremium'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -341,7 +341,7 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion_im_gremium', $this->RenderText('Funktion Im Gremium')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion_im_gremium', $this->RenderText('Funktion im Gremium')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
@@ -824,7 +824,7 @@
             //
             // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -835,7 +835,7 @@
             $editor->AddValue('praesident', $this->RenderText('Präsident'));
             $editor->AddValue('vizepraesident', $this->RenderText('Vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
-            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -849,7 +849,7 @@
             $editor->AddValue('praesident', $this->RenderText('Präsident'));
             $editor->AddValue('vizepraesident', $this->RenderText('Vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
-            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -1339,7 +1339,7 @@
             //
             // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1672,7 +1672,7 @@
             $editor->AddValue('praesident', $this->RenderText('Präsident'));
             $editor->AddValue('vizepraesident', $this->RenderText('Vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
-            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -2057,7 +2057,7 @@
             $editor->AddValue('praesident', $this->RenderText('Präsident'));
             $editor->AddValue('vizepraesident', $this->RenderText('Vizepraesident'));
             $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
-            $editColumn = new CustomEditColumn('Funktion Im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
+            $editColumn = new CustomEditColumn('Funktion im Gremium', 'funktion_im_gremium', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -2159,7 +2159,7 @@
             //
             // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -2329,7 +2329,7 @@
             //
             // View column for funktion_im_gremium field
             //
-            $column = new TextViewColumn('funktion_im_gremium', 'Funktion Im Gremium', $this->dataset);
+            $column = new TextViewColumn('funktion_im_gremium', 'Funktion im Gremium', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
