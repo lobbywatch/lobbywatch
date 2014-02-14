@@ -40,6 +40,7 @@ do
   mv "$file" "$file.bak";
   # Read file, process regex and write file
   cat "$file.bak" \
+  | perl -p -e's/\$editColumn->SetAllowSetToDefault\(true\);/\$editColumn->SetAllowSetToDefault(false);/g' \
   | perl -p -e's/^(\s*)(GetApplication\(\)->SetMainPage\(\$Page\);)/\1\2\n\1before_render\(\$Page\);/' \
   | perl -p -e's/CanLoginAsGuest\(\)\s*\{\s*return true;\s*\}/CanLoginAsGuest\(\) \{ return false; \}/g' \
   | perl -p -e's/'\''guest'\''\s*=>\s*new\s+DataSourceSecurityInfo\(\s*true/'\''guest'\'' => new DataSourceSecurityInfo\(GetApplication\(\)->GetOperation\(\) === '\''rss'\''/g' \
