@@ -1358,6 +1358,8 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('art');
             $this->dataset->AddField($field, true);
+            $field = new StringField('funktion_im_gremium');
+            $this->dataset->AddField($field, true);
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
@@ -2728,6 +2730,8 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('art');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
@@ -5765,6 +5769,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('art');
             $this->dataset->AddField($field, false);
+            $field = new StringField('funktion_im_gremium');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
@@ -6945,6 +6951,8 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('art');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('funktion_im_gremium');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, false);
