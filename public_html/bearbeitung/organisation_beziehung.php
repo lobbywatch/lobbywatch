@@ -150,8 +150,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisation_beziehungssearch', $this->dataset,
-                array('id', 'art', 'organisation_id_anzeige_name', 'ziel_organisation_id_anzeige_name', 'von', 'bis', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Art'), $this->RenderText('Organisation'), $this->RenderText('Ziel Organisation'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen')),
+                array('id', 'organisation_id_anzeige_name', 'art', 'ziel_organisation_id_anzeige_name', 'von', 'bis', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Ziel Organisation'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -172,7 +172,6 @@
             $this->AdvancedSearchControl = new AdvancedSearchControl('organisation_beziehungasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -244,6 +243,7 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -372,45 +372,6 @@
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Technischer Schlüssel einer Organisationsbeziehung'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for art field
-            //
-            $column = new TextViewColumn('art', 'Art', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for art field
-            //
-            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
-            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
-            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
-            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for art field
-            //
-            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
-            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
-            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
-            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Beschreibt die Beziehung einer Organisation zu einer Zielorgansation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -587,6 +548,45 @@
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremdschlüssel Organisation.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for art field
+            //
+            $column = new TextViewColumn('art', 'Art', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for art field
+            //
+            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
+            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
+            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for art field
+            //
+            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
+            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
+            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Beschreibt die Beziehung einer Organisation zu einer Zielorgansation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -1102,18 +1102,18 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for art field
-            //
-            $column = new TextViewColumn('art', 'Art', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for art field
+            //
+            $column = new TextViewColumn('art', 'Art', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1229,19 +1229,6 @@
         protected function AddEditColumns(Grid $grid)
         {
             //
-            // Edit column for art field
-            //
-            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
-            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
-            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
-            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for organisation_id field
             //
             $editor = new AutocomleteComboBox('organisation_id_edit', $this->CreateLinkBuilder());
@@ -1317,6 +1304,19 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_name', 'edit_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for art field
+            //
+            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
+            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
+            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1546,19 +1546,6 @@
         protected function AddInsertColumns(Grid $grid)
         {
             //
-            // Edit column for art field
-            //
-            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
-            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
-            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
-            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for organisation_id field
             //
             $editor = new AutocomleteComboBox('organisation_id_edit', $this->CreateLinkBuilder());
@@ -1634,6 +1621,19 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_name', 'insert_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for art field
+            //
+            $editor = new ComboBox('art_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('mitglied von', $this->RenderText('Mitglied von'));
+            $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
+            $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
+            $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1768,18 +1768,18 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for art field
-            //
-            $column = new TextViewColumn('art', 'Art', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for art field
+            //
+            $column = new TextViewColumn('art', 'Art', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -1899,18 +1899,18 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for art field
-            //
-            $column = new TextViewColumn('art', 'Art', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('organisation_id_anzeige_name', 'Organisation', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=view&pk0=%organisation_id%' , '_self');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for art field
+            //
+            $column = new TextViewColumn('art', 'Art', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
