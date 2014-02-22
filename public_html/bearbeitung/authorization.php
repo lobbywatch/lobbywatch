@@ -64,7 +64,9 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'q_unvollstaendige_parlamentarier' => '<span class="view">Unvollständige Parlamentarier</span>',
 'q_unvollstaendige_organisationen' => '<span class="view">Unvollständige Organisationen</span>',
 'v_last_updated_tables' => '<span class="view">Tabellenstand</span>',
-'q_last_updated_tables' => '<span class="view">Tabellenstand</span>');
+'q_last_updated_tables' => '<span class="view">Tabellenstand</span>',
+'parlamentarier_anhang' => 'Parlamentarier Anhang',
+'zutrittsberechtigung_anhang' => 'Zutrittsberechtigung Anhang');
 
 function CreateTableBasedGrantsManager()
 {
