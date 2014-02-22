@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 14. Feb 2014 um 22:05
+-- Erstellungszeit: 22. Feb 2014 um 11:33
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -1668,7 +1668,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang`
 --
--- Erzeugt am: 19. Jan 2014 um 08:22
+-- Erzeugt am: 22. Feb 2014 um 10:32
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang`;
@@ -1680,7 +1680,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
   `dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Erweiterung der Datei',
   `dateiname_voll` varchar(255) NOT NULL COMMENT 'Dateiname inkl. Erweiterung',
   `mime_type` varchar(100) NOT NULL COMMENT 'MIME Type der Datei',
-  `encoding` varchar(20) NOT NULL COMMENT 'Encoding der Datei',
+  `encoding` varchar(50) NOT NULL COMMENT 'Encoding der Datei',
   `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Anhangs',
   `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
@@ -1754,7 +1754,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
 --
--- Erzeugt am: 27. Jan 2014 um 07:02
+-- Erzeugt am: 22. Feb 2014 um 10:32
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
@@ -1766,7 +1766,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
   `dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Erweiterung der Datei',
   `dateiname_voll` varchar(255) NOT NULL COMMENT 'Dateiname inkl. Erweiterung',
   `mime_type` varchar(100) NOT NULL COMMENT 'MIME Type der Datei',
-  `encoding` varchar(20) NOT NULL COMMENT 'Encoding der Datei',
+  `encoding` varchar(50) NOT NULL COMMENT 'Encoding der Datei',
   `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Anhangs',
   `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
@@ -3014,7 +3014,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier_anhang` (
 ,`dateierweiterung` varchar(15)
 ,`dateiname_voll` varchar(255)
 ,`mime_type` varchar(100)
-,`encoding` varchar(20)
+,`encoding` varchar(50)
 ,`beschreibung` varchar(150)
 ,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
@@ -3147,7 +3147,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_anhang` (
 ,`dateierweiterung` varchar(15)
 ,`dateiname_voll` varchar(255)
 ,`mime_type` varchar(100)
-,`encoding` varchar(20)
+,`encoding` varchar(50)
 ,`beschreibung` varchar(150)
 ,`freigabe_visa` varchar(10)
 ,`freigabe_datum` timestamp
@@ -3398,7 +3398,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_anhang`
 --
--- Erzeugt am: 27. Jan 2014 um 06:59
+-- Erzeugt am: 22. Feb 2014 um 10:32
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_anhang`;
@@ -3410,7 +3410,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang` (
   `dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Erweiterung der Datei',
   `dateiname_voll` varchar(255) NOT NULL COMMENT 'Dateiname inkl. Erweiterung',
   `mime_type` varchar(100) NOT NULL COMMENT 'MIME Type der Datei',
-  `encoding` varchar(20) NOT NULL COMMENT 'Encoding der Datei',
+  `encoding` varchar(50) NOT NULL COMMENT 'Encoding der Datei',
   `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Anhangs',
   `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
@@ -3478,7 +3478,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_anhang_log`
 --
--- Erzeugt am: 27. Jan 2014 um 07:02
+-- Erzeugt am: 22. Feb 2014 um 10:32
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_anhang_log`;
@@ -3490,7 +3490,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang_log` (
   `dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Erweiterung der Datei',
   `dateiname_voll` varchar(255) NOT NULL COMMENT 'Dateiname inkl. Erweiterung',
   `mime_type` varchar(100) NOT NULL COMMENT 'MIME Type der Datei',
-  `encoding` varchar(20) NOT NULL COMMENT 'Encoding der Datei',
+  `encoding` varchar(50) NOT NULL COMMENT 'Encoding der Datei',
   `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Anhangs',
   `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
   `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',

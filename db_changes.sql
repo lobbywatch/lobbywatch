@@ -360,3 +360,13 @@ ALTER TABLE `interessenbindung_log` CHANGE `funktion_im_gremium` `funktion_im_gr
 ALTER TABLE `mandat` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation';
 
 ALTER TABLE `mandat_log` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation';
+
+-- 22.02.2014
+
+ALTER TABLE `parlamentarier_anhang` CHANGE `encoding` `encoding` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Encoding der Datei';
+
+ALTER TABLE `parlamentarier_anhang_log` CHANGE `encoding` `encoding` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Encoding der Datei';
+
+ALTER TABLE `zutrittsberechtigung_anhang` CHANGE `encoding` `encoding` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Encoding der Datei';
+
+ALTER TABLE `zutrittsberechtigung_anhang_log` CHANGE `encoding` `encoding` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Encoding der Datei';

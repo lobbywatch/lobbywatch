@@ -765,6 +765,26 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for mime_type field
+            //
+            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('mime_type_handler');
+            $column->SetDescription($this->RenderText('MIME Type der Datei'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for encoding field
+            //
+            $column = new TextViewColumn('encoding', 'Encoding', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Encoding der Datei'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -1644,6 +1664,13 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'dateiname_voll_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for mime_type field
+            //
+            $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mime_type_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
