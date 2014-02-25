@@ -523,7 +523,7 @@ class Kommission {
 
   // Branchen und Interessengruppen je Kommission
   function BranchenInteressengruppen($komm) {
-    $sql = "SELECT a.name,b.name,b.beschreibung FROM branche a, interessengruppe b, kommission k WHERE b.branche_id=a.id AND a.kommission_id = k.id AND k.abkuerzung=:komm
+    $sql = "SELECT a.name as branche, b.name,b.beschreibung FROM branche a, interessengruppe b, kommission k WHERE b.branche_id=a.id AND a.kommission_id = k.id AND k.abkuerzung=:komm
    ORDER BY b.name ASC";
     dtXXX($sql);
     $gruppen = $this->db->prepare ( $sql );
@@ -547,7 +547,7 @@ class Kommission {
     if ($anz > 0) {
       return $erg;
     } else {
-      return "Noch keine Gruppen definiert";
+      return "Noch keine Gruppenzuordnung";
     }
   }
 } // end Class
@@ -1662,25 +1662,36 @@ if (isset ( $_GET ['beidekomm'] )) {
   $html .= "<h4 class='accord' style='clear:both;padding-top:20px;cursor:pointer'>Branchen und Interessengruppen <img src='icons/mouseclick_mini.jpg' /></h4>";
   $html .= "<ul>";
   // Vereinfachung f&uuml;r Gruppen und Typenvergleich
+  $ig = array();
+  dtXXX($typen, '$typen');
+  dtXXX($gruppen, '$gruppen');
   foreach ( $typen as $wert ) {
     $typenar [] = $wert ['name'];
+    $ig[$wert ['name']]['igs'] = array();
+    $ig[$wert ['name']]['name'] = $wert ['name'];
   }
   // print_r($typenar); //Typen pro kommission
+  dtXXX($typenar, '$typenar');
   foreach ( $gruppen as $w ) {
     $typus [] = $w ['name'];
+    $ig[$w ['branche']]['igs'][$w ['name']] = $w ['beschreibung'];
   }
+  dtXXX($typus, '$typus');
   // print_r($typus);
-  for($i = 0; $i < count ( $typenar ); $i ++) {
-    $html .= "<li style='list-style:none' ><b>Branche: {$typenar[$i]}<br>Interessengruppen:</b></li>";
+  dtXXX($ig, '$ig');
+  foreach($ig as $b) {
+    $html .= "<li style='list-style:disc' ><b>Branche: {$b['name']}</b><br>Interessengruppen:</li><ul>";
 
-    if (in_array ( $typenar [$i], $typus )) { // Gruppe definiert?
+//     if (in_array ( $typenar [$i], $typus )) { // Gruppe definiert?
+    if (!empty($b['igs'])) { // Gruppe definiert?
 
-      foreach ( $gruppen as $val ) {
-        $html .= "<li><b>{$val['name']}:</b> {$val['beschreibung']}</li>";
+      foreach ( $b['igs'] as $name => $beschreibung ) {
+        $html .= "<li><b>{$name}:</b> {$beschreibung}</li>";
       }
     } else {
       $html .= "<li>Noch keine Gruppen definiert</li>";
     }
+    $html .= "</ul>";
   } // for
   $html .= "</ul>";
 

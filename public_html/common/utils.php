@@ -17,14 +17,14 @@ function endsWith($haystack, $needle)
 
 // Logging
 
-function dt($msg) {
+function dt($msg, $text = null) {
   global $debug;
   if ($debug !== true)
     return;
   if (is_array($msg) || is_object($msg)) {
     $msg = print_r($msg, true);
   }
-  print ("<p style='color:red;'>$msg</p>") ;
+  print ("<p style='color:red;'>" . (is_string($text) ? $text . ' => ' : '') . "$msg</p>") ;
 }
 function dtXXX($msg) {
   // Disabled debug comment: do nothing
