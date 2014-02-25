@@ -40,7 +40,7 @@ function GetPageInfos()
     $result = array();
     $result[] = array('caption' => '<span class="entity important-entity">Organisation</span>', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation');
     $result[] = array('caption' => '<span class="entity important-entity">Parlamentarier</span>', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier');
-    $result[] = array('caption' => '<span class="entity">Zutrittsberechtigung</span>', 'short_caption' => 'Zutrittsberechtigung', 'filename' => 'zutrittsberechtigung.php', 'name' => 'zutrittsberechtigung');
+    $result[] = array('caption' => '<span class="entity">Zutrittsberechtigter</span>', 'short_caption' => 'Zutrittsberechtigter', 'filename' => 'zutrittsberechtigung.php', 'name' => 'zutrittsberechtigung');
     $result[] = array('caption' => '<span class="relation">Interessenbindung</span>', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung');
     $result[] = array('caption' => '<span class="relation">Mandat</span>', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat');
     $result[] = array('caption' => '<span class="relation">In Kommission</span>', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission');

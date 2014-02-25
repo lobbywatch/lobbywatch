@@ -9741,7 +9741,7 @@
             if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity important-entity">Parlamentarier</span>'), 'parlamentarier.php', $this->RenderText('Parlamentarier'), $currentPageCaption == $this->RenderText('<span class="entity important-entity">Parlamentarier</span>')));
             if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Zutrittsberechtigung</span>'), 'zutrittsberechtigung.php', $this->RenderText('Zutrittsberechtigung'), $currentPageCaption == $this->RenderText('<span class="entity">Zutrittsberechtigung</span>')));
+                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Zutrittsberechtigter</span>'), 'zutrittsberechtigung.php', $this->RenderText('Zutrittsberechtigter'), $currentPageCaption == $this->RenderText('<span class="entity">Zutrittsberechtigter</span>')));
             if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="relation">Interessenbindung</span>'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('<span class="relation">Interessenbindung</span>')));
             if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
@@ -10176,7 +10176,7 @@
               //
             // View column for zutrittsberechtigung_anhangDetailView0zutrittsberechtigung detail
             //
-            $column = new DetailColumn(array('id'), 'detail0zutrittsberechtigung', 'zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_handler', 'zutrittsberechtigung_anhangDetailView0zutrittsberechtigung_handler', $this->dataset, 'Zutrittsberechtigung Anhang', $this->RenderText('Zutrittsberechtigung Anhang'));
+            $column = new DetailColumn(array('id'), 'detail0zutrittsberechtigung', 'zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_handler', 'zutrittsberechtigung_anhangDetailView0zutrittsberechtigung_handler', $this->dataset, 'Zutrittsberechtigter Anhang', $this->RenderText('Zutrittsberechtigter Anhang'));
               $grid->AddViewColumn($column);
             }
             
@@ -15013,7 +15013,7 @@
             //
             // Http Handlers
             //
-            $pageView = new zutrittsberechtigung_anhangDetailView0zutrittsberechtigungPage($this, 'Zutrittsberechtigung Anhang', 'Zutrittsberechtigung Anhang', array('zutrittsberechtigung_id'), GetCurrentUserGrantForDataSource('zutrittsberechtigung.zutrittsberechtigung_anhang'), 'UTF-8', 20, 'zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_handler');
+            $pageView = new zutrittsberechtigung_anhangDetailView0zutrittsberechtigungPage($this, 'Zutrittsberechtigter Anhang', 'Zutrittsberechtigter Anhang', array('zutrittsberechtigung_id'), GetCurrentUserGrantForDataSource('zutrittsberechtigung.zutrittsberechtigung_anhang'), 'UTF-8', 20, 'zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_handler');
             
             $pageView->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('zutrittsberechtigung.zutrittsberechtigung_anhang'));
             $handler = new PageHTTPHandler('zutrittsberechtigung_anhangDetailView0zutrittsberechtigung_handler', $pageView);
@@ -15021,10 +15021,10 @@
             $pageEdit = new zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigungPage($this, array('zutrittsberechtigung_id'), array('id'), $this->GetForeingKeyFields(), $this->CreateMasterDetailRecordGridForzutrittsberechtigung_anhangDetailEdit0zutrittsberechtigungGrid(), $this->dataset, GetCurrentUserGrantForDataSource('zutrittsberechtigung.zutrittsberechtigung_anhang'), 'UTF-8');
             
             $pageEdit->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource('zutrittsberechtigung.zutrittsberechtigung_anhang'));
-            $pageEdit->SetShortCaption('Zutrittsberechtigung Anhang');
+            $pageEdit->SetShortCaption('Zutrittsberechtigter Anhang');
             $pageEdit->SetHeader(GetPagesHeader());
             $pageEdit->SetFooter(GetPagesFooter());
-            $pageEdit->SetCaption('Zutrittsberechtigung Anhang');
+            $pageEdit->SetCaption('Zutrittsberechtigter Anhang');
             $pageEdit->SetHttpHandlerName('zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_handler');
             $handler = new PageHTTPHandler('zutrittsberechtigung_anhangDetailEdit0zutrittsberechtigung_handler', $pageEdit);
             GetApplication()->RegisterHTTPHandler($handler);
@@ -15900,10 +15900,10 @@
     try
     {
         $Page = new zutrittsberechtigungPage("zutrittsberechtigung.php", "zutrittsberechtigung", GetCurrentUserGrantForDataSource("zutrittsberechtigung"), 'UTF-8');
-        $Page->SetShortCaption('<span class="entity">Zutrittsberechtigung</span>');
+        $Page->SetShortCaption('<span class="entity">Zutrittsberechtigter</span>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
-        $Page->SetCaption('Zutrittsberechtigung');
+        $Page->SetCaption('Zutrittsberechtigter');
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("zutrittsberechtigung"));
         GetApplication()->SetEnableLessRunTimeCompile(GetEnableLessFilesRunTimeCompilation());
         GetApplication()->SetCanUserChangeOwnPassword(
