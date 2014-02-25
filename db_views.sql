@@ -135,7 +135,7 @@ CREATE OR REPLACE VIEW `v_last_updated_parlamentarier_anhang` AS
 CREATE OR REPLACE VIEW `v_last_updated_zutrittsberechtigung_anhang` AS
   (SELECT
   'zutrittsberechtigung_anhang' table_name,
-  'Zutrittsberechtigunganhang' name,
+  'Zutrittsberechtigteranhang' name,
   (select count(*) from `zutrittsberechtigung_anhang`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
@@ -174,7 +174,7 @@ CREATE OR REPLACE VIEW `v_last_updated_fraktion` AS
 CREATE OR REPLACE VIEW `v_last_updated_zutrittsberechtigung` AS
   (SELECT
   'zutrittsberechtigung' table_name,
-  'Zutrittsberechtigung' name,
+  'Zutrittsberechtigter' name,
   (select count(*) from `zutrittsberechtigung`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
