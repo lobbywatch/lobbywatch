@@ -426,3 +426,7 @@ ul.css-tabs a.current {
 {
   margin-top: 0.7em;
 }
+
+small.desc {
+  font-size: 80%;
+}
