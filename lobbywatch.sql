@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 01. Mrz 2014 um 20:28
+-- Erstellungszeit: 01. Mrz 2014 um 22:47
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -280,6 +280,50 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
 --   `snapshot_id`
 --       `snapshot` -> `id`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `country`
+--
+-- Erzeugt am: 01. Mrz 2014 um 21:44
+--
+
+DROP TABLE IF EXISTS `country`;
+CREATE TABLE IF NOT EXISTS `country` (
+  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+  `continent` enum('Antarctica','Australia','Africa','North America','South America','Europe','Asia') NOT NULL COMMENT 'Kontinent',
+  `name_en` varchar(200) NOT NULL COMMENT 'Name des Landes auf Englisch',
+  `official_name_en` varchar(200) NOT NULL COMMENT 'Offizieller Name des Landes (englisch)',
+  `capital_en` varchar(200) NOT NULL COMMENT 'Hauptstadt auf Englisch',
+  `name_de` varchar(200) NOT NULL COMMENT 'Name des Landes auf Deutsch',
+  `official_name_de` varchar(200) NOT NULL COMMENT 'Offizieller Name des Landes (deutsch)',
+  `capital_de` varchar(200) NOT NULL COMMENT 'Hauptstadt auf Deutsch',
+  `name_fr` varchar(200) DEFAULT NULL COMMENT 'Französischer Name',
+  `official_name_fr` varchar(200) DEFAULT NULL COMMENT 'Offizieller Name des Landes (französisch)',
+  `capital_fr` varchar(200) DEFAULT NULL COMMENT 'Hauptstadt auf Französisch',
+  `name_it` varchar(200) DEFAULT NULL COMMENT 'Italienischer Name',
+  `official_name_it` varchar(200) DEFAULT NULL COMMENT 'Offizieller Name des Landes (italiensich)',
+  `capital_it` varchar(200) DEFAULT NULL COMMENT 'Hauptstadt auf Italienisch',
+  `iso-2` varchar(2) NOT NULL COMMENT 'ISO 3166 ALPHA-2 Code',
+  `iso-3` varchar(3) NOT NULL COMMENT 'ISO 3166 ALPHA-3 Code',
+  `vehicle_code` varchar(4) DEFAULT NULL COMMENT 'Nationalitätszeichen für Fahrzeuge',
+  `ioc` varchar(3) NOT NULL COMMENT ' Ländercodes des Internationalen Olympischen Komitees (IOC)',
+  `tld` varchar(6) NOT NULL COMMENT 'Top Level Domain für Internet',
+  `currency` varchar(5) NOT NULL COMMENT 'Währungsabkürzung',
+  `phone` varchar(10) NOT NULL COMMENT 'Internatinale Vorwahl',
+  `utc` mediumint(9) NOT NULL COMMENT 'Verschiebung zur Weltzeit GMT',
+  `show_level` int(11) NOT NULL DEFAULT '0' COMMENT 'Anzeigestufe je höher desto selektiver',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_name_de` (`name_de`),
+  UNIQUE KEY `idx_name_en` (`name_en`),
+  KEY `idx_show_level` (`show_level`),
+  KEY `idx_continent` (`continent`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Länder der Welt mit ISO Code (http://countrylist.net)' AUTO_INCREMENT=252 ;
 
 -- --------------------------------------------------------
 
@@ -1201,7 +1245,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 26. Jan 2014 um 09:59
+-- Erzeugt am: 01. Mrz 2014 um 21:12
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1211,7 +1255,8 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französischer Name',
   `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
@@ -1240,7 +1285,8 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `idx_lobbygroup` (`interessengruppe_id`),
   KEY `interessengruppe2_id` (`interessengruppe2_id`),
-  KEY `interessengruppe3_id` (`interessengruppe3_id`)
+  KEY `interessengruppe3_id` (`interessengruppe3_id`),
+  KEY `land` (`land_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=418 ;
 
 --
@@ -1253,6 +1299,8 @@ CREATE TABLE IF NOT EXISTS `organisation` (
 --       `interessengruppe` -> `id`
 --   `interessengruppe3_id`
 --       `interessengruppe` -> `id`
+--   `land_id`
+--       `country` -> `id`
 --
 
 --
@@ -1457,7 +1505,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 27. Jan 2014 um 07:02
+-- Erzeugt am: 01. Mrz 2014 um 21:02
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1467,6 +1515,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französischer Name',
   `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
+  `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
   `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
@@ -2090,6 +2139,42 @@ CREATE TABLE IF NOT EXISTS `v_branche` (
 -- --------------------------------------------------------
 
 --
+-- Stellvertreter-Struktur des Views `v_country`
+--
+DROP VIEW IF EXISTS `v_country`;
+CREATE TABLE IF NOT EXISTS `v_country` (
+`anzeige_name` varchar(200)
+,`id` int(10)
+,`continent` enum('Antarctica','Australia','Africa','North America','South America','Europe','Asia')
+,`name_en` varchar(200)
+,`official_name_en` varchar(200)
+,`capital_en` varchar(200)
+,`name_de` varchar(200)
+,`official_name_de` varchar(200)
+,`capital_de` varchar(200)
+,`name_fr` varchar(200)
+,`official_name_fr` varchar(200)
+,`capital_fr` varchar(200)
+,`name_it` varchar(200)
+,`official_name_it` varchar(200)
+,`capital_it` varchar(200)
+,`iso-2` varchar(2)
+,`iso-3` varchar(3)
+,`vehicle_code` varchar(4)
+,`ioc` varchar(3)
+,`tld` varchar(6)
+,`currency` varchar(5)
+,`phone` varchar(10)
+,`utc` mediumint(9)
+,`show_level` int(11)
+,`created_visa` varchar(10)
+,`created_date` timestamp
+,`updated_visa` varchar(10)
+,`updated_date` timestamp
+);
+-- --------------------------------------------------------
+
+--
 -- Stellvertreter-Struktur des Views `v_fraktion`
 --
 DROP VIEW IF EXISTS `v_fraktion`;
@@ -2661,7 +2746,8 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`name_fr` varchar(150)
 ,`name_it` varchar(150)
 ,`ort` varchar(100)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft')
+,`land_id` int(11)
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -3585,6 +3671,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
+-- Struktur des Views `v_country`
+--
+DROP TABLE IF EXISTS `v_country`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_country` AS select `c`.`name_de` AS `anzeige_name`,`c`.`id` AS `id`,`c`.`continent` AS `continent`,`c`.`name_en` AS `name_en`,`c`.`official_name_en` AS `official_name_en`,`c`.`capital_en` AS `capital_en`,`c`.`name_de` AS `name_de`,`c`.`official_name_de` AS `official_name_de`,`c`.`capital_de` AS `capital_de`,`c`.`name_fr` AS `name_fr`,`c`.`official_name_fr` AS `official_name_fr`,`c`.`capital_fr` AS `capital_fr`,`c`.`name_it` AS `name_it`,`c`.`official_name_it` AS `official_name_it`,`c`.`capital_it` AS `capital_it`,`c`.`iso-2` AS `iso-2`,`c`.`iso-3` AS `iso-3`,`c`.`vehicle_code` AS `vehicle_code`,`c`.`ioc` AS `ioc`,`c`.`tld` AS `tld`,`c`.`currency` AS `currency`,`c`.`phone` AS `phone`,`c`.`utc` AS `utc`,`c`.`show_level` AS `show_level`,`c`.`created_visa` AS `created_visa`,`c`.`created_date` AS `created_date`,`c`.`updated_visa` AS `updated_visa`,`c`.`updated_date` AS `updated_date` from `country` `c`;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur des Views `v_fraktion`
 --
 DROP TABLE IF EXISTS `v_fraktion`;
@@ -3805,7 +3900,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_zutrittsberechtigung`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_zutrittsberechtigung` AS (select 'zutrittsberechtigung' AS `table_name`,'Zutrittsberechtigung' AS `name`,(select count(0) from `zutrittsberechtigung`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `zutrittsberechtigung` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_zutrittsberechtigung` AS (select 'zutrittsberechtigung' AS `table_name`,'Zutrittsberechtigter' AS `name`,(select count(0) from `zutrittsberechtigung`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `zutrittsberechtigung` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -3814,7 +3909,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_last_updated_zutrittsberechtigung_anhang`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_zutrittsberechtigung_anhang` AS (select 'zutrittsberechtigung_anhang' AS `table_name`,'Zutrittsberechtigunganhang' AS `name`,(select count(0) from `zutrittsberechtigung_anhang`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `zutrittsberechtigung_anhang` `t` order by `t`.`updated_date` desc limit 1);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_last_updated_zutrittsberechtigung_anhang` AS (select 'zutrittsberechtigung_anhang' AS `table_name`,'Zutrittsberechtigteranhang' AS `name`,(select count(0) from `zutrittsberechtigung_anhang`) AS `anzahl_eintraege`,`t`.`updated_visa` AS `last_visa`,`t`.`updated_date` AS `last_updated`,`t`.`id` AS `last_updated_id` from `zutrittsberechtigung_anhang` `t` order by `t`.`updated_date` desc limit 1);
 
 -- --------------------------------------------------------
 
@@ -3841,7 +3936,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation` AS select concat_ws('; ',`t`.`name_de`,`t`.`name_fr`,`t`.`name_it`) AS `anzeige_name`,concat_ws('; ',`t`.`name_de`,`t`.`name_fr`,`t`.`name_it`) AS `name`,`t`.`id` AS `id`,`t`.`name_de` AS `name_de`,`t`.`name_fr` AS `name_fr`,`t`.`name_it` AS `name_it`,`t`.`ort` AS `ort`,`t`.`rechtsform` AS `rechtsform`,`t`.`typ` AS `typ`,`t`.`vernehmlassung` AS `vernehmlassung`,`t`.`interessengruppe_id` AS `interessengruppe_id`,`t`.`interessengruppe2_id` AS `interessengruppe2_id`,`t`.`interessengruppe3_id` AS `interessengruppe3_id`,`t`.`branche_id` AS `branche_id`,`t`.`homepage` AS `homepage`,`t`.`handelsregister_url` AS `handelsregister_url`,`t`.`beschreibung` AS `beschreibung`,`t`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `organisation` `t`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation` AS select concat_ws('; ',`t`.`name_de`,`t`.`name_fr`,`t`.`name_it`) AS `anzeige_name`,concat_ws('; ',`t`.`name_de`,`t`.`name_fr`,`t`.`name_it`) AS `name`,`t`.`id` AS `id`,`t`.`name_de` AS `name_de`,`t`.`name_fr` AS `name_fr`,`t`.`name_it` AS `name_it`,`t`.`ort` AS `ort`,`t`.`land_id` AS `land_id`,`t`.`rechtsform` AS `rechtsform`,`t`.`typ` AS `typ`,`t`.`vernehmlassung` AS `vernehmlassung`,`t`.`interessengruppe_id` AS `interessengruppe_id`,`t`.`interessengruppe2_id` AS `interessengruppe2_id`,`t`.`interessengruppe3_id` AS `interessengruppe3_id`,`t`.`branche_id` AS `branche_id`,`t`.`homepage` AS `homepage`,`t`.`handelsregister_url` AS `handelsregister_url`,`t`.`beschreibung` AS `beschreibung`,`t`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`t`.`notizen` AS `notizen`,`t`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`t`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`t`.`kontrolliert_visa` AS `kontrolliert_visa`,`t`.`kontrolliert_datum` AS `kontrolliert_datum`,`t`.`freigabe_visa` AS `freigabe_visa`,`t`.`freigabe_datum` AS `freigabe_datum`,`t`.`created_visa` AS `created_visa`,`t`.`created_date` AS `created_date`,`t`.`updated_visa` AS `updated_visa`,`t`.`updated_date` AS `updated_date` from `organisation` `t`;
 
 -- --------------------------------------------------------
 
@@ -4130,7 +4225,8 @@ ALTER TABLE `organisation`
   ADD CONSTRAINT `fk_lo_lg` FOREIGN KEY (`interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
   ADD CONSTRAINT `fk_lo_lt` FOREIGN KEY (`branche_id`) REFERENCES `branche` (`id`),
   ADD CONSTRAINT `fk_organisation_interessengruppe2_id` FOREIGN KEY (`interessengruppe2_id`) REFERENCES `interessengruppe` (`id`),
-  ADD CONSTRAINT `fk_organisation_interessengruppe3_id` FOREIGN KEY (`interessengruppe3_id`) REFERENCES `interessengruppe` (`id`);
+  ADD CONSTRAINT `fk_organisation_interessengruppe3_id` FOREIGN KEY (`interessengruppe3_id`) REFERENCES `interessengruppe` (`id`),
+  ADD CONSTRAINT `fk_org_country` FOREIGN KEY (`land_id`) REFERENCES `country` (`id`);
 
 --
 -- Constraints der Tabelle `organisation_beziehung`

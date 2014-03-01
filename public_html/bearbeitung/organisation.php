@@ -1068,6 +1068,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -1152,6 +1154,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -1248,6 +1252,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -1333,6 +1339,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -1846,6 +1854,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -1916,6 +1926,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -2954,6 +2966,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -3038,6 +3052,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -3134,6 +3150,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -3219,6 +3237,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -3811,6 +3831,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -3893,6 +3915,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -4378,6 +4402,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -4460,6 +4486,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -7879,6 +7907,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -7949,6 +7979,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -8738,6 +8770,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -8821,6 +8855,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -9063,6 +9099,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -9146,6 +9184,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -10583,6 +10623,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -10653,6 +10695,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -11442,6 +11486,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -11525,6 +11571,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -11767,6 +11815,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -11850,6 +11900,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -13294,6 +13346,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -13364,6 +13418,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -14210,6 +14266,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -14293,6 +14351,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -14537,6 +14597,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -14620,6 +14682,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -24883,6 +24947,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -24968,6 +25034,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -25416,6 +25484,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -26164,6 +26234,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -26249,6 +26321,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -26685,6 +26759,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -27056,6 +27132,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -27752,6 +27830,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -27837,6 +27917,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -29051,6 +29133,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -29493,6 +29577,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -29578,6 +29664,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -30784,6 +30872,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -31255,6 +31345,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -32197,6 +32289,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -32282,6 +32376,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -33199,6 +33295,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -33321,6 +33419,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -33406,6 +33506,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -34275,6 +34377,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -34547,6 +34651,8 @@
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -35281,6 +35387,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('ort');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $this->dataset->AddField($field, false);
             $field = new StringField('typ');
@@ -35330,6 +35438,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $this->dataset->AddLookupField('land_id', 'v_country', new IntegerField('id'), new StringField('anzeige_name', 'land_id_anzeige_name', 'land_id_anzeige_name_v_country'), 'land_id_anzeige_name_v_country');
             $this->dataset->AddLookupField('branche_id', 'v_branche', new IntegerField('id'), new StringField('anzeige_name', 'branche_id_anzeige_name', 'branche_id_anzeige_name_v_branche'), 'branche_id_anzeige_name_v_branche');
             $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe_id_anzeige_name_v_interessengruppe'), 'interessengruppe_id_anzeige_name_v_interessengruppe');
             $this->dataset->AddLookupField('interessengruppe2_id', 'v_interessengruppe', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe2_id_anzeige_name_v_interessengruppe'), 'interessengruppe2_id_anzeige_name_v_interessengruppe');
@@ -35404,8 +35513,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'typ', 'vernehmlassung', 'branche_id_anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'beschreibung', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Branche'), $this->RenderText('Interessengruppe'), $this->RenderText('2. Interessengruppe'), $this->RenderText('3. Interessengruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
+                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'land_id_anzeige_name', 'rechtsform', 'typ', 'vernehmlassung', 'branche_id_anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'beschreibung', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Land'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Branche'), $this->RenderText('Interessengruppe'), $this->RenderText('2. Interessengruppe'), $this->RenderText('3. Interessengruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -35430,6 +35539,88 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_fr', $this->RenderText('Name Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_it', $this->RenderText('Name It')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ort', $this->RenderText('Ort')));
+            
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_country`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('continent');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('iso-2');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('iso-3');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('vehicle_code');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ioc');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('tld');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('currency');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('phone');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('utc');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('show_level');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('land_id', $this->RenderText('Land'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('rechtsform', $this->RenderText('Rechtsform')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('typ', $this->RenderText('Typ')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vernehmlassung', $this->RenderText('Vernehmlassung')));
@@ -35923,6 +36114,220 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for land_id field
+            //
+            $editor = new ComboBox('land_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddMFUValue($this->RenderText('191'));
+            $editor->AddMFUValue($this->RenderText('47'));
+            $editor->AddMFUValue($this->RenderText('93'));
+            $editor->AddMFUValue($this->RenderText('126'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_country`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('continent');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('iso-2');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('iso-3');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('vehicle_code');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ioc');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('tld');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('currency');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('phone');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('utc');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('show_level');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level >= 100'));
+            $editColumn = new LookUpEditColumn(
+                'Land', 
+                'land_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetCaptionTemplate($this->RenderText('%anzeige_name%'));
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for land_id field
+            //
+            $editor = new ComboBox('land_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddMFUValue($this->RenderText('191'));
+            $editor->AddMFUValue($this->RenderText('47'));
+            $editor->AddMFUValue($this->RenderText('93'));
+            $editor->AddMFUValue($this->RenderText('126'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_country`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('continent');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('iso-2');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('iso-3');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('vehicle_code');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ioc');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('tld');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('currency');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('phone');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('utc');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('show_level');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level >= 100'));
+            $editColumn = new LookUpEditColumn(
+                'Land', 
+                'land_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetCaptionTemplate($this->RenderText('%anzeige_name%'));
+            $editColumn->SetAllowSetToNull(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('191'));
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -35939,10 +36344,12 @@
             $editor->AddValue('Verein', $this->RenderText('Verein'));
             $editor->AddValue('Informelle Gruppe', $this->RenderText('Informelle Gruppe'));
             $editor->AddValue('Parlamentarische Gruppe', $this->RenderText('Parlamentarische Gruppe'));
-            $editor->AddValue('Oeffentlich-rechtlich', $this->RenderText('Oeffentlich-rechtlich'));
+            $editor->AddValue('Oeffentlich-rechtlich', $this->RenderText('Öffentlich-rechtlich'));
             $editor->AddValue('Einzelunternehmen', $this->RenderText('Einzelunternehmen'));
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
+            $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
+            $editor->AddMFUValue($this->RenderText('AG'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -35960,10 +36367,12 @@
             $editor->AddValue('Verein', $this->RenderText('Verein'));
             $editor->AddValue('Informelle Gruppe', $this->RenderText('Informelle Gruppe'));
             $editor->AddValue('Parlamentarische Gruppe', $this->RenderText('Parlamentarische Gruppe'));
-            $editor->AddValue('Oeffentlich-rechtlich', $this->RenderText('Oeffentlich-rechtlich'));
+            $editor->AddValue('Oeffentlich-rechtlich', $this->RenderText('Öffentlich-rechtlich'));
             $editor->AddValue('Einzelunternehmen', $this->RenderText('Einzelunternehmen'));
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
+            $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
+            $editor->AddMFUValue($this->RenderText('AG'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -37032,6 +37441,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -37255,6 +37671,106 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for land_id field
+            //
+            $editor = new ComboBox('land_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddMFUValue($this->RenderText('191'));
+            $editor->AddMFUValue($this->RenderText('47'));
+            $editor->AddMFUValue($this->RenderText('93'));
+            $editor->AddMFUValue($this->RenderText('126'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_country`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('continent');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('iso-2');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('iso-3');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('vehicle_code');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ioc');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('tld');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('currency');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('phone');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('utc');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('show_level');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level >= 100'));
+            $editColumn = new LookUpEditColumn(
+                'Land', 
+                'land_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetCaptionTemplate($this->RenderText('%anzeige_name%'));
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for rechtsform field
             //
             $editor = new ComboBox('rechtsform_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -37264,10 +37780,12 @@
             $editor->AddValue('Verein', $this->RenderText('Verein'));
             $editor->AddValue('Informelle Gruppe', $this->RenderText('Informelle Gruppe'));
             $editor->AddValue('Parlamentarische Gruppe', $this->RenderText('Parlamentarische Gruppe'));
-            $editor->AddValue('Oeffentlich-rechtlich', $this->RenderText('Oeffentlich-rechtlich'));
+            $editor->AddValue('Oeffentlich-rechtlich', $this->RenderText('Öffentlich-rechtlich'));
             $editor->AddValue('Einzelunternehmen', $this->RenderText('Einzelunternehmen'));
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
+            $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
+            $editor->AddMFUValue($this->RenderText('AG'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -37746,6 +38264,107 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for land_id field
+            //
+            $editor = new ComboBox('land_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddMFUValue($this->RenderText('191'));
+            $editor->AddMFUValue($this->RenderText('47'));
+            $editor->AddMFUValue($this->RenderText('93'));
+            $editor->AddMFUValue($this->RenderText('126'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_country`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('continent');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_en');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('official_name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('capital_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('iso-2');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('iso-3');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('vehicle_code');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ioc');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('tld');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('currency');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('phone');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('utc');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('show_level');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level >= 100'));
+            $editColumn = new LookUpEditColumn(
+                'Land', 
+                'land_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetCaptionTemplate($this->RenderText('%anzeige_name%'));
+            $editColumn->SetAllowSetToNull(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('191'));
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for rechtsform field
             //
             $editor = new ComboBox('rechtsform_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -37755,10 +38374,12 @@
             $editor->AddValue('Verein', $this->RenderText('Verein'));
             $editor->AddValue('Informelle Gruppe', $this->RenderText('Informelle Gruppe'));
             $editor->AddValue('Parlamentarische Gruppe', $this->RenderText('Parlamentarische Gruppe'));
-            $editor->AddValue('Oeffentlich-rechtlich', $this->RenderText('Oeffentlich-rechtlich'));
+            $editor->AddValue('Oeffentlich-rechtlich', $this->RenderText('Öffentlich-rechtlich'));
             $editor->AddValue('Einzelunternehmen', $this->RenderText('Einzelunternehmen'));
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
+            $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
+            $editor->AddMFUValue($this->RenderText('AG'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -38125,6 +38746,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -38322,6 +38950,13 @@
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -38567,6 +39202,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -38817,6 +39461,13 @@
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -39057,6 +39708,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -39307,6 +39967,13 @@
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -39547,6 +40214,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -39797,6 +40473,13 @@
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -40037,6 +40720,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -40287,6 +40979,13 @@
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -40527,6 +41226,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -40777,6 +41485,13 @@
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -41017,6 +41732,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -41267,6 +41991,13 @@
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -41507,6 +42238,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -41757,6 +42497,13 @@
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -41997,6 +42744,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -42247,6 +43003,13 @@
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -42487,6 +43250,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -42737,6 +43509,13 @@
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -42977,6 +43756,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -43227,6 +44015,13 @@
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

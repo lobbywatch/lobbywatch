@@ -2562,6 +2562,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('ort');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('land_id');
+            $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $this->dataset->AddField($field, false);
             $field = new StringField('typ');
@@ -4248,6 +4250,8 @@
             $field = new StringField('name_it');
             $this->dataset->AddField($field, false);
             $field = new StringField('ort');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('land_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $this->dataset->AddField($field, false);

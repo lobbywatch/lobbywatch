@@ -370,3 +370,16 @@ ALTER TABLE `parlamentarier_anhang_log` CHANGE `encoding` `encoding` VARCHAR( 50
 ALTER TABLE `zutrittsberechtigung_anhang` CHANGE `encoding` `encoding` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Encoding der Datei';
 
 ALTER TABLE `zutrittsberechtigung_anhang_log` CHANGE `encoding` `encoding` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Encoding der Datei';
+
+-- 01.03.2014
+ALTER TABLE `country`
+  ADD `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von' AFTER `utc`,
+  ADD `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am' AFTER `created_visa`,
+  ADD `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von'AFTER `created_date`,
+  ADD `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'AFTER `updated_visa`;
+
+ALTER TABLE `organisation` ADD `land_id` INT NOT NULL COMMENT 'Land der Organisation' AFTER `ort` ,
+ADD INDEX ( `idx_land` ) ;
+
+ALTER TABLE `organisation_log` ADD `land_id` INT NOT NULL COMMENT 'Land der Organisation' AFTER `ort` ,
+ADD INDEX ( `idx_land` ) ;
