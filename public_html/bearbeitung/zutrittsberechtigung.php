@@ -10665,7 +10665,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Beruf des Zutrittsberechtigten'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -13372,7 +13372,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beruf_handler');
-            $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Beruf des Zutrittsberechtigten'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -13902,7 +13902,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beruf_handler');
-            $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Beruf des Zutrittsberechtigten'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -14432,7 +14432,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beruf_handler');
-            $column->SetDescription($this->RenderText('Beruf des Parlamentariers'));
+            $column->SetDescription($this->RenderText('Beruf des Zutrittsberechtigten'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
