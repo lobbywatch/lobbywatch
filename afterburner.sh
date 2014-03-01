@@ -1,5 +1,33 @@
 #!/bin/bash
 
+# diff -urw --exclude=".git" --exclude="*.bak" ../lobbydev_wo_afterburner/ . > afterburner_changes.diff
+
+clean="true";
+#fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"
+#absolute_path=$(readlink -m /home/nohsib/dvc/../bop)
+# Ref: http://stackoverflow.com/questions/7069682/how-to-get-arguments-with-flags-in-bash-script
+while test $# -gt 0; do
+        case "$1" in
+                -h|--help)
+                        echo "afterburner"
+                        echo " "
+                        echo "$0 [options]"
+                        echo " "
+                        echo "options:"
+                        echo "-n, --no-clean            Do not clean files"
+                        exit 0
+                        ;;
+                -n|--no-cealn)
+                        shift
+                        no_clean="false"
+                        ;;
+                *)
+                        break
+                        ;;
+        esac
+done
+
+
 root_dir=public_html
 dir=$root_dir/bearbeitung
 auswertung=$root_dir/auswertung
@@ -18,17 +46,19 @@ rm -rf $dir/templates_c/*
 all_files=`find $dir -name "*.php"`;
 #all_files='';
 
-for file in $all_files
-do
-  echo "Clean $file";
-  mv "$file" "$file.bak";
-  # Read file, process regex and write file
-  (cat "$file.bak"; echo -e "\n") \
-  | dos2unix \
-  | perl -0 -p -e's/(\s*\?>\s*)$/\n/s' \
-  | perl -0 -p -e's/\s*$/\n/s' \
-  > "$file";
-done
+if [[ "$clean" = "true" ]] ; then
+  for file in $all_files
+  do
+    echo "Clean $file";
+    mv "$file" "$file.bak";
+    # Read file, process regex and write file
+    (cat "$file.bak"; echo -e "\n") \
+    | dos2unix \
+    | perl -0 -p -e's/(\s*\?>\s*)$/\n/s' \
+    | perl -0 -p -e's/\s*$/\n/s' \
+    > "$file";
+  done
+fi
 
 for file in $dir/*.php
 do
