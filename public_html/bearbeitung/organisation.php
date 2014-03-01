@@ -36209,7 +36209,7 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level >= 100'));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level > 50'));
             $editColumn = new LookUpEditColumn(
                 'Land', 
                 'land_id', 
@@ -36311,7 +36311,7 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level >= 100'));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level > 50'));
             $editColumn = new LookUpEditColumn(
                 'Land', 
                 'land_id', 
@@ -37759,7 +37759,7 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level >= 100'));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level > 50'));
             $editColumn = new LookUpEditColumn(
                 'Land', 
                 'land_id', 
@@ -38352,7 +38352,7 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level >= 100'));
+            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), 'show_level > 50'));
             $editColumn = new LookUpEditColumn(
                 'Land', 
                 'land_id', 
