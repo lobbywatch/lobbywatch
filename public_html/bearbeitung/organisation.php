@@ -36779,54 +36779,104 @@
             //
             // Edit column for interessengruppe_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe', 'interessengruppe_id', 'interessengruppe_id_anzeige_name', 'inline_edit_interessengruppe_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Interessengruppe', 'interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -36836,54 +36886,104 @@
             //
             // Edit column for interessengruppe_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe', 'interessengruppe_id', 'interessengruppe_id_anzeige_name', 'inline_insert_interessengruppe_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Interessengruppe', 'interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -36903,54 +37003,104 @@
             //
             // Edit column for interessengruppe2_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe2_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe2_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', 'interessengruppe2_id_anzeige_name', 'inline_edit_interessengruppe2_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -36960,54 +37110,104 @@
             //
             // Edit column for interessengruppe2_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe2_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe2_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', 'interessengruppe2_id_anzeige_name', 'inline_insert_interessengruppe2_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -37027,54 +37227,104 @@
             //
             // Edit column for interessengruppe3_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe3_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe3_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', 'interessengruppe3_id_anzeige_name', 'inline_edit_interessengruppe3_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -37084,54 +37334,104 @@
             //
             // Edit column for interessengruppe3_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe3_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe3_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', 'interessengruppe3_id_anzeige_name', 'inline_insert_interessengruppe3_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -38115,54 +38415,104 @@
             //
             // Edit column for interessengruppe_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe', 'interessengruppe_id', 'interessengruppe_id_anzeige_name', 'edit_interessengruppe_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Interessengruppe', 'interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -38170,54 +38520,104 @@
             //
             // Edit column for interessengruppe2_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe2_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe2_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', 'interessengruppe2_id_anzeige_name', 'edit_interessengruppe2_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -38225,54 +38625,104 @@
             //
             // Edit column for interessengruppe3_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe3_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe3_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', 'interessengruppe3_id_anzeige_name', 'edit_interessengruppe3_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -38765,54 +39215,104 @@
             //
             // Edit column for interessengruppe_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('Interessengruppe', 'interessengruppe_id', 'interessengruppe_id_anzeige_name', 'insert_interessengruppe_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Interessengruppe', 'interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -38820,54 +39320,104 @@
             //
             // Edit column for interessengruppe2_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe2_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe2_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', 'interessengruppe2_id_anzeige_name', 'insert_interessengruppe2_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -38875,54 +39425,104 @@
             //
             // Edit column for interessengruppe3_id field
             //
-            $editor = new AutocomleteComboBox('interessengruppe3_id_edit', $this->CreateLinkBuilder());
-            $editor->SetSize('250px');
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('interessengruppe3_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('angaben');
+            $dataset0->AddField($field, false);
+            $field = new StringField('notizen');
+            $dataset0->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $dataset0->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $dataset0->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`v_interessengruppe`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new DynamicLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', 'interessengruppe3_id_anzeige_name', 'insert_interessengruppe3_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -45065,297 +45665,6 @@
             /* </inline insert column> */
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'ort_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_edit_interessengruppe_id_anzeige_name_search', 'id', 'anzeige_name', null);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_insert_interessengruppe_id_anzeige_name_search', 'id', 'anzeige_name', null);
-            GetApplication()->RegisterHTTPHandler($handler);
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_edit_interessengruppe2_id_anzeige_name_search', 'id', 'anzeige_name', null);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_insert_interessengruppe2_id_anzeige_name_search', 'id', 'anzeige_name', null);
-            GetApplication()->RegisterHTTPHandler($handler);
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_edit_interessengruppe3_id_anzeige_name_search', 'id', 'anzeige_name', null);
-            GetApplication()->RegisterHTTPHandler($handler);
-            
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_insert_interessengruppe3_id_anzeige_name_search', 'id', 'anzeige_name', null);
-            GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
             //
@@ -45552,294 +45861,6 @@
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessengruppe_id_anzeige_name_search', 'id', 'anzeige_name', null);
-            GetApplication()->RegisterHTTPHandler($handler);
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessengruppe2_id_anzeige_name_search', 'id', 'anzeige_name', null);
-            GetApplication()->RegisterHTTPHandler($handler);
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_interessengruppe3_id_anzeige_name_search', 'id', 'anzeige_name', null);
-            GetApplication()->RegisterHTTPHandler($handler);
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessengruppe_id_anzeige_name_search', 'id', 'anzeige_name', null);
-            GetApplication()->RegisterHTTPHandler($handler);
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessengruppe2_id_anzeige_name_search', 'id', 'anzeige_name', null);
-            GetApplication()->RegisterHTTPHandler($handler);
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_interessengruppe`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
-            $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_interessengruppe3_id_anzeige_name_search', 'id', 'anzeige_name', null);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
