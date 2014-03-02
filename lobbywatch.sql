@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 01. Mrz 2014 um 22:47
+-- Erstellungszeit: 02. Mrz 2014 um 06:14
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -1245,7 +1245,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 01. Mrz 2014 um 21:12
+-- Erzeugt am: 02. Mrz 2014 um 05:06
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1256,7 +1256,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
   `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
@@ -1505,7 +1505,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 01. Mrz 2014 um 21:02
+-- Erzeugt am: 02. Mrz 2014 um 05:07
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1516,7 +1516,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
   `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
@@ -2747,7 +2747,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`name_it` varchar(150)
 ,`ort` varchar(100)
 ,`land_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
