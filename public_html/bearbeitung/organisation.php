@@ -36349,7 +36349,7 @@
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
-            $editor->AddMFUValue($this->RenderText('AG'));
+            $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -36372,7 +36372,7 @@
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
-            $editor->AddMFUValue($this->RenderText('AG'));
+            $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -37785,7 +37785,7 @@
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
-            $editor->AddMFUValue($this->RenderText('AG'));
+            $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -38379,7 +38379,7 @@
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
-            $editor->AddMFUValue($this->RenderText('AG'));
+            $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
