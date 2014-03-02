@@ -59,6 +59,81 @@ function lobbywatch_menu() {
     'type' => MENU_CALLBACK,
     );
 
+  $items['partei'] = array(
+    'title' => 'Parteien',
+    'page callback' => 'lobbywatch_partei_list',
+    'access arguments' => array('access lobbywatch general content'),
+    'type' => MENU_CALLBACK,
+    );
+
+  $items['partei/%'] = array(
+    'title' => 'Partei',
+    'page callback' => 'lobbywatch_partei_id',
+    'page arguments' => array(1),
+    'access arguments' => array('access lobbywatch general content'),
+    'type' => MENU_CALLBACK,
+    );
+
+  $items['kommission'] = array(
+    'title' => 'Kommissionen',
+    'page callback' => 'lobbywatch_kommission_list',
+    'access arguments' => array('access lobbywatch general content'),
+    'type' => MENU_CALLBACK,
+    );
+
+  $items['kommission/%'] = array(
+    'title' => 'Kommission',
+    'page callback' => 'lobbywatch_kommission_id',
+    'page arguments' => array(1),
+    'access arguments' => array('access lobbywatch general content'),
+    'type' => MENU_CALLBACK,
+    );
+
+  $items['branche'] = array(
+    'title' => 'Branchen',
+    'page callback' => 'lobbywatch_branche_list',
+    'access arguments' => array('access lobbywatch general content'),
+    'type' => MENU_CALLBACK,
+    );
+
+  $items['branche/%'] = array(
+    'title' => 'Branche',
+    'page callback' => 'lobbywatch_branche_id',
+    'page arguments' => array(1),
+    'access arguments' => array('access lobbywatch general content'),
+    'type' => MENU_CALLBACK,
+    );
+
+  $items['interessengruppe'] = array(
+    'title' => 'Interessengruppen',
+    'page callback' => 'lobbywatch_interessengruppe_list',
+    'access arguments' => array('access lobbywatch general content'),
+    'type' => MENU_CALLBACK,
+    );
+
+  $items['interessengruppe/%'] = array(
+    'title' => 'Interessengruppe',
+    'page callback' => 'lobbywatch_interessengruppe_id',
+    'page arguments' => array(1),
+    'access arguments' => array('access lobbywatch general content'),
+    'type' => MENU_CALLBACK,
+    );
+
+  $items['zutrittsberechtigter'] = array(
+    'title' => 'Zutrittsberechtigte',
+    'page callback' => 'lobbywatch_zutrittsberechtigung_list',
+    'access arguments' => array('access lobbywatch general content'),
+    'type' => MENU_CALLBACK,
+    );
+
+  $items['zutrittsberechtigter/%'] = array(
+    'title' => 'Zutrittsberechtigter',
+    'page callback' => 'lobbywatch_zutrittsberechtigung_id',
+    'page arguments' => array(1),
+    'access arguments' => array('access lobbywatch general content'),
+    'type' => MENU_CALLBACK,
+    );
+
     return $items;
 }
 
@@ -296,6 +371,104 @@ function lobbywatch_clean_for_url($name){
   return check_plain($url_name);
 }
 
+// Ref: http://stackoverflow.com/questions/1416697/converting-timestamp-to-time-ago-in-php-e-g-1-day-ago-2-days-ago
+function time_elapsed_string($datetime, $full = false) {
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
+
+function years($date_str) {
+//   dpm($date_str);
+  $today = new DateTime();
+  $date = new DateTime($date_str);
+//   dpm($date);
+  $interval  = $today->diff($date);
+//   dpm($interval);
+  return format_plural($interval->format('%y'), '1 Jahr', '@count Jahre');
+}
+
+function years_months($date_str) {
+//   dpm($date_str);
+  $today = new DateTime();
+  $date = new DateTime($date_str);
+//   dpm($date);
+  $interval  = $today->diff($date);
+//   dpm($interval);
+  $years = $interval->format('%y');
+  $months = $interval->format('%m');
+  return ($years > 0 ? format_plural($years, '1 Jahr', '@count Jahren') : '') . ($months > 0 ? ' ' . format_plural($months, '1 Monat', '@count Monaten') : '');
+}
+
+
+function lobbywatch_gaesteMitMandaten($parlamentarier_id) {
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
+GROUP_CONCAT(DISTINCT
+    CONCAT('<li><a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
+    IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
+    IF(mandat.funktion_im_gremium IS NULL OR TRIM(mandat.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(mandat.funktion_im_gremium, 1)), SUBSTRING(mandat.funktion_im_gremium, 2)))),
+    IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')))
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ' '
+) mandate
+FROM v_zutrittsberechtigung zutrittsberechtigung
+LEFT JOIN v_mandat mandat
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id AND mandat.bis IS NULL
+LEFT JOIN v_organisation organisation
+  ON mandat.organisation_id = organisation.id
+WHERE
+  zutrittsberechtigung.bis IS NULL
+  AND zutrittsberechtigung.parlamentarier_id=:id
+GROUP BY zutrittsberechtigung.id;";
+
+  $gaeste = array();
+//   $sth = $con->prepare($sql);
+//   $sth->execute(array(':id' => $parlamentarier_id));
+  $result = db_query($sql, array(':id' => $parlamentarier_id));
+//  $record = $result->fetchAssoc();
+
+  //$gaeste = $result->fetchAssoc();
+  $gaeste = $result->fetchAllAssoc('id', PDO::FETCH_ASSOC);
+  //dpm($gaeste, '$gaeste');
+
+  if (!$gaeste) {
+    return '<p>keine</p>';
+//      throw new Exception('Parlamentarier ID not found');
+  }
+
+  $res = '';
+  foreach($gaeste as $gast) {
+    $res .= '<h5>' . $gast['zutrittsberechtigung_name'] . '</h5>';
+    //$res .= mandateList($con, $gast['id']);
+    $res .= "<ul>\n" . $gast['mandate'] . "\n</ul>";
+  }
+
+  return $res;
+}
+
 function lobbywatch_parlamentarier_id($id, $name='') {
 
 //   dpm($id, 'id');
@@ -312,87 +485,35 @@ function lobbywatch_parlamentarier_id($id, $name='') {
   db_set_active('lobbywatch');
 
   try {
-    $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email,
+    $sql = "SET SESSION group_concat_max_len=5000;";
+    db_query($sql);
+
+    $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.kleinbild, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei,
     GROUP_CONCAT(DISTINCT
-    CONCAT('<li><a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>', IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art, ', ', interessenbindung.beschreibung)
-    ORDER BY organisation.anzeige_name
-    SEPARATOR ' '
-    ) interessenbindungen,
-    GROUP_CONCAT(DISTINCT
-    CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion)
-    ORDER BY zutrittsberechtigung.name
-    SEPARATOR ' '
-    ) zutrittsberechtigungen,
-    GROUP_CONCAT(DISTINCT
-    CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion,
-    IF (organisation2.id IS NOT NULL,
-    CONCAT(', ',
-    organisation2.anzeige_name
-    , IF(organisation2.rechtsform IS NULL OR TRIM(organisation2.rechtsform) = '', '', CONCAT(', ', organisation2.rechtsform)), IF(organisation2.ort IS NULL OR TRIM(organisation2.ort) = '', '', CONCAT(', ', organisation2.ort)), ', '
-    , IFNULL(mandat.art, ''), ', ', IFNULL(mandat.beschreibung, '')
-    ),
-    '')
-    )
-    ORDER BY zutrittsberechtigung.name, organisation2.anzeige_name
-    SEPARATOR ' '
-    ) mandate,
-    CONCAT(
-      CASE parlamentarier.geschlecht
-      WHEN 'M' THEN CONCAT('<p>Sehr geehrter Herr ', parlamentarier.nachname, '</p>')
-      WHEN 'F' THEN CONCAT('<p>Sehr geehrte Frau ', parlamentarier.nachname, '</p>')
-      ELSE CONCAT('<p>Sehr geehrte(r) Herr/Frau ', parlamentarier.nachname, '</p>')
-      END,
-      '<p>[Einleitung]</p>',
-      '<p>Ihre <b>Interessenbindungen</b>:</p>',
-      '<ul>',
-      GROUP_CONCAT(DISTINCT
-      CONCAT('<li>', organisation.anzeige_name, IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art, ', ', interessenbindung.beschreibung)
+      CONCAT('<li><a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
+      IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
+      IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art,
+      IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))),
+        IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung)))
       ORDER BY organisation.anzeige_name
       SEPARATOR ' '
-      ),
-      '</ul>',
-      '<p>Ihre <b>Gäste</b>:</p>',
-      '<ul>',
-      GROUP_CONCAT(DISTINCT
+    ) interessenbindungen,
+    GROUP_CONCAT(DISTINCT CONCAT('<li><a href=\"/kommission/', k.id, '\">', k.name, ' (', k.abkuerzung, ')</a> ', IF(k.art IS NULL, '', CONCAT(', ', k.art))) ORDER BY k.abkuerzung SEPARATOR ' ') kommissionen_namen,
+    GROUP_CONCAT(DISTINCT
       CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion)
       ORDER BY zutrittsberechtigung.name
       SEPARATOR ' '
-      ),
-      '</ul>',
-      '<p><b>Mandate</b> der Gäste:</p>',
-      '<ul>',
-      GROUP_CONCAT(DISTINCT
-      CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion,
-      IF (organisation2.id IS NOT NULL,
-      CONCAT(', ',
-      organisation2.anzeige_name
-      , IF(organisation2.rechtsform IS NULL OR TRIM(organisation2.rechtsform) = '', '', CONCAT(', ', organisation2.rechtsform)), IF(organisation2.ort IS NULL OR TRIM(organisation2.ort) = '', '', CONCAT(', ', organisation2.ort)), ', '
-      , IFNULL(mandat.art, ''), ', ', IFNULL(mandat.beschreibung, '')
-      ),
-      '')
-      )
-      ORDER BY zutrittsberechtigung.name, organisation2.anzeige_name
-      SEPARATOR ' '
-      ),
-      '</ul>',
-      '<p>Freundliche Grüsse<br></p>'
-      ) email_text_html
+    ) zutrittsberechtigungen
       FROM v_parlamentarier parlamentarier
       LEFT JOIN v_interessenbindung interessenbindung
-      ON interessenbindung.parlamentarier_id = parlamentarier.id
+      ON interessenbindung.parlamentarier_id = parlamentarier.id AND interessenbindung.bis IS NULL
       LEFT JOIN v_organisation organisation
       ON interessenbindung.organisation_id = organisation.id
       LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
-      ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
-      LEFT JOIN v_mandat mandat
-      ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id
-      LEFT JOIN v_organisation organisation2
-      ON mandat.organisation_id = organisation2.id
+      ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND zutrittsberechtigung.bis IS NULL
+      LEFT JOIN v_in_kommission ik ON parlamentarier.id = ik.parlamentarier_id AND ik.bis IS NULL LEFT JOIN v_kommission k ON ik.kommission_id=k.id
       WHERE
       parlamentarier.im_rat_bis IS NULL
-      AND interessenbindung.bis IS NULL
-      AND zutrittsberechtigung.bis IS NULL
-      AND mandat.bis IS NULL
       AND parlamentarier.id=:id
       GROUP BY parlamentarier.id";
 
@@ -401,6 +522,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
   //     dpm($result, 'result');
 
       $record = $result->fetchAssoc();
+      $gaeste = lobbywatch_gaesteMitMandaten($id);
 
   //     dpm($record, '$record');
 
@@ -412,11 +534,24 @@ function lobbywatch_parlamentarier_id($id, $name='') {
 
   if ($record) {
       // TODO security, check content
-      $markup .= '<h2>' . check_plain($record["parlamentarier_name"]) . '</h2>' .
+      $parlamentarier_name = check_plain($record["parlamentarier_name"]);
+      $markup .= '<h2>' . $parlamentarier_name . '</h2>' .
+      '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '">' .
       '<p>Lobbyfaktor: <b>XY</b></p>' .
+      '<table border="0">' .
+      '<tr><td>Rat:</td><td>' . check_plain($record['ratstyp']) . '</td></tr>' .
+      '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
+      '<tr><td>Partei:</td><td>' . l('/partei/' . $record['partei'], $record['partei']) . '</td></tr>' .
+      '<tr><td>Im Rat seit:</td><td>' . years_months(check_plain($record['im_rat_seit'])) . ' (' . check_plain($record['im_rat_seit_formatted']) . ')' . '</td></tr>' .
+      '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
+      '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>' .
+      '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage']) . '</td></tr>' .
+      '<tr><td>Parlament.ch Webseite:</td><td>' . l($parlamentarier_name, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id']) . '</td></tr>' .
+      '</table>' .
+      '<h4>Kommissionen</h4><ul>' . $record['kommissionen_namen'] . '</ul>' .
       '<h4>Interessenbindungen</h4><ul>' . $record['interessenbindungen'] . '</ul>' .
       '<h4>Gäste</h4><ul>' . $record['zutrittsberechtigungen'] . '</ul>' .
-      '<h4>Mandate</h4><ul>' . $record['mandate'] . '</ul>';
+      '<h4>Mandate der Gäste</h4>' . $gaeste;
 
     $build = array();
     $build['terms'] = array(
@@ -436,7 +571,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
  * TODO
  */
 function lobbywatch_organisation_list() {
-  $markup = t('<p>Liste der Parlamentarier</p>');
+  $markup = t('<p>Liste der Organisationen</p>');
   $markup .= '<ul>';
 
   // Use the database we set up earlier
@@ -514,4 +649,429 @@ function lobbywatch_organisation_id($id, $name = '') {
   } else {
     drupal_goto('organisation');
   }
+}
+
+/**
+ * TODO
+ */
+function lobbywatch_kommission_list() {
+  $markup = t('<p>Liste der Kommissionen</p>');
+  $markup .= '<ul>';
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  $result = db_query("SELECT * FROM v_kommission kommission ORDER BY kommission.anzeige_name");
+
+  while ($record = $result->fetchAssoc()) {
+    $markup .= '<li><a href="/kommission/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
+  }
+
+  $markup .= '</ul>';
+
+  // Go back to the default database,
+  // otherwise Drupal will not be able to access it's own data later on.
+  db_set_active();
+
+  $build = array();
+  $build['terms'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="lobbywatch">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+    );
+
+    return $build;
+}
+
+function lobbywatch_kommission_id($id, $name = '') {
+
+  //   dpm($id, 'id');
+
+  $url_name = lobbywatch_anzeige_name_for_url('kommission', $id);
+  if ($name !== $url_name) {
+    drupal_goto("kommission/$id/$url_name");
+  }
+
+  $markup = t('<p>Kommission</p>');
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+  $sql = "SELECT * FROM v_kommission kommission WHERE kommission.id=:id";
+
+  $result = db_query($sql, array(':id' => $id));
+
+  //     dpm($result, 'result');
+
+  $record = $result->fetchAssoc();
+//   dpm($record, '$record');
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+  }
+  if ($record) {
+    $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    . '<h3>Sachbereiche</h3>'
+    . '<ul>'
+//     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
+    . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($record['sachbereiche']))))
+    . '</ul>';
+
+    $build = array();
+    $build['terms'] = array(
+      '#weight' => -5,
+      '#prefix' => '<div class="lobbywatch">',
+      '#markup' => $markup,
+      '#suffix' => '</div>',
+      );
+
+      return $build;
+  } else {
+    drupal_goto('kommission');
+  }
+}
+
+  /**
+ * TODO
+ */
+function lobbywatch_partei_list() {
+  $markup = t('<p>Liste der Parteien</p>');
+  $markup .= '<ul>';
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  $result = db_query("SELECT * FROM v_partei partei ORDER BY partei.anzeige_name");
+
+  while ($record = $result->fetchAssoc()) {
+    $markup .= '<li><a href="/partei/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
+  }
+
+  $markup .= '</ul>';
+
+  // Go back to the default database,
+  // otherwise Drupal will not be able to access it's own data later on.
+  db_set_active();
+
+  $build = array();
+  $build['terms'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="lobbywatch">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+    );
+
+    return $build;
+}
+
+function lobbywatch_partei_id($id, $name = '') {
+
+  //   dpm($id, 'id');
+
+  $url_name = lobbywatch_anzeige_name_for_url('partei', $id);
+  if ($name !== $url_name) {
+    drupal_goto("partei/$id/$url_name");
+  }
+
+  $markup = t('<p>Partei</p>');
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+  $sql = "SELECT * FROM v_partei partei WHERE partei.id=:id";
+
+  $result = db_query($sql, array(':id' => $id));
+
+  //     dpm($result, 'result');
+
+  $record = $result->fetchAssoc();
+//   dpm($record, '$record');
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+  }
+  if ($record) {
+    $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    . '<ul>'
+//     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
+//     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
+    . '</ul>';
+
+    $build = array();
+    $build['terms'] = array(
+      '#weight' => -5,
+      '#prefix' => '<div class="lobbywatch">',
+      '#markup' => $markup,
+      '#suffix' => '</div>',
+      );
+
+      return $build;
+  } else {
+    drupal_goto('partei');
+  }
+
+}
+
+  /**
+ * TODO
+ */
+function lobbywatch_branche_list() {
+  $markup = t('<p>Liste der Parteien</p>');
+  $markup .= '<ul>';
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  $result = db_query("SELECT * FROM v_branche branche ORDER BY branche.anzeige_name");
+
+  while ($record = $result->fetchAssoc()) {
+    $markup .= '<li><a href="/branche/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
+  }
+
+  $markup .= '</ul>';
+
+  // Go back to the default database,
+  // otherwise Drupal will not be able to access it's own data later on.
+  db_set_active();
+
+  $build = array();
+  $build['terms'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="lobbywatch">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+    );
+
+    return $build;
+}
+
+function lobbywatch_branche_id($id, $name = '') {
+
+  //   dpm($id, 'id');
+
+  $url_name = lobbywatch_anzeige_name_for_url('branche', $id);
+  if ($name !== $url_name) {
+    drupal_goto("branche/$id/$url_name");
+  }
+
+  $markup = t('<p>Branche</p>');
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+  $sql = "SELECT * FROM v_branche branche WHERE branche.id=:id";
+
+  $result = db_query($sql, array(':id' => $id));
+
+  //     dpm($result, 'result');
+
+  $record = $result->fetchAssoc();
+//   dpm($record, '$record');
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+  }
+  if ($record) {
+    $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    . '<ul>'
+//     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
+//     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
+    . '</ul>';
+
+    $build = array();
+    $build['terms'] = array(
+      '#weight' => -5,
+      '#prefix' => '<div class="lobbywatch">',
+      '#markup' => $markup,
+      '#suffix' => '</div>',
+      );
+
+      return $build;
+  } else {
+    drupal_goto('branche');
+  }
+
+}
+
+  /**
+ * TODO
+ */
+function lobbywatch_interessengruppe_list() {
+  $markup = t('<p>Liste der Interessengruppen</p>');
+  $markup .= '<ul>';
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  $result = db_query("SELECT * FROM v_interessengruppe interessengruppe ORDER BY interessengruppe.anzeige_name");
+
+  while ($record = $result->fetchAssoc()) {
+    $markup .= '<li><a href="/interessengruppe/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
+  }
+
+  $markup .= '</ul>';
+
+  // Go back to the default database,
+  // otherwise Drupal will not be able to access it's own data later on.
+  db_set_active();
+
+  $build = array();
+  $build['terms'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="lobbywatch">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+    );
+
+    return $build;
+}
+
+function lobbywatch_interessengruppe_id($id, $name = '') {
+
+  //   dpm($id, 'id');
+
+  $url_name = lobbywatch_anzeige_name_for_url('interessengruppe', $id);
+  if ($name !== $url_name) {
+    drupal_goto("interessengruppe/$id/$url_name");
+  }
+
+  $markup = t('<p>Interessengruppe</p>');
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+  $sql = "SELECT * FROM v_interessengruppe interessengruppe WHERE interessengruppe.id=:id";
+
+  $result = db_query($sql, array(':id' => $id));
+
+  //     dpm($result, 'result');
+
+  $record = $result->fetchAssoc();
+//   dpm($record, '$record');
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+  }
+  if ($record) {
+    $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    . '<ul>'
+//     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
+//     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
+    . '</ul>';
+
+    $build = array();
+    $build['terms'] = array(
+      '#weight' => -5,
+      '#prefix' => '<div class="lobbywatch">',
+      '#markup' => $markup,
+      '#suffix' => '</div>',
+      );
+
+      return $build;
+  } else {
+    drupal_goto('interessengruppe');
+  }
+
+}
+
+  /**
+ * TODO
+ */
+function lobbywatch_zutrittsberechtigung_list() {
+  $markup = t('<p>Liste der Zutrittsberechtigten</p>');
+  $markup .= '<ul>';
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  $result = db_query("SELECT * FROM v_zutrittsberechtigung zutrittsberechtigung ORDER BY zutrittsberechtigung.anzeige_name");
+
+  while ($record = $result->fetchAssoc()) {
+    $markup .= '<li><a href="/zutrittsberechtigter/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
+  }
+
+  $markup .= '</ul>';
+
+  // Go back to the default database,
+  // otherwise Drupal will not be able to access it's own data later on.
+  db_set_active();
+
+  $build = array();
+  $build['terms'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="lobbywatch">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+    );
+
+    return $build;
+}
+
+function lobbywatch_zutrittsberechtigung_id($id, $name = '') {
+
+  //   dpm($id, 'id');
+
+  $url_name = lobbywatch_anzeige_name_for_url('zutrittsberechtigung', $id);
+  if ($name !== $url_name) {
+    drupal_goto("zutrittsberechtigter/$id/$url_name");
+  }
+
+  $markup = t('<p>Zutrittsberechtigter</p>');
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+  $sql = "SELECT * FROM v_zutrittsberechtigung zutrittsberechtigung WHERE zutrittsberechtigung.id=:id";
+
+  $result = db_query($sql, array(':id' => $id));
+
+  //     dpm($result, 'result');
+
+  $record = $result->fetchAssoc();
+//   dpm($record, '$record');
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+  }
+  if ($record) {
+    $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    . '<ul>'
+//     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
+//     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
+    . '</ul>';
+
+    $build = array();
+    $build['terms'] = array(
+      '#weight' => -5,
+      '#prefix' => '<div class="lobbywatch">',
+      '#markup' => $markup,
+      '#suffix' => '</div>',
+      );
+
+      return $build;
+  } else {
+    drupal_goto('zutrittsberechtigter');
+  }
+
 }

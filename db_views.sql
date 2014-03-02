@@ -259,7 +259,7 @@ CREATE OR REPLACE VIEW `v_user_permission` AS SELECT t.* FROM `user_permission` 
 CREATE OR REPLACE VIEW `v_mil_grad` AS SELECT t.* FROM `mil_grad` t ORDER BY `ranghoehe` ASC;
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
-SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name, CONCAT(p.vorname, ' ', p.nachname) AS name, p.*, GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen2, partei.abkuerzung AS partei, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad
+SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name, CONCAT(p.vorname, ' ', p.nachname) AS name, p.*, GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_namen, GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung, partei.abkuerzung AS partei, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad
 FROM `parlamentarier` p
 LEFT JOIN v_in_kommission ik ON p.id = ik.parlamentarier_id AND ik.bis IS NULL LEFT JOIN v_kommission k ON ik.kommission_id=k.id
 LEFT JOIN v_partei partei ON p.partei_id=partei.id
