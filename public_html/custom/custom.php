@@ -892,6 +892,14 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       } elseif (isset($rowData['rechtsform']) || isset($rowData['interessengruppe_id']) || isset($rowData['branche_id'])) {
         $completeness_styles .= 'background-color: orange;';
       }
+    } elseif ($table_name === 'branche') {
+      if (isset($rowData['kommission_id'])) {
+        $completeness_styles .= 'background-color: greenyellow;';
+      }
+    } elseif ($table_name === 'kommission') {
+      if (isset($rowData['parlament_url'])) {
+        $completeness_styles .= 'background-color: greenyellow;';
+      }
     }
 
     // Write styles
