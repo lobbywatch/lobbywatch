@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 02. Mrz 2014 um 06:14
+-- Erstellungszeit: 02. Mrz 2014 um 07:28
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -717,6 +717,36 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
 -- --------------------------------------------------------
 
 --
+-- Tabellenstruktur für Tabelle `interessenraum`
+--
+-- Erzeugt am: 02. Mrz 2014 um 05:51
+--
+
+DROP TABLE IF EXISTS `interessenraum`;
+CREATE TABLE IF NOT EXISTS `interessenraum` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Interessenraumes',
+  `name` varchar(50) NOT NULL COMMENT 'Name des Interessenbereiches',
+  `beschreibung` text COMMENT 'Beschreibung des Interessenraumes',
+  `reihenfolge` int(11) DEFAULT NULL COMMENT 'Anzeigereihenfolge (je kleiner desto höher)',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `interessenraum_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
+  KEY `reihenfolge` (`reihenfolge`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Interessenbereiche (Stammdaten)' AUTO_INCREMENT=12 ;
+
+-- --------------------------------------------------------
+
+--
 -- Tabellenstruktur für Tabelle `in_kommission`
 --
 -- Erzeugt am: 19. Jan 2014 um 08:22
@@ -1245,7 +1275,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 02. Mrz 2014 um 05:06
+-- Erzeugt am: 02. Mrz 2014 um 05:59
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1256,6 +1286,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
   `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
+  `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum der Organisation',
   `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
@@ -1286,11 +1317,14 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   KEY `idx_lobbygroup` (`interessengruppe_id`),
   KEY `interessengruppe2_id` (`interessengruppe2_id`),
   KEY `interessengruppe3_id` (`interessengruppe3_id`),
-  KEY `land` (`land_id`)
+  KEY `land` (`land_id`),
+  KEY `interessenraum_id` (`interessenraum_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=418 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation`:
+--   `interessenraum_id`
+--       `interessenraum` -> `id`
 --   `interessengruppe_id`
 --       `interessengruppe` -> `id`
 --   `branche_id`
@@ -2328,6 +2362,30 @@ CREATE TABLE IF NOT EXISTS `v_interessengruppe` (
 ,`name` varchar(150)
 ,`branche_id` int(11)
 ,`beschreibung` text
+,`notizen` text
+,`eingabe_abgeschlossen_visa` varchar(10)
+,`eingabe_abgeschlossen_datum` timestamp
+,`kontrolliert_visa` varchar(10)
+,`kontrolliert_datum` timestamp
+,`freigabe_visa` varchar(10)
+,`freigabe_datum` timestamp
+,`created_visa` varchar(10)
+,`created_date` timestamp
+,`updated_visa` varchar(10)
+,`updated_date` timestamp
+);
+-- --------------------------------------------------------
+
+--
+-- Stellvertreter-Struktur des Views `v_interessenraum`
+--
+DROP VIEW IF EXISTS `v_interessenraum`;
+CREATE TABLE IF NOT EXISTS `v_interessenraum` (
+`anzeige_name` varchar(50)
+,`id` int(11)
+,`name` varchar(50)
+,`beschreibung` text
+,`reihenfolge` int(11)
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
 ,`eingabe_abgeschlossen_datum` timestamp
@@ -3734,6 +3792,15 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
+-- Struktur des Views `v_interessenraum`
+--
+DROP TABLE IF EXISTS `v_interessenraum`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_interessenraum` AS select `r`.`name` AS `anzeige_name`,`r`.`id` AS `id`,`r`.`name` AS `name`,`r`.`beschreibung` AS `beschreibung`,`r`.`reihenfolge` AS `reihenfolge`,`r`.`notizen` AS `notizen`,`r`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`r`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`r`.`kontrolliert_visa` AS `kontrolliert_visa`,`r`.`kontrolliert_datum` AS `kontrolliert_datum`,`r`.`freigabe_visa` AS `freigabe_visa`,`r`.`freigabe_datum` AS `freigabe_datum`,`r`.`created_visa` AS `created_visa`,`r`.`created_date` AS `created_date`,`r`.`updated_visa` AS `updated_visa`,`r`.`updated_date` AS `updated_date` from `interessenraum` `r` order by `r`.`reihenfolge`;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur des Views `v_in_kommission`
 --
 DROP TABLE IF EXISTS `v_in_kommission`;
@@ -4222,6 +4289,7 @@ ALTER TABLE `mil_grad_log`
 -- Constraints der Tabelle `organisation`
 --
 ALTER TABLE `organisation`
+  ADD CONSTRAINT `fk_org_interessenraum` FOREIGN KEY (`interessenraum_id`) REFERENCES `interessenraum` (`id`),
   ADD CONSTRAINT `fk_lo_lg` FOREIGN KEY (`interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
   ADD CONSTRAINT `fk_lo_lt` FOREIGN KEY (`branche_id`) REFERENCES `branche` (`id`),
   ADD CONSTRAINT `fk_organisation_interessengruppe2_id` FOREIGN KEY (`interessengruppe2_id`) REFERENCES `interessengruppe` (`id`),
