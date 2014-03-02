@@ -219,54 +219,132 @@ ORDER BY last_updated DESC;
 
 -- VIEWS
 
-CREATE OR REPLACE VIEW `v_country` AS SELECT c.name_de as anzeige_name, c.* FROM `country` c;
+CREATE OR REPLACE VIEW `v_country` AS
+SELECT country.name_de as anzeige_name, country.*
+FROM `country`;
 
-CREATE OR REPLACE VIEW `v_interessenraum` AS SELECT r.name as anzeige_name, r.* FROM `interessenraum` r ORDER BY r.`reihenfolge` ASC;
+CREATE OR REPLACE VIEW `v_interessenraum` AS
+SELECT interessenraum.name as anzeige_name, interessenraum.*
+FROM `interessenraum` interessenraum
+ORDER BY interessenraum.`reihenfolge` ASC;
 
-CREATE OR REPLACE VIEW `v_kommission` AS SELECT CONCAT(t.name, ' (', t.abkuerzung, ')') AS anzeige_name, t.* FROM `kommission` t;
+CREATE OR REPLACE VIEW `v_kommission` AS
+SELECT CONCAT(kommission.name, ' (', kommission.abkuerzung, ')') AS anzeige_name, kommission.*
+FROM `kommission`;
 
-CREATE OR REPLACE VIEW `v_partei` AS SELECT CONCAT(t.name, ' (', t.abkuerzung, ')') AS anzeige_name, t.* FROM `partei` t;
+CREATE OR REPLACE VIEW `v_partei` AS
+SELECT CONCAT(partei.name, ' (', partei.abkuerzung, ')') AS anzeige_name, partei.*
+FROM `partei`;
 
-CREATE OR REPLACE VIEW `v_fraktion` AS SELECT CONCAT_WS(', ', t.abkuerzung, t.name) AS anzeige_name, t.* FROM `fraktion` t;
+CREATE OR REPLACE VIEW `v_fraktion` AS
+SELECT CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name) AS anzeige_name, fraktion.*
+FROM `fraktion`;
 
-CREATE OR REPLACE VIEW `v_interessenbindung` AS SELECT t.* FROM `interessenbindung` t;
+CREATE OR REPLACE VIEW `v_interessenbindung` AS
+SELECT interessenbindung.*
+FROM `interessenbindung`;
 
-CREATE OR REPLACE VIEW `v_zutrittsberechtigung` AS
-SELECT CONCAT(z.nachname, ', ', z.vorname) AS anzeige_name, CONCAT(z.vorname, ' ', z.nachname) AS name, z.*, partei.abkuerzung AS partei
-FROM `zutrittsberechtigung` z
-LEFT JOIN v_partei partei ON z.partei_id=partei.id;
+CREATE OR REPLACE VIEW `v_branche` AS
+SELECT CONCAT(branche.name) AS anzeige_name,
+branche.*,
+kommission.anzeige_name as kommission
+FROM `branche`
+LEFT JOIN `v_kommission` kommission
+ON kommission.id = branche.kommission_id
+;
 
-CREATE OR REPLACE VIEW `v_organisation` AS SELECT CONCAT_WS('; ', t.name_de , t.name_fr, t.name_it) AS anzeige_name, CONCAT_WS('; ', t.name_de , t.name_fr, t.name_it) AS name, t.* FROM `organisation` t;
+CREATE OR REPLACE VIEW `v_interessengruppe` AS
+SELECT CONCAT(interessengruppe.name) AS anzeige_name,
+interessengruppe.*,
+branche.anzeige_name as branche,
+branche.kommission_id as kommission_id,
+branche.kommission as kommission
+FROM `interessengruppe`
+LEFT JOIN `v_branche` branche
+ON branche.id = interessengruppe.branche_id
+;
 
-CREATE OR REPLACE VIEW `v_interessengruppe` AS SELECT CONCAT(t.name) AS anzeige_name, t.* FROM `interessengruppe` t;
+CREATE OR REPLACE VIEW `v_organisation` AS
+SELECT CONCAT_WS('; ', o.name_de, o.name_fr, o.name_it) AS anzeige_name,
+CONCAT_WS('; ', o.name_de , o.name_fr, o.name_it) AS name,
+o.*,
+branche.anzeige_name as branche,
+interessengruppe1.anzeige_name as interessengruppe,
+interessengruppe1.branche as interessengruppe_branche,
+interessengruppe2.anzeige_name as interessengruppe2,
+interessengruppe2.branche as interessengruppe2_branche,
+interessengruppe3.anzeige_name as interessengruppe3,
+interessengruppe3.branche as interessengruppe3_branche,
+country.name_de as land,
+interessenraum.anzeige_name as interessenraum
+FROM `organisation` o
+LEFT JOIN `v_branche` branche
+ON branche.id = o.branche_id
+LEFT JOIN `v_interessengruppe` interessengruppe1
+ON interessengruppe1.id = o.interessengruppe_id
+LEFT JOIN `v_interessengruppe` interessengruppe2
+ON interessengruppe2.id = o.interessengruppe2_id
+LEFT JOIN `v_interessengruppe` interessengruppe3
+ON interessengruppe3.id = o.interessengruppe3_id
+LEFT JOIN `v_country` country
+ON country.id = o.land_id
+LEFT JOIN `v_interessenraum` interessenraum
+ON interessenraum.id = o.interessenraum_id
+;
 
-CREATE OR REPLACE VIEW `v_branche` AS SELECT CONCAT(t.name) AS anzeige_name,  t.* FROM `branche` t;
+CREATE OR REPLACE VIEW `v_mandat` AS SELECT mandat.* FROM `mandat`;
 
-CREATE OR REPLACE VIEW `v_mandat` AS SELECT t.* FROM `mandat` t;
+CREATE OR REPLACE VIEW `v_in_kommission` AS
+SELECT in_kommission.*, parlamentarier.ratstyp, parlamentarier.partei_id, parlamentarier.fraktion_id, parlamentarier.kanton
+FROM `in_kommission`
+INNER JOIN `parlamentarier`
+ON in_kommission.parlamentarier_id = parlamentarier.id;
 
-CREATE OR REPLACE VIEW `v_in_kommission` AS SELECT t.*, parlamentarier.ratstyp, parlamentarier.partei_id, parlamentarier.fraktion_id, parlamentarier.kanton FROM `in_kommission` t INNER JOIN parlamentarier ON t.parlamentarier_id = parlamentarier.id;
+CREATE OR REPLACE VIEW `v_organisation_beziehung` AS
+SELECT organisation_beziehung.*
+FROM `organisation_beziehung`;
 
-CREATE OR REPLACE VIEW `v_organisation_beziehung` AS SELECT t.* FROM `organisation_beziehung` t;
+CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS
+SELECT parlamentarier_anhang.parlamentarier_id as parlamentarier_id2, parlamentarier_anhang.*
+FROM `parlamentarier_anhang`;
 
-CREATE OR REPLACE VIEW `v_parlamentarier_anhang` AS SELECT t.parlamentarier_id as parlamentarier_id2, t.* FROM `parlamentarier_anhang` t;
+CREATE OR REPLACE VIEW `v_zutrittsberechtigung_anhang` AS
+SELECT zutrittsberechtigung_anhang.zutrittsberechtigung_id as zutrittsberechtigung_id2, zutrittsberechtigung_anhang.*
+FROM `zutrittsberechtigung_anhang`;
 
-CREATE OR REPLACE VIEW `v_zutrittsberechtigung_anhang` AS SELECT t.zutrittsberechtigung_id as zutrittsberechtigung_id2, t.* FROM `zutrittsberechtigung_anhang` t;
+CREATE OR REPLACE VIEW `v_user` AS
+SELECT CONCAT_WS(' ', u.vorname, u.nachname ) as anzeige_name, u.*
+FROM `user` u;
 
-CREATE OR REPLACE VIEW `v_user` AS SELECT CONCAT_WS(' ', u.vorname, u.nachname ) as anzeige_name, u.* FROM `user` u;
+CREATE OR REPLACE VIEW `v_user_permission` AS
+SELECT t.*
+FROM `user_permission` t;
 
-CREATE OR REPLACE VIEW `v_user_permission` AS SELECT t.* FROM `user_permission` t;
-
-CREATE OR REPLACE VIEW `v_mil_grad` AS SELECT t.* FROM `mil_grad` t ORDER BY `ranghoehe` ASC;
+CREATE OR REPLACE VIEW `v_mil_grad` AS
+SELECT t.*
+FROM `mil_grad` t
+ORDER BY `ranghoehe` ASC;
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
 SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name, CONCAT(p.vorname, ' ', p.nachname) AS name, p.*, GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_namen, GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung, partei.abkuerzung AS partei, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad
 FROM `parlamentarier` p
-LEFT JOIN v_in_kommission ik ON p.id = ik.parlamentarier_id AND ik.bis IS NULL LEFT JOIN v_kommission k ON ik.kommission_id=k.id
-LEFT JOIN v_partei partei ON p.partei_id=partei.id
-LEFT JOIN v_fraktion fraktion ON p.fraktion_id=fraktion.id
-LEFT JOIN v_mil_grad mil_grad ON p.militaerischer_grad_id=mil_grad.id
+LEFT JOIN `v_in_kommission` ik ON p.id = ik.parlamentarier_id AND ik.bis IS NULL
+LEFT JOIN `v_kommission` k ON ik.kommission_id=k.id
+LEFT JOIN `v_partei` partei ON p.partei_id=partei.id
+LEFT JOIN `v_fraktion` fraktion ON p.fraktion_id=fraktion.id
+LEFT JOIN `v_mil_grad` mil_grad ON p.militaerischer_grad_id=mil_grad.id
 GROUP BY p.id;
 
+CREATE OR REPLACE VIEW `v_zutrittsberechtigung` AS
+SELECT CONCAT(zutrittsberechtigung.nachname, ', ', zutrittsberechtigung.vorname) AS anzeige_name, CONCAT(zutrittsberechtigung.vorname, ' ', zutrittsberechtigung.nachname) AS name,
+zutrittsberechtigung.*,
+partei.abkuerzung AS partei,
+parlamentarier.anzeige_name as parlamentarier_name
+FROM `zutrittsberechtigung`
+LEFT JOIN `v_partei` partei
+ON zutrittsberechtigung.partei_id=partei.id
+LEFT JOIN `v_parlamentarier` parlamentarier
+ON parlamentarier.id = zutrittsberechtigung.parlamentarier_id;
 
 
 -- Der der Kommissionen für Parlamenterier
