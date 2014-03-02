@@ -535,6 +535,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
     db_query($sql);
 
     $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.kleinbild, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei, parlamentarier.partei_id,
+    parlamentarier.name,
     GROUP_CONCAT(DISTINCT
       CONCAT('<li><a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
       IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
@@ -592,7 +593,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>' .
       '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage']) . '</td></tr>' .
-      '<tr><td>Parlament.ch Webseite:</td><td>' . l($parlamentarier_name, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id']) . '</td></tr>' .
+      '<tr><td>Parlament.ch Webseite:</td><td>' . l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id']) . '</td></tr>' .
       '</table>' .
       '<h4>Kommissionen</h4><ul>' . $record['kommissionen_namen'] . '</ul>' .
       '<h4>Interessenbindungen</h4><ul>' . $record['interessenbindungen'] . '</ul>' .
