@@ -572,7 +572,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -1134,7 +1138,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -1721,6 +1729,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -1769,6 +1779,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1808,6 +1836,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -1856,6 +1886,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1905,6 +1953,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -1953,6 +2003,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1993,6 +2061,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -2041,6 +2111,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2149,6 +2237,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -2243,6 +2333,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2497,7 +2589,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -2650,7 +2746,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -2844,6 +2944,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -2892,6 +2994,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zwischenorganisation_id', $this->RenderText('Zwischenorganisation'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -2917,6 +3037,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -2965,6 +3087,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('connector_organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -3046,6 +3186,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
@@ -3180,7 +3322,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -3310,6 +3456,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -3358,6 +3506,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -3397,6 +3563,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -3445,6 +3613,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -3494,6 +3680,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -3542,6 +3730,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -3582,6 +3788,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -3630,6 +3838,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -3738,6 +3964,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -3832,6 +4060,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -4086,7 +4316,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -4239,7 +4473,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -4389,6 +4627,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -4437,6 +4677,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -4474,6 +4732,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -4522,6 +4782,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -4616,6 +4894,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -4788,7 +5068,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -4860,6 +5144,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -4908,6 +5194,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -4945,6 +5249,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -4993,6 +5299,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -5089,6 +5413,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -5260,7 +5586,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -8825,6 +9155,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -8873,6 +9205,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -8913,6 +9263,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -8961,6 +9313,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -9881,6 +10251,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -9929,6 +10301,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum')));
@@ -10069,7 +10459,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -10346,6 +10740,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -10394,6 +10790,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -10434,6 +10848,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -10482,6 +10898,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -11422,6 +11856,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -11470,6 +11906,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -11698,7 +12152,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -11913,6 +12371,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -11961,6 +12421,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -12192,7 +12670,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -13221,6 +13703,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -13316,6 +13800,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -13364,6 +13850,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -13412,6 +13900,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -13451,6 +13957,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -13499,6 +14007,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -14562,7 +15088,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -14652,6 +15182,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             
             $lookupDataset = new TableDataset(
@@ -14675,6 +15207,8 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -14724,6 +15258,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
@@ -14988,6 +15540,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -15083,6 +15637,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -15131,6 +15687,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -15179,6 +15737,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -15218,6 +15794,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -15266,6 +15844,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -16258,7 +16854,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -16369,6 +16969,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -16404,6 +17006,8 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -16453,6 +17057,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -16819,7 +17441,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -16931,6 +17557,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -16966,6 +17594,8 @@
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
@@ -17015,6 +17645,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -18162,6 +18810,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -18210,6 +18860,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -18250,6 +18918,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -18298,6 +18968,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -19214,6 +19902,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -19262,6 +19952,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum')));
@@ -19513,6 +20221,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -19561,6 +20271,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -19601,6 +20329,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -19649,6 +20379,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -20574,6 +21322,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -20622,6 +21372,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -20918,6 +21686,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
@@ -20966,6 +21736,24 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe2_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessengruppe3_branche');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('land');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('interessenraum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -22028,6 +22816,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -22122,6 +22912,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -23221,7 +24013,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -23310,6 +24106,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('organisation_id', $this->RenderText('Organisation Id')));
@@ -23536,6 +24334,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -23630,6 +24430,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24651,7 +25453,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -24761,6 +25567,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25130,7 +25938,11 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen2');
+            $field = new StringField('kommissionen_namen');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen2');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -25241,6 +26053,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(

@@ -251,6 +251,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'parlamentarier_id', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('datei', $this->RenderText('Datei')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('dateiname_voll', $this->RenderText('Dateiname')));
@@ -378,6 +380,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('parlamentarier_id', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -473,6 +477,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('parlamentarier_id', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1077,6 +1083,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('parlamentarier_id', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
