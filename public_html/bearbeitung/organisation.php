@@ -37742,7 +37742,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
+            $column->SetDescription($this->RenderText('Aktionsgebiet der Organisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -41470,7 +41470,7 @@
             //
             $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
+            $column->SetDescription($this->RenderText('Aktionsgebiet der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -41992,7 +41992,7 @@
             //
             $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
+            $column->SetDescription($this->RenderText('Aktionsgebiet der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -42514,7 +42514,7 @@
             //
             $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
+            $column->SetDescription($this->RenderText('Aktionsgebiet der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -43036,7 +43036,7 @@
             //
             $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
+            $column->SetDescription($this->RenderText('Aktionsgebiet der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -43558,7 +43558,7 @@
             //
             $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
+            $column->SetDescription($this->RenderText('Aktionsgebiet der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -44080,7 +44080,7 @@
             //
             $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
+            $column->SetDescription($this->RenderText('Aktionsgebiet der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -44602,7 +44602,7 @@
             //
             $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
+            $column->SetDescription($this->RenderText('Aktionsgebiet der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -45124,7 +45124,7 @@
             //
             $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
+            $column->SetDescription($this->RenderText('Aktionsgebiet der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -45646,7 +45646,7 @@
             //
             $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
+            $column->SetDescription($this->RenderText('Aktionsgebiet der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -46168,7 +46168,7 @@
             //
             $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
+            $column->SetDescription($this->RenderText('Aktionsgebiet der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
