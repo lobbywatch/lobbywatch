@@ -545,6 +545,15 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       ORDER BY organisation.anzeige_name
       SEPARATOR ' '
     ) interessenbindungen,
+    GROUP_CONCAT(DISTINCT
+      CONCAT('<li><a href=\"/organisation/', organisation2.id, '\">', organisation2.anzeige_name, '</a>',
+      IF(organisation2.rechtsform IS NULL OR TRIM(organisation2.rechtsform) = '', '', CONCAT(', ', organisation2.rechtsform)),
+      IF(organisation2.ort IS NULL OR TRIM(organisation2.ort) = '', '', CONCAT(', ', organisation2.ort)),
+      IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), '')
+      )
+      ORDER BY organisation2.anzeige_name
+      SEPARATOR ' '
+    ) verbundene_organisationen,
     GROUP_CONCAT(DISTINCT CONCAT('<li><a href=\"/kommission/', k.id, '\">', k.name, ' (', k.abkuerzung, ')</a> ', IF(k.art IS NULL, '', CONCAT(', ', k.art))) ORDER BY k.abkuerzung SEPARATOR ' ') kommissionen_namen,
     GROUP_CONCAT(DISTINCT
       CONCAT('<li><a href=\"/zutrittsberechtigter/', zutrittsberechtigung.id, '\">', zutrittsberechtigung.name, '</a>, ', zutrittsberechtigung.funktion)
@@ -559,6 +568,10 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
       ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND zutrittsberechtigung.bis IS NULL
       LEFT JOIN v_in_kommission ik ON parlamentarier.id = ik.parlamentarier_id AND ik.bis IS NULL LEFT JOIN v_kommission k ON ik.kommission_id=k.id
+      LEFT JOIN v_organisation_parlamentarier_beide_indirekt v
+      ON v.parlamentarier_id = parlamentarier.id
+      LEFT JOIN v_organisation organisation2
+      ON organisation2.id = v.connector_organisation_id
       WHERE
       parlamentarier.im_rat_bis IS NULL
       AND parlamentarier.id=:id
@@ -598,7 +611,10 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       '<h4>Kommissionen</h4><ul>' . $record['kommissionen_namen'] . '</ul>' .
       '<h4>Interessenbindungen</h4><ul>' . $record['interessenbindungen'] . '</ul>' .
       '<h4>Gäste</h4><ul>' . $record['zutrittsberechtigungen'] . '</ul>' .
-      '<h4>Mandate der Gäste</h4>' . $gaeste;
+      '<h4>Mandate der Gäste</h4>' . $gaeste .
+      '<h4>Organisationen mit einer Verbindung</h4>'
+      . '<p>Auch indirekte Verbindungen werden aufgeführt.</p>'
+      . '<ul>' . $record['verbundene_organisationen'] . '</ul>';
 
     $build = array();
     $build['terms'] = array(
@@ -669,7 +685,8 @@ function lobbywatch_organisation_id($id, $name = '') {
         CONCAT('<li><a href=\"/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, ' </a>',
         ', ', parlamentarier.ratstyp,
         IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei)),
-        ', ', parlamentarier.kanton
+        ', ', parlamentarier.kanton,
+        IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), '')
         )
         ORDER BY parlamentarier.anzeige_name
         SEPARATOR ' '
