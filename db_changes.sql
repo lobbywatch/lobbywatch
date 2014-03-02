@@ -410,3 +410,8 @@ CREATE TABLE IF NOT EXISTS `interessenraum` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `interessenraum_name_unique` (`name`) COMMENT 'Fachlicher unique constraint'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Interessenbereiche (Stammdaten)';
+
+ALTER TABLE `organisation` ADD `interessenraum_id` INT NULL DEFAULT NULL COMMENT 'Interessenraum der Organisation' AFTER `land_id` ,
+ADD INDEX ( `interessenraum_id` ) ;
+
+ALTER TABLE `organisation_log` ADD `interessenraum_id` INT NULL DEFAULT NULL COMMENT 'Interessenraum der Organisation' AFTER `land_id`;
