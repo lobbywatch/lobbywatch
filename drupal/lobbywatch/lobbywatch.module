@@ -371,6 +371,7 @@ function lobbywatch_anzeige_name_for_url($table, $id) {
 
 function lobbywatch_clean_for_url($name){
   $url_name = preg_replace('/[.,]/i', '', $name);
+  $url_name = preg_replace('/[\/]/i', '-', $url_name);
   return check_plain($url_name);
 }
 
