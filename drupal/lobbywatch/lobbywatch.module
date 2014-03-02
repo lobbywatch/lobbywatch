@@ -632,6 +632,7 @@ function lobbywatch_organisation_id($id, $name = '') {
   }
   if ($record) {
     $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    . '<h3>Parlamentarierverbindungen</h3>TBD'
     . '<ul>'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
@@ -720,7 +721,10 @@ function lobbywatch_kommission_id($id, $name = '') {
     . '<ul>'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($record['sachbereiche']))))
-    . '</ul>';
+    . '</ul>'
+    . '<h3>Mitglider</h3>TBD'
+    . '<h3>Branchen und Interessengruppen</h3>TBD'
+    ;
 
     $build = array();
     $build['terms'] = array(
@@ -801,6 +805,7 @@ function lobbywatch_partei_id($id, $name = '') {
   }
   if ($record) {
     $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    . '<h3>Mitglieder</h3>TBD'
     . '<ul>'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
 //     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
@@ -886,6 +891,8 @@ function lobbywatch_branche_id($id, $name = '') {
   }
   if ($record) {
     $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    . '<h3>Interessengruppen</h3>TBD'
+    . '<h3>Kommissionen</h3>TBD'
     . '<ul>'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
 //     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
@@ -972,6 +979,7 @@ function lobbywatch_interessengruppe_id($id, $name = '') {
   if ($record) {
     $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
     . '<ul>'
+    . '<p>Branche</>TBD'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
 //     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
     . '</ul>';
@@ -1056,6 +1064,8 @@ function lobbywatch_zutrittsberechtigung_id($id, $name = '') {
   }
   if ($record) {
     $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    . '<h3>Mandate</h3>TBD'
+    . '<h3>Parlamentarier</h3>TBD'
     . '<ul>'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
 //     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
