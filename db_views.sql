@@ -221,6 +221,8 @@ ORDER BY last_updated DESC;
 
 CREATE OR REPLACE VIEW `v_country` AS SELECT c.name_de as anzeige_name, c.* FROM `country` c;
 
+CREATE OR REPLACE VIEW `v_interessenraum` AS SELECT r.name as anzeige_name, r.* FROM `interessenraum` r ORDER BY r.`reihenfolge` ASC;
+
 CREATE OR REPLACE VIEW `v_kommission` AS SELECT CONCAT(t.name, ' (', t.abkuerzung, ')') AS anzeige_name, t.* FROM `kommission` t;
 
 CREATE OR REPLACE VIEW `v_partei` AS SELECT CONCAT(t.name, ' (', t.abkuerzung, ')') AS anzeige_name, t.* FROM `partei` t;

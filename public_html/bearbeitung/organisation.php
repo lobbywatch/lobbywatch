@@ -35389,6 +35389,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $this->dataset->AddField($field, false);
             $field = new StringField('typ');
@@ -35439,6 +35441,7 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('land_id', 'v_country', new IntegerField('id'), new StringField('anzeige_name', 'land_id_anzeige_name', 'land_id_anzeige_name_v_country'), 'land_id_anzeige_name_v_country');
+            $this->dataset->AddLookupField('interessenraum_id', 'v_interessenraum', new IntegerField('id'), new StringField('anzeige_name', 'interessenraum_id_anzeige_name', 'interessenraum_id_anzeige_name_v_interessenraum'), 'interessenraum_id_anzeige_name_v_interessenraum');
             $this->dataset->AddLookupField('branche_id', 'v_branche', new IntegerField('id'), new StringField('anzeige_name', 'branche_id_anzeige_name', 'branche_id_anzeige_name_v_branche'), 'branche_id_anzeige_name_v_branche');
             $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe_id_anzeige_name_v_interessengruppe'), 'interessengruppe_id_anzeige_name_v_interessengruppe');
             $this->dataset->AddLookupField('interessengruppe2_id', 'v_interessengruppe', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe2_id_anzeige_name_v_interessengruppe'), 'interessengruppe2_id_anzeige_name_v_interessengruppe');
@@ -35513,8 +35516,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'land_id_anzeige_name', 'rechtsform', 'typ', 'vernehmlassung', 'branche_id_anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'beschreibung', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Land'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Branche'), $this->RenderText('Interessengruppe'), $this->RenderText('2. Interessengruppe'), $this->RenderText('3. Interessengruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
+                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'land_id_anzeige_name', 'interessenraum_id_anzeige_name', 'rechtsform', 'typ', 'vernehmlassung', 'branche_id_anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'beschreibung', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Land'), $this->RenderText('Interessenraum'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Branche'), $this->RenderText('Interessengruppe'), $this->RenderText('2. Interessengruppe'), $this->RenderText('3. Interessengruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -35621,6 +35624,50 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('land_id', $this->RenderText('Land'), $lookupDataset, 'id', 'anzeige_name', false));
+            
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_interessenraum`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('reihenfolge');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessenraum_id', $this->RenderText('Interessenraum'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('rechtsform', $this->RenderText('Rechtsform')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('typ', $this->RenderText('Typ')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vernehmlassung', $this->RenderText('Vernehmlassung')));
@@ -36323,7 +36370,131 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetDescription($this->RenderText('Sitz der Organisation'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for interessenraum_id field
+            //
+            $editor = new ComboBox('interessenraum_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_interessenraum`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('reihenfolge');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $editColumn = new LookUpEditColumn(
+                'Interessenraum', 
+                'interessenraum_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for interessenraum_id field
+            //
+            $editor = new ComboBox('interessenraum_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_interessenraum`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('reihenfolge');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $editColumn = new LookUpEditColumn(
+                'Interessenraum', 
+                'interessenraum_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('1'));
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -37448,6 +37619,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -37766,6 +37944,61 @@
                 $editor, 
                 $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetCaptionTemplate($this->RenderText('%anzeige_name%'));
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for interessenraum_id field
+            //
+            $editor = new ComboBox('interessenraum_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_interessenraum`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('reihenfolge');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $editColumn = new LookUpEditColumn(
+                'Interessenraum', 
+                'interessenraum_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -38365,6 +38598,62 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for interessenraum_id field
+            //
+            $editor = new ComboBox('interessenraum_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_interessenraum`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('reihenfolge');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $editColumn = new LookUpEditColumn(
+                'Interessenraum', 
+                'interessenraum_id', 
+                $editor, 
+                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
+            $editColumn->SetAllowSetToNull(true);
+            $editColumn->SetInsertDefaultValue($this->RenderText('1'));
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for rechtsform field
             //
             $editor = new ComboBox('rechtsform_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -38753,6 +39042,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for rechtsform field
             //
             $column = new TextViewColumn('rechtsform', 'Rechtsform', $this->dataset);
@@ -38957,6 +39253,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -39206,7 +39509,16 @@
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetDescription($this->RenderText('Sitz der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -39468,6 +39780,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -39712,7 +40031,16 @@
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetDescription($this->RenderText('Sitz der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -39974,6 +40302,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -40218,7 +40553,16 @@
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetDescription($this->RenderText('Sitz der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -40480,6 +40824,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -40724,7 +41075,16 @@
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetDescription($this->RenderText('Sitz der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -40986,6 +41346,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -41230,7 +41597,16 @@
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetDescription($this->RenderText('Sitz der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -41492,6 +41868,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -41736,7 +42119,16 @@
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetDescription($this->RenderText('Sitz der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -41998,6 +42390,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -42242,7 +42641,16 @@
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetDescription($this->RenderText('Sitz der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -42504,6 +42912,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -42748,7 +43163,16 @@
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetDescription($this->RenderText('Sitz der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -43010,6 +43434,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -43254,7 +43685,16 @@
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetDescription($this->RenderText('Sitz der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -43516,6 +43956,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -43760,7 +44207,16 @@
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Land der Organisation'));
+            $column->SetDescription($this->RenderText('Sitz der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Interessenraum der Organisation'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -44022,6 +44478,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('land_id_anzeige_name', 'Land', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzeige_name field
+            //
+            $column = new TextViewColumn('interessenraum_id_anzeige_name', 'Interessenraum', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

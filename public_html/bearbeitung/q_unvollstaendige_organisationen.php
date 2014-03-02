@@ -62,6 +62,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('land_id');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('interessenraum_id');
+            $this->dataset->AddField($field, false);
             $field = new StringField('rechtsform');
             $this->dataset->AddField($field, false);
             $field = new StringField('typ');
