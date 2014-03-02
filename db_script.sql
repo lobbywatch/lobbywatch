@@ -440,3 +440,8 @@ p.updated_visa='roland';
 -- 10.02.2014
 
 SELECT * FROM `COLUMNS` WHERE `TABLE_NAME`='parlamentarier' and `TABLE_SCHEMA`='lobbywatch';
+
+-- 02.03.2014
+
+SELECT * FROM  `country` WHERE `name_de` like '%, %';
+UPDATE `country` SET `name_de`=REPLACE(`name_de`, ',Republik', '')  WHERE `name_de` like '%,Republik';
