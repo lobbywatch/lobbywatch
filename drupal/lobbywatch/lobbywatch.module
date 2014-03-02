@@ -430,7 +430,7 @@ function years_months($date_str) {
 function lobbywatch_gaesteMitMandaten($parlamentarier_id) {
   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
 GROUP_CONCAT(DISTINCT
-    CONCAT('<li><a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
+    CONCAT('<li>', IF(mandat.bis IS NOT NULL, '<s>', ''), '<a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
     IF(mandat.funktion_im_gremium IS NULL OR TRIM(mandat.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(mandat.funktion_im_gremium, 1)), SUBSTRING(mandat.funktion_im_gremium, 2)))),
     IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')))
@@ -439,7 +439,7 @@ GROUP_CONCAT(DISTINCT
 ) mandate
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id AND mandat.bis IS NULL
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id -- AND mandat.bis IS NULL
 LEFT JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id
 WHERE
@@ -537,44 +537,59 @@ function lobbywatch_parlamentarier_id($id, $name='') {
     $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.kleinbild, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei, parlamentarier.partei_id,
     parlamentarier.name,
     GROUP_CONCAT(DISTINCT
-      CONCAT('<li><a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
+      CONCAT('<li>', IF(interessenbindung.bis IS NOT NULL, '<s>', ''), '<a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
       IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
       IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art,
       IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))),
-        IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung)))
+      IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung)),
+      IF(interessenbindung.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(interessenbindung.bis, '%Y'), '</s>'), ''))
       ORDER BY organisation.anzeige_name
       SEPARATOR ' '
     ) interessenbindungen,
     GROUP_CONCAT(DISTINCT
-      CONCAT('<li><a href=\"/organisation/', organisation2.id, '\">', organisation2.anzeige_name, '</a>',
+      CONCAT('<li>', IF(v.bis IS NOT NULL, '<s>', ''), '<a href=\"/organisation/', organisation2.id, '\">', organisation2.anzeige_name, '</a>',
       IF(organisation2.rechtsform IS NULL OR TRIM(organisation2.rechtsform) = '', '', CONCAT(', ', organisation2.rechtsform)),
       IF(organisation2.ort IS NULL OR TRIM(organisation2.ort) = '', '', CONCAT(', ', organisation2.ort)),
-      IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), '')
+      IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
+      IF(v.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(v.bis, '%Y'), '</s>'), '')
       )
       ORDER BY organisation2.anzeige_name
       SEPARATOR ' '
     ) verbundene_organisationen,
-    GROUP_CONCAT(DISTINCT CONCAT('<li><a href=\"/kommission/', k.id, '\">', k.name, ' (', k.abkuerzung, ')</a> ', IF(k.art IS NULL, '', CONCAT(', ', k.art))) ORDER BY k.abkuerzung SEPARATOR ' ') kommissionen_namen,
     GROUP_CONCAT(DISTINCT
-      CONCAT('<li><a href=\"/zutrittsberechtigter/', zutrittsberechtigung.id, '\">', zutrittsberechtigung.name, '</a>, ', zutrittsberechtigung.funktion)
+      CONCAT('<li>', IF(ik.bis IS NOT NULL, '<s>', ''), '<a href=\"/kommission/', kommission.id, '\">',
+      kommission.name, ' (', kommission.abkuerzung, ')</a> ',
+      IF(kommission.art IS NULL, '', CONCAT(', ', kommission.art)),
+      IF(ik.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(ik.bis, '%Y'), '</s>'), '')
+      )
+      ORDER BY kommission.abkuerzung
+      SEPARATOR ' '
+      ) kommissionen_namen,
+    GROUP_CONCAT(DISTINCT
+      CONCAT('<li>', IF(zutrittsberechtigung.bis IS NOT NULL, '<s>', ''), '<a href=\"/zutrittsberechtigter/', zutrittsberechtigung.id, '\">',
+      zutrittsberechtigung.name, '</a>, ',
+      zutrittsberechtigung.funktion,
+      IF(zutrittsberechtigung.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(zutrittsberechtigung.bis, '%Y'), '</s>'), ''))
       ORDER BY zutrittsberechtigung.name
       SEPARATOR ' '
     ) zutrittsberechtigungen
       FROM v_parlamentarier parlamentarier
       LEFT JOIN v_interessenbindung interessenbindung
-      ON interessenbindung.parlamentarier_id = parlamentarier.id AND interessenbindung.bis IS NULL
+      ON interessenbindung.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
       LEFT JOIN v_organisation organisation
       ON interessenbindung.organisation_id = organisation.id
       LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
-      ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND zutrittsberechtigung.bis IS NULL
-      LEFT JOIN v_in_kommission ik ON parlamentarier.id = ik.parlamentarier_id AND ik.bis IS NULL LEFT JOIN v_kommission k ON ik.kommission_id=k.id
+      ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id -- AND zutrittsberechtigung.bis IS NULL
+      LEFT JOIN v_in_kommission ik
+      ON parlamentarier.id = ik.parlamentarier_id -- AND ik.bis IS NULL
+      LEFT JOIN v_kommission kommission
+      ON ik.kommission_id=kommission.id
       LEFT JOIN v_organisation_parlamentarier_beide_indirekt v
-      ON v.parlamentarier_id = parlamentarier.id
+      ON v.parlamentarier_id = parlamentarier.id -- AND v.bis IS NULL
       LEFT JOIN v_organisation organisation2
       ON organisation2.id = v.connector_organisation_id
       WHERE
-      parlamentarier.im_rat_bis IS NULL
-      AND parlamentarier.id=:id
+      parlamentarier.id=:id
       GROUP BY parlamentarier.id";
 
     $result = db_query($sql, array(':id' => $id));
@@ -682,18 +697,19 @@ function lobbywatch_organisation_id($id, $name = '') {
   try {
   $sql = "SELECT organisation.*,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li><a href=\"/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, ' </a>',
+        CONCAT('<li>', IF(v.bis IS NOT NULL, '<s>', ''), '<a href=\"/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, ' </a>',
         ', ', parlamentarier.ratstyp,
         IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei)),
         ', ', parlamentarier.kanton,
-        IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), '')
+        IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
+        IF(v.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(v.bis, '%Y'), '</s>'), '')
         )
         ORDER BY parlamentarier.anzeige_name
         SEPARATOR ' '
       ) verbundene_parlamentarier
   FROM v_organisation organisation
   LEFT JOIN v_organisation_parlamentarier_beide_indirekt v
-  ON v.connector_organisation_id = organisation.id
+  ON v.connector_organisation_id = organisation.id -- AND v.bis IS NULL
   LEFT JOIN v_parlamentarier parlamentarier
   ON parlamentarier.id = v.parlamentarier_id
   WHERE organisation.id=:id
@@ -1212,21 +1228,21 @@ function lobbywatch_zutrittsberechtigung_id($id, $name = '') {
   try {
   $sql = "SELECT zutrittsberechtigung.*,
   GROUP_CONCAT(DISTINCT
-    CONCAT('<li><a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
+    CONCAT('<li>', IF(mandat.bis IS NOT NULL, '<s>', ''), '<a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
     IF(mandat.funktion_im_gremium IS NULL OR TRIM(mandat.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(mandat.funktion_im_gremium, 1)), SUBSTRING(mandat.funktion_im_gremium, 2)))),
-    IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')))
+    IF(TRUE AND (mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = ''), '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')),
+    IF(mandat.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
 ) mandate
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id AND mandat.bis IS NULL
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id -- AND mandat.bis IS NULL
 LEFT JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id
 WHERE
-  zutrittsberechtigung.bis IS NULL
-  AND zutrittsberechtigung.id=:id
+  zutrittsberechtigung.id=:id
 GROUP BY zutrittsberechtigung.id;";
 
   $result = db_query($sql, array(':id' => $id));

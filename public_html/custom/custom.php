@@ -635,19 +635,20 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
   $rendered = $smarty->fetch($TemplateName, null, null, $display);
 }
 
-function gaesteMitMandaten($con, $parlamentarier_id) {
+function gaesteMitMandaten($con, $parlamentarier_id, $for_email = false) {
   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
 GROUP_CONCAT(DISTINCT
-    CONCAT('<li>', organisation.anzeige_name,
+    CONCAT('<li>', IF(mandat.bis IS NOT NULL, '<s>', ''), organisation.anzeige_name,
     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
     IF(mandat.funktion_im_gremium IS NULL OR TRIM(mandat.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(mandat.funktion_im_gremium, 1)), SUBSTRING(mandat.funktion_im_gremium, 2)))),
-    IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')))
+    IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')),
+    IF(mandat.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
 ) mandate
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id AND mandat.bis IS NULL
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
 LEFT JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id
 WHERE
@@ -675,37 +676,37 @@ GROUP BY zutrittsberechtigung.id;";
   return $res;
 }
 
-function mandateList($con, $zutrittsberechtigte_id) {
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
-GROUP_CONCAT(DISTINCT
-    CONCAT('<li>', organisation.anzeige_name,
-    IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
-    IF(mandat.funktion_im_gremium IS NULL OR TRIM(mandat.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(mandat.funktion_im_gremium, 1)), SUBSTRING(mandat.funktion_im_gremium, 2)))),
-    IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')))
-    ORDER BY organisation.anzeige_name
-    SEPARATOR ' '
-) mandate
-FROM v_zutrittsberechtigung zutrittsberechtigung
-LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id AND mandat.bis IS NULL
-LEFT JOIN v_organisation organisation
-  ON mandat.organisation_id = organisation.id
-WHERE
-  zutrittsberechtigung.bis IS NULL
-  AND zutrittsberechtigung.id=:id
-GROUP BY zutrittsberechtigung.id;";
-
-  $result = array();
-  $sth = $con->prepare($sql);
-  $sth->execute(array(':id' => $zutrittsberechtigte_id));
-  $result = $sth->fetchAll();
-
-  if (!$result) {
-    return '<p>keine</p>';
-  }
-
-  return "<ul>\n" . $result[0]['mandate'] . "\n</ul>";
-}
+// function mandateList($con, $zutrittsberechtigte_id) {
+//   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
+// GROUP_CONCAT(DISTINCT
+//     CONCAT('<li>', organisation.anzeige_name,
+//     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
+//     IF(mandat.funktion_im_gremium IS NULL OR TRIM(mandat.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(mandat.funktion_im_gremium, 1)), SUBSTRING(mandat.funktion_im_gremium, 2)))),
+//     IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')))
+//     ORDER BY organisation.anzeige_name
+//     SEPARATOR ' '
+// ) mandate
+// FROM v_zutrittsberechtigung zutrittsberechtigung
+// LEFT JOIN v_mandat mandat
+//   ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id AND mandat.bis IS NULL
+// LEFT JOIN v_organisation organisation
+//   ON mandat.organisation_id = organisation.id
+// WHERE
+//   zutrittsberechtigung.bis IS NULL
+//   AND zutrittsberechtigung.id=:id
+// GROUP BY zutrittsberechtigung.id;";
+//
+//   $result = array();
+//   $sth = $con->prepare($sql);
+//   $sth->execute(array(':id' => $zutrittsberechtigte_id));
+//   $result = $sth->fetchAll();
+//
+//   if (!$result) {
+//     return '<p>keine</p>';
+//   }
+//
+//   return "<ul>\n" . $result[0]['mandate'] . "\n</ul>";
+// }
 
 function getFullUsername($user) {
   switch($user) {
@@ -798,12 +799,12 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
     } else if (getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: blue;';
     } else if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= 'background-color: orange';
+      $workflow_styles .= 'background-color: orange;';
     } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: yellow;';
     }
 
-    if (isset($rowData['im_rat_bis'])) {
+    if (isset($rowData['im_rat_bis']) || isset($rowData['bis'])) {
       $workflow_styles .= 'text-decoration: line-through;';
     }
 

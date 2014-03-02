@@ -137,30 +137,46 @@
 
         $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email, parlamentarier.geschlecht,
   GROUP_CONCAT(DISTINCT
-      CONCAT('<li>', organisation.anzeige_name,
+      CONCAT('<li>',
+      IF(interessenbindung.bis IS NOT NULL, '<s>', ''),
+      organisation.anzeige_name,
       IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
       IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
-      CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)), IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))),
-      IF(interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessenbindung.beschreibung, '&quot;</small>'))
+      CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
+      IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))),
+      IF(interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessenbindung.beschreibung, '&quot;</small>')),
+      IF(interessenbindung.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(interessenbindung.bis, '%Y'), '</s>'), '')
       )
       ORDER BY organisation.anzeige_name
       SEPARATOR ' '
   ) interessenbindungen,
   GROUP_CONCAT(DISTINCT
-      CONCAT('<li>', organisation.anzeige_name,
+      IF(interessenbindung.bis IS NULL, CONCAT('<li>', organisation.anzeige_name,
       IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
       IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
       IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))),
       IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung))
-      )
+      ), '')
       ORDER BY organisation.anzeige_name
       SEPARATOR ' '
   ) interessenbindungen_for_email,
-            GROUP_CONCAT(DISTINCT
-    CONCAT('<li>', zutrittsberechtigung.name, ', ', zutrittsberechtigung.funktion)
+  GROUP_CONCAT(DISTINCT
+      CONCAT('<li>', IF(zutrittsberechtigung.bis IS NOT NULL, '<s>', ''),
+      zutrittsberechtigung.name, ', ',
+      zutrittsberechtigung.funktion,
+      IF(zutrittsberechtigung.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(zutrittsberechtigung.bis, '%Y'), '</s>'), '')
+      )
     ORDER BY zutrittsberechtigung.name
     SEPARATOR ' '
   ) zutrittsberechtigungen,
+  GROUP_CONCAT(DISTINCT
+      IF(zutrittsberechtigung.bis IS NULL, CONCAT('<li>',
+      zutrittsberechtigung.name, ', ',
+      zutrittsberechtigung.funktion
+      ), '')
+    ORDER BY zutrittsberechtigung.name
+    SEPARATOR ' '
+  ) zutrittsberechtigungen_for_email,
   CASE parlamentarier.geschlecht
   WHEN 'M' THEN CONCAT('<p>Sehr geehrter Herr ', parlamentarier.nachname, '</p>')
   WHEN 'F' THEN CONCAT('<p>Sehr geehrte Frau ', parlamentarier.nachname, '</p>')
@@ -168,14 +184,13 @@
   END anrede
 FROM v_parlamentarier parlamentarier
 LEFT JOIN v_interessenbindung interessenbindung
-  ON interessenbindung.parlamentarier_id = parlamentarier.id AND interessenbindung.bis IS NULL
+  ON interessenbindung.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
 LEFT JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
 LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
-  ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id AND zutrittsberechtigung.bis IS NULL
+  ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id -- AND zutrittsberechtigung.bis IS NULL
 WHERE
-  parlamentarier.im_rat_bis IS NULL
-  AND parlamentarier.id=:id
+  parlamentarier.id=:id
 GROUP BY parlamentarier.id;";
 
 //         df($sql);
@@ -225,8 +240,8 @@ GROUP BY parlamentarier.id;";
                 '<h4>Mandate der Gäste</h4>' . gaesteMitMandaten($con, $id),
               'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailto. '" target="_blank">' . $result[0]["parlamentarier_name"] . '</a>',
               'EmailText' => '<p>' . $result[0]['anrede'] . '</p>' .'<p>[Einleitung]</p>' . '<p>Ihre <b>Interessenbindungen</b>:</p><ul>' . $result[0]['interessenbindungen_for_email'] . '</ul>' .
-                '<p>Ihre <b>Gäste</b>:</p>' . ($result[0]['zutrittsberechtigungen'] ? '<ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
-                '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id) . '<p>Freundliche Grüsse<br>' . getFullUsername(Application::Instance()->GetCurrentUser()) . '</p>',
+                '<p>Ihre <b>Gäste</b>:</p>' . ($result[0]['zutrittsberechtigungen_for_email'] ? '<ul>' . $result[0]['zutrittsberechtigungen_for_email'] . '</ul>': '<p>keine</p>') .
+                '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true) . '<p>Freundliche Grüsse<br>' . getFullUsername(Application::Instance()->GetCurrentUser()) . '</p>',
                'MailTo' => $mailto,
           ),
             'Authentication' => array(
