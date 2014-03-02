@@ -135,7 +135,7 @@
         $session_sql = "SET SESSION group_concat_max_len=5000;";
         $con->query($session_sql);
 
-        $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email, parlamentarier.geschlecht,
+        $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf,
   GROUP_CONCAT(DISTINCT
       CONCAT('<li>',
       IF(interessenbindung.bis IS NOT NULL, '<s>', ''),
@@ -164,6 +164,7 @@
       CONCAT('<li>', IF(zutrittsberechtigung.bis IS NOT NULL, '<s>', ''),
       zutrittsberechtigung.name, ', ',
       zutrittsberechtigung.funktion,
+      IF(zutrittsberechtigung.beruf IS NULL OR TRIM(zutrittsberechtigung.beruf) = '', '', CONCAT(', ', zutrittsberechtigung.beruf)),
       IF(zutrittsberechtigung.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(zutrittsberechtigung.bis, '%Y'), '</s>'), '')
       )
     ORDER BY zutrittsberechtigung.name
@@ -172,7 +173,8 @@
   GROUP_CONCAT(DISTINCT
       IF(zutrittsberechtigung.bis IS NULL, CONCAT('<li>',
       zutrittsberechtigung.name, ', ',
-      zutrittsberechtigung.funktion
+      zutrittsberechtigung.funktion,
+      IF(zutrittsberechtigung.beruf IS NULL OR TRIM(zutrittsberechtigung.beruf) = '', '', CONCAT(', ', zutrittsberechtigung.beruf))
       ), '')
     ORDER BY zutrittsberechtigung.name
     SEPARATOR ' '
@@ -235,11 +237,11 @@ GROUP BY parlamentarier.id;";
             'Parlamentarier' => array(
               'Id'  => $id,
               'Title' => 'Vorschau: ' . $result[0]["parlamentarier_name"],
-              'Preview' => '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
+              'Preview' => '<p><b>Beruf</b>: ' . $result[0]['beruf'] . '</p>' . '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
                 '<h4>Gäste</h4>' . ($result[0]['zutrittsberechtigungen'] ? '<ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
                 '<h4>Mandate der Gäste</h4>' . gaesteMitMandaten($con, $id),
               'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailto. '" target="_blank">' . $result[0]["parlamentarier_name"] . '</a>',
-              'EmailText' => '<p>' . $result[0]['anrede'] . '</p>' .'<p>[Einleitung]</p>' . '<p>Ihre <b>Interessenbindungen</b>:</p><ul>' . $result[0]['interessenbindungen_for_email'] . '</ul>' .
+              'EmailText' => '<p>' . $result[0]['anrede'] . '</p>' .'<p>[Einleitung]</p>' . (isset($result[0]['beruf']) ? '<p><b>Beruf</b>: ' . $result[0]['beruf'] . '</p>' : '') . '<p>Ihre <b>Interessenbindungen</b>:</p><ul>' . $result[0]['interessenbindungen_for_email'] . '</ul>' .
                 '<p>Ihre <b>Gäste</b>:</p>' . ($result[0]['zutrittsberechtigungen_for_email'] ? '<ul>' . $result[0]['zutrittsberechtigungen_for_email'] . '</ul>': '<p>keine</p>') .
                 '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true) . '<p>Freundliche Grüsse<br>' . getFullUsername(Application::Instance()->GetCurrentUser()) . '</p>',
                'MailTo' => $mailto,

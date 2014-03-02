@@ -539,7 +539,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
     GROUP_CONCAT(DISTINCT
       CONCAT('<li>', IF(interessenbindung.bis IS NOT NULL, '<s>', ''), '<a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
       IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
-      IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', interessenbindung.art,
+      IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
       IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))),
       IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung)),
       IF(interessenbindung.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(interessenbindung.bis, '%Y'), '</s>'), ''))
@@ -569,6 +569,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       CONCAT('<li>', IF(zutrittsberechtigung.bis IS NOT NULL, '<s>', ''), '<a href=\"/zutrittsberechtigter/', zutrittsberechtigung.id, '\">',
       zutrittsberechtigung.name, '</a>, ',
       zutrittsberechtigung.funktion,
+      IF(zutrittsberechtigung.beruf IS NULL OR TRIM(zutrittsberechtigung.beruf) = '', '', CONCAT(', ', zutrittsberechtigung.beruf)),
       IF(zutrittsberechtigung.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(zutrittsberechtigung.bis, '%Y'), '</s>'), ''))
       ORDER BY zutrittsberechtigung.name
       SEPARATOR ' '
@@ -1261,8 +1262,9 @@ GROUP BY zutrittsberechtigung.id;";
    . '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Parlamentarier</td><td>' . l($record['parlamentarier_name'], 'parlamentarier/' . $record['parlamentarier_id']) . '</td></tr>'
-    .  '<tr><td>Partei:</td><td>' . l($record['partei'], 'partei/' . $record['partei_id']) . '</td></tr>'
+    .  '<tr><td>Funktion:</td><td>' . check_plain($record['funktion']) . '</td></tr>'
     .  '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>'
+    .  '<tr><td>Partei:</td><td>' . l($record['partei'], 'partei/' . $record['partei_id']) . '</td></tr>'
     .  '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage']) . '</td></tr>'
     . '</table>'
     . '<h3>Mandate</h3>'
