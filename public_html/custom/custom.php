@@ -821,7 +821,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       if (isset($rowData['email'])) {
         $completeness_styles .= 'background-color: greenyellow;';
       }
-    }
+   }
 
     // Write styles
     if ($completeness_styles != '') {
@@ -886,6 +886,12 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     if ($table_name == 'partei' && isset($rowData['name'])) {
       $completeness_styles .= 'background-color: greenyellow;';
+    } elseif ($table_name === 'organisation') {
+      if (isset($rowData['rechtsform']) && isset($rowData['interessengruppe_id']) && isset($rowData['branche_id'])) {
+        $completeness_styles .= 'background-color: greenyellow;';
+      } elseif (isset($rowData['rechtsform']) || isset($rowData['interessengruppe_id']) || isset($rowData['branche_id'])) {
+        $completeness_styles .= 'background-color: orange;';
+      }
     }
 
     // Write styles
