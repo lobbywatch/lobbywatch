@@ -812,6 +812,9 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
 //       || $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa']
       )
+//     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0
+//       && $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa']
+      )
     ) {
       //$workflow_styles .= 'border-color: green; border-width: 3px;';
           $workflow_styles .= 'background-image: url(img/tick.png); background-repeat: no-repeat; background-position: bottom right;';
