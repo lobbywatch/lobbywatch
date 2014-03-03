@@ -776,9 +776,10 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //               ||
               !getTimestamp($rowData['eingabe_abgeschlossen_datum'])))
         || (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
-          && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
-          && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
-          && !getTimestamp($rowData['eingabe_abgeschlossen_datum']))
+//           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
+//           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
+          && !getTimestamp($rowData['eingabe_abgeschlossen_datum'])
+          )
     ) {
 //       df($rowData, '$rowData');
 //       df(getTimestamp($rowData['autorisierung_verschickt_datum']), 'getTimestamp($rowData[autorisierung_verschickt_datum]');
@@ -813,14 +814,16 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       )
     ) {
       //$workflow_styles .= 'border-color: green; border-width: 3px;';
-          $workflow_styles .= 'background-image: url(img/tick.png); background-repeat: no-repeat; background-position: bottom right;';
+//           $workflow_styles .= 'background-image: url(img/tick.png); background-repeat: no-repeat; background-position: bottom right;';
+          $workflow_styles .= 'background-image: url(img/icons/fugue/eye.png); background-repeat: no-repeat; background-position: bottom right;';
     } elseif (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
     && !preg_match('/background-image/',$workflow_styles)
 //     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
 //       || $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'])
     ) {
       //$workflow_styles .= 'border-color: green; border-width: 3px;';
-          $workflow_styles .= 'background-image: url(img/tick-small-red.png); background-repeat: no-repeat; background-position: bottom right;';
+          $workflow_styles .= 'background-image: url(img/icons/fugue/eye-half.png); background-repeat: no-repeat; background-position: bottom right;';
+//           $workflow_styles .= 'background-image: url(img/tick-small-red.png); background-repeat: no-repeat; background-position: bottom right;';
     }
 
     if (isset($rowData['im_rat_bis']) || isset($rowData['bis'])) {
