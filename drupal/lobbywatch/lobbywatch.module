@@ -637,13 +637,14 @@ function lobbywatch_parlamentarier_id($id, $name='') {
   }
 
   if ($record) {
+      $ratstyp = preg_replace('/SR/i', 'Ständerat', preg_replace('/NR/i', 'Nationalrat', check_plain($record['ratstyp'])));
       // TODO security, check content
       $parlamentarier_name = check_plain($record["parlamentarier_name"]);
       $markup .= '<h2>' . $parlamentarier_name . '</h2>' .
       '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '">' .
       '<p>Lobbyfaktor: <b>XY</b></p>' .
       '<table border="0">' .
-      '<tr><td>Rat:</td><td>' . check_plain($record['ratstyp']) . '</td></tr>' .
+      '<tr><td>Rat:</td><td>' . $ratstyp . '</td></tr>' .
       '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
       '<tr><td>Partei:</td><td>' . l($record['partei'], 'partei/' . $record['partei_id']) . '</td></tr>' .
       '<tr><td>Im Rat seit:</td><td>' . years_months(check_plain($record['im_rat_seit'])) . ' (' . check_plain($record['im_rat_seit_formatted']) . ')' . '</td></tr>' .
@@ -925,39 +926,54 @@ ORDER BY organisation.anzeige_name;
     . '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Rechtsform</td><td>' . check_plain($record['rechtsform']) . '</td></tr>'
+    . '<tr><td>Ort</td><td>' . check_plain($record['ort']) . '</td></tr>'
     . '<tr><td>Branche</td><td>' . l($record['branche'], 'branche/' . $record['branche_id']) . '</td></tr>'
     . '<tr><td>Interessengruppe</td><td>' . l($record['interessengruppe'], 'interessengruppe/' . $record['interessengruppe_id']) . '</td></tr>'
     . '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage']) . '</td></tr>'
     . '<tr><td>Handelsregister:</td><td>' . l($record['handelsregister_url'], $record['handelsregister_url']) . '</td></tr>'
-    . '</table>'
-    . '<h3>Arbeitet für</h3>'
-    . '<ul>'
-    . $record['arbeitet_fuer']
-    . '</ul>'
-    . '<h3>Auftraggeber für</h3>'
-    . '<ul>'
-    . $record['auftraggeber_fuer']
-    . '</ul>'
-    . '<h3>Mitglied von</h3>'
-    . '<ul>'
-    . $record['mitglied_von']
-    . '</ul>'
-    . '<h3>Mitglieder</h3>'
-    . '<ul>'
-    . $record['mitglieder']
-    . '</ul>'
-    . '<h3>Muttergesellschaft</h3>'
-    . '<ul>'
-    . $record['muttergesellschaft']
-    . '</ul>'
-    . '<h3>Tochtergesellschaften</h3>'
-    . '<ul>'
-    . $record['tochtergesellschaften']
-    . '</ul>'
-    . '<h3>Parlamentarierverbindungen</h3>'
-    . '<ul>'
-    . $record['verbundene_parlamentarier']
-    . '</ul>';
+    . '</table>';
+    if ($record['arbeitet_fuer']) {
+      $markup .= '<h3>Arbeitet für</h3>'
+      . '<ul>'
+      . $record['arbeitet_fuer']
+      . '</ul>';
+    }
+    if ($record['auftraggeber_fuer']) {
+      $markup .= '<h3>Auftraggeber für</h3>'
+      . '<ul>'
+      . $record['auftraggeber_fuer']
+      . '</ul>';
+    }
+    if ($record['mitglied_von']) {
+      $markup .= '<h3>Mitglied von</h3>'
+      . '<ul>'
+      . $record['mitglied_von']
+      . '</ul>';
+    }
+    if ($record['mitglieder']) {
+      $markup .= '<h3>Mitglieder</h3>'
+      . '<ul>'
+      . $record['mitglieder']
+      . '</ul>';
+    }
+    if ($record['muttergesellschaft']) {
+      $markup .= '<h3>Muttergesellschaft</h3>'
+      . '<ul>'
+      . $record['muttergesellschaft']
+      . '</ul>';
+    }
+    if ($record['tochtergesellschaften']) {
+      $markup .= '<h3>Tochtergesellschaften</h3>'
+      . '<ul>'
+      . $record['tochtergesellschaften']
+      . '</ul>';
+    }
+    if ($record['verbundene_parlamentarier']) {
+      $markup .= '<h3>Parlamentarierverbindungen</h3>'
+      . '<ul>'
+      . $record['verbundene_parlamentarier']
+      . '</ul>';
+    }
 
     $build = array();
     $build['terms'] = array(
