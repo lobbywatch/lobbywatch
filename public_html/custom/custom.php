@@ -778,7 +778,9 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
         || (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
 //           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
 //           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
-          && !getTimestamp($rowData['eingabe_abgeschlossen_datum'])
+          && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
+//           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
+            ))
           )
     ) {
 //       df($rowData, '$rowData');
@@ -810,8 +812,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
     if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
     && !preg_match('/background-image/',$workflow_styles)
     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 3600
-//       || $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa']
-      )
+       || ($rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa'] && getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0)
 //     && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) > 0
 //       && $rowData['kontrolliert_visa'] != $rowData['eingabe_abgeschlossen_visa']
       )
