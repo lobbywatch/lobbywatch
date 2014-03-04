@@ -436,7 +436,7 @@ ORDER BY beziehung, organisation_name;
 -- Organisationen für welche eine PR-Agentur arbeitet.
 -- Connector: organisation_beziehung.organisation_id
 CREATE OR REPLACE VIEW `v_organisation_beziehung_arbeitet_fuer` AS
-SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
+SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation.*
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation organisation
   ON organisation_beziehung.ziel_organisation_id = organisation.id
@@ -448,7 +448,7 @@ ORDER BY organisation.anzeige_name;
 -- Connector: organisation_beziehung.ziel_organisation_id
 -- Reverse Beziehung
 CREATE OR REPLACE VIEW `v_organisation_beziehung_auftraggeber_fuer` AS
-SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
+SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation.*
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation organisation
   ON organisation_beziehung.organisation_id = organisation.id
@@ -459,7 +459,7 @@ ORDER BY organisation.anzeige_name;
 -- Organisationen, in welcher eine Organisation Mitglied ist.
 -- Connector: organisation_beziehung.organisation_id
 CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglied_von` AS
-SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
+SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation.*
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation organisation
   ON organisation_beziehung.ziel_organisation_id = organisation.id
@@ -471,12 +471,35 @@ ORDER BY organisation.anzeige_name;
 -- Connector: organisation_beziehung.ziel_organisation_id
 -- Reverse Beziehung
 CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglieder` AS
-SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.*
+SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation.*
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation organisation
   ON organisation_beziehung.organisation_id = organisation.id
 WHERE
   organisation_beziehung.art = 'mitglied von'
+ORDER BY organisation.anzeige_name;
+
+-- Muttergesellschaften.
+-- Connector: organisation_beziehung.organisation_id
+CREATE OR REPLACE VIEW `v_organisation_beziehung_muttergesellschaft` AS
+SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation.*
+FROM v_organisation_beziehung organisation_beziehung
+INNER JOIN v_organisation organisation
+  ON organisation_beziehung.ziel_organisation_id = organisation.id
+WHERE
+  organisation_beziehung.art = 'tochtergesellschaft von'
+ORDER BY organisation.anzeige_name;
+
+-- Tochtergesellschaften
+-- Connector: organisation_beziehung.ziel_organisation_id
+-- Reverse Beziehung
+CREATE OR REPLACE VIEW `v_organisation_beziehung_tochtergesellschaften` AS
+SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation.*
+FROM v_organisation_beziehung organisation_beziehung
+INNER JOIN v_organisation organisation
+  ON organisation_beziehung.organisation_id = organisation.id
+WHERE
+  organisation_beziehung.art = 'tochtergesellschaft von'
 ORDER BY organisation.anzeige_name;
 
 -- Parlamenterier, die eine Interessenbindung zu dieser Organisation haben.
