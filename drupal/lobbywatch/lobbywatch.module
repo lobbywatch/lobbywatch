@@ -533,7 +533,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
     drupal_goto("parlamentarier/$id/$url_name");
   }
 
-  $markup = t('<p>Parlamentarier</p>');
+  $markup = '';
 
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
@@ -698,7 +698,7 @@ function lobbywatch_organisation_id($id, $name = '') {
     drupal_goto("organisation/$id/$url_name");
   }
 
-  $markup = t('<p>Organisation</p>');
+  $markup = '';
 
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
@@ -811,7 +811,7 @@ function lobbywatch_kommission_id($id, $name = '') {
     drupal_goto("kommission/$id/$url_name");
   }
 
-  $markup = t('<p>Kommission</p>');
+  $markup = '';
 
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
@@ -940,7 +940,7 @@ function lobbywatch_partei_id($id, $name = '') {
     drupal_goto("partei/$id/$url_name");
   }
 
-  $markup = t('<p>Partei</p>');
+  $markup = '';
 
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
@@ -1042,7 +1042,7 @@ function lobbywatch_branche_id($id, $name = '') {
     drupal_goto("branche/$id/$url_name");
   }
 
-  $markup = t('<p>Branche</p>');
+  $markup = '';
 
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
@@ -1148,7 +1148,7 @@ function lobbywatch_interessengruppe_id($id, $name = '') {
     drupal_goto("interessengruppe/$id/$url_name");
   }
 
-  $markup = t('<p>Interessengruppe</p>');
+  $markup = '';
 
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
@@ -1235,7 +1235,7 @@ function lobbywatch_zutrittsberechtigung_id($id, $name = '') {
     drupal_goto("zutrittsberechtigter/$id/$url_name");
   }
 
-  $markup = t('<p>Zutrittsberechtigter</p>');
+  $markup = '';
 
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
