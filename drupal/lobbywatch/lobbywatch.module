@@ -707,7 +707,7 @@ function lobbywatch_organisation_id($id, $name = '') {
   try {
   $sql = "SELECT organisation.*,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li>', IF(v.bis IS NOT NULL, '<s>', ''), '<a href=\"/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, ' </a>',
+        CONCAT('<li>', IF(v.bis IS NOT NULL, '<s>', ''), '<a href=\"/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, '</a>',
         ', ', parlamentarier.ratstyp,
         IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei)),
         ', ', parlamentarier.kanton,
@@ -823,7 +823,7 @@ function lobbywatch_kommission_id($id, $name = '') {
 
     $sql = "SELECT kommission.*,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li><a href=\"/parlamentarier/', parlamentarier.parlamentarier_id, '\">', parlamentarier.parlamentarier_name, ' </a>',
+        CONCAT('<li><a href=\"/parlamentarier/', parlamentarier.parlamentarier_id, '\">', parlamentarier.parlamentarier_name, '</a>',
         ', ', parlamentarier.ratstyp,
         IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei)),
         ', ', parlamentarier.kanton
@@ -832,7 +832,7 @@ function lobbywatch_kommission_id($id, $name = '') {
         SEPARATOR ' '
       ) parlamentarier,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li><a href=\"/branche/', branche.id, '\">', branche.anzeige_name, ' </a>'
+        CONCAT('<li><a href=\"/branche/', branche.id, '\">', branche.anzeige_name, '</a>'
         )
         ORDER BY branche.anzeige_name
         SEPARATOR ' '
@@ -952,7 +952,7 @@ function lobbywatch_partei_id($id, $name = '') {
 
   $sql = "SELECT partei.*,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li><a href=\"/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, ' </a>',
+        CONCAT('<li><a href=\"/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, '</a>',
         ', ', parlamentarier.ratstyp,
         IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei)),
         ', ', parlamentarier.kanton
