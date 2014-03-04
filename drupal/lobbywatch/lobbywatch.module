@@ -30,6 +30,7 @@ function lobbywatch_menu() {
 
   $items['parlamentarier/%'] = array(
     'title' => 'Parlamentarier',
+    // TODO set 'title callback' for adding name
     'page callback' => 'lobbywatch_parlamentarier_id',
     'page arguments' => array(1),
     'access arguments' => array('access lobbywatch general content'),
@@ -38,6 +39,7 @@ function lobbywatch_menu() {
 
   $items['parlamentarier/%/%'] = array(
     'title' => 'Parlamentarier',
+    // TODO set 'title callback' for adding name
     'page callback' => 'lobbywatch_parlamentarier_id',
     'page arguments' => array(1, 2),
     'access arguments' => array('access lobbywatch general content'),
@@ -53,6 +55,7 @@ function lobbywatch_menu() {
 
   $items['organisation/%'] = array(
     'title' => 'Organisation',
+    // TODO set 'title callback' for adding name
     'page callback' => 'lobbywatch_organisation_id',
     'page arguments' => array(1),
     'access arguments' => array('access lobbywatch general content'),
@@ -68,6 +71,7 @@ function lobbywatch_menu() {
 
   $items['partei/%'] = array(
     'title' => 'Partei',
+    // TODO set 'title callback' for adding name
     'page callback' => 'lobbywatch_partei_id',
     'page arguments' => array(1),
     'access arguments' => array('access lobbywatch general content'),
@@ -83,6 +87,7 @@ function lobbywatch_menu() {
 
   $items['kommission/%'] = array(
     'title' => 'Kommission',
+    // TODO set 'title callback' for adding name
     'page callback' => 'lobbywatch_kommission_id',
     'page arguments' => array(1),
     'access arguments' => array('access lobbywatch general content'),
@@ -98,6 +103,7 @@ function lobbywatch_menu() {
 
   $items['branche/%'] = array(
     'title' => 'Branche',
+    // TODO set 'title callback' for adding name
     'page callback' => 'lobbywatch_branche_id',
     'page arguments' => array(1),
     'access arguments' => array('access lobbywatch general content'),
@@ -113,6 +119,7 @@ function lobbywatch_menu() {
 
   $items['interessengruppe/%'] = array(
     'title' => 'Interessengruppe',
+    // TODO set 'title callback' for adding name
     'page callback' => 'lobbywatch_interessengruppe_id',
     'page arguments' => array(1),
     'access arguments' => array('access lobbywatch general content'),
@@ -128,6 +135,7 @@ function lobbywatch_menu() {
 
   $items['zutrittsberechtigter/%'] = array(
     'title' => 'Zutrittsberechtigter',
+    // TODO set 'title callback' for adding name
     'page callback' => 'lobbywatch_zutrittsberechtigung_id',
     'page arguments' => array(1),
     'access arguments' => array('access lobbywatch general content'),
@@ -851,9 +859,15 @@ function lobbywatch_kommission_id($id, $name = '') {
   }
   if ($record) {
     $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    . '<table border="0">'
+    . '<tr><td>Abkürzung</td><td>' . check_plain($record['abkuerzung']) . '</td></tr>'
+    . '<tr><td>Parlament.ch Link</td><td>' . (isset($record['parlament_url']) ? l($record['anzeige_name'], $record['parlament_url']) : '') . '</td></tr>'
+    . '<tr><td>Beschreibung</td><td>' . check_plain($record['beschreibung']) . '</td></tr>'
+    . '<tr><td>Typ</td><td>' . check_plain($record['typ']) . '</td></tr>'
+    . '<tr><td>Art</td><td>' . check_plain($record['art']) . '</td></tr>'
+    . '</table>'
     . '<h3>Sachbereiche</h3>'
     . '<ul>'
-//     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($record['sachbereiche']))))
     . '</ul>'
     // TODO präsidium
