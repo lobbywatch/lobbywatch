@@ -694,7 +694,7 @@ function lobbywatch_organisation_list() {
   $result = db_query("SELECT * FROM v_organisation organisation ORDER BY organisation.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
-    $markup .= '<li><a href="/organisation/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
+    $markup .= '<li><a href="/organisation/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . (check_plain($record['rechtsform']) ? ', ' . check_plain($record['rechtsform']) : '');
   }
 
   $markup .= '</ul>';
