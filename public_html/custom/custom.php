@@ -838,15 +838,24 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
     $completeness_styles = '';
 
     if ($table_name === 'parlamentarier') {
-      if (isset($rowData['sitzplatz']) && isset($rowData['email'])) {
+      if (isset($rowData['sitzplatz']) && isset($rowData['email']) && isset($rowData['geburtstag']) && isset($rowData['im_rat_seit']) && isset($rowData['geschlecht']) && isset($rowData['kleinbild']) && isset($rowData['parlament_biografie_id']) && isset($rowData['beruf'])) {
         $completeness_styles .= 'background-color: greenyellow;';
-      } elseif (isset($rowData['sitzplatz']) || isset($rowData['email'])){
+      } elseif (isset($rowData['sitzplatz']) || isset($rowData['email']) || isset($rowData['geburtstag']) || isset($rowData['im_rat_seit']) || isset($rowData['geschlecht']) || isset($rowData['kleinbild']) || isset($rowData['parlament_biografie_id']) || isset($rowData['beruf'])){
         $completeness_styles .= 'background-color: orange;';
       }
-    } elseif ($table_name === 'zutrittsberechtigung') {
+      checkAndMarkColumnNotNull('sitzplatz', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('email', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('geburtstag', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('im_rat_seit', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('geschlecht', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('kleinbild', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('parlament_biografie_id', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
+   } elseif ($table_name === 'zutrittsberechtigung') {
       if (isset($rowData['email'])) {
         $completeness_styles .= 'background-color: greenyellow;';
       }
+      checkAndMarkColumnNotNull('email', $rowData, $rowCellStyles);
    }
 
     // Write styles
@@ -912,20 +921,26 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     if ($table_name == 'partei' && isset($rowData['name'])) {
       $completeness_styles .= 'background-color: greenyellow;';
+      checkAndMarkColumnNotNull('name', $rowData, $rowCellStyles);
     } elseif ($table_name === 'organisation') {
       if (isset($rowData['rechtsform']) && isset($rowData['interessengruppe_id']) && isset($rowData['branche_id'])) {
         $completeness_styles .= 'background-color: greenyellow;';
       } elseif (isset($rowData['rechtsform']) || isset($rowData['interessengruppe_id']) || isset($rowData['branche_id'])) {
         $completeness_styles .= 'background-color: orange;';
       }
+      checkAndMarkColumnNotNull('rechtsform', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('interessengruppe_id', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('branche_id', $rowData, $rowCellStyles);
     } elseif ($table_name === 'branche') {
       if (isset($rowData['kommission_id'])) {
         $completeness_styles .= 'background-color: greenyellow;';
       }
+      checkAndMarkColumnNotNull('kommission_id', $rowData, $rowCellStyles);
     } elseif ($table_name === 'kommission') {
       if (isset($rowData['parlament_url'])) {
         $completeness_styles .= 'background-color: greenyellow;';
       }
+      checkAndMarkColumnNotNull('parlament_url', $rowData, $rowCellStyles);
     }
 
     // Write styles
@@ -955,6 +970,15 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
   }
+}
+
+function checkAndMarkColumnNotNull($column, $rowData, &$rowCellStyles) {
+    if (empty($rowData[$column]) || $rowData[$column] == '') {
+      if (empty($rowCellStyles[$column])) {
+        $rowCellStyles[$column] = '';
+      }
+      $rowCellStyles[$column] .= 'background-image: url(img/book-question.png); background-repeat: no-repeat; background-position: top left;';
+    }
 }
 
 function globalOnBeforeUpdate($page, &$rowData, &$cancel, &$message, $tableName) {
