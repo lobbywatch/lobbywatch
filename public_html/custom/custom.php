@@ -765,6 +765,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
 
     // Check inconsistencies
+    // TODO check ranges
     if ((getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts
           && (!getTimestamp($rowData['autorisierung_verschickt_datum'])
 //               || !getTimestamp($rowData['kontrolliert_datum'])
@@ -886,6 +887,14 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
         || (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
           && !getTimestamp($rowData['eingabe_abgeschlossen_datum']))
+        || (!empty($rowData['autorisiert_datum']) && getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts
+//           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
+//           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
+          && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
+//              || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) < $update_threshold_ts)
+//           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
+            ))
+          )
     ) {
 //       df($rowData, '$rowData');
 //       df(getTimestamp($rowData['autorisierung_verschickt_datum']), 'getTimestamp($rowData[autorisierung_verschickt_datum]');
@@ -893,6 +902,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //       df(getTimestamp($rowData['kontrolliert_datum']), 'getTimestamp($rowData[kontrolliert_datum]');
 //       df(!getTimestamp($rowData['kontrolliert_datum']), '!getTimestamp($rowData[kontrolliert_datum]');
 //       df(getTimestamp($rowData['eingabe_abgeschlossen_datum']), 'getTimestamp($rowData[eingabe_abgeschlossen_datum]');
+//       df($update_threshold_ts, '$update_threshold_ts');
 //       df(!getTimestamp($rowData['eingabe_abgeschlossen_datum']), '!getTimestamp($rowData[eingabe_abgeschlossen_datum]');
 
 //           $workflow_styles .= 'background-color: red;';
@@ -905,6 +915,8 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       $workflow_styles .= 'background-color: greenyellow;';
 //     } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
 //       $rowCellStyles['id'] .= 'background-color: lightblue;';
+    } else if (!empty($rowData['autorisiert_datum']) && getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
+      $workflow_styles .= 'background-color: lightblue;';
     } else if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
       $workflow_styles .= 'background-color: orange';
     } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
