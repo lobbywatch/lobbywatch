@@ -327,7 +327,11 @@ function lobbywatch_parlamentarier_autocomplete($str = '') {
  */
 function lobbywatch_parlamentarier_list() {
   $markup = t('<p>Liste der Parlamentarier</p>');
-  $markup .= '<ul>';
+  $markup .= '<table border="0"  class="tablesorter table-medium header-sticky-enabled">
+  <thead>
+  <tr><th>Name</th><th>Partei</th><th>Rat</th><th>Kanton</th></tr>
+  </thead>
+  <tbody>';
 
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
@@ -340,10 +344,10 @@ function lobbywatch_parlamentarier_list() {
     ORDER BY parlamentarier.anzeige_name");
 
     while ($record = $result->fetchAssoc()) {
-      $markup .= '<li><a href="/parlamentarier/' . check_plain($record['id']) . '/' . lobbywatch_clean_for_url($record['anzeige_name']) . '">' . check_plain($record['anzeige_name']) . '</a>, ' . check_plain($record['partei']) . ', ' . check_plain($record['ratstyp']) . ', ' . check_plain($record['kanton']);
+      $markup .= '<tr><td><a href="/parlamentarier/' . check_plain($record['id']) . '/' . lobbywatch_clean_for_url($record['anzeige_name']) . '">' . check_plain($record['anzeige_name']) . '</a></td><td>' . check_plain($record['partei']) . '</td><td>' . check_plain($record['ratstyp']) . '</td><td>' . check_plain($record['kanton']) . '</td></tr>';
     }
 
-    $markup .= '</ul>';
+    $markup .= '</tbody></table>';
   } finally {
     // Go back to the default database,
     // otherwise Drupal will not be able to access it's own data later on.
