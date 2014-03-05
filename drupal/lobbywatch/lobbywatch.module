@@ -329,7 +329,7 @@ function lobbywatch_parlamentarier_list() {
   $markup = t('<p>Liste der Parlamentarier</p>');
   $markup .= '<table border="0"  class="tablesorter table-medium header-sticky-enabled">
   <thead>
-  <tr><th>Name</th><th>Partei</th><th>Rat</th><th>Kanton</th></tr>
+  <tr><th>Name</th><th>Photo</th><th>Partei</th><th>Rat</th><th>Kanton</th></tr>
   </thead>
   <tbody>';
 
@@ -344,7 +344,7 @@ function lobbywatch_parlamentarier_list() {
     ORDER BY parlamentarier.anzeige_name");
 
     while ($record = $result->fetchAssoc()) {
-      $markup .= '<tr><td><a href="/parlamentarier/' . check_plain($record['id']) . '/' . lobbywatch_clean_for_url($record['anzeige_name']) . '">' . check_plain($record['anzeige_name']) . '</a></td><td>' . check_plain($record['partei']) . '</td><td>' . check_plain($record['ratstyp']) . '</td><td>' . check_plain($record['kanton']) . '</td></tr>';
+      $markup .= '<tr><td><a href="/parlamentarier/' . check_plain($record['id']) . '/' . lobbywatch_clean_for_url($record['anzeige_name']) . '">' . check_plain($record['anzeige_name']) . '</a></td><td><a href="/parlamentarier/' . check_plain($record['id']) . '/' . lobbywatch_clean_for_url($record['anzeige_name']) . '">' . '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . check_plain($record['anzeige_name']) . '">' . '</a></td><td>' . check_plain($record['partei']) . '</td><td>' . check_plain($record['ratstyp']) . '</td><td>' . check_plain($record['kanton']) . '</td></tr>';
     }
 
     $markup .= '</tbody></table>';
