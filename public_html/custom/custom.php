@@ -766,6 +766,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     // Check inconsistencies
     // TODO check ranges
+    // TODO do not check only on !getTimestamp, use range
     if ((getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts
           && (!getTimestamp($rowData['autorisierung_verschickt_datum'])
 //               || !getTimestamp($rowData['kontrolliert_datum'])
@@ -780,6 +781,14 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
 //           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
           && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
+//           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
+            ))
+          )
+        || (!empty($rowData['autorisiert_datum']) && getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts
+//           && !(getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts)
+//           && !(getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts)
+          && (!getTimestamp($rowData['eingabe_abgeschlossen_datum']
+//              || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) < $update_threshold_ts)
 //           || (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts && (getTimestamp($rowData['kontrolliert_datum']) - getTimestamp($rowData['eingabe_abgeschlossen_datum']) < 0))
             ))
           )
