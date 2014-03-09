@@ -1,6 +1,17 @@
 <?php
 
 /**
+* Implements hook_views_api().
+*/
+function lobbywatch_views_api() {
+  return array(
+  'api' => 3,
+  'path' => drupal_get_path('module', 'lobbywatch') . '/views',
+  );
+}
+//- See more at: http://www.grasmash.com/article/demystifying-views-api-developers-guide-integrating-views#sthash.t41eZIbU.dpuf
+
+/**
  * Implements hook_menu().
  */
 function lobbywatch_menu() {
@@ -21,7 +32,7 @@ function lobbywatch_menu() {
     'access arguments' => array('access content'),
   );
 
-  $items['parlamentarier'] = array(
+  $items['parlamentarier-old'] = array(
     'title' => 'Parlamentarier',
     'page callback' => 'lobbywatch_parlamentarier_list',
     'access arguments' => array('access lobbywatch general content'),
@@ -171,8 +182,8 @@ function lobbywatch_permission() {
  * Implements hook_block_info().
  */
 function lobbywatch_block_info() {
-  $blocks['search'] = array(
-    'info' => t('Search'),
+  $blocks['parlamentarier_search'] = array(
+    'info' => t('Parlamentariersuche'),
     'cache' => DRUPAL_NO_CACHE,
     'weight' => 40,
     );
@@ -187,8 +198,8 @@ function lobbywatch_block_view($delta = '') {
   $block = array();
 
   switch ($delta) {
-    case 'search':
-      $block['subject'] = t('Search');
+    case 'parlamentarier_search':
+      $block['subject'] = t('Parlamentariersuche');
       // Form in a block: http://zerotodrupal.com/content/creating-form-block-drupal-7
       $block['content'] = drupal_get_form('lobbywatch_form');
       break;
@@ -1527,4 +1538,50 @@ GROUP BY zutrittsberechtigung.id;";
     drupal_goto('zutrittsberechtigter');
   }
 
+}
+
+function lobbywatch_get_parteien() {
+  // Cache ref: http://www.lullabot.com/blog/article/beginners-guide-caching-data-drupal-7
+  $cache = &drupal_static(__FUNCTION__);
+  if (!isset($cache)) {
+    db_set_active('lobbywatch');
+
+    try {
+      $sql = "SELECT partei.* FROM v_partei partei;";
+
+      $result = db_query($sql);
+
+      while ($record = $result->fetchAssoc()) {
+        $cache[$record['id']] = $record;
+      }
+    } finally {
+      // Go back to the default database,
+      // otherwise Drupal will not be able to access it's own data later on.
+      db_set_active();
+    }
+  }
+  return $cache;
+}
+
+function lobbywatch_get_kommissionen() {
+  // Cache ref: http://www.lullabot.com/blog/article/beginners-guide-caching-data-drupal-7
+  $cache = &drupal_static(__FUNCTION__);
+  if (!isset($cache)) {
+    db_set_active('lobbywatch');
+
+    try {
+      $sql = "SELECT kommission.* FROM v_kommission kommission;";
+
+      $result = db_query($sql);
+
+      while ($record = $result->fetchAssoc()) {
+        $cache[$record['id']] = $record;
+      }
+    } finally {
+      // Go back to the default database,
+      // otherwise Drupal will not be able to access it's own data later on.
+      db_set_active();
+    }
+  }
+  return $cache;
 }

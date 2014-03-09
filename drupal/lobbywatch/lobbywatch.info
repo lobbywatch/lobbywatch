@@ -3,5 +3,15 @@ description = "Lobbywatch extensions"
 
 package = "Lobbywatch"
 dependencies[] = ibexutils
+dependencies[] = views
+
 
 core = "7.x"
+
+; Views handlers
+files[] = views/lobbywatch_handler_filter_parlamentarier_geschlecht.inc
+files[] = views/lobbywatch_handler_filter_parlamentarier_kommissionen_string.inc
+files[] = views/lobbywatch_handler_filter_parlamentarier_partei.inc
+files[] = views/lobbywatch_handler_filter_parlamentarier_kanton.inc
+files[] = views/lobbywatch_handler_filter_parlamentarier_ratstyp.inc
+files[] = views/views_handler_argument_parlamentarier_id.inc
