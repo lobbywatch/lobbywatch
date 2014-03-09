@@ -3,6 +3,7 @@
 // Ref. http://www.grasmash.com/article/demystifying-views-api-developers-guide-integrating-views
 // https://api.drupal.org/api/views/views.api.php/group/views_handlers/7
 // Autocomplete: http://drupal.stackexchange.com/questions/60083/making-text-fields-autocomplete-in-views-exposed-filters
+// API: http://lobbywatch.dev/de/help/views/api-tables
 
 /**
  * Implements hook_views_data().
