@@ -666,8 +666,8 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>' .
       '<tr><td>Kinder:</td><td>' . check_plain($record['anzahl_kinder']) . '</td></tr>' .
-      '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage']) . '</td></tr>' .
-      '<tr><td>Parlament.ch Webseite:</td><td>' . l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id']) . '</td></tr>' .
+      '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</td></tr>' .
+      '<tr><td>Parlament.ch Webseite:</td><td>' . l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</td></tr>' .
       '</table>' .
       '<h4>Kommissionen</h4><ul>' . $record['kommissionen_namen'] . '</ul>' .
       '<h4>Interessenbindungen</h4><ul>' . $record['interessenbindungen'] . '</ul>' .
@@ -944,8 +944,8 @@ ORDER BY organisation.anzeige_name;
     . '<tr><td>Ort</td><td>' . check_plain($record['ort']) . '</td></tr>'
     . '<tr><td>Branche</td><td>' . l($record['branche'], 'branche/' . $record['branche_id']) . '</td></tr>'
     . '<tr><td>Interessengruppe</td><td>' . l($record['interessengruppe'], 'interessengruppe/' . $record['interessengruppe_id']) . '</td></tr>'
-    . '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage']) . '</td></tr>'
-    . '<tr><td>Handelsregister:</td><td>' . l($record['handelsregister_url'], $record['handelsregister_url']) . '</td></tr>'
+    . '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</td></tr>'
+    . '<tr><td>Handelsregister:</td><td>' . l($record['handelsregister_url'], $record['handelsregister_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</td></tr>'
     . '</table>';
     if ($record['arbeitet_fuer']) {
       $markup .= '<h3>Arbeitet für</h3>'
@@ -1099,7 +1099,7 @@ function lobbywatch_kommission_id($id, $name = '') {
     $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
     . '<table border="0">'
     . '<tr><td>Abkürzung</td><td>' . check_plain($record['abkuerzung']) . '</td></tr>'
-    . '<tr><td>Parlament.ch Link</td><td>' . (isset($record['parlament_url']) ? l($record['anzeige_name'], $record['parlament_url']) : '') . '</td></tr>'
+    . '<tr><td>Parlament.ch Link</td><td>' . (isset($record['parlament_url']) ? l($record['anzeige_name'], $record['parlament_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
     . '<tr><td>Beschreibung</td><td>' . check_plain($record['beschreibung']) . '</td></tr>'
     . '<tr><td>Typ</td><td>' . check_plain($record['typ']) . '</td></tr>'
     . '<tr><td>Art</td><td>' . check_plain($record['art']) . '</td></tr>'
@@ -1518,7 +1518,7 @@ GROUP BY zutrittsberechtigung.id;";
     .  '<tr><td>Funktion:</td><td>' . check_plain($record['funktion']) . '</td></tr>'
     .  '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>'
     .  '<tr><td>Partei:</td><td>' . l($record['partei'], 'partei/' . $record['partei_id']) . '</td></tr>'
-    .  '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage']) . '</td></tr>'
+    .  '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</td></tr>'
     . '</table>'
     . '<h3>Mandate</h3>'
     . '<ul>'
