@@ -94,6 +94,15 @@ BEGIN
    INSERT INTO `fraktion_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `fraktion`;
 
+   INSERT INTO `rat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `rat`;
+
+   INSERT INTO `kanton_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kanton`;
+
+   INSERT INTO `kanton_jahr_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kanton_jahr`;
+
    INSERT INTO `zutrittsberechtigung_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung`;
 
@@ -863,7 +872,6 @@ ALTER TABLE `mil_grad_log`
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   ADD CONSTRAINT `fk_mil_grad_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
-
 
 -- --------------------------------------------------------
 
@@ -1796,4 +1804,282 @@ SET FOREIGN_KEY_CHECKS=1;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 -- Take initial snapshot
-CALL `takeSnapshot` ('import' , 'Initial');
+-- CALL `takeSnapshot` ('import' , 'Initial');
+
+
+-- Changes
+-- 16.03.2014
+
+DROP PROCEDURE IF EXISTS takeSnapshot;
+delimiter //
+CREATE PROCEDURE takeSnapshot(aVisa VARCHAR(10), aBeschreibung VARCHAR(150)) MODIFIES SQL DATA
+COMMENT 'Speichert einen Snapshot in die _log Tabellen.'
+BEGIN
+  DECLARE ts TIMESTAMP DEFAULT NOW();
+  DECLARE sid int(11);
+  INSERT INTO `snapshot` (`id`, `beschreibung`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES (NULL, aBeschreibung, NULL, aVisa, ts, aVisa, ts);
+  SELECT LAST_INSERT_ID() INTO sid;
+
+   INSERT INTO `branche_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `branche`;
+
+   INSERT INTO `interessenbindung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessenbindung`;
+
+   INSERT INTO `interessengruppe_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessengruppe`;
+
+   INSERT INTO `in_kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_kommission`;
+
+   INSERT INTO `kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kommission`;
+
+   INSERT INTO `mandat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `mandat`;
+
+   INSERT INTO `organisation_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation`;
+
+   INSERT INTO `organisation_beziehung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_beziehung`;
+
+   INSERT INTO `parlamentarier_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier`;
+
+   INSERT INTO `parlamentarier_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier_anhang`;
+
+   INSERT INTO `partei_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `partei`;
+
+   INSERT INTO `fraktion_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `fraktion`;
+
+   INSERT INTO `rat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `rat`;
+
+   INSERT INTO `kanton_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kanton`;
+
+   INSERT INTO `kanton_jahr_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kanton_jahr`;
+
+   INSERT INTO `zutrittsberechtigung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung`;
+
+   INSERT INTO `zutrittsberechtigung_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung_anhang`;
+
+END
+//
+delimiter ;
+
+DROP TABLE IF EXISTS `rat_log`;
+CREATE TABLE IF NOT EXISTS `rat_log` LIKE `rat`;
+ALTER TABLE `rat_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP INDEX `idx_rat_unique`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_rat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+DROP TABLE IF EXISTS `kanton_log`;
+CREATE TABLE IF NOT EXISTS `kanton_log` LIKE `kanton`;
+ALTER TABLE `kanton_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP INDEX `abkuerzung`,
+  DROP INDEX `kantonsnr`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_kanton_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+DROP TABLE IF EXISTS `kanton_jahr_log`;
+CREATE TABLE IF NOT EXISTS `kanton_jahr_log` LIKE `kanton_jahr`;
+ALTER TABLE `kanton_jahr_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP INDEX `idx_kanton_jahr_unique`,
+  DROP INDEX `kanton_id`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_kanton_jahr_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- rat triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_rat_log_ins`;
+delimiter //
+create trigger `trg_rat_log_ins` after insert on `rat`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `rat_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `rat` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_rat_log_upd`;
+delimiter //
+create trigger `trg_rat_log_upd` after update on `rat`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `rat_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `rat` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_rat_log_del_before`;
+delimiter //
+create trigger `trg_rat_log_del_before` before delete on `rat`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `rat_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `rat` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_rat_log_del_after`;
+delimiter //
+create trigger `trg_rat_log_del_after` after delete on `rat`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `rat_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- kanton triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_kanton_log_ins`;
+delimiter //
+create trigger `trg_kanton_log_ins` after insert on `kanton`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `kanton` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_kanton_log_upd`;
+delimiter //
+create trigger `trg_kanton_log_upd` after update on `kanton`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `kanton` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_kanton_log_del_before`;
+delimiter //
+create trigger `trg_kanton_log_del_before` before delete on `kanton`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `kanton` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_kanton_log_del_after`;
+delimiter //
+create trigger `trg_kanton_log_del_after` after delete on `kanton`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `kanton_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- kanton_jahr triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_kanton_jahr_log_ins`;
+delimiter //
+create trigger `trg_kanton_jahr_log_ins` after insert on `kanton_jahr`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_jahr_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `kanton_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_kanton_jahr_log_upd`;
+delimiter //
+create trigger `trg_kanton_jahr_log_upd` after update on `kanton_jahr`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_jahr_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `kanton_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_kanton_jahr_log_del_before`;
+delimiter //
+create trigger `trg_kanton_jahr_log_del_before` before delete on `kanton_jahr`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `kanton_jahr_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `kanton_jahr` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_kanton_jahr_log_del_after`;
+delimiter //
+create trigger `trg_kanton_jahr_log_del_after` after delete on `kanton_jahr`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `kanton_jahr_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;

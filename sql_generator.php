@@ -1,5 +1,8 @@
 <?php
 
+// Run: php -f sql_generator.php
+
+
 // Query form database with
 /*
  * SELECT
@@ -27,6 +30,9 @@ $tables = array(
 'parlamentarier_anhang' => 'Parlamentarieranhang',
 'partei' => 'Partei',
 'fraktion' => 'Fraktion',
+'rat' => 'Rat',
+'kanton' => 'Kanton',
+'kanton_jahr' => 'Kantonjahr',
 'zutrittsberechtigung' => 'Zutrittsberechtigter',
 'zutrittsberechtigung_anhang' => 'Zutrittsberechtigunganhang',
 );

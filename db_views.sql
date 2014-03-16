@@ -132,19 +132,6 @@ CREATE OR REPLACE VIEW `v_last_updated_parlamentarier_anhang` AS
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
-CREATE OR REPLACE VIEW `v_last_updated_zutrittsberechtigung_anhang` AS
-  (SELECT
-  'zutrittsberechtigung_anhang' table_name,
-  'Zutrittsberechtigteranhang' name,
-  (select count(*) from `zutrittsberechtigung_anhang`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `zutrittsberechtigung_anhang` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  );
 CREATE OR REPLACE VIEW `v_last_updated_partei` AS
   (SELECT
   'partei' table_name,
@@ -171,6 +158,45 @@ CREATE OR REPLACE VIEW `v_last_updated_fraktion` AS
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
+CREATE OR REPLACE VIEW `v_last_updated_rat` AS
+  (SELECT
+  'rat' table_name,
+  'Rat' name,
+  (select count(*) from `rat`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `rat` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_kanton` AS
+  (SELECT
+  'kanton' table_name,
+  'Kanton' name,
+  (select count(*) from `kanton`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `kanton` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_kanton_jahr` AS
+  (SELECT
+  'kanton_jahr' table_name,
+  'Kantonjahr' name,
+  (select count(*) from `kanton_jahr`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `kanton_jahr` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
 CREATE OR REPLACE VIEW `v_last_updated_zutrittsberechtigung` AS
   (SELECT
   'zutrittsberechtigung' table_name,
@@ -181,6 +207,19 @@ CREATE OR REPLACE VIEW `v_last_updated_zutrittsberechtigung` AS
   t.id last_updated_id
   FROM
   `zutrittsberechtigung` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_zutrittsberechtigung_anhang` AS
+  (SELECT
+  'zutrittsberechtigung_anhang' table_name,
+  'Zutrittsberechtigunganhang' name,
+  (select count(*) from `zutrittsberechtigung_anhang`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `zutrittsberechtigung_anhang` t
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
@@ -205,13 +244,19 @@ SELECT * FROM v_last_updated_parlamentarier
 UNION
 SELECT * FROM v_last_updated_parlamentarier_anhang
 UNION
-SELECT * FROM v_last_updated_zutrittsberechtigung_anhang
-UNION
 SELECT * FROM v_last_updated_partei
 UNION
 SELECT * FROM v_last_updated_fraktion
 UNION
-SELECT * FROM v_last_updated_zutrittsberechtigung;
+SELECT * FROM v_last_updated_rat
+UNION
+SELECT * FROM v_last_updated_kanton
+UNION
+SELECT * FROM v_last_updated_kanton_jahr
+UNION
+SELECT * FROM v_last_updated_zutrittsberechtigung
+UNION
+SELECT * FROM v_last_updated_zutrittsberechtigung_anhang;
 
 CREATE OR REPLACE VIEW `v_last_updated_tables` AS
 SELECT * FROM `v_last_updated_tables_unordered`
@@ -222,6 +267,20 @@ ORDER BY last_updated DESC;
 CREATE OR REPLACE VIEW `v_country` AS
 SELECT country.name_de as anzeige_name, country.*
 FROM `country`;
+
+CREATE OR REPLACE VIEW `v_rat` AS
+SELECT rat.name_de as anzeige_name, rat.*
+FROM `rat`;
+
+CREATE OR REPLACE VIEW `v_kanton_jahr` AS
+SELECT kanton_jahr.*
+FROM `kanton_jahr`;
+
+CREATE OR REPLACE VIEW `v_kanton` AS
+SELECT kanton.name_de as anzeige_name, kanton.*, kanton_jahr.`id` as kanton_jahr_id, kanton_jahr.`jahr`, kanton_jahr.einwohner, kanton_jahr.auslaenderanteil, kanton_jahr.bevoelkerungsdichte, kanton_jahr.anzahl_gemeinden, kanton_jahr.anzahl_nationalraete
+FROM `kanton`
+LEFT JOIN `v_kanton_jahr` kanton_jahr
+ON kanton_jahr.kanton_id = kanton.id AND kanton_jahr.jahr=2012; -- use better criteria, last year with freigabe
 
 CREATE OR REPLACE VIEW `v_interessenraum` AS
 SELECT interessenraum.name as anzeige_name, interessenraum.*
@@ -295,10 +354,14 @@ ON interessenraum.id = o.interessenraum_id
 CREATE OR REPLACE VIEW `v_mandat` AS SELECT mandat.* FROM `mandat`;
 
 CREATE OR REPLACE VIEW `v_in_kommission` AS
-SELECT in_kommission.*, parlamentarier.ratstyp, parlamentarier.partei_id, parlamentarier.fraktion_id, parlamentarier.kanton
+SELECT in_kommission.*, rat.abkuerzung as rat, rat.abkuerzung as ratstyp, parlamentarier.partei_id, parlamentarier.fraktion_id, kanton.abkuerzung as kanton
 FROM `in_kommission`
 INNER JOIN `parlamentarier`
-ON in_kommission.parlamentarier_id = parlamentarier.id;
+ON in_kommission.parlamentarier_id = parlamentarier.id
+LEFT JOIN `kanton`
+ON parlamentarier.kanton_id = kanton.id
+LEFT JOIN `rat`
+ON parlamentarier.rat_id = rat.id;
 
 CREATE OR REPLACE VIEW `v_organisation_beziehung` AS
 SELECT organisation_beziehung.*
@@ -328,6 +391,7 @@ ORDER BY `ranghoehe` ASC;
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
 SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name,
 CONCAT(p.vorname, ' ', p.nachname) AS name,
+rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kanton.abkuerzung as kanton,
 p.*,
 GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_namen,
 --GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen2,
@@ -338,6 +402,8 @@ LEFT JOIN `v_kommission` k ON ik.kommission_id=k.id
 LEFT JOIN `v_partei` partei ON p.partei_id=partei.id
 LEFT JOIN `v_fraktion` fraktion ON p.fraktion_id=fraktion.id
 LEFT JOIN `v_mil_grad` mil_grad ON p.militaerischer_grad_id=mil_grad.id
+LEFT JOIN `v_kanton` kanton ON p.kanton_id = kanton.id
+LEFT JOIN `v_rat` rat ON p.rat_id = rat.id
 GROUP BY p.id;
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung` AS

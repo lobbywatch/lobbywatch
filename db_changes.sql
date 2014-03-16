@@ -415,3 +415,75 @@ ALTER TABLE `organisation` ADD `interessenraum_id` INT NULL DEFAULT NULL COMMENT
 ADD INDEX ( `interessenraum_id` ) ;
 
 ALTER TABLE `organisation_log` ADD `interessenraum_id` INT NULL DEFAULT NULL COMMENT 'Interessenraum der Organisation' AFTER `land_id`;
+
+-- 15.03.2014
+
+ALTER TABLE `kanton`
+  ADD `beschreibung` text NULL DEFAULT NULL COMMENT 'Beschreibung des Kantons',
+  ADD `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  ADD `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  ADD `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  ADD `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  ADD `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  ADD `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  ADD `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  ADD `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  ADD `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  ADD `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  ADD `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am';
+
+ALTER TABLE `kanton_jahr`
+  ADD `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  ADD `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  ADD `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  ADD `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  ADD `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  ADD `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  ADD `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  ADD `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  ADD `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  ADD `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  ADD `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am';
+
+ALTER TABLE `rat`
+  ADD `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  ADD `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  ADD `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  ADD `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  ADD `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  ADD `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  ADD `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  ADD `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  ADD `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  ADD `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  ADD `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am';
+
+-- 16.03.2014
+
+ALTER TABLE `parlamentarier` ADD `rat_id` INT NOT NULL COMMENT 'Ratszugehörigkeit; Fremdschlüssel des Rates' AFTER `kanton` ,
+ADD `kanton_id` INT NOT NULL COMMENT 'Kantonszugehörigkeit; Fremdschlüssel des Kantons' AFTER `rat_id` ,
+ADD INDEX ( `rat_id` ),
+ADD INDEX ( `kanton_id` );
+
+ALTER TABLE `parlamentarier_log` ADD `rat_id` INT NOT NULL COMMENT 'Ratszugehörigkeit; Fremdschlüssel des Rates' AFTER `kanton` ,
+ADD `kanton_id` INT NOT NULL COMMENT 'Kantonszugehörigkeit; Fremdschlüssel des Kantons' AFTER `rat_id`;
+
+SET @disable_table_logging = 1;
+--   // Your update statement goes here.
+
+UPDATE `parlamentarier` p
+    SET
+    p.kanton_id=(SELECT k.id FROM kanton k WHERE k.abkuerzung=p.kanton),
+    p.rat_id=(SELECT r.id FROM rat r WHERE r.abkuerzung=p.ratstyp),
+    p.updated_visa='roland';
+
+ALTER TABLE `parlamentarier` ADD CONSTRAINT `fk_rat_id` FOREIGN KEY ( `rat_id` ) REFERENCES `lobbywatch`.`rat` (
+`id`
+) ON DELETE RESTRICT ON UPDATE RESTRICT ;
+
+ALTER TABLE `parlamentarier` ADD CONSTRAINT `fk_kanton_id` FOREIGN KEY ( `kanton_id` ) REFERENCES `lobbywatch`.`kanton` (
+`id`
+) ON DELETE RESTRICT ON UPDATE RESTRICT ;
+
+
+SET @disable_table_logging = NULL;
