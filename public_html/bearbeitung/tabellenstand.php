@@ -40,8 +40,7 @@
     {
         protected function DoBeforeCreate()
         {
-            $selectQuery = '-- Last updated tables
-            SELECT * FROM (
+            $selectQuery = 'SELECT * FROM (
             SELECT *
             FROM (
             (SELECT
@@ -201,8 +200,47 @@
               )
             UNION
             (SELECT
+              \'rat\' table_name,
+              \'Rat\' name,
+              (select count(*) from `rat`) anzahl_eintraege,
+              t.`updated_visa` AS last_visa,
+              t.`updated_date` last_updated,
+              t.id last_updated_id
+              FROM
+              `rat` t
+              ORDER BY t.`updated_date` DESC
+              LIMIT 1
+              )
+            UNION
+            (SELECT
+              \'kanton\' table_name,
+              \'Kanton\' name,
+              (select count(*) from `kanton`) anzahl_eintraege,
+              t.`updated_visa` AS last_visa,
+              t.`updated_date` last_updated,
+              t.id last_updated_id
+              FROM
+              `kanton` t
+              ORDER BY t.`updated_date` DESC
+              LIMIT 1
+              )
+            UNION
+            (SELECT
+              \'kanton_jahr\' table_name,
+              \'Kantonjahr\' name,
+              (select count(*) from `kanton_jahr`) anzahl_eintraege,
+              t.`updated_visa` AS last_visa,
+              t.`updated_date` last_updated,
+              t.id last_updated_id
+              FROM
+              `kanton_jahr` t
+              ORDER BY t.`updated_date` DESC
+              LIMIT 1
+              )
+            UNION
+            (SELECT
               \'zutrittsberechtigung\' table_name,
-              \'Zutrittsberechtigung\' name,
+              \'Zutrittsberechtigter\' name,
               (select count(*) from `zutrittsberechtigung`) anzahl_eintraege,
               t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,

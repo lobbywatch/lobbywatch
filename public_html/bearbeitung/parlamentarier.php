@@ -454,6 +454,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -465,10 +471,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -1020,6 +1026,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1031,10 +1043,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -1585,10 +1597,8 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('ratstyp');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('kanton');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, true);
@@ -2471,6 +2481,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2482,10 +2498,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -2628,6 +2644,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2639,10 +2661,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -2839,10 +2861,8 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('ratstyp');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('kanton');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, true);
@@ -3204,6 +3224,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -3215,10 +3241,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -4198,6 +4224,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4209,10 +4241,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -4355,6 +4387,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4366,10 +4404,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -4950,6 +4988,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4961,10 +5005,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -5468,6 +5512,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -5479,10 +5529,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -5900,15 +5950,15 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('rat');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ratstyp');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('fraktion_id');
             $this->dataset->AddField($field, true);
             $field = new StringField('kanton');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'kommission_id_anzeige_name', 'kommission_id_anzeige_name_v_kommission'), 'kommission_id_anzeige_name_v_kommission');
         }
@@ -6831,15 +6881,15 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new StringField('rat');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ratstyp');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('fraktion_id');
             $this->dataset->AddField($field, true);
             $field = new StringField('kanton');
-            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'kommission_id_anzeige_name', 'kommission_id_anzeige_name_v_kommission'), 'kommission_id_anzeige_name_v_kommission');
         }
@@ -10341,6 +10391,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -10352,10 +10408,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -12034,6 +12090,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -12045,10 +12107,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -12552,6 +12614,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -12563,10 +12631,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -14970,6 +15038,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -14981,10 +15055,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -16736,6 +16810,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -16747,10 +16827,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -17323,6 +17403,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -17334,10 +17420,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -23895,6 +23981,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -23906,10 +23998,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -25335,6 +25427,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -25346,10 +25444,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -25820,6 +25918,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -25831,10 +25935,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -26927,10 +27031,10 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('kommissionen');
@@ -27034,6 +27138,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $this->dataset->AddLookupField('rat_id', 'v_rat', new IntegerField('id'), new StringField('abkuerzung', 'rat_id_abkuerzung', 'rat_id_abkuerzung_v_rat'), 'rat_id_abkuerzung_v_rat');
+            $this->dataset->AddLookupField('kanton_id', 'v_kanton', new IntegerField('id'), new StringField('abkuerzung', 'kanton_id_abkuerzung', 'kanton_id_abkuerzung_v_kanton'), 'kanton_id_abkuerzung_v_kanton');
             $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung', 'partei_id_abkuerzung', 'partei_id_abkuerzung_v_partei'), 'partei_id_abkuerzung_v_partei');
             $this->dataset->AddLookupField('fraktion_id', 'v_fraktion', new IntegerField('id'), new StringField('abkuerzung', 'fraktion_id_abkuerzung', 'fraktion_id_abkuerzung_v_fraktion'), 'fraktion_id_abkuerzung_v_fraktion');
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'interessengruppe', new IntegerField('id', null, null, true), new StringField('name', 'beruf_interessengruppe_id_name', 'beruf_interessengruppe_id_name_interessengruppe'), 'beruf_interessengruppe_id_name_interessengruppe');
@@ -27108,8 +27214,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'ratstyp', 'kanton', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'arbeitssprache', 'adresse_plz', 'adresse_ort', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Arbeitssprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Notizen')),
+                array('id', 'nachname', 'vorname', 'rat_id_abkuerzung', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'arbeitssprache', 'adresse_plz', 'adresse_ort', 'notizen', 'ratsunterbruch_von', 'ratsunterbruch_bis'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Arbeitssprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Notizen'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -27133,8 +27239,165 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('nachname', $this->RenderText('Nachname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vorname', $this->RenderText('Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zweiter_vorname', $this->RenderText('Zweiter Vorname')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ratstyp', $this->RenderText('Rat')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kanton', $this->RenderText('Kanton')));
+            
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_rat`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_en');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_mitglieder');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_en');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('rat_id', $this->RenderText('Rat'), $lookupDataset, 'id', 'abkuerzung', false));
+            
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_kanton`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kantonsnr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('amtssprache');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_it');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('flaeche_km2');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('beitrittsjahr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wappen_klein');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wappen');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lagebild');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kanton_jahr_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('jahr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('einwohner');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('auslaenderanteil');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('bevoelkerungsdichte');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_gemeinden');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kanton_id', $this->RenderText('Kanton'), $lookupDataset, 'id', 'abkuerzung', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kommissionen', $this->RenderText('Kommissionen')));
             
             $lookupDataset = new TableDataset(
@@ -27242,8 +27505,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('fraktionsfunktion', $this->RenderText('Fraktionsfunktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_bis', $this->RenderText('Im Rat Bis')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratsunterbruch_von', $this->RenderText('Ratsunterbruch Von')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratsunterbruch_bis', $this->RenderText('Ratsunterbruch Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf', $this->RenderText('Beruf')));
             
             $lookupDataset = new TableDataset(
@@ -27334,9 +27595,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_biografie_id', $this->RenderText('Parlament.ch Biografie ID')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('arbeitssprache', $this->RenderText('Arbeitssprache')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_firma', $this->RenderText('Adresse Firma')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_strasse', $this->RenderText('Adresse Strasse')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_zusatz', $this->RenderText('Adresse Zusatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_plz', $this->RenderText('Adresse PLZ')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_ort', $this->RenderText('Adresse Ort')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_kommission', $this->RenderText('ALT Kommission')));
@@ -27355,7 +27613,12 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratsunterbruch_von', $this->RenderText('Ratsunterbruch Von')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratsunterbruch_bis', $this->RenderText('Ratsunterbruch Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo_dateiname_voll', $this->RenderText('Photo Dateiname')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_firma', $this->RenderText('Adresse Firma')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_strasse', $this->RenderText('Adresse Strasse')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_zusatz', $this->RenderText('Adresse Zusatz')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -27547,19 +27810,81 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for ratstyp field
+            // Edit column for rat_id field
             //
-            $editor = new ComboBox('ratstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('NR', $this->RenderText('NR'));
-            $editor->AddValue('SR', $this->RenderText('SR'));
-            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
+            $editor = new ComboBox('rat_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_rat`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_en');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_mitglieder');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_en');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Rat', 
+                'rat_id', 
+                $editor, 
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -27568,59 +27893,196 @@
             
             /* <inline insert column> */
             //
-            // Edit column for ratstyp field
+            // Edit column for rat_id field
             //
-            $editor = new ComboBox('ratstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('NR', $this->RenderText('NR'));
-            $editor->AddValue('SR', $this->RenderText('SR'));
-            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
+            $editor = new ComboBox('rat_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_rat`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_en');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_mitglieder');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_en');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Rat', 
+                'rat_id', 
+                $editor, 
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('National- oder Ständerat?'));
+            $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for kanton field
+            // Edit column for kanton_id field
             //
-            $editor = new ComboBox('kanton_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('AG', $this->RenderText('AG'));
-            $editor->AddValue('AR', $this->RenderText('AR'));
-            $editor->AddValue('AI', $this->RenderText('AI'));
-            $editor->AddValue('BL', $this->RenderText('BL'));
-            $editor->AddValue('BS', $this->RenderText('BS'));
-            $editor->AddValue('BE', $this->RenderText('BE'));
-            $editor->AddValue('FR', $this->RenderText('FR'));
-            $editor->AddValue('GE', $this->RenderText('GE'));
-            $editor->AddValue('GL', $this->RenderText('GL'));
-            $editor->AddValue('GR', $this->RenderText('GR'));
-            $editor->AddValue('JU', $this->RenderText('JU'));
-            $editor->AddValue('LU', $this->RenderText('LU'));
-            $editor->AddValue('NE', $this->RenderText('NE'));
-            $editor->AddValue('NW', $this->RenderText('NW'));
-            $editor->AddValue('OW', $this->RenderText('OW'));
-            $editor->AddValue('SH', $this->RenderText('SH'));
-            $editor->AddValue('SZ', $this->RenderText('SZ'));
-            $editor->AddValue('SO', $this->RenderText('SO'));
-            $editor->AddValue('SG', $this->RenderText('SG'));
-            $editor->AddValue('TI', $this->RenderText('TI'));
-            $editor->AddValue('TG', $this->RenderText('TG'));
-            $editor->AddValue('UR', $this->RenderText('UR'));
-            $editor->AddValue('VD', $this->RenderText('VD'));
-            $editor->AddValue('VS', $this->RenderText('VS'));
-            $editor->AddValue('ZG', $this->RenderText('ZG'));
-            $editor->AddValue('ZH', $this->RenderText('ZH'));
-            $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
+            $editor = new ComboBox('kanton_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_kanton`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kantonsnr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('amtssprache');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_it');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('flaeche_km2');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('beitrittsjahr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wappen_klein');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wappen');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lagebild');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kanton_jahr_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('jahr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('einwohner');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('auslaenderanteil');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('bevoelkerungsdichte');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_gemeinden');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Kanton', 
+                'kanton_id', 
+                $editor, 
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -27629,42 +28091,117 @@
             
             /* <inline insert column> */
             //
-            // Edit column for kanton field
+            // Edit column for kanton_id field
             //
-            $editor = new ComboBox('kanton_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('AG', $this->RenderText('AG'));
-            $editor->AddValue('AR', $this->RenderText('AR'));
-            $editor->AddValue('AI', $this->RenderText('AI'));
-            $editor->AddValue('BL', $this->RenderText('BL'));
-            $editor->AddValue('BS', $this->RenderText('BS'));
-            $editor->AddValue('BE', $this->RenderText('BE'));
-            $editor->AddValue('FR', $this->RenderText('FR'));
-            $editor->AddValue('GE', $this->RenderText('GE'));
-            $editor->AddValue('GL', $this->RenderText('GL'));
-            $editor->AddValue('GR', $this->RenderText('GR'));
-            $editor->AddValue('JU', $this->RenderText('JU'));
-            $editor->AddValue('LU', $this->RenderText('LU'));
-            $editor->AddValue('NE', $this->RenderText('NE'));
-            $editor->AddValue('NW', $this->RenderText('NW'));
-            $editor->AddValue('OW', $this->RenderText('OW'));
-            $editor->AddValue('SH', $this->RenderText('SH'));
-            $editor->AddValue('SZ', $this->RenderText('SZ'));
-            $editor->AddValue('SO', $this->RenderText('SO'));
-            $editor->AddValue('SG', $this->RenderText('SG'));
-            $editor->AddValue('TI', $this->RenderText('TI'));
-            $editor->AddValue('TG', $this->RenderText('TG'));
-            $editor->AddValue('UR', $this->RenderText('UR'));
-            $editor->AddValue('VD', $this->RenderText('VD'));
-            $editor->AddValue('VS', $this->RenderText('VS'));
-            $editor->AddValue('ZG', $this->RenderText('ZG'));
-            $editor->AddValue('ZH', $this->RenderText('ZH'));
-            $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
+            $editor = new ComboBox('kanton_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_kanton`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kantonsnr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('amtssprache');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_it');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('flaeche_km2');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('beitrittsjahr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wappen_klein');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wappen');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lagebild');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kanton_jahr_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('jahr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('einwohner');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('auslaenderanteil');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('bevoelkerungsdichte');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_gemeinden');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Kanton', 
+                'kanton_id', 
+                $editor, 
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Kantonskürzel'));
+            $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -29306,16 +29843,16 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -29369,22 +29906,6 @@
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -29495,33 +30016,6 @@
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_firma_handler');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -29665,12 +30159,55 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('photo_dateiname_voll_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_firma_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -29712,48 +30249,185 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for ratstyp field
+            // Edit column for rat_id field
             //
-            $editor = new ComboBox('ratstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('NR', $this->RenderText('NR'));
-            $editor->AddValue('SR', $this->RenderText('SR'));
-            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
+            $editor = new ComboBox('rat_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_rat`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_en');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_mitglieder');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_en');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Rat', 
+                'rat_id', 
+                $editor, 
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for kanton field
+            // Edit column for kanton_id field
             //
-            $editor = new ComboBox('kanton_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('AG', $this->RenderText('AG'));
-            $editor->AddValue('AR', $this->RenderText('AR'));
-            $editor->AddValue('AI', $this->RenderText('AI'));
-            $editor->AddValue('BL', $this->RenderText('BL'));
-            $editor->AddValue('BS', $this->RenderText('BS'));
-            $editor->AddValue('BE', $this->RenderText('BE'));
-            $editor->AddValue('FR', $this->RenderText('FR'));
-            $editor->AddValue('GE', $this->RenderText('GE'));
-            $editor->AddValue('GL', $this->RenderText('GL'));
-            $editor->AddValue('GR', $this->RenderText('GR'));
-            $editor->AddValue('JU', $this->RenderText('JU'));
-            $editor->AddValue('LU', $this->RenderText('LU'));
-            $editor->AddValue('NE', $this->RenderText('NE'));
-            $editor->AddValue('NW', $this->RenderText('NW'));
-            $editor->AddValue('OW', $this->RenderText('OW'));
-            $editor->AddValue('SH', $this->RenderText('SH'));
-            $editor->AddValue('SZ', $this->RenderText('SZ'));
-            $editor->AddValue('SO', $this->RenderText('SO'));
-            $editor->AddValue('SG', $this->RenderText('SG'));
-            $editor->AddValue('TI', $this->RenderText('TI'));
-            $editor->AddValue('TG', $this->RenderText('TG'));
-            $editor->AddValue('UR', $this->RenderText('UR'));
-            $editor->AddValue('VD', $this->RenderText('VD'));
-            $editor->AddValue('VS', $this->RenderText('VS'));
-            $editor->AddValue('ZG', $this->RenderText('ZG'));
-            $editor->AddValue('ZH', $this->RenderText('ZH'));
-            $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
+            $editor = new ComboBox('kanton_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_kanton`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kantonsnr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('amtssprache');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_it');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('flaeche_km2');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('beitrittsjahr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wappen_klein');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wappen');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lagebild');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kanton_jahr_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('jahr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('einwohner');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('auslaenderanteil');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('bevoelkerungsdichte');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_gemeinden');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Kanton', 
+                'kanton_id', 
+                $editor, 
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -29937,24 +30611,6 @@
             //
             $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for ratsunterbruch_von field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for ratsunterbruch_bis field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -30205,39 +30861,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for adresse_firma field
-            //
-            $editor = new TextEdit('adresse_firma_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Adresse Firma', 'adresse_firma', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for adresse_strasse field
-            //
-            $editor = new TextEdit('adresse_strasse_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for adresse_zusatz field
-            //
-            $editor = new TextEdit('adresse_zusatz_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for adresse_plz field
             //
             $editor = new TextEdit('adresse_plz_edit');
@@ -30442,6 +31065,24 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for ratsunterbruch_von field
+            //
+            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for ratsunterbruch_bis field
+            //
+            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for photo_dateiname_voll field
             //
             $editor = new TextEdit('photo_dateiname_voll_edit');
@@ -30449,6 +31090,39 @@
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_firma field
+            //
+            $editor = new TextEdit('adresse_firma_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Firma', 'adresse_firma', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
         }
@@ -30491,48 +31165,185 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for ratstyp field
+            // Edit column for rat_id field
             //
-            $editor = new ComboBox('ratstyp_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('NR', $this->RenderText('NR'));
-            $editor->AddValue('SR', $this->RenderText('SR'));
-            $editColumn = new CustomEditColumn('Rat', 'ratstyp', $editor, $this->dataset);
+            $editor = new ComboBox('rat_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_rat`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_en');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_mitglieder');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage_en');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Rat', 
+                'rat_id', 
+                $editor, 
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for kanton field
+            // Edit column for kanton_id field
             //
-            $editor = new ComboBox('kanton_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('AG', $this->RenderText('AG'));
-            $editor->AddValue('AR', $this->RenderText('AR'));
-            $editor->AddValue('AI', $this->RenderText('AI'));
-            $editor->AddValue('BL', $this->RenderText('BL'));
-            $editor->AddValue('BS', $this->RenderText('BS'));
-            $editor->AddValue('BE', $this->RenderText('BE'));
-            $editor->AddValue('FR', $this->RenderText('FR'));
-            $editor->AddValue('GE', $this->RenderText('GE'));
-            $editor->AddValue('GL', $this->RenderText('GL'));
-            $editor->AddValue('GR', $this->RenderText('GR'));
-            $editor->AddValue('JU', $this->RenderText('JU'));
-            $editor->AddValue('LU', $this->RenderText('LU'));
-            $editor->AddValue('NE', $this->RenderText('NE'));
-            $editor->AddValue('NW', $this->RenderText('NW'));
-            $editor->AddValue('OW', $this->RenderText('OW'));
-            $editor->AddValue('SH', $this->RenderText('SH'));
-            $editor->AddValue('SZ', $this->RenderText('SZ'));
-            $editor->AddValue('SO', $this->RenderText('SO'));
-            $editor->AddValue('SG', $this->RenderText('SG'));
-            $editor->AddValue('TI', $this->RenderText('TI'));
-            $editor->AddValue('TG', $this->RenderText('TG'));
-            $editor->AddValue('UR', $this->RenderText('UR'));
-            $editor->AddValue('VD', $this->RenderText('VD'));
-            $editor->AddValue('VS', $this->RenderText('VS'));
-            $editor->AddValue('ZG', $this->RenderText('ZG'));
-            $editor->AddValue('ZH', $this->RenderText('ZH'));
-            $editColumn = new CustomEditColumn('Kanton', 'kanton', $editor, $this->dataset);
+            $editor = new ComboBox('kanton_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $lookupDataset = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_kanton`');
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kantonsnr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_it');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('amtssprache');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_fr');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('hauptort_it');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('flaeche_km2');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('beitrittsjahr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wappen_klein');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('wappen');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lagebild');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('notizen');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('eingabe_abgeschlossen_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('eingabe_abgeschlossen_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kontrolliert_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('kontrolliert_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('freigabe_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('freigabe_datum');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('updated_visa');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kanton_jahr_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('jahr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('einwohner');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('auslaenderanteil');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('bevoelkerungsdichte');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_gemeinden');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
+            $editColumn = new LookUpEditColumn(
+                'Kanton', 
+                'kanton_id', 
+                $editor, 
+                $this->dataset, 'id', 'abkuerzung', $lookupDataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -30717,24 +31528,6 @@
             //
             $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for ratsunterbruch_von field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for ratsunterbruch_bis field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -30973,39 +31766,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for adresse_firma field
-            //
-            $editor = new TextEdit('adresse_firma_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Adresse Firma', 'adresse_firma', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for adresse_strasse field
-            //
-            $editor = new TextEdit('adresse_strasse_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for adresse_zusatz field
-            //
-            $editor = new TextEdit('adresse_zusatz_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(100);
-            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for adresse_plz field
             //
             $editor = new TextEdit('adresse_plz_edit');
@@ -31038,6 +31798,57 @@
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for ratsunterbruch_von field
+            //
+            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for ratsunterbruch_bis field
+            //
+            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_firma field
+            //
+            $editor = new TextEdit('adresse_firma_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Firma', 'adresse_firma', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -31085,16 +31896,16 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -31148,22 +31959,6 @@
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -31265,27 +32060,6 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -31423,9 +32197,46 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -31462,16 +32273,16 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -31525,22 +32336,6 @@
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -31642,27 +32437,6 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -31800,9 +32574,46 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -31863,20 +32674,20 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('National- oder Ständerat?'));
+            $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Kantonskürzel'));
+            $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -32290,16 +33101,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32353,22 +33164,6 @@
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32470,27 +33265,6 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32628,9 +33402,46 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32686,20 +33497,20 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('National- oder Ständerat?'));
+            $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Kantonskürzel'));
+            $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33113,16 +33924,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33176,22 +33987,6 @@
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33293,27 +34088,6 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33451,9 +34225,46 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33509,20 +34320,20 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('National- oder Ständerat?'));
+            $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Kantonskürzel'));
+            $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -33936,16 +34747,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -33999,22 +34810,6 @@
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34116,27 +34911,6 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34274,9 +35048,46 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34332,20 +35143,20 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('National- oder Ständerat?'));
+            $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Kantonskürzel'));
+            $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -34759,16 +35570,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34822,22 +35633,6 @@
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -34939,27 +35734,6 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -35097,9 +35871,46 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -35155,20 +35966,20 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('National- oder Ständerat?'));
+            $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Kantonskürzel'));
+            $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -35582,16 +36393,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -35645,22 +36456,6 @@
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -35762,27 +36557,6 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -35920,9 +36694,46 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -35978,20 +36789,20 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('National- oder Ständerat?'));
+            $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Kantonskürzel'));
+            $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -36405,16 +37216,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -36468,22 +37279,6 @@
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -36585,27 +37380,6 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -36743,9 +37517,46 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -36801,20 +37612,20 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('National- oder Ständerat?'));
+            $column->SetDescription($this->RenderText('Ratszugehörigkeit; Fremdschlüssel des Rates'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Kantonskürzel'));
+            $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -37228,16 +38039,16 @@
             $result->AddPrintColumn($column);
             
             //
-            // View column for ratstyp field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('ratstyp', 'Rat', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
-            // View column for kanton field
+            // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton', 'Kanton', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -37291,22 +38102,6 @@
             //
             $column = new DateTimeViewColumn('im_rat_bis', 'Im Rat Bis', $this->dataset);
             $column->SetDateTimeFormat('Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -37408,27 +38203,6 @@
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -37566,9 +38340,46 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -38186,27 +38997,6 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for adresse_firma field
-            //
-            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_firma_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for adresse_strasse field
-            //
-            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_strasse_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for adresse_zusatz field
-            //
-            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_zusatz_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for adresse_ort field
             //
             $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
@@ -38234,6 +39024,27 @@
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_dateiname_voll_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for adresse_firma field
+            //
+            $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_firma_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_strasse_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_zusatz_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }

@@ -61,9 +61,9 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ratstyp');
+            $field = new IntegerField('rat_id');
             $this->dataset->AddField($field, false);
-            $field = new StringField('kanton');
+            $field = new IntegerField('kanton_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('kommissionen');
             $this->dataset->AddField($field, false);
