@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 16. Mrz 2014 um 10:44
+-- Erstellungszeit: 16. Mrz 2014 um 21:59
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -2392,7 +2392,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
 --
 -- Tabellenstruktur für Tabelle `rat`
 --
--- Erzeugt am: 16. Mrz 2014 um 08:39
+-- Erzeugt am: 16. Mrz 2014 um 20:06
 --
 
 DROP TABLE IF EXISTS `rat`;
@@ -2403,8 +2403,12 @@ CREATE TABLE IF NOT EXISTS `rat` (
   `name_fr` varchar(50) DEFAULT NULL COMMENT 'Name auf französisch',
   `name_it` varchar(50) DEFAULT NULL COMMENT 'Name auf italienisch',
   `name_en` varchar(50) DEFAULT NULL COMMENT 'Name auf englisch',
+  `anzahl_mitglieder` smallint(6) DEFAULT NULL COMMENT 'Anzahl Mitglieder des Rates',
+  `typ` enum('legislativ','exekutiv','judikativ') NOT NULL COMMENT 'Typ des Rates',
+  `interessenraum_id` int(11) DEFAULT '1' COMMENT 'Interessenraum des Rates',
+  `anzeigestufe` int(11) NOT NULL COMMENT 'Anzeigestufe, je höher desto selektiver, >=0 = alle werden angezeigt, >0 = Standardanzeige',
+  `gewicht` int(11) NOT NULL COMMENT 'Reihenfolge der Einträge, je grösser desto tiefer ("schwerer")',
   `beschreibung` text COMMENT 'Eine Beschreibung',
-  `anzahl_mitglieder` tinyint(4) DEFAULT NULL COMMENT 'Anzahl Mitglieder des Rates',
   `homepage_de` varchar(255) DEFAULT NULL COMMENT 'Deutschsprachige Homepage',
   `homepage_fr` varchar(255) DEFAULT NULL COMMENT 'Franszösichsprache Homepage',
   `homepage_it` varchar(255) DEFAULT NULL COMMENT 'Italienischsprachige Homepage',
@@ -2421,8 +2425,15 @@ CREATE TABLE IF NOT EXISTS `rat` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_rat_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint'
+  UNIQUE KEY `idx_rat_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
+  KEY `interessenraum_id` (`interessenraum_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Tabelle der Räte von Lobbywatch' AUTO_INCREMENT=4 ;
+
+--
+-- RELATIONEN DER TABELLE `rat`:
+--   `interessenraum_id`
+--       `interessenraum` -> `id`
+--
 
 --
 -- Trigger `rat`
@@ -2474,7 +2485,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `rat_log`
 --
--- Erzeugt am: 16. Mrz 2014 um 08:49
+-- Erzeugt am: 16. Mrz 2014 um 20:07
 --
 
 DROP TABLE IF EXISTS `rat_log`;
@@ -2485,8 +2496,12 @@ CREATE TABLE IF NOT EXISTS `rat_log` (
   `name_fr` varchar(50) DEFAULT NULL COMMENT 'Name auf französisch',
   `name_it` varchar(50) DEFAULT NULL COMMENT 'Name auf italienisch',
   `name_en` varchar(50) DEFAULT NULL COMMENT 'Name auf englisch',
+  `anzahl_mitglieder` smallint(6) DEFAULT NULL COMMENT 'Anzahl Mitglieder des Rates',
+  `typ` enum('legislativ','exekutiv','judikativ') NOT NULL COMMENT 'Typ des Rates',
+  `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum des Rates',
+  `anzeigestufe` int(11) NOT NULL COMMENT 'Anzeigestufe, je höher desto selektiver, >=0 = alle werden angezeigt, >0 = Standardanzeige',
+  `gewicht` int(11) NOT NULL COMMENT 'Reihenfolge der Einträge, je grösser desto tiefer ("schwerer")',
   `beschreibung` text COMMENT 'Eine Beschreibung',
-  `anzahl_mitglieder` tinyint(4) DEFAULT NULL COMMENT 'Anzahl Mitglieder des Rates',
   `homepage_de` varchar(255) DEFAULT NULL COMMENT 'Deutschsprachige Homepage',
   `homepage_fr` varchar(255) DEFAULT NULL COMMENT 'Franszösichsprache Homepage',
   `homepage_it` varchar(255) DEFAULT NULL COMMENT 'Italienischsprachige Homepage',
@@ -2509,7 +2524,7 @@ CREATE TABLE IF NOT EXISTS `rat_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_rat_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Tabelle der Räte von Lobbywatch' AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Tabelle der Räte von Lobbywatch' AUTO_INCREMENT=8 ;
 
 --
 -- RELATIONEN DER TABELLE `rat_log`:
@@ -4011,8 +4026,12 @@ CREATE TABLE IF NOT EXISTS `v_rat` (
 ,`name_fr` varchar(50)
 ,`name_it` varchar(50)
 ,`name_en` varchar(50)
+,`anzahl_mitglieder` smallint(6)
+,`typ` enum('legislativ','exekutiv','judikativ')
+,`interessenraum_id` int(11)
+,`anzeigestufe` int(11)
+,`gewicht` int(11)
 ,`beschreibung` text
-,`anzahl_mitglieder` tinyint(4)
 ,`homepage_de` varchar(255)
 ,`homepage_fr` varchar(255)
 ,`homepage_it` varchar(255)
@@ -5013,7 +5032,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_rat`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_rat` AS select `rat`.`name_de` AS `anzeige_name`,`rat`.`id` AS `id`,`rat`.`abkuerzung` AS `abkuerzung`,`rat`.`name_de` AS `name_de`,`rat`.`name_fr` AS `name_fr`,`rat`.`name_it` AS `name_it`,`rat`.`name_en` AS `name_en`,`rat`.`beschreibung` AS `beschreibung`,`rat`.`anzahl_mitglieder` AS `anzahl_mitglieder`,`rat`.`homepage_de` AS `homepage_de`,`rat`.`homepage_fr` AS `homepage_fr`,`rat`.`homepage_it` AS `homepage_it`,`rat`.`homepage_en` AS `homepage_en`,`rat`.`notizen` AS `notizen`,`rat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`rat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`rat`.`kontrolliert_visa` AS `kontrolliert_visa`,`rat`.`kontrolliert_datum` AS `kontrolliert_datum`,`rat`.`freigabe_visa` AS `freigabe_visa`,`rat`.`freigabe_datum` AS `freigabe_datum`,`rat`.`created_visa` AS `created_visa`,`rat`.`created_date` AS `created_date`,`rat`.`updated_visa` AS `updated_visa`,`rat`.`updated_date` AS `updated_date` from `rat`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_rat` AS select `rat`.`name_de` AS `anzeige_name`,`rat`.`id` AS `id`,`rat`.`abkuerzung` AS `abkuerzung`,`rat`.`name_de` AS `name_de`,`rat`.`name_fr` AS `name_fr`,`rat`.`name_it` AS `name_it`,`rat`.`name_en` AS `name_en`,`rat`.`anzahl_mitglieder` AS `anzahl_mitglieder`,`rat`.`typ` AS `typ`,`rat`.`interessenraum_id` AS `interessenraum_id`,`rat`.`anzeigestufe` AS `anzeigestufe`,`rat`.`gewicht` AS `gewicht`,`rat`.`beschreibung` AS `beschreibung`,`rat`.`homepage_de` AS `homepage_de`,`rat`.`homepage_fr` AS `homepage_fr`,`rat`.`homepage_it` AS `homepage_it`,`rat`.`homepage_en` AS `homepage_en`,`rat`.`notizen` AS `notizen`,`rat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`rat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`rat`.`kontrolliert_visa` AS `kontrolliert_visa`,`rat`.`kontrolliert_datum` AS `kontrolliert_datum`,`rat`.`freigabe_visa` AS `freigabe_visa`,`rat`.`freigabe_datum` AS `freigabe_datum`,`rat`.`created_visa` AS `created_visa`,`rat`.`created_date` AS `created_date`,`rat`.`updated_visa` AS `updated_visa`,`rat`.`updated_date` AS `updated_date` from `rat` order by `rat`.`gewicht`;
 
 -- --------------------------------------------------------
 
@@ -5266,6 +5285,12 @@ ALTER TABLE `partei`
 --
 ALTER TABLE `partei_log`
   ADD CONSTRAINT `fk_partei_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
+-- Constraints der Tabelle `rat`
+--
+ALTER TABLE `rat`
+  ADD CONSTRAINT `fk_interessenraum_id` FOREIGN KEY (`interessenraum_id`) REFERENCES `interessenraum` (`id`);
 
 --
 -- Constraints der Tabelle `rat_log`
