@@ -487,3 +487,21 @@ ALTER TABLE `parlamentarier` ADD CONSTRAINT `fk_kanton_id` FOREIGN KEY ( `kanton
 
 
 SET @disable_table_logging = NULL;
+
+ALTER TABLE `rat`
+  ADD `typ` enum('legislativ','exekutiv','judikativ') NOT NULL COMMENT 'Typ des Rates' AFTER `anzahl_mitglieder`,
+  ADD `interessenraum_id` int(11) DEFAULT 1 COMMENT 'Interessenraum des Rates' AFTER `typ`,
+  ADD `anzeigestufe` int(11) NOT NULL COMMENT 'Anzeigestufe, je höher desto selektiver, >=0 = alle werden angezeigt, >0 = Standardanzeige' AFTER `interessenraum_id`,
+  ADD `gewicht` int(11) NOT NULL COMMENT 'Reihenfolge der Einträge, je grösser desto tiefer ("schwerer")' AFTER `anzeigestufe`,
+  CHANGE `anzahl_mitglieder` `anzahl_mitglieder` SMALLINT NULL DEFAULT NULL COMMENT 'Anzahl Mitglieder des Rates',
+  CHANGE `beschreibung` `beschreibung` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Eine Beschreibung' AFTER `gewicht`,
+  ADD INDEX ( `interessenraum_id` ),
+  ADD CONSTRAINT `fk_interessenraum_id` FOREIGN KEY ( `interessenraum_id` ) REFERENCES `lobbywatch`.`interessenraum` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `rat_log`
+  ADD `typ` enum('legislativ','exekutiv','judikativ') NOT NULL COMMENT 'Typ des Rates' AFTER `anzahl_mitglieder`,
+  ADD `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum des Rates' AFTER `typ`,
+  ADD `anzeigestufe` int(11) NOT NULL COMMENT 'Anzeigestufe, je höher desto selektiver, >=0 = alle werden angezeigt, >0 = Standardanzeige' AFTER `interessenraum_id`,
+  ADD `gewicht` int(11) NOT NULL COMMENT 'Reihenfolge der Einträge, je grösser desto tiefer ("schwerer")' AFTER `anzeigestufe`,
+  CHANGE `anzahl_mitglieder` `anzahl_mitglieder` SMALLINT NULL DEFAULT NULL COMMENT 'Anzahl Mitglieder des Rates',
+  CHANGE `beschreibung` `beschreibung` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Eine Beschreibung' AFTER `gewicht`;

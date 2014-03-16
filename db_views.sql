@@ -270,7 +270,8 @@ FROM `country`;
 
 CREATE OR REPLACE VIEW `v_rat` AS
 SELECT rat.name_de as anzeige_name, rat.*
-FROM `rat`;
+FROM `rat`
+ORDER BY `gewicht` ASC;;
 
 CREATE OR REPLACE VIEW `v_kanton_jahr` AS
 SELECT kanton_jahr.*
