@@ -2938,7 +2938,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(false);
             
             /* <inline edit column> */
@@ -3004,7 +3004,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Rat Id', 
+                'Rat', 
                 'rat_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -3077,7 +3077,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Rat Id', 
+                'Rat', 
                 'rat_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -3093,7 +3093,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton Id', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(false);
             
             /* <inline edit column> */
@@ -3182,7 +3182,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kanton Id', 
+                'Kanton', 
                 'kanton_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -3278,7 +3278,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kanton Id', 
+                'Kanton', 
                 'kanton_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -5345,7 +5345,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierDetailEdit1fraktionssearch', $this->dataset,
                 array('id', 'nachname', 'vorname', 'zweiter_vorname', 'rat_id_abkuerzung', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'geschlecht', 'geburtstag', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'ALT_kommission', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'autorisiert_visa', 'autorisiert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Rat Id'), $this->RenderText('Kanton Id'), $this->RenderText('Kommissionen'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion Id'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad Id'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament Biografie Id'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Autorisierung Verschickt Visa'), $this->RenderText('Autorisierung Verschickt Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion Id'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad Id'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament Biografie Id'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Autorisierung Verschickt Visa'), $this->RenderText('Autorisierung Verschickt Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -5426,7 +5426,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('rat_id', $this->RenderText('Rat Id'), $lookupDataset, 'id', 'abkuerzung', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('rat_id', $this->RenderText('Rat'), $lookupDataset, 'id', 'abkuerzung', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -5507,7 +5507,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kanton_id', $this->RenderText('Kanton Id'), $lookupDataset, 'id', 'abkuerzung', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kanton_id', $this->RenderText('Kanton'), $lookupDataset, 'id', 'abkuerzung', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kommissionen', $this->RenderText('Kommissionen')));
             
             $lookupDataset = new TableDataset(
@@ -5826,7 +5826,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -5892,7 +5892,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Rat Id', 
+                'Rat', 
                 'rat_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -5965,7 +5965,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Rat Id', 
+                'Rat', 
                 'rat_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -5981,7 +5981,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton Id', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -6070,7 +6070,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kanton Id', 
+                'Kanton', 
                 'kanton_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -6166,7 +6166,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kanton Id', 
+                'Kanton', 
                 'kanton_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -7850,14 +7850,14 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton Id', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -8244,7 +8244,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Rat Id', 
+                'Rat', 
                 'rat_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -8338,7 +8338,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kanton Id', 
+                'Kanton', 
                 'kanton_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -9009,7 +9009,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Rat Id', 
+                'Rat', 
                 'rat_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -9103,7 +9103,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kanton Id', 
+                'Kanton', 
                 'kanton_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -9724,14 +9724,14 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton Id', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -10040,14 +10040,14 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat Id', $this->dataset);
+            $column = new TextViewColumn('rat_id_abkuerzung', 'Rat', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton Id', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
