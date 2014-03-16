@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 16. Mrz 2014 um 21:59
+-- Erstellungszeit: 16. Mrz 2014 um 22:31
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -1957,14 +1957,6 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=248 ;
 
 --
--- MIME TYPEN DER TABELLE `parlamentarier`:
---   `kleinbild`
---       `Image_JPEG`
---   `photo`
---       `Image_JPEG`
---
-
---
 -- RELATIONEN DER TABELLE `parlamentarier`:
 --   `beruf_interessengruppe_id`
 --       `interessengruppe` -> `id`
@@ -2072,12 +2064,6 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=22 ;
 
 --
--- MIME TYPEN DER TABELLE `parlamentarier_anhang`:
---   `datei`
---       `Application_Octetstream`
---
-
---
 -- RELATIONEN DER TABELLE `parlamentarier_anhang`:
 --   `parlamentarier_id`
 --       `parlamentarier` -> `id`
@@ -2174,7 +2160,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 16. Mrz 2014 um 09:26
+-- Erzeugt am: 16. Mrz 2014 um 21:30
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -2183,8 +2169,6 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   `nachname` varchar(100) NOT NULL COMMENT 'Nachname des Parlamentariers',
   `vorname` varchar(50) NOT NULL COMMENT 'Vornahme des Parlamentariers',
   `zweiter_vorname` varchar(50) DEFAULT NULL COMMENT 'Zweiter Vorname des Parlamentariers',
-  `ratstyp` enum('NR','SR') NOT NULL COMMENT 'National- oder Ständerat?',
-  `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') NOT NULL COMMENT 'Kantonskürzel',
   `rat_id` int(11) NOT NULL COMMENT 'Ratszugehörigkeit; Fremdschlüssel des Rates',
   `kanton_id` int(11) NOT NULL COMMENT 'Kantonszugehörigkeit; Fremdschlüssel des Kantons',
   `kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])',

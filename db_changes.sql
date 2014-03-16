@@ -505,3 +505,6 @@ ALTER TABLE `rat_log`
   ADD `gewicht` int(11) NOT NULL COMMENT 'Reihenfolge der Einträge, je grösser desto tiefer ("schwerer")' AFTER `anzeigestufe`,
   CHANGE `anzahl_mitglieder` `anzahl_mitglieder` SMALLINT NULL DEFAULT NULL COMMENT 'Anzahl Mitglieder des Rates',
   CHANGE `beschreibung` `beschreibung` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Eine Beschreibung' AFTER `gewicht`;
+
+ALTER TABLE `parlamentarier_log` DROP `ratstyp` ,
+DROP `kanton` ;
