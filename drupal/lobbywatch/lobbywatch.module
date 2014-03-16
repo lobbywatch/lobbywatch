@@ -584,7 +584,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
     db_query($sql);
 
     $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.kleinbild, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei, parlamentarier.partei_id,
-    parlamentarier.name, parlamentarier.anzahl_kinder,
+    parlamentarier.name, parlamentarier.anzahl_kinder, rat.name_de as rat_name_de, kanton.einwohner, kanton.auslaenderanteil, kanton.anzahl_staenderaete, kanton.anzahl_nationalraete,
     GROUP_CONCAT(DISTINCT
       CONCAT('<li>', IF(interessenbindung.bis IS NOT NULL, '<s>', ''), '<a href=\"/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
       IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
@@ -638,6 +638,10 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       ON v.parlamentarier_id = parlamentarier.id -- AND v.bis IS NULL
       LEFT JOIN v_organisation organisation2
       ON organisation2.id = v.connector_organisation_id
+      LEFT JOIN v_kanton kanton
+      ON kanton.id = parlamentarier.kanton_id
+      LEFT JOIN v_rat rat
+      ON rat.id = parlamentarier.rat_id
       WHERE
       parlamentarier.id=:id
       GROUP BY parlamentarier.id";
@@ -658,16 +662,24 @@ function lobbywatch_parlamentarier_id($id, $name='') {
   }
 
   if ($record) {
-      $ratstyp = preg_replace('/SR/i', 'Ständerat', preg_replace('/NR/i', 'Nationalrat', check_plain($record['ratstyp'])));
+      $rat = check_plain($record['rat_name_de']);
+      $ratstyp = check_plain($record['ratstyp']);
+      if ($ratstyp == 'SR') {
+        $vertretung = round($record['einwohner'] / $record['anzahl_staenderaete']);
+      } else {
+        $vertretung = round($record['einwohner'] / $record['anzahl_nationalraete']);
+      }
       // TODO security, check content
       $parlamentarier_name = check_plain($record["parlamentarier_name"]);
-      $markup .= '<h2>' . $parlamentarier_name . '</h2>' .
+      $markup .=
+//       '<h2>' . $parlamentarier_name . '</h2>' .
       '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '">' .
       '<p>Lobbyfaktor: <b>XY</b></p>' .
       '<table border="0">' .
-      '<tr><td>Rat:</td><td>' . $ratstyp . '</td></tr>' .
+      '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
       '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
       '<tr><td>Partei:</td><td>' . l($record['partei'], 'partei/' . $record['partei_id']) . '</td></tr>' .
+      '<tr><td>Vertretene Bevölkerung:</td><td>' . number_format($vertretung , 0 , '.' , '\'') . '</td></tr>' .
       '<tr><td>Im Rat seit:</td><td>' . years_months(check_plain($record['im_rat_seit'])) . ' (' . check_plain($record['im_rat_seit_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>' .
