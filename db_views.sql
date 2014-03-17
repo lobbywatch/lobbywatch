@@ -393,6 +393,13 @@ CREATE OR REPLACE VIEW `v_parlamentarier` AS
 SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name,
 CONCAT(p.vorname, ' ', p.nachname) AS name,
 rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kanton.abkuerzung as kanton,
+CAST(
+(CASE rat.abkuerzung
+  WHEN 'SR' THEN ROUND(kanton.einwohner / kanton.anzahl_staenderaete)
+  WHEN 'NR' THEN ROUND(kanton.einwohner / kanton.anzahl_nationalraete)
+  ELSE NULL
+END)
+AS UNSIGNED INTEGER) AS vertretene_bevoelkerung,
 p.*,
 GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_namen,
 --GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen2,
