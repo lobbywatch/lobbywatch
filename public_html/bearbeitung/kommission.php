@@ -139,6 +139,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -301,6 +303,8 @@
             $field = new StringField('ratstyp');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -1441,6 +1445,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1797,6 +1803,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1959,6 +1967,8 @@
             $field = new StringField('ratstyp');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -3086,6 +3096,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -3533,6 +3545,8 @@
             $field = new StringField('ratstyp');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
