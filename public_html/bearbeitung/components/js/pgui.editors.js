@@ -20,6 +20,9 @@ define(function(require, exports)
 
     exports.CustomEditor =  Class.extend({
 
+        /**
+         * @param rootElement jQuery
+         */
         init: function(rootElement)
         {
             this.rootElement = rootElement;
@@ -57,6 +60,26 @@ define(function(require, exports)
         isReadOnly: function()
         {
             return this.readOnly;
+        },
+
+        visible: function(value) {
+            var controlContainer = this.rootElement.closest('.control-group');
+            if (controlContainer.length === 0) {
+                return;
+            }
+            if (_.isUndefined(value)) {
+                return controlContainer.is(':visible');
+            }
+            else {
+                if (this.visible() != value) {
+                    if (value) {
+                        controlContainer.show();
+                    }
+                    else {
+                        controlContainer.hide();
+                    }
+                }
+            }
         },
 
         enabled: function(value) { return true; }

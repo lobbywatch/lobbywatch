@@ -20,22 +20,22 @@ class QueryDataset extends Dataset
     private $name;
 
     /**
-     * @param ConnectionFactory $ConnectionFactory
-     * @param array $ConnectionParams
+     * @param ConnectionFactory $connectionFactory
+     * @param array $connectionParams
      * @param string $sql
      * @param string[] $insertSql
      * @param string[] $updateSql
      * @param string[] $deleteSql
      * @param string $name
      */
-    function __construct($ConnectionFactory, $ConnectionParams, $sql, $insertSql, $updateSql, $deleteSql, $name)
+    function __construct($connectionFactory, $connectionParams, $sql, $insertSql, $updateSql, $deleteSql, $name)
     {
         $this->sql = $sql;
         $this->insertSql = $insertSql;
         $this->updateSql = $updateSql;
         $this->deleteSql = $deleteSql;
         $this->name = $name;
-        parent::__construct($ConnectionFactory, $ConnectionParams);
+        parent::__construct($connectionFactory, $connectionParams);
     }
 
     public function DoNotRewriteUnchangedValues() {

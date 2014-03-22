@@ -54,28 +54,35 @@
               GetConnectionOptions(),
               $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_unvollstaendige_parlamentarier');
             $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('nachname');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('vorname');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('zweiter_vorname');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('rat_id');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new IntegerField('kanton_id');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('kommissionen');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('parteifunktion');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new IntegerField('fraktion_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('fraktionsfunktion');
             $this->dataset->AddField($field, false);
             $field = new DateField('im_rat_seit');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $this->dataset->AddField($field, false);
@@ -154,12 +161,15 @@
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('updated_visa');
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
         }
     

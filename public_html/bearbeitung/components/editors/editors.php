@@ -537,7 +537,7 @@ class DateTimeEdit extends CustomEditor {
 
     public function SetValue($value) {
         if (!StringUtils::IsNullOrEmpty($value))
-            $this->value = SMDateTime::Parse($value, $this->showsTime ? 'Y-m-d H:i:s' : 'Y-m-d');
+            $this->value = SMDateTime::Parse($value, $this->format);
         else
             $this->value = null;
     }
@@ -569,7 +569,8 @@ class DateTimeEdit extends CustomEditor {
             if ($value == '')
                 return null;
             else
-                return $value;
+                // return $value;
+                return SMDateTime::Parse($value, $this->format);
         } else {
             $valueChanged = false;
             return null;
@@ -692,6 +693,10 @@ class ComboBox extends CustomEditor {
 
     public function Accept(Renderer $Renderer) {
         $Renderer->RenderComboBox($this);
+    }
+
+    public function IsSelectedValue($value) {
+        return (isset($this->selectedValue)) && ($this->GetSelectedValue() == $value);
     }
 
 }

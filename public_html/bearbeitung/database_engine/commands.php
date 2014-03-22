@@ -3,6 +3,7 @@
 include_once dirname(__FILE__) . '/' . 'engine.php';
 include_once dirname(__FILE__) . '/' . 'database_engine_utils.php';
 include_once dirname(__FILE__) . '/' . '../components/common_utils.php';
+include_once dirname(__FILE__) . '/' . '../components/error_utils.php';
 
 class FieldType
 {
@@ -120,7 +121,7 @@ class FilterConditionGenerator {
     /** @var string */
     private $resultCondition;
 
-    /** @var mixed */
+    /** @var FieldInfo */
     private $field;
     
     /** @var EngCommandImp */
@@ -136,7 +137,7 @@ class FilterConditionGenerator {
 
     /**
      * @param FieldFilter $filter
-     * @param mixed $field
+     * @param FieldInfo $field
      * @return string
      */
     public function CreateCondition($filter, $field)
@@ -189,9 +190,9 @@ class FilterConditionGenerator {
             if ($value === '' && $this->field->FieldType == ftNumber)
             {
                 if ($filter->GetFilterType() == '=')
-                    $this->resultCondition = $this->engCommandImp->GetIsNullConditition($this->engCommandImp->GetFieldFullName($this->field));
+                    $this->resultCondition = $this->engCommandImp->GetIsNullCondition($this->engCommandImp->GetFieldFullName($this->field));
                 elseif($filter->GetFilterType() == '<>')
-                    $this->resultCondition = sprintf('NOT (%s)', $this->engCommandImp->GetIsNullConditition($this->engCommandImp->GetFieldFullName($this->field)));
+                    $this->resultCondition = sprintf('NOT (%s)', $this->engCommandImp->GetIsNullCondition($this->engCommandImp->GetFieldFullName($this->field)));
             }
             elseif (isset($value))
             {
@@ -220,9 +221,9 @@ class FilterConditionGenerator {
             else
             {
                 if ($filter->GetFilterType() == '=')
-                    $this->resultCondition = $this->engCommandImp->GetIsNullConditition($this->engCommandImp->GetFieldFullName($this->field));
+                    $this->resultCondition = $this->engCommandImp->GetIsNullCondition($this->engCommandImp->GetFieldFullName($this->field));
                 elseif($filter->GetFilterType() == '<>')
-                    $this->resultCondition = sprintf('NOT (%s)', $this->engCommandImp->GetIsNullConditition($this->engCommandImp->GetFieldFullName($this->field)));
+                    $this->resultCondition = sprintf('NOT (%s)', $this->engCommandImp->GetIsNullCondition($this->engCommandImp->GetFieldFullName($this->field)));
             }
         }
 
@@ -266,7 +267,7 @@ class FilterConditionGenerator {
 
     public function VisitIsNullFieldFilter($filter)
     {
-        $this->resultCondition = $this->engCommandImp->GetIsNullConditition(
+        $this->resultCondition = $this->engCommandImp->GetIsNullCondition(
                 $this->engCommandImp->GetFieldFullName($this->field));
     }
 }
@@ -284,9 +285,14 @@ class FieldFilter
 
     public static function Equals($value) 
     {
-        return new FieldFilter($value, '=', $value);
+        return new FieldFilter($value, '=', true);
     }
 
+    /**
+     * @param mixed $value
+     * @param string $filterType ('=', '<>', 'LIKE', 'ILIKE')
+     * @param bool $ignoreFieldDataType
+     */
     public function  __construct($value, $filterType, $ignoreFieldDataType = false)
     {
         $this->value = $value;
@@ -371,6 +377,7 @@ class CompositeFilter {
     private $filterLinkType;
     private $innerFilters;
 
+    // AND | OR
     public function __construct($filterLinkType)
     {
         $this->filterLinkType = $filterLinkType;
@@ -562,6 +569,10 @@ class EngCommandImp
         return $this->GetCastToCharExpression($this->GetFieldFullName($fieldInfo), $fieldInfo);
     }
 
+    /**
+     * @param FieldInfo $fieldInfo
+     * @return string
+     */
     public function GetFieldFullName($fieldInfo)
     {
         if (isset($fieldInfo->TableName) && $fieldInfo->TableName != '')
@@ -600,6 +611,11 @@ class EngCommandImp
         return '\'' . $value->ToString('H:i:s') . '\'';
     }
 
+    /**
+     * @param FieldInfo $fieldInfo
+     * @param mixed $value
+     * @return string
+     */
     public function GetFieldValueAsSQL($fieldInfo, $value)
     {
         if ($fieldInfo->FieldType == ftNumber)
@@ -650,11 +666,21 @@ class EngCommandImp
         return '\'' . $this->EscapeString($value) . '\'';
     }
 
+    /**
+     * @param $string
+     * @return string
+     */
     public function EscapeString($string)
     {
         return str_replace('\'', '\'\'', $string);
     }
 
+    /**
+     * @param FieldInfo $fieldInfo
+     * @param mixed $value
+     * @param bool $setToDefault
+     * @return string
+     */
     public function GetFieldValueForInsert($fieldInfo, $value, $setToDefault)
     {
         if ($setToDefault)
@@ -669,6 +695,11 @@ class EngCommandImp
         }
     }
 
+    /**
+     * @param FieldInfo $fieldInfo
+     * @param mixed $value
+     * @return string
+     */
     public function GetFieldValueAsSQLForDelete($fieldInfo, $value)
     {
         if ($value == null || (!isset($value)))
@@ -681,10 +712,15 @@ class EngCommandImp
         }
     }
 
+    /**
+     * @param string $identifier
+     * @return string
+     */
     public function QuoteTableIdentifier($identifier)
     {
         if (StringUtils::Contains(StringUtils::Lower($identifier), 'select'))
             return $identifier;
+
         $result = '';
         $parts = StringUtils::SplitString('.', $identifier);
         foreach($parts as $part)
@@ -695,6 +731,10 @@ class EngCommandImp
         return $result;
     }
 
+    /**
+     * @param string $identifier
+     * @return string
+     */
     public function QuoteIdentifier($identifier)
     {
         return $identifier;
@@ -732,6 +772,10 @@ class EngCommandImp
         return "LIMIT $upLimit, $limitCount";
     }
 
+    /**
+     * @param int $joinKind
+     * @return string
+     */
     private function GetJoinKindAsSQL($joinKind)
     {
         switch ($joinKind)
@@ -748,6 +792,10 @@ class EngCommandImp
         }
     }
 
+    /**
+     * @param JoinInfo $joinInfo
+     * @return string
+     */
     public function CreateJoinClause($joinInfo)
     {
         return sprintf('%s %s%s ON %s = %s',
@@ -758,7 +806,11 @@ class EngCommandImp
             $this->GetFieldFullName($joinInfo->Field));
     }
 
-    public function GetIsNullConditition($fieldName)
+    /**
+     * @param string $fieldName
+     * @return string
+     */
+    public function GetIsNullCondition($fieldName)
     {
         return $fieldName . ' IS NULL';
     }
@@ -800,12 +852,16 @@ class EngCommandImp
      */
     protected function DoExecuteSelectCommand($connection, $command)
     {
-        //echo $command->GetSQL() . '<br>';
         $result = $this->connectionFactory->CreateDataset($connection, $command->GetSQL());
         $result->Open();
         return $result;
     }
 
+    /**
+     * @param EngConnection $connection
+     * @param string $sql
+     * @return EngDataReader
+     */
     public function ExecuteReader(EngConnection $connection, $sql)
     {
         $result = $this->connectionFactory->CreateDataset($connection, $sql);
@@ -884,6 +940,7 @@ class EngCommandImp
     /**
      * @param BaseSelectCommand $command
      * @return string
+     * @description returns string between SELECT and column list (for example, FIRST/SKIP for Firebird)
      */
     public function GetAfterSelectSQL($command)
     {

@@ -359,6 +359,9 @@ abstract class Dataset implements IFilterable, IDataset {
     /** @var ConnectionFactory */
     private $connectionFactory;
 
+    /** @var array */
+    private $connectionParams;
+
     /** @var EngDataReader */
     private $dataReader;
 
@@ -391,6 +394,8 @@ abstract class Dataset implements IFilterable, IDataset {
     public $OnNextRecord;
     /** @var \Event */
     public $OnAfterConnect;
+    /** @var \Event */
+    public $OnBeforeOpen;
     #endregion
 
     private $editMode;
@@ -402,12 +407,18 @@ abstract class Dataset implements IFilterable, IDataset {
     private $singleRecordFilters = array();
     private $rowIndex;
 
-    function __construct($ConnectionFactory, $ConnectionParams) {
-        $this->connectionFactory = $ConnectionFactory;
-        $this->connectionParams = $ConnectionParams;
+
+    /**
+     * @param ConnectionFactory $connectionFactory
+     * @param array $connectionParams
+     */
+    function __construct($connectionFactory, $connectionParams) {
+        $this->connectionFactory = $connectionFactory;
+        $this->connectionParams = $connectionParams;
 
         $this->OnAfterConnect = new Event();
         $this->OnNextRecord = new Event();
+        $this->OnBeforeOpen = new Event();
 
         $this->selectCommand = $this->CreateSelectCommand();
 
@@ -425,12 +436,16 @@ abstract class Dataset implements IFilterable, IDataset {
         $this->defaultFieldValues = array();
     }
 
-    public function DoNotRewriteUnchangedValues() {
-        return true;
-    }
-
     private function DoOnNextRecord() {
         $this->OnNextRecord->Fire(array($this));
+    }
+
+    private function DoBeforeOpen() {
+        $this->OnBeforeOpen->Fire(array($this));
+    }
+
+    public function DoNotRewriteUnchangedValues() {
+        return true;
     }
 
     public function SetClientEncoding($value) {
@@ -541,6 +556,7 @@ abstract class Dataset implements IFilterable, IDataset {
         $this->Connect();
         if (DebugUtils::GetDebugLevel() == 1)
             echo $this->selectCommand->GetSQL() . '<br>';
+        $this->DoBeforeOpen();
         $this->dataReader = $this->selectCommand->Execute($this->GetConnection());
         $this->rowIndex = 0;
         $this->insertedMode = false;

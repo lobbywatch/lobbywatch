@@ -232,13 +232,11 @@ abstract class BaseSelectCommand extends EngCommand implements IFilterable {
 }
 
 class CustomSelectCommand extends BaseSelectCommand {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $sql;
     const CustomSelectSubqueryAlias = 'SM_SOURCE_SQL';
 
-    public function __construct($sql, EngCommandImp $engCommandImp) {
+    public function __construct(EngCommandImp $engCommandImp, $sql) {
         parent::__construct($engCommandImp);
         $this->sql = $sql;
     }
@@ -254,6 +252,9 @@ class CustomSelectCommand extends BaseSelectCommand {
 
     #region Command building result
 
+    /**
+     * @return string
+     */
     public function GetSQL() {
         if ($this->HasCondition() || $this->HasJoins() || $this->HasOrdering()) {
             $fieldList = $this->GetFieldListClause();
@@ -287,7 +288,9 @@ class CustomSelectCommand extends BaseSelectCommand {
 }
 
 class SelectCommand extends BaseSelectCommand {
+    /** @var string */
     private $sourceTable;
+    /** @var string */
     private $sourceTableAlias;
 
     public function __construct(EngCommandImp $engCommandImp) {

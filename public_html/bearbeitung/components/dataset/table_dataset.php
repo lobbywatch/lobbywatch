@@ -12,14 +12,14 @@ class TableDataset extends Dataset
     private $tableName;
 
     /**
-     * @param ConnectionFactory $ConnectionFactory
-     * @param array $ConnectionParams
+     * @param ConnectionFactory $connectionFactory
+     * @param array $connectionParams
      * @param $tableName
      * @return \TableDataset
      */
-    function __construct($ConnectionFactory, $ConnectionParams, $tableName)
+    function __construct($connectionFactory, $connectionParams, $tableName)
     {
-        parent::__construct($ConnectionFactory, $ConnectionParams);
+        parent::__construct($connectionFactory, $connectionParams);
         $this->SetTableName($tableName);
     }
 

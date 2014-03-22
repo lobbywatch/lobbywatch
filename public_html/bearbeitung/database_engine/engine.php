@@ -160,7 +160,7 @@ abstract class ConnectionFactory {
     }
 
     public function CreateCustomSelectCommand($sql) {
-        return new CustomSelectCommand($sql, $this->CreateEngCommandImp());
+        return new CustomSelectCommand($this->CreateEngCommandImp(), $sql);
     }
 
     public function CreateCustomUpdateCommand($sql) {
@@ -601,8 +601,10 @@ abstract class EngDataReader {
         if ($fieldInfo->FieldType == ftDateTime)
             return $this->GetDateTimeFieldValueByName($value);
         elseif ($fieldInfo->FieldType == ftDate)
-            return $this->GetDateFieldValueByName($value); elseif ($fieldInfo->FieldType == ftTime)
-            return $this->GetTimeFieldValueByName($value); else {
+            return $this->GetDateFieldValueByName($value);
+        elseif ($fieldInfo->FieldType == ftTime)
+            return $this->GetTimeFieldValueByName($value);
+        else {
             return $value;
         }
     }

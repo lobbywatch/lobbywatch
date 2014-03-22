@@ -51,8 +51,10 @@
               GetConnectionOptions(),
               $selectQuery, $insertQuery, $updateQuery, $deleteQuery, 'q_unvollstaendige_organisationen');
             $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new StringField('name_de');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('name_fr');
             $this->dataset->AddField($field, false);
@@ -67,8 +69,10 @@
             $field = new StringField('rechtsform');
             $this->dataset->AddField($field, false);
             $field = new StringField('typ');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('vernehmlassung');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new IntegerField('interessengruppe_id');
             $this->dataset->AddField($field, false);
@@ -101,12 +105,15 @@
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('created_date');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('updated_visa');
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
+            $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe', new IntegerField('id'), new StringField('name', 'interessengruppe_id_name', 'interessengruppe_id_name_v_interessengruppe'), 'interessengruppe_id_name_v_interessengruppe');
             $this->dataset->AddLookupField('branche_id', 'v_branche', new IntegerField('id'), new StringField('name', 'branche_id_name', 'branche_id_name_v_branche'), 'branche_id_name_v_branche');
