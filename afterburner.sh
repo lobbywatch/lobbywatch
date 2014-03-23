@@ -299,7 +299,7 @@ do
   echo "Process $file";
   cat "$file" \
   | perl -p -e's/(login\s*=\s*)".*?"/\1""/ig' \
-  | perl -p -e's/(password\s*=\s*)".*?"/\1"hidden"/ig' \
+  | perl -p -e's/( password\s*=\s*)".*?"/\1"hidden"/ig' \
   | perl -p -e's/(database\s*=\s*)".*?"/\1""/ig' \
   > "lobbywatch_bearbeitung_public.pgtm";
 done
