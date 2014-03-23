@@ -848,7 +848,23 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
     $completeness_styles = '';
 
     if ($table_name === 'parlamentarier') {
-      if (isset($rowData['sitzplatz']) && isset($rowData['email']) && isset($rowData['geburtstag']) && isset($rowData['im_rat_seit']) && isset($rowData['geschlecht']) && isset($rowData['kleinbild']) && isset($rowData['parlament_biografie_id']) && isset($rowData['beruf'])) {
+      // Check zutrittsberechtigung workflow state
+      $zb_list = zutrittsberechtigung_state($rowData['id']);
+      $zb_state = count($zb_list) <= 2;
+      $zb_controlled = true;
+      foreach($zb_list as $zb) {
+        $zb_state &= getTimestamp($zb['eingabe_abgeschlossen_datum']) >= $update_threshold_ts;
+        $zb_controlled &= getTimestamp($zb['kontrolliert_datum']) >= $update_threshold_ts;
+      }
+      if ($zb_state && $zb_controlled) {
+        $completeness_styles .= 'background-image: url(img/icons/fugue/user-green-female.png); background-repeat: no-repeat; background-position: bottom right;';
+      } elseif ($zb_state) {
+        $completeness_styles .= 'background-image: url(img/icons/fugue/user.png); background-repeat: no-repeat; background-position: bottom right;';
+      } elseif (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
+        $completeness_styles .= 'background-image: url(img/icons/fugue/user--exclamation.png); background-repeat: no-repeat; background-position: bottom right;';
+      } // else nothing
+
+      if (isset($rowData['sitzplatz']) && isset($rowData['email']) && isset($rowData['geburtstag']) && isset($rowData['im_rat_seit']) && isset($rowData['geschlecht']) && isset($rowData['kleinbild']) && isset($rowData['parlament_biografie_id']) && isset($rowData['beruf']) && $zb_state) {
         $completeness_styles .= 'background-color: greenyellow;';
       } elseif (isset($rowData['sitzplatz']) || isset($rowData['email']) || isset($rowData['geburtstag']) || isset($rowData['im_rat_seit']) || isset($rowData['geschlecht']) || isset($rowData['kleinbild']) || isset($rowData['parlament_biografie_id']) || isset($rowData['beruf'])){
         $completeness_styles .= 'background-color: orange;';
@@ -861,6 +877,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       checkAndMarkColumnNotNull('kleinbild', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('parlament_biografie_id', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
+
    } elseif ($table_name === 'zutrittsberechtigung') {
       if (isset($rowData['email'])) {
         $completeness_styles .= 'background-color: greenyellow;';
@@ -1012,6 +1029,35 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
   }
+}
+
+function getDBConnection() {
+  $con_factory = new MyPDOConnectionFactory();
+  $options = GetConnectionOptions();
+  $eng_con = $con_factory->CreateConnection($options);
+  $eng_con->Connect();
+  // TODO close connection
+  //$con = $eng_con->GetConnectionHandle();
+  return $eng_con;
+}
+
+function zutrittsberechtigung_state($parlamentarier_id) {
+  $eng_con = getDBConnection();
+  $con = $eng_con->GetConnectionHandle();
+  // TODO close connection
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum
+FROM v_zutrittsberechtigung zutrittsberechtigung
+WHERE
+  zutrittsberechtigung.parlamentarier_id=:id;";
+
+  $zbs = array();
+  $sth = $con->prepare($sql);
+  $sth->execute(array(':id' => $parlamentarier_id));
+  $zbs = $sth->fetchAll();
+
+  $eng_con->Disconnect();
+
+  return $zbs;
 }
 
 function checkAndMarkColumnNotNull($column, $rowData, &$rowCellStyles) {

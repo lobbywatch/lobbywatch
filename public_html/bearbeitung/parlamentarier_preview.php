@@ -213,6 +213,8 @@ GROUP BY parlamentarier.id;";
         $sth->execute(array(':id' => $id));
         $result = $sth->fetchAll();
 
+        $eng_con->Disconnect();
+
         if (!$result) {
           throw new Exception('ID not found');
         }
