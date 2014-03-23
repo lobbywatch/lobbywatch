@@ -38513,6 +38513,7 @@
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
             $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
+            $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -38536,6 +38537,7 @@
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
             $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
+            $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -40363,6 +40365,7 @@
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
             $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
+            $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -41189,6 +41192,7 @@
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
             $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
+            $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
