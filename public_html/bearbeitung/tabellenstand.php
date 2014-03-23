@@ -71,7 +71,7 @@
             UNION
             (SELECT
               \'interessengruppe\' table_name,
-              \'Interessengruppe\' name,
+              \'Lobbygruppe\' name,
               (select count(*) from `interessengruppe`) anzahl_eintraege,
               t.`updated_visa` AS last_visa,
               t.`updated_date` last_updated,
