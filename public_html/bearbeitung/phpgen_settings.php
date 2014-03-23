@@ -45,8 +45,8 @@ function GetPageInfos()
     $result[] = array('caption' => '<span class="relation">Mandat</span>', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat');
     $result[] = array('caption' => '<span class="relation">In Kommission</span>', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission');
     $result[] = array('caption' => '<span class="relation">Organisation Beziehung</span>', 'short_caption' => 'Organisation Beziehung', 'filename' => 'organisation_beziehung.php', 'name' => 'organisation_beziehung');
-    $result[] = array('caption' => '<span class="entity">Interessengruppe</span>', 'short_caption' => 'Interessengruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe');
     $result[] = array('caption' => '<span class="entity">Branche</span>', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche');
+    $result[] = array('caption' => '<span class="entity">Interessengruppe</span>', 'short_caption' => 'Interessengruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe');
     $result[] = array('caption' => '<span class="entity">Kommission</span>', 'short_caption' => 'Kommission', 'filename' => 'kommission.php', 'name' => 'kommission');
     $result[] = array('caption' => '<span class="entity">Partei</span>', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei');
     $result[] = array('caption' => '<span class="entity">Fraktion</span>', 'short_caption' => 'Fraktion', 'filename' => 'fraktion.php', 'name' => 'fraktion');

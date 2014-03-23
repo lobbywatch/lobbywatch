@@ -202,10 +202,10 @@
                 $result->AddPage(new PageLink($this->RenderText('<span class="relation">In Kommission</span>'), 'in_kommission.php', $this->RenderText('In Kommission'), $currentPageCaption == $this->RenderText('<span class="relation">In Kommission</span>')));
             if (GetCurrentUserGrantForDataSource('organisation_beziehung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="relation">Organisation Beziehung</span>'), 'organisation_beziehung.php', $this->RenderText('Organisation Beziehung'), $currentPageCaption == $this->RenderText('<span class="relation">Organisation Beziehung</span>')));
-            if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Interessengruppe</span>'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('<span class="entity">Interessengruppe</span>')));
             if (GetCurrentUserGrantForDataSource('branche')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Branche</span>'), 'branche.php', $this->RenderText('Branche'), $currentPageCaption == $this->RenderText('<span class="entity">Branche</span>')));
+            if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Interessengruppe</span>'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('<span class="entity">Interessengruppe</span>')));
             if (GetCurrentUserGrantForDataSource('kommission')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Kommission</span>'), 'kommission.php', $this->RenderText('Kommission'), $currentPageCaption == $this->RenderText('<span class="entity">Kommission</span>')));
             if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
