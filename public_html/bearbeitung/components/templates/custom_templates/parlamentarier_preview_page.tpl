@@ -27,6 +27,17 @@
 
               <div class="row-fluid">
                   <div class="btn-toolbar">
+
+                      <div class="btn-group">
+                          <a id="btn-eingabe-abgeschlossen" class="btn" href="#">
+                              <i class="pg-icon-input-finished-selected"></i>
+                              Eingabe abgeschlossen
+                          </a>
+                          <a id="btn-kontrolliert" class="btn" href="#">
+                              <i class="pg-icon-controlled-selected"></i>
+                              Kontrolliert
+                          </a>
+                      </div>
                                
                       <div class="btn-group">
                           <a class="btn" href="parlamentarier.php?operation=edit&pk0={$Parlamentarier.Id}">Bearbeiten</a>
@@ -89,6 +100,7 @@
           
                       <div class="btn-group">
                           <a id="email-sent" class="btn" href="#">
+                              <i class="pg-icon-authorization-sent-selected"></i>
                               Autorisierungsanfrage verschickt
                           </a>
                       </div>
@@ -227,7 +239,7 @@
     
           var nRows = countSelectedRows();
           bootbox.animate(false);
-          bootbox.confirm( 'Bei ' + nRows + ' markierten Einträgen eine "Autorisierungsanfrage verschickt" setzen?' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+          bootbox.confirm( 'Autorisierungsanfrage verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
                 operateRowAsSelected('parlamentarier.php', 'sndsel', '');
@@ -236,6 +248,38 @@
         });
         return false;
       });
+      
+      $("#btn-eingabe-abgeschlossen").click(function() {
+        require(['bootbox.min'], function() {
+    
+          var nRows = countSelectedRows();
+          bootbox.animate(false);
+          bootbox.confirm( 'Eingabe abgeschlossen? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+              if (confirmed) {
+                //self.operateSelectRows('sndsel');
+                operateRowAsSelected('parlamentarier.php', 'finsel', '');
+              }
+          });
+        });
+        return false;
+      });
+      
+      $("#btn-kontrolliert").click(function() {
+        require(['bootbox.min'], function() {
+    
+          var nRows = countSelectedRows();
+          bootbox.animate(false);
+          bootbox.confirm( 'Eingabe kontrolliert? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+              if (confirmed) {
+                //self.operateSelectRows('sndsel');
+                operateRowAsSelected('parlamentarier.php', 'consel', '');
+              }
+          });
+        });
+        return false;
+      });
+
+
   });
 {/literal}</script>
 
