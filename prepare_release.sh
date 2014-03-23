@@ -20,4 +20,5 @@ cat ../data/lobbywatch.sql \
 
 cp lobbywatch_datenmodell.pdf public_html/
 cp lobbywatch_datenmodell_1page.pdf public_html/
+cp lobbywatch_datenmodell_simplified.pdf public_html/
 
