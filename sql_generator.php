@@ -20,7 +20,7 @@
 $tables = array(
 'branche' => 'Branche',
 'interessenbindung' => 'Interessenbindung',
-'interessengruppe' => 'Interessengruppe',
+'interessengruppe' => 'Lobbygruppe',
 'in_kommission' => 'In Kommission',
 'kommission' => 'Kommission',
 'mandat' => 'Mandat',
