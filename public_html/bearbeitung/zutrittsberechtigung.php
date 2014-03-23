@@ -10009,7 +10009,7 @@
             if (GetCurrentUserGrantForDataSource('branche')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Branche</span>'), 'branche.php', $this->RenderText('Branche'), $currentPageCaption == $this->RenderText('<span class="entity">Branche</span>')));
             if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Interessengruppe</span>'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('<span class="entity">Interessengruppe</span>')));
+                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Lobbygruppe</span>'), 'interessengruppe.php', $this->RenderText('Lobbygruppe'), $currentPageCaption == $this->RenderText('<span class="entity">Lobbygruppe</span>')));
             if (GetCurrentUserGrantForDataSource('kommission')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Kommission</span>'), 'kommission.php', $this->RenderText('Kommission'), $currentPageCaption == $this->RenderText('<span class="entity">Kommission</span>')));
             if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
@@ -10039,7 +10039,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('zutrittsberechtigungssearch', $this->dataset,
                 array('id', 'parlamentarier_id_anzeige_name', 'nachname', 'vorname', 'funktion', 'beruf', 'beruf_interessengruppe_id_name', 'partei_id_abkuerzung', 'geschlecht', 'email', 'homepage', 'von', 'bis', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Funktion'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Partei'), $this->RenderText('Geschlecht'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen')),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Funktion'), $this->RenderText('Beruf'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Partei'), $this->RenderText('Geschlecht'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -10266,7 +10266,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Interessengruppe'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Lobbygruppe'), $lookupDataset, 'id', 'name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -10974,7 +10974,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -11034,7 +11034,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe', 
+                'Beruf Lobbygruppe', 
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -11100,7 +11100,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe', 
+                'Beruf Lobbygruppe', 
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -11947,7 +11947,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -12401,7 +12401,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe', 
+                'Beruf Lobbygruppe', 
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -13051,7 +13051,7 @@
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Beruf Interessengruppe', 
+                'Beruf Lobbygruppe', 
                 'beruf_interessengruppe_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
@@ -13254,7 +13254,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -13479,7 +13479,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -13737,7 +13737,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremschlüssel zur Interessengruppe für den Beruf'));
@@ -14014,7 +14014,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -14267,7 +14267,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremschlüssel zur Interessengruppe für den Beruf'));
@@ -14544,7 +14544,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -14797,7 +14797,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Fremschlüssel zur Interessengruppe für den Beruf'));
@@ -15074,7 +15074,7 @@
             //
             // View column for name field
             //
-            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('beruf_interessengruppe_id_name', 'Beruf Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%beruf_interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);

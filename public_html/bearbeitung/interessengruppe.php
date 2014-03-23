@@ -14206,7 +14206,7 @@
             if (GetCurrentUserGrantForDataSource('branche')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Branche</span>'), 'branche.php', $this->RenderText('Branche'), $currentPageCaption == $this->RenderText('<span class="entity">Branche</span>')));
             if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Interessengruppe</span>'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('<span class="entity">Interessengruppe</span>')));
+                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Lobbygruppe</span>'), 'interessengruppe.php', $this->RenderText('Lobbygruppe'), $currentPageCaption == $this->RenderText('<span class="entity">Lobbygruppe</span>')));
             if (GetCurrentUserGrantForDataSource('kommission')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Kommission</span>'), 'kommission.php', $this->RenderText('Kommission'), $currentPageCaption == $this->RenderText('<span class="entity">Kommission</span>')));
             if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
@@ -16394,10 +16394,10 @@
     try
     {
         $Page = new interessengruppePage("interessengruppe.php", "interessengruppe", GetCurrentUserGrantForDataSource("interessengruppe"), 'UTF-8');
-        $Page->SetShortCaption('<span class="entity">Interessengruppe</span>');
+        $Page->SetShortCaption('<span class="entity">Lobbygruppe</span>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
-        $Page->SetCaption('Interessengruppe');
+        $Page->SetCaption('Lobbygruppe');
         $Page->SetRecordPermission(GetCurrentUserRecordPermissionsForDataSource("interessengruppe"));
         GetApplication()->SetEnableLessRunTimeCompile(GetEnableLessFilesRunTimeCompilation());
         GetApplication()->SetCanUserChangeOwnPassword(

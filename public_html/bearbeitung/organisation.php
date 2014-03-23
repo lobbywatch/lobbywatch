@@ -37459,7 +37459,7 @@
             if (GetCurrentUserGrantForDataSource('branche')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Branche</span>'), 'branche.php', $this->RenderText('Branche'), $currentPageCaption == $this->RenderText('<span class="entity">Branche</span>')));
             if (GetCurrentUserGrantForDataSource('interessengruppe')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Interessengruppe</span>'), 'interessengruppe.php', $this->RenderText('Interessengruppe'), $currentPageCaption == $this->RenderText('<span class="entity">Interessengruppe</span>')));
+                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Lobbygruppe</span>'), 'interessengruppe.php', $this->RenderText('Lobbygruppe'), $currentPageCaption == $this->RenderText('<span class="entity">Lobbygruppe</span>')));
             if (GetCurrentUserGrantForDataSource('kommission')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Kommission</span>'), 'kommission.php', $this->RenderText('Kommission'), $currentPageCaption == $this->RenderText('<span class="entity">Kommission</span>')));
             if (GetCurrentUserGrantForDataSource('partei')->HasViewGrant())
@@ -37489,7 +37489,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
                 array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'land_id_anzeige_name', 'interessenraum_id_anzeige_name', 'rechtsform', 'typ', 'vernehmlassung', 'branche_id_anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'beschreibung', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Land'), $this->RenderText('Interessenraum'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Branche'), $this->RenderText('Interessengruppe'), $this->RenderText('2. Interessengruppe'), $this->RenderText('3. Interessengruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Land'), $this->RenderText('Interessenraum'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Branche'), $this->RenderText('Lobbygruppe'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -37743,7 +37743,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe_id', $this->RenderText('Interessengruppe'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe_id', $this->RenderText('Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -37795,7 +37795,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe2_id', $this->RenderText('2. Interessengruppe'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe2_id', $this->RenderText('2. Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -37847,7 +37847,7 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe3_id', $this->RenderText('3. Interessengruppe'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe3_id', $this->RenderText('3. Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('handelsregister_url', $this->RenderText('Handelsregister Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
@@ -38770,7 +38770,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -38881,8 +38881,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('Interessengruppe', 'interessengruppe_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Lobbygruppe', 'interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -38996,8 +38996,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('Interessengruppe', 'interessengruppe_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Lobbygruppe', 'interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -39010,7 +39010,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -39121,8 +39121,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('2. Lobbygruppe', 'interessengruppe2_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -39236,8 +39236,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('2. Lobbygruppe', 'interessengruppe2_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -39250,7 +39250,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -39361,8 +39361,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('3. Lobbygruppe', 'interessengruppe3_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -39476,8 +39476,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('3. Lobbygruppe', 'interessengruppe3_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -40003,7 +40003,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -40011,7 +40011,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -40019,7 +40019,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
@@ -40568,8 +40568,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('Interessengruppe', 'interessengruppe_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Lobbygruppe', 'interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -40681,8 +40681,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('2. Lobbygruppe', 'interessengruppe2_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -40794,8 +40794,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('3. Lobbygruppe', 'interessengruppe3_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -41395,8 +41395,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('Interessengruppe', 'interessengruppe_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Lobbygruppe', 'interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -41508,8 +41508,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('2. Interessengruppe', 'interessengruppe2_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('2. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('2. Lobbygruppe', 'interessengruppe2_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -41621,8 +41621,8 @@
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
-            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Interessengruppe'), new ForeignKeyInfo('id', 'branche_id'));
-            $editColumn = new MultiLevelLookupEditColumn('3. Interessengruppe', 'interessengruppe3_id', $editor, $this->dataset);
+            $editor->AddLevel($dataset1, 'id', 'anzeige_name', $this->RenderText('3. Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('3. Lobbygruppe', 'interessengruppe3_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -41780,7 +41780,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -41788,7 +41788,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -41796,7 +41796,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $grid->AddPrintColumn($column);
@@ -41995,7 +41995,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -42003,7 +42003,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -42011,7 +42011,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $grid->AddExportColumn($column);
@@ -42262,7 +42262,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
@@ -42272,7 +42272,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
@@ -42282,7 +42282,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
@@ -42522,7 +42522,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -42530,7 +42530,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -42538,7 +42538,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -42784,7 +42784,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
@@ -42794,7 +42794,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
@@ -42804,7 +42804,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
@@ -43044,7 +43044,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -43052,7 +43052,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -43060,7 +43060,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -43306,7 +43306,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
@@ -43316,7 +43316,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
@@ -43326,7 +43326,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
@@ -43566,7 +43566,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -43574,7 +43574,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -43582,7 +43582,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -43828,7 +43828,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
@@ -43838,7 +43838,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
@@ -43848,7 +43848,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
@@ -44088,7 +44088,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -44096,7 +44096,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -44104,7 +44104,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -44350,7 +44350,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
@@ -44360,7 +44360,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
@@ -44370,7 +44370,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
@@ -44610,7 +44610,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -44618,7 +44618,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -44626,7 +44626,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -44872,7 +44872,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
@@ -44882,7 +44882,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
@@ -44892,7 +44892,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
@@ -45132,7 +45132,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -45140,7 +45140,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -45148,7 +45148,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -45394,7 +45394,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
@@ -45404,7 +45404,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
@@ -45414,7 +45414,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
@@ -45654,7 +45654,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -45662,7 +45662,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -45670,7 +45670,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -45916,7 +45916,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
@@ -45926,7 +45926,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
@@ -45936,7 +45936,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
@@ -46176,7 +46176,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -46184,7 +46184,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -46192,7 +46192,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -46438,7 +46438,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
@@ -46448,7 +46448,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
@@ -46458,7 +46458,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
@@ -46698,7 +46698,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -46706,7 +46706,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -46714,7 +46714,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -46960,7 +46960,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $column->SetDescription($this->RenderText('Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.'));
@@ -46970,7 +46970,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $column->SetDescription($this->RenderText('2. Interessengruppe der Organisation.'));
@@ -46980,7 +46980,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $column->SetDescription($this->RenderText('3. Interessengruppe der Organisation.'));
@@ -47220,7 +47220,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -47228,7 +47228,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe2_id_anzeige_name', '2. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe2_id%' , '_self');
             $result->AddPrintColumn($column);
@@ -47236,7 +47236,7 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Interessengruppe', $this->dataset);
+            $column = new TextViewColumn('interessengruppe3_id_anzeige_name', '3. Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe3_id%' , '_self');
             $result->AddPrintColumn($column);
