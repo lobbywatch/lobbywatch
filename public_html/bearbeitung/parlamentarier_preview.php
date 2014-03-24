@@ -202,7 +202,7 @@
   //          df($eng_con->LastError(), 'last error');
   //         $eng_con->Disconnect();
   //         df($result, 'result');
-  //         $preview = $result[0]['email_text_html'];
+  //         $preview = $rowData['email_text_html'];
 
   //         $q = $con->query($sql);
   //         $result2 = $q->fetchAll();
@@ -222,40 +222,41 @@
           $eng_con->Disconnect();
         }
 
-        $mailto = 'mailto:' . urlencode($result[0]["email"]) . '?subject=' . urlencode('Interessenbindungen') . '&body=' . urlencode('[Kopiere von Vorlage]') . '&bcc=info@lobbywatch.ch';
-
         $rowData = $result[0];
+
+        $mailto = 'mailto:' . urlencode($rowData["email"]) . '?subject=' . urlencode('Interessenbindungen') . '&body=' . urlencode('[Kopiere von Vorlage]') . '&bcc=info@lobbywatch.ch';
+
         //df($rowData);
         $rowCellStyles = '';
         $rowStyles = '';
         customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
 
-//         ShowPreviewPage('<h4>Preview</h4><h3>' .$result[0]["parlamentarier_name"] . '</h3>' .
-//         '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
-//         '<h4>Gäste</h4><ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>' .
-//         '<h4>Mandate</h4><ul>' . $result[0]['mandate'] . '</ul>');
+//         ShowPreviewPage('<h4>Preview</h4><h3>' .$rowData["parlamentarier_name"] . '</h3>' .
+//         '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .
+//         '<h4>Gäste</h4><ul>' . $rowData['zutrittsberechtigungen'] . '</ul>' .
+//         '<h4>Mandate</h4><ul>' . $rowData['mandate'] . '</ul>');
         DisplayTemplateSimple('custom_templates/parlamentarier_preview_page.tpl',
           array(
           ),
           array(
             'App' => array(
               'ContentEncoding' => 'UTF-8',
-              'PageCaption' => 'Vorschau: ' . $result[0]["parlamentarier_name"],
+              'PageCaption' => 'Vorschau: ' . $rowData["parlamentarier_name"],
               'Header' => GetPagesHeader(),
               'Direction' => 'ltr',
           ),
             'Footer' => GetPagesFooter(),
             'Parlamentarier' => array(
               'Id'  => $id,
-              'Title' => 'Vorschau: ' . $result[0]["parlamentarier_name"],
+              'Title' => 'Vorschau: ' . $rowData["parlamentarier_name"],
               'Preview' => '<table style="margin-top: 1em; margin-bottom: 1em;">
                   <tr><td style="padding: 16px; '. $rowCellStyles['id'] . '" title="Status des Arbeitsablaufes dieses Parlamenteriers">Arbeitsablauf</td><td style="padding: 16px; '. $rowCellStyles['nachname'] . '" title="Status der Vollständigkeit der Felder dieses Parlamenteriers">Vollständigkeit</td></tr></table>' .
-                  '<p><b>Beruf</b>: ' . $result[0]['beruf'] . '</p>' . '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
-                '<h4>Gäste</h4>' . ($result[0]['zutrittsberechtigungen'] ? '<ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
+                  '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' . '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .
+                '<h4>Gäste</h4>' . ($rowData['zutrittsberechtigungen'] ? '<ul>' . $rowData['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
                 '<h4>Mandate der Gäste</h4>' . gaesteMitMandaten($con, $id),
-              'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailto. '" target="_blank">' . $result[0]["parlamentarier_name"] . '</a>',
-              'EmailText' => '<p>' . $result[0]['anrede'] . '</p>' .'<p>[Einleitung]</p>' . (isset($result[0]['beruf']) ? '<p><b>Beruf</b>: ' . $result[0]['beruf'] . '</p>' : '') . '<p>Ihre <b>Interessenbindungen</b>:</p><ul>' . $result[0]['interessenbindungen_for_email'] . '</ul>' .
-                '<p>Ihre <b>Gäste</b>:</p>' . ($result[0]['zutrittsberechtigungen_for_email'] ? '<ul>' . $result[0]['zutrittsberechtigungen_for_email'] . '</ul>': '<p>keine</p>') .
+              'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailto. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
+              'EmailText' => '<p>' . $rowData['anrede'] . '</p>' .'<p>[Einleitung]</p>' . (isset($rowData['beruf']) ? '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' : '') . '<p>Ihre <b>Interessenbindungen</b>:</p><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
+                '<p>Ihre <b>Gäste</b>:</p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<p>keine</p>') .
                 '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true) . '<p>Freundliche Grüsse<br>' . getFullUsername(Application::Instance()->GetCurrentUser()) . '</p>',
                'MailTo' => $mailto,
           ),
