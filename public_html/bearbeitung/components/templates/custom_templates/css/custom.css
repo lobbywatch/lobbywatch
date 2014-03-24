@@ -432,5 +432,6 @@ small.desc {
 }
 
 .preview-missing-data {
-  color: red;
+  /*color: red;*/
+  font-style: italic;
 }
