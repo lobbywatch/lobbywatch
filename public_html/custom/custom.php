@@ -861,7 +861,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       $zb_controlled = true;
       foreach($zb_list as $zb) {
         $zb_state &= getTimestamp($zb['eingabe_abgeschlossen_datum']) >= $update_threshold_ts;
-        $zb_controlled &= getTimestamp($zb['kontrolliert_datum']) >= $update_threshold_ts;
+        $zb_controlled &= getTimestamp($zb['kontrolliert_datum']) >= $update_threshold_ts && getTimestamp($zb['kontrolliert_datum']) > getTimestamp($zb['eingabe_abgeschlossen_datum']);
       }
       if ($zb_state && $zb_controlled) {
         $completeness_styles .= 'background-image: url(img/icons/fugue/user-green-female.png); background-repeat: no-repeat; background-position: bottom right;';
