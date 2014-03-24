@@ -748,6 +748,13 @@ function getTimestamp($date_str) {
   return SMDateTime::Parse($date_str, 'Y-m-d H:i:s')->GetTimestamp();
 }
 
+/**
+ *
+ * @param unknown $table_name
+ * @param unknown $rowData eingabe_abgeschlossen_datum, kontrolliert_datum, freigabe_datum, autorisierung_verschickt_datum, autorisiert_datum, kontrolliert_visa, eingabe_abgeschlossen_visa, im_rat_bis, sitzplatz, email, geburtstag, im_rat_bis, geschlecht, kleinbild, parlament_biografie_id, beruf,
+ * @param unknown $rowCellStyles
+ * @param unknown $rowStyles
+ */
 function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
   $update_threshold = SMDateTime::Parse('2012-01-01', 'Y-m-d');

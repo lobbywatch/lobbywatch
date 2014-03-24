@@ -126,100 +126,109 @@
         $con_factory = new MyPDOConnectionFactory();
         $options = GetConnectionOptions();
         $eng_con = $con_factory->CreateConnection($options);
-        $eng_con->Connect();
-        $con = $eng_con->GetConnectionHandle();
-//         df($eng_con->Connected(), 'connected');
-//         df($con, 'con');
-        $cmd = $con_factory->CreateEngCommandImp();
+        try {
+          $eng_con->Connect();
+          $con = $eng_con->GetConnectionHandle();
+  //         df($eng_con->Connected(), 'connected');
+  //         df($con, 'con');
+          $cmd = $con_factory->CreateEngCommandImp();
 
-        $session_sql = "SET SESSION group_concat_max_len=5000;";
-        $con->query($session_sql);
+          $session_sql = "SET SESSION group_concat_max_len=5000;";
+          $con->query($session_sql);
 
-        $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf,
-  GROUP_CONCAT(DISTINCT
-      CONCAT('<li>',
-      IF(interessenbindung.bis IS NOT NULL, '<s>', ''),
-      organisation.anzeige_name,
-      IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
-      IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
-      CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
-      IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))),
-      IF(interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessenbindung.beschreibung, '&quot;</small>')),
-      IF(interessenbindung.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(interessenbindung.bis, '%Y'), '</s>'), '')
-      )
-      ORDER BY organisation.anzeige_name
+          $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id,
+    GROUP_CONCAT(DISTINCT
+        CONCAT('<li>',
+        IF(interessenbindung.bis IS NOT NULL, '<s>', ''),
+        organisation.anzeige_name,
+        IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
+        IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
+        CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
+        IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))),
+        IF(interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessenbindung.beschreibung, '&quot;</small>')),
+        IF(interessenbindung.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(interessenbindung.bis, '%Y'), '</s>'), '')
+        )
+        ORDER BY organisation.anzeige_name
+        SEPARATOR ' '
+    ) interessenbindungen,
+    GROUP_CONCAT(DISTINCT
+        IF(interessenbindung.bis IS NULL, CONCAT('<li>', organisation.anzeige_name,
+        IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
+        IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
+        IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))),
+        IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung))
+        ), '')
+        ORDER BY organisation.anzeige_name
+        SEPARATOR ' '
+    ) interessenbindungen_for_email,
+    GROUP_CONCAT(DISTINCT
+        CONCAT('<li>', IF(zutrittsberechtigung.bis IS NOT NULL, '<s>', ''),
+        zutrittsberechtigung.name, ', ',
+        zutrittsberechtigung.funktion,
+        IF(zutrittsberechtigung.beruf IS NULL OR TRIM(zutrittsberechtigung.beruf) = '', '', CONCAT(', ', zutrittsberechtigung.beruf)),
+        IF(zutrittsberechtigung.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(zutrittsberechtigung.bis, '%Y'), '</s>'), '')
+        )
+      ORDER BY zutrittsberechtigung.name
       SEPARATOR ' '
-  ) interessenbindungen,
-  GROUP_CONCAT(DISTINCT
-      IF(interessenbindung.bis IS NULL, CONCAT('<li>', organisation.anzeige_name,
-      IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
-      IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
-      IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2)))),
-      IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung))
-      ), '')
-      ORDER BY organisation.anzeige_name
+    ) zutrittsberechtigungen,
+    GROUP_CONCAT(DISTINCT
+        IF(zutrittsberechtigung.bis IS NULL, CONCAT('<li>',
+        zutrittsberechtigung.name, ', ',
+        zutrittsberechtigung.funktion,
+        IF(zutrittsberechtigung.beruf IS NULL OR TRIM(zutrittsberechtigung.beruf) = '', '', CONCAT(', ', zutrittsberechtigung.beruf))
+        ), '')
+      ORDER BY zutrittsberechtigung.name
       SEPARATOR ' '
-  ) interessenbindungen_for_email,
-  GROUP_CONCAT(DISTINCT
-      CONCAT('<li>', IF(zutrittsberechtigung.bis IS NOT NULL, '<s>', ''),
-      zutrittsberechtigung.name, ', ',
-      zutrittsberechtigung.funktion,
-      IF(zutrittsberechtigung.beruf IS NULL OR TRIM(zutrittsberechtigung.beruf) = '', '', CONCAT(', ', zutrittsberechtigung.beruf)),
-      IF(zutrittsberechtigung.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(zutrittsberechtigung.bis, '%Y'), '</s>'), '')
-      )
-    ORDER BY zutrittsberechtigung.name
-    SEPARATOR ' '
-  ) zutrittsberechtigungen,
-  GROUP_CONCAT(DISTINCT
-      IF(zutrittsberechtigung.bis IS NULL, CONCAT('<li>',
-      zutrittsberechtigung.name, ', ',
-      zutrittsberechtigung.funktion,
-      IF(zutrittsberechtigung.beruf IS NULL OR TRIM(zutrittsberechtigung.beruf) = '', '', CONCAT(', ', zutrittsberechtigung.beruf))
-      ), '')
-    ORDER BY zutrittsberechtigung.name
-    SEPARATOR ' '
-  ) zutrittsberechtigungen_for_email,
-  CASE parlamentarier.geschlecht
-  WHEN 'M' THEN CONCAT('<p>Sehr geehrter Herr ', parlamentarier.nachname, '</p>')
-  WHEN 'F' THEN CONCAT('<p>Sehr geehrte Frau ', parlamentarier.nachname, '</p>')
-  ELSE CONCAT('<p>Sehr geehrte(r) Herr/Frau ', parlamentarier.nachname, '</p>')
-  END anrede
-FROM v_parlamentarier parlamentarier
-LEFT JOIN v_interessenbindung interessenbindung
-  ON interessenbindung.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
-LEFT JOIN v_organisation organisation
-  ON interessenbindung.organisation_id = organisation.id
-LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
-  ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id -- AND zutrittsberechtigung.bis IS NULL
-WHERE
-  parlamentarier.id=:id
-GROUP BY parlamentarier.id;";
+    ) zutrittsberechtigungen_for_email,
+    CASE parlamentarier.geschlecht
+    WHEN 'M' THEN CONCAT('<p>Sehr geehrter Herr ', parlamentarier.nachname, '</p>')
+    WHEN 'F' THEN CONCAT('<p>Sehr geehrte Frau ', parlamentarier.nachname, '</p>')
+    ELSE CONCAT('<p>Sehr geehrte(r) Herr/Frau ', parlamentarier.nachname, '</p>')
+    END anrede
+  FROM v_parlamentarier parlamentarier
+  LEFT JOIN v_interessenbindung interessenbindung
+    ON interessenbindung.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
+  LEFT JOIN v_organisation organisation
+    ON interessenbindung.organisation_id = organisation.id
+  LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
+    ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id -- AND zutrittsberechtigung.bis IS NULL
+  WHERE
+    parlamentarier.id=:id
+  GROUP BY parlamentarier.id;";
 
-//         df($sql);
-        $result = array();
-//         $eng_con->ExecQueryToArray($sql, $result);
-//          df($eng_con->LastError(), 'last error');
-//         $eng_con->Disconnect();
-//         df($result, 'result');
-//         $preview = $result[0]['email_text_html'];
+  //         df($sql);
+          $result = array();
+  //         $eng_con->ExecQueryToArray($sql, $result);
+  //          df($eng_con->LastError(), 'last error');
+  //         $eng_con->Disconnect();
+  //         df($result, 'result');
+  //         $preview = $result[0]['email_text_html'];
 
-//         $q = $con->query($sql);
-//         $result2 = $q->fetchAll();
-//         df($eng_con->LastError(), 'last error');
-//         df($q, 'q');
-//         df($result2, 'result2');
+  //         $q = $con->query($sql);
+  //         $result2 = $q->fetchAll();
+  //         df($eng_con->LastError(), 'last error');
+  //         df($q, 'q');
+  //         df($result2, 'result2');
 
-        $sth = $con->prepare($sql);
-        $sth->execute(array(':id' => $id));
-        $result = $sth->fetchAll();
+          $sth = $con->prepare($sql);
+          $sth->execute(array(':id' => $id));
+          $result = $sth->fetchAll();
 
-        $eng_con->Disconnect();
-
-        if (!$result) {
-          throw new Exception('ID not found');
+          if (!$result) {
+            df($eng_con->LastError());
+            throw new Exception('ID not found');
+          }
+        } finally {
+          $eng_con->Disconnect();
         }
 
         $mailto = 'mailto:' . urlencode($result[0]["email"]) . '?subject=' . urlencode('Interessenbindungen') . '&body=' . urlencode('[Kopiere von Vorlage]') . '&bcc=info@lobbywatch.ch';
+
+        $rowData = $result[0];
+        //df($rowData);
+        $rowCellStyles = '';
+        $rowStyles = '';
+        customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
 
 //         ShowPreviewPage('<h4>Preview</h4><h3>' .$result[0]["parlamentarier_name"] . '</h3>' .
 //         '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
@@ -239,7 +248,9 @@ GROUP BY parlamentarier.id;";
             'Parlamentarier' => array(
               'Id'  => $id,
               'Title' => 'Vorschau: ' . $result[0]["parlamentarier_name"],
-              'Preview' => '<p><b>Beruf</b>: ' . $result[0]['beruf'] . '</p>' . '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
+              'Preview' => '<table style="margin-top: 1em; margin-bottom: 1em;">
+                  <tr><td style="padding: 16px; '. $rowCellStyles['id'] . '" title="Status des Arbeitsablaufes dieses Parlamenteriers">Arbeitsablauf</td><td style="padding: 16px; '. $rowCellStyles['nachname'] . '" title="Status der Vollständigkeit der Felder dieses Parlamenteriers">Vollständigkeit</td></tr></table>' .
+                  '<p><b>Beruf</b>: ' . $result[0]['beruf'] . '</p>' . '<h4>Interessenbindungen</h4><ul>' . $result[0]['interessenbindungen'] . '</ul>' .
                 '<h4>Gäste</h4>' . ($result[0]['zutrittsberechtigungen'] ? '<ul>' . $result[0]['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
                 '<h4>Mandate der Gäste</h4>' . gaesteMitMandaten($con, $id),
               'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailto. '" target="_blank">' . $result[0]["parlamentarier_name"] . '</a>',
