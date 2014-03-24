@@ -430,3 +430,7 @@ ul.css-tabs a.current {
 small.desc {
   font-size: 80%;
 }
+
+.preview-missing-data {
+  color: red;
+}
