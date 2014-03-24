@@ -33,6 +33,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'parlamentarier.parlamentarier_anhang' => '<span class="entity important-entity">Parlamentarier</span>.Parlamentarier Anhang',
 'parlamentarier.v_organisation_parlamentarier_beide_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.Organisation Parlamentarier Beide Indirekt',
 'parlamentarier.v_in_kommission_liste' => '<span class="entity important-entity">Parlamentarier</span>.In Kommission Liste',
+'parlamentarier.zutrittsberechtigung' => '<span class="entity important-entity">Parlamentarier</span>.Zutrittsberechtigung',
 'parlamentarier.v_interessenbindung_liste_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.<s>V Interessenbindung Liste Indirekt</s>',
 'parlamentarier.v_zutrittsberechtigung_mit_mandaten_indirekt' => '<span class="entity important-entity">Parlamentarier</span>.<s>V Zutrittsberechtigung Mit Mandaten Indirekt</s>',
 'parlamentarier.v_interessenbindung_liste' => '<span class="entity important-entity">Parlamentarier</span>.<s>V Interessenbindung Liste</s>',
