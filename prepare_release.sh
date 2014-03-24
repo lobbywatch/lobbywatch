@@ -18,7 +18,7 @@ cat ../data/lobbywatch.sql \
 | perl -p -e's/DEFINER=`root`@`localhost` //ig' \
 > ../data/deploy_lobbywatch.sql;
 
-cp lobbywatch_datenmodell.pdf public_html/
-cp lobbywatch_datenmodell_1page.pdf public_html/
-cp lobbywatch_datenmodell_simplified.pdf public_html/
+cp -u lobbywatch_datenmodell.pdf public_html/
+cp -u lobbywatch_datenmodell_1page.pdf public_html/
+cp -u lobbywatch_datenmodell_simplified.pdf public_html/
 
