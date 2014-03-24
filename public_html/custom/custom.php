@@ -1055,7 +1055,8 @@ function zutrittsberechtigung_state($parlamentarier_id) {
   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum
 FROM v_zutrittsberechtigung zutrittsberechtigung
 WHERE
-  zutrittsberechtigung.parlamentarier_id=:id;";
+  zutrittsberechtigung.parlamentarier_id=:id
+  AND zutrittsberechtigung.bis IS NULL;";
 
   $zbs = array();
   $sth = $con->prepare($sql);
