@@ -1,7 +1,7 @@
 ﻿<?php
 
-  require_once dirname(__FILE__) . "/../settings/settings.php";
-  require_once dirname(__FILE__) . "/../common/utils.php";
+  require_once dirname(__FILE__) . "/../../settings/settings.php";
+  require_once dirname(__FILE__) . "/../../common/utils.php";
 
 //    $username = "root";
 //    $password = "mysql";
