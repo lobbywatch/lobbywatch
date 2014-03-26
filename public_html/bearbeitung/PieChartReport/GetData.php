@@ -3,21 +3,18 @@
   require_once dirname(__FILE__) . "/../../settings/settings.php";
   require_once dirname(__FILE__) . "/../../common/utils.php";
 
-//    $username = "root";
-//    $password = "mysql";
-//    $host = "localhost";
-//    $database="lobbywatch";
+    $username = $db_connection['reader_username'];
+    $password = $db_connection['reader_password'];
+    $host = $db_connection['server'];
+    $database = $db_connection['database'];
 
-   $username = $db_connection['reader_username'];
-   $password = $db_connection['reader_password'];
-   $host = $db_connection['server'];
-   $database=$db_connection['database'];
+  $optionen = array (
+    PDO::ATTR_PERSISTENT => true
+  );
 
+  $db = new PDO ( 'mysql:host=' . $host .';dbname=' . $database . ';charset=utf8', $username, $password, $optionen );
 
-//    $server = mysqli_connect($host, $username, $password);
-//    $connection = mysqli_select_db($database, $server);
-
-  $connection = new mysqli($host, $username, $password, $database);
+  $db->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
    $option = urldecode($_GET["option"]);
 //    $id = urldecode($_GET["id"]);
@@ -116,16 +113,20 @@
       $color_map["SVP"] = "#0A7D3A";
    }
 
-   $query = $connection->query($cmd);
+//    $query = $connection->query($cmd);
+    $stmt = $db->prepare($cmd);
 
-   if (!$query) {
-      echo $connection->error;
+    $stmt->execute(array());
+    $result = $stmt->fetchAll ( PDO::FETCH_ASSOC );
+
+   if (!$result) {
+      print_r($db->errorInfo());
       die;
    }
 
    $data = array();
 
-   while ($row = $query->fetch_array(MYSQLI_ASSOC)) {
+   foreach($result as $row) {
       /*echo "Label: {$row["label"]}, value: {$row["value"]}, color:{$row["color"]} \n";*/
 
       /* set color */
@@ -148,4 +149,4 @@
 
    echo json_encode($data);
 
-   $connection->close();
+   $db = null;
