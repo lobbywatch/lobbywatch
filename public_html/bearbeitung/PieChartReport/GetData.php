@@ -8,6 +8,12 @@
     $host = $db_connection['server'];
     $database = $db_connection['database'];
 
+//    $username = "root";
+//    $password = "mysql";
+//    $host = "localhost";
+//    $database="lobbywatch";
+
+
   $optionen = array (
     PDO::ATTR_PERSISTENT => true
   );
