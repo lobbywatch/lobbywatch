@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 17. Mrz 2014 um 07:31
+-- Erstellungszeit: 01. Apr 2014 um 06:57
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -494,7 +494,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   UNIQUE KEY `interessenbindung_art_parlamentarier_organisation_unique` (`art`,`parlamentarier_id`,`organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbyorg` (`organisation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=387 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=410 ;
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung`:
@@ -593,7 +593,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbyorg` (`organisation_id`),
   KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=809 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=964 ;
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung_log`:
@@ -629,7 +629,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `interessengruppe_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_lobbytyp` (`branche_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=44 ;
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe`:
@@ -715,7 +715,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
   PRIMARY KEY (`log_id`),
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `fk_interessengruppe_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=64 ;
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe_log`:
@@ -1350,7 +1350,7 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   UNIQUE KEY `mandat_zutrittsberechtigung_organisation_art_unique` (`art`,`zutrittsberechtigung_id`,`organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
   KEY `organisations_id` (`organisation_id`),
   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=81 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=118 ;
 
 --
 -- RELATIONEN DER TABELLE `mandat`:
@@ -1446,7 +1446,7 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
   KEY `organisations_id` (`organisation_id`),
   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`),
   KEY `fk_mandat_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=216 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=331 ;
 
 --
 -- RELATIONEN DER TABELLE `mandat_log`:
@@ -1564,7 +1564,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 02. Mrz 2014 um 05:59
+-- Erzeugt am: 23. Mrz 2014 um 19:48
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1576,7 +1576,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
   `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
   `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
@@ -1608,7 +1608,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   KEY `interessengruppe3_id` (`interessengruppe3_id`),
   KEY `land` (`land_id`),
   KEY `interessenraum_id` (`interessenraum_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=457 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=529 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation`:
@@ -1724,7 +1724,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
   UNIQUE KEY `organisation_beziehung_organisation_zielorganisation_art_unique` (`art`,`organisation_id`,`ziel_organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
   KEY `organisation_id` (`organisation_id`),
   KEY `ziel_organisation_id` (`ziel_organisation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=67 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung`:
@@ -1815,7 +1815,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
   KEY `organisation_id` (`organisation_id`),
   KEY `ziel_organisation_id` (`ziel_organisation_id`),
   KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=38 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=102 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung_log`:
@@ -1828,7 +1828,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 02. Mrz 2014 um 06:35
+-- Erzeugt am: 23. Mrz 2014 um 19:48
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -1840,7 +1840,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
   `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
   `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
@@ -1873,7 +1873,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   KEY `interessengruppe2_id` (`interessengruppe2_id`),
   KEY `interessengruppe3_id` (`interessengruppe3_id`),
   KEY `fk_organisation_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=771 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=1047 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_log`:
@@ -2061,7 +2061,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   KEY `parlamentarier_id` (`parlamentarier_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=25 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_anhang`:
@@ -2147,7 +2147,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
   PRIMARY KEY (`log_id`),
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `fk_parlamentarier_anhang_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=31 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_anhang_log`:
@@ -2230,7 +2230,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   KEY `militaerischer_grad` (`militaerischer_grad_id`),
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=1194 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=1213 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -2704,7 +2704,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung_authorisierungs_email` (
 `parlamentarier_name` varchar(151)
 ,`geschlecht` varchar(1)
 ,`organisation_name` varchar(454)
-,`rechtsform` varchar(23)
+,`rechtsform` varchar(33)
 ,`ort` varchar(100)
 ,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat')
 ,`beschreibung` varchar(150)
@@ -3358,7 +3358,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -3437,7 +3437,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_arbeitet_fuer` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -3491,7 +3491,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_auftraggeber_fuer` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -3545,7 +3545,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglieder` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -3599,7 +3599,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglied_von` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -3653,7 +3653,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_muttergesellschaft` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -3707,7 +3707,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_tochtergesellschaften` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4286,7 +4286,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
   KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`),
   KEY `partei` (`partei_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=66 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=423 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung`:
@@ -4389,7 +4389,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=17 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_anhang`:
@@ -4475,7 +4475,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang_log` (
   PRIMARY KEY (`log_id`),
   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`),
   KEY `fk_zutrittsberechtigung_anhang_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=18 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_anhang_log`:
@@ -4534,7 +4534,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`),
   KEY `partei` (`partei_id`),
   KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=139 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=569 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_log`:
