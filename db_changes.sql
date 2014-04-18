@@ -514,3 +514,16 @@ DROP `kanton` ;
 ALTER TABLE `organisation` CHANGE `rechtsform` `rechtsform` ENUM( 'AG', 'GmbH', 'Stiftung', 'Verein', 'Informelle Gruppe', 'Parlamentarische Gruppe', 'Oeffentlich-rechtlich', 'Einzelunternehmen', 'KG', 'Genossenschaft', 'Staatlich', 'Patronatskomitee', 'Ausserparlamentarische Kommission' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Rechtsform der Organisation';
 
 ALTER TABLE `organisation_log` CHANGE `rechtsform` `rechtsform` ENUM( 'AG', 'GmbH', 'Stiftung', 'Verein', 'Informelle Gruppe', 'Parlamentarische Gruppe', 'Oeffentlich-rechtlich', 'Einzelunternehmen', 'KG', 'Genossenschaft', 'Staatlich', 'Patronatskomitee', 'Ausserparlamentarische Kommission' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Rechtsform der Organisation';
+
+-- 17.04.2014
+
+-- ALTER TABLE `zutrittsberechtigung`
+--   ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY (`ALT_lobbyorganisation_id`) REFERENCES `organisation` (`id`);
+
+-- ALTER TABLE `zutrittsberechtigung` DROP FOREIGN KEY `fk_zb_lo` ;
+
+ALTER TABLE `zutrittsberechtigung` DROP FOREIGN KEY `fk_zb_lo` ;
+
+-- ALTER TABLE `zutrittsberechtigung` ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY ( `ALT_lobbyorganisation_id` ) REFERENCES `organisation` (
+-- `id`
+-- ) ON DELETE NO ACTION ON UPDATE NO ACTION ;

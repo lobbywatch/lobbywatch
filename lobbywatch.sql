@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 01. Apr 2014 um 06:57
+-- Erstellungszeit: 18. Apr 2014 um 19:46
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -4245,7 +4245,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mit_mandaten_indirekt` (
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung`
 --
--- Erzeugt am: 19. Jan 2014 um 09:40
+-- Erzeugt am: 17. Apr 2014 um 18:02
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung`;
@@ -4292,8 +4292,6 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
 -- RELATIONEN DER TABELLE `zutrittsberechtigung`:
 --   `beruf_interessengruppe_id`
 --       `interessengruppe` -> `id`
---   `ALT_lobbyorganisation_id`
---       `organisation` -> `id`
 --   `parlamentarier_id`
 --       `parlamentarier` -> `id`
 --   `partei_id`
@@ -5288,7 +5286,6 @@ ALTER TABLE `rat_log`
 --
 ALTER TABLE `zutrittsberechtigung`
   ADD CONSTRAINT `fk_zb_lg` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
-  ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY (`ALT_lobbyorganisation_id`) REFERENCES `organisation` (`id`),
   ADD CONSTRAINT `fk_zb_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`),
   ADD CONSTRAINT `fk_zutrittsberechtigung_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`);
 
