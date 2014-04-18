@@ -10,14 +10,14 @@ function strToTimestamp($date, $format) {
         if ($datetime !== false)
             return $datetime->getTimestamp();
         else
-            return 0;
+            return false;
     }
     else
-        return 0;
+        return false;
 }
 
 function strToTimestamp2($date, $format) {
-    $decoded_date = strptime($date, dateFormatToStrftime($format));
+    $decoded_date = strptimeEx($date, dateFormatToStrftime($format));
     if ($decoded_date !== false) {
         return mktime(
             $decoded_date['tm_hour'],
@@ -28,7 +28,7 @@ function strToTimestamp2($date, $format) {
             $decoded_date['tm_year'] + 1900
         );
     } else
-        return 0;
+        return false;
 }
 
 function dateFormatToStrftime($dateFormat) {
@@ -97,11 +97,11 @@ class SMDateTime {
             if (is_object($stringValue) && (get_class($stringValue) == 'SMDateTime')) {
                 return $stringValue;
             } else {
-                $timestamp = strtotime($stringValue);
+                $timestamp = strToTimestamp($stringValue, $format);
                 if ($timestamp === false) {
-                    $timestamp = strToTimestamp($stringValue, $format);
-                    if ($timestamp === 0) {
-                        $timestamp = strToTimestamp2($stringValue, $format);
+                    $timestamp = strToTimestamp2($stringValue, $format);
+                    if ($timestamp === false) {
+                        $timestamp = strtotime($stringValue);
                     }
                 }
                 return new SMDateTime($timestamp);

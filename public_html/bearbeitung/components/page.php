@@ -1193,11 +1193,15 @@ abstract class Page implements IPage, IVariableContainer
         return null;
     }
 
-    public function GetCustomTemplate($part, $mode, $defaultValue) {
+    public function GetCustomTemplate($part, $mode, $defaultValue, &$params = null) {
         $result = null;
-        if (!$mode)
+
+        if (!$mode) // for PageList
             $mode = $this->GetCurrentPageMode();
-        $this->OnGetCustomTemplate->Fire(array($part, $mode, &$result));
+        if (!$params)
+            $params = array();
+
+        $this->OnGetCustomTemplate->Fire(array($part, $mode, &$result, &$params));
         if ($result)
             return Path::Combine('custom_templates', $result);
         else

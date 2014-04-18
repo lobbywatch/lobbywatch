@@ -14,19 +14,27 @@ class InsertRenderer extends EditRenderer
         return $page->GetSeparatedInsertViewData();
     }
 
+    protected function getPageMode() {
+        return PageMode::Insert;
+    }
+
     public function RenderGrid(Grid $grid)
     {
         $hiddenValues = array(OPERATION_PARAMNAME => OPERATION_COMMIT_INSERT);
 
-        $template = $grid->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::Insert, 'insert/grid.tpl');
+        $customParams = array();
+        $template = $grid->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::Insert, 'insert/grid.tpl',
+            $customParams);
 
         $this->DisplayTemplate($template,
             array(
                 'Grid' => $grid->GetInsertViewData($this)
             ),
-            array(
-                'Authentication' => $grid->GetPage()->GetAuthenticationViewData(),
-                'HiddenValues' => $hiddenValues
+            array_merge($customParams,
+                array(
+                    'Authentication' => $grid->GetPage()->GetAuthenticationViewData(),
+                    'HiddenValues' => $hiddenValues
+                )
             )
         );
     }

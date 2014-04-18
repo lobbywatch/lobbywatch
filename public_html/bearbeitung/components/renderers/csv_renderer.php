@@ -5,6 +5,7 @@
 
 include_once dirname(__FILE__) . '/' . 'renderer.php';
 include_once dirname(__FILE__) . '/' . '../utils/file_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/string_utils.php';
 
 class CsvRenderer extends Renderer
 {
@@ -62,7 +63,10 @@ class CsvRenderer extends Renderer
             $rowValues = $Grid->GetDataset()->GetCurrentFieldValues();
             $Row = array();
             foreach($Grid->GetExportColumns() as $Column)
-                $Row[] = htmlspecialchars($this->RenderViewColumn($Column, $rowValues));
+                $Row[] = StringUtils::EscapeString(
+                    $this->RenderViewColumn($Column, $rowValues),
+                    $Column->GetGrid()->GetPage()->GetContentEncoding()
+                );
             $Rows[] = $Row;
         }
             	

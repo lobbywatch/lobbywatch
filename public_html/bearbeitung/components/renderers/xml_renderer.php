@@ -5,6 +5,7 @@
 
 include_once dirname(__FILE__) . '/' . 'renderer.php';
 include_once dirname(__FILE__) . '/' . '../utils/file_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/string_utils.php';
 
 
 class XmlRenderer extends Renderer
@@ -34,9 +35,9 @@ class XmlRenderer extends Renderer
             array('Grid' => $Grid));
     }
     
-    private function PrepareColumnCaptionForXml($caption)
+    private function PrepareColumnCaptionForXml($caption, $encoding)
     {
-        return htmlspecialchars(str_replace(' ', '', $caption));
+        return StringUtils::EscapeString(str_replace(' ', '', $caption), $encoding);
     }
     
     protected function GetCustomRenderedViewColumn(CustomViewColumn $column, $rowValues)
@@ -63,7 +64,8 @@ class XmlRenderer extends Renderer
             $rowValues = $Grid->GetDataset()->GetCurrentFieldValues();
             $Row = array();
             foreach($Grid->GetExportColumns() as $column)
-                $Row[$this->PrepareColumnCaptionForXml($column->GetCaption())] = $this->RenderViewColumn($column, $rowValues);
+                $Row[$this->PrepareColumnCaptionForXml($column->GetCaption(),
+                $column->GetGrid()->GetPage()->GetContentEncoding())] = $this->RenderViewColumn($column, $rowValues);
             $Rows[] = $Row;
         }
         

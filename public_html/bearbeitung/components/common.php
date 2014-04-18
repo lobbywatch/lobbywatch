@@ -89,8 +89,8 @@ class ImageFitByWidthResizeFilter extends ImageFilter
 
     public function echobig($string, $bufferSize = 8192)
     {
-        for ($chars=strlen($string)-1,$start=0;$start <= $chars;$start += $bufferSize)
-            echo substr($string,$start,$bufferSize);
+        for ($chars = strlen($string) - 1, $start =0 ; $start <= $chars; $start += $bufferSize)
+            echo substr($string, $start, $bufferSize);
     }
 
 
@@ -191,6 +191,7 @@ abstract class HTTPHandler
 
 class DownloadHTTPHandler extends HTTPHandler
 {
+    /** @var IDataset */
     private $dataset;
     private $fieldName;
     private $contentType;
@@ -228,8 +229,10 @@ class DownloadHTTPHandler extends HTTPHandler
 
 class ImageHTTPHandler extends HTTPHandler
 {
+    /** @var IDataset */
     private $dataset;
     private $fieldName;
+    /** @var ImageFilter */
     private $imageFilter;
 
     public function __construct($dataset, $fieldName, $name, $imageFilter)
@@ -278,8 +281,10 @@ class ShowTextBlobHandler extends HTTPHandler
     }
  // Afterburner
 
+    /** @var IDataset */
     private $dataset;
     private $fieldName;
+    /** @var Page */
     private $parentPage;
     private $caption;
     private $column;
@@ -435,7 +440,7 @@ class DynamicSearchHandler extends HTTPHandler
             $replacements = array();
             $replacements[0] = '<em class="highlight_autocomplete">$1</em>';
 
-            return preg_replace($patterns, $replacements, $value);;
+            return preg_replace($patterns, $replacements, $value);
         }
         else
             return $value;
@@ -444,6 +449,7 @@ class DynamicSearchHandler extends HTTPHandler
 
 class PageHttpHandler extends HTTPHandler
 {
+    /** @var Page */
     private $page;
     
     public function __construct($name, $page)

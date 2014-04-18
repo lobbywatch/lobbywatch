@@ -566,7 +566,7 @@
         {
             return ;
         }
-        public function v_last_updated_tablesGrid_OnGetCustomTemplate($part, $mode, &$result)
+        public function v_last_updated_tablesGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
         if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
           $result = 'edit/grid.tpl';

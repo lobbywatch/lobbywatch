@@ -37,30 +37,30 @@ class ViewAllRenderer extends Renderer
         $this->SetHTTPContentTypeByPage($Page);
         $Page->BeforePageRender->Fire(array(&$Page));
         $Grid = $this->Render($Page->GetGrid());
-        
-        $layoutTemplate = $Page->GetCustomTemplate(PagePart::Layout, PageMode::ViewAll, 'common/layout.tpl');
+
+        $customParams = array();
+        $layoutTemplate = $Page->GetCustomTemplate(PagePart::Layout, PageMode::ViewAll, 'common/layout.tpl', $customParams);
 
         $this->DisplayTemplate('list/page.tpl',
             array(
                 'Page' => $Page
             ),
-            array(
-                // Template override
-                'LayoutTemplateName' => $layoutTemplate,
-
-                // View datas
-                'Authentication' => $Page->GetAuthenticationViewData(),
-                'App' => $Page->GetListViewData(),
-
-                // Rendered controls
-                'Grid' => $Grid,
-                'PageList' => $this->RenderDef($Page->GetReadyPageList()),
-                'HideSideBarByDefault' => $Page->GetHidePageListByDefault(),
-                'Variables' => $this->GetPageVariables($Page),
-
-                'PageNavigator' => $this->GetPageNavigator1($Page),
-                'PageNavigator2' => $this->GetPageNavigator2($Page)
-
+            array_merge($customParams,
+                array(
+                    // Template override
+                    'LayoutTemplateName' => $layoutTemplate,
+                    // View data
+                    'Authentication' => $Page->GetAuthenticationViewData(),
+                    'App' => $Page->GetListViewData(),
+                    // Rendered controls
+                    'Grid' => $Grid,
+                    'PageList' => $this->RenderDef($Page->GetReadyPageList()),
+                    'HideSideBarByDefault' => $Page->GetHidePageListByDefault(),
+                    'Variables' => $this->GetPageVariables($Page),
+                    // Page navigators
+                    'PageNavigator' => $this->GetPageNavigator1($Page),
+                    'PageNavigator2' => $this->GetPageNavigator2($Page)
+                )
             )
         );
     }
@@ -88,7 +88,9 @@ class ViewAllRenderer extends Renderer
             $DetailPage->AdvancedSearchControl->SetOpenInNewWindowLink($linkBuilder->GetLink());
         }
 
-        $layoutTemplate = $DetailPage->GetCustomTemplate(PagePart::Layout, PageMode::ViewAll, 'common/layout.tpl');
+        $customParams = array();
+        $layoutTemplate = $DetailPage->GetCustomTemplate(PagePart::Layout, PageMode::ViewAll, 'common/layout.tpl',
+            $customParams);
 
         $parentPage = $DetailPage->GetParentPage();
 
@@ -103,17 +105,19 @@ class ViewAllRenderer extends Renderer
                 'PageNavigator' => $this->GetPageNavigator1($DetailPage),
                 'PageNavigator2' => $this->GetPageNavigator2($DetailPage)
             ),
-            array(
-                'LayoutTemplateName' => $layoutTemplate,
-                'Grid' => $Grid,
-                'Authentication' => $DetailPage->GetAuthenticationViewData(),
-                'AdvancedSearch' => isset($DetailPage->AdvancedSearchControl) ? $this->Render($DetailPage->AdvancedSearchControl) : '',
-                'IsAdvancedSearchActive' => $isAdvancedSearchActive,
-                'FriendlyAdvancedSearchCondition' => $userFriendlySearchCondition,
-                'HideSideBarByDefault' => $DetailPage->GetHidePageListByDefault(),
+            array_merge($customParams,
+                array(
+                    'LayoutTemplateName' => $layoutTemplate,
+                    'Grid' => $Grid,
+                    'Authentication' => $DetailPage->GetAuthenticationViewData(),
+                    'AdvancedSearch' => isset($DetailPage->AdvancedSearchControl) ? $this->Render($DetailPage->AdvancedSearchControl) : '',
+                    'IsAdvancedSearchActive' => $isAdvancedSearchActive,
+                    'FriendlyAdvancedSearchCondition' => $userFriendlySearchCondition,
+                    'HideSideBarByDefault' => $DetailPage->GetHidePageListByDefault(),
 
-                'MasterGrid' => $this->Render($DetailPage->GetMasterGrid()),
-                'Variables' => $this->GetPageVariables($DetailPage)
+                    'MasterGrid' => $this->Render($DetailPage->GetMasterGrid()),
+                    'Variables' => $this->GetPageVariables($DetailPage)
+                )
             )
         );
     }
@@ -135,8 +139,10 @@ class ViewAllRenderer extends Renderer
         }
 
         $template = $this->renderSingleRow ? 'list/single_row.tpl' : 'list/grid.tpl';
+        $customParams = array();
+
         if (!$this->renderSingleRow)
-            $template = $page->GetCustomTemplate(PagePart::Grid, PageMode::ViewAll, $template);
+            $template = $page->GetCustomTemplate(PagePart::Grid, PageMode::ViewAll, $template, $customParams);
         $this->DisplayTemplate(
             $template,
             array(
@@ -144,31 +150,33 @@ class ViewAllRenderer extends Renderer
                 'Page' => $Grid->GetPage(),
                 'DataGrid' => $Grid->GetViewData($this)
             ),
-            array(
-                'SingleRowTemplate' => $page->GetCustomTemplate(PagePart::GridRow, PageMode::ViewAll, 'list/single_row.tpl'),
-                'AdvancedSearchControl' => $page->AdvancedSearchControl,
+            array_merge($customParams,
+                array(
+                    'SingleRowTemplate' => $page->GetCustomTemplate(PagePart::GridRow, PageMode::ViewAll, 'list/single_row.tpl'),
+                    'AdvancedSearchControl' => $page->AdvancedSearchControl,
 
-                // Remove!!!
-                'HiddenValues' => $Grid->GetHiddenValues(),
-                'TextsForHighlight' =>
-                    $page->AdvancedSearchControl ?
-                        array_map(Q::L('($v) => StringUtils::JSStringLiteral($v)'),
-                            $page->AdvancedSearchControl->GetHighlightedFieldText()
-                        ):
-                        array(),
-                'HighlightOptions' =>
-                    $page->AdvancedSearchControl ?
-                        $page->AdvancedSearchControl->GetHighlightedFieldOptions() :
-                        array(),
+                    // Remove!!!
+                    'HiddenValues' => $Grid->GetHiddenValues(),
+                    'TextsForHighlight' =>
+                        $page->AdvancedSearchControl ?
+                            array_map(Q::L('($v) => StringUtils::JSStringLiteral($v)'),
+                                $page->AdvancedSearchControl->GetHighlightedFieldText()
+                            ):
+                            array(),
+                    'HighlightOptions' =>
+                        $page->AdvancedSearchControl ?
+                            $page->AdvancedSearchControl->GetHighlightedFieldOptions() :
+                            array(),
 
-                'Authentication' => $page->GetAuthenticationViewData(),
+                    'Authentication' => $page->GetAuthenticationViewData(),
 
-                'Columns' => $Grid->GetViewColumns(),
-                'Bands' => $Grid->GetViewBands(),
-                'FilterBuilder' => $Grid->GetFilterBuilder()->GetViewData(),
-                'ActiveFilterBuilderJson' => $Grid->GetFilterBuilder()->GetActiveFilterAsJson(),
-                'ActiveFilterBuilderAsString' => $Grid->GetFilterBuilder()->GetActiveFilterAsString(),
-                'IsActiveFilterEmpty' => $Grid->GetFilterBuilder()->IsEmpty()
+                    'Columns' => $Grid->GetViewColumns(),
+                    'Bands' => $Grid->GetViewBands(),
+                    'FilterBuilder' => $Grid->GetFilterBuilder()->GetViewData(),
+                    'ActiveFilterBuilderJson' => $Grid->GetFilterBuilder()->GetActiveFilterAsJson(),
+                    'ActiveFilterBuilderAsString' => $Grid->GetFilterBuilder()->GetActiveFilterAsString(),
+                    'IsActiveFilterEmpty' => $Grid->GetFilterBuilder()->IsEmpty()
+                )
             )
         );
     }

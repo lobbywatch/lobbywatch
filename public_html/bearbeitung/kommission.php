@@ -9828,7 +9828,7 @@
         {
             return ;
         }
-        public function kommissionGrid_OnGetCustomTemplate($part, $mode, &$result)
+        public function kommissionGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
         if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
           $result = 'edit/grid.tpl';

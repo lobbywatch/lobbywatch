@@ -252,10 +252,11 @@ class CustomEditColumn
     { }
 
     public function DoSetDatasetValuesFromPost($value) {
-        if ($value == '' && $this->allowSetToNull)
+        if (StringUtils::IsNullOrEmpty($value) && $this->allowSetToNull)
             $this->dataset->SetFieldValueByName($this->GetFieldName(), null);
         else
-            $this->dataset->SetFieldValueByName($this->GetFieldName(), $value);
+            $this->dataset->SetFieldValueByName($this->GetFieldName(),
+                $this->editControl->prepareValueForDataset($value));
     }
 
     public function SetDatasetValuesFromPost()

@@ -10,89 +10,39 @@ class ViewRenderer extends Renderer
         $this->SetHTTPContentTypeByPage($Page);
         $Page->BeforePageRender->Fire(array(&$Page));
 
-        $layoutTemplate = $Page->GetCustomTemplate(PagePart::Layout, PageMode::View, 'common/layout.tpl');
+        $customParams = array();
+        $layoutTemplate = $Page->GetCustomTemplate(PagePart::Layout, PageMode::View, 'common/layout.tpl', $customParams);
 
         $this->DisplayTemplate('view/page.tpl',
             array('Page' => $Page),
-            array(
-                'App' => $Page->GetSingleRecordViewData(),
-                'Authentication' => $Page->GetAuthenticationViewData(),
-                'LayoutTemplateName' => $layoutTemplate,
-                'PageList' => $this->RenderDef($Page->GetReadyPageList()),
-                'Grid' => $this->Render($Page->GetGrid()),
-                'HideSideBarByDefault' => $Page->GetHidePageListByDefault()
+            array_merge($customParams,
+                array(
+                    'App' => $Page->GetSingleRecordViewData(),
+                    'Authentication' => $Page->GetAuthenticationViewData(),
+                    'LayoutTemplateName' => $layoutTemplate,
+                    'PageList' => $this->RenderDef($Page->GetReadyPageList()),
+                    'Grid' => $this->Render($Page->GetGrid()),
+                    'HideSideBarByDefault' => $Page->GetHidePageListByDefault()
+                )
             )
         );
     }
 
     function RenderGrid(Grid $Grid) {
-        /*$primaryKeyMap = array();
-        $Grid->GetDataset()->Open();
 
-        $Row = array();
-        if($Grid->GetDataset()->Next())
-        {
-            $linkBuilder = $Grid->CreateLinkBuilder();
-            $linkBuilder->AddParameter(OPERATION_PARAMNAME, OPERATION_PRINT_ONE);
-
-            $keyValues = $Grid->GetDataset()->GetPrimaryKeyValues();
-            for($i = 0; $i < count($keyValues); $i++)
-                $linkBuilder->AddParameter("pk$i", $keyValues[$i]);
-            
-            $primaryKeyMap = $Grid->GetDataset()->GetPrimaryKeyValuesMap();
-            $rowValues = $Grid->GetDataset()->GetFieldValues();
-
-            foreach($Grid->GetSingleRecordViewColumns() as $Column)
-            {
-                $columnName = $Grid->GetDataset()->IsLookupField($Column->GetName()) ?
-                    $Grid->GetDataset()->IsLookupFieldNameByDisplayFieldName($Column->GetName()) :
-                    $Column->GetName();
-
-                $columnRenderResult = '';
-                $customRenderColumnHandled = false;
-
-                $Grid->OnCustomRenderColumn->Fire(array(
-                    $columnName, 
-                    $Column->GetData(), 
-                    $rowValues, 
-                    &$columnRenderResult, &$customRenderColumnHandled
-                ));
-
-                $columnRenderResult = $customRenderColumnHandled ? 
-                    $Grid->GetPage()->RenderText($columnRenderResult) : 
-                    $this->Render($Column);
-
-                $Row[] = $columnRenderResult;
-            }
-        }
-        else
-        {
-            RaiseError('Cannot retrieve single record. Check the primary key fields.');
-        }
-
-        $template = $Grid->GetPage()->GetCustomTemplate(PagePart::RecordCard, PageMode::View, 'view/grid.tpl');
-        $this->DisplayTemplate($template,
-            array(
-                'Grid' => $Grid->GetViewSingleRowViewData($this),
-                'Columns' => $Grid->GetSingleRecordViewColumns()
-            ),
-            array(
-            'PrintOneRecord' => $Grid->GetPage()->GetPrinterFriendlyAvailable(),
-            'PrintRecordLink' => $linkBuilder->GetLink(),
-            'Title' => $Grid->GetPage()->GetShortCaption(),
-            'PrimaryKeyMap' => $primaryKeyMap,
-            'ColumnCount' => count($Grid->GetSingleRecordViewColumns()),
-            'Row' => $Row,
-        ));*/
-        $template = $Grid->GetPage()->GetCustomTemplate(PagePart::RecordCard, PageMode::View, 'view/grid.tpl');
-
+        $customParams = array();
+        $template = $Grid->GetPage()->GetCustomTemplate(PagePart::RecordCard, PageMode::View,
+            'view/grid.tpl', $customParams);
         $this->DisplayTemplate($template,
             array(
                 'Grid' => $Grid->GetViewSingleRowViewData($this),
             ),
-            array(
-                'Authentication' => $Grid->GetPage()->GetAuthenticationViewData()
-            ));
+            array_merge($customParams,
+                array(
+                    'Authentication' => $Grid->GetPage()->GetAuthenticationViewData()
+                )
+            )
+        );
     }
 
     protected function ShowHtmlNullValue()

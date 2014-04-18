@@ -160,6 +160,14 @@ abstract class CustomEditor extends Component {
     protected function DoGetViewData() {
         return array();
     }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function prepareValueForDataset($value) {
+        return $value;
+    }
 }
 
 class TextAreaEdit extends CustomEditor {
@@ -569,12 +577,20 @@ class DateTimeEdit extends CustomEditor {
             if ($value == '')
                 return null;
             else
-                // return $value;
-                return SMDateTime::Parse($value, $this->format);
+                return $value;
+                // return SMDateTime::Parse($value, $this->format);
         } else {
             $valueChanged = false;
             return null;
         }
+    }
+
+    /**
+     * @param string $value
+     * @return mixed
+     */
+    public function prepareValueForDataset($value) {
+        return SMDateTime::Parse($value, $this->format);
     }
 }
 

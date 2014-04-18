@@ -5,8 +5,8 @@
  * @link https://github.com/matchab/strptime-php
  */
 
-if (!function_exists('strptime'))
-{
+// if (!function_exists('strptime'))
+// {
 	/**
 	 * 
 	 * 
@@ -92,7 +92,7 @@ if (!function_exists('strptime'))
 	 * @param string $format
 	 * @return array
 	 */
-	function strptime($date,$format)
+	function strptimeEx($date,$format)
 	{
 		//Default return values
 		$tmSec = 0;
@@ -219,4 +219,4 @@ if (!function_exists('strptime'))
 		$time['unparsed'] = $buffer; //Unparsed buffer
 		return $time;
 	}
-}
+// }

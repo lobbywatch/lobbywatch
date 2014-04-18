@@ -2379,7 +2379,7 @@
         {
             return ;
         }
-        public function in_kommissionGrid_OnGetCustomTemplate($part, $mode, &$result)
+        public function in_kommissionGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
         if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
           $result = 'edit/grid.tpl';

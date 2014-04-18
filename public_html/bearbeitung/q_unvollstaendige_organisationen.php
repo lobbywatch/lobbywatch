@@ -1801,7 +1801,7 @@
         {
             return ;
         }
-        public function q_unvollstaendige_organisationenGrid_OnGetCustomTemplate($part, $mode, &$result)
+        public function q_unvollstaendige_organisationenGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
         if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
           $result = 'edit/grid.tpl';

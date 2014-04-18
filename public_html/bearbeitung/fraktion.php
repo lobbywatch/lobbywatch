@@ -2440,7 +2440,7 @@
         {
             return ;
         }
-        public function parteiDetailEditGrid0fraktion_OnGetCustomTemplate($part, $mode, &$result)
+        public function parteiDetailEditGrid0fraktion_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
         if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
           $result = 'edit/grid.tpl';
@@ -12658,7 +12658,7 @@
         {
             return ;
         }
-        public function fraktionGrid_OnGetCustomTemplate($part, $mode, &$result)
+        public function fraktionGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
         if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
           $result = 'edit/grid.tpl';

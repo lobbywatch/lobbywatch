@@ -37,7 +37,7 @@ class PdfRenderer extends Renderer
         $html = $this->Render($Page->GetGrid());
 
         $mpdf = new mPDF('utf-8', 'A4', '8', '', 10, 10, 7, 7, 10, 10);
-        $mpdf->charset_in = 'utf-8';
+        $mpdf->charset_in = $Page->GetContentEncoding();
 
 
         $stylesheet = FileUtils::ReadAllText('components/css/pdf.css');

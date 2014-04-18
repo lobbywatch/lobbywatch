@@ -526,7 +526,7 @@
         {
             return ;
         }
-        public function v_parlamentarier_authorisierungs_emailGrid_OnGetCustomTemplate($part, $mode, &$result)
+        public function v_parlamentarier_authorisierungs_emailGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
         if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
           $result = 'edit/grid.tpl';

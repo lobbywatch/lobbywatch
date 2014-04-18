@@ -5,6 +5,7 @@
 
 include_once dirname(__FILE__) . '/' . 'renderer.php';
 include_once dirname(__FILE__) . '/' . '../utils/file_utils.php';
+include_once dirname(__FILE__) . '/' . '../utils/string_utils.php';
 
 
 class ExcelRenderer extends Renderer
@@ -52,10 +53,10 @@ class ExcelRenderer extends Renderer
             array('Grid' => $grid));
     }
     
-    function PrepareForExcel($str)
+    function PrepareForExcel($str, $encoding)
     {
-    	$ret = htmlspecialchars($str);
-    	if (substr($ret,0,1)== "=") 
+    	$ret = StringUtils::EscapeString($str, $encoding);
+    	if (substr($ret,0,1) == "=")
     		$ret = "&#61;".substr($ret,1);
     	return $ret;    
     }    
@@ -66,14 +67,20 @@ class ExcelRenderer extends Renderer
         $HeaderCaptions = array();
         $Grid->GetDataset()->Open();
         foreach($Grid->GetExportColumns() as $Column)
-            $HeaderCaptions[] = $this->PrepareForExcel($Column->GetCaption());
+            $HeaderCaptions[] = $this->PrepareForExcel(
+                $Column->GetCaption(),
+                $Column->GetGrid()->GetPage()->GetContentEncoding()
+            );
         while($Grid->GetDataset()->Next())
         {
             $rowValues = $Grid->GetDataset()->GetCurrentFieldValues();
             $Row = array();
             foreach($Grid->GetExportColumns() as $Column)
             {
-                $cell['Value'] = $this->PrepareForExcel($this->RenderViewColumn($Column, $rowValues));
+                $cell['Value'] = $this->PrepareForExcel(
+                    $this->RenderViewColumn($Column, $rowValues),
+                    $Column->GetGrid()->GetPage()->GetContentEncoding()
+                );
                 $cell['Align'] = $Column->GetAlign();
                 $Row[] = $cell;
             }

@@ -2607,7 +2607,7 @@
         {
             return ;
         }
-        public function mandatGrid_OnGetCustomTemplate($part, $mode, &$result)
+        public function mandatGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
         if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
           $result = 'edit/grid.tpl';

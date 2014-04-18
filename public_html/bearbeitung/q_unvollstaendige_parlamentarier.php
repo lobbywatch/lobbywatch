@@ -1332,7 +1332,7 @@
         {
             return ;
         }
-        public function q_unvollstaendige_parlamentarierGrid_OnGetCustomTemplate($part, $mode, &$result)
+        public function q_unvollstaendige_parlamentarierGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
         if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
           $result = 'edit/grid.tpl';

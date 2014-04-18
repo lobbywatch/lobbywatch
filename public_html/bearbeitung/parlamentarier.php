@@ -14780,7 +14780,7 @@
         {
             return ;
         }
-        public function zutrittsberechtigungDetailEditGrid3parlamentarier_OnGetCustomTemplate($part, $mode, &$result)
+        public function zutrittsberechtigungDetailEditGrid3parlamentarier_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
         if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
           $result = 'edit/grid.tpl';
@@ -45571,7 +45571,7 @@
         {
             return ;
         }
-        public function parlamentarierGrid_OnGetCustomTemplate($part, $mode, &$result)
+        public function parlamentarierGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
         if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
           $result = 'edit/grid.tpl';

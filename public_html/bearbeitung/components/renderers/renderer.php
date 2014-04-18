@@ -237,6 +237,10 @@ abstract class Renderer
         $this->result = '';
     }
 
+
+    /**
+     * @param TextBox $textBox
+     */
     public function RenderTextBox($textBox)  {
         $this->result = $textBox->GetCaption();
     }
@@ -247,6 +251,9 @@ abstract class Renderer
             array());
     }
 
+    /**
+     * @param CustomHtmlControl $control
+     */
     public function RenderCustomHtmlControl($control)  {
         $this->result = $control->GetHtml();
     }
@@ -398,7 +405,11 @@ abstract class Renderer
         }
     }
 
-    public function RenderCheckBoxViewColumn($column) 
+
+    /**
+     * @param CheckBoxFormatValueViewColumnDecorator $column
+     */
+    public function RenderCheckBoxViewColumn($column)
     {
         $value = $column->GetInnerField()->GetData();
 
@@ -421,11 +432,13 @@ abstract class Renderer
         }
     }
 
-    public function RenderDivTagViewColumnDecorator($column) 
+    /**
+     * @param DivTagViewColumnDecorator $column
+     */
+    public function RenderDivTagViewColumnDecorator($column)
     {
         if ($this->HtmlMarkupAvailable()) 
         {
-            $styles = '';
             $styleBuilder = new StyleBuilder();
 
             if (isset($column->Bold))
@@ -445,27 +458,33 @@ abstract class Renderer
         }
     }
 
-    public function RenderExtendedHyperLinkColumnDecorator($columDecorator)
+    /**
+     * @param ExtendedHyperLinkColumnDecorator $columnDecorator
+     */
+    public function RenderExtendedHyperLinkColumnDecorator($columnDecorator)
     {
-        if ($columDecorator->GetData() == null) 
+        if ($columnDecorator->GetData() == null)
         {
-            $this->result = $this->GetNullValuePresentation($columDecorator);
+            $this->result = $this->GetNullValuePresentation($columnDecorator);
         }
         else
         {
             if ($this->HtmlMarkupAvailable())
             {
                 $this->result = sprintf('<a href="%s" target="%s">%s</a>',
-                    $columDecorator->GetLink(),
-                    $columDecorator->GetTarget(),
-                    $this->Render($columDecorator->GetInnerField())
+                    $columnDecorator->GetLink(),
+                    $columnDecorator->GetTarget(),
+                    $this->Render($columnDecorator->GetInnerField())
                     );
             }
             else
-                $this->result = $this->Render($columDecorator->GetInnerField());
+                $this->result = $this->Render($columnDecorator->GetInnerField());
         }
     }
 
+    /**
+     * @param DownloadDataColumn $column
+     */
     public function RenderDownloadDataColumn($column)
     {
         if ($column->GetData() == null) 
@@ -483,7 +502,10 @@ abstract class Renderer
         }
     }
 
-    public function RenderImageViewColumn($column) 
+    /**
+     * @param ImageViewColumn $column
+     */
+    public function RenderImageViewColumn($column)
     {
         if ($column->GetData() == null) 
         {
@@ -513,7 +535,10 @@ abstract class Renderer
         }
     }
 
-    public function RenderDetailColumn($detailColumn) 
+    /**
+     * @param DetailColumn $detailColumn
+     */
+    public function RenderDetailColumn($detailColumn)
     {
         $this->result =
             '<a class="page_link" onclick="expand(' . $detailColumn->GetDataset()->GetCurrentRowIndex() .
@@ -532,6 +557,9 @@ abstract class Renderer
 
     public abstract function RenderPage(Page $Page);
 
+    /**
+     * @param CustomErrorPage $errorPage
+     */
     public function RenderCustomErrorPage($errorPage)  {
         $this->DisplayTemplate('security_error_page.tpl',
             array(
@@ -551,21 +579,25 @@ abstract class Renderer
     public function RenderDetailPage(DetailPage $detailPage)  {
         $this->SetHTTPContentTypeByPage($detailPage);
 
-        $layoutTemplate = $detailPage->GetCustomTemplate(PagePart::Layout, PageMode::ViewAll, 'common/layout.tpl');
+        $customParams = array();
+        $layoutTemplate = $detailPage->GetCustomTemplate(PagePart::Layout, PageMode::ViewAll, 'common/layout.tpl',
+            $customParams);
 
         $Grid = $this->Render($detailPage->GetGrid());
         $this->DisplayTemplate('list/detail_page.tpl',
             array(
-                    'App' => $detailPage->GetListViewData(),
-                    'LayoutTemplateName' => $layoutTemplate,
-                    'Page' => $detailPage,
-                    'DetailPage' => $detailPage
-                ),
+                'App' => $detailPage->GetListViewData(),
+                'LayoutTemplateName' => $layoutTemplate,
+                'Page' => $detailPage,
+                'DetailPage' => $detailPage
+            ),
+            array_merge($customParams,
                 array(
                     'Authentication' => $detailPage->GetAuthenticationViewData(),
                     'Grid' => $Grid
-                    )
-                );
+                )
+            )
+        );
     }
 
     /**
@@ -573,6 +605,8 @@ abstract class Renderer
      */
     public function RenderDetailPageEdit($DetailPage) { }
 
+
+    //TODO: introduce ILoginPage and change the generated code accordingly
     public function RenderLoginPage($loginPage)  {
         $this->SetHTTPContentTypeByPage($loginPage);
 
@@ -590,6 +624,9 @@ abstract class Renderer
 
     #region Page parts
 
+    /**
+     * @param ShowTextBlobHandler $textBlobViewer
+     */
     public function RenderTextBlobViewer($textBlobViewer)  {
         $this->DisplayTemplate('text_blob_viewer.tpl',
             array(
@@ -610,43 +647,51 @@ abstract class Renderer
             $hiddenValues = array(OPERATION_PARAMNAME => OPERATION_COMMIT);
             AddPrimaryKeyParametersToArray($hiddenValues, $grid->GetGrid()->GetDataset()->GetPrimaryKeyValues());
 
-            //$primaryKeyMap = $grid->GetGrid()->GetDataset()->GetPrimaryKeyValuesMap();
-
-            
-
+            $customParams = array();
             $this->DisplayTemplate(
-                $grid->GetGrid()->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::ModalEdit, 'edit/vertical_grid.tpl'),
+                $grid->GetGrid()->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::ModalEdit,
+                    'edit/vertical_grid.tpl', $customParams),
                 array(
                     'Grid' => $grid->GetGrid()->GetModalEditViewData($this)
                 ),
-                array(
-                    'HiddenValues' => $hiddenValues
+                array_merge($customParams,
+                    array(
+                        'HiddenValues' => $hiddenValues
+                    )
                 )
             ); 
         }
         else if ($grid->GetState() == VerticalGridState::DisplayInsertGrid) {
             $hiddenValues = array(OPERATION_PARAMNAME => OPERATION_COMMIT);
-            
+
+            $customParams = array();
             $this->DisplayTemplate(
-                $grid->GetGrid()->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::ModalInsert, 'insert/vertical_grid.tpl'),
+                $grid->GetGrid()->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::ModalInsert,
+                    'insert/vertical_grid.tpl', $customParams),
                 array(
                     'Grid' => $grid->GetGrid()->GetModalInsertViewData($this)
                 ),
-                array(
-                    'HiddenValues' => $hiddenValues
+                array_merge($customParams,
+                    array(
+                        'HiddenValues' => $hiddenValues
+                    )
                 )
             );
         }
         else if ($grid->GetState() == VerticalGridState::DisplayCopyGrid) {
             $hiddenValues = array(OPERATION_PARAMNAME => OPERATION_COMMIT);
 
+            $customParams = array();
             $this->DisplayTemplate(
-                $grid->GetGrid()->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::ModalInsert, 'insert/vertical_grid.tpl'),
+                $grid->GetGrid()->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::ModalInsert,
+                    'insert/vertical_grid.tpl', $customParams),
                 array(
                     'Grid' => $grid->GetGrid()->GetModalInsertViewData($this)
                 ),
-                array(
-                    'HiddenValues' => $hiddenValues
+                array_merge($customParams,
+                    array(
+                        'HiddenValues' => $hiddenValues
+                    )
                 )
             );
         }
@@ -654,6 +699,7 @@ abstract class Renderer
 
     public function RenderRecordCardView(RecordCardView $recordCardView) {
         $Grid = $recordCardView->GetGrid();
+        $linkBuilder = null;
 
         $primaryKeyMap = array();
         $Grid->GetDataset()->Open();
@@ -699,32 +745,42 @@ abstract class Renderer
             RaiseError('Cannot retrieve single record. Check the primary key fields.');
         }
 
+        $customParams = array();
         $this->DisplayTemplate(
-            $Grid->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::ModalView, 'view/record_card_view.tpl')
-            ,
+            $Grid->GetPage()->GetCustomTemplate(PagePart::VerticalGrid, PageMode::ModalView,
+                'view/record_card_view.tpl', $customParams),
             array(
                 'Grid' => $Grid,
                 'Columns' => $Grid->GetSingleRecordViewColumns()
             ),
-            array(
-                'PrintOneRecord' => $Grid->GetPage()->GetPrinterFriendlyAvailable(),
-                'PrintRecordLink' => $linkBuilder->GetLink(),
-                'Title' => $Grid->GetPage()->GetShortCaption(),
-                'PrimaryKeyMap' => $primaryKeyMap,
-                'ColumnCount' => count($Grid->GetSingleRecordViewColumns()),
-                'Row' => $Row,
-        ));
+            array_merge($customParams,
+                array(
+                    'PrintOneRecord' => $Grid->GetPage()->GetPrinterFriendlyAvailable(),
+                    'PrintRecordLink' => $linkBuilder->GetLink(),
+                    'Title' => $Grid->GetPage()->GetShortCaption(),
+                    'PrimaryKeyMap' => $primaryKeyMap,
+                    'ColumnCount' => count($Grid->GetSingleRecordViewColumns()),
+                    'Row' => $Row
+                )
+            )
+        );
     }
 
     public function RenderPageList(PageList $pageList) {
-        $template = $pageList->GetParentPage()->GetCustomTemplate(PagePart::PageList, null, 'page_list.tpl');
+
+        $customParams = array();
+        $template = $pageList->GetParentPage()->GetCustomTemplate(PagePart::PageList, null, 'page_list.tpl',
+            $customParams);
         $this->DisplayTemplate($template,
             array(
                 'PageList' => $pageList),
-            array(
-                'Authentication' => $pageList->GetParentPage()->GetAuthenticationViewData(),
-                'List' => $pageList->GetViewData()
-            ));
+            array_merge($customParams,
+                array(
+                    'Authentication' => $pageList->GetParentPage()->GetAuthenticationViewData(),
+                    'List' => $pageList->GetViewData()
+                )
+            )
+        );
     }
 
     public function RenderLoginControl($loginControl)  {

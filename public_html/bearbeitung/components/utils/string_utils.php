@@ -215,4 +215,8 @@ class StringUtils
         else
             return substr($value, $start, $length);
     }
+
+    public static function EscapeString($value, $encoding) {
+        return htmlspecialchars($value, ENT_COMPAT | ENT_HTML401, $encoding);
+    }
 }
