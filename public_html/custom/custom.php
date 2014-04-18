@@ -541,6 +541,7 @@ function add_more_navigation_links(&$result) {
   $result->AddPage(new PageLink('<span class="website">Website</span>', '/', 'Homepage', false, true));
   $result->AddPage(new PageLink('<span class="wiki">Wiki</span>', '/wiki', 'Wiki', false, false));
   $result->AddPage(new PageLink('<span class="auswertung">Auswertung</span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false));
+  $result->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'PieChartReport/SimplyPieChart.html', 'Stand SGK', false, false));
 }
 
 function clean_non_ascii($str) {
