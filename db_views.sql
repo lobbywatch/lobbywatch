@@ -31,7 +31,7 @@ CREATE OR REPLACE VIEW `v_last_updated_interessenbindung` AS
 CREATE OR REPLACE VIEW `v_last_updated_interessengruppe` AS
   (SELECT
   'interessengruppe' table_name,
-  'Interessengruppe' name,
+  'Lobbygruppe' name,
   (select count(*) from `interessengruppe`) anzahl_eintraege,
   t.`updated_visa` AS last_visa,
   t.`updated_date` last_updated,
@@ -90,6 +90,19 @@ CREATE OR REPLACE VIEW `v_last_updated_organisation` AS
   t.id last_updated_id
   FROM
   `organisation` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_organisation_anhang` AS
+  (SELECT
+  'organisation_anhang' table_name,
+  'Organisationsanhang' name,
+  (select count(*) from `organisation_anhang`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `organisation_anhang` t
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
@@ -197,6 +210,32 @@ CREATE OR REPLACE VIEW `v_last_updated_kanton_jahr` AS
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
+CREATE OR REPLACE VIEW `v_last_updated_settings` AS
+  (SELECT
+  'settings' table_name,
+  'Einstellungen' name,
+  (select count(*) from `settings`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `settings` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
+CREATE OR REPLACE VIEW `v_last_updated_settings_category` AS
+  (SELECT
+  'settings_category' table_name,
+  'Einstellungskategorien' name,
+  (select count(*) from `settings_category`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `settings_category` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
 CREATE OR REPLACE VIEW `v_last_updated_zutrittsberechtigung` AS
   (SELECT
   'zutrittsberechtigung' table_name,
@@ -238,6 +277,8 @@ SELECT * FROM v_last_updated_mandat
 UNION
 SELECT * FROM v_last_updated_organisation
 UNION
+SELECT * FROM v_last_updated_organisation_anhang
+UNION
 SELECT * FROM v_last_updated_organisation_beziehung
 UNION
 SELECT * FROM v_last_updated_parlamentarier
@@ -254,6 +295,10 @@ SELECT * FROM v_last_updated_kanton
 UNION
 SELECT * FROM v_last_updated_kanton_jahr
 UNION
+SELECT * FROM v_last_updated_settings
+UNION
+SELECT * FROM v_last_updated_settings_category
+UNION
 SELECT * FROM v_last_updated_zutrittsberechtigung
 UNION
 SELECT * FROM v_last_updated_zutrittsberechtigung_anhang;
@@ -263,6 +308,14 @@ SELECT * FROM `v_last_updated_tables_unordered`
 ORDER BY last_updated DESC;
 
 -- VIEWS
+
+CREATE OR REPLACE VIEW `v_settings` AS
+SELECT `settings`.*
+FROM `settings`;
+
+CREATE OR REPLACE VIEW `v_settings_category` AS
+SELECT `settings_category`.*
+FROM `settings_category`;
 
 CREATE OR REPLACE VIEW `v_country` AS
 SELECT country.name_de as anzeige_name, country.*
@@ -351,6 +404,10 @@ ON country.id = o.land_id
 LEFT JOIN `v_interessenraum` interessenraum
 ON interessenraum.id = o.interessenraum_id
 ;
+
+CREATE OR REPLACE VIEW `v_organisation_anhang` AS
+SELECT organisation_anhang.organisation_id as organisation_id2, organisation_anhang.*
+FROM `organisation_anhang`;
 
 CREATE OR REPLACE VIEW `v_mandat` AS SELECT mandat.* FROM `mandat`;
 

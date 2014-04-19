@@ -25,6 +25,7 @@ $tables = array(
 'kommission' => 'Kommission',
 'mandat' => 'Mandat',
 'organisation' => 'Organisation',
+'organisation_anhang' => 'Organisationsanhang',
 'organisation_beziehung' => 'Organisation Beziehung',
 'parlamentarier' => 'Parlamentarier',
 'parlamentarier_anhang' => 'Parlamentarieranhang',
@@ -33,6 +34,8 @@ $tables = array(
 'rat' => 'Rat',
 'kanton' => 'Kanton',
 'kanton_jahr' => 'Kantonjahr',
+'settings' => 'Einstellungen',
+'settings_category' => 'Einstellungskategorien',
 'zutrittsberechtigung' => 'Zutrittsberechtigter',
 'zutrittsberechtigung_anhang' => 'Zutrittsberechtigunganhang',
 );

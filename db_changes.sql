@@ -527,3 +527,110 @@ ALTER TABLE `zutrittsberechtigung` DROP FOREIGN KEY `fk_zb_lo` ;
 -- ALTER TABLE `zutrittsberechtigung` ADD CONSTRAINT `fk_zb_lo` FOREIGN KEY ( `ALT_lobbyorganisation_id` ) REFERENCES `organisation` (
 -- `id`
 -- ) ON DELETE NO ACTION ON UPDATE NO ACTION ;
+
+-- 19.04.2014
+
+ALTER TABLE `parlamentarier` ADD `twitter_name` VARCHAR( 50 ) NULL DEFAULT NULL COMMENT 'Twittername' AFTER `parlament_biografie_id` ;
+
+ALTER TABLE `parlamentarier_log` ADD `twitter_name` VARCHAR( 50 ) NULL DEFAULT NULL COMMENT 'Twittername' AFTER `parlament_biografie_id` ;
+
+ALTER TABLE `zutrittsberechtigung` ADD `twitter_name` VARCHAR( 50 ) NULL DEFAULT NULL COMMENT 'Twittername' AFTER `homepage` ;
+
+ALTER TABLE `zutrittsberechtigung_log` ADD `twitter_name` VARCHAR( 50 ) NULL DEFAULT NULL COMMENT 'Twittername' AFTER `homepage` ;
+
+ALTER TABLE `organisation` ADD `twitter_name` VARCHAR( 50 ) NULL DEFAULT NULL COMMENT 'Twittername' AFTER `handelsregister_url` ;
+
+ALTER TABLE `organisation_log` ADD `twitter_name` VARCHAR( 50 ) NULL DEFAULT NULL COMMENT 'Twittername' AFTER `handelsregister_url` ;
+
+ALTER TABLE `partei` ADD `twitter_name` VARCHAR( 50 ) NULL DEFAULT NULL COMMENT 'Twittername' AFTER `email` ;
+
+ALTER TABLE `partei_log` ADD `twitter_name` VARCHAR( 50 ) NULL DEFAULT NULL COMMENT 'Twittername' AFTER `email` ;
+
+DROP TABLE IF EXISTS `organisation_anhang`;
+CREATE TABLE IF NOT EXISTS `organisation_anhang` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Organisationsanhangs',
+  `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Organisation',
+  `datei` varchar(255) NOT NULL COMMENT 'Datei',
+  `dateiname` varchar(255) NOT NULL COMMENT 'Dateiname ohne Erweiterung',
+  `dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Erweiterung der Datei',
+  `dateiname_voll` varchar(255) NOT NULL COMMENT 'Dateiname inkl. Erweiterung',
+  `mime_type` varchar(100) NOT NULL COMMENT 'MIME Type der Datei',
+  `encoding` varchar(50) NOT NULL COMMENT 'Encoding der Datei',
+  `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Anhangs',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  KEY `organisation_id` (`organisation_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen';
+
+ALTER TABLE `organisation_anhang`
+  ADD CONSTRAINT `fk_org_anhang` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE `partei`
+ADD `farbcode` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23';
+
+ALTER TABLE `partei_log`
+ADD `farbcode` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23';
+
+ALTER TABLE `fraktion`
+ADD `farbcode` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23';
+
+ALTER TABLE `fraktion_log`
+ADD `farbcode` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23';
+
+ALTER TABLE `fraktion` CHANGE `farbcode` `farbcode` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23' AFTER `position` ;
+
+ALTER TABLE `fraktion_log` CHANGE `farbcode` `farbcode` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23' AFTER `position` ;
+
+ALTER TABLE `settings`
+  ADD `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  ADD `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  ADD `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  ADD `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  ADD `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am';
+
+ALTER TABLE `settings_category`
+  ADD `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  ADD `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  ADD `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  ADD `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  ADD `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am';
+
+ALTER TABLE `settings` CHANGE `key` `key_name` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Schlüsselname der Einstellung. NICHT VERÄNDERN. Wird vom Programm vorgegeben';
+
+ALTER TABLE `settings_log` CHANGE `key` `key_name` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Schlüsselname der Einstellung. NICHT VERÄNDERN. Wird vom Programm vorgegeben';
+
+ALTER TABLE `interessenbindung` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'patronatskommittee' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung';
+
+ALTER TABLE `interessenbindung_log` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'patronatskommittee' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung';
+
+ALTER TABLE `mandat` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'patronatskommittee' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation';
+
+ALTER TABLE `mandat_log` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'patronatskommittee' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation';
+
+ALTER TABLE `branche`
+ADD `farbcode` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23' AFTER `angaben`;
+
+ALTER TABLE `branche_log`
+ADD `farbcode` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23' AFTER `angaben`;
+
+ALTER TABLE `parlamentarier` CHANGE `arbeitssprache` `arbeitssprache` ENUM( 'd', 'f', 'i', 'de', 'fr', 'it' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch';
+
+ALTER TABLE `parlamentarier_log` CHANGE `arbeitssprache` `arbeitssprache` ENUM( 'd', 'f', 'i', 'de', 'fr', 'it' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch';
+
+SET @disable_triggers = 1;
+UPDATE `parlamentarier` SET `arbeitssprache`='de' WHERE `arbeitssprache`='d';
+UPDATE `parlamentarier` SET `arbeitssprache`='fr' WHERE `arbeitssprache`='f';
+UPDATE `parlamentarier` SET `arbeitssprache`='it' WHERE `arbeitssprache`='i';
+UPDATE `parlamentarier_log` SET `arbeitssprache`='de' WHERE `arbeitssprache`='d';
+UPDATE `parlamentarier_log` SET `arbeitssprache`='fr' WHERE `arbeitssprache`='f';
+UPDATE `parlamentarier_log` SET `arbeitssprache`='it' WHERE `arbeitssprache`='i';
+SET @disable_triggers = NULL;
+
+ALTER TABLE `parlamentarier` CHANGE `arbeitssprache` `arbeitssprache` ENUM('de', 'fr', 'it' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch';
+
+ALTER TABLE `parlamentarier_log` CHANGE `arbeitssprache` `arbeitssprache` ENUM('de', 'fr', 'it' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch';

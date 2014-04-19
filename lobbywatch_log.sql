@@ -82,6 +82,9 @@ BEGIN
    INSERT INTO `organisation_beziehung_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_beziehung`;
 
+   INSERT INTO `organisation_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_anhang`;
+
    INSERT INTO `parlamentarier_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier`;
 
@@ -1844,6 +1847,9 @@ BEGIN
    INSERT INTO `organisation_beziehung_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_beziehung`;
 
+   INSERT INTO `organisation_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_anhang`;
+
    INSERT INTO `parlamentarier_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier`;
 
@@ -2078,6 +2084,294 @@ for each row
 thisTrigger: begin
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   UPDATE `kanton_jahr_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- Changes
+-- 19.04.2014
+
+DROP PROCEDURE IF EXISTS takeSnapshot;
+delimiter //
+CREATE PROCEDURE takeSnapshot(aVisa VARCHAR(10), aBeschreibung VARCHAR(150)) MODIFIES SQL DATA
+COMMENT 'Speichert einen Snapshot in die _log Tabellen.'
+BEGIN
+  DECLARE ts TIMESTAMP DEFAULT NOW();
+  DECLARE sid int(11);
+  INSERT INTO `snapshot` (`id`, `beschreibung`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES (NULL, aBeschreibung, NULL, aVisa, ts, aVisa, ts);
+  SELECT LAST_INSERT_ID() INTO sid;
+
+   INSERT INTO `branche_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `branche`;
+
+   INSERT INTO `interessenbindung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessenbindung`;
+
+   INSERT INTO `interessengruppe_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessengruppe`;
+
+   INSERT INTO `in_kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_kommission`;
+
+   INSERT INTO `kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kommission`;
+
+   INSERT INTO `mandat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `mandat`;
+
+   INSERT INTO `organisation_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation`;
+
+   INSERT INTO `organisation_beziehung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_beziehung`;
+
+   INSERT INTO `organisation_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_anhang`;
+
+   INSERT INTO `parlamentarier_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier`;
+
+   INSERT INTO `parlamentarier_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier_anhang`;
+
+   INSERT INTO `partei_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `partei`;
+
+   INSERT INTO `fraktion_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `fraktion`;
+
+   INSERT INTO `rat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `rat`;
+
+   INSERT INTO `kanton_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kanton`;
+
+   INSERT INTO `kanton_jahr_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kanton_jahr`;
+
+   INSERT INTO `settings_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `settings`;
+
+   INSERT INTO `settings_category_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `settings_category`;
+
+   INSERT INTO `zutrittsberechtigung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung`;
+
+   INSERT INTO `zutrittsberechtigung_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung_anhang`;
+
+END
+//
+delimiter ;
+
+-- organisation_anhang
+
+DROP TABLE IF EXISTS `organisation_anhang_log`;
+CREATE TABLE IF NOT EXISTS `organisation_anhang_log` LIKE `organisation_anhang`;
+ALTER TABLE `organisation_anhang_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_organisation_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- organisation_anhang triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_organisation_anhang_log_ins`;
+delimiter //
+create trigger `trg_organisation_anhang_log_ins` after insert on `organisation_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_anhang_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `organisation_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_organisation_anhang_log_upd`;
+delimiter //
+create trigger `trg_organisation_anhang_log_upd` after update on `organisation_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_anhang_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `organisation_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_organisation_anhang_log_del_before`;
+delimiter //
+create trigger `trg_organisation_anhang_log_del_before` before delete on `organisation_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_anhang_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `organisation_anhang` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_organisation_anhang_log_del_after`;
+delimiter //
+create trigger `trg_organisation_anhang_log_del_after` after delete on `organisation_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `organisation_anhang_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- settings
+
+DROP TABLE IF EXISTS `settings_log`;
+CREATE TABLE IF NOT EXISTS `settings_log` LIKE `settings`;
+ALTER TABLE `settings_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP INDEX `category_id`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_settings_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- settings triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_settings_log_ins`;
+delimiter //
+create trigger `trg_settings_log_ins` after insert on `settings`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `settings` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_settings_log_upd`;
+delimiter //
+create trigger `trg_settings_log_upd` after update on `settings`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `settings` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_settings_log_del_before`;
+delimiter //
+create trigger `trg_settings_log_del_before` before delete on `settings`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `settings` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_settings_log_del_after`;
+delimiter //
+create trigger `trg_settings_log_del_after` after delete on `settings`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `settings_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- settings_category
+
+DROP TABLE IF EXISTS `settings_category_log`;
+CREATE TABLE IF NOT EXISTS `settings_category_log` LIKE `settings_category`;
+ALTER TABLE `settings_category_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_settings_category_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- settings_category triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_settings_category_log_ins`;
+delimiter //
+create trigger `trg_settings_category_log_ins` after insert on `settings_category`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_category_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `settings_category` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_settings_category_log_upd`;
+delimiter //
+create trigger `trg_settings_category_log_upd` after update on `settings_category`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_category_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `settings_category` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_settings_category_log_del_before`;
+delimiter //
+create trigger `trg_settings_category_log_del_before` before delete on `settings_category`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `settings_category_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `settings_category` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_settings_category_log_del_after`;
+delimiter //
+create trigger `trg_settings_category_log_del_after` after delete on `settings_category`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `settings_category_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
