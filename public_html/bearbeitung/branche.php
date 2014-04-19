@@ -162,6 +162,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -225,6 +227,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -940,6 +944,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1070,6 +1076,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1133,6 +1141,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1756,6 +1766,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1955,6 +1967,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -2599,6 +2613,8 @@
             $field = new StringField('homepage');
             $this->dataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('twitter_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
@@ -3368,6 +3384,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -3430,6 +3448,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4331,6 +4351,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $this->dataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
@@ -4595,6 +4617,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -5384,6 +5408,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -5446,6 +5472,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -6544,6 +6572,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -7041,6 +7071,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('angaben');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -8049,6 +8081,8 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('angaben');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('farbcode');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);

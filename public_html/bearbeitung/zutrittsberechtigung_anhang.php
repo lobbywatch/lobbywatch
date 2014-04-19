@@ -210,6 +210,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('bis');
@@ -339,6 +341,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('bis');
@@ -436,6 +440,8 @@
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -1042,6 +1048,8 @@
             $field = new StringField('email');
             $lookupDataset->AddField($field, false);
             $field = new StringField('homepage');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);

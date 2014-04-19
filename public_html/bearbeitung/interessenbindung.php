@@ -287,6 +287,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_firma');
@@ -391,6 +393,8 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
@@ -610,6 +614,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_firma');
@@ -772,6 +778,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_firma');
@@ -901,6 +909,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
@@ -1005,6 +1015,8 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
@@ -1994,6 +2006,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_firma');
@@ -2108,6 +2122,8 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
@@ -2505,6 +2521,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_firma');
@@ -2619,6 +2637,8 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
@@ -3400,6 +3420,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_firma');
@@ -3553,6 +3575,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_firma');
@@ -3660,6 +3684,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
@@ -3755,6 +3781,8 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
@@ -3975,6 +4003,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_firma');
@@ -4081,6 +4111,8 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
@@ -4222,6 +4254,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_firma');
@@ -4328,6 +4362,8 @@
             $field = new StringField('homepage');
             $lookupDataset->AddField($field, false);
             $field = new StringField('handelsregister_url');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);

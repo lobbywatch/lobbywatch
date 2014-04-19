@@ -124,6 +124,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('parlament_biografie_id');
             $this->dataset->AddField($field, false);
+            $field = new StringField('twitter_name');
+            $this->dataset->AddField($field, false);
             $field = new StringField('arbeitssprache');
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_firma');

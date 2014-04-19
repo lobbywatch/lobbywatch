@@ -135,6 +135,19 @@
               )
             UNION
             (SELECT
+              \'organisation_anhang\' table_name,
+              \'Organisationsanhang\' name,
+              (select count(*) from `organisation_anhang`) anzahl_eintraege,
+              t.`updated_visa` AS last_visa,
+              t.`updated_date` last_updated,
+              t.id last_updated_id
+              FROM
+              `organisation_anhang` t
+              ORDER BY t.`updated_date` DESC
+              LIMIT 1
+              )
+            UNION
+            (SELECT
               \'organisation_beziehung\' table_name,
               \'Organisation Beziehung\' name,
               (select count(*) from `organisation_beziehung`) anzahl_eintraege,
@@ -234,6 +247,32 @@
               t.id last_updated_id
               FROM
               `kanton_jahr` t
+              ORDER BY t.`updated_date` DESC
+              LIMIT 1
+              )
+            UNION
+            (SELECT
+              \'settings\' table_name,
+              \'Einstellungen\' name,
+              (select count(*) from `settings`) anzahl_eintraege,
+              t.`updated_visa` AS last_visa,
+              t.`updated_date` last_updated,
+              t.id last_updated_id
+              FROM
+              `settings` t
+              ORDER BY t.`updated_date` DESC
+              LIMIT 1
+              )
+            UNION
+            (SELECT
+              \'settings_category\' table_name,
+              \'Einstellungskategorien\' name,
+              (select count(*) from `settings_category`) anzahl_eintraege,
+              t.`updated_visa` AS last_visa,
+              t.`updated_date` last_updated,
+              t.id last_updated_id
+              FROM
+              `settings_category` t
               ORDER BY t.`updated_date` DESC
               LIMIT 1
               )
