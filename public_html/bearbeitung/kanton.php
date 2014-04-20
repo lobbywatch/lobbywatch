@@ -1159,6 +1159,8 @@
         {
             $result = new Grid($this, $this->dataset, 'kanton_jahrDetailViewGrid0kanton');
             $result->SetAllowDeleteSelected(false);
+            $result->SetDefaultOrdering('jahr', otDescending);
+            
             $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(true);
@@ -3581,6 +3583,8 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
+            $result->SetDefaultOrdering('jahr', otDescending);
+            
             $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(true);
@@ -3664,7 +3668,14 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
+    <p>Jährlich ändernde Daten zu den Kantonen
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }    
     }
     
@@ -17878,6 +17889,8 @@
             ApplyCommonPageSettings($this, $result);
             
             $result->SetUseImagesForActions(true);
+            $result->SetDefaultOrdering('abkuerzung', otAscending);
+            
             $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(true);
@@ -18069,7 +18082,14 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
+    <p>Tabelle mit Daten zu den Kantonen
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

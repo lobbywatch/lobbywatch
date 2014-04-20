@@ -1081,6 +1081,8 @@
             ApplyCommonPageSettings($this, $result);
             
             $result->SetUseImagesForActions(true);
+            $result->SetDefaultOrdering('key_name', otAscending);
+            
             $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(true);
@@ -1279,7 +1281,14 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
+    <p>Einstellungen für Lobbywatch. Die Funktionsweise kann gesteuert werden. Beispielsweise können Angaben zum Arbeitsablauf gesetzt werden.
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

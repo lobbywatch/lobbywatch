@@ -1496,7 +1496,19 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
+    <p>Änhange zu Organisationen, z.B. Autorisierungs-E-Mails (als pdf), Korrespondenzen, wichtige Hinweise, Quellen, die der Rückverfolgbarkeit und der Beweisführung für verwendete Informationen dienen.
+    </p>
+    </div>
+    
+    <div class="wiki-table-help">
+    <p>Bei Organisationsbeziehungen sollten Anhänge bei der Ausgangs- und nicht bei der Zielorganisation gespeichert werden.
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }    
     }
     
@@ -2340,6 +2352,8 @@
         {
             $result = new Grid($this, $this->dataset, 'organisation_jahrDetailViewGrid1organisation');
             $result->SetAllowDeleteSelected(false);
+            $result->SetDefaultOrdering('jahr', otDescending);
+            
             $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(true);
@@ -4346,6 +4360,8 @@
                 $result->SetAllowDeleteSelected(false);
             ApplyCommonPageSettings($this, $result);
             $result->SetUseImagesForActions(true);
+            $result->SetDefaultOrdering('jahr', otDescending);
+            
             $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(true);
@@ -4521,7 +4537,14 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
+    <p>Jährlich ändernde Daten zu Organisationen
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }    
     }
     

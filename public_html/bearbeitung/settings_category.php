@@ -2794,6 +2794,8 @@
             ApplyCommonPageSettings($this, $result);
             
             $result->SetUseImagesForActions(true);
+            $result->SetDefaultOrdering('name', otAscending);
+            
             $result->SetUseFixedHeader(true);
             
             $result->SetShowLineNumbers(true);
@@ -2931,7 +2933,14 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
+    <p>Die Einstellungsparameter können kategorisiert und gruppiert werden.
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

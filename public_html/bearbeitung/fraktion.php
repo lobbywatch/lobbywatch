@@ -13081,7 +13081,14 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
+    <p>Tabelle der Bundeshausfraktionen
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }
     }
 

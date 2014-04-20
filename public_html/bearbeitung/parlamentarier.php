@@ -1587,7 +1587,7 @@
             return '' . $GLOBALS["edit_header_message"] . '
     
     <div class="wiki-table-help">
-    <p>Innerhalb der Bearbeitungsmaske Parlamentarier können Dateien als Anhang gespeichert werden. z.B. Autorisierungs-E-Mails (als pdf), Korrespondenzen, wichtige Hinweise, Quellen, die der Rückverfolgbarkeit und der Beweisführung für verwendete Informationen dienen.
+    <p>Anhänge zu Parlamentariern, z.B. Autorisierungs-E-Mails (als pdf), Korrespondenzen, wichtige Hinweise, Quellen, die der Rückverfolgbarkeit und der Beweisführung für verwendete Informationen dienen.
     </p>
     </div>
     

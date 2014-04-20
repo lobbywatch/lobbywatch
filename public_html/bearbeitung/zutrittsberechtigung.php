@@ -1344,7 +1344,14 @@
     
         protected function DoGetGridHeader()
         {
-            return '';
+            return '' . $GLOBALS["edit_header_message"] . '
+    
+    <div class="wiki-table-help">
+    <p>Anhänge zu Zutrittsberechtigten, z.B. Autorisierungs-E-Mails (als pdf), Korrespondenzen, wichtige Hinweise, Quellen, die der Rückverfolgbarkeit und der Beweisführung für verwendete Informationen dienen.
+    </p>
+    </div>
+    
+    ' . $GLOBALS["edit_general_hint"] . '';
         }    
     }
     
