@@ -1332,6 +1332,20 @@
         {
             return ;
         }
+        public function organisation_anhangDetailEditGrid0organisation_OnGetCustomTemplate($part, $mode, &$result, &$params)
+        {
+        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
+          $result = 'edit/grid.tpl';
+        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
+          $result = 'insert/grid.tpl';
+        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
+          $result = 'view/grid.tpl';
+        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
+          $result = 'list/grid.tpl';
+        } else if ($part == PagePart::PageList) {
+          $result = 'page_list.tpl';
+        }
+        }
         function organisation_anhangDetailEditGrid0organisation_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
@@ -1385,6 +1399,7 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $this->OnGetCustomTemplate->AddListener('organisation_anhangDetailEditGrid0organisation' . '_OnGetCustomTemplate', $this);
             $result->BeforeDeleteRecord->AddListener('organisation_anhangDetailEditGrid0organisation' . '_' . 'BeforeDeleteRecord', $this);
             $result->BeforeInsertRecord->AddListener('organisation_anhangDetailEditGrid0organisation' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);

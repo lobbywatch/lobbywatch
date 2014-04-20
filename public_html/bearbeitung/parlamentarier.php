@@ -1420,6 +1420,20 @@
         {
             return ;
         }
+        public function parlamentarier_anhangDetailEditGrid0parlamentarier_OnGetCustomTemplate($part, $mode, &$result, &$params)
+        {
+        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
+          $result = 'edit/grid.tpl';
+        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
+          $result = 'insert/grid.tpl';
+        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
+          $result = 'view/grid.tpl';
+        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
+          $result = 'list/grid.tpl';
+        } else if ($part == PagePart::PageList) {
+          $result = 'page_list.tpl';
+        }
+        }
         function parlamentarier_anhangDetailEditGrid0parlamentarier_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
@@ -1473,6 +1487,7 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $this->OnGetCustomTemplate->AddListener('parlamentarier_anhangDetailEditGrid0parlamentarier' . '_OnGetCustomTemplate', $this);
             $result->BeforeDeleteRecord->AddListener('parlamentarier_anhangDetailEditGrid0parlamentarier' . '_' . 'BeforeDeleteRecord', $this);
             $result->BeforeInsertRecord->AddListener('parlamentarier_anhangDetailEditGrid0parlamentarier' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
