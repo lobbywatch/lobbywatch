@@ -35614,6 +35614,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -37433,6 +37434,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -39650,6 +39652,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -40056,6 +40059,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
@@ -40488,6 +40492,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -40959,6 +40964,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $result->AddPrintColumn($column);
             
             //
@@ -41386,6 +41392,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -41857,6 +41864,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $result->AddPrintColumn($column);
             
             //
@@ -42284,6 +42292,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -42755,6 +42764,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $result->AddPrintColumn($column);
             
             //
@@ -43182,6 +43192,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -43653,6 +43664,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $result->AddPrintColumn($column);
             
             //
@@ -44080,6 +44092,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -44551,6 +44564,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $result->AddPrintColumn($column);
             
             //
@@ -44978,6 +44992,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -45449,6 +45464,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $result->AddPrintColumn($column);
             
             //
@@ -45876,6 +45892,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -46347,6 +46364,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $result->AddPrintColumn($column);
             
             //
@@ -46774,6 +46792,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $column->SetDescription($this->RenderText('Kantonszugehörigkeit; Fremdschlüssel des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -47245,6 +47264,7 @@
             //
             $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'kanton.php?operation=view&pk0=%kanton_id%' , '_self');
             $result->AddPrintColumn($column);
             
             //
