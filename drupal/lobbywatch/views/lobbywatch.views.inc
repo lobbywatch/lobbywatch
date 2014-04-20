@@ -292,14 +292,17 @@ function lobbywatch_views_data() {
       'title' => t('Im Rat seit'), // The item it appears as on the UI,
       'help' => t('Parlamentarier im Rat seit.'), // The help that appears on the UI,
       'field' => array(
-          'handler' => 'views_handler_field_date',
+          'handler' => 'views_handler_field_datetime',
           'click sortable' => TRUE,
       ),
       'sort' => array(
-          'handler' => 'views_handler_sort_date',
+          'handler' => 'views_handler_sort_datetime',
       ),
       'filter' => array(
-          'handler' => 'views_handler_filter_date',
+          // Roland: default Views views_handler_filter_date supports only timestamps
+          // Roland: Use filter from Date module: date_views_argument_handler_simple
+          // Roland: Proposition from https://drupal.org/comment/6880180#comment-6880180
+          'handler' => 'views_handler_filter_datetime',
           'allow empty' => TRUE,
       ),
   );
@@ -309,14 +312,17 @@ function lobbywatch_views_data() {
       'title' => t('Im Rat bis'), // The item it appears as on the UI,
       'help' => t('Parlamentarier im Rat bis. NULL = noch aktiv'), // The help that appears on the UI,
       'field' => array(
-          'handler' => 'views_handler_field_date',
+          'handler' => 'views_handler_field_datetime',
           'click sortable' => TRUE,
       ),
       'sort' => array(
-          'handler' => 'views_handler_sort_date',
+          'handler' => 'views_handler_sort_datetime',
       ),
       'filter' => array(
-          'handler' => 'views_handler_filter_date',
+          // Roland: default Views views_handler_filter_date supports only timestamps
+          // Roland: Use filter from Date module: date_views_argument_handler_simple
+          // Roland: Proposition from https://drupal.org/comment/6880180#comment-6880180
+          'handler' => 'views_handler_filter_datetime',
           'allow empty' => TRUE,
       ),
   );
@@ -343,14 +349,17 @@ function lobbywatch_views_data() {
       'title' => t('Geburtsdatum'), // The item it appears as on the UI,
       'help' => t('Geburtsdatum des Parlamentariers.'), // The help that appears on the UI,
       'field' => array(
-          'handler' => 'views_handler_field_date',
+          'handler' => 'views_handler_field_datetime',
           'click sortable' => TRUE,
       ),
       'sort' => array(
-          'handler' => 'views_handler_sort_date',
+          'handler' => 'views_handler_sort_datetime',
       ),
       'filter' => array(
-          'handler' => 'views_handler_filter_date',
+          // Roland: default Views views_handler_filter_date supports only timestamps
+          // Roland: Use filter from Date module: date_views_argument_handler_simple
+          // Roland: Proposition from https://drupal.org/comment/6880180#comment-6880180
+          'handler' => 'views_handler_filter_datetime',
           'allow empty' => TRUE,
       ),
   );

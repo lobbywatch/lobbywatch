@@ -357,7 +357,7 @@ function lobbywatch_parlamentarier_list() {
   try {
     $result = db_query("SELECT parlamentarier.*
     FROM v_parlamentarier parlamentarier
-    WHERE parlamentarier.im_rat_bis IS NULL
+    WHERE parlamentarier.im_rat_bis IS NULL OR NOW() < parlamentarier.im_rat_bis
     ORDER BY parlamentarier.anzeige_name");
 
     while ($record = $result->fetchAssoc()) {

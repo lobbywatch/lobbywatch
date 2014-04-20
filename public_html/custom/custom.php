@@ -1,5 +1,7 @@
 <?php
 
+// ATTENTION: THIS FILE IS ENCODED AS ISO-8859-1
+
 require_once dirname(__FILE__) . "/../settings/settings.php";
 require_once dirname(__FILE__) . "/../common/utils.php";
 require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_state.php';
@@ -298,10 +300,13 @@ function parlamentarier_check_imRatBis($page, &$rowData, &$cancel, &$message, $t
 // df($imRatBis === '');
 // df($imRatBis->GetTimestamp());
 // df($imRatBis->GetDateTime());
-  if ($imRatBis !== null && $imRatBis->GetTimestamp() > SMDateTime::Now()->GetTimestamp()) {
-    $cancel = true;
-    $message = '"Im Rat bis"-Datum darf nicht in der Zukunft liegen: ' . $imRatBis->ToString('d.m.Y');
-  }
+
+  // Roland, 20.04.2014: We support since v1.12 im_rat_bis in the future
+//   if ($imRatBis !== null && $imRatBis->GetTimestamp() > SMDateTime::Now()->GetTimestamp()) {
+//     $cancel = true;
+//     $message = '"Im Rat bis"-Datum darf nicht in der Zukunft liegen: ' . $imRatBis->ToString('d.m.Y');
+//   }
+
   if ($imRatSeit !== null && $imRatBis !== null && $imRatSeit->GetTimestamp() >= $imRatBis->GetTimestamp()) {
     $cancel = true;
     $message = '"Im Rat bis"-Datum darf nicht kleiner als "Im Rat seit"-Datum sein: ' . $imRatBis->ToString('d.m.Y');
@@ -810,6 +815,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
   $update_threshold = SMDateTime::Parse('2012-01-01', 'Y-m-d');
   $update_threshold_ts = $update_threshold->GetTimestamp();
+  $now_ts = time();
 
   if ($table_name === 'parlamentarier' || $table_name === 'zutrittsberechtigung') {
     //df($rowData, '$rowData');
@@ -898,7 +904,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
           $workflow_styles .= 'background-image: url(img/tick-small-red.png); background-repeat: no-repeat; background-position: bottom right;';
     }
 
-    if (isset($rowData['im_rat_bis']) || isset($rowData['bis'])) {
+    if ((isset($rowData['im_rat_bis']) && getTimestamp($rowData['im_rat_bis']) < $now_ts) || isset($rowData['bis'])) {
       $workflow_styles .= 'text-decoration: line-through;';
     }
 

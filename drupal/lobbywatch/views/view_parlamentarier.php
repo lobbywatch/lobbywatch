@@ -92,6 +92,10 @@ $handler->display->display_options['fields']['kanton']['element_label_colon'] = 
 $handler->display->display_options['sorts']['anzeige_name']['id'] = 'anzeige_name';
 $handler->display->display_options['sorts']['anzeige_name']['table'] = 'v_parlamentarier';
 $handler->display->display_options['sorts']['anzeige_name']['field'] = 'anzeige_name';
+$handler->display->display_options['filter_groups']['groups'] = array(
+  1 => 'AND',
+  2 => 'OR',
+);
 /* Filter criterion: Parlamentarier: Kanton */
 $handler->display->display_options['filters']['kanton']['id'] = 'kanton';
 $handler->display->display_options['filters']['kanton']['table'] = 'v_parlamentarier';
@@ -143,21 +147,12 @@ $handler->display->display_options['filters']['ratstyp']['expose']['remember_rol
   5 => 0,
   3 => 0,
 );
-/* Filter criterion: Parlamentarier: Im Rat bis */
-$handler->display->display_options['filters']['im_rat_bis']['id'] = 'im_rat_bis';
-$handler->display->display_options['filters']['im_rat_bis']['table'] = 'v_parlamentarier';
-$handler->display->display_options['filters']['im_rat_bis']['field'] = 'im_rat_bis';
-$handler->display->display_options['filters']['im_rat_bis']['operator'] = 'empty';
-$handler->display->display_options['filters']['im_rat_bis']['group'] = 1;
-$handler->display->display_options['filters']['im_rat_bis']['expose']['operator_id'] = 'im_rat_bis_op';
-$handler->display->display_options['filters']['im_rat_bis']['expose']['label'] = 'Im Rat bis';
-$handler->display->display_options['filters']['im_rat_bis']['expose']['operator'] = 'im_rat_bis_op';
-$handler->display->display_options['filters']['im_rat_bis']['expose']['identifier'] = 'im_rat_bis';
 /* Filter criterion: Parlamentarier: Kommissionen */
 $handler->display->display_options['filters']['kommissionen']['id'] = 'kommissionen';
 $handler->display->display_options['filters']['kommissionen']['table'] = 'v_parlamentarier';
 $handler->display->display_options['filters']['kommissionen']['field'] = 'kommissionen';
 $handler->display->display_options['filters']['kommissionen']['operator'] = 'contains';
+$handler->display->display_options['filters']['kommissionen']['group'] = 1;
 $handler->display->display_options['filters']['kommissionen']['exposed'] = TRUE;
 $handler->display->display_options['filters']['kommissionen']['expose']['operator_id'] = 'kommissionen_op';
 $handler->display->display_options['filters']['kommissionen']['expose']['label'] = 'Kommissionen';
@@ -170,6 +165,20 @@ $handler->display->display_options['filters']['kommissionen']['expose']['remembe
   5 => 0,
   3 => 0,
 );
+/* Filter criterion: Parlamentarier: Im Rat bis */
+$handler->display->display_options['filters']['im_rat_bis_1']['id'] = 'im_rat_bis_1';
+$handler->display->display_options['filters']['im_rat_bis_1']['table'] = 'v_parlamentarier';
+$handler->display->display_options['filters']['im_rat_bis_1']['field'] = 'im_rat_bis';
+$handler->display->display_options['filters']['im_rat_bis_1']['operator'] = 'empty';
+$handler->display->display_options['filters']['im_rat_bis_1']['group'] = 2;
+/* Filter criterion: Parlamentarier: Im Rat bis */
+$handler->display->display_options['filters']['im_rat_bis']['id'] = 'im_rat_bis';
+$handler->display->display_options['filters']['im_rat_bis']['table'] = 'v_parlamentarier';
+$handler->display->display_options['filters']['im_rat_bis']['field'] = 'im_rat_bis';
+$handler->display->display_options['filters']['im_rat_bis']['operator'] = '>';
+$handler->display->display_options['filters']['im_rat_bis']['value']['value'] = 'now';
+$handler->display->display_options['filters']['im_rat_bis']['value']['type'] = 'offset';
+$handler->display->display_options['filters']['im_rat_bis']['group'] = 2;
 
 /* Display: Page */
 $handler = $view->new_display('page', 'Page', 'page');
