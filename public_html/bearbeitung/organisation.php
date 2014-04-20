@@ -1650,6 +1650,8 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1663,6 +1665,8 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1755,9 +1759,11 @@
             // Edit column for mitarbeiter_weltweit field
             //
             $editor = new TextEdit('mitarbeiter_weltweit_edit');
+            $editor->SetSize(8);
+            $editor->SetMaxLength(8);
             $editColumn = new CustomEditColumn('Mitarbeiter Weltweit', 'mitarbeiter_weltweit', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new MaxValueValidator(10000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1772,9 +1778,11 @@
             // Edit column for mitarbeiter_weltweit field
             //
             $editor = new TextEdit('mitarbeiter_weltweit_edit');
+            $editor->SetSize(8);
+            $editor->SetMaxLength(8);
             $editColumn = new CustomEditColumn('Mitarbeiter Weltweit', 'mitarbeiter_weltweit', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new MaxValueValidator(10000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1798,6 +1806,8 @@
             // Edit column for mitarbeiter_schweiz field
             //
             $editor = new TextEdit('mitarbeiter_schweiz_edit');
+            $editor->SetSize(6);
+            $editor->SetMaxLength(6);
             $editColumn = new CustomEditColumn('Mitarbeiter Schweiz', 'mitarbeiter_schweiz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1815,6 +1825,8 @@
             // Edit column for mitarbeiter_schweiz field
             //
             $editor = new TextEdit('mitarbeiter_schweiz_edit');
+            $editor->SetSize(6);
+            $editor->SetMaxLength(6);
             $editColumn = new CustomEditColumn('Mitarbeiter Schweiz', 'mitarbeiter_schweiz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1842,7 +1854,9 @@
             //
             // Edit column for geschaeftsbericht_url field
             //
-            $editor = new TextAreaEdit('geschaeftsbericht_url_edit', 50, 8);
+            $editor = new TextEdit('geschaeftsbericht_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Geschaeftsbericht Url', 'geschaeftsbericht_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1855,7 +1869,9 @@
             //
             // Edit column for geschaeftsbericht_url field
             //
-            $editor = new TextAreaEdit('geschaeftsbericht_url_edit', 50, 8);
+            $editor = new TextEdit('geschaeftsbericht_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Geschaeftsbericht Url', 'geschaeftsbericht_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1880,7 +1896,9 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1893,7 +1911,9 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2348,7 +2368,9 @@
             //
             // Edit column for geschaeftsbericht_url field
             //
-            $editor = new TextAreaEdit('geschaeftsbericht_url_edit', 50, 8);
+            $editor = new TextEdit('geschaeftsbericht_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Geschaeftsbericht Url', 'geschaeftsbericht_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2361,7 +2383,9 @@
             //
             // Edit column for geschaeftsbericht_url field
             //
-            $editor = new TextAreaEdit('geschaeftsbericht_url_edit', 50, 8);
+            $editor = new TextEdit('geschaeftsbericht_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Geschaeftsbericht Url', 'geschaeftsbericht_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2382,7 +2406,9 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2395,7 +2421,9 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2759,6 +2787,8 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2772,6 +2802,8 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2864,9 +2896,11 @@
             // Edit column for mitarbeiter_weltweit field
             //
             $editor = new TextEdit('mitarbeiter_weltweit_edit');
+            $editor->SetSize(8);
+            $editor->SetMaxLength(8);
             $editColumn = new CustomEditColumn('Mitarbeiter Weltweit', 'mitarbeiter_weltweit', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new MaxValueValidator(10000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -2881,9 +2915,11 @@
             // Edit column for mitarbeiter_weltweit field
             //
             $editor = new TextEdit('mitarbeiter_weltweit_edit');
+            $editor->SetSize(8);
+            $editor->SetMaxLength(8);
             $editColumn = new CustomEditColumn('Mitarbeiter Weltweit', 'mitarbeiter_weltweit', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new MaxValueValidator(10000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -2907,6 +2943,8 @@
             // Edit column for mitarbeiter_schweiz field
             //
             $editor = new TextEdit('mitarbeiter_schweiz_edit');
+            $editor->SetSize(6);
+            $editor->SetMaxLength(6);
             $editColumn = new CustomEditColumn('Mitarbeiter Schweiz', 'mitarbeiter_schweiz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2924,6 +2962,8 @@
             // Edit column for mitarbeiter_schweiz field
             //
             $editor = new TextEdit('mitarbeiter_schweiz_edit');
+            $editor->SetSize(6);
+            $editor->SetMaxLength(6);
             $editColumn = new CustomEditColumn('Mitarbeiter Schweiz', 'mitarbeiter_schweiz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2951,7 +2991,9 @@
             //
             // Edit column for geschaeftsbericht_url field
             //
-            $editor = new TextAreaEdit('geschaeftsbericht_url_edit', 50, 8);
+            $editor = new TextEdit('geschaeftsbericht_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Geschaeftsbericht Url', 'geschaeftsbericht_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2964,7 +3006,9 @@
             //
             // Edit column for geschaeftsbericht_url field
             //
-            $editor = new TextAreaEdit('geschaeftsbericht_url_edit', 50, 8);
+            $editor = new TextEdit('geschaeftsbericht_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Geschaeftsbericht Url', 'geschaeftsbericht_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2989,7 +3033,9 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3002,7 +3048,9 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3601,6 +3649,8 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3634,9 +3684,11 @@
             // Edit column for mitarbeiter_weltweit field
             //
             $editor = new TextEdit('mitarbeiter_weltweit_edit');
+            $editor->SetSize(8);
+            $editor->SetMaxLength(8);
             $editColumn = new CustomEditColumn('Mitarbeiter Weltweit', 'mitarbeiter_weltweit', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new MaxValueValidator(10000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -3649,6 +3701,8 @@
             // Edit column for mitarbeiter_schweiz field
             //
             $editor = new TextEdit('mitarbeiter_schweiz_edit');
+            $editor->SetSize(6);
+            $editor->SetMaxLength(6);
             $editColumn = new CustomEditColumn('Mitarbeiter Schweiz', 'mitarbeiter_schweiz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3663,7 +3717,9 @@
             //
             // Edit column for geschaeftsbericht_url field
             //
-            $editor = new TextAreaEdit('geschaeftsbericht_url_edit', 50, 8);
+            $editor = new TextEdit('geschaeftsbericht_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Geschaeftsbericht Url', 'geschaeftsbericht_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3674,7 +3730,9 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3831,6 +3889,8 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3864,9 +3924,11 @@
             // Edit column for mitarbeiter_weltweit field
             //
             $editor = new TextEdit('mitarbeiter_weltweit_edit');
+            $editor->SetSize(8);
+            $editor->SetMaxLength(8);
             $editColumn = new CustomEditColumn('Mitarbeiter Weltweit', 'mitarbeiter_weltweit', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new MaxValueValidator(10000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -3879,6 +3941,8 @@
             // Edit column for mitarbeiter_schweiz field
             //
             $editor = new TextEdit('mitarbeiter_schweiz_edit');
+            $editor->SetSize(6);
+            $editor->SetMaxLength(6);
             $editColumn = new CustomEditColumn('Mitarbeiter Schweiz', 'mitarbeiter_schweiz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new MaxValueValidator(1000000, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3893,7 +3957,9 @@
             //
             // Edit column for geschaeftsbericht_url field
             //
-            $editor = new TextAreaEdit('geschaeftsbericht_url_edit', 50, 8);
+            $editor = new TextEdit('geschaeftsbericht_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Geschaeftsbericht Url', 'geschaeftsbericht_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3904,7 +3970,9 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3917,18 +3985,6 @@
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
             $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for updated_visa field
-            //
-            $editor = new TextEdit('updated_visa_edit');
-            $editor->SetSize(10);
-            $editor->SetMaxLength(10);
-            $editColumn = new CustomEditColumn('Updated Visa', 'updated_visa', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -4356,7 +4412,9 @@
             //
             // Edit column for geschaeftsbericht_url field
             //
-            $editor = new TextAreaEdit('geschaeftsbericht_url_edit', 50, 8);
+            $editor = new TextEdit('geschaeftsbericht_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Geschaeftsbericht Url', 'geschaeftsbericht_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -4369,7 +4427,9 @@
             //
             // Edit column for geschaeftsbericht_url field
             //
-            $editor = new TextAreaEdit('geschaeftsbericht_url_edit', 50, 8);
+            $editor = new TextEdit('geschaeftsbericht_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Geschaeftsbericht Url', 'geschaeftsbericht_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -4390,7 +4450,9 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -4403,7 +4465,9 @@
             //
             // Edit column for quelle_url field
             //
-            $editor = new TextAreaEdit('quelle_url_edit', 50, 8);
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
