@@ -325,10 +325,12 @@ function check_bis_date($page, &$rowData, &$cancel, &$message, $tableName)
   }
 // df($bis);
 // df($bis->GetTimestamp());
-  if ($bis !== null && $bis->GetTimestamp() > SMDateTime::Now()->GetTimestamp()) {
-    $cancel = true;
-    $message = 'Bis-Datum darf nicht in der Zukunft liegen: ' . $bis->ToString('d.m.Y');
-  }
+
+  // Roland, 20.04.2014: We support since v1.12 bis in the future
+//   if ($bis !== null && $bis->GetTimestamp() > SMDateTime::Now()->GetTimestamp()) {
+//     $cancel = true;
+//     $message = 'Bis-Datum darf nicht in der Zukunft liegen: ' . $bis->ToString('d.m.Y');
+//   }
   if ($von !== null && $bis !== null && $von->GetTimestamp() >= $bis->GetTimestamp()) {
     $cancel = true;
     $message = 'Bis-Datum darf nicht kleiner als Von-Datum sein: ' . $bis->ToString('d.m.Y');
@@ -678,11 +680,11 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
 function gaesteMitMandaten($con, $parlamentarier_id, $for_email = false) {
   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
 GROUP_CONCAT(DISTINCT
-    CONCAT('<li>', IF(mandat.bis IS NOT NULL, '<s>', ''), organisation.anzeige_name,
+    CONCAT('<li>', IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), organisation.anzeige_name,
     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', " . (!$for_email ? "'<span class=\"preview-missing-data\">, Rechtsform fehlt</span>'" : "''") . ", CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
     IF(mandat.funktion_im_gremium IS NULL OR TRIM(mandat.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(mandat.funktion_im_gremium, 1)), SUBSTRING(mandat.funktion_im_gremium, 2)))),
     IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')),
-    IF(mandat.bis IS NOT NULL, CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
+    IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
 ) mandate
@@ -692,7 +694,7 @@ LEFT JOIN v_mandat mandat
 LEFT JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id
 WHERE
-  zutrittsberechtigung.bis IS NULL
+  (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())
   AND zutrittsberechtigung.parlamentarier_id=:id
 GROUP BY zutrittsberechtigung.id;";
 
@@ -904,8 +906,10 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
           $workflow_styles .= 'background-image: url(img/tick-small-red.png); background-repeat: no-repeat; background-position: bottom right;';
     }
 
-    if ((isset($rowData['im_rat_bis']) && getTimestamp($rowData['im_rat_bis']) < $now_ts) || isset($rowData['bis'])) {
+    if ((isset($rowData['im_rat_bis']) && getTimestamp($rowData['im_rat_bis']) < $now_ts) || (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts)) {
       $workflow_styles .= 'text-decoration: line-through;';
+    } elseif ((isset($rowData['im_rat_bis']) && getTimestamp($rowData['im_rat_bis']) > $now_ts) || (isset($rowData['bis']) && getTimestamp($rowData['bis']) > $now_ts)) {
+      $workflow_styles .= 'text-decoration: underline;';
     }
 
     // Check completeness
@@ -1034,8 +1038,10 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
           $workflow_styles .= 'background-image: url(img/tick-small-red.png); background-repeat: no-repeat; background-position: bottom right;';
     }
 
-    if (isset($rowData['bis'])) {
+      if (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts) {
       $workflow_styles .= 'text-decoration: line-through;';
+    } elseif (isset($rowData['bis']) && getTimestamp($rowData['bis']) > $now_ts) {
+      $workflow_styles .= 'text-decoration: underline;';
     }
 
     // Check completeness
