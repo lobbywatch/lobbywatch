@@ -119,6 +119,19 @@ CREATE OR REPLACE VIEW `v_last_updated_organisation_beziehung` AS
   ORDER BY t.`updated_date` DESC
   LIMIT 1
   );
+CREATE OR REPLACE VIEW `v_last_updated_organisation_jahr` AS
+  (SELECT
+  'organisation_jahr' table_name,
+  'Organisationsjahr' name,
+  (select count(*) from `organisation_jahr`) anzahl_eintraege,
+  t.`updated_visa` AS last_visa,
+  t.`updated_date` last_updated,
+  t.id last_updated_id
+  FROM
+  `organisation_jahr` t
+  ORDER BY t.`updated_date` DESC
+  LIMIT 1
+  );
 CREATE OR REPLACE VIEW `v_last_updated_parlamentarier` AS
   (SELECT
   'parlamentarier' table_name,
@@ -281,6 +294,8 @@ SELECT * FROM v_last_updated_organisation_anhang
 UNION
 SELECT * FROM v_last_updated_organisation_beziehung
 UNION
+SELECT * FROM v_last_updated_organisation_jahr
+UNION
 SELECT * FROM v_last_updated_parlamentarier
 UNION
 SELECT * FROM v_last_updated_parlamentarier_anhang
@@ -330,11 +345,23 @@ CREATE OR REPLACE VIEW `v_kanton_jahr` AS
 SELECT kanton_jahr.*
 FROM `kanton_jahr`;
 
-CREATE OR REPLACE VIEW `v_kanton` AS
+CREATE OR REPLACE VIEW `v_kanton_jahr_last` AS
+SELECT kanton_jahr.*
+FROM `kanton_jahr`
+ORDER BY `kanton_jahr`.jahr DESC
+LIMIT 1;
+
+CREATE OR REPLACE VIEW `v_kanton_2012` AS
 SELECT kanton.name_de as anzeige_name, kanton.*, kanton_jahr.`id` as kanton_jahr_id, kanton_jahr.`jahr`, kanton_jahr.einwohner, kanton_jahr.auslaenderanteil, kanton_jahr.bevoelkerungsdichte, kanton_jahr.anzahl_gemeinden, kanton_jahr.anzahl_nationalraete
 FROM `kanton`
 LEFT JOIN `v_kanton_jahr` kanton_jahr
-ON kanton_jahr.kanton_id = kanton.id AND kanton_jahr.jahr=2012; -- use better criteria, last year with freigabe
+ON kanton_jahr.kanton_id = kanton.id AND kanton_jahr.jahr=2012;
+
+CREATE OR REPLACE VIEW `v_kanton` AS
+SELECT kanton.name_de as anzeige_name, kanton.*, kanton_jahr.`id` as kanton_jahr_id, kanton_jahr.`jahr`, kanton_jahr.einwohner, kanton_jahr.auslaenderanteil, kanton_jahr.bevoelkerungsdichte, kanton_jahr.anzahl_gemeinden, kanton_jahr.anzahl_nationalraete
+FROM `kanton`
+LEFT JOIN `v_kanton_jahr_last` kanton_jahr
+ON kanton_jahr.kanton_id = kanton.id;
 
 CREATE OR REPLACE VIEW `v_interessenraum` AS
 SELECT interessenraum.name as anzeige_name, interessenraum.*
@@ -377,6 +404,16 @@ LEFT JOIN `v_branche` branche
 ON branche.id = interessengruppe.branche_id
 ;
 
+CREATE OR REPLACE VIEW `v_organisation_jahr` AS
+SELECT `organisation_jahr`.*
+FROM `organisation_jahr`;
+
+CREATE OR REPLACE VIEW `v_organisation_jahr_last` AS
+SELECT `organisation_jahr`.*
+FROM `organisation_jahr`
+ORDER BY `organisation_jahr`.jahr DESC
+LIMIT 1;
+
 CREATE OR REPLACE VIEW `v_organisation` AS
 SELECT CONCAT_WS('; ', o.name_de, o.name_fr, o.name_it) AS anzeige_name,
 CONCAT_WS('; ', o.name_de , o.name_fr, o.name_it) AS name,
@@ -389,7 +426,8 @@ interessengruppe2.branche as interessengruppe2_branche,
 interessengruppe3.anzeige_name as interessengruppe3,
 interessengruppe3.branche as interessengruppe3_branche,
 country.name_de as land,
-interessenraum.anzeige_name as interessenraum
+interessenraum.anzeige_name as interessenraum,
+organisation_jahr.`id` as organisation_jahr_id, organisation_jahr.jahr, organisation_jahr.umsatz, organisation_jahr.gewinn, organisation_jahr.kapital, organisation_jahr.mitarbeiter_weltweit, organisation_jahr.mitarbeiter_schweiz, organisation_jahr.geschaeftsbericht_url, organisation_jahr.quelle_url
 FROM `organisation` o
 LEFT JOIN `v_branche` branche
 ON branche.id = o.branche_id
@@ -403,6 +441,8 @@ LEFT JOIN `v_country` country
 ON country.id = o.land_id
 LEFT JOIN `v_interessenraum` interessenraum
 ON interessenraum.id = o.interessenraum_id
+LEFT JOIN `v_organisation_jahr_last` organisation_jahr
+ON organisation_jahr.organisation_id = o.id
 ;
 
 CREATE OR REPLACE VIEW `v_organisation_anhang` AS

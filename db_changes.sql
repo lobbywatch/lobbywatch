@@ -634,3 +634,57 @@ SET @disable_triggers = NULL;
 ALTER TABLE `parlamentarier` CHANGE `arbeitssprache` `arbeitssprache` ENUM('de', 'fr', 'it' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch';
 
 ALTER TABLE `parlamentarier_log` CHANGE `arbeitssprache` `arbeitssprache` ENUM('de', 'fr', 'it' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch';
+
+ALTER TABLE `parlamentarier` ADD `linkedin_profil_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL zum LinkedIn-Profil' AFTER `twitter_name` ,
+ADD `xing_profil_name` VARCHAR( 150 ) NULL DEFAULT NULL COMMENT 'Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link' AFTER `linkedin_profil_url` ,
+ADD `facebook_name` VARCHAR( 150 ) NULL DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt' AFTER `xing_profil_name` ;
+
+ALTER TABLE `parlamentarier_log` ADD `linkedin_profil_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL zum LinkedIn-Profil' AFTER `twitter_name` ,
+ADD `xing_profil_name` VARCHAR( 150 ) NULL DEFAULT NULL COMMENT 'Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link' AFTER `linkedin_profil_url` ,
+ADD `facebook_name` VARCHAR( 150 ) NULL DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt' AFTER `xing_profil_name` ;
+
+ALTER TABLE `zutrittsberechtigung` ADD `linkedin_profil_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL zum LinkedIn-Profil' AFTER `twitter_name` ,
+ADD `xing_profil_name` VARCHAR( 150 ) NULL DEFAULT NULL COMMENT 'Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link' AFTER `linkedin_profil_url` ,
+ADD `facebook_name` VARCHAR( 150 ) NULL DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt' AFTER `xing_profil_name` ;
+
+ALTER TABLE `zutrittsberechtigung_log` ADD `linkedin_profil_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL zum LinkedIn-Profil' AFTER `twitter_name` ,
+ADD `xing_profil_name` VARCHAR( 150 ) NULL DEFAULT NULL COMMENT 'Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link' AFTER `linkedin_profil_url` ,
+ADD `facebook_name` VARCHAR( 150 ) NULL DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt' AFTER `xing_profil_name` ;
+
+DROP TABLE IF EXISTS `organisation_jahr`;
+CREATE TABLE IF NOT EXISTS `organisation_jahr` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Jahreswerte einer Organisation',
+  `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Kantons',
+  `jahr` smallint(6) NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
+  `umsatz` int(11) NOT NULL COMMENT 'Umsatz der Organisation in Franken',
+  `gewinn` int(11) NOT NULL COMMENT 'Gewinn der Organisation in Franken',
+  `mitarbeiter_weltweit` int(11) DEFAULT NULL COMMENT 'Anzahl Mitarbeiter weltweit',
+  `mitarbeiter_schweiz` int(11) DEFAULT NULL COMMENT 'Anzahl Mitarbeiter in der Schweiz',
+  `kapital` int(11) DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken',
+  `geschaeftsbericht_url` varchar(255) DEFAULT NULL COMMENT 'Link zum Geschäftsbericht',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_organisation_jahr_unique` (`organisation_id`,`jahr`) COMMENT 'Fachlicher unique constraint',
+  KEY `organisation_id` (`organisation_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Organisationen';
+
+ALTER TABLE `organisation_jahr`
+  ADD CONSTRAINT `fk_organisation_jahr_organisation_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`);
+
+ALTER TABLE `organisation_jahr` CHANGE `kapital` `kapital` INT( 11 ) NULL DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken' AFTER `gewinn` ;
+
+ALTER TABLE `organisation_jahr_log` CHANGE `kapital` `kapital` INT( 11 ) NULL DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken' AFTER `gewinn` ;
+
+ALTER TABLE `organisation_jahr` ADD `quelle_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL der Quelle' AFTER `geschaeftsbericht_url` ;
+
+ALTER TABLE `organisation_jahr_log` ADD `quelle_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL der Quelle' AFTER `geschaeftsbericht_url` ;

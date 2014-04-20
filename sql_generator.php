@@ -27,6 +27,7 @@ $tables = array(
 'organisation' => 'Organisation',
 'organisation_anhang' => 'Organisationsanhang',
 'organisation_beziehung' => 'Organisation Beziehung',
+'organisation_jahr' => 'Organisationsjahr',
 'parlamentarier' => 'Parlamentarier',
 'parlamentarier_anhang' => 'Parlamentarieranhang',
 'partei' => 'Partei',

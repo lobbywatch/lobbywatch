@@ -2130,6 +2130,9 @@ BEGIN
    INSERT INTO `organisation_anhang_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_anhang`;
 
+   INSERT INTO `organisation_jahr_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_jahr`;
+
    INSERT INTO `parlamentarier_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier`;
 
@@ -2372,6 +2375,77 @@ for each row
 thisTrigger: begin
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   UPDATE `settings_category_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- organisation_jahr
+
+DROP TABLE IF EXISTS `organisation_jahr_log`;
+CREATE TABLE IF NOT EXISTS `organisation_jahr_log` LIKE `organisation_jahr`;
+ALTER TABLE `organisation_jahr_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP INDEX `idx_organisation_jahr_unique`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_organisation_jahr_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- organisation_jahr triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_organisation_jahr_log_ins`;
+delimiter //
+create trigger `trg_organisation_jahr_log_ins` after insert on `organisation_jahr`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_jahr_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `organisation_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_organisation_jahr_log_upd`;
+delimiter //
+create trigger `trg_organisation_jahr_log_upd` after update on `organisation_jahr`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_jahr_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `organisation_jahr` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_organisation_jahr_log_del_before`;
+delimiter //
+create trigger `trg_organisation_jahr_log_del_before` before delete on `organisation_jahr`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `organisation_jahr_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `organisation_jahr` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_organisation_jahr_log_del_after`;
+delimiter //
+create trigger `trg_organisation_jahr_log_del_after` after delete on `organisation_jahr`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `organisation_jahr_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end
