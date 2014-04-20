@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 20. Apr 2014 um 07:08
+-- Erstellungszeit: 20. Apr 2014 um 10:09
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -2521,7 +2521,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
--- Erzeugt am: 19. Apr 2014 um 18:19
+-- Erzeugt am: 20. Apr 2014 um 07:58
 --
 
 DROP TABLE IF EXISTS `partei`;
@@ -2610,7 +2610,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 19. Apr 2014 um 18:19
+-- Erzeugt am: 20. Apr 2014 um 08:00
 --
 
 DROP TABLE IF EXISTS `partei_log`;
@@ -2621,6 +2621,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
   `fraktion_id` int(11) DEFAULT NULL COMMENT 'Fraktionszugehörigkeit der Partei im nationalen Parlament',
   `gruendung` date DEFAULT NULL COMMENT 'Gründungsjahr der Partei. Wenn der genaue Tag unbekannt ist, den 1. Januar wählen.',
   `position` enum('links','rechts','mitte') DEFAULT NULL COMMENT 'Politische Position der Partei',
+  `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23',
   `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage der Partei',
   `email` varchar(100) DEFAULT NULL COMMENT 'Kontakt E-Mail-Adresse der Partei',
   `twitter_name` varchar(50) DEFAULT NULL COMMENT 'Twittername',
@@ -2641,7 +2642,6 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23',
   PRIMARY KEY (`log_id`),
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_partei_log_snapshot_id` (`snapshot_id`)

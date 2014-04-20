@@ -36805,7 +36805,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -36843,7 +36843,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -37615,7 +37615,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -37625,7 +37625,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -40714,7 +40714,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -40726,7 +40726,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -41612,7 +41612,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -41624,7 +41624,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -42510,7 +42510,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -42522,7 +42522,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -43408,7 +43408,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -43420,7 +43420,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -44306,7 +44306,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -44318,7 +44318,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -45204,7 +45204,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -45216,7 +45216,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -46102,7 +46102,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -46114,7 +46114,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -47000,7 +47000,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -47012,7 +47012,7 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -48163,7 +48163,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'linkedin_profil_url_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -48197,7 +48197,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'xing_profil_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -48356,7 +48356,7 @@
             //
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'linkedin_profil_url_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -48364,7 +48364,7 @@
             //
             $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'xing_profil_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
