@@ -1,7 +1,4 @@
 <?php
-// Processed by afterburner.sh
-
-
 
 // require_once 'renderer.php';
 include_once dirname(__FILE__) . '/' . 'renderer.php';
@@ -37,7 +34,7 @@ class EditRenderer extends Renderer
                     'HideSideBarByDefault' => $page->GetHidePageListByDefault(),
                     'LayoutTemplateName' => $layoutTemplate,
                     'PageList' => $this->RenderDef($page->GetReadyPageList()),
-                    'Grid' => $this->Render($page->GetGrid(), true, true, $GLOBALS['customParams'])  /* Afterburner */,
+                    'Grid' => $this->Render($page->GetGrid()),
                     'Variables' => $this->GetPageVariables($page)
                 )
             )

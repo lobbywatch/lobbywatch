@@ -60,7 +60,8 @@
                         <label class="control-label" for="{$Column.FieldName}_edit">
                             <span {* if $Column.Hint}class="hint"{/if *}>{$Column.Caption}</span>
                             {if $Column.Required}<span class="required-mark">*</span>{/if}
-                            {if $Column.Hint}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Column.Hint}" data-hinttitle="{$Column.Caption}">{/if}
+                            {*if $Column.Hint}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Column.Hint}" data-hinttitle="{$Column.Caption}">{/if*}
+                            {if $Hints[$Column.FieldName]}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Hints[$Column.FieldName]}" data-hinttitle="{$Column.Caption}">{/if}
                         </label>
                         {include file="edit_field_options.tpl" Column=$Column}
                     </div>

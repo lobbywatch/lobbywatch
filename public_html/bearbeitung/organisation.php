@@ -1334,17 +1334,7 @@
         }
         public function organisation_anhangDetailEditGrid0organisation_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
-        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
-          $result = 'edit/grid.tpl';
-        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
-          $result = 'insert/grid.tpl';
-        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
-          $result = 'view/grid.tpl';
-        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
-          $result = 'list/grid.tpl';
-        } else if ($part == PagePart::PageList) {
-          $result = 'page_list.tpl';
-        }
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
         }
         function organisation_anhangDetailEditGrid0organisation_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
@@ -4327,17 +4317,7 @@
         }
         public function organisation_jahrDetailEditGrid1organisation_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
-        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
-          $result = 'edit/grid.tpl';
-        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
-          $result = 'insert/grid.tpl';
-        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
-          $result = 'view/grid.tpl';
-        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
-          $result = 'list/grid.tpl';
-        } else if ($part == PagePart::PageList) {
-          $result = 'page_list.tpl';
-        }
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
         }
         public function organisation_jahrDetailEditGrid1organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {
@@ -54936,17 +54916,7 @@
         }
         public function organisationGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
-        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
-          $result = 'edit/grid.tpl';
-        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
-          $result = 'insert/grid.tpl';
-        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
-          $result = 'view/grid.tpl';
-        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
-          $result = 'list/grid.tpl';
-        } else if ($part == PagePart::PageList) {
-          $result = 'page_list.tpl';
-        }
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
         }
         public function organisationGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {

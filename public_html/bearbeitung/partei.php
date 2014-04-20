@@ -13286,17 +13286,7 @@
         }
         public function parteiGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
-        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
-          $result = 'edit/grid.tpl';
-        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
-          $result = 'insert/grid.tpl';
-        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
-          $result = 'view/grid.tpl';
-        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
-          $result = 'list/grid.tpl';
-        } else if ($part == PagePart::PageList) {
-          $result = 'page_list.tpl';
-        }
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
         }
         public function parteiGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {

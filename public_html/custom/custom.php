@@ -115,18 +115,52 @@ function convert_ansi($text) {
   return ConvertTextToEncoding($text, 'UTF-8', GetAnsiEncoding());
 }
 
-function before_render(Page $page) {
-  $page->OnCustomHTMLHeader->AddListener('add_custom_header');
+// Call: defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
+function defaultOnGetCustomTemplate(Page $page, $part, $mode, &$result, &$params)
+{
+  if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
+    $result = 'edit/grid.tpl';
+  } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
+    $result = 'insert/grid.tpl';
+  } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
+    $result = 'view/grid.tpl';
+  } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
+    $result = 'list/grid.tpl';
+  } else if ($part == PagePart::PageList) {
+    $result = 'page_list.tpl';
+  }
 
+  fillHintParams($page, $params);
+}
+
+function fillHintParams(Page $page, &$params) {
+  // Fill info hints
   $hints = array();
   foreach($page->GetGrid()->GetViewColumns() as $column) {
     $raw_name = $column->GetName();
     $name = preg_replace('/^(.*?_id).*/', '\1', $raw_name);
     $name = preg_replace('/_anzeige_name$/', '', $name);
     $hints[$name] = htmlspecialchars($column->GetDescription());
-//      df("Names: $raw_name -> $name");
+    //      df("Names: $raw_name -> $name");
   }
-  $GLOBALS['customParams'] = array( 'Hints' => $hints);
+  $params = array_merge($params, array( 'Hints' => $hints));
+//   df($params, 'params');
+}
+
+function before_render(Page $page) {
+  // Add custom headers
+  $page->OnCustomHTMLHeader->AddListener('add_custom_header');
+
+//   // Fill info hints
+//   $hints = array();
+//   foreach($page->GetGrid()->GetViewColumns() as $column) {
+//     $raw_name = $column->GetName();
+//     $name = preg_replace('/^(.*?_id).*/', '\1', $raw_name);
+//     $name = preg_replace('/_anzeige_name$/', '', $name);
+//     $hints[$name] = htmlspecialchars($column->GetDescription());
+// //      df("Names: $raw_name -> $name");
+//   }
+//   $GLOBALS['customParams'] = array( 'Hints' => $hints);
 }
 
 function add_custom_header(&$page, &$result) {

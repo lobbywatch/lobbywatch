@@ -176,7 +176,6 @@ do
   mv "$file" "$file.bak";
   # Read file, process regex and write file
   cat "$file.bak" \
-  | perl -p -e's/('\''SetDefaultCheckBoxName'\'' => \$column->GetFieldName\(\) \. '\''_def'\'')/\1,\n                '\''Hint'\'' => isset(\$GLOBALS['\''customParams'\'']['\''Hints'\''][\$column->GetFieldName()]) ? \$GLOBALS['\''customParams'\'']['\''Hints'\''][\$column->GetFieldName()] : null, \/\/ Afterburner/' \
   | perl -p -e's/(case OPERATION_DELETE_SELECTED:)/case OPERATION_INPUT_FINISHED_SELECTED: \/\/ Afterburner\n                \$this->gridState = new InputFinishedSelectedGridState(\$this); \/\/ Afterburner\n                break;\n            case OPERATION_DE_INPUT_FINISHED_SELECTED: \/\/ Afterburner\n                \$this->gridState = new DeInputFinishedSelectedGridState(\$this);
                 break;\n            case OPERATION_CONTROLLED_SELECTED: \/\/ Afterburner\n                \$this->gridState = new ControlledSelectedGridState(\$this); \/\/ Afterburner\n                break;\n            case OPERATION_DE_CONTROLLED_SELECTED: \/\/ Afterburner\n                \$this->gridState = new DeControlledSelectedGridState(\$this);
                 break;\n            case OPERATION_AUTHORIZATION_SENT_SELECTED: \/\/ Afterburner\n                \$this->gridState = new AuthorizationSentSelectedGridState(\$this); \/\/ Afterburner\n                break;\n            case OPERATION_DE_AUTHORIZATION_SENT_SELECTED: \/\/ Afterburner\n                \$this->gridState = new DeAuthorizationSentSelectedGridState(\$this);
@@ -191,20 +190,21 @@ do
   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
   > "$file";
 done
+#   | perl -p -e's/('\''SetDefaultCheckBoxName'\'' => \$column->GetFieldName\(\) \. '\''_def'\'')/\1,\n                '\''Hint'\'' => isset(\$GLOBALS['\''customParams'\'']['\''Hints'\''][\$column->GetFieldName()]) ? \$GLOBALS['\''customParams'\'']['\''Hints'\''][\$column->GetFieldName()] : null, \/\/ Afterburner/' \
 #  | perl -p -e's/('\''SetDefaultCheckBoxName'\'' => \$column->GetFieldName\(\) \. '\''_def'\'')/\1,\n                '\''Hint'\'' => \$GLOBALS['\''customParams'\'']['\''Hints'\''][\$column->GetFieldName()], \/\/ Afterburner/' \
 # \n        '\''Hint'\'' => $GLOBALS['\''customParams'\'']['\''Hints'\''][$column-X>GetFieldName()], \/\/ Afterburner/
 
 # 'Grid' => $this->Render($page->GetGrid()),
-for file in $dir/components/renderers/edit_renderer.php $dir/components/renderers/insert_renderer.php
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  # Read file, process regex and write file
-  cat "$file.bak" \
-  | perl -p -e's/\$this->Render\(\$page->GetGrid\(\)\)/\$this->Render(\$page->GetGrid(), true, true, \$GLOBALS['\''customParams'\''])  \/* Afterburner *\//' \
-  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
-  > "$file";
-done
+# for file in $dir/components/renderers/edit_renderer.php $dir/components/renderers/insert_renderer.php
+# do
+#   echo "Process $file";
+#   mv "$file" "$file.bak";
+#   # Read file, process regex and write file
+#   cat "$file.bak" \
+#   | perl -p -e's/\$this->Render\(\$page->GetGrid\(\)\)/\$this->Render(\$page->GetGrid(), true, true, \$GLOBALS['\''customParams'\''])  \/* Afterburner *\//' \
+#   | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+#   > "$file";
+# done
 
 for file in $dir/components/js/pgui.insert-page-main.js $dir/components/js/pgui.edit-page-main.js
 do

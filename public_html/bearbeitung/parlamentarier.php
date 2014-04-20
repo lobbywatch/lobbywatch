@@ -1422,17 +1422,7 @@
         }
         public function parlamentarier_anhangDetailEditGrid0parlamentarier_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
-        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
-          $result = 'edit/grid.tpl';
-        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
-          $result = 'insert/grid.tpl';
-        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
-          $result = 'view/grid.tpl';
-        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
-          $result = 'list/grid.tpl';
-        } else if ($part == PagePart::PageList) {
-          $result = 'page_list.tpl';
-        }
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
         }
         function parlamentarier_anhangDetailEditGrid0parlamentarier_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
@@ -47669,17 +47659,7 @@
         }
         public function parlamentarierGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
-        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
-          $result = 'edit/grid.tpl';
-        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
-          $result = 'insert/grid.tpl';
-        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
-          $result = 'view/grid.tpl';
-        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
-          $result = 'list/grid.tpl';
-        } else if ($part == PagePart::PageList) {
-          $result = 'page_list.tpl';
-        }
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
         }
         public function parlamentarierGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {

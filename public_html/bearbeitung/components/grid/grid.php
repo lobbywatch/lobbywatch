@@ -1494,8 +1494,7 @@ class Grid {
                 'IsValueNull' => $column->IsValueNull(),
                 'IsValueSetToDefault' => $column->IsValueSetToDefault(),
                 'SetNullCheckBoxName' => $column->GetFieldName() . '_null',
-                'SetDefaultCheckBoxName' => $column->GetFieldName() . '_def',
-                'Hint' => isset($GLOBALS['customParams']['Hints'][$column->GetFieldName()]) ? $GLOBALS['customParams']['Hints'][$column->GetFieldName()] : null, // Afterburner
+                'SetDefaultCheckBoxName' => $column->GetFieldName() . '_def'
             );
         }
         return $columnViewDatas;
@@ -1514,8 +1513,7 @@ class Grid {
                 'IsValueNull' => $column->IsValueNull(),
                 'IsValueSetToDefault' => $column->IsValueSetToDefault(),
                 'SetNullCheckBoxName' => $column->GetFieldName() . '_null',
-                'SetDefaultCheckBoxName' => $column->GetFieldName() . '_def',
-                'Hint' => isset($GLOBALS['customParams']['Hints'][$column->GetFieldName()]) ? $GLOBALS['customParams']['Hints'][$column->GetFieldName()] : null, // Afterburner
+                'SetDefaultCheckBoxName' => $column->GetFieldName() . '_def'
             );
         }
         return $columnViewDatas;
