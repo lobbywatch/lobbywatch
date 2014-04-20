@@ -19,6 +19,7 @@ $appGrants = array();
 $dataSourceRecordPermissions = array();
 
 $tableCaptions = array('organisation' => '<span class="entity important-entity">Organisation</span>',
+'organisation.organisation_anhang' => '<span class="entity important-entity">Organisation</span>.Organisation Anhang',
 'organisation.v_organisation_parlamentarier_beide_indirekt' => '<span class="entity important-entity">Organisation</span>.Organisation Parlamentarier Beide Indirekt',
 'organisation.v_organisation_beziehung_auftraggeber_fuer' => '<span class="entity important-entity">Organisation</span>.Organisation Beziehung Auftraggeber Fuer',
 'organisation.v_organisation_beziehung_arbeitet_fuer' => '<span class="entity important-entity">Organisation</span>.Organisation Beziehung Arbeitet Fuer',
