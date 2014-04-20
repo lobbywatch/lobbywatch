@@ -161,6 +161,19 @@
               )
             UNION
             (SELECT
+              \'organisation_jahr\' table_name,
+              \'Organisationsjahr\' name,
+              (select count(*) from `organisation_jahr`) anzahl_eintraege,
+              t.`updated_visa` AS last_visa,
+              t.`updated_date` last_updated,
+              t.id last_updated_id
+              FROM
+              `organisation_jahr` t
+              ORDER BY t.`updated_date` DESC
+              LIMIT 1
+              )
+            UNION
+            (SELECT
               \'parlamentarier\' table_name,
               \'Parlamentarier\' name,
               (select count(*) from `parlamentarier`) anzahl_eintraege,
