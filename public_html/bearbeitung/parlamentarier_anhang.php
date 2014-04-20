@@ -1656,6 +1656,10 @@
         {
             return ;
         }
+        public function parlamentarier_anhangGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
+        {
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
+        }
         function parlamentarier_anhangGrid_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
@@ -1698,6 +1702,7 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $this->OnGetCustomTemplate->AddListener('parlamentarier_anhangGrid' . '_OnGetCustomTemplate', $this);
             $result->BeforeDeleteRecord->AddListener('parlamentarier_anhangGrid' . '_' . 'BeforeDeleteRecord', $this);
             $result->BeforeInsertRecord->AddListener('parlamentarier_anhangGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);

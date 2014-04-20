@@ -1398,6 +1398,10 @@
         {
             return ;
         }
+        public function zutrittsberechtigung_anhangGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
+        {
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
+        }
         function zutrittsberechtigung_anhangGrid_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
@@ -1456,6 +1460,7 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $this->OnGetCustomTemplate->AddListener('zutrittsberechtigung_anhangGrid' . '_OnGetCustomTemplate', $this);
             $result->BeforeDeleteRecord->AddListener('zutrittsberechtigung_anhangGrid' . '_' . 'BeforeDeleteRecord', $this);
             $result->BeforeInsertRecord->AddListener('zutrittsberechtigung_anhangGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
