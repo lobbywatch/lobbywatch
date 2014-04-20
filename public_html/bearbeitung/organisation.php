@@ -43635,8 +43635,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'land_id_anzeige_name', 'interessenraum_id_anzeige_name', 'rechtsform', 'typ', 'vernehmlassung', 'branche_id_anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'beschreibung', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Land'), $this->RenderText('Interessenraum'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Branche'), $this->RenderText('Lobbygruppe'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
+                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'land_id_anzeige_name', 'interessenraum_id_anzeige_name', 'rechtsform', 'typ', 'vernehmlassung', 'branche_id_anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Land'), $this->RenderText('Interessenraum'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Branche'), $this->RenderText('Lobbygruppe'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -43999,6 +43999,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe3_id', $this->RenderText('3. Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('handelsregister_url', $this->RenderText('Handelsregister Url')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name', $this->RenderText('Twitter Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_parlam_verbindung', $this->RenderText('ALT Parlam Verbindung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
@@ -45759,6 +45760,42 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -46229,6 +46266,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('handelsregister_url_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -47020,6 +47065,17 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -47861,6 +47917,17 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
@@ -48020,6 +48087,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $grid->AddPrintColumn($column);
             
             //
@@ -48235,6 +48310,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $grid->AddExportColumn($column);
             
             //
@@ -48521,6 +48604,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -48762,6 +48855,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -49043,6 +49144,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -49284,6 +49395,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -49565,6 +49684,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -49806,6 +49935,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -50087,6 +50224,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -50328,6 +50475,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -50609,6 +50764,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -50850,6 +51015,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -51131,6 +51304,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -51372,6 +51555,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -51653,6 +51844,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -51894,6 +52095,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -52175,6 +52384,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -52416,6 +52635,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -52697,6 +52924,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -52938,6 +53175,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -53219,6 +53464,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -53460,6 +53715,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -53741,6 +54004,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -53982,6 +54255,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -54263,6 +54544,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -54504,6 +54795,14 @@
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //

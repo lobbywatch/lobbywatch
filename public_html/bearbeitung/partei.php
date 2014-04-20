@@ -10578,8 +10578,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parteissearch', $this->dataset,
-                array('id', 'abkuerzung', 'name', 'beschreibung', 'gruendung', 'position', 'homepage', 'email', 'fraktion_id_anzeige_name', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Beschreibung'), $this->RenderText('Gruendung'), $this->RenderText('Position'), $this->RenderText('Homepage'), $this->RenderText('Email'), $this->RenderText('Fraktion'), $this->RenderText('Notizen')),
+                array('id', 'abkuerzung', 'name', 'beschreibung', 'gruendung', 'position', 'farbcode', 'homepage', 'email', 'twitter_name', 'fraktion_id_anzeige_name', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Beschreibung'), $this->RenderText('Gruendung'), $this->RenderText('Position'), $this->RenderText('Farbcode'), $this->RenderText('Homepage'), $this->RenderText('Email'), $this->RenderText('Twitter Name'), $this->RenderText('Fraktion'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -10605,8 +10605,10 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('gruendung', $this->RenderText('Gruendung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('position', $this->RenderText('Position')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('farbcode', $this->RenderText('Farbcode')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name', $this->RenderText('Twitter Name')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -10914,6 +10916,41 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for farbcode field
+            //
+            $editor = new TextEdit('farbcode_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for farbcode field
+            //
+            $editor = new TextEdit('farbcode_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('HTML-Farbcode, z.B. red oder #23FF23'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -10990,6 +11027,42 @@
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('Kontakt E-Mail-Adresse der Partei'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -11446,6 +11519,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -11463,6 +11543,14 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('email_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11615,6 +11703,17 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for farbcode field
+            //
+            $editor = new TextEdit('farbcode_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for homepage field
             //
             $editor = new TextEdit('homepage_edit');
@@ -11635,6 +11734,17 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -11877,6 +11987,17 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for farbcode field
+            //
+            $editor = new TextEdit('farbcode_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for homepage field
             //
             $editor = new TextEdit('homepage_edit');
@@ -11897,6 +12018,17 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -12031,6 +12163,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -12042,6 +12181,14 @@
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $grid->AddPrintColumn($column);
             
             //
@@ -12183,6 +12330,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -12194,6 +12348,14 @@
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $grid->AddExportColumn($column);
             
             //
@@ -12372,6 +12534,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('HTML-Farbcode, z.B. red oder #23FF23'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -12392,6 +12563,16 @@
             $column->SetFullTextWindowHandlerName('email_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('Kontakt E-Mail-Adresse der Partei'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -12558,6 +12739,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -12569,6 +12757,14 @@
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -12742,6 +12938,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('HTML-Farbcode, z.B. red oder #23FF23'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -12762,6 +12967,16 @@
             $column->SetFullTextWindowHandlerName('email_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('Kontakt E-Mail-Adresse der Partei'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -12928,6 +13143,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -12939,6 +13161,14 @@
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $result->AddPrintColumn($column);
             
             //

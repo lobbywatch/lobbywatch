@@ -8173,8 +8173,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('branchessearch', $this->dataset,
-                array('id', 'name', 'kommission_id_anzeige_name', 'beschreibung', 'angaben', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Kommission'), $this->RenderText('Beschreibung'), $this->RenderText('Angaben'), $this->RenderText('Notizen')),
+                array('id', 'name', 'kommission_id_anzeige_name', 'beschreibung', 'angaben', 'farbcode', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Kommission'), $this->RenderText('Beschreibung'), $this->RenderText('Angaben'), $this->RenderText('Farbcode'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -8255,6 +8255,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission_id', $this->RenderText('Kommission'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('angaben', $this->RenderText('Angaben')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('farbcode', $this->RenderText('Farbcode')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
@@ -8593,6 +8594,41 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for farbcode field
+            //
+            $editor = new TextEdit('farbcode_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for farbcode field
+            //
+            $editor = new TextEdit('farbcode_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('HTML-Farbcode, z.B. red oder #23FF23'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -8901,6 +8937,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -9084,6 +9127,17 @@
             //
             $editor = new TextAreaEdit('angaben_edit', 50, 8);
             $editColumn = new CustomEditColumn('Angaben', 'angaben', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for farbcode field
+            //
+            $editor = new TextEdit('farbcode_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -9313,6 +9367,17 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for farbcode field
+            //
+            $editor = new TextEdit('farbcode_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -9367,6 +9432,13 @@
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -9488,6 +9560,13 @@
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -9651,6 +9730,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('HTML-Farbcode, z.B. red oder #23FF23'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -9790,6 +9878,13 @@
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -9948,6 +10043,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('HTML-Farbcode, z.B. red oder #23FF23'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -10087,6 +10191,13 @@
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for farbcode field
+            //
+            $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

@@ -750,13 +750,29 @@ function getTimestamp($date_str) {
 }
 
 /**
+ * Set background-color if farbcode is set.
+
+ * @param unknown $table_name
+ * @param unknown $rowData farbcode
+ * @param unknown $rowCellStyles
+ * @param unknown $rowStyles
+ */
+function customDrawRowFarbcode($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
+  if (isset($rowData['farbcode'])) {
+    $rowCellStyles['farbcode'] = 'background-color: ' . $rowData['farbcode'];
+  }
+}
+
+/**
  *
  * @param unknown $table_name
- * @param unknown $rowData eingabe_abgeschlossen_datum, kontrolliert_datum, freigabe_datum, autorisierung_verschickt_datum, autorisiert_datum, kontrolliert_visa, eingabe_abgeschlossen_visa, im_rat_bis, sitzplatz, email, geburtstag, im_rat_bis, geschlecht, kleinbild, parlament_biografie_id, beruf,
+ * @param unknown $rowData eingabe_abgeschlossen_datum, kontrolliert_datum, freigabe_datum, autorisierung_verschickt_datum, autorisiert_datum, kontrolliert_visa, eingabe_abgeschlossen_visa, im_rat_bis, sitzplatz, email, geburtstag, im_rat_bis, geschlecht, kleinbild, parlament_biografie_id, beruf, farbcode
  * @param unknown $rowCellStyles
  * @param unknown $rowStyles
  */
 function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
+
+  customDrawRowFarbcode($table_name, $rowData, $rowCellStyles, $rowStyles);
 
   $update_threshold = SMDateTime::Parse('2012-01-01', 'Y-m-d');
   $update_threshold_ts = $update_threshold->GetTimestamp();

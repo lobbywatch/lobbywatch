@@ -34599,8 +34599,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'rat_id_abkuerzung', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'arbeitssprache', 'adresse_plz', 'adresse_ort', 'notizen', 'ratsunterbruch_von', 'ratsunterbruch_bis'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Arbeitssprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Notizen'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis')),
+                array('id', 'nachname', 'vorname', 'rat_id_abkuerzung', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'arbeitssprache', 'adresse_plz', 'adresse_ort', 'notizen', 'ratsunterbruch_von', 'ratsunterbruch_bis'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Arbeitssprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Notizen'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -34996,6 +34996,10 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_biografie_id', $this->RenderText('Parlament.ch Biografie ID')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name', $this->RenderText('Twitter Name')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('linkedin_profil_url', $this->RenderText('Linkedin Profil Url')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('xing_profil_name', $this->RenderText('Xing Profil Name')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('facebook_name', $this->RenderText('Facebook Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('arbeitssprache', $this->RenderText('Arbeitssprache')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_plz', $this->RenderText('Adresse PLZ')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_ort', $this->RenderText('Adresse Ort')));
@@ -36743,6 +36747,160 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for linkedin_profil_url field
+            //
+            $editor = new TextEdit('linkedin_profil_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for linkedin_profil_url field
+            //
+            $editor = new TextEdit('linkedin_profil_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for xing_profil_name field
+            //
+            $editor = new TextEdit('xing_profil_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for xing_profil_name field
+            //
+            $editor = new TextEdit('xing_profil_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for facebook_name field
+            //
+            $editor = new TextEdit('facebook_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for facebook_name field
+            //
+            $editor = new TextEdit('facebook_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
@@ -37454,6 +37612,44 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -38307,6 +38503,52 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for linkedin_profil_url field
+            //
+            $editor = new TextEdit('linkedin_profil_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for xing_profil_name field
+            //
+            $editor = new TextEdit('xing_profil_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for facebook_name field
+            //
+            $editor = new TextEdit('facebook_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -39233,6 +39475,52 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for twitter_name field
+            //
+            $editor = new TextEdit('twitter_name_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for linkedin_profil_url field
+            //
+            $editor = new TextEdit('linkedin_profil_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for xing_profil_name field
+            //
+            $editor = new TextEdit('xing_profil_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for facebook_name field
+            //
+            $editor = new TextEdit('facebook_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for arbeitssprache field
             //
             $editor = new ComboBox('arbeitssprache_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -39533,6 +39821,35 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -39910,6 +40227,35 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -40366,6 +40712,52 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
@@ -40738,6 +41130,35 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -41189,6 +41610,52 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
@@ -41561,6 +42028,35 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -42012,6 +42508,52 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
@@ -42384,6 +42926,35 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -42835,6 +43406,52 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
@@ -43207,6 +43824,35 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -43658,6 +44304,52 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
@@ -44030,6 +44722,35 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -44481,6 +45202,52 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
@@ -44853,6 +45620,35 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -45304,6 +46100,52 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
@@ -45676,6 +46518,35 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -46127,6 +46998,52 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for arbeitssprache field
             //
             $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
@@ -46499,6 +47416,35 @@
             $column = new TextViewColumn('parlament_biografie_id', 'Parlament.ch Biografie ID', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name field
+            //
+            $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -47197,6 +48143,112 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for linkedin_profil_url field
+            //
+            $editor = new TextEdit('linkedin_profil_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for linkedin_profil_url field
+            //
+            $editor = new TextEdit('linkedin_profil_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Linkedin Profil Url', 'linkedin_profil_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'linkedin_profil_url_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for xing_profil_name field
+            //
+            $editor = new TextEdit('xing_profil_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for xing_profil_name field
+            //
+            $editor = new TextEdit('xing_profil_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'xing_profil_name_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for facebook_name field
+            //
+            $editor = new TextEdit('facebook_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for facebook_name field
+            //
+            $editor = new TextEdit('facebook_name_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'facebook_name_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for adresse_ort field
             //
             $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
@@ -47312,6 +48364,30 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for linkedin_profil_url field
+            //
+            $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'linkedin_profil_url_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for xing_profil_name field
+            //
+            $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'xing_profil_name_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for facebook_name field
+            //
+            $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'facebook_name_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_ort field
