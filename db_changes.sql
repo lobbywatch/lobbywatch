@@ -714,3 +714,43 @@ ALTER TABLE `mandat` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 
 ALTER TABLE `mandat_log` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'patronatskomitee' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation';
 
 ALTER TABLE `partei_log` CHANGE `farbcode` `farbcode` VARCHAR( 15 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23' AFTER `position`;
+
+ALTER TABLE `organisation_jahr`
+CHANGE `umsatz` `umsatz` BIGINT NULL DEFAULT NULL COMMENT 'Umsatz der Organisation in Franken',
+CHANGE `gewinn` `gewinn` BIGINT NULL DEFAULT NULL COMMENT 'Gewinn der Organisation in Franken',
+CHANGE `kapital` `kapital` BIGINT UNSIGNED NULL DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken',
+CHANGE `mitarbeiter_weltweit` `mitarbeiter_weltweit` INT( 11 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Mitarbeiter weltweit',
+CHANGE `mitarbeiter_schweiz` `mitarbeiter_schweiz` INT( 11 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Mitarbeiter in der Schweiz',
+CHANGE `jahr` `jahr` SMALLINT( 6 ) UNSIGNED NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen';
+
+ALTER TABLE `organisation_jahr_log`
+CHANGE `umsatz` `umsatz` BIGINT NULL DEFAULT NULL COMMENT 'Umsatz der Organisation in Franken',
+CHANGE `gewinn` `gewinn` BIGINT NULL DEFAULT NULL COMMENT 'Gewinn der Organisation in Franken',
+CHANGE `kapital` `kapital` BIGINT UNSIGNED NULL DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken',
+CHANGE `mitarbeiter_weltweit` `mitarbeiter_weltweit` INT( 11 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Mitarbeiter weltweit',
+CHANGE `mitarbeiter_schweiz` `mitarbeiter_schweiz` INT( 11 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Mitarbeiter in der Schweiz',
+CHANGE `jahr` `jahr` SMALLINT( 6 ) UNSIGNED NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen';
+
+ALTER TABLE `kanton`
+CHANGE `flaeche_km2` `flaeche_km2` INT( 11 ) UNSIGNED NOT NULL COMMENT 'Fläche in km2',
+CHANGE `beitrittsjahr` `beitrittsjahr` SMALLINT( 6 ) UNSIGNED NOT NULL COMMENT 'Beitrittsjahr zur Schweiz';
+
+ALTER TABLE `kanton_jahr`
+CHANGE `jahr` `jahr` SMALLINT( 6 ) UNSIGNED NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
+CHANGE `anzahl_nationalraete` `anzahl_nationalraete` TINYINT( 4 ) UNSIGNED NOT NULL COMMENT 'Anzahl Nationalräte des Kantons',
+CHANGE `einwohner` `einwohner` INT( 11 ) UNSIGNED NOT NULL COMMENT 'Wohnbevölkerung des Kantons',
+CHANGE `bevoelkerungsdichte` `bevoelkerungsdichte` SMALLINT( 6 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Bevölkerungsdichte [Einwohner/km2]',
+CHANGE `anzahl_gemeinden` `anzahl_gemeinden` SMALLINT( 6 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Gemeinden',
+CHANGE `steuereinnahmen` `steuereinnahmen` INT( 11 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Stuereinnahmen in Franken';
+
+ALTER TABLE `kanton_log`
+CHANGE `flaeche_km2` `flaeche_km2` INT( 11 ) UNSIGNED NOT NULL COMMENT 'Fläche in km2',
+CHANGE `beitrittsjahr` `beitrittsjahr` SMALLINT( 6 ) UNSIGNED NOT NULL COMMENT 'Beitrittsjahr zur Schweiz';
+
+ALTER TABLE `kanton_jahr_log`
+CHANGE `jahr` `jahr` SMALLINT( 6 ) UNSIGNED NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
+CHANGE `anzahl_nationalraete` `anzahl_nationalraete` TINYINT( 4 ) UNSIGNED NOT NULL COMMENT 'Anzahl Nationalräte des Kantons',
+CHANGE `einwohner` `einwohner` INT( 11 ) UNSIGNED NOT NULL COMMENT 'Wohnbevölkerung des Kantons',
+CHANGE `bevoelkerungsdichte` `bevoelkerungsdichte` SMALLINT( 6 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Bevölkerungsdichte [Einwohner/km2]',
+CHANGE `anzahl_gemeinden` `anzahl_gemeinden` SMALLINT( 6 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Gemeinden',
+CHANGE `steuereinnahmen` `steuereinnahmen` INT( 11 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Stuereinnahmen in Franken';

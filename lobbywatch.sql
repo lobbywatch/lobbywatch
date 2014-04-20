@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 20. Apr 2014 um 10:09
+-- Erstellungszeit: 20. Apr 2014 um 10:33
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -919,7 +919,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `kanton`
 --
--- Erzeugt am: 16. Mrz 2014 um 08:40
+-- Erzeugt am: 20. Apr 2014 um 08:29
 --
 
 DROP TABLE IF EXISTS `kanton`;
@@ -935,8 +935,8 @@ CREATE TABLE IF NOT EXISTS `kanton` (
   `hauptort_de` varchar(50) NOT NULL COMMENT 'Hauptort des Kantons',
   `hauptort_fr` varchar(50) DEFAULT NULL COMMENT 'Hauptort auf französisch',
   `hauptort_it` varchar(50) DEFAULT NULL COMMENT 'Hauptort auf italienisch',
-  `flaeche_km2` int(11) NOT NULL COMMENT 'Fläche in km2',
-  `beitrittsjahr` smallint(6) NOT NULL COMMENT 'Beitrittsjahr zur Schweiz',
+  `flaeche_km2` int(11) unsigned NOT NULL COMMENT 'Fläche in km2',
+  `beitrittsjahr` smallint(6) unsigned NOT NULL COMMENT 'Beitrittsjahr zur Schweiz',
   `wappen_klein` varchar(255) NOT NULL COMMENT 'Pfad zu kleinem Wappen des Kantons (25px)',
   `wappen` varchar(255) NOT NULL COMMENT 'Pfad zu Wappen des Kantons (50px)',
   `lagebild` varchar(255) NOT NULL COMMENT 'Pfad zum lagebild des Kantons',
@@ -1008,20 +1008,20 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kanton_jahr`
 --
--- Erzeugt am: 16. Mrz 2014 um 08:22
+-- Erzeugt am: 20. Apr 2014 um 08:30
 --
 
 DROP TABLE IF EXISTS `kanton_jahr`;
 CREATE TABLE IF NOT EXISTS `kanton_jahr` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Jahreswerte eines Kantons',
   `kanton_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Kantons',
-  `jahr` smallint(6) NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
-  `anzahl_nationalraete` tinyint(4) NOT NULL COMMENT 'Anzahl Nationalräte des Kantons',
-  `einwohner` int(11) NOT NULL COMMENT 'Wohnbevölkerung des Kantons',
+  `jahr` smallint(6) unsigned NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
+  `anzahl_nationalraete` tinyint(4) unsigned NOT NULL COMMENT 'Anzahl Nationalräte des Kantons',
+  `einwohner` int(11) unsigned NOT NULL COMMENT 'Wohnbevölkerung des Kantons',
   `auslaenderanteil` float NOT NULL COMMENT 'Ausländeranteil, zwischen 0 und 1',
-  `bevoelkerungsdichte` smallint(6) DEFAULT NULL COMMENT 'Bevölkerungsdichte [Einwohner/km2]',
-  `anzahl_gemeinden` smallint(6) DEFAULT NULL COMMENT 'Anzahl Gemeinden',
-  `steuereinnahmen` int(11) DEFAULT NULL COMMENT 'Stuereinnahmen in Franken',
+  `bevoelkerungsdichte` smallint(6) unsigned DEFAULT NULL COMMENT 'Bevölkerungsdichte [Einwohner/km2]',
+  `anzahl_gemeinden` smallint(6) unsigned DEFAULT NULL COMMENT 'Anzahl Gemeinden',
+  `steuereinnahmen` int(11) unsigned DEFAULT NULL COMMENT 'Stuereinnahmen in Franken',
   `ausgaben` int(11) DEFAULT NULL COMMENT 'Ausgaben in Franken',
   `finanzausgleich` int(11) DEFAULT NULL COMMENT 'Geld durch Finanzausgleich bekommen, in Franken',
   `schulden` int(11) DEFAULT NULL COMMENT 'Schulden des Kantons in Franken',
@@ -1097,20 +1097,20 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kanton_jahr_log`
 --
--- Erzeugt am: 16. Mrz 2014 um 08:49
+-- Erzeugt am: 20. Apr 2014 um 08:31
 --
 
 DROP TABLE IF EXISTS `kanton_jahr_log`;
 CREATE TABLE IF NOT EXISTS `kanton_jahr_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `kanton_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Kantons',
-  `jahr` smallint(6) NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
-  `anzahl_nationalraete` tinyint(4) NOT NULL COMMENT 'Anzahl Nationalräte des Kantons',
-  `einwohner` int(11) NOT NULL COMMENT 'Wohnbevölkerung des Kantons',
+  `jahr` smallint(6) unsigned NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
+  `anzahl_nationalraete` tinyint(4) unsigned NOT NULL COMMENT 'Anzahl Nationalräte des Kantons',
+  `einwohner` int(11) unsigned NOT NULL COMMENT 'Wohnbevölkerung des Kantons',
   `auslaenderanteil` float NOT NULL COMMENT 'Ausländeranteil, zwischen 0 und 1',
-  `bevoelkerungsdichte` smallint(6) DEFAULT NULL COMMENT 'Bevölkerungsdichte [Einwohner/km2]',
-  `anzahl_gemeinden` smallint(6) DEFAULT NULL COMMENT 'Anzahl Gemeinden',
-  `steuereinnahmen` int(11) DEFAULT NULL COMMENT 'Stuereinnahmen in Franken',
+  `bevoelkerungsdichte` smallint(6) unsigned DEFAULT NULL COMMENT 'Bevölkerungsdichte [Einwohner/km2]',
+  `anzahl_gemeinden` smallint(6) unsigned DEFAULT NULL COMMENT 'Anzahl Gemeinden',
+  `steuereinnahmen` int(11) unsigned DEFAULT NULL COMMENT 'Stuereinnahmen in Franken',
   `ausgaben` int(11) DEFAULT NULL COMMENT 'Ausgaben in Franken',
   `finanzausgleich` int(11) DEFAULT NULL COMMENT 'Geld durch Finanzausgleich bekommen, in Franken',
   `schulden` int(11) DEFAULT NULL COMMENT 'Schulden des Kantons in Franken',
@@ -1145,7 +1145,7 @@ CREATE TABLE IF NOT EXISTS `kanton_jahr_log` (
 --
 -- Tabellenstruktur für Tabelle `kanton_log`
 --
--- Erzeugt am: 16. Mrz 2014 um 08:49
+-- Erzeugt am: 20. Apr 2014 um 08:31
 --
 
 DROP TABLE IF EXISTS `kanton_log`;
@@ -1161,8 +1161,8 @@ CREATE TABLE IF NOT EXISTS `kanton_log` (
   `hauptort_de` varchar(50) NOT NULL COMMENT 'Hauptort des Kantons',
   `hauptort_fr` varchar(50) DEFAULT NULL COMMENT 'Hauptort auf französisch',
   `hauptort_it` varchar(50) DEFAULT NULL COMMENT 'Hauptort auf italienisch',
-  `flaeche_km2` int(11) NOT NULL COMMENT 'Fläche in km2',
-  `beitrittsjahr` smallint(6) NOT NULL COMMENT 'Beitrittsjahr zur Schweiz',
+  `flaeche_km2` int(11) unsigned NOT NULL COMMENT 'Fläche in km2',
+  `beitrittsjahr` smallint(6) unsigned NOT NULL COMMENT 'Beitrittsjahr zur Schweiz',
   `wappen_klein` varchar(255) NOT NULL COMMENT 'Pfad zu kleinem Wappen des Kantons (25px)',
   `wappen` varchar(255) NOT NULL COMMENT 'Pfad zu Wappen des Kantons (50px)',
   `lagebild` varchar(255) NOT NULL COMMENT 'Pfad zum lagebild des Kantons',
@@ -1963,19 +1963,19 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_jahr`
 --
--- Erzeugt am: 20. Apr 2014 um 04:27
+-- Erzeugt am: 20. Apr 2014 um 08:27
 --
 
 DROP TABLE IF EXISTS `organisation_jahr`;
 CREATE TABLE IF NOT EXISTS `organisation_jahr` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Jahreswerte einer Organisation',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Kantons',
-  `jahr` smallint(6) NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
-  `umsatz` int(11) DEFAULT NULL COMMENT 'Umsatz der Organisation in Franken',
-  `gewinn` int(11) DEFAULT NULL COMMENT 'Gewinn der Organisation in Franken',
-  `kapital` int(11) DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken',
-  `mitarbeiter_weltweit` int(11) DEFAULT NULL COMMENT 'Anzahl Mitarbeiter weltweit',
-  `mitarbeiter_schweiz` int(11) DEFAULT NULL COMMENT 'Anzahl Mitarbeiter in der Schweiz',
+  `jahr` smallint(6) unsigned NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
+  `umsatz` bigint(20) DEFAULT NULL COMMENT 'Umsatz der Organisation in Franken',
+  `gewinn` bigint(20) DEFAULT NULL COMMENT 'Gewinn der Organisation in Franken',
+  `kapital` bigint(20) unsigned DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken',
+  `mitarbeiter_weltweit` int(11) unsigned DEFAULT NULL COMMENT 'Anzahl Mitarbeiter weltweit',
+  `mitarbeiter_schweiz` int(11) unsigned DEFAULT NULL COMMENT 'Anzahl Mitarbeiter in der Schweiz',
   `geschaeftsbericht_url` varchar(255) DEFAULT NULL COMMENT 'Link zum Geschäftsbericht',
   `quelle_url` varchar(255) DEFAULT NULL COMMENT 'URL der Quelle',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -2050,19 +2050,19 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_jahr_log`
 --
--- Erzeugt am: 20. Apr 2014 um 04:28
+-- Erzeugt am: 20. Apr 2014 um 08:28
 --
 
 DROP TABLE IF EXISTS `organisation_jahr_log`;
 CREATE TABLE IF NOT EXISTS `organisation_jahr_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Kantons',
-  `jahr` smallint(6) NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
-  `umsatz` int(11) DEFAULT NULL COMMENT 'Umsatz der Organisation in Franken',
-  `gewinn` int(11) DEFAULT NULL COMMENT 'Gewinn der Organisation in Franken',
-  `kapital` int(11) DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken',
-  `mitarbeiter_weltweit` int(11) DEFAULT NULL COMMENT 'Anzahl Mitarbeiter weltweit',
-  `mitarbeiter_schweiz` int(11) DEFAULT NULL COMMENT 'Anzahl Mitarbeiter in der Schweiz',
+  `jahr` smallint(6) unsigned NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
+  `umsatz` bigint(20) DEFAULT NULL COMMENT 'Umsatz der Organisation in Franken',
+  `gewinn` bigint(20) DEFAULT NULL COMMENT 'Gewinn der Organisation in Franken',
+  `kapital` bigint(20) unsigned DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken',
+  `mitarbeiter_weltweit` int(11) unsigned DEFAULT NULL COMMENT 'Anzahl Mitarbeiter weltweit',
+  `mitarbeiter_schweiz` int(11) unsigned DEFAULT NULL COMMENT 'Anzahl Mitarbeiter in der Schweiz',
   `geschaeftsbericht_url` varchar(255) DEFAULT NULL COMMENT 'Link zum Geschäftsbericht',
   `quelle_url` varchar(255) DEFAULT NULL COMMENT 'URL der Quelle',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -3436,8 +3436,8 @@ CREATE TABLE IF NOT EXISTS `v_kanton` (
 ,`hauptort_de` varchar(50)
 ,`hauptort_fr` varchar(50)
 ,`hauptort_it` varchar(50)
-,`flaeche_km2` int(11)
-,`beitrittsjahr` smallint(6)
+,`flaeche_km2` int(11) unsigned
+,`beitrittsjahr` smallint(6) unsigned
 ,`wappen_klein` varchar(255)
 ,`wappen` varchar(255)
 ,`lagebild` varchar(255)
@@ -3455,12 +3455,12 @@ CREATE TABLE IF NOT EXISTS `v_kanton` (
 ,`updated_visa` varchar(10)
 ,`updated_date` timestamp
 ,`kanton_jahr_id` int(11)
-,`jahr` smallint(6)
-,`einwohner` int(11)
+,`jahr` smallint(6) unsigned
+,`einwohner` int(11) unsigned
 ,`auslaenderanteil` float
-,`bevoelkerungsdichte` smallint(6)
-,`anzahl_gemeinden` smallint(6)
-,`anzahl_nationalraete` tinyint(4)
+,`bevoelkerungsdichte` smallint(6) unsigned
+,`anzahl_gemeinden` smallint(6) unsigned
+,`anzahl_nationalraete` tinyint(4) unsigned
 );
 -- --------------------------------------------------------
 
@@ -3481,8 +3481,8 @@ CREATE TABLE IF NOT EXISTS `v_kanton_2012` (
 ,`hauptort_de` varchar(50)
 ,`hauptort_fr` varchar(50)
 ,`hauptort_it` varchar(50)
-,`flaeche_km2` int(11)
-,`beitrittsjahr` smallint(6)
+,`flaeche_km2` int(11) unsigned
+,`beitrittsjahr` smallint(6) unsigned
 ,`wappen_klein` varchar(255)
 ,`wappen` varchar(255)
 ,`lagebild` varchar(255)
@@ -3500,12 +3500,12 @@ CREATE TABLE IF NOT EXISTS `v_kanton_2012` (
 ,`updated_visa` varchar(10)
 ,`updated_date` timestamp
 ,`kanton_jahr_id` int(11)
-,`jahr` smallint(6)
-,`einwohner` int(11)
+,`jahr` smallint(6) unsigned
+,`einwohner` int(11) unsigned
 ,`auslaenderanteil` float
-,`bevoelkerungsdichte` smallint(6)
-,`anzahl_gemeinden` smallint(6)
-,`anzahl_nationalraete` tinyint(4)
+,`bevoelkerungsdichte` smallint(6) unsigned
+,`anzahl_gemeinden` smallint(6) unsigned
+,`anzahl_nationalraete` tinyint(4) unsigned
 );
 -- --------------------------------------------------------
 
@@ -3516,13 +3516,13 @@ DROP VIEW IF EXISTS `v_kanton_jahr`;
 CREATE TABLE IF NOT EXISTS `v_kanton_jahr` (
 `id` int(11)
 ,`kanton_id` int(11)
-,`jahr` smallint(6)
-,`anzahl_nationalraete` tinyint(4)
-,`einwohner` int(11)
+,`jahr` smallint(6) unsigned
+,`anzahl_nationalraete` tinyint(4) unsigned
+,`einwohner` int(11) unsigned
 ,`auslaenderanteil` float
-,`bevoelkerungsdichte` smallint(6)
-,`anzahl_gemeinden` smallint(6)
-,`steuereinnahmen` int(11)
+,`bevoelkerungsdichte` smallint(6) unsigned
+,`anzahl_gemeinden` smallint(6) unsigned
+,`steuereinnahmen` int(11) unsigned
 ,`ausgaben` int(11)
 ,`finanzausgleich` int(11)
 ,`schulden` int(11)
@@ -3547,13 +3547,13 @@ DROP VIEW IF EXISTS `v_kanton_jahr_last`;
 CREATE TABLE IF NOT EXISTS `v_kanton_jahr_last` (
 `id` int(11)
 ,`kanton_id` int(11)
-,`jahr` smallint(6)
-,`anzahl_nationalraete` tinyint(4)
-,`einwohner` int(11)
+,`jahr` smallint(6) unsigned
+,`anzahl_nationalraete` tinyint(4) unsigned
+,`einwohner` int(11) unsigned
 ,`auslaenderanteil` float
-,`bevoelkerungsdichte` smallint(6)
-,`anzahl_gemeinden` smallint(6)
-,`steuereinnahmen` int(11)
+,`bevoelkerungsdichte` smallint(6) unsigned
+,`anzahl_gemeinden` smallint(6) unsigned
+,`steuereinnahmen` int(11) unsigned
 ,`ausgaben` int(11)
 ,`finanzausgleich` int(11)
 ,`schulden` int(11)
@@ -4017,12 +4017,12 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`land` varchar(200)
 ,`interessenraum` varchar(50)
 ,`organisation_jahr_id` int(11)
-,`jahr` smallint(6)
-,`umsatz` int(11)
-,`gewinn` int(11)
-,`kapital` int(11)
-,`mitarbeiter_weltweit` int(11)
-,`mitarbeiter_schweiz` int(11)
+,`jahr` smallint(6) unsigned
+,`umsatz` bigint(20)
+,`gewinn` bigint(20)
+,`kapital` bigint(20) unsigned
+,`mitarbeiter_weltweit` int(11) unsigned
+,`mitarbeiter_schweiz` int(11) unsigned
 ,`geschaeftsbericht_url` varchar(255)
 ,`quelle_url` varchar(255)
 );
@@ -4130,12 +4130,12 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_arbeitet_fuer` (
 ,`land` varchar(200)
 ,`interessenraum` varchar(50)
 ,`organisation_jahr_id` int(11)
-,`jahr` smallint(6)
-,`umsatz` int(11)
-,`gewinn` int(11)
-,`kapital` int(11)
-,`mitarbeiter_weltweit` int(11)
-,`mitarbeiter_schweiz` int(11)
+,`jahr` smallint(6) unsigned
+,`umsatz` bigint(20)
+,`gewinn` bigint(20)
+,`kapital` bigint(20) unsigned
+,`mitarbeiter_weltweit` int(11) unsigned
+,`mitarbeiter_schweiz` int(11) unsigned
 ,`geschaeftsbericht_url` varchar(255)
 ,`quelle_url` varchar(255)
 );
@@ -4194,12 +4194,12 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_auftraggeber_fuer` (
 ,`land` varchar(200)
 ,`interessenraum` varchar(50)
 ,`organisation_jahr_id` int(11)
-,`jahr` smallint(6)
-,`umsatz` int(11)
-,`gewinn` int(11)
-,`kapital` int(11)
-,`mitarbeiter_weltweit` int(11)
-,`mitarbeiter_schweiz` int(11)
+,`jahr` smallint(6) unsigned
+,`umsatz` bigint(20)
+,`gewinn` bigint(20)
+,`kapital` bigint(20) unsigned
+,`mitarbeiter_weltweit` int(11) unsigned
+,`mitarbeiter_schweiz` int(11) unsigned
 ,`geschaeftsbericht_url` varchar(255)
 ,`quelle_url` varchar(255)
 );
@@ -4258,12 +4258,12 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglieder` (
 ,`land` varchar(200)
 ,`interessenraum` varchar(50)
 ,`organisation_jahr_id` int(11)
-,`jahr` smallint(6)
-,`umsatz` int(11)
-,`gewinn` int(11)
-,`kapital` int(11)
-,`mitarbeiter_weltweit` int(11)
-,`mitarbeiter_schweiz` int(11)
+,`jahr` smallint(6) unsigned
+,`umsatz` bigint(20)
+,`gewinn` bigint(20)
+,`kapital` bigint(20) unsigned
+,`mitarbeiter_weltweit` int(11) unsigned
+,`mitarbeiter_schweiz` int(11) unsigned
 ,`geschaeftsbericht_url` varchar(255)
 ,`quelle_url` varchar(255)
 );
@@ -4322,12 +4322,12 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglied_von` (
 ,`land` varchar(200)
 ,`interessenraum` varchar(50)
 ,`organisation_jahr_id` int(11)
-,`jahr` smallint(6)
-,`umsatz` int(11)
-,`gewinn` int(11)
-,`kapital` int(11)
-,`mitarbeiter_weltweit` int(11)
-,`mitarbeiter_schweiz` int(11)
+,`jahr` smallint(6) unsigned
+,`umsatz` bigint(20)
+,`gewinn` bigint(20)
+,`kapital` bigint(20) unsigned
+,`mitarbeiter_weltweit` int(11) unsigned
+,`mitarbeiter_schweiz` int(11) unsigned
 ,`geschaeftsbericht_url` varchar(255)
 ,`quelle_url` varchar(255)
 );
@@ -4386,12 +4386,12 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_muttergesellschaft` (
 ,`land` varchar(200)
 ,`interessenraum` varchar(50)
 ,`organisation_jahr_id` int(11)
-,`jahr` smallint(6)
-,`umsatz` int(11)
-,`gewinn` int(11)
-,`kapital` int(11)
-,`mitarbeiter_weltweit` int(11)
-,`mitarbeiter_schweiz` int(11)
+,`jahr` smallint(6) unsigned
+,`umsatz` bigint(20)
+,`gewinn` bigint(20)
+,`kapital` bigint(20) unsigned
+,`mitarbeiter_weltweit` int(11) unsigned
+,`mitarbeiter_schweiz` int(11) unsigned
 ,`geschaeftsbericht_url` varchar(255)
 ,`quelle_url` varchar(255)
 );
@@ -4450,12 +4450,12 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_tochtergesellschaften` (
 ,`land` varchar(200)
 ,`interessenraum` varchar(50)
 ,`organisation_jahr_id` int(11)
-,`jahr` smallint(6)
-,`umsatz` int(11)
-,`gewinn` int(11)
-,`kapital` int(11)
-,`mitarbeiter_weltweit` int(11)
-,`mitarbeiter_schweiz` int(11)
+,`jahr` smallint(6) unsigned
+,`umsatz` bigint(20)
+,`gewinn` bigint(20)
+,`kapital` bigint(20) unsigned
+,`mitarbeiter_weltweit` int(11) unsigned
+,`mitarbeiter_schweiz` int(11) unsigned
 ,`geschaeftsbericht_url` varchar(255)
 ,`quelle_url` varchar(255)
 );
@@ -4468,12 +4468,12 @@ DROP VIEW IF EXISTS `v_organisation_jahr`;
 CREATE TABLE IF NOT EXISTS `v_organisation_jahr` (
 `id` int(11)
 ,`organisation_id` int(11)
-,`jahr` smallint(6)
-,`umsatz` int(11)
-,`gewinn` int(11)
-,`kapital` int(11)
-,`mitarbeiter_weltweit` int(11)
-,`mitarbeiter_schweiz` int(11)
+,`jahr` smallint(6) unsigned
+,`umsatz` bigint(20)
+,`gewinn` bigint(20)
+,`kapital` bigint(20) unsigned
+,`mitarbeiter_weltweit` int(11) unsigned
+,`mitarbeiter_schweiz` int(11) unsigned
 ,`geschaeftsbericht_url` varchar(255)
 ,`quelle_url` varchar(255)
 ,`notizen` text
@@ -4497,12 +4497,12 @@ DROP VIEW IF EXISTS `v_organisation_jahr_last`;
 CREATE TABLE IF NOT EXISTS `v_organisation_jahr_last` (
 `id` int(11)
 ,`organisation_id` int(11)
-,`jahr` smallint(6)
-,`umsatz` int(11)
-,`gewinn` int(11)
-,`kapital` int(11)
-,`mitarbeiter_weltweit` int(11)
-,`mitarbeiter_schweiz` int(11)
+,`jahr` smallint(6) unsigned
+,`umsatz` bigint(20)
+,`gewinn` bigint(20)
+,`kapital` bigint(20) unsigned
+,`mitarbeiter_weltweit` int(11) unsigned
+,`mitarbeiter_schweiz` int(11) unsigned
 ,`geschaeftsbericht_url` varchar(255)
 ,`quelle_url` varchar(255)
 ,`notizen` text
@@ -4647,7 +4647,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`rat` varchar(10)
 ,`ratstyp` varchar(10)
 ,`kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH')
-,`vertretene_bevoelkerung` bigint(12) unsigned
+,`vertretene_bevoelkerung` bigint(13) unsigned
 ,`id` int(11)
 ,`nachname` varchar(100)
 ,`vorname` varchar(50)
