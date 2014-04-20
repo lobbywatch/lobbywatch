@@ -14331,9 +14331,9 @@
             if (GetCurrentUserGrantForDataSource('kanton')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Kanton</span>'), 'kanton.php', $this->RenderText('Kanton'), $currentPageCaption == $this->RenderText('<span class="entity">Kanton</span>')));
             if (GetCurrentUserGrantForDataSource('settings')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('<span class="view">Settings</span>'), 'settings.php', $this->RenderText('Settings'), $currentPageCaption == $this->RenderText('<span class="view">Settings</span>')));
+                $result->AddPage(new PageLink($this->RenderText('<span class="settings">Settings</span>'), 'settings.php', $this->RenderText('Settings'), $currentPageCaption == $this->RenderText('<span class="settings">Settings</span>')));
             if (GetCurrentUserGrantForDataSource('settings_category')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('<span class="view">Settings Category</span>'), 'settings_category.php', $this->RenderText('Settings Category'), $currentPageCaption == $this->RenderText('<span class="view">Settings Category</span>')));
+                $result->AddPage(new PageLink($this->RenderText('<span class="settings">Settings Category</span>'), 'settings_category.php', $this->RenderText('Settings Category'), $currentPageCaption == $this->RenderText('<span class="settings">Settings Category</span>')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="view">Unvollständige Parlamentarier</span>'), 'q_unvollstaendige_parlamentarier.php', $this->RenderText('Unvollständige Parlamentarier'), $currentPageCaption == $this->RenderText('<span class="view">Unvollständige Parlamentarier</span>')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_organisationen')->HasViewGrant())
@@ -15011,7 +15011,7 @@
             // View column for wappen_klein field
             //
             $column = new ExternalImageColumn('wappen_klein', 'Wappen Klein', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             
             /* <inline edit column> */
@@ -15047,7 +15047,7 @@
             // View column for wappen field
             //
             $column = new ExternalImageColumn('wappen', 'Wappen', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             
             /* <inline edit column> */
@@ -15083,7 +15083,7 @@
             // View column for lagebild field
             //
             $column = new ExternalImageColumn('lagebild', 'Lagebild', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             
             /* <inline edit column> */
@@ -15546,7 +15546,7 @@
             // View column for wappen_klein field
             //
             $column = new ExternalImageColumn('wappen_klein', 'Wappen Klein', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -15554,7 +15554,7 @@
             // View column for wappen field
             //
             $column = new ExternalImageColumn('wappen', 'Wappen', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -15562,7 +15562,7 @@
             // View column for lagebild field
             //
             $column = new ExternalImageColumn('lagebild', 'Lagebild', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -16869,7 +16869,7 @@
             // View column for wappen_klein field
             //
             $column = new ExternalImageColumn('wappen_klein', 'Wappen Klein', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Pfad zu kleinem Wappen des Kantons (25px)'));
             $column->SetFixedWidth(null);
@@ -16879,7 +16879,7 @@
             // View column for wappen field
             //
             $column = new ExternalImageColumn('wappen', 'Wappen', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Pfad zu Wappen des Kantons (50px)'));
             $column->SetFixedWidth(null);
@@ -16889,7 +16889,7 @@
             // View column for lagebild field
             //
             $column = new ExternalImageColumn('lagebild', 'Lagebild', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Pfad zum lagebild des Kantons'));
             $column->SetFixedWidth(null);
@@ -17372,7 +17372,7 @@
             // View column for wappen_klein field
             //
             $column = new ExternalImageColumn('wappen_klein', 'Wappen Klein', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Pfad zu kleinem Wappen des Kantons (25px)'));
             $column->SetFixedWidth(null);
@@ -17382,7 +17382,7 @@
             // View column for wappen field
             //
             $column = new ExternalImageColumn('wappen', 'Wappen', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Pfad zu Wappen des Kantons (50px)'));
             $column->SetFixedWidth(null);
@@ -17392,7 +17392,7 @@
             // View column for lagebild field
             //
             $column = new ExternalImageColumn('lagebild', 'Lagebild', $this->dataset, '');
-            $column->SetSourcePrefix('');
+            $column->SetSourcePrefix('/sites/lobbywatch.ch/app/');
             $column->SetSourceSuffix('');
             $column->SetDescription($this->RenderText('Pfad zum lagebild des Kantons'));
             $column->SetFixedWidth(null);
