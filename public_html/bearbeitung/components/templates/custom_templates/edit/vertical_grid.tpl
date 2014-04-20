@@ -17,6 +17,7 @@
                     <label class="control-label" for="not-existed">
                         {$Column.Caption}
                         {if $Column.Required}<span class="required-mark">*</span>{/if}
+                        {if $Column.Hint}<img src="img/icons/information.png" alt="Hinweis" data-hint="{$Column.Hint}" data-hinttitle="{$Column.Caption}">{/if}
                     {include file="edit_field_options.tpl" Column=$Column}
                     </label>
                     <div class="controls">
