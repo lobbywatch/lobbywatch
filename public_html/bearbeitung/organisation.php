@@ -256,6 +256,10 @@
         {
             return ;
         }
+        public function organisation_anhangDetailViewGrid0organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation_anhang', $rowData, $rowCellStyles, $rowStyles);
+        }
         function organisation_anhangDetailViewGrid0organisation_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
@@ -285,6 +289,7 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $result->OnCustomDrawCell->AddListener('organisation_anhangDetailViewGrid0organisation' . '_OnCustomDrawRow', $this);
             $result->BeforeDeleteRecord->AddListener('organisation_anhangDetailViewGrid0organisation' . '_' . 'BeforeDeleteRecord', $this);
             $result->BeforeInsertRecord->AddListener('organisation_anhangDetailViewGrid0organisation' . '_' . 'BeforeInsertRecord', $this);
             $this->AddFieldColumns($result);
@@ -1415,6 +1420,10 @@
         {
             return ;
         }
+        public function organisation_anhangDetailEditGrid0organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation_anhang', $rowData, $rowCellStyles, $rowStyles);
+        }
         function organisation_anhangDetailEditGrid0organisation_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
@@ -1468,6 +1477,7 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $result->OnCustomDrawCell->AddListener('organisation_anhangDetailEditGrid0organisation' . '_OnCustomDrawRow', $this);
             $result->BeforeDeleteRecord->AddListener('organisation_anhangDetailEditGrid0organisation' . '_' . 'BeforeDeleteRecord', $this);
             $result->BeforeInsertRecord->AddListener('organisation_anhangDetailEditGrid0organisation' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
@@ -2375,6 +2385,10 @@
         {
             return ;
         }
+        public function organisation_jahrDetailViewGrid1organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation_jahr', $rowData, $rowCellStyles, $rowStyles);
+        }
     
         public function GetPageDirection()
         {
@@ -2396,6 +2410,7 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $result->OnCustomDrawCell->AddListener('organisation_jahrDetailViewGrid1organisation' . '_OnCustomDrawRow', $this);
             $this->AddFieldColumns($result);
             //
             // View column for geschaeftsbericht_url field
@@ -4342,6 +4357,10 @@
           $result = 'page_list.tpl';
         }
         }
+        public function organisation_jahrDetailEditGrid1organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('organisation_jahr', $rowData, $rowCellStyles, $rowStyles);
+        }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -4372,6 +4391,7 @@
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('organisation_jahrDetailEditGrid1organisation' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('organisation_jahrDetailEditGrid1organisation' . '_OnCustomDrawRow', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);
@@ -43613,6 +43633,12 @@
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Partei</span>'), 'partei.php', $this->RenderText('Partei'), $currentPageCaption == $this->RenderText('<span class="entity">Partei</span>')));
             if (GetCurrentUserGrantForDataSource('fraktion')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Fraktion</span>'), 'fraktion.php', $this->RenderText('Fraktion'), $currentPageCaption == $this->RenderText('<span class="entity">Fraktion</span>')));
+            if (GetCurrentUserGrantForDataSource('kanton')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<span class="entity">Kanton</span>'), 'kanton.php', $this->RenderText('Kanton'), $currentPageCaption == $this->RenderText('<span class="entity">Kanton</span>')));
+            if (GetCurrentUserGrantForDataSource('settings')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<span class="view">Settings</span>'), 'settings.php', $this->RenderText('Settings'), $currentPageCaption == $this->RenderText('<span class="view">Settings</span>')));
+            if (GetCurrentUserGrantForDataSource('settings_category')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<span class="view">Settings Category</span>'), 'settings_category.php', $this->RenderText('Settings Category'), $currentPageCaption == $this->RenderText('<span class="view">Settings Category</span>')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="view">Unvollständige Parlamentarier</span>'), 'q_unvollstaendige_parlamentarier.php', $this->RenderText('Unvollständige Parlamentarier'), $currentPageCaption == $this->RenderText('<span class="view">Unvollständige Parlamentarier</span>')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_organisationen')->HasViewGrant())

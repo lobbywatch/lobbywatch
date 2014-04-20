@@ -307,6 +307,14 @@ h3.box-title,
   margin-left: -20px;
 }
 
+.pg-page-list > li > a .settings {
+  background-image: url("../../../../img/icons/fugue/application-block.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
 .pg-page-list > li > a .website,
 .pg-page-list > li > a .auswertung {
   background-image: url("/favicon.png");
