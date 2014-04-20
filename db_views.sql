@@ -346,10 +346,9 @@ SELECT kanton_jahr.*
 FROM `kanton_jahr`;
 
 CREATE OR REPLACE VIEW `v_kanton_jahr_last` AS
-SELECT kanton_jahr.*
+SELECT MAX(kanton_jahr.jahr) max_jahr, kanton_jahr.*
 FROM `kanton_jahr`
-ORDER BY `kanton_jahr`.jahr DESC
-LIMIT 1;
+GROUP BY kanton_jahr.kanton_id;
 
 CREATE OR REPLACE VIEW `v_kanton_2012` AS
 SELECT kanton.name_de as anzeige_name, kanton.*, kanton_jahr.`id` as kanton_jahr_id, kanton_jahr.`jahr`, kanton_jahr.einwohner, kanton_jahr.auslaenderanteil, kanton_jahr.bevoelkerungsdichte, kanton_jahr.anzahl_gemeinden, kanton_jahr.anzahl_nationalraete
@@ -408,11 +407,15 @@ CREATE OR REPLACE VIEW `v_organisation_jahr` AS
 SELECT `organisation_jahr`.*
 FROM `organisation_jahr`;
 
+CREATE OR REPLACE VIEW `v_kanton_jahr_last` AS
+SELECT MAX(kanton_jahr.jahr) max_jahr, kanton_jahr.*
+FROM `kanton_jahr`
+GROUP BY kanton_jahr.kanton_id;
+
 CREATE OR REPLACE VIEW `v_organisation_jahr_last` AS
-SELECT `organisation_jahr`.*
+SELECT MAX(organisation_jahr.jahr) max_jahr, `organisation_jahr`.*
 FROM `organisation_jahr`
-ORDER BY `organisation_jahr`.jahr DESC
-LIMIT 1;
+GROUP BY organisation_jahr.organisation_id;
 
 CREATE OR REPLACE VIEW `v_organisation` AS
 SELECT CONCAT_WS('; ', o.name_de, o.name_fr, o.name_it) AS anzeige_name,

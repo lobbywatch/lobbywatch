@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 20. Apr 2014 um 10:33
+-- Erstellungszeit: 20. Apr 2014 um 20:19
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -3545,7 +3545,8 @@ CREATE TABLE IF NOT EXISTS `v_kanton_jahr` (
 --
 DROP VIEW IF EXISTS `v_kanton_jahr_last`;
 CREATE TABLE IF NOT EXISTS `v_kanton_jahr_last` (
-`id` int(11)
+`max_jahr` smallint(6) unsigned
+,`id` int(11)
 ,`kanton_id` int(11)
 ,`jahr` smallint(6) unsigned
 ,`anzahl_nationalraete` tinyint(4) unsigned
@@ -4495,7 +4496,8 @@ CREATE TABLE IF NOT EXISTS `v_organisation_jahr` (
 --
 DROP VIEW IF EXISTS `v_organisation_jahr_last`;
 CREATE TABLE IF NOT EXISTS `v_organisation_jahr_last` (
-`id` int(11)
+`max_jahr` smallint(6) unsigned
+,`id` int(11)
 ,`organisation_id` int(11)
 ,`jahr` smallint(6) unsigned
 ,`umsatz` bigint(20)
@@ -5512,7 +5514,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_kanton_jahr_last`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_kanton_jahr_last` AS select `kanton_jahr`.`id` AS `id`,`kanton_jahr`.`kanton_id` AS `kanton_id`,`kanton_jahr`.`jahr` AS `jahr`,`kanton_jahr`.`anzahl_nationalraete` AS `anzahl_nationalraete`,`kanton_jahr`.`einwohner` AS `einwohner`,`kanton_jahr`.`auslaenderanteil` AS `auslaenderanteil`,`kanton_jahr`.`bevoelkerungsdichte` AS `bevoelkerungsdichte`,`kanton_jahr`.`anzahl_gemeinden` AS `anzahl_gemeinden`,`kanton_jahr`.`steuereinnahmen` AS `steuereinnahmen`,`kanton_jahr`.`ausgaben` AS `ausgaben`,`kanton_jahr`.`finanzausgleich` AS `finanzausgleich`,`kanton_jahr`.`schulden` AS `schulden`,`kanton_jahr`.`notizen` AS `notizen`,`kanton_jahr`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`kanton_jahr`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`kanton_jahr`.`kontrolliert_visa` AS `kontrolliert_visa`,`kanton_jahr`.`kontrolliert_datum` AS `kontrolliert_datum`,`kanton_jahr`.`freigabe_visa` AS `freigabe_visa`,`kanton_jahr`.`freigabe_datum` AS `freigabe_datum`,`kanton_jahr`.`created_visa` AS `created_visa`,`kanton_jahr`.`created_date` AS `created_date`,`kanton_jahr`.`updated_visa` AS `updated_visa`,`kanton_jahr`.`updated_date` AS `updated_date` from `kanton_jahr` order by `kanton_jahr`.`jahr` desc limit 1;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_kanton_jahr_last` AS select max(`kanton_jahr`.`jahr`) AS `max_jahr`,`kanton_jahr`.`id` AS `id`,`kanton_jahr`.`kanton_id` AS `kanton_id`,`kanton_jahr`.`jahr` AS `jahr`,`kanton_jahr`.`anzahl_nationalraete` AS `anzahl_nationalraete`,`kanton_jahr`.`einwohner` AS `einwohner`,`kanton_jahr`.`auslaenderanteil` AS `auslaenderanteil`,`kanton_jahr`.`bevoelkerungsdichte` AS `bevoelkerungsdichte`,`kanton_jahr`.`anzahl_gemeinden` AS `anzahl_gemeinden`,`kanton_jahr`.`steuereinnahmen` AS `steuereinnahmen`,`kanton_jahr`.`ausgaben` AS `ausgaben`,`kanton_jahr`.`finanzausgleich` AS `finanzausgleich`,`kanton_jahr`.`schulden` AS `schulden`,`kanton_jahr`.`notizen` AS `notizen`,`kanton_jahr`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`kanton_jahr`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`kanton_jahr`.`kontrolliert_visa` AS `kontrolliert_visa`,`kanton_jahr`.`kontrolliert_datum` AS `kontrolliert_datum`,`kanton_jahr`.`freigabe_visa` AS `freigabe_visa`,`kanton_jahr`.`freigabe_datum` AS `freigabe_datum`,`kanton_jahr`.`created_visa` AS `created_visa`,`kanton_jahr`.`created_date` AS `created_date`,`kanton_jahr`.`updated_visa` AS `updated_visa`,`kanton_jahr`.`updated_date` AS `updated_date` from `kanton_jahr` group by `kanton_jahr`.`kanton_id`;
 
 -- --------------------------------------------------------
 
@@ -5845,7 +5847,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_jahr_last`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_jahr_last` AS select `organisation_jahr`.`id` AS `id`,`organisation_jahr`.`organisation_id` AS `organisation_id`,`organisation_jahr`.`jahr` AS `jahr`,`organisation_jahr`.`umsatz` AS `umsatz`,`organisation_jahr`.`gewinn` AS `gewinn`,`organisation_jahr`.`kapital` AS `kapital`,`organisation_jahr`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation_jahr`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation_jahr`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation_jahr`.`quelle_url` AS `quelle_url`,`organisation_jahr`.`notizen` AS `notizen`,`organisation_jahr`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_jahr`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_jahr`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_jahr`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_jahr`.`freigabe_visa` AS `freigabe_visa`,`organisation_jahr`.`freigabe_datum` AS `freigabe_datum`,`organisation_jahr`.`created_visa` AS `created_visa`,`organisation_jahr`.`created_date` AS `created_date`,`organisation_jahr`.`updated_visa` AS `updated_visa`,`organisation_jahr`.`updated_date` AS `updated_date` from `organisation_jahr` order by `organisation_jahr`.`jahr` desc limit 1;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_jahr_last` AS select max(`organisation_jahr`.`jahr`) AS `max_jahr`,`organisation_jahr`.`id` AS `id`,`organisation_jahr`.`organisation_id` AS `organisation_id`,`organisation_jahr`.`jahr` AS `jahr`,`organisation_jahr`.`umsatz` AS `umsatz`,`organisation_jahr`.`gewinn` AS `gewinn`,`organisation_jahr`.`kapital` AS `kapital`,`organisation_jahr`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation_jahr`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation_jahr`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation_jahr`.`quelle_url` AS `quelle_url`,`organisation_jahr`.`notizen` AS `notizen`,`organisation_jahr`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_jahr`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_jahr`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_jahr`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_jahr`.`freigabe_visa` AS `freigabe_visa`,`organisation_jahr`.`freigabe_datum` AS `freigabe_datum`,`organisation_jahr`.`created_visa` AS `created_visa`,`organisation_jahr`.`created_date` AS `created_date`,`organisation_jahr`.`updated_visa` AS `updated_visa`,`organisation_jahr`.`updated_date` AS `updated_date` from `organisation_jahr` group by `organisation_jahr`.`organisation_id`;
 
 -- --------------------------------------------------------
 
