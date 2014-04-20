@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 20. Apr 2014 um 06:38
+-- Erstellungszeit: 20. Apr 2014 um 06:52
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -1577,7 +1577,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 19. Apr 2014 um 17:46
+-- Erzeugt am: 20. Apr 2014 um 04:48
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1590,7 +1590,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
   `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum der Organisation',
   `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
-  `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
+  `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
   `interessengruppe2_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. 2. Interessengruppe der Organisation.',
@@ -2097,7 +2097,7 @@ CREATE TABLE IF NOT EXISTS `organisation_jahr_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 19. Apr 2014 um 17:47
+-- Erzeugt am: 20. Apr 2014 um 04:48
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -2110,7 +2110,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
   `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum der Organisation',
   `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
-  `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
+  `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
   `interessengruppe2_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. 2. Interessengruppe der Organisation.',
@@ -3985,7 +3985,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
 ,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
-,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
+,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
 ,`interessengruppe2_id` int(11)
@@ -4098,7 +4098,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_arbeitet_fuer` (
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
 ,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
-,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
+,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
 ,`interessengruppe2_id` int(11)
@@ -4162,7 +4162,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_auftraggeber_fuer` (
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
 ,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
-,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
+,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
 ,`interessengruppe2_id` int(11)
@@ -4226,7 +4226,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglieder` (
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
 ,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
-,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
+,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
 ,`interessengruppe2_id` int(11)
@@ -4290,7 +4290,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglied_von` (
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
 ,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
-,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
+,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
 ,`interessengruppe2_id` int(11)
@@ -4354,7 +4354,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_muttergesellschaft` (
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
 ,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
-,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
+,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
 ,`interessengruppe2_id` int(11)
@@ -4418,7 +4418,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_tochtergesellschaften` (
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
 ,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
-,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby')
+,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
 ,`interessengruppe2_id` int(11)

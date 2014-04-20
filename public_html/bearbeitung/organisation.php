@@ -44731,6 +44731,8 @@
             $editor->AddValue('MitgliedsOrganisation', $this->RenderText('MitgliedsOrganisation'));
             $editor->AddValue('LeistungsErbringer', $this->RenderText('LeistungsErbringer'));
             $editor->AddValue('dezidierteLobby', $this->RenderText('dezidierteLobby'));
+            $editor->AddValue('Gemeinnuetzig', $this->RenderText('Gemeinnuetzig'));
+            $editor->AddValue('Gewinnorientiert', $this->RenderText('Gewinnorientiert'));
             $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -44749,6 +44751,8 @@
             $editor->AddValue('MitgliedsOrganisation', $this->RenderText('MitgliedsOrganisation'));
             $editor->AddValue('LeistungsErbringer', $this->RenderText('LeistungsErbringer'));
             $editor->AddValue('dezidierteLobby', $this->RenderText('dezidierteLobby'));
+            $editor->AddValue('Gemeinnuetzig', $this->RenderText('Gemeinnuetzig'));
+            $editor->AddValue('Gewinnorientiert', $this->RenderText('Gewinnorientiert'));
             $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -46564,6 +46568,8 @@
             $editor->AddValue('MitgliedsOrganisation', $this->RenderText('MitgliedsOrganisation'));
             $editor->AddValue('LeistungsErbringer', $this->RenderText('LeistungsErbringer'));
             $editor->AddValue('dezidierteLobby', $this->RenderText('dezidierteLobby'));
+            $editor->AddValue('Gemeinnuetzig', $this->RenderText('Gemeinnuetzig'));
+            $editor->AddValue('Gewinnorientiert', $this->RenderText('Gewinnorientiert'));
             $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -47399,6 +47405,8 @@
             $editor->AddValue('MitgliedsOrganisation', $this->RenderText('MitgliedsOrganisation'));
             $editor->AddValue('LeistungsErbringer', $this->RenderText('LeistungsErbringer'));
             $editor->AddValue('dezidierteLobby', $this->RenderText('dezidierteLobby'));
+            $editor->AddValue('Gemeinnuetzig', $this->RenderText('Gemeinnuetzig'));
+            $editor->AddValue('Gewinnorientiert', $this->RenderText('Gewinnorientiert'));
             $editColumn = new CustomEditColumn('Typ', 'typ', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);

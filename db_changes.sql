@@ -696,3 +696,7 @@ CHANGE `gewinn` `gewinn` INT( 11 ) NULL COMMENT 'Gewinn der Organisation in Fran
 ALTER TABLE `organisation_jahr_log`
 CHANGE `umsatz` `umsatz` INT( 11 ) NULL COMMENT 'Umsatz der Organisation in Franken',
 CHANGE `gewinn` `gewinn` INT( 11 ) NULL COMMENT 'Gewinn der Organisation in Franken';
+
+ALTER TABLE `organisation` CHANGE `typ` `typ` SET( 'EinzelOrganisation', 'DachOrganisation', 'MitgliedsOrganisation', 'LeistungsErbringer', 'dezidierteLobby', 'Gemeinnuetzig', 'Gewinnorientiert' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.';
+
+ALTER TABLE `organisation_log` CHANGE `typ` `typ` SET( 'EinzelOrganisation', 'DachOrganisation', 'MitgliedsOrganisation', 'LeistungsErbringer', 'dezidierteLobby', 'Gemeinnuetzig', 'Gewinnorientiert' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.';
