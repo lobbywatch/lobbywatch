@@ -815,7 +815,8 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
   customDrawRowFarbcode($table_name, $rowData, $rowCellStyles, $rowStyles);
 
-  $update_threshold = SMDateTime::Parse('2012-01-01', 'Y-m-d');
+  $update_threshold_setting = getSettingValue('ueberarbeitungsDatumSchwellwert', '2012-01-01');
+  $update_threshold = SMDateTime::Parse($update_threshold_setting, 'Y-m-d');
   $update_threshold_ts = $update_threshold->GetTimestamp();
   $now_ts = time();
 
@@ -1198,3 +1199,77 @@ function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName)
 
   clean_fields(/*$page,*/ $rowData/*, $cancel, $message, $tableName*/);
 }
+
+/**
+ * Fetch a setting parameter.
+ * @return value or default value if nothing found
+ */
+function getSettingValue($key, $defaultValue = null) {
+  $eng_con = getDBConnection();
+  $values = array();
+  try {
+    $con = $eng_con->GetConnectionHandle();
+    // TODO close connection
+    $sql = "SELECT id, value
+  FROM v_settings settings
+  WHERE
+    settings.key_name=:key";
+
+    $sth = $con->prepare($sql);
+    $sth->execute(array(':key' => $key));
+    $values = $sth->fetchAll();
+  } finally {
+    $eng_con->Disconnect();
+  }
+
+//   df($values, '$values');
+//   df($defaultValue, '$defaultValue');
+//   df($values[0]['value'], '$values[0][value]');
+
+//   df(getSettingCategoryValues('Test'), 'Test');
+//   df(getSettingCategoryValues('Test3', 'nothing'), 'Test nothing');
+
+  if (count($values) > 1) {
+    throw new Exception('Too many values for setting "' . $key . '""');
+  } else if (count($values) == 0) {
+    // Nothing found, return defaultValue
+    return $defaultValue;
+  } else {
+    // Return first result
+    return $values[0]['value'];
+  }
+}
+
+/**
+ * Useful for color values.
+ * @return key=value array
+ */
+function getSettingCategoryValues($categoryName, $defaultValue = null) {
+  $eng_con = getDBConnection();
+  $values = array();
+  try {
+    $con = $eng_con->GetConnectionHandle();
+    // TODO close connection
+    $sql = "SELECT id, key_name, value
+  FROM v_settings settings
+  WHERE settings.category_name=:categoryName";
+
+    $sth = $con->prepare($sql);
+    $sth->execute(array(':categoryName' => $categoryName));
+    $values = $sth->fetchAll();
+  } finally {
+    $eng_con->Disconnect();
+  }
+
+  if (count($values) == 0) {
+    // Nothing found, return defaultValue
+    return $defaultValue;
+  } else {
+    $simple = array();
+    foreach ($values as $rec) {
+      $simple[$rec['key_name']] = $rec['value'];
+    }
+    return $simple;
+  }
+}
+

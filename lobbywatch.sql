@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 20. Apr 2014 um 20:19
+-- Erstellungszeit: 20. Apr 2014 um 21:35
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -4836,6 +4836,7 @@ CREATE TABLE IF NOT EXISTS `v_settings` (
 ,`created_date` timestamp
 ,`updated_visa` varchar(10)
 ,`updated_date` timestamp
+,`category_name` varchar(50)
 );
 -- --------------------------------------------------------
 
@@ -5937,7 +5938,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_settings`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_settings` AS select `settings`.`id` AS `id`,`settings`.`key_name` AS `key_name`,`settings`.`value` AS `value`,`settings`.`description` AS `description`,`settings`.`category_id` AS `category_id`,`settings`.`notizen` AS `notizen`,`settings`.`created_visa` AS `created_visa`,`settings`.`created_date` AS `created_date`,`settings`.`updated_visa` AS `updated_visa`,`settings`.`updated_date` AS `updated_date` from `settings`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_settings` AS select `settings`.`id` AS `id`,`settings`.`key_name` AS `key_name`,`settings`.`value` AS `value`,`settings`.`description` AS `description`,`settings`.`category_id` AS `category_id`,`settings`.`notizen` AS `notizen`,`settings`.`created_visa` AS `created_visa`,`settings`.`created_date` AS `created_date`,`settings`.`updated_visa` AS `updated_visa`,`settings`.`updated_date` AS `updated_date`,`settings_category`.`name` AS `category_name` from (`settings` left join `v_settings_category` `settings_category` on((`settings`.`category_id` = `settings_category`.`id`)));
 
 -- --------------------------------------------------------
 

@@ -324,13 +324,15 @@ ORDER BY last_updated DESC;
 
 -- VIEWS
 
-CREATE OR REPLACE VIEW `v_settings` AS
-SELECT `settings`.*
-FROM `settings`;
-
 CREATE OR REPLACE VIEW `v_settings_category` AS
 SELECT `settings_category`.*
 FROM `settings_category`;
+
+CREATE OR REPLACE VIEW `v_settings` AS
+SELECT `settings`.*, settings_category.name as category_name
+FROM `settings`
+LEFT JOIN `v_settings_category` settings_category
+ON settings.category_id = settings_category.id;
 
 CREATE OR REPLACE VIEW `v_country` AS
 SELECT country.name_de as anzeige_name, country.*
