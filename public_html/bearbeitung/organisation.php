@@ -130,7 +130,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -142,7 +144,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -256,10 +260,6 @@
         {
             return ;
         }
-        public function organisation_anhangDetailViewGrid0organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
-        {
-        customDrawRow('organisation_anhang', $rowData, $rowCellStyles, $rowStyles);
-        }
         function organisation_anhangDetailViewGrid0organisation_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
@@ -289,7 +289,6 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
-            $result->OnCustomDrawCell->AddListener('organisation_anhangDetailViewGrid0organisation' . '_OnCustomDrawRow', $this);
             $result->BeforeDeleteRecord->AddListener('organisation_anhangDetailViewGrid0organisation' . '_' . 'BeforeDeleteRecord', $this);
             $result->BeforeInsertRecord->AddListener('organisation_anhangDetailViewGrid0organisation' . '_' . 'BeforeInsertRecord', $this);
             $this->AddFieldColumns($result);
@@ -312,7 +311,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -324,7 +325,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -647,7 +650,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -659,7 +664,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -900,7 +907,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1147,7 +1156,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1420,10 +1431,6 @@
         {
             return ;
         }
-        public function organisation_anhangDetailEditGrid0organisation_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
-        {
-        customDrawRow('organisation_anhang', $rowData, $rowCellStyles, $rowStyles);
-        }
         function organisation_anhangDetailEditGrid0organisation_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
         {
             datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
@@ -1477,7 +1484,6 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
-            $result->OnCustomDrawCell->AddListener('organisation_anhangDetailEditGrid0organisation' . '_OnCustomDrawRow', $this);
             $result->BeforeDeleteRecord->AddListener('organisation_anhangDetailEditGrid0organisation' . '_' . 'BeforeDeleteRecord', $this);
             $result->BeforeInsertRecord->AddListener('organisation_anhangDetailEditGrid0organisation' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
@@ -1527,7 +1533,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1539,7 +1547,9 @@
             //
             // Edit column for beschreibung field
             //
-            $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
+            $editor = new TextEdit('beschreibung_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);

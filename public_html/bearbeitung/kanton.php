@@ -99,7 +99,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('kanton_id', 'kanton', new IntegerField('id', null, null, true), new StringField('abkuerzung', 'kanton_id_abkuerzung', 'kanton_id_abkuerzung_kanton'), 'kanton_id_abkuerzung_kanton');
+            $this->dataset->AddLookupField('kanton_id', 'v_kanton', new IntegerField('id'), new StringField('abkuerzung', 'kanton_id_abkuerzung', 'kanton_id_abkuerzung_v_kanton'), 'kanton_id_abkuerzung_v_kanton');
         }
     
         protected function AddFieldColumns(Grid $grid)
@@ -116,7 +116,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton Id', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(false);
             
             /* <inline edit column> */
@@ -127,10 +127,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`kanton`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_kanton`');
+            $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -203,9 +206,23 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kanton_jahr_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('jahr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('einwohner');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('auslaenderanteil');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('bevoelkerungsdichte');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_gemeinden');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kanton Id', 
+                'Kanton', 
                 'kanton_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -223,10 +240,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`kanton`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_kanton`');
+            $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -299,9 +319,23 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kanton_jahr_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('jahr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('einwohner');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('auslaenderanteil');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('bevoelkerungsdichte');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_gemeinden');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kanton Id', 
+                'Kanton', 
                 'kanton_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -1236,7 +1270,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('kanton_id', 'kanton', new IntegerField('id', null, null, true), new StringField('abkuerzung', 'kanton_id_abkuerzung', 'kanton_id_abkuerzung_kanton'), 'kanton_id_abkuerzung_kanton');
+            $this->dataset->AddLookupField('kanton_id', 'v_kanton', new IntegerField('id'), new StringField('abkuerzung', 'kanton_id_abkuerzung', 'kanton_id_abkuerzung_v_kanton'), 'kanton_id_abkuerzung_v_kanton');
         }
     
         protected function CreatePageNavigator()
@@ -1264,7 +1298,7 @@
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('kanton_jahrDetailEdit0kantonssearch', $this->dataset,
                 array('id', 'kanton_id_abkuerzung', 'jahr', 'anzahl_nationalraete', 'einwohner', 'auslaenderanteil', 'bevoelkerungsdichte', 'anzahl_gemeinden', 'steuereinnahmen', 'ausgaben', 'finanzausgleich', 'schulden', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Kanton Id'), $this->RenderText('Jahr'), $this->RenderText('Anzahl Nationalraete'), $this->RenderText('Einwohner'), $this->RenderText('Auslaenderanteil'), $this->RenderText('Bevoelkerungsdichte'), $this->RenderText('Anzahl Gemeinden'), $this->RenderText('Steuereinnahmen'), $this->RenderText('Ausgaben'), $this->RenderText('Finanzausgleich'), $this->RenderText('Schulden'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array($this->RenderText('Id'), $this->RenderText('Kanton'), $this->RenderText('Jahr'), $this->RenderText('Anzahl Nationalraete'), $this->RenderText('Einwohner'), $this->RenderText('Auslaenderanteil'), $this->RenderText('Bevoelkerungsdichte'), $this->RenderText('Anzahl Gemeinden'), $this->RenderText('Steuereinnahmen'), $this->RenderText('Ausgaben'), $this->RenderText('Finanzausgleich'), $this->RenderText('Schulden'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -1289,10 +1323,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`kanton`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_kanton`');
+            $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1365,7 +1402,21 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kanton_id', $this->RenderText('Kanton Id'), $lookupDataset, 'id', 'abkuerzung', false));
+            $field = new IntegerField('kanton_jahr_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('jahr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('einwohner');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('auslaenderanteil');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('bevoelkerungsdichte');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_gemeinden');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kanton_id', $this->RenderText('Kanton'), $lookupDataset, 'id', 'abkuerzung', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('jahr', $this->RenderText('Jahr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_nationalraete', $this->RenderText('Anzahl Nationalraete')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('einwohner', $this->RenderText('Einwohner')));
@@ -1442,7 +1493,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton Id', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
@@ -1453,10 +1504,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`kanton`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_kanton`');
+            $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1529,9 +1583,23 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kanton_jahr_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('jahr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('einwohner');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('auslaenderanteil');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('bevoelkerungsdichte');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_gemeinden');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kanton Id', 
+                'Kanton', 
                 'kanton_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -1549,10 +1617,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`kanton`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_kanton`');
+            $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1625,9 +1696,23 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kanton_jahr_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('jahr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('einwohner');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('auslaenderanteil');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('bevoelkerungsdichte');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_gemeinden');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kanton Id', 
+                'Kanton', 
                 'kanton_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -2435,7 +2520,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton Id', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2858,10 +2943,13 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`kanton`');
-            $field = new IntegerField('id', null, null, true);
+                '`v_kanton`');
+            $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('id');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2934,9 +3022,23 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kanton_jahr_id');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('jahr');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('einwohner');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('auslaenderanteil');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('bevoelkerungsdichte');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_gemeinden');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('abkuerzung', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
-                'Kanton Id', 
+                'Kanton', 
                 'kanton_id', 
                 $editor, 
                 $this->dataset, 'id', 'abkuerzung', $lookupDataset);
@@ -3105,7 +3207,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton Id', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -3275,7 +3377,7 @@
             //
             // View column for abkuerzung field
             //
-            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton Id', $this->dataset);
+            $column = new TextViewColumn('kanton_id_abkuerzung', 'Kanton', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
