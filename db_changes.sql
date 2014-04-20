@@ -688,3 +688,11 @@ ALTER TABLE `organisation_jahr_log` CHANGE `kapital` `kapital` INT( 11 ) NULL DE
 ALTER TABLE `organisation_jahr` ADD `quelle_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL der Quelle' AFTER `geschaeftsbericht_url` ;
 
 ALTER TABLE `organisation_jahr_log` ADD `quelle_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL der Quelle' AFTER `geschaeftsbericht_url` ;
+
+ALTER TABLE `organisation_jahr`
+CHANGE `umsatz` `umsatz` INT( 11 ) NULL COMMENT 'Umsatz der Organisation in Franken',
+CHANGE `gewinn` `gewinn` INT( 11 ) NULL COMMENT 'Gewinn der Organisation in Franken';
+
+ALTER TABLE `organisation_jahr_log`
+CHANGE `umsatz` `umsatz` INT( 11 ) NULL COMMENT 'Umsatz der Organisation in Franken',
+CHANGE `gewinn` `gewinn` INT( 11 ) NULL COMMENT 'Gewinn der Organisation in Franken';

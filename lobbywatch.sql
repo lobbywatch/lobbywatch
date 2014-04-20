@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 20. Apr 2014 um 05:50
+-- Erstellungszeit: 20. Apr 2014 um 06:38
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -1963,7 +1963,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_jahr`
 --
--- Erzeugt am: 20. Apr 2014 um 03:47
+-- Erzeugt am: 20. Apr 2014 um 04:27
 --
 
 DROP TABLE IF EXISTS `organisation_jahr`;
@@ -1971,8 +1971,8 @@ CREATE TABLE IF NOT EXISTS `organisation_jahr` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Jahreswerte einer Organisation',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Kantons',
   `jahr` smallint(6) NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
-  `umsatz` int(11) NOT NULL COMMENT 'Umsatz der Organisation in Franken',
-  `gewinn` int(11) NOT NULL COMMENT 'Gewinn der Organisation in Franken',
+  `umsatz` int(11) DEFAULT NULL COMMENT 'Umsatz der Organisation in Franken',
+  `gewinn` int(11) DEFAULT NULL COMMENT 'Gewinn der Organisation in Franken',
   `kapital` int(11) DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken',
   `mitarbeiter_weltweit` int(11) DEFAULT NULL COMMENT 'Anzahl Mitarbeiter weltweit',
   `mitarbeiter_schweiz` int(11) DEFAULT NULL COMMENT 'Anzahl Mitarbeiter in der Schweiz',
@@ -2050,7 +2050,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_jahr_log`
 --
--- Erzeugt am: 20. Apr 2014 um 03:47
+-- Erzeugt am: 20. Apr 2014 um 04:28
 --
 
 DROP TABLE IF EXISTS `organisation_jahr_log`;
@@ -2058,8 +2058,8 @@ CREATE TABLE IF NOT EXISTS `organisation_jahr_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Kantons',
   `jahr` smallint(6) NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
-  `umsatz` int(11) NOT NULL COMMENT 'Umsatz der Organisation in Franken',
-  `gewinn` int(11) NOT NULL COMMENT 'Gewinn der Organisation in Franken',
+  `umsatz` int(11) DEFAULT NULL COMMENT 'Umsatz der Organisation in Franken',
+  `gewinn` int(11) DEFAULT NULL COMMENT 'Gewinn der Organisation in Franken',
   `kapital` int(11) DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken',
   `mitarbeiter_weltweit` int(11) DEFAULT NULL COMMENT 'Anzahl Mitarbeiter weltweit',
   `mitarbeiter_schweiz` int(11) DEFAULT NULL COMMENT 'Anzahl Mitarbeiter in der Schweiz',
