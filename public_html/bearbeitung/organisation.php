@@ -1599,6 +1599,8 @@
             // Edit column for jahr field
             //
             $editor = new TextEdit('jahr_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Jahr', 'jahr', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1621,6 +1623,8 @@
             // Edit column for jahr field
             //
             $editor = new TextEdit('jahr_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Jahr', 'jahr', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1652,8 +1656,6 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
-            $editor->SetSize(4);
-            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1667,8 +1669,6 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
-            $editor->SetSize(4);
-            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2738,6 +2738,8 @@
             // Edit column for jahr field
             //
             $editor = new TextEdit('jahr_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Jahr', 'jahr', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -2760,6 +2762,8 @@
             // Edit column for jahr field
             //
             $editor = new TextEdit('jahr_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Jahr', 'jahr', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -2791,8 +2795,6 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
-            $editor->SetSize(4);
-            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2806,8 +2808,6 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
-            $editor->SetSize(4);
-            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3633,6 +3633,8 @@
             // Edit column for jahr field
             //
             $editor = new TextEdit('jahr_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Jahr', 'jahr', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -3653,8 +3655,6 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
-            $editor->SetSize(4);
-            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3873,6 +3873,8 @@
             // Edit column for jahr field
             //
             $editor = new TextEdit('jahr_edit');
+            $editor->SetSize(4);
+            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Jahr', 'jahr', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -3893,8 +3895,6 @@
             // Edit column for umsatz field
             //
             $editor = new TextEdit('umsatz_edit');
-            $editor->SetSize(4);
-            $editor->SetMaxLength(4);
             $editColumn = new CustomEditColumn('Umsatz', 'umsatz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new NumberValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('NumberValidationMessage'), $this->RenderText($editColumn->GetCaption())));
