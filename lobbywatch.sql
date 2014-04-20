@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 20. Apr 2014 um 06:52
+-- Erstellungszeit: 20. Apr 2014 um 07:08
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -473,7 +473,7 @@ CREATE TABLE IF NOT EXISTS `fraktion_log` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 19. Apr 2014 um 18:51
+-- Erzeugt am: 20. Apr 2014 um 05:05
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
@@ -481,7 +481,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessenbindung',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
-  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskommittee') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
+  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
@@ -567,7 +567,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 19. Apr 2014 um 18:51
+-- Erzeugt am: 20. Apr 2014 um 05:05
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
@@ -575,7 +575,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
-  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskommittee') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
+  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
@@ -1332,7 +1332,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 19. Apr 2014 um 18:52
+-- Erzeugt am: 20. Apr 2014 um 05:07
 --
 
 DROP TABLE IF EXISTS `mandat`;
@@ -1340,7 +1340,7 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `zutrittsberechtigung_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Zutrittsberechtigung.',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
-  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskommittee') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
+  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `verguetung` int(11) DEFAULT NULL COMMENT 'Jährliche Vergütung CHF dieses Mandates, z.B. Entschädigung für Beiratsfunktion.',
   `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird nicht ausgwertet, jedoch in den Resultaten angezeigt.',
@@ -1423,7 +1423,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mandat_log`
 --
--- Erzeugt am: 19. Apr 2014 um 18:52
+-- Erzeugt am: 20. Apr 2014 um 05:08
 --
 
 DROP TABLE IF EXISTS `mandat_log`;
@@ -1431,7 +1431,7 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `zutrittsberechtigung_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Zutrittsberechtigung.',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
-  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskommittee') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
+  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `verguetung` int(11) DEFAULT NULL COMMENT 'Jährliche Vergütung CHF dieses Mandates, z.B. Entschädigung für Beiratsfunktion.',
   `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird nicht ausgwertet, jedoch in den Resultaten angezeigt.',
@@ -1577,7 +1577,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 20. Apr 2014 um 04:48
+-- Erzeugt am: 20. Apr 2014 um 05:03
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1589,7 +1589,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
   `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
   `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
@@ -2097,7 +2097,7 @@ CREATE TABLE IF NOT EXISTS `organisation_jahr_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 20. Apr 2014 um 04:48
+-- Erzeugt am: 20. Apr 2014 um 05:03
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -2109,7 +2109,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
   `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
   `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
@@ -3165,7 +3165,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung` (
 `id` int(11)
 ,`parlamentarier_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskommittee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht')
 ,`status` enum('deklariert','nicht-deklariert')
@@ -3200,7 +3200,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung_authorisierungs_email` (
 ,`organisation_name` varchar(454)
 ,`rechtsform` varchar(33)
 ,`ort` varchar(100)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskommittee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
 ,`beschreibung` varchar(150)
 );
 -- --------------------------------------------------------
@@ -3214,7 +3214,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung_liste` (
 ,`id` int(11)
 ,`parlamentarier_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskommittee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht')
 ,`status` enum('deklariert','nicht-deklariert')
@@ -3930,7 +3930,7 @@ CREATE TABLE IF NOT EXISTS `v_mandat` (
 `id` int(11)
 ,`zutrittsberechtigung_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskommittee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`verguetung` int(11)
 ,`beschreibung` varchar(150)
@@ -3984,7 +3984,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4097,7 +4097,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_arbeitet_fuer` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4161,7 +4161,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_auftraggeber_fuer` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4225,7 +4225,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglieder` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4289,7 +4289,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglied_von` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4353,7 +4353,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_muttergesellschaft` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4417,7 +4417,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_tochtergesellschaften` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Patronatskomitee','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4528,7 +4528,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_parlamentarier` (
 ,`id` int(11)
 ,`parlamentarier_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskommittee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht')
 ,`status` enum('deklariert','nicht-deklariert')
@@ -4973,7 +4973,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mandate` (
 ,`id` int(11)
 ,`zutrittsberechtigung_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskommittee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`verguetung` int(11)
 ,`beschreibung` varchar(150)
@@ -5007,7 +5007,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mit_mandaten` (
 ,`id` int(11)
 ,`zutrittsberechtigung_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskommittee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`verguetung` int(11)
 ,`beschreibung` varchar(150)

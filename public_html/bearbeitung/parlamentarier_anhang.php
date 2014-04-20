@@ -1650,6 +1650,14 @@
         {
             return ;
         }
+        function parlamentarier_anhangGrid_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            datei_anhang_delete($page, $rowData, $cancel, $message, $tableName);
+        }
+        function parlamentarier_anhangGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            datei_anhang_insert($page, $rowData, $cancel, $message, $tableName);
+        }
         public function datei_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["private_files_dir"] . '/parlamentarier_anhang/%parlamentarier_id%');
@@ -1684,6 +1692,8 @@
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
+            $result->BeforeDeleteRecord->AddListener('parlamentarier_anhangGrid' . '_' . 'BeforeDeleteRecord', $this);
+            $result->BeforeInsertRecord->AddListener('parlamentarier_anhangGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

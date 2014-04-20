@@ -953,6 +953,7 @@
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat'));
+            $editor->AddValue('patronatskomitee', $this->RenderText('Patronatskomitee'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -970,6 +971,7 @@
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat'));
+            $editor->AddValue('patronatskomitee', $this->RenderText('Patronatskomitee'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1871,6 +1873,7 @@
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat'));
+            $editor->AddValue('patronatskomitee', $this->RenderText('Patronatskomitee'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -2309,6 +2312,7 @@
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat'));
+            $editor->AddValue('patronatskomitee', $this->RenderText('Patronatskomitee'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
