@@ -815,7 +815,18 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
   customDrawRowFarbcode($table_name, $rowData, $rowCellStyles, $rowStyles);
 
-  $update_threshold_setting = getSettingValue('ueberarbeitungsDatumSchwellwert', '2012-01-01');
+  $workflowStateColors = array();
+  $workflowStateColors['freigabe'] = 'greenyellow';
+  $workflowStateColors['autorisiert'] = 'lightblue';
+  $workflowStateColors['autorisierung_verschickt'] = 'blue';
+  $workflowStateColors['kontrolliert'] = 'orange';
+  $workflowStateColors['eingabe_abgeschlossen'] = 'yellow';
+
+  $workflowStateColors = getSettingValue('arbeitsablaufStatusFarben', true, $workflowStateColors);
+
+//   df(json_encode($workflowStateColors), '$workflowStateColors');
+
+  $update_threshold_setting = getSettingValue('ueberarbeitungsDatumSchwellwert', false, '2012-01-01');
   $update_threshold = SMDateTime::Parse($update_threshold_setting, 'Y-m-d');
   $update_threshold_ts = $update_threshold->GetTimestamp();
   $now_ts = time();
@@ -872,18 +883,19 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
           $workflow_styles .= 'background-image: url(img/icons/warning.gif); background-repeat: no-repeat;';
 
     }
+
     // Color states
     //else
     if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= 'background-color: greenyellow;';
+      $workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
     } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= 'background-color: lightblue;';
+      $workflow_styles .= "background-color: {$workflowStateColors['autorisiert']};";
     } else if (getTimestamp($rowData['autorisierung_verschickt_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= 'background-color: blue;';
+      $workflow_styles .= "background-color: {$workflowStateColors['autorisierung_verschickt']};";
     } else if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= 'background-color: orange;';
+      $workflow_styles .= "background-color: {$workflowStateColors['kontrolliert']};";
     } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= 'background-color: yellow;';
+      $workflow_styles .= "background-color: {$workflowStateColors['eingabe_abgeschlossen']};";
     }
 
     if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
@@ -1007,15 +1019,15 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     //else
     if (getTimestamp($rowData['freigabe_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= 'background-color: greenyellow;';
+      $workflow_styles .= "background-color: {$workflowStateColors['freigabe']};";
 //     } else if (getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
 //       $rowCellStyles['id'] .= 'background-color: lightblue;';
     } else if (!empty($rowData['autorisiert_datum']) && getTimestamp($rowData['autorisiert_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= 'background-color: lightblue;';
+      $workflow_styles .= "background-color: {$workflowStateColors['autorisiert']};";
     } else if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= 'background-color: orange;';
+      $workflow_styles .= "background-color: {$workflowStateColors['kontrolliert']};";
     } else if (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
-      $workflow_styles .= 'background-color: yellow;';
+      $workflow_styles .= "background-color: {$workflowStateColors['eingabe_abgeschlossen']};";
     }
 
     if (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
@@ -1242,7 +1254,7 @@ function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName)
  * Fetch a setting parameter.
  * @return value or default value if nothing found
  */
-function getSettingValue($key, $defaultValue = null) {
+function getSettingValue($key, $json = false, $defaultValue = null) {
   $settings = &php_static_cache(__FUNCTION__);
   if (!isset($settings)) {
     // Initially, fetch all at once
@@ -1315,7 +1327,9 @@ function getSettingValue($key, $defaultValue = null) {
   // Subsequent invocations of this function for a particular index field
   // skip the above two code blocks and quickly return the already indexed
   // information.
-  return $settings[$key];
+  $setting = $settings[$key];
+
+  return $json ? json_decode($setting, true) : $setting;
 }
 
 /**

@@ -231,8 +231,8 @@
         $rowStyles = '';
         customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
 
-        $email_intro = getSettingValue('parlamentarierAutorisierungEmailEinleitung', '<p>[Einleitung]</p>');
-        $email_end = getSettingValue('parlamentarierAutorisierungEmailSchluss', '<p>Freundliche Grüsse<br>%name%</p>');
+        $email_intro = getSettingValue('parlamentarierAutorisierungEmailEinleitung', false, '<p>[Einleitung]</p>');
+        $email_end = getSettingValue('parlamentarierAutorisierungEmailSchluss', false, '<p>Freundliche Grüsse<br>%name%</p>');
         $email_end = StringUtils::ReplaceVariableInTemplate($email_end, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
 //         ShowPreviewPage('<h4>Preview</h4><h3>' .$rowData["parlamentarier_name"] . '</h3>' .
