@@ -1113,23 +1113,33 @@ function getDBConnection() {
 }
 
 function zutrittsberechtigung_state($parlamentarier_id) {
-  $eng_con = getDBConnection();
-  $con = $eng_con->GetConnectionHandle();
-  // TODO close connection
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum
-FROM v_zutrittsberechtigung zutrittsberechtigung
-WHERE
-  zutrittsberechtigung.parlamentarier_id=:id
-  AND zutrittsberechtigung.bis IS NULL;";
+  $zb_state = &php_static_cache(__FUNCTION__);
+  //   if (!isset($settings)) {
+  //     // If this function is being called for the first time after a reset,
+  //     // query the database and execute any other code needed to retrieve
+  //     // information about the supported languages.
+  //   }
+  if (!isset($zb_state[$parlamentarier_id])) {
+    $eng_con = getDBConnection();
+    $con = $eng_con->GetConnectionHandle();
+    // TODO close connection
+    $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum
+  FROM v_zutrittsberechtigung zutrittsberechtigung
+  WHERE
+    zutrittsberechtigung.parlamentarier_id=:id
+    AND zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW();";
 
-  $zbs = array();
-  $sth = $con->prepare($sql);
-  $sth->execute(array(':id' => $parlamentarier_id));
-  $zbs = $sth->fetchAll();
+    $zbs = array();
+    $sth = $con->prepare($sql);
+    $sth->execute(array(':id' => $parlamentarier_id));
+    $zbs = $sth->fetchAll();
 
-  $eng_con->Disconnect();
+    $eng_con->Disconnect();
 
-  return $zbs;
+    $zb_state[$parlamentarier_id] = $zbs;
+  }
+
+  return $zb_state[$parlamentarier_id];
 }
 
 function checkAndMarkColumnNotNull($column, $rowData, &$rowCellStyles) {
@@ -1205,39 +1215,53 @@ function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName)
  * @return value or default value if nothing found
  */
 function getSettingValue($key, $defaultValue = null) {
-  $eng_con = getDBConnection();
-  $values = array();
-  try {
-    $con = $eng_con->GetConnectionHandle();
-    // TODO close connection
-    $sql = "SELECT id, value
-  FROM v_settings settings
-  WHERE
-    settings.key_name=:key";
+  $settings = &php_static_cache(__FUNCTION__);
+//   if (!isset($settings)) {
+//     // If this function is being called for the first time after a reset,
+//     // query the database and execute any other code needed to retrieve
+//     // information about the supported languages.
+//   }
+  if (!isset($settings[$key])) {
+    // If this function is being called for the first time for a particular
+    // index field, then execute code needed to index the information already
+    // available in $settings by the desired field.
+    $eng_con = getDBConnection();
+    $values = array();
+    try {
+      $con = $eng_con->GetConnectionHandle();
+      // TODO close connection
+      $sql = "SELECT id, value
+          FROM v_settings settings
+          WHERE settings.key_name=:key";
 
-    $sth = $con->prepare($sql);
-    $sth->execute(array(':key' => $key));
-    $values = $sth->fetchAll();
-  } finally {
-    $eng_con->Disconnect();
+      $sth = $con->prepare($sql);
+      $sth->execute(array(':key' => $key));
+      $values = $sth->fetchAll();
+    } finally {
+      $eng_con->Disconnect();
+    }
+
+  //   df($values, '$values');
+  //   df($defaultValue, '$defaultValue');
+  //   df($values[0]['value'], '$values[0][value]');
+
+  //   df(getSettingCategoryValues('Test'), 'Test');
+  //   df(getSettingCategoryValues('Test3', 'nothing'), 'Test nothing');
+
+    if (count($values) > 1) {
+      throw new Exception('Too many values for setting "' . $key . '""');
+    } else if (count($values) == 0) {
+      // Nothing found, return defaultValue
+      $settings[$key] = $defaultValue;
+    } else {
+      // Take the first result
+      $settings[$key] =  $values[0]['value'];
+    }
   }
-
-//   df($values, '$values');
-//   df($defaultValue, '$defaultValue');
-//   df($values[0]['value'], '$values[0][value]');
-
-//   df(getSettingCategoryValues('Test'), 'Test');
-//   df(getSettingCategoryValues('Test3', 'nothing'), 'Test nothing');
-
-  if (count($values) > 1) {
-    throw new Exception('Too many values for setting "' . $key . '""');
-  } else if (count($values) == 0) {
-    // Nothing found, return defaultValue
-    return $defaultValue;
-  } else {
-    // Return first result
-    return $values[0]['value'];
-  }
+  // Subsequent invocations of this function for a particular index field
+  // skip the above two code blocks and quickly return the already indexed
+  // information.
+  return $settings[$key];
 }
 
 /**
@@ -1245,31 +1269,44 @@ function getSettingValue($key, $defaultValue = null) {
  * @return key=value array
  */
 function getSettingCategoryValues($categoryName, $defaultValue = null) {
-  $eng_con = getDBConnection();
-  $values = array();
-  try {
-    $con = $eng_con->GetConnectionHandle();
-    // TODO close connection
-    $sql = "SELECT id, key_name, value
-  FROM v_settings settings
-  WHERE settings.category_name=:categoryName";
+  $settings = &php_static_cache(__FUNCTION__);
+//   if (!isset($settings)) {
+//     // If this function is being called for the first time after a reset,
+//     // query the database and execute any other code needed to retrieve
+//     // information about the supported languages.
+//   }
+  if (!isset($settings[$categoryName])) {
+    $eng_con = getDBConnection();
+    $values = array();
+    try {
+      $con = $eng_con->GetConnectionHandle();
+      // TODO close connection
+      $sql = "SELECT id, key_name, value
+    FROM v_settings settings
+    WHERE settings.category_name=:categoryName";
 
-    $sth = $con->prepare($sql);
-    $sth->execute(array(':categoryName' => $categoryName));
-    $values = $sth->fetchAll();
-  } finally {
-    $eng_con->Disconnect();
-  }
-
-  if (count($values) == 0) {
-    // Nothing found, return defaultValue
-    return $defaultValue;
-  } else {
-    $simple = array();
-    foreach ($values as $rec) {
-      $simple[$rec['key_name']] = $rec['value'];
+      $sth = $con->prepare($sql);
+      $sth->execute(array(':categoryName' => $categoryName));
+      $values = $sth->fetchAll();
+    } finally {
+      $eng_con->Disconnect();
     }
-    return $simple;
+
+    if (count($values) == 0) {
+      // Nothing found, return defaultValue
+      $settings[$categoryName] = $defaultValue;
+    } else {
+      $simple = array();
+      foreach ($values as $rec) {
+        $simple[$rec['key_name']] = $rec['value'];
+      }
+      $settings[$categoryName] = $simple;
+    }
   }
+
+  // Subsequent invocations of this function for a particular index field
+  // skip the above two code blocks and quickly return the already indexed
+  // information.
+  return $settings[$categoryName];
 }
 
