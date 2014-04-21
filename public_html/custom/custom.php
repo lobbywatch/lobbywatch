@@ -1114,11 +1114,35 @@ function getDBConnection() {
 
 function zutrittsberechtigung_state($parlamentarier_id) {
   $zb_state = &php_static_cache(__FUNCTION__);
-  //   if (!isset($settings)) {
-  //     // If this function is being called for the first time after a reset,
-  //     // query the database and execute any other code needed to retrieve
-  //     // information about the supported languages.
-  //   }
+
+  // Load all zutrittsberechtige on first call
+  if (!isset($zb_state)) {
+    // Fetch all the first time
+    $eng_con = getDBConnection();
+    $con = $eng_con->GetConnectionHandle();
+    // TODO close connection
+    $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum, zutrittsberechtigung.parlamentarier_id
+  FROM v_zutrittsberechtigung zutrittsberechtigung
+  WHERE
+    -- zutrittsberechtigung.parlamentarier_id=:id AND
+    zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()
+    -- ORDER BY zutrittsberechtigung.parlamentarier_id LIMIT 10
+        ;";
+
+    $zbs = array();
+    $sth = $con->prepare($sql);
+    $sth->execute(array(':id' => $parlamentarier_id));
+    $zbs = $sth->fetchAll();
+
+    $eng_con->Disconnect();
+
+    foreach($zbs as $zb) {
+      $zb_state[$zb['parlamentarier_id']][] = $zb;
+    }
+//     df($zb_state, '$zb_state');
+  }
+
+  // Fetch a single parlamentarier, should not be called anymore
   if (!isset($zb_state[$parlamentarier_id])) {
     $eng_con = getDBConnection();
     $con = $eng_con->GetConnectionHandle();
@@ -1137,7 +1161,11 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     $eng_con->Disconnect();
 
     $zb_state[$parlamentarier_id] = $zbs;
+
+//     df($zb_state, '$zb_state');
   }
+
+//   df($zb_state[$parlamentarier_id], '$zb_state[$parlamentarier_id]');
 
   return $zb_state[$parlamentarier_id];
 }
