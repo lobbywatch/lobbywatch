@@ -231,6 +231,10 @@
         $rowStyles = '';
         customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
 
+        $email_intro = getSettingValue('parlamentarierAutorisierungEmailEinleitung', '<p>[Einleitung]</p>');
+        $email_end = getSettingValue('parlamentarierAutorisierungEmailSchluss', '<p>Freundliche Grüsse<br>%name%</p>');
+        $email_end = StringUtils::ReplaceVariableInTemplate($email_end, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
+
 //         ShowPreviewPage('<h4>Preview</h4><h3>' .$rowData["parlamentarier_name"] . '</h3>' .
 //         '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .
 //         '<h4>Gäste</h4><ul>' . $rowData['zutrittsberechtigungen'] . '</ul>' .
@@ -255,9 +259,9 @@
                 '<h4>Gäste' . (substr_count($rowData['zutrittsberechtigungen'], '[VALID_Zutrittsberechtigung]') > 2 ? ' <img src="img/icons/warning.gif" alt="Warnung">': '') . '</h4>' . ($rowData['zutrittsberechtigungen'] ? '<ul>' . $rowData['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
                 '<h4>Mandate der Gäste</h4>' . gaesteMitMandaten($con, $id),
               'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailto. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
-              'EmailText' => '<p>' . $rowData['anrede'] . '</p>' .'<p>[Einleitung]</p>' . (isset($rowData['beruf']) ? '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' : '') . '<p>Ihre <b>Interessenbindungen</b>:</p><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
+              'EmailText' => '<p>' . $rowData['anrede'] . '</p>' . $email_intro . (isset($rowData['beruf']) ? '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' : '') . '<p>Ihre <b>Interessenbindungen</b>:</p><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
                 '<p>Ihre <b>Gäste</b>:</p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<p>keine</p>') .
-                '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true) . '<p>Freundliche Grüsse<br>' . getFullUsername(Application::Instance()->GetCurrentUser()) . '</p>',
+                '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true) . $email_end,
                'MailTo' => $mailto,
           ),
             'Authentication' => array(
