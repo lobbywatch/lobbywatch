@@ -1244,11 +1244,37 @@ function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName)
  */
 function getSettingValue($key, $defaultValue = null) {
   $settings = &php_static_cache(__FUNCTION__);
-//   if (!isset($settings)) {
-//     // If this function is being called for the first time after a reset,
-//     // query the database and execute any other code needed to retrieve
-//     // information about the supported languages.
-//   }
+  if (!isset($settings)) {
+    // Initially, fetch all at once
+    $eng_con = getDBConnection();
+    $values = array();
+    try {
+      $con = $eng_con->GetConnectionHandle();
+      // TODO close connection
+      $sql = "SELECT id, key_name, value
+          FROM v_settings settings
+          -- WHERE settings.key_name=:key";
+
+      $sth = $con->prepare($sql);
+      $sth->execute(array(':key' => $key));
+      $values = $sth->fetchAll();
+    } finally {
+      $eng_con->Disconnect();
+    }
+
+  //   df($values, '$values');
+  //   df($defaultValue, '$defaultValue');
+  //   df($values[0]['value'], '$values[0][value]');
+
+  //   df(getSettingCategoryValues('Test'), 'Test');
+  //   df(getSettingCategoryValues('Test3', 'nothing'), 'Test nothing');
+
+    foreach($values as $value) {
+      // Take the first result
+      $settings[$value['key_name']] =  $value['value'];
+    }
+//     df($settings, 'settings');
+  }
   if (!isset($settings[$key])) {
     // If this function is being called for the first time for a particular
     // index field, then execute code needed to index the information already
