@@ -162,7 +162,23 @@ function lobbywatch_menu() {
     'type' => MENU_CALLBACK,
     );
 
-    return $items;
+  $items['kategorien'] = array(
+    'title' => 'Kategorien', //Kategorienübersicht
+    'page callback' => 'lobbywatch_category_list',
+    'page arguments' => array('2'),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  $items['kategorie-lobbygruppen'] = array(
+    'title' => 'Kategorie Lobbygruppen', //Kategorienübersicht
+    'page callback' => 'lobbywatch_category_lobby_group_list',
+    'page arguments' => array('3'),
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
 }
 
 /**
@@ -337,6 +353,55 @@ function lobbywatch_parlamentarier_autocomplete($str = '') {
 
   // TODO exit required? it's not in examples
 //    exit();
+}
+
+/**
+ * Builds a page which prints hierarchically the kategory taxonomy terms.
+ */
+function lobbywatch_category_list($vid = 2) {
+  $markup = '';
+//   $markup = t('<p>See also <a href="/en/artikel/bisherige">Article Archive</a>, <a href="/en/schluesselwoerter">Keywords</a>, and <a href="/en/quelle">Sources</a></p>'); //<p>Siehe auch <a href="/artikel/bisherige">Bisherige Artikel</a>, <a href="/schluesselwoerter">Schlüsselwörterübersicht</a> oder <a href="/quelle">Quellenübersicht</a></p>
+  $markup .= bergamotte_vocabulary_tree($vid);
+//   $markup .= t("<h2>Combinations</h2>") . "\n"; //<h2>Kombinationen</h2>
+//   $markup .= "<ul class=\"term-combinations\">\n";
+//   $markup .= "<li>" . bergamotte_build_term_with_feed(t('Akteure [Person; Institution]'), array(19, 20)) . "</li>\n";
+//   $markup .= "<li>" . bergamotte_build_term_with_feed(t('Akteure [Politik, Regulation & Gesundheitswesen; Multiple Sklerose Gesellschaft; Schweizerische Multiple Sklerose Gesellschaft; DMSG; Pharma; Person; Institution; Patientenerfahrung]'), array(14, 15, 18, 19, 20, 21, 16, 17)) . "</li>\n";
+//   $markup .= "</ul>\n";
+
+  $build = array();
+  $build['terms'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="category-listing">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+   );
+
+  return $build;
+}
+
+/**
+ * Builds a page which prints hierarchically the kategory taxonomy terms.
+ */
+function lobbywatch_category_lobby_group_list($vid = 2) {
+  $markup = '';
+//   $markup .= t('<p>See also <a href="/en/artikel/bisherige">Article Archive</a>, <a href="/en/schluesselwoerter">Keywords</a>, and <a href="/en/quelle">Sources</a></p>');
+  //<p>Siehe auch <a href="/artikel/bisherige">Bisherige Artikel</a>, <a href="/schluesselwoerter">Schlüsselwörterübersicht</a> oder <a href="/quelle">Quellenübersicht</a></p>
+  $markup .= bergamotte_vocabulary_tree($vid);
+//   $markup .= t("<h2>Combinations</h2>") . "\n"; //<h2>Kombinationen</h2>
+//   $markup .= "<ul class=\"term-combinations\">\n";
+//   $markup .= "<li>" . bergamotte_build_term_with_feed(t('Akteure [Person; Institution]'), array(19, 20)) . "</li>\n";
+//   $markup .= "<li>" . bergamotte_build_term_with_feed(t('Akteure [Politik, Regulation & Gesundheitswesen; Multiple Sklerose Gesellschaft; Schweizerische Multiple Sklerose Gesellschaft; DMSG; Pharma; Person; Institution; Patientenerfahrung]'), array(14, 15, 18, 19, 20, 21, 16, 17)) . "</li>\n";
+//   $markup .= "</ul>\n";
+
+  $build = array();
+  $build['terms'] = array(
+    '#weight' => -5,
+    '#prefix' => '<div class="category-lobby-group-listing">',
+    '#markup' => $markup,
+    '#suffix' => '</div>',
+   );
+
+  return $build;
 }
 
 /**
