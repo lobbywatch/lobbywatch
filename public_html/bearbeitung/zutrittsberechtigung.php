@@ -11845,6 +11845,8 @@
             $editor->SetMaxLength(50);
             $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -11858,11 +11860,13 @@
             $editor->SetMaxLength(50);
             $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
-            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetDescription($this->RenderText('Twittername, nur Name, ohne https://twitter.com'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -11921,6 +11925,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -11934,6 +11940,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -11959,6 +11967,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -11972,6 +11982,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -13175,6 +13187,8 @@
             $editor->SetMaxLength(50);
             $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -13197,6 +13211,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -13208,6 +13224,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -13885,6 +13903,8 @@
             $editor->SetMaxLength(50);
             $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -13907,6 +13927,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -13918,6 +13940,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -14611,7 +14635,7 @@
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
-            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetDescription($this->RenderText('Twittername, nur Name, ohne https://twitter.com'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -15216,7 +15240,7 @@
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
-            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetDescription($this->RenderText('Twittername, nur Name, ohne https://twitter.com'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -15821,7 +15845,7 @@
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
-            $column->SetDescription($this->RenderText('Twittername'));
+            $column->SetDescription($this->RenderText('Twittername, nur Name, ohne https://twitter.com'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -16994,6 +17018,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -17007,6 +17033,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Xing Profil Name', 'xing_profil_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -17028,6 +17056,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -17041,6 +17071,8 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Facebook Name', 'facebook_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */

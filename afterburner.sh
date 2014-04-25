@@ -148,6 +148,17 @@ do
   > "$file";
 done
 
+for file in $dir/components/lang.php
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  # Read file, process regex and write file
+  cat "$file.bak" \
+  | perl -p -e's/Musetr/Muster/' \
+  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+  > "$file";
+done
+
 for file in $dir/components/grid/columns.php
 do
   echo "Process $file";

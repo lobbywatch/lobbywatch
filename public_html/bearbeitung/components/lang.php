@@ -1,4 +1,7 @@
 <?php
+// Processed by afterburner.sh
+
+
 $cAccessDenied='Verbindung abgebrochen';
 $cEditOperationNotPermitted='Verändern nicht erlaubt';
 $cViewOperationNotPermitted='Ansicht nicht erlaubt';
@@ -135,7 +138,7 @@ $cRangelengthValidationMessage='Bitte geben Sie zwischen {0} und {1} Zeichen ein
 $cRangeValidationMessage='Bitte geben Sie einen Betrag zwischen {0} und {1} ein.';
 $cMaxValidationMessage='Bitte geben Sie einen Betrag kleiner oder gleich {0} an.';
 $cMinValidationMessage='Bitte geben Sie einen Betrag größer oder gleich {0} an.';
-$cRegExpValidationMessage='Ihre Eingabe entspricht nicht dem Musetr.';
+$cRegExpValidationMessage='Ihre Eingabe entspricht nicht dem Muster.';
 $cSaveAndBackToList='Speichern und zurück zur Liste';
 $cSaveAndInsert='Speichern und neuen Datensatz einfügen';
 $cSaveAndEdit='Speichern und weiter bearbeiten';
