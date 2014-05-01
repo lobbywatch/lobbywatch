@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 20. Apr 2014 um 21:35
+-- Erstellungszeit: 01. Mai 2014 um 20:58
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
   PRIMARY KEY (`log_id`),
   KEY `kommission_id` (`kommission_id`),
   KEY `fk_branche_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=22 ;
 
 --
 -- RELATIONEN DER TABELLE `branche_log`:
@@ -460,7 +460,7 @@ CREATE TABLE IF NOT EXISTS `fraktion_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_fraktion_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Fraktionen des Parlamentes' AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Fraktionen des Parlamentes' AUTO_INCREMENT=23 ;
 
 --
 -- RELATIONEN DER TABELLE `fraktion_log`:
@@ -1186,7 +1186,7 @@ CREATE TABLE IF NOT EXISTS `kanton_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_kanton_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kantone der Schweiz' AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kantone der Schweiz' AUTO_INCREMENT=53 ;
 
 --
 -- RELATIONEN DER TABELLE `kanton_log`:
@@ -1992,7 +1992,7 @@ CREATE TABLE IF NOT EXISTS `organisation_jahr` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_organisation_jahr_unique` (`organisation_id`,`jahr`) COMMENT 'Fachlicher unique constraint',
   KEY `organisation_id` (`organisation_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Organisationen' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Organisationen' AUTO_INCREMENT=2 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_jahr`:
@@ -2084,7 +2084,7 @@ CREATE TABLE IF NOT EXISTS `organisation_jahr_log` (
   PRIMARY KEY (`log_id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `fk_organisation_jahr_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Organisationen' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Organisationen' AUTO_INCREMENT=2 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_jahr_log`:
@@ -2156,7 +2156,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 20. Apr 2014 um 02:29
+-- Erzeugt am: 01. Mai 2014 um 18:19
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -2174,6 +2174,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `fraktionsfunktion` enum('mitglied','praesident','vizepraesident') DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Fraktion',
   `im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
   `im_rat_bis` date DEFAULT NULL COMMENT 'Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag',
+  `ratswechsel` date DEFAULT NULL COMMENT 'Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden',
   `ratsunterbruch_von` date DEFAULT NULL COMMENT 'Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch',
   `ratsunterbruch_bis` date DEFAULT NULL COMMENT 'Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch',
   `beruf` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
@@ -2434,7 +2435,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 20. Apr 2014 um 02:30
+-- Erzeugt am: 01. Mai 2014 um 18:19
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -2452,6 +2453,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   `fraktionsfunktion` enum('mitglied','praesident','vizepraesident') DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Fraktion',
   `im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
   `im_rat_bis` date DEFAULT NULL COMMENT 'Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag',
+  `ratswechsel` date DEFAULT NULL COMMENT 'Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden',
   `ratsunterbruch_von` date DEFAULT NULL COMMENT 'Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch',
   `ratsunterbruch_bis` date DEFAULT NULL COMMENT 'Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch',
   `beruf` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
@@ -2508,7 +2510,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   KEY `militaerischer_grad` (`militaerischer_grad_id`),
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=1268 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=1512 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -2645,7 +2647,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
   PRIMARY KEY (`log_id`),
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_partei_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=25 ;
 
 --
 -- RELATIONEN DER TABELLE `partei_log`:
@@ -2821,7 +2823,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key_name`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=2 ;
 
 --
 -- RELATIONEN DER TABELLE `settings`:
@@ -2893,7 +2895,7 @@ CREATE TABLE IF NOT EXISTS `settings_category` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings' AUTO_INCREMENT=2 ;
 
 --
 -- Trigger `settings_category`
@@ -2965,7 +2967,7 @@ CREATE TABLE IF NOT EXISTS `settings_category_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_settings_category_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings' AUTO_INCREMENT=2 ;
 
 --
 -- RELATIONEN DER TABELLE `settings_category_log`:
@@ -3000,7 +3002,7 @@ CREATE TABLE IF NOT EXISTS `settings_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_settings_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=2 ;
 
 --
 -- RELATIONEN DER TABELLE `settings_log`:
@@ -4663,6 +4665,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`fraktionsfunktion` enum('mitglied','praesident','vizepraesident')
 ,`im_rat_seit` date
 ,`im_rat_bis` date
+,`ratswechsel` date
 ,`ratsunterbruch_von` date
 ,`ratsunterbruch_bis` date
 ,`beruf` varchar(150)
@@ -5893,7 +5896,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_parlamentarier`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`p`.`nachname`,', ',`p`.`vorname`) AS `anzeige_name`,concat(`p`.`vorname`,' ',`p`.`nachname`) AS `name`,`rat`.`abkuerzung` AS `rat`,`rat`.`abkuerzung` AS `ratstyp`,`kanton`.`abkuerzung` AS `kanton`,cast((case `rat`.`abkuerzung` when 'SR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_staenderaete`),0) when 'NR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_nationalraete`),0) else NULL end) as unsigned) AS `vertretene_bevoelkerung`,`p`.`id` AS `id`,`p`.`nachname` AS `nachname`,`p`.`vorname` AS `vorname`,`p`.`zweiter_vorname` AS `zweiter_vorname`,`p`.`rat_id` AS `rat_id`,`p`.`kanton_id` AS `kanton_id`,`p`.`kommissionen` AS `kommissionen`,`p`.`partei_id` AS `partei_id`,`p`.`parteifunktion` AS `parteifunktion`,`p`.`fraktion_id` AS `fraktion_id`,`p`.`fraktionsfunktion` AS `fraktionsfunktion`,`p`.`im_rat_seit` AS `im_rat_seit`,`p`.`im_rat_bis` AS `im_rat_bis`,`p`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`p`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`p`.`beruf` AS `beruf`,`p`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`p`.`zivilstand` AS `zivilstand`,`p`.`anzahl_kinder` AS `anzahl_kinder`,`p`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`p`.`geschlecht` AS `geschlecht`,`p`.`geburtstag` AS `geburtstag`,`p`.`photo` AS `photo`,`p`.`photo_dateiname` AS `photo_dateiname`,`p`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`p`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`p`.`photo_mime_type` AS `photo_mime_type`,`p`.`kleinbild` AS `kleinbild`,`p`.`sitzplatz` AS `sitzplatz`,`p`.`email` AS `email`,`p`.`homepage` AS `homepage`,`p`.`parlament_biografie_id` AS `parlament_biografie_id`,`p`.`twitter_name` AS `twitter_name`,`p`.`linkedin_profil_url` AS `linkedin_profil_url`,`p`.`xing_profil_name` AS `xing_profil_name`,`p`.`facebook_name` AS `facebook_name`,`p`.`arbeitssprache` AS `arbeitssprache`,`p`.`adresse_firma` AS `adresse_firma`,`p`.`adresse_strasse` AS `adresse_strasse`,`p`.`adresse_zusatz` AS `adresse_zusatz`,`p`.`adresse_plz` AS `adresse_plz`,`p`.`adresse_ort` AS `adresse_ort`,`p`.`ALT_kommission` AS `ALT_kommission`,`p`.`notizen` AS `notizen`,`p`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`p`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`p`.`kontrolliert_visa` AS `kontrolliert_visa`,`p`.`kontrolliert_datum` AS `kontrolliert_datum`,`p`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`p`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`p`.`autorisiert_visa` AS `autorisiert_visa`,`p`.`autorisiert_datum` AS `autorisiert_datum`,`p`.`freigabe_visa` AS `freigabe_visa`,`p`.`freigabe_datum` AS `freigabe_datum`,`p`.`created_visa` AS `created_visa`,`p`.`created_date` AS `created_date`,`p`.`updated_visa` AS `updated_visa`,`p`.`updated_date` AS `updated_date`,group_concat(distinct concat(`k`.`name`,'(',`k`.`abkuerzung`,')') order by `k`.`abkuerzung` ASC separator ', ') AS `kommissionen_namen`,-(-(group_concat(distinct concat(`k`.`name`,'(',`k`.`abkuerzung`,')') order by `k`.`abkuerzung` ASC separator ', '))) AS `kommissionen2`,group_concat(distinct `k`.`abkuerzung` order by `k`.`abkuerzung` ASC separator ', ') AS `kommissionen_abkuerzung`,`partei`.`abkuerzung` AS `partei`,`fraktion`.`abkuerzung` AS `fraktion`,`mil_grad`.`name` AS `militaerischer_grad` from (((((((`parlamentarier` `p` left join `v_in_kommission` `ik` on(((`p`.`id` = `ik`.`parlamentarier_id`) and isnull(`ik`.`bis`)))) left join `v_kommission` `k` on((`ik`.`kommission_id` = `k`.`id`))) left join `v_partei` `partei` on((`p`.`partei_id` = `partei`.`id`))) left join `v_fraktion` `fraktion` on((`p`.`fraktion_id` = `fraktion`.`id`))) left join `v_mil_grad` `mil_grad` on((`p`.`militaerischer_grad_id` = `mil_grad`.`id`))) left join `v_kanton` `kanton` on((`p`.`kanton_id` = `kanton`.`id`))) left join `v_rat` `rat` on((`p`.`rat_id` = `rat`.`id`))) group by `p`.`id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`p`.`nachname`,', ',`p`.`vorname`) AS `anzeige_name`,concat(`p`.`vorname`,' ',`p`.`nachname`) AS `name`,`rat`.`abkuerzung` AS `rat`,`rat`.`abkuerzung` AS `ratstyp`,`kanton`.`abkuerzung` AS `kanton`,cast((case `rat`.`abkuerzung` when 'SR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_staenderaete`),0) when 'NR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_nationalraete`),0) else NULL end) as unsigned) AS `vertretene_bevoelkerung`,`p`.`id` AS `id`,`p`.`nachname` AS `nachname`,`p`.`vorname` AS `vorname`,`p`.`zweiter_vorname` AS `zweiter_vorname`,`p`.`rat_id` AS `rat_id`,`p`.`kanton_id` AS `kanton_id`,`p`.`kommissionen` AS `kommissionen`,`p`.`partei_id` AS `partei_id`,`p`.`parteifunktion` AS `parteifunktion`,`p`.`fraktion_id` AS `fraktion_id`,`p`.`fraktionsfunktion` AS `fraktionsfunktion`,`p`.`im_rat_seit` AS `im_rat_seit`,`p`.`im_rat_bis` AS `im_rat_bis`,`p`.`ratswechsel` AS `ratswechsel`,`p`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`p`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`p`.`beruf` AS `beruf`,`p`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`p`.`zivilstand` AS `zivilstand`,`p`.`anzahl_kinder` AS `anzahl_kinder`,`p`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`p`.`geschlecht` AS `geschlecht`,`p`.`geburtstag` AS `geburtstag`,`p`.`photo` AS `photo`,`p`.`photo_dateiname` AS `photo_dateiname`,`p`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`p`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`p`.`photo_mime_type` AS `photo_mime_type`,`p`.`kleinbild` AS `kleinbild`,`p`.`sitzplatz` AS `sitzplatz`,`p`.`email` AS `email`,`p`.`homepage` AS `homepage`,`p`.`parlament_biografie_id` AS `parlament_biografie_id`,`p`.`twitter_name` AS `twitter_name`,`p`.`linkedin_profil_url` AS `linkedin_profil_url`,`p`.`xing_profil_name` AS `xing_profil_name`,`p`.`facebook_name` AS `facebook_name`,`p`.`arbeitssprache` AS `arbeitssprache`,`p`.`adresse_firma` AS `adresse_firma`,`p`.`adresse_strasse` AS `adresse_strasse`,`p`.`adresse_zusatz` AS `adresse_zusatz`,`p`.`adresse_plz` AS `adresse_plz`,`p`.`adresse_ort` AS `adresse_ort`,`p`.`ALT_kommission` AS `ALT_kommission`,`p`.`notizen` AS `notizen`,`p`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`p`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`p`.`kontrolliert_visa` AS `kontrolliert_visa`,`p`.`kontrolliert_datum` AS `kontrolliert_datum`,`p`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`p`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`p`.`autorisiert_visa` AS `autorisiert_visa`,`p`.`autorisiert_datum` AS `autorisiert_datum`,`p`.`freigabe_visa` AS `freigabe_visa`,`p`.`freigabe_datum` AS `freigabe_datum`,`p`.`created_visa` AS `created_visa`,`p`.`created_date` AS `created_date`,`p`.`updated_visa` AS `updated_visa`,`p`.`updated_date` AS `updated_date`,group_concat(distinct concat(`k`.`name`,'(',`k`.`abkuerzung`,')') order by `k`.`abkuerzung` ASC separator ', ') AS `kommissionen_namen`,-(-(group_concat(distinct concat(`k`.`name`,'(',`k`.`abkuerzung`,')') order by `k`.`abkuerzung` ASC separator ', '))) AS `kommissionen2`,group_concat(distinct `k`.`abkuerzung` order by `k`.`abkuerzung` ASC separator ', ') AS `kommissionen_abkuerzung`,`partei`.`abkuerzung` AS `partei`,`fraktion`.`abkuerzung` AS `fraktion`,`mil_grad`.`name` AS `militaerischer_grad` from (((((((`parlamentarier` `p` left join `v_in_kommission` `ik` on(((`p`.`id` = `ik`.`parlamentarier_id`) and isnull(`ik`.`bis`)))) left join `v_kommission` `k` on((`ik`.`kommission_id` = `k`.`id`))) left join `v_partei` `partei` on((`p`.`partei_id` = `partei`.`id`))) left join `v_fraktion` `fraktion` on((`p`.`fraktion_id` = `fraktion`.`id`))) left join `v_mil_grad` `mil_grad` on((`p`.`militaerischer_grad_id` = `mil_grad`.`id`))) left join `v_kanton` `kanton` on((`p`.`kanton_id` = `kanton`.`id`))) left join `v_rat` `rat` on((`p`.`rat_id` = `rat`.`id`))) group by `p`.`id`;
 
 -- --------------------------------------------------------
 
