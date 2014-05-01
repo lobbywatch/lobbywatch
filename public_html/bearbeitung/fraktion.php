@@ -2777,6 +2777,8 @@
             $this->dataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $this->dataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $this->dataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $this->dataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -5290,6 +5292,8 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $this->dataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $this->dataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $this->dataset->AddField($field, false);

@@ -495,6 +495,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -1076,6 +1078,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -2643,6 +2647,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -2815,6 +2821,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -3453,6 +3461,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -4560,6 +4570,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -4732,6 +4744,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -5392,6 +5406,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -5973,6 +5989,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -9476,6 +9494,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -9648,6 +9668,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -11432,6 +11454,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -11837,6 +11861,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -12009,6 +12035,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -13658,6 +13686,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -14317,6 +14347,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -17217,6 +17249,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -18986,6 +19020,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -19539,6 +19575,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -22030,6 +22068,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -23896,6 +23936,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -24526,6 +24568,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -31299,6 +31343,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -32779,6 +32825,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -33287,6 +33335,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -34400,6 +34450,8 @@
             $this->dataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $this->dataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $this->dataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $this->dataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -34575,8 +34627,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'rat_id_abkuerzung', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'arbeitssprache', 'adresse_plz', 'adresse_ort', 'notizen', 'ratsunterbruch_von', 'ratsunterbruch_bis'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Arbeitssprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Notizen'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis')),
+                array('id', 'nachname', 'vorname', 'rat_id_abkuerzung', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratswechsel', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'geschlecht', 'geburtstag', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'arbeitssprache', 'adresse_plz', 'adresse_ort', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratswechsel'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militärischer Grad'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament.ch Biografie ID'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Arbeitssprache'), $this->RenderText('Adresse PLZ'), $this->RenderText('Adresse Ort'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -34883,6 +34935,9 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('fraktionsfunktion', $this->RenderText('Fraktionsfunktion')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_bis', $this->RenderText('Im Rat Bis')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratswechsel', $this->RenderText('Ratswechsel')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratsunterbruch_von', $this->RenderText('Ratsunterbruch Von')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratsunterbruch_bis', $this->RenderText('Ratsunterbruch Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf', $this->RenderText('Beruf')));
             
             $lookupDataset = new TableDataset(
@@ -34995,8 +35050,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratsunterbruch_von', $this->RenderText('Ratsunterbruch Von')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('ratsunterbruch_bis', $this->RenderText('Ratsunterbruch Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo_dateiname_voll', $this->RenderText('Photo Dateiname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_firma', $this->RenderText('Adresse Firma')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_strasse', $this->RenderText('Adresse Strasse')));
@@ -36088,6 +36141,38 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for ratswechsel field
+            //
+            $editor = new DateTimeEdit('ratswechsel_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratswechsel', 'ratswechsel', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for ratswechsel field
+            //
+            $editor = new DateTimeEdit('ratswechsel_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratswechsel', 'ratswechsel', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -37503,6 +37588,30 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -37786,22 +37895,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -38259,6 +38352,33 @@
             //
             $editor = new DateTimeEdit('im_rat_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Im Rat Bis', 'im_rat_bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for ratswechsel field
+            //
+            $editor = new DateTimeEdit('ratswechsel_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratswechsel', 'ratswechsel', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for ratsunterbruch_von field
+            //
+            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for ratsunterbruch_bis field
+            //
+            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -38765,24 +38885,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for ratsunterbruch_von field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for ratsunterbruch_bis field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for photo_dateiname_voll field
             //
             $editor = new TextEdit('photo_dateiname_voll_edit');
@@ -39250,6 +39352,33 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for ratswechsel field
+            //
+            $editor = new DateTimeEdit('ratswechsel_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratswechsel', 'ratswechsel', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for ratsunterbruch_von field
+            //
+            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for ratsunterbruch_bis field
+            //
+            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for beruf field
             //
             $editor = new TextEdit('beruf_edit');
@@ -39572,24 +39701,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for ratsunterbruch_von field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Von', 'ratsunterbruch_von', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for ratsunterbruch_bis field
-            //
-            $editor = new DateTimeEdit('ratsunterbruch_bis_edit', false, 'd.m.Y', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Ratsunterbruch Bis', 'ratsunterbruch_bis', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for adresse_firma field
             //
             $editor = new TextEdit('adresse_firma_edit');
@@ -39733,6 +39844,30 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -39992,22 +40127,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -40140,6 +40259,30 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -40399,22 +40542,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -40589,6 +40716,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -41045,6 +41182,30 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -41304,22 +41465,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -41489,6 +41634,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -41945,6 +42100,30 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -42204,22 +42383,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -42389,6 +42552,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -42845,6 +43018,30 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -43104,22 +43301,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -43289,6 +43470,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -43745,6 +43936,30 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -44004,22 +44219,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -44189,6 +44388,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -44645,6 +44854,30 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -44904,22 +45137,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -45089,6 +45306,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -45545,6 +45772,30 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -45804,22 +46055,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -45989,6 +46224,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -46445,6 +46690,30 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -46704,22 +46973,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -46889,6 +47142,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -47345,6 +47608,30 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for ratswechsel field
+            //
+            $column = new DateTimeViewColumn('ratswechsel', 'Ratswechsel', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_von field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for ratsunterbruch_bis field
+            //
+            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -47604,22 +47891,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_von field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_von', 'Ratsunterbruch Von', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ratsunterbruch_bis field
-            //
-            $column = new DateTimeViewColumn('ratsunterbruch_bis', 'Ratsunterbruch Bis', $this->dataset);
-            $column->SetDateTimeFormat('d.m.Y');
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

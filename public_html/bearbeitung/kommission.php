@@ -174,6 +174,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -346,6 +348,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -1508,6 +1512,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -1880,6 +1886,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -2052,6 +2060,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
@@ -3201,6 +3211,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
             $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
+            $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_bis');
@@ -3664,6 +3676,8 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new DateField('im_rat_bis');
+            $lookupDataset->AddField($field, false);
+            $field = new DateField('ratswechsel');
             $lookupDataset->AddField($field, false);
             $field = new DateField('ratsunterbruch_von');
             $lookupDataset->AddField($field, false);

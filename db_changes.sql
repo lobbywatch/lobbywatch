@@ -754,3 +754,12 @@ CHANGE `einwohner` `einwohner` INT( 11 ) UNSIGNED NOT NULL COMMENT 'Wohnbevölke
 CHANGE `bevoelkerungsdichte` `bevoelkerungsdichte` SMALLINT( 6 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Bevölkerungsdichte [Einwohner/km2]',
 CHANGE `anzahl_gemeinden` `anzahl_gemeinden` SMALLINT( 6 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Gemeinden',
 CHANGE `steuereinnahmen` `steuereinnahmen` INT( 11 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Stuereinnahmen in Franken';
+
+
+-- 01.05.2015
+
+ALTER TABLE `parlamentarier`
+  ADD `ratswechsel` date DEFAULT NULL COMMENT 'Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden' AFTER `im_rat_bis`;
+
+ALTER TABLE `parlamentarier_log`
+  ADD `ratswechsel` date DEFAULT NULL COMMENT 'Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden' AFTER `im_rat_bis`;
