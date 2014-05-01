@@ -537,7 +537,7 @@ function years_months($date_str) {
 //   dpm($interval);
   $years = $interval->format('%y');
   $months = $interval->format('%m');
-  return ($years > 0 ? format_plural($years, '1 Jahr', '@count Jahren') : '') . ($months > 0 ? ' ' . format_plural($months, '1 Monat', '@count Monaten') : '');
+  return ($years > 0 ? format_plural($years, '1 Jahr', '@count Jahre') : '') . ($months > 0 ? ' ' . format_plural($months, '1 Monat', '@count Monate') : '');
 }
 
 
