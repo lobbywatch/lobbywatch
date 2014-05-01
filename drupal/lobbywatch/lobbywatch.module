@@ -745,7 +745,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
       '<tr><td>Partei:</td><td>' . l($record['partei'], 'partei/' . $record['partei_id']) . '</td></tr>' .
       '<tr><td>Vertretene Bevölkerung:</td><td>' . number_format($vertretung , 0 , '.' , '\'') . '</td></tr>' .
-      '<tr><td>Im Rat seit:</td><td>' . years_months(check_plain($record['im_rat_seit'])) . ' (' . check_plain($record['im_rat_seit_formatted']) . ')' . '</td></tr>' .
+      '<tr><td>Im Parlament seit:</td><td>' . years_months(check_plain($record['im_rat_seit'])) . ' (' . check_plain($record['im_rat_seit_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>' .
       '<tr><td>Kinder:</td><td>' . check_plain($record['anzahl_kinder']) . '</td></tr>' .
