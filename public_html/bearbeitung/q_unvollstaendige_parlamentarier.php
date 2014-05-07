@@ -41,11 +41,13 @@
         protected function DoBeforeCreate()
         {
             $selectQuery = 'select * from parlamentarier where
-            photo is null OR photo = \'\' OR
-            sitzplatz is null OR sitzplatz = 0 OR
             geschlecht is null OR
             geburtstag is null OR
-            email is null OR trim(email)=\'\'';
+            email is null OR trim(email)=\'\' OR
+            im_rat_seit is null OR
+            kleinbild is null OR
+            parlament_biografie_id is null OR
+            beruf is null';
             $insertQuery = array();
             $updateQuery = array();
             $deleteQuery = array();
@@ -250,8 +252,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('q_unvollstaendige_parlamentarierssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'geburtstag', 'photo_dateiname_voll', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Geburtstag'), $this->RenderText('Photo Dateiname Voll'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'nachname', 'vorname', 'parlament_biografie_id', 'email', 'beruf', 'im_rat_seit', 'kommissionen', 'geburtstag', 'kleinbild', 'sitzplatz', 'homepage', 'geschlecht', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Parlament Biografie Id'), $this->RenderText('Email'), $this->RenderText('Beruf'), $this->RenderText('Im Rat Seit'), $this->RenderText('Kommissionen'), $this->RenderText('Geburtstag'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Homepage'), $this->RenderText('Geschlecht'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -274,12 +276,16 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('nachname', $this->RenderText('Nachname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vorname', $this->RenderText('Vorname')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_biografie_id', $this->RenderText('Parlament Biografie Id')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf', $this->RenderText('Beruf')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('im_rat_seit', $this->RenderText('Im Rat Seit')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kommissionen', $this->RenderText('Kommissionen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('geburtstag', $this->RenderText('Geburtstag')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo_dateiname_voll', $this->RenderText('Photo Dateiname Voll')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kleinbild', $this->RenderText('Kleinbild')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('geschlecht', $this->RenderText('Geschlecht')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
@@ -389,23 +395,23 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.stage/bearbeitung/parlamentarier_preview.php?pk0=%id%' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
             //
-            // View column for geburtstag field
+            // View column for parlament_biografie_id field
             //
-            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('Y-m-d');
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament Biografie Id', $this->dataset);
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for geburtstag field
+            // Edit column for parlament_biografie_id field
             //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $editor = new TextEdit('parlament_biografie_id_edit');
+            $editColumn = new CustomEditColumn('Parlament Biografie Id', 'parlament_biografie_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -414,10 +420,78 @@
             
             /* <inline insert column> */
             //
-            // Edit column for geburtstag field
+            // Edit column for parlament_biografie_id field
             //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $editor = new TextEdit('parlament_biografie_id_edit');
+            $editColumn = new CustomEditColumn('Parlament Biografie Id', 'parlament_biografie_id', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for email field
+            //
+            $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for email field
+            //
+            $editor = new TextEdit('email_edit');
+            $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for email field
+            //
+            $editor = new TextEdit('email_edit');
+            $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for beruf field
+            //
+            $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for beruf field
+            //
+            $editor = new TextEdit('beruf_edit');
+            $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for beruf field
+            //
+            $editor = new TextEdit('beruf_edit');
+            $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -428,17 +502,18 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for photo_dateiname_voll field
+            // View column for im_rat_seit field
             //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
+            $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column->SetDateTimeFormat('Y');
             $column->SetOrderable(true);
             
             /* <inline edit column> */
             //
-            // Edit column for photo_dateiname_voll field
+            // Edit column for im_rat_seit field
             //
-            $editor = new TextEdit('photo_dateiname_voll_edit');
-            $editColumn = new CustomEditColumn('Photo Dateiname Voll', 'photo_dateiname_voll', $editor, $this->dataset);
+            $editor = new DateTimeEdit('im_rat_seit_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -447,10 +522,77 @@
             
             /* <inline insert column> */
             //
-            // Edit column for photo_dateiname_voll field
+            // Edit column for im_rat_seit field
             //
-            $editor = new TextEdit('photo_dateiname_voll_edit');
-            $editColumn = new CustomEditColumn('Photo Dateiname Voll', 'photo_dateiname_voll', $editor, $this->dataset);
+            $editor = new DateTimeEdit('im_rat_seit_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -463,8 +605,9 @@
             //
             // View column for kleinbild field
             //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
             
             /* <inline edit column> */
             //
@@ -527,40 +670,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for email field
-            //
-            $column = new TextViewColumn('email', 'Email', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for email field
-            //
-            $editor = new TextEdit('email_edit');
-            $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for email field
-            //
-            $editor = new TextEdit('email_edit');
-            $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%email%' , '_blank');
-            $column->SetDescription($this->RenderText(''));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -590,6 +699,43 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for geschlecht field
+            //
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('M', $this->RenderText('M'));
+            $editor->AddValue('F', $this->RenderText('F'));
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for geschlecht field
+            //
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('M', $this->RenderText('M'));
+            $editor->AddValue('F', $this->RenderText('F'));
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -759,35 +905,15 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.stage/bearbeitung/parlamentarier_preview.php?pk0=%id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for geburtstag field
+            // View column for parlament_biografie_id field
             //
-            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('Y-m-d');
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament Biografie Id', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for kleinbild field
-            //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for sitzplatz field
-            //
-            $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
-            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -799,11 +925,63 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for beruf field
+            //
+            $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for im_rat_seit field
+            //
+            $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for kleinbild field
+            //
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for sitzplatz field
+            //
+            $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -870,20 +1048,60 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for geburtstag field
+            // Edit column for parlament_biografie_id field
             //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $editor = new TextEdit('parlament_biografie_id_edit');
+            $editColumn = new CustomEditColumn('Parlament Biografie Id', 'parlament_biografie_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for photo_dateiname_voll field
+            // Edit column for email field
             //
-            $editor = new TextEdit('photo_dateiname_voll_edit');
-            $editColumn = new CustomEditColumn('Photo Dateiname Voll', 'photo_dateiname_voll', $editor, $this->dataset);
+            $editor = new TextEdit('email_edit');
+            $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beruf field
+            //
+            $editor = new TextEdit('beruf_edit');
+            $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for im_rat_seit field
+            //
+            $editor = new DateTimeEdit('im_rat_seit_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -910,20 +1128,22 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for email field
+            // Edit column for homepage field
             //
-            $editor = new TextEdit('email_edit');
-            $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
+            $editor = new TextEdit('homepage_edit');
+            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for homepage field
+            // Edit column for geschlecht field
             //
-            $editor = new TextEdit('homepage_edit');
-            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('M', $this->RenderText('M'));
+            $editor->AddValue('F', $this->RenderText('F'));
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1007,20 +1227,60 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for geburtstag field
+            // Edit column for parlament_biografie_id field
             //
-            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
-            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
+            $editor = new TextEdit('parlament_biografie_id_edit');
+            $editColumn = new CustomEditColumn('Parlament Biografie Id', 'parlament_biografie_id', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for photo_dateiname_voll field
+            // Edit column for email field
             //
-            $editor = new TextEdit('photo_dateiname_voll_edit');
-            $editColumn = new CustomEditColumn('Photo Dateiname Voll', 'photo_dateiname_voll', $editor, $this->dataset);
+            $editor = new TextEdit('email_edit');
+            $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beruf field
+            //
+            $editor = new TextEdit('beruf_edit');
+            $editColumn = new CustomEditColumn('Beruf', 'beruf', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for im_rat_seit field
+            //
+            $editor = new DateTimeEdit('im_rat_seit_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Im Rat Seit', 'im_rat_seit', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for geburtstag field
+            //
+            $editor = new DateTimeEdit('geburtstag_edit', false, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Geburtstag', 'geburtstag', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1047,20 +1307,22 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for email field
+            // Edit column for homepage field
             //
-            $editor = new TextEdit('email_edit');
-            $editColumn = new CustomEditColumn('Email', 'email', $editor, $this->dataset);
+            $editor = new TextEdit('homepage_edit');
+            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for homepage field
+            // Edit column for geschlecht field
             //
-            $editor = new TextEdit('homepage_edit');
-            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
+            $editor = new ComboBox('geschlecht_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('M', $this->RenderText('M'));
+            $editor->AddValue('F', $this->RenderText('F'));
+            $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1143,35 +1405,15 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.stage/bearbeitung/parlamentarier_preview.php?pk0=%id%' , '_self');
             $grid->AddPrintColumn($column);
             
             //
-            // View column for geburtstag field
+            // View column for parlament_biografie_id field
             //
-            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('Y-m-d');
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament Biografie Id', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for kleinbild field
-            //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for sitzplatz field
-            //
-            $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
-            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $grid->AddPrintColumn($column);
             
             //
@@ -1183,11 +1425,63 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for beruf field
+            //
+            $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for im_rat_seit field
+            //
+            $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for kleinbild field
+            //
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for sitzplatz field
+            //
+            $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -1243,35 +1537,15 @@
             //
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.stage/bearbeitung/parlamentarier_preview.php?pk0=%id%' , '_self');
             $grid->AddExportColumn($column);
             
             //
-            // View column for geburtstag field
+            // View column for parlament_biografie_id field
             //
-            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
-            $column->SetDateTimeFormat('Y-m-d');
+            $column = new TextViewColumn('parlament_biografie_id', 'Parlament Biografie Id', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for kleinbild field
-            //
-            $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for sitzplatz field
-            //
-            $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
-            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=%parlament_biografie_id%' , '_blank');
             $grid->AddExportColumn($column);
             
             //
@@ -1283,11 +1557,63 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for beruf field
+            //
+            $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for im_rat_seit field
+            //
+            $column = new DateTimeViewColumn('im_rat_seit', 'Im Rat Seit', $this->dataset);
+            $column->SetDateTimeFormat('Y');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for geburtstag field
+            //
+            $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for kleinbild field
+            //
+            $column = new ExternalImageColumn('kleinbild', 'Kleinbild', $this->dataset, '%kleinbild%');
+            $column->SetSourcePrefix('../auswertung/parlamentarierBilder/');
+            $column->SetSourceSuffix('');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for sitzplatz field
+            //
+            $column = new TextViewColumn('sitzplatz', 'Sitzplatz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for geschlecht field
+            //
+            $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //

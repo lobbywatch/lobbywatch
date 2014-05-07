@@ -947,10 +947,10 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
       if (isset($rowData['sitzplatz']) && isset($rowData['email']) && isset($rowData['geburtstag']) && isset($rowData['im_rat_seit']) && isset($rowData['geschlecht']) && isset($rowData['kleinbild']) && isset($rowData['parlament_biografie_id']) && isset($rowData['beruf']) && $zb_state) {
         $completeness_styles .= 'background-color: greenyellow;';
-      } elseif (isset($rowData['sitzplatz']) || isset($rowData['email']) || isset($rowData['geburtstag']) || isset($rowData['im_rat_seit']) || isset($rowData['geschlecht']) || isset($rowData['kleinbild']) || isset($rowData['parlament_biografie_id']) || isset($rowData['beruf'])){
+      } elseif (/*isset($rowData['sitzplatz']) ||*/ isset($rowData['email']) || isset($rowData['geburtstag']) || isset($rowData['im_rat_seit']) || isset($rowData['geschlecht']) || isset($rowData['kleinbild']) || isset($rowData['parlament_biografie_id']) || isset($rowData['beruf'])){
         $completeness_styles .= 'background-color: orange;';
       }
-      checkAndMarkColumnNotNull('sitzplatz', $rowData, $rowCellStyles);
+      //checkAndMarkColumnNotNull('sitzplatz', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('email', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('geburtstag', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('im_rat_seit', $rowData, $rowCellStyles);

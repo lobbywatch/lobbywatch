@@ -42,7 +42,8 @@
         {
             $selectQuery = 'select * from organisation where
             rechtsform is null OR rechtsform = \'\' OR
-            interessengruppe_id = null';
+            interessengruppe_id = null OR
+            branche_id = null';
             $insertQuery = array();
             $updateQuery = array();
             $deleteQuery = array();
@@ -188,8 +189,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('q_unvollstaendige_organisationenssearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'vernehmlassung', 'interessengruppe_id_name', 'branche_id_name', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe'), $this->RenderText('Branche'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'vernehmlassung', 'interessengruppe_id_name', 'branche_id_name', 'homepage', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe'), $this->RenderText('Branche'), $this->RenderText('Homepage'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -319,6 +320,7 @@
             $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
@@ -851,6 +853,40 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for homepage field
+            //
+            $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for homepage field
+            //
+            $editor = new TextEdit('homepage_edit');
+            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for homepage field
+            //
+            $editor = new TextEdit('homepage_edit');
+            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
@@ -1059,6 +1095,14 @@
             $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=edit&pk0=%branche_id%' , '_self');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for homepage field
+            //
+            $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1288,6 +1332,16 @@
                 'branche_id', 
                 $editor, 
                 $this->dataset, 'id', 'name', $lookupDataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for homepage field
+            //
+            $editor = new TextEdit('homepage_edit');
+            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1540,6 +1594,16 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for homepage field
+            //
+            $editor = new TextEdit('homepage_edit');
+            $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for created_visa field
             //
             $editor = new TextEdit('created_visa_edit');
@@ -1663,6 +1727,14 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for homepage field
+            //
+            $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
@@ -1759,6 +1831,14 @@
             $column = new TextViewColumn('branche_id_name', 'Branche', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=edit&pk0=%branche_id%' , '_self');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for homepage field
+            //
+            $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $grid->AddExportColumn($column);
             
             //
