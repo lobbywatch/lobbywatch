@@ -1,5 +1,6 @@
 *-error_log
 *-access_log
+.htpasswds_lobbycontrol
 
 /settings.php
 /logs
@@ -15,4 +16,3 @@
 /lobbywatch_bearbeitung.bak.pgtm
 /lobbywatch_bearbeitung.old.pgtm
 /lobbywatch_bearbeitung.old.old.pgtm
-
