@@ -20,6 +20,7 @@ The data are not stored in this repository.
 * MySql 5.5
 * Drupal 7
 * D3
+* bash
 
 ### Edit forms generation
 
