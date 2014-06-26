@@ -44,4 +44,4 @@ See parameters with
 
 ## License
 
-Source of Lobbywatch.ch is licensed under GPL, see license file.
+Source of Lobbywatch.ch is licensed under GPL, see LICENSE.
