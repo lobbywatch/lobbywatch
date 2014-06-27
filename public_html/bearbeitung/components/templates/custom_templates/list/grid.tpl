@@ -61,6 +61,9 @@
                             {$Captions->GetMessageString('Refresh')}
                         </a>
                     {/if}
+                </div>
+                
+                <div class="btn-group">
 
                     {if $DataGrid.ActionsPanel.ImRatBisSelectedButton}
                         <button class="btn set-imratbis-selected">
