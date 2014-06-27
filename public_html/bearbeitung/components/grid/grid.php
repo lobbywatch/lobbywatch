@@ -847,28 +847,29 @@ class Grid {
 
     function GetAllowControlledSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'kontrolliert_datum') && is_column_present($columns,'kontrolliert_visa'); // Afterburner
+      return $this->GetAllowDeleteSelected() && is_column_present($columns,'kontrolliert_datum') && is_column_present($columns,'kontrolliert_visa') && isFullWorkflowUser(); // Afterburner
     }
 
     function GetAllowAuthorizationSentSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'autorisierung_verschickt_datum') && is_column_present($columns,'autorisierung_verschickt_visa'); // Afterburner
+      return $this->GetAllowDeleteSelected() && is_column_present($columns,'autorisierung_verschickt_datum') && is_column_present($columns,'autorisierung_verschickt_visa') && isFullWorkflowUser(); // Afterburner
     }
 
     function GetAllowAuthorizeSelected() { // Afterburner
       $columns = $this->GetEditColumns(); // Afterburner
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'autorisiert_datum') && is_column_present($columns,'autorisiert_visa') && is_column_present($columns,'autorisierung_verschickt_datum'); // Afterburner
+      return $this->GetAllowDeleteSelected() && is_column_present($columns,'autorisiert_datum') && is_column_present($columns,'autorisiert_visa') && is_column_present($columns,'autorisierung_verschickt_datum') && isFullWorkflowUser(); // Afterburner
     }
 
     function GetAllowReleaseSelected() { // Afterburner
       $columns = $this->GetEditColumns();
-      return $this->GetAllowDeleteSelected() && is_column_present($columns,'freigabe_datum') && is_column_present($columns,'freigabe_visa'); // Afterburner
+      return $this->GetAllowDeleteSelected() && is_column_present($columns,'freigabe_datum') && is_column_present($columns,'freigabe_visa') && isFullWorkflowUser(); // Afterburner
     }
 
     function GetAllowImRatBisSelected() { // Afterburner
       $columns = $this->GetEditColumns();
       return $this->GetAllowDeleteSelected() && is_column_present($columns,'im_rat_bis'); // Afterburner
     }
+
     function GetAllowDeleteSelected() {
         return $this->allowDeleteSelected;
     }

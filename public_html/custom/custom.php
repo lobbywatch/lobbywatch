@@ -1378,3 +1378,12 @@ function getSettingCategoryValues($categoryName, $defaultValue = null) {
   return $settings[$categoryName];
 }
 
+/**
+ * Certain operations are only available for full workflow users. This method defines who is a full workflow user.
+ *
+ * @return boolean true for full workflow users
+ */
+function isFullWorkflowUser() {
+//   df(Application::Instance()->GetCurrentUserId(), 'id');
+  return in_array(Application::Instance()->GetCurrentUserId(), array(1, 2, 3, 4, 5, 6), false);
+}
