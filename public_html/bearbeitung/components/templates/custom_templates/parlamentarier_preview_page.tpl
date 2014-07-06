@@ -7,7 +7,9 @@
 <!-- the tabs -->
 <ul class="css-tabs">
   <li><a href="#preview">Vorschau</a></li>
-  <li><a href="#email">Autorisierungs-E-Mail</a></li>
+  <li><a href="#email-parlam">Autorisierungs-E-Mail Parlamentarier</a></li>
+  {if isset($Zutrittsberechtigter0.Id)}<li><a href="#email-zb0">Autorisierungs-E-Mail Zutrittsberechtiger 1</a></li>{/if}
+  {if isset($Zutrittsberechtigter1.Id)}<li><a href="#email-zb1">Autorisierungs-E-Mail Zutrittsberechtiger 2</a></li>{/if}
 </ul>
  
 <!-- tab "panes" -->
@@ -29,11 +31,11 @@
                   <div class="btn-toolbar">
 
                       <div class="btn-group">
-                          <a id="btn-eingabe-abgeschlossen" class="btn" href="#">
+                          <a id="btn-eingabe-abgeschlossen-parlam" class="btn" href="#">
                               <i class="pg-icon-input-finished-selected"></i>
                               Eingabe abgeschlossen
                           </a>
-                          <a id="btn-kontrolliert" class="btn" href="#">
+                          <a id="btn-kontrolliert-parlam" class="btn" href="#">
                               <i class="pg-icon-controlled-selected"></i>
                               Kontrolliert
                           </a>
@@ -61,11 +63,12 @@
 
         </div>
     </div>
-  </div>
+  </div> <!-- end first tab content.-->
+  
   <!-- Second tab content.-->
   <div {*class="row-fluid"*}>
     
-    <div id="ops" class="hide">
+    <div id="opsParlam" class="hide">
       <div class="pg-row-selected-sim">
         <input name="rec0" type="checkbox" checked>
         <input name="rec0_pk0" value="{$Parlamentarier.Id}" type="hidden">
@@ -87,19 +90,19 @@
                       <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen und 5. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
                   
                       <div class="btn-group">
-                          <a id="email-select-button" class="btn" href="#">
+                          <a id="email-select-button-parlam" class="btn" href="#">
                               E-Mail selektieren
                           </a>
                       </div>
           
                       <div class="btn-group">
-                          <a id="email-open" class="btn" href="#">
+                          <a id="email-open-parlam" class="btn" href="#">
                               E-Mail öffnen
                           </a>
                       </div>
           
                       <div class="btn-group">
-                          <a id="email-sent" class="btn" href="#">
+                          <a id="email-sent-parlam" class="btn" href="#">
                               <i class="pg-icon-authorization-sent-selected"></i>
                               Autorisierungsanfrage verschickt
                           </a>
@@ -129,17 +132,174 @@
             </div> {*container-fluid*}
             
             {* <button id="email-select-button">E-Mail selektieren</button>
-            <button id="email-open">E-Mail öffnen</button>
-            <button id="email-sent">Autorisierungsanfrage verschickt</button> *} 
+            <button id="email-open-parlam">E-Mail öffnen</button>
+            <button id="email-sent-parlam">Autorisierungsanfrage verschickt</button> *} 
 
-            <div id="email-content" {*style="padding-left: 20px;"*} class="email-content span8">
+            <div id="email-content-parlam" {*style="padding-left: 20px;"*} class="email-content span8">
                 {$Parlamentarier.EmailText}
             </div>
 
         </div>
     </div>
-  </div>
-</div>
+  </div>  <!-- end second tab content.-->
+
+  <!-- Third tab content.-->
+  <div {*class="row-fluid"*}>
+    
+    <div id="opsZb0" class="hide">
+      <div class="pg-row-selected-sim">
+        <input name="rec0" type="checkbox" checked>
+        <input name="rec0_pk0" value="{$Zutrittsberechtigter0.Id}" type="hidden">
+      </div>
+    </div>
+
+    {*<div class="span2"></div>*}
+
+    <div class="row-fluid" {*class="span8"*}>
+
+        <div class="email">
+            <h3>{$Zutrittsberechtigter0.EmailTitle}</h3>
+            
+            <div class="container-fluid">
+
+              <div class="row-fluid">
+                  <div class="btn-toolbar">
+          
+                      <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen und 5. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
+                  
+                      <div class="btn-group">
+                          <a id="email-select-button-zb0" class="btn" href="#">
+                              E-Mail selektieren
+                          </a>
+                      </div>
+          
+                      <div class="btn-group">
+                          <a id="email-open-zb0" class="btn" href="#">
+                              E-Mail öffnen
+                          </a>
+                      </div>
+          
+                      <div class="btn-group">
+                          <a id="email-sent-zb0" class="btn" href="#">
+                              <i class="pg-icon-authorization-sent-selected"></i>
+                              Autorisierungsanfrage verschickt
+                          </a>
+                      </div>
+          
+          {*        </div>
+             </div>
+                      
+              <div class="row-fluid">
+                  <div class="btn-toolbar">
+          *}
+                      
+                      <div class="btn-group">
+                          <a class="btn" href="zutrittsberechtigung.php?operation=edit&pk0={$Zutrittsberechtigter0.Id}">Bearbeiten</a>
+                      </div>
+          
+                      <div class="btn-group">
+                          <a class="btn" href="zutrittsberechtigung.php?operation=view&pk0={$Zutrittsberechtigter0.Id}">Ansehen</a>
+                      </div>
+                      
+                      <div class="btn-group">
+                          <a class="btn btn-primary" href="parlamentarier.php?operation=return">{$Captions->GetMessageString('BackToList')}</a>
+                      </div>
+                      
+                  </div>
+              </div>
+            </div> {*container-fluid*}
+            
+            {* <button id="email-select-button">E-Mail selektieren</button>
+            <button id="email-open-zb0">E-Mail öffnen</button>
+            <button id="email-sent-zb0">Autorisierungsanfrage verschickt</button> *} 
+
+            <div id="email-content-zb0" {*style="padding-left: 20px;"*} class="email-content span8">
+                {$Zutrittsberechtigter0.EmailText}
+            </div>
+
+        </div>
+    </div>
+  </div>  <!-- end third tab content.-->
+
+  <!-- Fourth tab content.-->
+  <div {*class="row-fluid"*}>
+    
+    <div id="opsZb1" class="hide">
+      <div class="pg-row-selected-sim">
+        <input name="rec0" type="checkbox" checked>
+        <input name="rec0_pk0" value="{$Zutrittsberechtigter1.Id}" type="hidden">
+      </div>
+    </div>
+
+    {*<div class="span2"></div>*}
+
+    <div class="row-fluid" {*class="span8"*}>
+
+        <div class="email">
+            <h3>{$Zutrittsberechtigter1.EmailTitle}</h3>
+            
+            <div class="container-fluid">
+
+              <div class="row-fluid">
+                  <div class="btn-toolbar">
+          
+                      <p><small>1. E-Mail selektieren, 2. Kopieren, 3. E-Mail öffnen, 4. E-Mail-Text einfügen und 5. &quot;Autorisierungsanfrage verschickt&quot; setzen.</small></p>
+                  
+                      <div class="btn-group">
+                          <a id="email-select-button-zb1" class="btn" href="#">
+                              E-Mail selektieren
+                          </a>
+                      </div>
+          
+                      <div class="btn-group">
+                          <a id="email-open-zb1" class="btn" href="#">
+                              E-Mail öffnen
+                          </a>
+                      </div>
+          
+                      <div class="btn-group">
+                          <a id="email-sent-zb1" class="btn" href="#">
+                              <i class="pg-icon-authorization-sent-selected"></i>
+                              Autorisierungsanfrage verschickt
+                          </a>
+                      </div>
+          
+          {*        </div>
+             </div>
+                      
+              <div class="row-fluid">
+                  <div class="btn-toolbar">
+          *}
+                      
+                      <div class="btn-group">
+                          <a class="btn" href="zutrittsberechtigung.php?operation=edit&pk0={$Zutrittsberechtigter1.Id}">Bearbeiten</a>
+                      </div>
+          
+                      <div class="btn-group">
+                          <a class="btn" href="zutrittsberechtigung.php?operation=view&pk0={$Zutrittsberechtigter1.Id}">Ansehen</a>
+                      </div>
+                      
+                      <div class="btn-group">
+                          <a class="btn btn-primary" href="parlamentarier.php?operation=return">{$Captions->GetMessageString('BackToList')}</a>
+                      </div>
+                      
+                  </div>
+              </div>
+            </div> {*container-fluid*}
+            
+            {* <button id="email-select-button">E-Mail selektieren</button>
+            <button id="email-open-zb1">E-Mail öffnen</button>
+            <button id="email-sent-zb1">Autorisierungsanfrage verschickt</button> *} 
+
+            <div id="email-content-zb1" {*style="padding-left: 20px;"*} class="email-content span8">
+                {$Zutrittsberechtigter1.EmailText}
+            </div>
+
+        </div>
+    </div>
+  </div>  <!-- end fourth tab content.-->
+
+</div><!-- tab "panes" -->
 
 <script type="text/javascript">{literal}
   //http://stackoverflow.com/questions/985272/jquery-selecting-text-in-an-element-akin-to-highlighting-with-your-mouse
@@ -180,8 +340,8 @@
   };
   
   // Adapted from pgui.grid.ops.js
-  function operateRowAsSelected(action, operation, date) {
-    var selectedRows = $('#ops')
+  function operateRowAsSelected(action, operation, date, ids) {
+    var selectedRows = $(ids)
         .find('.pg-row-selected-sim')
         .filter(function() {
             return true;
@@ -194,7 +354,7 @@
         .append($('<input name="operation" value="' + operation + '">'))
         .append(
             $('<input name="recordCount">')
-                .attr('value', $('#ops').find('.pg-row-selected-sim').length))
+                .attr('value', $(ids).find('.pg-row-selected-sim').length))
         .appendTo($('body'));
 
     selectedRows.each(function() {
@@ -204,8 +364,8 @@
     $form.submit();
   }
   
-  function countSelectedRows() {
-    var selectedRows = $('#ops')
+  function countSelectedRows(ids) {
+    var selectedRows = $(ids)
       .find('.pg-row-selected-sim')
       .filter(function() {
           return true;
@@ -223,56 +383,113 @@
       //  selectText('email-content');
       //});
 
-      $("#email-select-button").click(function() {
+      $("#email-select-button-parlam").click(function() {
         //selectText('email-content');
-        $('#email-content').selectText();
+        $('#email-content-parlam').selectText();
         return false;
       });
 
-      $("#email-open").click(function() {
+      $("#email-select-button-zb0").click(function() {
+        //selectText('email-content');
+        $('#email-content-zb0').selectText();
+        return false;
+      });
+
+      $("#email-select-button-zb1").click(function() {
+        //selectText('email-content');
+        $('#email-content-zb1').selectText();
+        return false;
+      });
+
+      $("#email-open-parlam").click(function() {
         window.open("{/literal}{$Parlamentarier.MailTo}{literal}", 'Mailer');
         return false;
       });
 
-      $("#email-sent").click(function() {
+      $("#email-open-zb0").click(function() {
+        window.open("{/literal}{$Zutrittsberechtigter0.MailTo}{literal}", 'Mailer');
+        return false;
+      });
+
+      $("#email-open-zb1").click(function() {
+        window.open("{/literal}{$Zutrittsberechtigter1.MailTo}{literal}", 'Mailer');
+        return false;
+      });
+
+      $("#email-sent-parlam").click(function() {
         require(['bootbox.min'], function() {
     
-          var nRows = countSelectedRows();
+          var ids = '#opsParlam';
+          var nRows = countSelectedRows(ids);
           bootbox.animate(false);
-          bootbox.confirm( 'Autorisierungsanfrage verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+          bootbox.confirm( 'Parlamentarier-Autorisierungsanfrage verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
-                operateRowAsSelected('parlamentarier.php', 'sndsel', '');
+                operateRowAsSelected('parlamentarier.php', 'sndsel', '', ids);
               }
           });
         });
         return false;
       });
       
-      $("#btn-eingabe-abgeschlossen").click(function() {
+      $("#email-sent-zb0").click(function() {
         require(['bootbox.min'], function() {
     
-          var nRows = countSelectedRows();
+          var ids = '#opsZb0';
+          var nRows = countSelectedRows(ids);
+          bootbox.animate(false);
+          bootbox.confirm( 'Zutrittsberechtiger-Autorisierungsanfrage verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+              if (confirmed) {
+                //self.operateSelectRows('sndsel');
+                operateRowAsSelected('zutrittsberechtigung.php', 'sndsel', '', ids);
+              }
+          });
+        });
+        return false;
+      });
+      
+      $("#email-sent-zb1").click(function() {
+        require(['bootbox.min'], function() {
+    
+          var ids = '#opsZb1';
+          var nRows = countSelectedRows(ids);
+          bootbox.animate(false);
+          bootbox.confirm( 'Zutrittsberechtiger-Autorisierungsanfrage verschickt? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+              if (confirmed) {
+                //self.operateSelectRows('sndsel');
+                operateRowAsSelected('zutrittsberechtigung.php', 'sndsel', '', ids);
+              }
+          });
+        });
+        return false;
+      });
+      
+      $("#btn-eingabe-abgeschlossen-parlam").click(function() {
+        require(['bootbox.min'], function() {
+    
+          var ids = '#opsParlam';
+          var nRows = countSelectedRows(ids);
           bootbox.animate(false);
           bootbox.confirm( 'Eingabe abgeschlossen? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
-                operateRowAsSelected('parlamentarier.php', 'finsel', '');
+                operateRowAsSelected('parlamentarier.php', 'finsel', '', ids);
               }
           });
         });
         return false;
       });
       
-      $("#btn-kontrolliert").click(function() {
+      $("#btn-kontrolliert-parlam").click(function() {
         require(['bootbox.min'], function() {
     
-          var nRows = countSelectedRows();
+          var ids = '#opsParlam';
+          var nRows = countSelectedRows(ids);
           bootbox.animate(false);
           bootbox.confirm( 'Eingabe kontrolliert? (n=' + nRows + ')' /*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
               if (confirmed) {
                 //self.operateSelectRows('sndsel');
-                operateRowAsSelected('parlamentarier.php', 'consel', '');
+                operateRowAsSelected('parlamentarier.php', 'consel', '', ids);
               }
           });
         });

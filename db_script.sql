@@ -449,3 +449,5 @@ UPDATE `country` SET `name_de`=REPLACE(`name_de`, ',Republik', '')  WHERE `name_
 
 -- 16.03.2014
 
+-- Parlamentarier without Zutrittsberechtigungen
+select * from parlamentarier where not exists (select * from zutrittsberechtigung where zutrittsberechtigung.parlamentarier_id = parlamentarier.id);

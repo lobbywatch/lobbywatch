@@ -493,7 +493,7 @@ ORDER BY `ranghoehe` ASC;
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
 SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name,
-CONCAT(p.vorname, ' ', p.nachname) AS name,
+CONCAT_WS(' ', p.vorname, p.zweiter_vorname, p.nachname) AS name,
 rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kanton.abkuerzung as kanton,
 CAST(
 (CASE rat.abkuerzung

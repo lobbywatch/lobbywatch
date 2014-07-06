@@ -677,17 +677,22 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
   $rendered = $smarty->fetch($TemplateName, null, null, $display);
 }
 
-function gaesteMitMandaten($con, $parlamentarier_id, $for_email = false) {
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
+function zutrittsberechtigteForParlamentarier($con, $parlamentarier_id, $for_email = false) {
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, zutrittsberechtigung.beruf, zutrittsberechtigung.email,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li>', IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), organisation.anzeige_name,
     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', " . (!$for_email ? "'<span class=\"preview-missing-data\">, Rechtsform fehlt</span>'" : "''") . ", CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
     IF(mandat.funktion_im_gremium IS NULL OR TRIM(mandat.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(mandat.funktion_im_gremium, 1)), SUBSTRING(mandat.funktion_im_gremium, 2)))),
-    IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')),
+    " . (!$for_email ? " IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>'))," : "") . "
     IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
-) mandate
+) mandate,
+CASE zutrittsberechtigung.geschlecht
+    WHEN 'M' THEN CONCAT('<p>Sehr geehrter Herr ', zutrittsberechtigung.nachname, '</p>')
+    WHEN 'F' THEN CONCAT('<p>Sehr geehrte Frau ', zutrittsberechtigung.nachname, '</p>')
+    ELSE CONCAT('<p>Sehr geehrte(r) Herr/Frau ', zutrittsberechtigung.nachname, '</p>')
+END anrede
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
   ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
@@ -698,22 +703,27 @@ WHERE
   AND zutrittsberechtigung.parlamentarier_id=:id
 GROUP BY zutrittsberechtigung.id;";
 
+  $res = array();
   $gaeste = array();
   $sth = $con->prepare($sql);
   $sth->execute(array(':id' => $parlamentarier_id));
   $gaeste = $sth->fetchAll();
 
+  $gaesteMitMandaten = '';
+
   if (!$gaeste) {
-    return '<p>keine</p>';
-//      throw new Exception('Parlamentarier ID not found');
+    $gaesteMitMandaten = '<p>keine</p>';
+    //      throw new Exception('Parlamentarier ID not found');
+  } else {
+    foreach($gaeste as $gast) {
+      $gaesteMitMandaten .= '<h5>' . $gast['zutrittsberechtigung_name'] . '</h5>';
+      //$gaesteMitMandaten .= mandateList($con, $gast['id']);
+      $gaesteMitMandaten .= "<ul>\n" . $gast['mandate'] . "\n</ul>";
+    }
   }
 
-  $res = '';
-  foreach($gaeste as $gast) {
-    $res .= '<h5>' . $gast['zutrittsberechtigung_name'] . '</h5>';
-    //$res .= mandateList($con, $gast['id']);
-    $res .= "<ul>\n" . $gast['mandate'] . "\n</ul>";
-  }
+  $res['gaesteMitMandaten'] = $gaesteMitMandaten;
+  $res['zutrittsberechtigte'] = $gaeste;
 
   return $res;
 }
@@ -970,13 +980,8 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
    }
 
     // Write styles
-    if ($completeness_styles != '') {
-      $rowCellStyles['nachname'] = $completeness_styles;
-    }
-
-    if ($workflow_styles != '') {
-      $rowCellStyles['id'] = $workflow_styles;
-    }
+    $rowCellStyles['nachname'] = $completeness_styles;
+    $rowCellStyles['id'] = $workflow_styles;
 
     //     df($rowCellStyles, '$rowCellStyles ' . $rowData['nachname'] . ' ' .$rowData['vorname']);
   } else {
@@ -1090,9 +1095,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     // Write styles
 
-    if ($workflow_styles != '') {
-      $rowCellStyles['id'] = $workflow_styles;
-    }
+    $rowCellStyles['id'] = $workflow_styles;
 
     if ($completeness_styles != '') {
       switch($table_name) {
