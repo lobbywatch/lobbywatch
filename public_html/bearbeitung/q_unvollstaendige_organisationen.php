@@ -91,6 +91,12 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');

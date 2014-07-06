@@ -493,6 +493,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -1030,6 +1036,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -2627,6 +2639,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -5684,6 +5702,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -5810,6 +5834,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -5948,6 +5978,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -6075,6 +6111,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -6664,6 +6706,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -6776,6 +6824,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -7928,6 +7982,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -8054,6 +8114,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -8192,6 +8258,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -8319,6 +8391,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -8989,6 +9067,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -9113,6 +9197,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -9676,6 +9766,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -9800,6 +9896,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -10236,6 +10338,12 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
@@ -10990,6 +11098,12 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
@@ -12658,6 +12772,12 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
@@ -13414,6 +13534,12 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
@@ -13577,6 +13703,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -13689,6 +13821,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -14520,6 +14658,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -14645,6 +14789,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -14929,6 +15079,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -15054,6 +15210,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -15772,6 +15934,12 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
@@ -16528,6 +16696,12 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
@@ -16691,6 +16865,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -16803,6 +16983,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -17634,6 +17820,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -17759,6 +17951,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -18043,6 +18241,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -18168,6 +18372,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -18886,6 +19096,12 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
@@ -19642,6 +19858,12 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, true);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, true);
             $field = new StringField('notizen');
@@ -19812,6 +20034,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -19924,6 +20152,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -20812,6 +21046,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -20937,6 +21177,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -21223,6 +21469,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -21348,6 +21600,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -32023,6 +32281,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -32150,6 +32414,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -32670,6 +32940,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -33524,6 +33800,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -33651,6 +33933,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -34161,6 +34449,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -34606,6 +34900,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -35388,6 +35688,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -35515,6 +35821,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -36793,6 +37105,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -37321,6 +37639,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -37448,6 +37772,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -38718,6 +39048,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -39253,6 +39589,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -40237,6 +40579,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -40364,6 +40712,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -41323,6 +41677,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -41487,6 +41847,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -41614,6 +41980,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -42525,6 +42897,12 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -42839,6 +43217,12 @@
             $field = new StringField('twitter_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $lookupDataset->AddField($field, false);
@@ -43615,6 +43999,12 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_strasse');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_zusatz');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('adresse_plz');
+            $this->dataset->AddField($field, false);
             $field = new StringField('ALT_parlam_verbindung');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
@@ -43726,8 +44116,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'land_id_anzeige_name', 'interessenraum_id_anzeige_name', 'rechtsform', 'typ', 'vernehmlassung', 'branche_id_anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Land'), $this->RenderText('Interessenraum'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Branche'), $this->RenderText('Lobbygruppe'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
+                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'land_id_anzeige_name', 'interessenraum_id_anzeige_name', 'rechtsform', 'typ', 'vernehmlassung', 'branche_id_anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Land'), $this->RenderText('Interessenraum'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Branche'), $this->RenderText('Lobbygruppe'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse Plz'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -44092,6 +44482,9 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('handelsregister_url', $this->RenderText('Handelsregister Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name', $this->RenderText('Twitter Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_strasse', $this->RenderText('Adresse Strasse')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_zusatz', $this->RenderText('Adresse Zusatz')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_plz', $this->RenderText('Adresse Plz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_parlam_verbindung', $this->RenderText('ALT Parlam Verbindung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
@@ -44773,6 +45166,7 @@
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
             $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
+            $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -44797,6 +45191,7 @@
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
             $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
+            $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -45921,6 +46316,115 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for adresse_plz field
+            //
+            $editor = new TextEdit('adresse_plz_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for adresse_plz field
+            //
+            $editor = new TextEdit('adresse_plz_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -46382,6 +46886,31 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -46693,6 +47222,7 @@
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
             $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
+            $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -47181,6 +47711,39 @@
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for adresse_plz field
+            //
+            $editor = new TextEdit('adresse_plz_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -47543,6 +48106,7 @@
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
             $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
+            $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -48036,6 +48600,39 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for adresse_plz field
+            //
+            $editor = new TextEdit('adresse_plz_edit');
+            $editor->SetSize(10);
+            $editor->SetMaxLength(10);
+            $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for ALT_parlam_verbindung field
             //
             $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
@@ -48200,6 +48797,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -48423,6 +49041,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -48725,6 +49364,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -48968,6 +49638,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -49265,6 +49956,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -49508,6 +50230,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -49805,6 +50548,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -50048,6 +50822,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -50345,6 +51140,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -50588,6 +51414,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -50885,6 +51732,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -51128,6 +52006,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -51425,6 +52324,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -51668,6 +52598,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -51965,6 +52916,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -52208,6 +53190,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -52505,6 +53508,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -52748,6 +53782,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -53045,6 +54100,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -53288,6 +54374,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -53585,6 +54692,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -53828,6 +54966,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -54125,6 +55284,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -54368,6 +55558,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -54665,6 +55876,37 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetDescription($this->RenderText('Adresse der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetDescription($this->RenderText('Adressezusatz, z.B. Postfach'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ALT_parlam_verbindung field
             //
             $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
@@ -54908,6 +56150,27 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for adresse_plz field
+            //
+            $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -55541,6 +56804,72 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for adresse_strasse field
+            //
+            $editor = new TextEdit('adresse_strasse_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Strasse', 'adresse_strasse', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_strasse_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for adresse_zusatz field
+            //
+            $editor = new TextEdit('adresse_zusatz_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Adresse Zusatz', 'adresse_zusatz', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_zusatz_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -55622,6 +56951,20 @@
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for adresse_strasse field
+            //
+            $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_strasse_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for adresse_zusatz field
+            //
+            $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_zusatz_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field

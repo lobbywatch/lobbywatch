@@ -774,3 +774,17 @@ ALTER TABLE `user`
   ADD `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am' AFTER `created_visa`,
   ADD `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von' AFTER `created_date`,
   ADD `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am' AFTER `updated_visa`;
+
+ALTER TABLE `organisation` CHANGE `rechtsform` `rechtsform` ENUM( 'AG', 'GmbH', 'Stiftung', 'Verein', 'Informelle Gruppe', 'Parlamentarische Gruppe', 'Oeffentlich-rechtlich', 'Einzelunternehmen', 'KG', 'Genossenschaft', 'Staatlich', 'Ausserparlamentarische Kommission', 'Einfache Gesellschaft' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Rechtsform der Organisation';
+
+ALTER TABLE `organisation_log` CHANGE `rechtsform` `rechtsform` ENUM( 'AG', 'GmbH', 'Stiftung', 'Verein', 'Informelle Gruppe', 'Parlamentarische Gruppe', 'Oeffentlich-rechtlich', 'Einzelunternehmen', 'KG', 'Genossenschaft', 'Staatlich', 'Ausserparlamentarische Kommission', 'Einfache Gesellschaft' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Rechtsform der Organisation';
+
+ALTER TABLE `organisation`
+  ADD `adresse_strasse` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Adresse der Organisation' AFTER `beschreibung`,
+  ADD `adresse_zusatz` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach' AFTER `adresse_strasse`,
+  ADD `adresse_plz` VARCHAR(10) NULL DEFAULT NULL COMMENT 'Postleitzahl der Organisation' AFTER `adresse_zusatz`;
+
+ALTER TABLE `organisation_log`
+  ADD `adresse_strasse` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Adresse der Organisation' AFTER `beschreibung`,
+  ADD `adresse_zusatz` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach' AFTER `adresse_strasse`,
+  ADD `adresse_plz` VARCHAR(10) NULL DEFAULT NULL COMMENT 'Postleitzahl der Organisation' AFTER `adresse_zusatz`;
