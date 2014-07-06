@@ -261,7 +261,8 @@
               'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailto. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
               'EmailText' => '<p>' . $rowData['anrede'] . '</p>' . $email_intro . (isset($rowData['beruf']) ? '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' : '') . '<p>Ihre <b>Interessenbindungen</b>:</p><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
                 '<p>Ihre <b>Gäste</b>:</p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<p>keine</p>') .
-                '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true) . $email_end,
+                $email_end,
+                // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
                'MailTo' => $mailto,
           ),
             'Authentication' => array(

@@ -234,6 +234,8 @@
                 $result->AddPage(new PageLink($this->RenderText('<span class="settings">User</span>'), 'user.php', $this->RenderText('User'), $currentPageCaption == $this->RenderText('<span class="settings">User</span>')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_parlamentarier')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="view">Unvollständige Parlamentarier</span>'), 'q_unvollstaendige_parlamentarier.php', $this->RenderText('Unvollständige Parlamentarier'), $currentPageCaption == $this->RenderText('<span class="view">Unvollständige Parlamentarier</span>')));
+            if (GetCurrentUserGrantForDataSource('q_unvollstaendige_zutrittsberechtigte')->HasViewGrant())
+                $result->AddPage(new PageLink($this->RenderText('<span class="view">Unvollständige Zutrittsberechtigte</span>'), 'q_unvollstaendige_zutrittsberechtigte.php', $this->RenderText('Unvollständige Zutrittsberechtigte'), $currentPageCaption == $this->RenderText('<span class="view">Unvollständige Zutrittsberechtigte</span>')));
             if (GetCurrentUserGrantForDataSource('q_unvollstaendige_organisationen')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="view">Unvollständige Organisationen</span>'), 'q_unvollstaendige_organisationen.php', $this->RenderText('Unvollständige Organisationen'), $currentPageCaption == $this->RenderText('<span class="view">Unvollständige Organisationen</span>')));
             if (GetCurrentUserGrantForDataSource('q_last_updated_tables')->HasViewGrant())
@@ -1671,17 +1673,11 @@
         }
         public function q_unvollstaendige_parlamentarierGrid_OnGetCustomTemplate($part, $mode, &$result, &$params)
         {
-        if ($part == PagePart::VerticalGrid && $mode == PageMode::Edit) {
-          $result = 'edit/grid.tpl';
-        } else if ($part == PagePart::VerticalGrid && $mode == PageMode::Insert) {
-          $result = 'insert/grid.tpl';
-        } else if ($part == PagePart::RecordCard && $mode == PageMode::View) {
-          $result = 'view/grid.tpl';
-        } else if ($part == PagePart::Grid && $mode == PageMode::ViewAll) {
-          $result = 'list/grid.tpl';
-        } else if ($part == PagePart::PageList) {
-          $result = 'page_list.tpl';
+        defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);
         }
+        public function q_unvollstaendige_parlamentarierGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
+        {
+        customDrawRow('parlamentarier', $rowData, $rowCellStyles, $rowStyles);
         }
     
         protected function CreateGrid()
@@ -1695,13 +1691,14 @@
             ApplyCommonPageSettings($this, $result);
             
             $result->SetUseImagesForActions(true);
-            $result->SetUseFixedHeader(false);
+            $result->SetUseFixedHeader(true);
             
-            $result->SetShowLineNumbers(false);
+            $result->SetShowLineNumbers(true);
             
             $result->SetHighlightRowAtHover(false);
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('q_unvollstaendige_parlamentarierGrid' . '_OnGetCustomTemplate', $this);
+            $result->OnCustomDrawCell->AddListener('q_unvollstaendige_parlamentarierGrid' . '_OnCustomDrawRow', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

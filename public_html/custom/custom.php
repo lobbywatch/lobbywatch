@@ -960,10 +960,13 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
 
    } elseif ($table_name === 'zutrittsberechtigung') {
-      if (isset($rowData['email'])) {
-        $completeness_styles .= 'background-color: greenyellow;';
+     if (isset($rowData['email']) && isset($rowData['geschlecht'])) {
+       $completeness_styles .= 'background-color: greenyellow;';
+     } elseif (isset($rowData['email']) || isset($rowData['geschlecht'])) {
+        $completeness_styles .= 'background-color: orange;';
       }
       checkAndMarkColumnNotNull('email', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('geschlecht', $rowData, $rowCellStyles);
    }
 
     // Write styles
