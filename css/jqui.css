@@ -33,7 +33,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 }
 
 #c1c2 #wrapper #col1.marginleft  {
-	margin-left: 200px;
+	margin-left: 230px;
 }
 
 #c1c2 #wrapper #col1.marginright {
@@ -51,7 +51,7 @@ body.fixed_width .fixedwidth .fixedwidth {
 * html #tiki-center {font-size: 1em}
 
 #c1c2 #col2 {
-	width: 200px;
+	width: 230px;
 	overflow: visible;
 }
 
