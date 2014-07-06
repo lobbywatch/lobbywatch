@@ -788,3 +788,11 @@ ALTER TABLE `organisation_log`
   ADD `adresse_strasse` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Adresse der Organisation' AFTER `beschreibung`,
   ADD `adresse_zusatz` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach' AFTER `adresse_strasse`,
   ADD `adresse_plz` VARCHAR(10) NULL DEFAULT NULL COMMENT 'Postleitzahl der Organisation' AFTER `adresse_zusatz`;
+
+ALTER TABLE `interessenbindung` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'patronatskomitee', 'finanziell' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung';
+
+ALTER TABLE `interessenbindung_log` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'patronatskomitee', 'finanziell' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung';
+
+ALTER TABLE `mandat` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'patronatskomitee', 'finanziell' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation';
+
+ALTER TABLE `mandat_log` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'patronatskomitee', 'finanziell' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation';
