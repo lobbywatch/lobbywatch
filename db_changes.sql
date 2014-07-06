@@ -806,7 +806,7 @@ ALTER TABLE `organisation_beziehung` CHANGE `art` `art` ENUM( 'arbeitet fuer', '
 
 ALTER TABLE `organisation_beziehung_log` CHANGE `art` `art` ENUM( 'arbeitet fuer', 'mitglied von', 'tochtergesellschaft von', 'partner von' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation';
 
---
+-- Part 2
 
 UPDATE `interessenbindung` SET art='beirat' WHERE art='patronatskomitee';
 
@@ -835,3 +835,6 @@ UPDATE `parlamentarier_log` SET `zivilstand`='verheiratet' WHERE `zivilstand`= '
 ALTER TABLE `parlamentarier` CHANGE `zivilstand` `zivilstand` ENUM( 'ledig', 'verheiratet', 'geschieden', 'eingetragene partnerschaft') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Zivilstand';
 
 ALTER TABLE `parlamentarier_log` CHANGE `zivilstand` `zivilstand` ENUM( 'ledig', 'verheiratet', 'geschieden', 'eingetragene partnerschaft') CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Zivilstand';
+
+UPDATE `user` SET `created_visa`='roland', `created_date`=STR_TO_DATE('08.11.2013','%d.%m.%Y'), `updated_visa`='roland', `updated_date`=NOW() WHERE `id` IN (1, 2, 3, 4, 5, 6, 7);
+UPDATE `user` SET `created_visa`='roland', `created_date`=NOW(), `updated_visa`='roland', `updated_date`=NOW() WHERE `id` > 7;
