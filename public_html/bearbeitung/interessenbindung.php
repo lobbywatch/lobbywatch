@@ -1195,7 +1195,7 @@
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
-            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1213,7 +1213,7 @@
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
-            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(false);
@@ -2323,7 +2323,7 @@
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
-            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2870,7 +2870,7 @@
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
-            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(false);
