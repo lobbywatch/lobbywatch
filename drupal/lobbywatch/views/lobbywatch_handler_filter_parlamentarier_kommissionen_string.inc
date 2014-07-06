@@ -33,7 +33,7 @@ class lobbywatch_handler_filter_parlamentarier_kommissionen_string extends views
 //       dpm($kommissionen);
       $options = array();
       foreach ($kommissionen as $kommission => $info) {
-        $name = mb_substr($info['name'], 0, 65);
+        $name = mb_substr($info['name'], 0, 100);
         $options[$info['abkuerzung']] = $name . ($name != $info['name'] ? '…' : '') . ' (' . $info['abkuerzung'] . ')';
       }
 //       dpm($options);
