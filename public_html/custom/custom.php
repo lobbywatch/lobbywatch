@@ -689,9 +689,9 @@ GROUP_CONCAT(DISTINCT
     SEPARATOR ' '
 ) mandate,
 CASE zutrittsberechtigung.geschlecht
-    WHEN 'M' THEN CONCAT('<p>Sehr geehrter Herr ', zutrittsberechtigung.nachname, '</p>')
-    WHEN 'F' THEN CONCAT('<p>Sehr geehrte Frau ', zutrittsberechtigung.nachname, '</p>')
-    ELSE CONCAT('<p>Sehr geehrte(r) Herr/Frau ', zutrittsberechtigung.nachname, '</p>')
+    WHEN 'M' THEN CONCAT('Sehr geehrter Herr ', zutrittsberechtigung.nachname)
+    WHEN 'F' THEN CONCAT('Sehr geehrte Frau ', zutrittsberechtigung.nachname)
+    ELSE CONCAT('Sehr geehrte(r) Herr/Frau ', zutrittsberechtigung.nachname)
 END anrede
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
