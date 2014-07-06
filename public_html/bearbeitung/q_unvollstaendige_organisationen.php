@@ -406,7 +406,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=edit&amp;pk0=%id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=edit&amp;pk0=%id%&amp;t=0' , '_self');
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1053,7 +1053,7 @@
             //
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=edit&amp;pk0=%id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=edit&amp;pk0=%id%&amp;t=0' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1682,7 +1682,7 @@
             //
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=edit&amp;pk0=%id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=edit&amp;pk0=%id%&amp;t=0' , '_self');
             $grid->AddPrintColumn($column);
             
             //
@@ -1789,7 +1789,7 @@
             //
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=edit&amp;pk0=%id%' , '_self');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'organisation.php?operation=edit&amp;pk0=%id%&amp;t=0' , '_self');
             $grid->AddExportColumn($column);
             
             //
