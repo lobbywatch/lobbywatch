@@ -1388,6 +1388,6 @@ function isFullWorkflowUser() {
   return in_array(Application::Instance()->GetCurrentUserId(), array(1, 2, 3, 4, 5, 6), false);
 }
 
-function onAfterLogin($userName, $connection) {
+function defaultOnAfterLogin($userName, $connection) {
   $connection->ExecSQL("UPDATE `user` SET `last_login`= CURRENT_TIMESTAMP WHERE `name` = '$userName';");
 }

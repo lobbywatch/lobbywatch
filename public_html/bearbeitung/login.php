@@ -129,7 +129,7 @@
 
         private function OnAfterLogin($userName, $connection)
         {
-            onAfterLogin($userName, $connection);
+            defaultOnAfterLogin($userName, $connection);
         }
 
         private function GetUrlToRedirectAfterLogin()

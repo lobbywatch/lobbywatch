@@ -69,6 +69,7 @@ $tableCaptions = array('organisation' => '<span class="entity important-entity">
 'settings' => '<span class="settings">Settings</span>',
 'settings_category' => '<span class="settings">Settings Category</span>',
 'settings_category.settings' => '<span class="settings">Settings Category</span>.<s>Settings</s>',
+'user' => '<span class="settings">User</span>',
 'v_parlamentarier_authorisierungs_email' => '<span class="view">Parlamentarier Email</span>',
 'q_unvollstaendige_parlamentarier' => '<span class="view">Unvollständige Parlamentarier</span>',
 'q_unvollstaendige_organisationen' => '<span class="view">Unvollständige Organisationen</span>',
