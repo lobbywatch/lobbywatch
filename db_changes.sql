@@ -812,6 +812,10 @@ UPDATE `interessenbindung` SET art='beirat' WHERE art='patronatskomitee';
 
 UPDATE `interessenbindung_log` SET art='beirat' WHERE art='patronatskomitee';
 
+UPDATE `mandat` SET art='beirat' WHERE art='patronatskomitee';
+
+UPDATE `mandat_log` SET art='beirat' WHERE art='patronatskomitee';
+
 ALTER TABLE `interessenbindung` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'finanziell' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung';
 
 ALTER TABLE `interessenbindung_log` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'finanziell' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung';
