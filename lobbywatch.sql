@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 01. Mai 2014 um 20:58
+-- Erstellungszeit: 06. Jul 2014 um 21:51
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -180,7 +180,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche`
 --
--- Erzeugt am: 19. Apr 2014 um 19:03
+-- Erzeugt am: 06. Jul 2014 um 17:39
 --
 
 DROP TABLE IF EXISTS `branche`;
@@ -191,6 +191,13 @@ CREATE TABLE IF NOT EXISTS `branche` (
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
   `angaben` text COMMENT 'Angaben zur Branche',
   `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23',
+  `symbol_abs` varchar(255) DEFAULT NULL COMMENT 'Symbolbild (Icon) der Branche, absoluter Pfad',
+  `symbol_rel` varchar(255) DEFAULT NULL COMMENT 'Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit $rel_files_url/ zu URL ergänzt werden',
+  `symbol_klein_rel` varchar(255) DEFAULT NULL COMMENT 'Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit $rel_files_url/ zu URL ergänzt werden',
+  `symbol_dateiname_wo_ext` varchar(255) DEFAULT NULL COMMENT 'Symbolbilddateiname ohne Erweiterung',
+  `symbol_dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Dateierweiterung des Symbolbildes',
+  `symbol_dateiname` varchar(255) DEFAULT NULL COMMENT 'Symbolbilddateiname mit Erweiterung',
+  `symbol_mime_type` varchar(100) DEFAULT NULL COMMENT 'MIME Type des Symbolbildes',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
@@ -263,7 +270,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche_log`
 --
--- Erzeugt am: 19. Apr 2014 um 19:03
+-- Erzeugt am: 06. Jul 2014 um 17:39
 --
 
 DROP TABLE IF EXISTS `branche_log`;
@@ -274,6 +281,13 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
   `angaben` text COMMENT 'Angaben zur Branche',
   `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23',
+  `symbol_abs` varchar(255) DEFAULT NULL COMMENT 'Symbolbild (Icon) der Branche, absoluter Pfad',
+  `symbol_rel` varchar(255) DEFAULT NULL COMMENT 'Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit $rel_files_url/ zu URL ergänzt werden',
+  `symbol_klein_rel` varchar(255) DEFAULT NULL COMMENT 'Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit $rel_files_url/ zu URL ergänzt werden',
+  `symbol_dateiname_wo_ext` varchar(255) DEFAULT NULL COMMENT 'Symbolbilddateiname ohne Erweiterung',
+  `symbol_dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Dateierweiterung des Symbolbildes',
+  `symbol_dateiname` varchar(255) DEFAULT NULL COMMENT 'Symbolbilddateiname mit Erweiterung',
+  `symbol_mime_type` varchar(100) DEFAULT NULL COMMENT 'MIME Type des Symbolbildes',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
@@ -293,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
   PRIMARY KEY (`log_id`),
   KEY `kommission_id` (`kommission_id`),
   KEY `fk_branche_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=30 ;
 
 --
 -- RELATIONEN DER TABELLE `branche_log`:
@@ -306,7 +320,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
 --
 -- Tabellenstruktur für Tabelle `country`
 --
--- Erzeugt am: 01. Mrz 2014 um 21:44
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `country`;
@@ -350,7 +364,7 @@ CREATE TABLE IF NOT EXISTS `country` (
 --
 -- Tabellenstruktur für Tabelle `fraktion`
 --
--- Erzeugt am: 19. Apr 2014 um 19:00
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `fraktion`;
@@ -429,7 +443,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `fraktion_log`
 --
--- Erzeugt am: 19. Apr 2014 um 19:00
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `fraktion_log`;
@@ -473,7 +487,7 @@ CREATE TABLE IF NOT EXISTS `fraktion_log` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 20. Apr 2014 um 05:05
+-- Erzeugt am: 06. Jul 2014 um 11:31
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
@@ -481,7 +495,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessenbindung',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
-  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
+  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht') NOT NULL COMMENT 'Ist diese Interessenbindung deklarationspflichtig? Bezeichung der Interessenbindung. Möglichst kurz. Wird nicht ausgewertet, jedoch angezeigt.',
   `status` enum('deklariert','nicht-deklariert') NOT NULL DEFAULT 'deklariert' COMMENT 'Status der Interessenbindung',
@@ -507,7 +521,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   UNIQUE KEY `interessenbindung_art_parlamentarier_organisation_unique` (`art`,`parlamentarier_id`,`organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbyorg` (`organisation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=488 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=592 ;
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung`:
@@ -567,7 +581,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 20. Apr 2014 um 05:05
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
@@ -606,7 +620,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbyorg` (`organisation_id`),
   KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=1371 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=2008 ;
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung_log`:
@@ -619,7 +633,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
 --
 -- Tabellenstruktur für Tabelle `interessengruppe`
 --
--- Erzeugt am: 19. Jan 2014 um 08:22
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `interessengruppe`;
@@ -642,7 +656,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `interessengruppe_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_lobbytyp` (`branche_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=64 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=103 ;
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe`:
@@ -700,7 +714,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessengruppe_log`
 --
--- Erzeugt am: 27. Jan 2014 um 07:02
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
@@ -728,7 +742,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
   PRIMARY KEY (`log_id`),
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `fk_interessengruppe_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=90 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=146 ;
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe_log`:
@@ -741,7 +755,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
 --
 -- Tabellenstruktur für Tabelle `interessenraum`
 --
--- Erzeugt am: 02. Mrz 2014 um 05:51
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `interessenraum`;
@@ -771,7 +785,7 @@ CREATE TABLE IF NOT EXISTS `interessenraum` (
 --
 -- Tabellenstruktur für Tabelle `in_kommission`
 --
--- Erzeugt am: 19. Jan 2014 um 08:22
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `in_kommission`;
@@ -797,7 +811,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
   UNIQUE KEY `in_kommission_parlamentarier_kommission_funktion_unique` (`funktion`,`parlamentarier_id`,`kommission_id`,`bis`) COMMENT 'Fachlicher unique constraint',
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `kommissions_id` (`kommission_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=119 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=159 ;
 
 --
 -- RELATIONEN DER TABELLE `in_kommission`:
@@ -875,7 +889,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `in_kommission_log`
 --
--- Erzeugt am: 27. Jan 2014 um 07:02
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `in_kommission_log`;
@@ -906,7 +920,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `kommissions_id` (`kommission_id`),
   KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=187 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=306 ;
 
 --
 -- RELATIONEN DER TABELLE `in_kommission_log`:
@@ -919,7 +933,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `kanton`
 --
--- Erzeugt am: 20. Apr 2014 um 08:29
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `kanton`;
@@ -1008,7 +1022,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kanton_jahr`
 --
--- Erzeugt am: 20. Apr 2014 um 08:30
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `kanton_jahr`;
@@ -1097,7 +1111,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kanton_jahr_log`
 --
--- Erzeugt am: 20. Apr 2014 um 08:31
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `kanton_jahr_log`;
@@ -1145,7 +1159,7 @@ CREATE TABLE IF NOT EXISTS `kanton_jahr_log` (
 --
 -- Tabellenstruktur für Tabelle `kanton_log`
 --
--- Erzeugt am: 20. Apr 2014 um 08:31
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `kanton_log`;
@@ -1199,7 +1213,7 @@ CREATE TABLE IF NOT EXISTS `kanton_log` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
--- Erzeugt am: 19. Jan 2014 um 08:22
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `kommission`;
@@ -1228,7 +1242,7 @@ CREATE TABLE IF NOT EXISTS `kommission` (
   UNIQUE KEY `kommission_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `kommission_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
   KEY `zugehoerige_kommission` (`mutter_kommission_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=45 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=46 ;
 
 --
 -- RELATIONEN DER TABELLE `kommission`:
@@ -1286,7 +1300,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 27. Jan 2014 um 07:02
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
@@ -1319,7 +1333,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
   PRIMARY KEY (`log_id`),
   KEY `zugehoerige_kommission` (`mutter_kommission_id`),
   KEY `fk_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=35 ;
 
 --
 -- RELATIONEN DER TABELLE `kommission_log`:
@@ -1332,7 +1346,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 20. Apr 2014 um 05:07
+-- Erzeugt am: 06. Jul 2014 um 04:21
 --
 
 DROP TABLE IF EXISTS `mandat`;
@@ -1340,7 +1354,7 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `zutrittsberechtigung_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Zutrittsberechtigung.',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
-  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
+  `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee','finanziell') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
   `funktion_im_gremium` enum('praesident','vizepraesident','mitglied') DEFAULT NULL COMMENT 'Funktion innerhalb des Gremiums, z.B. Präsident in einem Vorstand einer AG entspricht einem Verwatlungsratspräsidenten, Präsident einer Geschäftsleitung entspricht einem CEO.',
   `verguetung` int(11) DEFAULT NULL COMMENT 'Jährliche Vergütung CHF dieses Mandates, z.B. Entschädigung für Beiratsfunktion.',
   `beschreibung` varchar(150) DEFAULT NULL COMMENT 'Umschreibung des Mandates. Beschreibung wird nicht ausgwertet, jedoch in den Resultaten angezeigt.',
@@ -1363,7 +1377,7 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   UNIQUE KEY `mandat_zutrittsberechtigung_organisation_art_unique` (`art`,`zutrittsberechtigung_id`,`organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
   KEY `organisations_id` (`organisation_id`),
   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=182 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=247 ;
 
 --
 -- RELATIONEN DER TABELLE `mandat`:
@@ -1423,7 +1437,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mandat_log`
 --
--- Erzeugt am: 20. Apr 2014 um 05:08
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `mandat_log`;
@@ -1459,7 +1473,7 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
   KEY `organisations_id` (`organisation_id`),
   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`),
   KEY `fk_mandat_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=471 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=635 ;
 
 --
 -- RELATIONEN DER TABELLE `mandat_log`:
@@ -1472,7 +1486,7 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
 --
 -- Tabellenstruktur für Tabelle `mil_grad`
 --
--- Erzeugt am: 30. Dez 2013 um 05:16
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `mil_grad`;
@@ -1542,7 +1556,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mil_grad_log`
 --
--- Erzeugt am: 27. Jan 2014 um 07:02
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `mil_grad_log`;
@@ -1577,7 +1591,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 20. Apr 2014 um 05:03
+-- Erzeugt am: 06. Jul 2014 um 04:03
 --
 
 DROP TABLE IF EXISTS `organisation`;
@@ -1589,7 +1603,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
   `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
   `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
@@ -1600,6 +1614,9 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `handelsregister_url` varchar(255) DEFAULT NULL COMMENT 'Link zum Eintrag im Handelsregister',
   `twitter_name` varchar(50) DEFAULT NULL COMMENT 'Twittername',
   `beschreibung` text COMMENT 'Beschreibung der Organisation, Zweck gemäss Handelsregister oder  Statuten',
+  `adresse_strasse` varchar(100) DEFAULT NULL COMMENT 'Adresse der Organisation',
+  `adresse_zusatz` varchar(100) DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach',
+  `adresse_plz` varchar(10) DEFAULT NULL COMMENT 'Postleitzahl der Organisation',
   `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') DEFAULT NULL COMMENT 'Einschätzung der Verbindung der Organisation ins Parlament',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
@@ -1622,7 +1639,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   KEY `interessengruppe3_id` (`interessengruppe3_id`),
   KEY `land` (`land_id`),
   KEY `interessenraum_id` (`interessenraum_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=635 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=751 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation`:
@@ -1712,7 +1729,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_anhang`
 --
--- Erzeugt am: 19. Apr 2014 um 18:05
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `organisation_anhang`;
@@ -1734,7 +1751,7 @@ CREATE TABLE IF NOT EXISTS `organisation_anhang` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   KEY `organisation_id` (`organisation_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen' AUTO_INCREMENT=2 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_anhang`:
@@ -1792,7 +1809,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_anhang_log`
 --
--- Erzeugt am: 19. Apr 2014 um 18:42
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `organisation_anhang_log`;
@@ -1820,7 +1837,7 @@ CREATE TABLE IF NOT EXISTS `organisation_anhang_log` (
   PRIMARY KEY (`log_id`),
   KEY `organisation_id` (`organisation_id`),
   KEY `fk_organisation_anhang_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen' AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen' AUTO_INCREMENT=2 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_anhang_log`:
@@ -1833,7 +1850,7 @@ CREATE TABLE IF NOT EXISTS `organisation_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung`
 --
--- Erzeugt am: 14. Feb 2014 um 19:04
+-- Erzeugt am: 06. Jul 2014 um 04:39
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung`;
@@ -1841,7 +1858,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel einer Organisationsbeziehung',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation.',
   `ziel_organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Zielorganisation.',
-  `art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von') NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation',
+  `art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von') NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation',
   `von` date DEFAULT NULL COMMENT 'Beginn der Organisationsbeziehung, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Organisationsbeziehung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -1859,7 +1876,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
   UNIQUE KEY `organisation_beziehung_organisation_zielorganisation_art_unique` (`art`,`organisation_id`,`ziel_organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
   KEY `organisation_id` (`organisation_id`),
   KEY `ziel_organisation_id` (`ziel_organisation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=140 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=186 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung`:
@@ -1919,7 +1936,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung_log`
 --
--- Erzeugt am: 14. Feb 2014 um 19:04
+-- Erzeugt am: 06. Jul 2014 um 04:40
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
@@ -1927,7 +1944,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation.',
   `ziel_organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Zielorganisation.',
-  `art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von') NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation',
+  `art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von') NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation',
   `von` date DEFAULT NULL COMMENT 'Beginn der Organisationsbeziehung, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Organisationsbeziehung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -1950,7 +1967,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
   KEY `organisation_id` (`organisation_id`),
   KEY `ziel_organisation_id` (`ziel_organisation_id`),
   KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=238 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=346 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung_log`:
@@ -1963,7 +1980,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_jahr`
 --
--- Erzeugt am: 20. Apr 2014 um 08:27
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `organisation_jahr`;
@@ -2050,7 +2067,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_jahr_log`
 --
--- Erzeugt am: 20. Apr 2014 um 08:28
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `organisation_jahr_log`;
@@ -2097,7 +2114,7 @@ CREATE TABLE IF NOT EXISTS `organisation_jahr_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 20. Apr 2014 um 05:03
+-- Erzeugt am: 06. Jul 2014 um 04:03
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -2109,7 +2126,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
   `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
   `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
+  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
   `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
   `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
   `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
@@ -2120,6 +2137,9 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `handelsregister_url` varchar(255) DEFAULT NULL COMMENT 'Link zum Eintrag im Handelsregister',
   `twitter_name` varchar(50) DEFAULT NULL COMMENT 'Twittername',
   `beschreibung` text COMMENT 'Beschreibung der Organisation, Zweck gemäss Handelsregister oder  Statuten',
+  `adresse_strasse` varchar(100) DEFAULT NULL COMMENT 'Adresse der Organisation',
+  `adresse_zusatz` varchar(100) DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach',
+  `adresse_plz` varchar(10) DEFAULT NULL COMMENT 'Postleitzahl der Organisation',
   `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') DEFAULT NULL COMMENT 'Einschätzung der Verbindung der Organisation ins Parlament',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
@@ -2143,7 +2163,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   KEY `interessengruppe2_id` (`interessengruppe2_id`),
   KEY `interessengruppe3_id` (`interessengruppe3_id`),
   KEY `fk_organisation_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=1617 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=2875 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_log`:
@@ -2156,7 +2176,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 01. Mai 2014 um 18:19
+-- Erzeugt am: 06. Jul 2014 um 11:31
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -2179,7 +2199,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `ratsunterbruch_bis` date DEFAULT NULL COMMENT 'Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch',
   `beruf` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
-  `zivilstand` enum('ledig','verheirated','geschieden','eingetragene partnerschaft') DEFAULT NULL COMMENT 'Zivilstand',
+  `zivilstand` enum('ledig','verheiratet','geschieden','eingetragene partnerschaft') DEFAULT NULL COMMENT 'Zivilstand',
   `anzahl_kinder` tinyint(3) unsigned DEFAULT NULL COMMENT 'Anzahl der Kinder',
   `militaerischer_grad_id` int(11) DEFAULT NULL COMMENT 'Militärischer Grad, leer (NULL) = kein Militärdienst',
   `geschlecht` enum('M','F') DEFAULT 'M' COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau',
@@ -2229,7 +2249,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   KEY `fraktion_id` (`fraktion_id`),
   KEY `rat_id` (`rat_id`),
   KEY `kanton_id` (`kanton_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=248 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=254 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier`:
@@ -2314,7 +2334,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang`
 --
--- Erzeugt am: 22. Feb 2014 um 10:32
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang`;
@@ -2336,7 +2356,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   KEY `parlamentarier_id` (`parlamentarier_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=45 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_anhang`:
@@ -2394,7 +2414,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
 --
--- Erzeugt am: 22. Feb 2014 um 10:32
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
@@ -2422,7 +2442,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
   PRIMARY KEY (`log_id`),
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `fk_parlamentarier_anhang_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=52 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_anhang_log`:
@@ -2435,7 +2455,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 01. Mai 2014 um 18:19
+-- Erzeugt am: 06. Jul 2014 um 11:31
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -2458,7 +2478,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   `ratsunterbruch_bis` date DEFAULT NULL COMMENT 'Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch',
   `beruf` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
   `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
-  `zivilstand` enum('ledig','verheirated','geschieden','eingetragene partnerschaft') DEFAULT NULL COMMENT 'Zivilstand',
+  `zivilstand` enum('ledig','verheiratet','geschieden','eingetragene partnerschaft') DEFAULT NULL COMMENT 'Zivilstand',
   `anzahl_kinder` tinyint(3) unsigned DEFAULT NULL COMMENT 'Anzahl der Kinder',
   `militaerischer_grad_id` int(11) DEFAULT NULL COMMENT 'Militärischer Grad, leer (NULL) = kein Militärdienst',
   `geschlecht` enum('M','F') DEFAULT 'M' COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau',
@@ -2510,7 +2530,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   KEY `militaerischer_grad` (`militaerischer_grad_id`),
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=1512 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=1609 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -2523,7 +2543,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
--- Erzeugt am: 20. Apr 2014 um 07:58
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `partei`;
@@ -2612,7 +2632,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 20. Apr 2014 um 08:00
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `partei_log`;
@@ -2660,7 +2680,7 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
 --
 -- Tabellenstruktur für Tabelle `rat`
 --
--- Erzeugt am: 16. Mrz 2014 um 20:06
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `rat`;
@@ -2753,7 +2773,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `rat_log`
 --
--- Erzeugt am: 16. Mrz 2014 um 20:07
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `rat_log`;
@@ -2805,7 +2825,7 @@ CREATE TABLE IF NOT EXISTS `rat_log` (
 --
 -- Tabellenstruktur für Tabelle `settings`
 --
--- Erzeugt am: 19. Apr 2014 um 18:49
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `settings`;
@@ -2823,7 +2843,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key_name`),
   KEY `category_id` (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=9 ;
 
 --
 -- RELATIONEN DER TABELLE `settings`:
@@ -2881,7 +2901,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `settings_category`
 --
--- Erzeugt am: 19. Apr 2014 um 18:36
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `settings_category`;
@@ -2895,7 +2915,7 @@ CREATE TABLE IF NOT EXISTS `settings_category` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings' AUTO_INCREMENT=3 ;
 
 --
 -- Trigger `settings_category`
@@ -2947,7 +2967,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `settings_category_log`
 --
--- Erzeugt am: 19. Apr 2014 um 18:42
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `settings_category_log`;
@@ -2967,7 +2987,7 @@ CREATE TABLE IF NOT EXISTS `settings_category_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_settings_category_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings' AUTO_INCREMENT=3 ;
 
 --
 -- RELATIONEN DER TABELLE `settings_category_log`:
@@ -2980,7 +3000,7 @@ CREATE TABLE IF NOT EXISTS `settings_category_log` (
 --
 -- Tabellenstruktur für Tabelle `settings_log`
 --
--- Erzeugt am: 19. Apr 2014 um 18:49
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `settings_log`;
@@ -3002,7 +3022,7 @@ CREATE TABLE IF NOT EXISTS `settings_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_settings_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=30 ;
 
 --
 -- RELATIONEN DER TABELLE `settings_log`:
@@ -3015,7 +3035,7 @@ CREATE TABLE IF NOT EXISTS `settings_log` (
 --
 -- Tabellenstruktur für Tabelle `snapshot`
 --
--- Erzeugt am: 27. Jan 2014 um 07:02
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `snapshot`;
@@ -3035,7 +3055,7 @@ CREATE TABLE IF NOT EXISTS `snapshot` (
 --
 -- Tabellenstruktur für Tabelle `user`
 --
--- Erzeugt am: 08. Feb 2014 um 09:48
+-- Erzeugt am: 06. Jul 2014 um 05:02
 --
 
 DROP TABLE IF EXISTS `user`;
@@ -3045,15 +3065,22 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(255) NOT NULL,
   `nachname` varchar(100) DEFAULT NULL COMMENT 'Nachname des Benutzers',
   `vorname` varchar(50) DEFAULT NULL COMMENT 'Vorname des Benutzers',
+  `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Benutzers',
+  `last_login` timestamp NULL DEFAULT NULL COMMENT 'Datum des letzten Login',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `created_visa` varchar(10) DEFAULT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator users' AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator users' AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `user_permission`
 --
--- Erzeugt am: 31. Dez 2013 um 10:20
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `user_permission`;
@@ -3064,7 +3091,7 @@ CREATE TABLE IF NOT EXISTS `user_permission` (
   `permission_name` varchar(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions' AUTO_INCREMENT=152 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions' AUTO_INCREMENT=224 ;
 
 -- --------------------------------------------------------
 
@@ -3080,6 +3107,13 @@ CREATE TABLE IF NOT EXISTS `v_branche` (
 ,`beschreibung` text
 ,`angaben` text
 ,`farbcode` varchar(15)
+,`symbol_abs` varchar(255)
+,`symbol_rel` varchar(255)
+,`symbol_klein_rel` varchar(255)
+,`symbol_dateiname_wo_ext` varchar(255)
+,`symbol_dateierweiterung` varchar(15)
+,`symbol_dateiname` varchar(255)
+,`symbol_mime_type` varchar(100)
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
 ,`eingabe_abgeschlossen_datum` timestamp
@@ -3167,7 +3201,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung` (
 `id` int(11)
 ,`parlamentarier_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht')
 ,`status` enum('deklariert','nicht-deklariert')
@@ -3197,12 +3231,12 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung` (
 --
 DROP VIEW IF EXISTS `v_interessenbindung_authorisierungs_email`;
 CREATE TABLE IF NOT EXISTS `v_interessenbindung_authorisierungs_email` (
-`parlamentarier_name` varchar(151)
+`parlamentarier_name` varchar(202)
 ,`geschlecht` varchar(1)
 ,`organisation_name` varchar(454)
 ,`rechtsform` varchar(33)
 ,`ort` varchar(100)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell')
 ,`beschreibung` varchar(150)
 );
 -- --------------------------------------------------------
@@ -3216,7 +3250,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung_liste` (
 ,`id` int(11)
 ,`parlamentarier_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht')
 ,`status` enum('deklariert','nicht-deklariert')
@@ -3933,7 +3967,7 @@ CREATE TABLE IF NOT EXISTS `v_mandat` (
 `id` int(11)
 ,`zutrittsberechtigung_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee','finanziell')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`verguetung` int(11)
 ,`beschreibung` varchar(150)
@@ -3987,7 +4021,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -3998,6 +4032,9 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`handelsregister_url` varchar(255)
 ,`twitter_name` varchar(50)
 ,`beschreibung` text
+,`adresse_strasse` varchar(100)
+,`adresse_zusatz` varchar(100)
+,`adresse_plz` varchar(10)
 ,`ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission')
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
@@ -4063,7 +4100,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung` (
 `id` int(11)
 ,`organisation_id` int(11)
 ,`ziel_organisation_id` int(11)
-,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von')
+,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von')
 ,`von` date
 ,`bis` date
 ,`notizen` text
@@ -4088,7 +4125,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_arbeitet_fuer` (
 `organisation_name` varchar(454)
 ,`organisation_id` int(11)
 ,`ziel_organisation_id` int(11)
-,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von')
+,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von')
 ,`von` date
 ,`bis` date
 ,`anzeige_name` varchar(454)
@@ -4100,7 +4137,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_arbeitet_fuer` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4111,6 +4148,9 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_arbeitet_fuer` (
 ,`handelsregister_url` varchar(255)
 ,`twitter_name` varchar(50)
 ,`beschreibung` text
+,`adresse_strasse` varchar(100)
+,`adresse_zusatz` varchar(100)
+,`adresse_plz` varchar(10)
 ,`ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission')
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
@@ -4152,7 +4192,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_auftraggeber_fuer` (
 `organisation_name` varchar(454)
 ,`organisation_id` int(11)
 ,`ziel_organisation_id` int(11)
-,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von')
+,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von')
 ,`von` date
 ,`bis` date
 ,`anzeige_name` varchar(454)
@@ -4164,7 +4204,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_auftraggeber_fuer` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4175,6 +4215,9 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_auftraggeber_fuer` (
 ,`handelsregister_url` varchar(255)
 ,`twitter_name` varchar(50)
 ,`beschreibung` text
+,`adresse_strasse` varchar(100)
+,`adresse_zusatz` varchar(100)
+,`adresse_plz` varchar(10)
 ,`ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission')
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
@@ -4216,7 +4259,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglieder` (
 `organisation_name` varchar(454)
 ,`organisation_id` int(11)
 ,`ziel_organisation_id` int(11)
-,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von')
+,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von')
 ,`von` date
 ,`bis` date
 ,`anzeige_name` varchar(454)
@@ -4228,7 +4271,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglieder` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4239,6 +4282,9 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglieder` (
 ,`handelsregister_url` varchar(255)
 ,`twitter_name` varchar(50)
 ,`beschreibung` text
+,`adresse_strasse` varchar(100)
+,`adresse_zusatz` varchar(100)
+,`adresse_plz` varchar(10)
 ,`ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission')
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
@@ -4280,7 +4326,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglied_von` (
 `organisation_name` varchar(454)
 ,`organisation_id` int(11)
 ,`ziel_organisation_id` int(11)
-,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von')
+,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von')
 ,`von` date
 ,`bis` date
 ,`anzeige_name` varchar(454)
@@ -4292,7 +4338,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglied_von` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4303,6 +4349,9 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_mitglied_von` (
 ,`handelsregister_url` varchar(255)
 ,`twitter_name` varchar(50)
 ,`beschreibung` text
+,`adresse_strasse` varchar(100)
+,`adresse_zusatz` varchar(100)
+,`adresse_plz` varchar(10)
 ,`ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission')
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
@@ -4344,7 +4393,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_muttergesellschaft` (
 `organisation_name` varchar(454)
 ,`organisation_id` int(11)
 ,`ziel_organisation_id` int(11)
-,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von')
+,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von')
 ,`von` date
 ,`bis` date
 ,`anzeige_name` varchar(454)
@@ -4356,7 +4405,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_muttergesellschaft` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4367,6 +4416,9 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_muttergesellschaft` (
 ,`handelsregister_url` varchar(255)
 ,`twitter_name` varchar(50)
 ,`beschreibung` text
+,`adresse_strasse` varchar(100)
+,`adresse_zusatz` varchar(100)
+,`adresse_plz` varchar(10)
 ,`ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission')
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
@@ -4408,7 +4460,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_tochtergesellschaften` (
 `organisation_name` varchar(454)
 ,`organisation_id` int(11)
 ,`ziel_organisation_id` int(11)
-,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von')
+,`art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von')
 ,`von` date
 ,`bis` date
 ,`anzeige_name` varchar(454)
@@ -4420,7 +4472,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_tochtergesellschaften` (
 ,`ort` varchar(100)
 ,`land_id` int(11)
 ,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission')
+,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft')
 ,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
 ,`vernehmlassung` enum('immer','punktuell','nie')
 ,`interessengruppe_id` int(11)
@@ -4431,6 +4483,9 @@ CREATE TABLE IF NOT EXISTS `v_organisation_beziehung_tochtergesellschaften` (
 ,`handelsregister_url` varchar(255)
 ,`twitter_name` varchar(50)
 ,`beschreibung` text
+,`adresse_strasse` varchar(100)
+,`adresse_zusatz` varchar(100)
+,`adresse_plz` varchar(10)
 ,`ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission')
 ,`notizen` text
 ,`eingabe_abgeschlossen_visa` varchar(10)
@@ -4532,7 +4587,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_parlamentarier` (
 ,`id` int(11)
 ,`parlamentarier_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`deklarationstyp` enum('deklarationspflichtig','nicht deklarationspflicht')
 ,`status` enum('deklariert','nicht-deklariert')
@@ -4647,7 +4702,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_parlamentarier_indirekt` (
 DROP VIEW IF EXISTS `v_parlamentarier`;
 CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 `anzeige_name` varchar(152)
-,`name` varchar(151)
+,`name` varchar(202)
 ,`rat` varchar(10)
 ,`ratstyp` varchar(10)
 ,`kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH')
@@ -4670,7 +4725,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`ratsunterbruch_bis` date
 ,`beruf` varchar(150)
 ,`beruf_interessengruppe_id` int(11)
-,`zivilstand` enum('ledig','verheirated','geschieden','eingetragene partnerschaft')
+,`zivilstand` enum('ledig','verheiratet','geschieden','eingetragene partnerschaft')
 ,`anzahl_kinder` tinyint(3) unsigned
 ,`militaerischer_grad_id` int(11)
 ,`geschlecht` enum('M','F')
@@ -4870,6 +4925,13 @@ CREATE TABLE IF NOT EXISTS `v_user` (
 ,`password` varchar(255)
 ,`nachname` varchar(100)
 ,`vorname` varchar(50)
+,`email` varchar(100)
+,`last_login` timestamp
+,`notizen` text
+,`created_visa` varchar(10)
+,`created_date` timestamp
+,`updated_visa` varchar(10)
+,`updated_date` timestamp
 );
 -- --------------------------------------------------------
 
@@ -4960,7 +5022,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_anhang` (
 --
 DROP VIEW IF EXISTS `v_zutrittsberechtigung_authorisierungs_email`;
 CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_authorisierungs_email` (
-`parlamentarier_name` varchar(151)
+`parlamentarier_name` varchar(202)
 ,`geschlecht` varchar(1)
 ,`zutrittsberechtigung_name` varchar(151)
 ,`funktion` varchar(150)
@@ -4979,7 +5041,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mandate` (
 ,`id` int(11)
 ,`zutrittsberechtigung_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee','finanziell')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`verguetung` int(11)
 ,`beschreibung` varchar(150)
@@ -5013,7 +5075,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mit_mandaten` (
 ,`id` int(11)
 ,`zutrittsberechtigung_id` int(11)
 ,`organisation_id` int(11)
-,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee')
+,`art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','patronatskomitee','finanziell')
 ,`funktion_im_gremium` enum('praesident','vizepraesident','mitglied')
 ,`verguetung` int(11)
 ,`beschreibung` varchar(150)
@@ -5073,7 +5135,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mit_mandaten_indirekt` (
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung`
 --
--- Erzeugt am: 20. Apr 2014 um 02:31
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung`;
@@ -5197,7 +5259,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_anhang`
 --
--- Erzeugt am: 22. Feb 2014 um 10:32
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_anhang`;
@@ -5219,7 +5281,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=22 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_anhang`:
@@ -5277,7 +5339,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_anhang_log`
 --
--- Erzeugt am: 22. Feb 2014 um 10:32
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_anhang_log`;
@@ -5305,7 +5367,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang_log` (
   PRIMARY KEY (`log_id`),
   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`),
   KEY `fk_zutrittsberechtigung_anhang_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=22 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=24 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_anhang_log`:
@@ -5318,7 +5380,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_log`
 --
--- Erzeugt am: 20. Apr 2014 um 02:31
+-- Erzeugt am: 25. Mai 2014 um 18:55
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
@@ -5368,7 +5430,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`),
   KEY `partei` (`partei_id`),
   KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=615 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=665 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_log`:
@@ -5383,7 +5445,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
 --
 DROP TABLE IF EXISTS `v_branche`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_branche` AS select concat(`branche`.`name`) AS `anzeige_name`,`branche`.`id` AS `id`,`branche`.`name` AS `name`,`branche`.`kommission_id` AS `kommission_id`,`branche`.`beschreibung` AS `beschreibung`,`branche`.`angaben` AS `angaben`,`branche`.`farbcode` AS `farbcode`,`branche`.`notizen` AS `notizen`,`branche`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`branche`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`branche`.`kontrolliert_visa` AS `kontrolliert_visa`,`branche`.`kontrolliert_datum` AS `kontrolliert_datum`,`branche`.`freigabe_visa` AS `freigabe_visa`,`branche`.`freigabe_datum` AS `freigabe_datum`,`branche`.`created_visa` AS `created_visa`,`branche`.`created_date` AS `created_date`,`branche`.`updated_visa` AS `updated_visa`,`branche`.`updated_date` AS `updated_date`,`kommission`.`anzeige_name` AS `kommission` from (`branche` left join `v_kommission` `kommission` on((`kommission`.`id` = `branche`.`kommission_id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_branche` AS select concat(`branche`.`name`) AS `anzeige_name`,`branche`.`id` AS `id`,`branche`.`name` AS `name`,`branche`.`kommission_id` AS `kommission_id`,`branche`.`beschreibung` AS `beschreibung`,`branche`.`angaben` AS `angaben`,`branche`.`farbcode` AS `farbcode`,`branche`.`symbol_abs` AS `symbol_abs`,`branche`.`symbol_rel` AS `symbol_rel`,`branche`.`symbol_klein_rel` AS `symbol_klein_rel`,`branche`.`symbol_dateiname_wo_ext` AS `symbol_dateiname_wo_ext`,`branche`.`symbol_dateierweiterung` AS `symbol_dateierweiterung`,`branche`.`symbol_dateiname` AS `symbol_dateiname`,`branche`.`symbol_mime_type` AS `symbol_mime_type`,`branche`.`notizen` AS `notizen`,`branche`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`branche`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`branche`.`kontrolliert_visa` AS `kontrolliert_visa`,`branche`.`kontrolliert_datum` AS `kontrolliert_datum`,`branche`.`freigabe_visa` AS `freigabe_visa`,`branche`.`freigabe_datum` AS `freigabe_datum`,`branche`.`created_visa` AS `created_visa`,`branche`.`created_date` AS `created_date`,`branche`.`updated_visa` AS `updated_visa`,`branche`.`updated_date` AS `updated_date`,`kommission`.`anzeige_name` AS `kommission` from (`branche` left join `v_kommission` `kommission` on((`kommission`.`id` = `branche`.`kommission_id`)));
 
 -- --------------------------------------------------------
 
@@ -5761,7 +5823,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation` AS select concat_ws('; ',`o`.`name_de`,`o`.`name_fr`,`o`.`name_it`) AS `anzeige_name`,concat_ws('; ',`o`.`name_de`,`o`.`name_fr`,`o`.`name_it`) AS `name`,`o`.`id` AS `id`,`o`.`name_de` AS `name_de`,`o`.`name_fr` AS `name_fr`,`o`.`name_it` AS `name_it`,`o`.`ort` AS `ort`,`o`.`land_id` AS `land_id`,`o`.`interessenraum_id` AS `interessenraum_id`,`o`.`rechtsform` AS `rechtsform`,`o`.`typ` AS `typ`,`o`.`vernehmlassung` AS `vernehmlassung`,`o`.`interessengruppe_id` AS `interessengruppe_id`,`o`.`interessengruppe2_id` AS `interessengruppe2_id`,`o`.`interessengruppe3_id` AS `interessengruppe3_id`,`o`.`branche_id` AS `branche_id`,`o`.`homepage` AS `homepage`,`o`.`handelsregister_url` AS `handelsregister_url`,`o`.`twitter_name` AS `twitter_name`,`o`.`beschreibung` AS `beschreibung`,`o`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`o`.`notizen` AS `notizen`,`o`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`o`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`o`.`kontrolliert_visa` AS `kontrolliert_visa`,`o`.`kontrolliert_datum` AS `kontrolliert_datum`,`o`.`freigabe_visa` AS `freigabe_visa`,`o`.`freigabe_datum` AS `freigabe_datum`,`o`.`created_visa` AS `created_visa`,`o`.`created_date` AS `created_date`,`o`.`updated_visa` AS `updated_visa`,`o`.`updated_date` AS `updated_date`,`branche`.`anzeige_name` AS `branche`,`interessengruppe1`.`anzeige_name` AS `interessengruppe`,`interessengruppe1`.`branche` AS `interessengruppe_branche`,`interessengruppe2`.`anzeige_name` AS `interessengruppe2`,`interessengruppe2`.`branche` AS `interessengruppe2_branche`,`interessengruppe3`.`anzeige_name` AS `interessengruppe3`,`interessengruppe3`.`branche` AS `interessengruppe3_branche`,`country`.`name_de` AS `land`,`interessenraum`.`anzeige_name` AS `interessenraum`,`organisation_jahr`.`id` AS `organisation_jahr_id`,`organisation_jahr`.`jahr` AS `jahr`,`organisation_jahr`.`umsatz` AS `umsatz`,`organisation_jahr`.`gewinn` AS `gewinn`,`organisation_jahr`.`kapital` AS `kapital`,`organisation_jahr`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation_jahr`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation_jahr`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation_jahr`.`quelle_url` AS `quelle_url` from (((((((`organisation` `o` left join `v_branche` `branche` on((`branche`.`id` = `o`.`branche_id`))) left join `v_interessengruppe` `interessengruppe1` on((`interessengruppe1`.`id` = `o`.`interessengruppe_id`))) left join `v_interessengruppe` `interessengruppe2` on((`interessengruppe2`.`id` = `o`.`interessengruppe2_id`))) left join `v_interessengruppe` `interessengruppe3` on((`interessengruppe3`.`id` = `o`.`interessengruppe3_id`))) left join `v_country` `country` on((`country`.`id` = `o`.`land_id`))) left join `v_interessenraum` `interessenraum` on((`interessenraum`.`id` = `o`.`interessenraum_id`))) left join `v_organisation_jahr_last` `organisation_jahr` on((`organisation_jahr`.`organisation_id` = `o`.`id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation` AS select concat_ws('; ',`o`.`name_de`,`o`.`name_fr`,`o`.`name_it`) AS `anzeige_name`,concat_ws('; ',`o`.`name_de`,`o`.`name_fr`,`o`.`name_it`) AS `name`,`o`.`id` AS `id`,`o`.`name_de` AS `name_de`,`o`.`name_fr` AS `name_fr`,`o`.`name_it` AS `name_it`,`o`.`ort` AS `ort`,`o`.`land_id` AS `land_id`,`o`.`interessenraum_id` AS `interessenraum_id`,`o`.`rechtsform` AS `rechtsform`,`o`.`typ` AS `typ`,`o`.`vernehmlassung` AS `vernehmlassung`,`o`.`interessengruppe_id` AS `interessengruppe_id`,`o`.`interessengruppe2_id` AS `interessengruppe2_id`,`o`.`interessengruppe3_id` AS `interessengruppe3_id`,`o`.`branche_id` AS `branche_id`,`o`.`homepage` AS `homepage`,`o`.`handelsregister_url` AS `handelsregister_url`,`o`.`twitter_name` AS `twitter_name`,`o`.`beschreibung` AS `beschreibung`,`o`.`adresse_strasse` AS `adresse_strasse`,`o`.`adresse_zusatz` AS `adresse_zusatz`,`o`.`adresse_plz` AS `adresse_plz`,`o`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`o`.`notizen` AS `notizen`,`o`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`o`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`o`.`kontrolliert_visa` AS `kontrolliert_visa`,`o`.`kontrolliert_datum` AS `kontrolliert_datum`,`o`.`freigabe_visa` AS `freigabe_visa`,`o`.`freigabe_datum` AS `freigabe_datum`,`o`.`created_visa` AS `created_visa`,`o`.`created_date` AS `created_date`,`o`.`updated_visa` AS `updated_visa`,`o`.`updated_date` AS `updated_date`,`branche`.`anzeige_name` AS `branche`,`interessengruppe1`.`anzeige_name` AS `interessengruppe`,`interessengruppe1`.`branche` AS `interessengruppe_branche`,`interessengruppe2`.`anzeige_name` AS `interessengruppe2`,`interessengruppe2`.`branche` AS `interessengruppe2_branche`,`interessengruppe3`.`anzeige_name` AS `interessengruppe3`,`interessengruppe3`.`branche` AS `interessengruppe3_branche`,`country`.`name_de` AS `land`,`interessenraum`.`anzeige_name` AS `interessenraum`,`organisation_jahr`.`id` AS `organisation_jahr_id`,`organisation_jahr`.`jahr` AS `jahr`,`organisation_jahr`.`umsatz` AS `umsatz`,`organisation_jahr`.`gewinn` AS `gewinn`,`organisation_jahr`.`kapital` AS `kapital`,`organisation_jahr`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation_jahr`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation_jahr`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation_jahr`.`quelle_url` AS `quelle_url` from (((((((`organisation` `o` left join `v_branche` `branche` on((`branche`.`id` = `o`.`branche_id`))) left join `v_interessengruppe` `interessengruppe1` on((`interessengruppe1`.`id` = `o`.`interessengruppe_id`))) left join `v_interessengruppe` `interessengruppe2` on((`interessengruppe2`.`id` = `o`.`interessengruppe2_id`))) left join `v_interessengruppe` `interessengruppe3` on((`interessengruppe3`.`id` = `o`.`interessengruppe3_id`))) left join `v_country` `country` on((`country`.`id` = `o`.`land_id`))) left join `v_interessenraum` `interessenraum` on((`interessenraum`.`id` = `o`.`interessenraum_id`))) left join `v_organisation_jahr_last` `organisation_jahr` on((`organisation_jahr`.`organisation_id` = `o`.`id`)));
 
 -- --------------------------------------------------------
 
@@ -5788,7 +5850,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_beziehung_arbeitet_fuer`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_arbeitet_fuer` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `organisation`.`anzeige_name`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_arbeitet_fuer` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `organisation`.`anzeige_name`;
 
 -- --------------------------------------------------------
 
@@ -5797,7 +5859,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_beziehung_auftraggeber_fuer`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_auftraggeber_fuer` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `organisation`.`anzeige_name`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_auftraggeber_fuer` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `organisation`.`anzeige_name`;
 
 -- --------------------------------------------------------
 
@@ -5806,7 +5868,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_beziehung_mitglieder`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_mitglieder` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'mitglied von') order by `organisation`.`anzeige_name`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_mitglieder` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'mitglied von') order by `organisation`.`anzeige_name`;
 
 -- --------------------------------------------------------
 
@@ -5815,7 +5877,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_beziehung_mitglied_von`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_mitglied_von` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'mitglied von') order by `organisation`.`anzeige_name`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_mitglied_von` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'mitglied von') order by `organisation`.`anzeige_name`;
 
 -- --------------------------------------------------------
 
@@ -5824,7 +5886,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_beziehung_muttergesellschaft`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_muttergesellschaft` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'tochtergesellschaft von') order by `organisation`.`anzeige_name`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_muttergesellschaft` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`ziel_organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'tochtergesellschaft von') order by `organisation`.`anzeige_name`;
 
 -- --------------------------------------------------------
 
@@ -5833,7 +5895,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_beziehung_tochtergesellschaften`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_tochtergesellschaften` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'tochtergesellschaft von') order by `organisation`.`anzeige_name`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_beziehung_tochtergesellschaften` AS select `organisation`.`anzeige_name` AS `organisation_name`,`organisation_beziehung`.`organisation_id` AS `organisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `ziel_organisation_id`,`organisation_beziehung`.`art` AS `art`,`organisation_beziehung`.`von` AS `von`,`organisation_beziehung`.`bis` AS `bis`,`organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`land` AS `land`,`organisation`.`interessenraum` AS `interessenraum`,`organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`organisation`.`jahr` AS `jahr`,`organisation`.`umsatz` AS `umsatz`,`organisation`.`gewinn` AS `gewinn`,`organisation`.`kapital` AS `kapital`,`organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation`.`quelle_url` AS `quelle_url` from (`v_organisation_beziehung` `organisation_beziehung` join `v_organisation` `organisation` on((`organisation_beziehung`.`organisation_id` = `organisation`.`id`))) where (`organisation_beziehung`.`art` = 'tochtergesellschaft von') order by `organisation`.`anzeige_name`;
 
 -- --------------------------------------------------------
 
@@ -5896,7 +5958,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_parlamentarier`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`p`.`nachname`,', ',`p`.`vorname`) AS `anzeige_name`,concat(`p`.`vorname`,' ',`p`.`nachname`) AS `name`,`rat`.`abkuerzung` AS `rat`,`rat`.`abkuerzung` AS `ratstyp`,`kanton`.`abkuerzung` AS `kanton`,cast((case `rat`.`abkuerzung` when 'SR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_staenderaete`),0) when 'NR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_nationalraete`),0) else NULL end) as unsigned) AS `vertretene_bevoelkerung`,`p`.`id` AS `id`,`p`.`nachname` AS `nachname`,`p`.`vorname` AS `vorname`,`p`.`zweiter_vorname` AS `zweiter_vorname`,`p`.`rat_id` AS `rat_id`,`p`.`kanton_id` AS `kanton_id`,`p`.`kommissionen` AS `kommissionen`,`p`.`partei_id` AS `partei_id`,`p`.`parteifunktion` AS `parteifunktion`,`p`.`fraktion_id` AS `fraktion_id`,`p`.`fraktionsfunktion` AS `fraktionsfunktion`,`p`.`im_rat_seit` AS `im_rat_seit`,`p`.`im_rat_bis` AS `im_rat_bis`,`p`.`ratswechsel` AS `ratswechsel`,`p`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`p`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`p`.`beruf` AS `beruf`,`p`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`p`.`zivilstand` AS `zivilstand`,`p`.`anzahl_kinder` AS `anzahl_kinder`,`p`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`p`.`geschlecht` AS `geschlecht`,`p`.`geburtstag` AS `geburtstag`,`p`.`photo` AS `photo`,`p`.`photo_dateiname` AS `photo_dateiname`,`p`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`p`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`p`.`photo_mime_type` AS `photo_mime_type`,`p`.`kleinbild` AS `kleinbild`,`p`.`sitzplatz` AS `sitzplatz`,`p`.`email` AS `email`,`p`.`homepage` AS `homepage`,`p`.`parlament_biografie_id` AS `parlament_biografie_id`,`p`.`twitter_name` AS `twitter_name`,`p`.`linkedin_profil_url` AS `linkedin_profil_url`,`p`.`xing_profil_name` AS `xing_profil_name`,`p`.`facebook_name` AS `facebook_name`,`p`.`arbeitssprache` AS `arbeitssprache`,`p`.`adresse_firma` AS `adresse_firma`,`p`.`adresse_strasse` AS `adresse_strasse`,`p`.`adresse_zusatz` AS `adresse_zusatz`,`p`.`adresse_plz` AS `adresse_plz`,`p`.`adresse_ort` AS `adresse_ort`,`p`.`ALT_kommission` AS `ALT_kommission`,`p`.`notizen` AS `notizen`,`p`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`p`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`p`.`kontrolliert_visa` AS `kontrolliert_visa`,`p`.`kontrolliert_datum` AS `kontrolliert_datum`,`p`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`p`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`p`.`autorisiert_visa` AS `autorisiert_visa`,`p`.`autorisiert_datum` AS `autorisiert_datum`,`p`.`freigabe_visa` AS `freigabe_visa`,`p`.`freigabe_datum` AS `freigabe_datum`,`p`.`created_visa` AS `created_visa`,`p`.`created_date` AS `created_date`,`p`.`updated_visa` AS `updated_visa`,`p`.`updated_date` AS `updated_date`,group_concat(distinct concat(`k`.`name`,'(',`k`.`abkuerzung`,')') order by `k`.`abkuerzung` ASC separator ', ') AS `kommissionen_namen`,-(-(group_concat(distinct concat(`k`.`name`,'(',`k`.`abkuerzung`,')') order by `k`.`abkuerzung` ASC separator ', '))) AS `kommissionen2`,group_concat(distinct `k`.`abkuerzung` order by `k`.`abkuerzung` ASC separator ', ') AS `kommissionen_abkuerzung`,`partei`.`abkuerzung` AS `partei`,`fraktion`.`abkuerzung` AS `fraktion`,`mil_grad`.`name` AS `militaerischer_grad` from (((((((`parlamentarier` `p` left join `v_in_kommission` `ik` on(((`p`.`id` = `ik`.`parlamentarier_id`) and isnull(`ik`.`bis`)))) left join `v_kommission` `k` on((`ik`.`kommission_id` = `k`.`id`))) left join `v_partei` `partei` on((`p`.`partei_id` = `partei`.`id`))) left join `v_fraktion` `fraktion` on((`p`.`fraktion_id` = `fraktion`.`id`))) left join `v_mil_grad` `mil_grad` on((`p`.`militaerischer_grad_id` = `mil_grad`.`id`))) left join `v_kanton` `kanton` on((`p`.`kanton_id` = `kanton`.`id`))) left join `v_rat` `rat` on((`p`.`rat_id` = `rat`.`id`))) group by `p`.`id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select concat(`p`.`nachname`,', ',`p`.`vorname`) AS `anzeige_name`,concat_ws(' ',`p`.`vorname`,`p`.`zweiter_vorname`,`p`.`nachname`) AS `name`,`rat`.`abkuerzung` AS `rat`,`rat`.`abkuerzung` AS `ratstyp`,`kanton`.`abkuerzung` AS `kanton`,cast((case `rat`.`abkuerzung` when 'SR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_staenderaete`),0) when 'NR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_nationalraete`),0) else NULL end) as unsigned) AS `vertretene_bevoelkerung`,`p`.`id` AS `id`,`p`.`nachname` AS `nachname`,`p`.`vorname` AS `vorname`,`p`.`zweiter_vorname` AS `zweiter_vorname`,`p`.`rat_id` AS `rat_id`,`p`.`kanton_id` AS `kanton_id`,`p`.`kommissionen` AS `kommissionen`,`p`.`partei_id` AS `partei_id`,`p`.`parteifunktion` AS `parteifunktion`,`p`.`fraktion_id` AS `fraktion_id`,`p`.`fraktionsfunktion` AS `fraktionsfunktion`,`p`.`im_rat_seit` AS `im_rat_seit`,`p`.`im_rat_bis` AS `im_rat_bis`,`p`.`ratswechsel` AS `ratswechsel`,`p`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`p`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`p`.`beruf` AS `beruf`,`p`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`p`.`zivilstand` AS `zivilstand`,`p`.`anzahl_kinder` AS `anzahl_kinder`,`p`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`p`.`geschlecht` AS `geschlecht`,`p`.`geburtstag` AS `geburtstag`,`p`.`photo` AS `photo`,`p`.`photo_dateiname` AS `photo_dateiname`,`p`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`p`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`p`.`photo_mime_type` AS `photo_mime_type`,`p`.`kleinbild` AS `kleinbild`,`p`.`sitzplatz` AS `sitzplatz`,`p`.`email` AS `email`,`p`.`homepage` AS `homepage`,`p`.`parlament_biografie_id` AS `parlament_biografie_id`,`p`.`twitter_name` AS `twitter_name`,`p`.`linkedin_profil_url` AS `linkedin_profil_url`,`p`.`xing_profil_name` AS `xing_profil_name`,`p`.`facebook_name` AS `facebook_name`,`p`.`arbeitssprache` AS `arbeitssprache`,`p`.`adresse_firma` AS `adresse_firma`,`p`.`adresse_strasse` AS `adresse_strasse`,`p`.`adresse_zusatz` AS `adresse_zusatz`,`p`.`adresse_plz` AS `adresse_plz`,`p`.`adresse_ort` AS `adresse_ort`,`p`.`ALT_kommission` AS `ALT_kommission`,`p`.`notizen` AS `notizen`,`p`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`p`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`p`.`kontrolliert_visa` AS `kontrolliert_visa`,`p`.`kontrolliert_datum` AS `kontrolliert_datum`,`p`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`p`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`p`.`autorisiert_visa` AS `autorisiert_visa`,`p`.`autorisiert_datum` AS `autorisiert_datum`,`p`.`freigabe_visa` AS `freigabe_visa`,`p`.`freigabe_datum` AS `freigabe_datum`,`p`.`created_visa` AS `created_visa`,`p`.`created_date` AS `created_date`,`p`.`updated_visa` AS `updated_visa`,`p`.`updated_date` AS `updated_date`,group_concat(distinct concat(`k`.`name`,'(',`k`.`abkuerzung`,')') order by `k`.`abkuerzung` ASC separator ', ') AS `kommissionen_namen`,-(-(group_concat(distinct concat(`k`.`name`,'(',`k`.`abkuerzung`,')') order by `k`.`abkuerzung` ASC separator ', '))) AS `kommissionen2`,group_concat(distinct `k`.`abkuerzung` order by `k`.`abkuerzung` ASC separator ', ') AS `kommissionen_abkuerzung`,`partei`.`abkuerzung` AS `partei`,`fraktion`.`abkuerzung` AS `fraktion`,`mil_grad`.`name` AS `militaerischer_grad` from (((((((`parlamentarier` `p` left join `v_in_kommission` `ik` on(((`p`.`id` = `ik`.`parlamentarier_id`) and isnull(`ik`.`bis`)))) left join `v_kommission` `k` on((`ik`.`kommission_id` = `k`.`id`))) left join `v_partei` `partei` on((`p`.`partei_id` = `partei`.`id`))) left join `v_fraktion` `fraktion` on((`p`.`fraktion_id` = `fraktion`.`id`))) left join `v_mil_grad` `mil_grad` on((`p`.`militaerischer_grad_id` = `mil_grad`.`id`))) left join `v_kanton` `kanton` on((`p`.`kanton_id` = `kanton`.`id`))) left join `v_rat` `rat` on((`p`.`rat_id` = `rat`.`id`))) group by `p`.`id`;
 
 -- --------------------------------------------------------
 
@@ -5959,7 +6021,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_user`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_user` AS select concat_ws(' ',`u`.`vorname`,`u`.`nachname`) AS `anzeige_name`,`u`.`id` AS `id`,`u`.`name` AS `name`,`u`.`password` AS `password`,`u`.`nachname` AS `nachname`,`u`.`vorname` AS `vorname` from `user` `u`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_user` AS select concat_ws(' ',`u`.`vorname`,`u`.`nachname`) AS `anzeige_name`,`u`.`id` AS `id`,`u`.`name` AS `name`,`u`.`password` AS `password`,`u`.`nachname` AS `nachname`,`u`.`vorname` AS `vorname`,`u`.`email` AS `email`,`u`.`last_login` AS `last_login`,`u`.`notizen` AS `notizen`,`u`.`created_visa` AS `created_visa`,`u`.`created_date` AS `created_date`,`u`.`updated_visa` AS `updated_visa`,`u`.`updated_date` AS `updated_date` from `user` `u`;
 
 -- --------------------------------------------------------
 
