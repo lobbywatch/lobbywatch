@@ -45168,7 +45168,8 @@
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -45193,7 +45194,8 @@
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -47220,7 +47222,8 @@
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -48102,7 +48105,8 @@
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
