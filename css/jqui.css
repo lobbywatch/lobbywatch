@@ -1,4 +1,4 @@
-/* $Id: jqui.css 45760 2013-04-29 01:54:24Z lindonb $
+/* $Id: jqui.css 50824 2014-04-16 23:18:06Z alexandrequessy $
 	Jqui (jqui.css) for Tiki Wiki CMS Groupware.
 	Visit http://themes.tiki.org for more information.
 */
@@ -32,6 +32,10 @@ body.fixed_width .fixedwidth .fixedwidth {
 	text-align: left
 }
 
+#c1c2 #wrapper #col1.marginleft  {
+	margin-left: 200px;
+}
+
 #c1c2 #wrapper #col1.marginright {
 	margin-right: 200px;
 }
@@ -46,16 +50,8 @@ body.fixed_width .fixedwidth .fixedwidth {
 
 * html #tiki-center {font-size: 1em}
 
-#c1c2 #wrapper #col1.marginleft  {
-	margin-left: 230px;
-  /*margin-left: 20%;*/
-}
-
-
 #c1c2 #col2 {
-  width: 230px;
-  /*width: 20%;*/
-  /*max-width: 350px;*/
+	width: 200px;
 	overflow: visible;
 }
 
@@ -213,18 +209,18 @@ input[type="submit"]:hover {
 	height: 100%;
 }
 
-#top_modules #sitetitles {
+#top_modules .sitetitles {
 	font-weight: bold;
 	margin-left: 20px;
 	margin-top: 3%;
 	margin-bottom: 2%;
 }
 
-#top_modules #sitetitle {
+#top_modules .sitetitle {
 	font-size: 2.4em;
 }
 
-#top_modules #sitesubtitle {
+#top_modules .sitesubtitle {
 	font-size: 1.2em;
 	padding-top: 5px;
 }
@@ -469,6 +465,10 @@ h3.box-title,
 .normal {
 	border: 1px solid #aaa;
 }
+
+.cbox > .normal {
+	border: none;
+}
 /*
 .normal a.link,
 .normal a,
@@ -679,19 +679,10 @@ body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
 /**** Image Galleries ****/
 
 /***** File Galleries *****/
-/*
-.opaque {
-	color: ;
-	background: ;
-	border: ;
-	padding: ;
-}
 
-.opaque .box-title {
-	padding-bottom: ;
-	border-bottom: ;
+.opaque {
+	border-color: #ccc;
 }
-*/
 
 /***** Trackers *****/
 
@@ -789,6 +780,14 @@ td.calheadhighlight {
 	padding-left:46px;
 }
 
+/* Comments */
+
+#comment-container ol ol {
+	list-style-image: url("../img/icons/quoteleft.gif");
+}
+
+
+
 /***** End New (unsorted) *****/
 
 /***** border radius definitions                   *****
@@ -830,7 +829,9 @@ a.admbox.off,
 .forum_actions,
 .admintoclevel,
 .post .postbody-title,
-.post .author_info {
+.post .author_info,
+#outerToc-static,
+.toolbars-picker {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -863,5 +864,9 @@ a.admbox.off,
 	border-bottom-right-radius: 0;
 }
 /***** end border radius definitions  *****/
+
+a.fc-event:hover {
+	color: #ccc;
+}
 
 /* End of File */
