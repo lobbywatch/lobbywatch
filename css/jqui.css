@@ -1,0 +1,867 @@
+/* $Id: jqui.css 45760 2013-04-29 01:54:24Z lindonb $
+	Jqui (jqui.css) for Tiki Wiki CMS Groupware.
+	Visit http://themes.tiki.org for more information.
+*/
+
+/* Import foundation CSS files. */
+@import url("lite/lite.css");
+@import url("layout/layout.css");
+@import url("layout/design.css");
+
+/***** XHTML Elements (body tag here,
+			others follow Layout) *****/
+body {
+	font: 76% Verdana,Arial,sans-serif;
+	line-height: 1.5;
+	color: #000;
+	background: #fff}
+
+html > body,
+*:first-child+html body {font-size: 74%}
+
+ /***** Layout (overrides layout.css;
+		also styling of page layout divs)  *****/
+
+/* Enable header and footer content to widen when middle has wide content. */
+body.fixed_width .fixedwidth .fixedwidth {
+	width: 100%;
+	padding: 0;
+}
+
+#main {
+	text-align: left
+}
+
+#c1c2 #wrapper #col1.marginright {
+	margin-right: 200px;
+}
+
+#c1c2 #wrapper #col1 .content {
+	background: transparent;
+}
+
+#c1c2 #wrapper #col1 #tiki-center {
+	padding: 10px;
+}
+
+* html #tiki-center {font-size: 1em}
+
+#c1c2 #wrapper #col1.marginleft  {
+	margin-left: 230px;
+  /*margin-left: 20%;*/
+}
+
+
+#c1c2 #col2 {
+  width: 230px;
+  /*width: 20%;*/
+  /*max-width: 350px;*/
+	overflow: visible;
+}
+
+#c1c2 #col2 .content {margin-left: 4px}
+
+#col3 {
+	width: 200px;
+	margin-left: -200px;
+}
+
+#col3 .content {margin-right: 4px;}
+
+.footerbgtrap {
+	color: #363636;
+	background: #fdfdfd;
+	border: 1px solid #cccccc;
+	border-bottom: none;
+	margin: 10px;
+	margin-bottom: 0;
+	text-align: center;
+}
+
+/***** XHTML Elements (other than body tag) ******/
+a,
+a:visited {
+	color: #0001a6;
+	text-decoration: none;
+}
+
+a:active, a:hover {
+	color: #6a6bd7;
+	text-decoration: none;
+}
+
+h1, h2, h3, h4, h5 {
+	line-height: 1.1;
+}
+
+h1 {
+	font-size: 180%;
+}
+
+h2 {
+	font-size: 160%;
+}
+
+h3 {
+	font-size: 140%;
+}
+
+h4 {
+	font-size: 120%;
+}
+
+h5 {
+	font-size: 110%;
+}
+
+fieldset {
+	border: 1px solid #cccccc}
+
+legend {
+	color: #000;
+}
+
+.navbar {
+	margin: 5px 0;
+	line-height: 220%;
+}
+
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a {
+	margin: .5em .4em .5em 0;
+	cursor: pointer;
+	line-height: 1.4em;
+	width: auto;
+	overflow: visible;
+	border: 1px solid #cccccc;
+	background: #e2e2e2 url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+	color: #666666;
+	outline: none;
+}
+
+.button a:hover,
+button:hover,
+input[type="reset"]:hover,
+input[type="submit"]:hover,
+.button input:hover,
+.calbuttonBox:hover {
+	margin: .5em .4em .5em 0;
+	border: 1px solid #aaa;
+	background: #cccccc url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+	color: #363636;
+	outline: none;
+}
+
+/* Needed for Opera (11) */
+input[type="reset"],
+input[type="submit"],
+input[type="reset"]:hover,
+input[type="submit"]:hover {
+	padding: .1em .8em;
+}
+
+.highlight,
+.highlight a {
+	border: 1px solid #fcefa1;
+	background: #f3f3f3 url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	color: #363636;
+}
+
+.button.highlight {
+	border: none;
+}
+
+.button.highlight a {
+	border: 1px solid #fcefa1;
+	background: #aaaaaa;
+	color: #363636;
+}
+
+.error {
+	background: none;
+}
+
+
+/***** Site Header & Identity *****/
+.header {
+	min-height: 100%;
+	height: 100% !important;
+}
+
+.header_fixedwidth {
+	height: auto;
+}
+
+#top_modules {
+	height: 100%;
+}
+
+#top_modules .module.secondary_site_menu {
+	position: absolute;
+	top: 0;
+	right: 30px;
+}
+
+#top_modules .box-logo {
+	height: 100%;
+}
+
+#top_modules #sitetitles {
+	font-weight: bold;
+	margin-left: 20px;
+	margin-top: 3%;
+	margin-bottom: 2%;
+}
+
+#top_modules #sitetitle {
+	font-size: 2.4em;
+}
+
+#top_modules #sitesubtitle {
+	font-size: 1.2em;
+	padding-top: 5px;
+}
+
+#top_modules .siteloginbar_popup {
+	position: absolute;
+	bottom: 0;
+	right: 20px;
+}
+
+#tiki-top {
+	padding: 0 .3em 0 1em;
+	border: 1px solid #aaa;
+	background: #cccccc url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+	color: #363636;
+	margin: 0 10px 10px;
+	font-size: 1.1em;
+}
+
+#topbar_modules {
+	min-height: 34px;
+}
+
+#topbar_modules .box-search {
+	position: absolute;
+	top: 0px;
+	right: 20px;
+	height: 34px;
+	line-height: 34px;
+}
+
+#top_modules .box-quickadmin {
+	border: 1px solid #999;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+
+
+/****** Menus, Links ******/
+/** CSS (suckerfish) menus **/
+
+/* default and topbar dropdown typography (colors) and padding */
+.cssmenu_horiz a,
+.cssmenu_vert a,
+#tiki-top .cssmenu_horiz li ul li a,
+#tiki-top .cssmenu_horiz li:hover ul li a {
+	background: #fff;
+	font-weight: normal;
+	text-decoration: none;
+	padding: .5em 1em;
+}
+
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li {
+	background: #e2e2e2;
+	border: 1px solid #aaa;
+	border-top: 0;
+	margin-bottom: -1px
+}
+
+.cssmenu_horiz li ul li:first-child,
+.cssmenu_vert li ul li:first-child {
+	border-top: 1px solid #aaa;
+}
+
+#tiki-top .cssmenu_horiz li a {
+	padding: 14px 1em;
+	font-size: 1em;
+	font-weight: bold;
+	text-decoration: none;
+	background: none;
+	border-right: 1px solid #aaa;
+}
+
+#tiki-top .cssmenu_horiz li:hover a {
+	text-decoration: none;
+}
+
+/* ul ul top compensation for padding */
+#tiki-top .cssmenu_horiz li:hover ul,
+#tiki-top .cssmenu_horiz li.sfHover ul {
+	top: 44px;
+}
+
+.secondary_site_menu .cssmenu_horiz li:hover ul,
+.secondary_site_menu .cssmenu_horiz li.sfHover ul {
+	top: 22px;
+}
+
+#tiki-top .cssmenu_horiz li:hover ul ul,
+#tiki-top .cssmenu_horiz li.sfHover ul ul,
+.secondary_site_menu .cssmenu_horiz li:hover ul ul,
+.secondary_site_menu .cssmenu_horiz li.sfHover ul ul {
+	top: -1px;
+}
+
+#tiki-top .cssmenu_horiz li.menuSection a {
+	padding-right: 24px;
+}
+
+/* left column width */
+#col2 .box-data .cssmenu_vert,
+#col2 .box-data .cssmenu_vert ul {
+	padding-left: 0;
+}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 166px;
+}
+
+/* offset from left column (matches above) */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul {
+	left: 166px;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li:hover ul,
+#col2 .cssmenu_vert li.sfHover ul,
+#col2 .cssmenu_vert li:hover ul li,
+#col2 .cssmenu_vert li.sfHover ul li {
+	width: 10em;
+}
+
+/* return ul ul ... to default */
+#col2 .cssmenu_vert li li:hover ul,
+#col2 .cssmenu_vert li li.sfHover ul {
+	left: 10em;
+}
+
+a .sf-sub-indicator {
+	top: 8px;
+}
+
+.sf-sub-indicator {
+	background: url(jqui/arrows-1174a5.png) no-repeat -10px -100px;
+}
+
+#tiki-top .cssmenu_horiz li a .sf-sub-indicator {top: 16px}
+
+#tiki-top .cssmenu_horiz li ul li  a .sf-sub-indicator {
+	background: url(jqui/arrows-1174a5.png) no-repeat;
+	top: 7px;
+}
+
+.secondary_site_menu a .sf-sub-indicator {
+	top: 8px;
+}
+
+/***** Boxes *****/
+/** Modules **/
+.box,
+.cbox {
+	padding: .2em;
+	margin: 0 .5em 10px;
+	background-color: #fefefe;
+	color: #363636;
+	border: 1px solid #aaa;
+}
+
+#col2 .box,
+#col3 .box {
+	margin-bottom: 10px;
+}
+
+
+h3.box-title,
+.cbox-title {
+	padding: .5em .3em .3em 1em;
+	position: relative;
+	border: 1px solid #aaa;
+	background: #cccccc url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+	color: #363636;
+	font-weight: bold;
+	margin: 0;
+	font-size: 1.1em;
+}
+
+.cbox-data,
+.box-data {
+	padding: .5em 1em;
+	background-image: none;
+}
+
+/* menu in a module, use module bg colour */
+.box-menu .cssmenu_vert a {
+	background-color: inherit;
+}
+
+
+/** Other boxes **/
+
+.rbox-title,
+.rbox-data {
+/* -moz-background-clip: border;
+	-moz-background-inline-policy: continuous;
+	-moz-background-origin :padding;*/
+	background: #f3f3f3 url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) repeat-x scroll 50% 50%;
+	border: 1px solid #ccc;
+	color: #363636;
+}
+
+.errors {
+	background: none;
+	color: #cd0a0a;
+}
+
+.errors .rbox-title,
+.errors .rbox-data {
+	color: #cd0a0a;
+	background:#fef1ec url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 100%;
+	border: 1px solid #cd0a0a;
+}
+
+.warning .rbox-title,
+.warning .rbox-data {
+	color: #cd0a0a;
+	background: #fef1ec url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png) repeat-x scroll 50% 100%;
+	border: 1px solid #cd0a0a;
+}
+
+.rbox-title,
+.error .rbox-title,
+.errors .rbox-title,
+.warning .rbox-title {
+	border-bottom: none;
+	margin-bottom: -.5em;
+}
+
+.simplebox {
+	border: 1px solid #aaa;
+	background-color: #f3f3f3;
+	color: #363636;
+}
+
+/***** Tables, Tabs *****/
+/** Tables **/
+
+.normal {
+	border: 1px solid #aaa;
+}
+/*
+.normal a.link,
+.normal a,
+th a,
+th a:visited,
+td.heading a,
+td.heading a:visited {
+	color: ;
+}
+
+.admin a.link,
+.admin a,
+.admin label,
+fieldset.admin label,
+.cbox fieldset.admin a {
+	color: ;
+}
+*/
+
+tr.odd td,
+td.odd,
+li.odd,
+table.normal tr:nth-child(2n+1),
+.tablesorter tr.odd td {
+	background: #f9f9f9;
+}
+
+tr.even td,
+td.even,
+li.even,
+table.normal tr:nth-child(2n),
+.tablesorter tr.even td {
+	background: #f3f3f3;
+}
+
+/** Tabs **/
+/* reset what's in layout.css */
+
+.tabactive,
+.tabinactive,
+[class].tabactive,
+[class].tabinactive {top: 0 !important}
+
+.tabs {
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	position: relative;
+	padding: .2em .2em 0;
+	margin:0 0.2em 1px 0;
+	border: 1px solid #aaa;
+	background: #ccc url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+}
+
+.tabs br {
+	display: none;
+}
+
+.tabs span {
+	display: block;
+	float: left;
+}
+
+.tabmark {
+	list-style-image: none;
+	float: left;
+	border: 1px solid #cccccc;
+	background: #e2e2e2 url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 50% 50% repeat-x;
+	outline: none;
+	border-bottom-width: 0 !important;
+	margin: 0 .2em -1px 0;
+}
+
+.tabmark a {
+	padding: 0.5em 1em;
+	color: #666666;
+	font-weight: normal;
+}
+
+.tabactive {
+	border-bottom-width: 0;
+	padding-bottom: 1px;
+	border: 1px solid #aaa;
+	background: #fff url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_65_ffffff_1x400.png) 50% 50% repeat-x;
+	font-weight: normal;
+	color: #363636;
+	outline: none;
+}
+
+.statuson {
+	background: #ccc;
+}
+
+/***** Wiki *****/
+
+/* code plugin */
+
+.codecaption {
+	font-size: .9em;
+	line-height: 1.4em;
+	padding: .2em 1em;
+	display: inline;
+	border: 1px solid #666666;
+	border-bottom: none;
+	margin: 0;
+	color: #666666;
+	background: #f9f9f9;
+	font-weight: bold;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+}
+
+.codelisting {
+	font-family: "Courier New", Courier, monospace;
+	line-height: 1.2em;
+	padding: 1em;
+	background: #f9f9f9;
+	margin: 0;
+	border: 1px solid #666666;
+	overflow: auto;
+	border-top-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomleft: 3px;
+	-moz-border-radius-bottomright: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+}
+
+/***** Articles ****/
+body.tiki_cms h1 a.pagetitle,
+body.tiki_cms h1 a.pagetitle:visited,
+body.tiki_cms h1 a.pagetitle:hover {border-bottom: none}
+
+
+.articletrailer span {
+	margin-left: 5px;
+	padding-left: 20px;
+}
+
+.articletrailer .share {
+	margin-left: 0;
+	padding-left: 0;
+}
+
+/***** Blogs *****/
+
+
+/***** Forums *****/
+
+.post .postbody {
+	border: 1px solid #aaa;
+	padding: 6px;
+}
+
+.postbody-title {
+	padding: .5em .3em .3em 1em;
+	position: relative;
+	border: 1px solid #aaa;
+	background: #ccc url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x;
+	color: #363636;
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+.postbody-title h2 {
+	margin: .2em 0 .3em;
+}
+
+.postbody .actions {
+	text-align: right;
+	margin-bottom: 4px;
+}
+
+.post .postbody .content {
+	float: none}
+
+.post .author {
+	float: none;
+	text-align: left;
+	margin: 6px 0;
+}
+
+.post .author_info .icons {
+	text-align: left;
+	display: inline;
+}
+
+.post .author_info,
+.forum_actions {
+	background: #ddd url(../vendor/jquery/jquery-ui-themes/themes/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png) 0% 0% repeat-x;
+	border: 1px solid #aaa;
+	color: #333;
+	padding: 3px;
+	margin: 10px 0 0;
+}
+.forum_actions .title {
+	font-weight: bold;
+}
+
+
+/**** Image Galleries ****/
+
+/***** File Galleries *****/
+/*
+.opaque {
+	color: ;
+	background: ;
+	border: ;
+	padding: ;
+}
+
+.opaque .box-title {
+	padding-bottom: ;
+	border-bottom: ;
+}
+*/
+
+/***** Trackers *****/
+
+/***** Categories, Tags *****/
+
+/***** Tags (freetags) *****/
+.freetagitemlist {
+	margin-bottom: 30px;
+	padding: 0 0 10px;
+}
+
+.freetaglist a {
+	font-size: 0.9em;
+}
+
+/*****  Polls  *****/
+
+/***** FAQs *****/
+
+/***** Quizzes *****/
+
+/***** Shoutbox *****/
+
+/***** Directory *****/
+.dirsite {
+	margin-bottom: 30px;
+	padding: 0 0 10px}
+
+/***** Messages *****/
+
+/***** TikiSheets *****/
+
+
+/***** Calendar *****/
+.caltable {
+	border-bottom: none;
+}
+
+.caltable .days {
+	border: none;
+}
+
+.caltable .odd,
+.caltable .even,
+.caltable .calborder {
+	border-color: #aaa
+}
+
+.caltable .odd {
+	background: #e2e2e2;
+}
+.caltable .even {
+	background: #cccccc;
+}
+
+.caltable td.calhighlight,
+td.calheadhighlight {
+	background: #fcefa1;
+}
+
+/*** Cluetip ***/
+.cluetip-default {
+	background: #aaa;
+	color: #000;
+}
+
+.cluetip-default #cluetip-outer {
+	background: #ccc;
+}
+.cluetip-default h3#cluetip-title {
+	background: #aaa;
+	color: #fff;
+}
+
+.cluetip-default #cluetip-title a {
+	color: #fff;
+}
+
+
+#cluetip-close {
+	background: #aaa;
+	color: #cd0a0a;
+}
+
+/***** New (unsorted) *****/
+
+/* Quote plugin */
+.quoteheader {
+	background : url('../img/icons/quoteleft.gif') no-repeat;
+	padding-left:50px;
+	height:35px;
+}
+
+.quotebody {
+	padding-left:46px;
+}
+
+/***** End New (unsorted) *****/
+
+/***** border radius definitions                   *****
+ ***** remove if you require strict css validation *****/
+
+.footerbgtrap,
+.rbox-title,
+.tabs,
+.tabmark,
+.postbody-title {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+}
+
+fieldset,
+input,
+textarea,
+.button a,
+.button a:visited,
+button,
+input[type="reset"],
+input[type="submit"],
+.button input,
+.calbuttonBox a,
+#tiki-top,
+.box,
+.cbox,
+h3.box-title,
+.simplebox,
+.cbox-title,
+.post .postbody,
+body.tiki_admin .simplebox,
+a.admbox,
+a.admbox.off,
+.forum_actions,
+.admintoclevel,
+.post .postbody-title,
+.post .author_info {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+
+.rbox-title {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-bottom: none !important;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+}
+
+.rbox-data {
+	border-top-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+}
+
+.admintoclevel .admintoclevel {
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+}
+/***** end border radius definitions  *****/
+
+/* End of File */
