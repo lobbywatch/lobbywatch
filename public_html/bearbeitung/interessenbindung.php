@@ -216,7 +216,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
@@ -575,7 +574,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
@@ -747,7 +745,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
@@ -1198,8 +1195,7 @@
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
-            $editor->AddValue('beirat', $this->RenderText('Beirat'));
-            $editor->AddValue('patronatskomitee', $this->RenderText('Patronatskomitee'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1217,8 +1213,7 @@
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
-            $editor->AddValue('beirat', $this->RenderText('Beirat'));
-            $editor->AddValue('patronatskomitee', $this->RenderText('Patronatskomitee'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(false);
@@ -2035,7 +2030,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
@@ -2329,8 +2323,7 @@
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
-            $editor->AddValue('beirat', $this->RenderText('Beirat'));
-            $editor->AddValue('patronatskomitee', $this->RenderText('Patronatskomitee'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2584,7 +2577,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
@@ -2878,8 +2870,7 @@
             $editor->AddValue('geschaeftsfuehrend', $this->RenderText('Geschaeftsführend'));
             $editor->AddValue('vorstand', $this->RenderText('Vorstand/Verwaltungsrat/Stiftungsrat'));
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
-            $editor->AddValue('beirat', $this->RenderText('Beirat'));
-            $editor->AddValue('patronatskomitee', $this->RenderText('Patronatskomitee'));
+            $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(false);
@@ -3507,7 +3498,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
@@ -3670,7 +3660,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
@@ -4154,7 +4143,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
@@ -4437,7 +4425,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
