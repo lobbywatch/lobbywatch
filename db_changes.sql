@@ -756,10 +756,21 @@ CHANGE `anzahl_gemeinden` `anzahl_gemeinden` SMALLINT( 6 ) UNSIGNED NULL DEFAULT
 CHANGE `steuereinnahmen` `steuereinnahmen` INT( 11 ) UNSIGNED NULL DEFAULT NULL COMMENT 'Stuereinnahmen in Franken';
 
 
--- 01.05.2015
+-- 01.05.2014
 
 ALTER TABLE `parlamentarier`
   ADD `ratswechsel` date DEFAULT NULL COMMENT 'Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden' AFTER `im_rat_bis`;
 
 ALTER TABLE `parlamentarier_log`
   ADD `ratswechsel` date DEFAULT NULL COMMENT 'Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden' AFTER `im_rat_bis`;
+
+-- 06.07.2014
+
+ALTER TABLE `user` ADD `last_login` TIMESTAMP NULL DEFAULT NULL COMMENT 'Datum des letzten Login' AFTER `vorname` ;
+
+ALTER TABLE `user`
+  ADD `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.' AFTER `last_login`,
+  ADD `created_visa` varchar(10) NULL COMMENT 'Datensatz erstellt von' AFTER `notizen` ,
+  ADD `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am' AFTER `created_visa`,
+  ADD `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von' AFTER `created_date`,
+  ADD `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am' AFTER `updated_visa`;

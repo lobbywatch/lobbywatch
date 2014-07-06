@@ -129,7 +129,7 @@
 
         private function OnAfterLogin($userName, $connection)
         {
-            // stub
+            onAfterLogin($userName, $connection);
         }
 
         private function GetUrlToRedirectAfterLogin()
