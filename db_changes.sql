@@ -766,7 +766,8 @@ ALTER TABLE `parlamentarier_log`
 
 -- 06.07.2014
 
-ALTER TABLE `user` ADD `last_login` TIMESTAMP NULL DEFAULT NULL COMMENT 'Datum des letzten Login' AFTER `vorname` ;
+ALTER TABLE `user`
+  ADD `last_login` TIMESTAMP NULL DEFAULT NULL COMMENT 'Datum des letzten Login' AFTER `vorname` ;
 
 ALTER TABLE `user`
   ADD `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.' AFTER `last_login`,
@@ -774,6 +775,9 @@ ALTER TABLE `user`
   ADD `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am' AFTER `created_visa`,
   ADD `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von' AFTER `created_date`,
   ADD `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am' AFTER `updated_visa`;
+
+ALTER TABLE `user`
+  ADD `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Benutzers' AFTER `vorname` ;
 
 ALTER TABLE `organisation` CHANGE `rechtsform` `rechtsform` ENUM( 'AG', 'GmbH', 'Stiftung', 'Verein', 'Informelle Gruppe', 'Parlamentarische Gruppe', 'Oeffentlich-rechtlich', 'Einzelunternehmen', 'KG', 'Genossenschaft', 'Staatlich', 'Ausserparlamentarische Kommission', 'Einfache Gesellschaft' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Rechtsform der Organisation';
 
