@@ -12,9 +12,14 @@
 /lobbywatch_bearbeitung.pgtm.xml
 /lobbywatch_bearbeitung2.pgtm
 /lobbywatch_bearbeitung.bad.pgtm
+/lobbywatch_bearbeitung.pgtm.txt
+*.bad
 
 /lobbywatch_bearbeitung.bak.pgtm
 /lobbywatch_bearbeitung.old.pgtm
 /lobbywatch_bearbeitung.old.old.pgtm
+/lobbywatch_bearbeitung.old.old.old.pgtm
 VisualLobbyAspx/VisualLobby/VisualLobby.csproj.user
 *.pdb
+/tmp
+/public_html/bearbeitung/PieChartReport_v02.zip

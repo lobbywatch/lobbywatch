@@ -42,7 +42,9 @@
         {
             $selectQuery = 'select * from zutrittsberechtigung where
             geschlecht is null OR
-            email is null OR trim(email)=\'\'';
+            email is null OR trim(email)=\'\' OR
+            beruf is null OR trim(beruf)=\'\' OR
+            funktion is null OR trim(funktion)=\'\'';
             $insertQuery = array();
             $updateQuery = array();
             $deleteQuery = array();
@@ -2614,7 +2616,9 @@
     </p>
     <ul>
     <li>das Geschlecht fehlt,
-    </li><li>die E-Mail-Adresse fehlt.
+    </li><li>die E-Mail-Adresse fehlt,
+    </li><li>der Beruf fehlt,
+    </li><li>die Funktion fehlt.
     </li></ul><p>Diese Kriterien werden nach Bedarf angepasst.
     </p>
     </div>

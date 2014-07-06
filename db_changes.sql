@@ -838,3 +838,21 @@ ALTER TABLE `parlamentarier_log` CHANGE `zivilstand` `zivilstand` ENUM( 'ledig',
 
 UPDATE `user` SET `created_visa`='roland', `created_date`=STR_TO_DATE('08.11.2013','%d.%m.%Y'), `updated_visa`='roland', `updated_date`=NOW() WHERE `id` IN (1, 2, 3, 4, 5, 6, 7);
 UPDATE `user` SET `created_visa`='roland', `created_date`=NOW(), `updated_visa`='roland', `updated_date`=NOW() WHERE `id` > 7;
+
+ALTER TABLE `branche`
+  ADD `symbol_abs` varchar(255) DEFAULT NULL COMMENT 'Symbolbild (Icon) der Branche, absoluter Pfad' AFTER `farbcode`,
+  ADD `symbol_rel` varchar(255) DEFAULT NULL COMMENT 'Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit $rel_files_url/ zu URL ergänzt werden' AFTER `symbol_abs`,
+  ADD `symbol_klein_rel` varchar(255) DEFAULT NULL COMMENT 'Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit $rel_files_url/ zu URL ergänzt werden' AFTER `symbol_rel`,
+  ADD `symbol_dateiname_wo_ext` varchar(255) DEFAULT NULL COMMENT 'Symbolbilddateiname ohne Erweiterung' AFTER symbol_klein_rel,
+  ADD `symbol_dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Dateierweiterung des Symbolbildes' AFTER symbol_dateiname_wo_ext,
+  ADD `symbol_dateiname` varchar(255) DEFAULT NULL COMMENT 'Symbolbilddateiname mit Erweiterung' AFTER symbol_dateierweiterung,
+  ADD `symbol_mime_type` varchar(100) DEFAULT NULL COMMENT 'MIME Type des Symbolbildes' AFTER symbol_dateiname;
+
+ALTER TABLE `branche_log`
+  ADD `symbol_abs` varchar(255) DEFAULT NULL COMMENT 'Symbolbild (Icon) der Branche, absoluter Pfad' AFTER `farbcode`,
+  ADD `symbol_rel` varchar(255) DEFAULT NULL COMMENT 'Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit $rel_files_url/ zu URL ergänzt werden' AFTER `symbol_abs`,
+  ADD `symbol_klein_rel` varchar(255) DEFAULT NULL COMMENT 'Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit $rel_files_url/ zu URL ergänzt werden' AFTER `symbol_rel`,
+  ADD `symbol_dateiname_wo_ext` varchar(255) DEFAULT NULL COMMENT 'Symbolbilddateiname ohne Erweiterung' AFTER symbol_klein_rel,
+  ADD `symbol_dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Dateierweiterung des Symbolbildes' AFTER symbol_dateiname_wo_ext,
+  ADD `symbol_dateiname` varchar(255) DEFAULT NULL COMMENT 'Symbolbilddateiname mit Erweiterung' AFTER symbol_dateierweiterung,
+  ADD `symbol_mime_type` varchar(100) DEFAULT NULL COMMENT 'MIME Type des Symbolbildes' AFTER symbol_dateiname;

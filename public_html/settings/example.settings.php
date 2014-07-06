@@ -14,7 +14,9 @@ if ($stage) {
 
   $env_dir = "/";
   // $env_dir = "/test/";
-  $public_files_dir = "/home/lobbywatch/public_html/files";
+  $public_files_dir_rel = "files";
+  $public_files_dir_abs = $public_files_dir = "/home/lobbywatch/public_html/$public_files_dir_rel";
+  $rel_files_url = "/$public_files_dir_rel";
   $private_files_dir = "/home/lobbywatch/private_files/lobbywatch_db_files";
 
   $db_connection = array (
@@ -31,7 +33,9 @@ if ($stage) {
 
   $env_dir = "/";
   // $env_dir = "/test/";
-  $public_files_dir = "/home/lobbywatch/public_html/test/files";
+  $public_files_dir_rel = "test/files";
+  $public_files_dir_abs = $public_files_dir = "/home/lobbywatch/public_html/test/$public_files_dir_rel";
+  $rel_files_url = "/$public_files_dir_rel";
   $private_files_dir = "/home/lobbywatch/private_files/lobbywatch_db_files/test";
 
   $db_connection = array (

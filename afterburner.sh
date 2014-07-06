@@ -77,6 +77,9 @@ do
   | perl -0 -p -e's/(?<=CreateRssGenerator\(\)).*?(?=\})/ \{\n            return setupRSS\(\$this, \$this->dataset\);\n        /sg' \
   | perl -p -e's/\$env_dir/'\'' \. \$GLOBALS["env_dir"] \. '\''/g' \
   | perl -p -e's/\$env(?!_dir)/'\'' \. \$GLOBALS["env"] \. '\''/g' \
+  | perl -p -e's/\$rel_files_url/'\'' \. \$GLOBALS["rel_files_url"] \. '\''/g' \
+  | perl -p -e's/\$public_files_dir_rel/'\'' \. \$GLOBALS["public_files_dir_rel"] \. '\''/g' \
+  | perl -p -e's/\$public_files_dir_abs/'\'' \. \$GLOBALS["public_files_dir_abs"] \. '\''/g' \
   | perl -p -e's/\$public_files_dir/'\'' \. \$GLOBALS["public_files_dir"] \. '\''/g' \
   | perl -p -e's/\$private_files_dir/'\'' \. \$GLOBALS["private_files_dir"] \. '\''/g' \
   | perl -p -e's/\$build_date:\$/'\'' \. \$GLOBALS["build_date"] \. '\''/g' \

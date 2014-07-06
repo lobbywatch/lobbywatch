@@ -2,6 +2,8 @@
 
 #genfile=lobbywatch_bearbeitung_gen.pgtm
 
+cp lobbywatch_bearbeitung.old.old.pgtm lobbywatch_bearbeitung.old.old.old.pgtm
+
 cp lobbywatch_bearbeitung.old.pgtm lobbywatch_bearbeitung.old.old.pgtm
 
 cp lobbywatch_bearbeitung.bak.pgtm lobbywatch_bearbeitung.old.pgtm

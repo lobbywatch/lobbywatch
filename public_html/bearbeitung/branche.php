@@ -164,6 +164,20 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -229,6 +243,20 @@
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -946,6 +974,20 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1078,6 +1120,20 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1143,6 +1199,20 @@
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1768,6 +1838,20 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1969,6 +2053,20 @@
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -3392,6 +3490,20 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -3456,6 +3568,20 @@
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4632,6 +4758,20 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -5422,6 +5562,20 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -5486,6 +5640,20 @@
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -6586,6 +6754,20 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -7085,6 +7267,20 @@
             $field = new StringField('angaben');
             $lookupDataset->AddField($field, false);
             $field = new StringField('farbcode');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -8096,6 +8292,20 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('farbcode');
             $this->dataset->AddField($field, false);
+            $field = new StringField('symbol_abs');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('symbol_rel');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('symbol_klein_rel');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname_wo_ext');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('symbol_dateierweiterung');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('symbol_dateiname');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('symbol_mime_type');
+            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -8651,6 +8861,16 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for symbol_klein_rel field
+            //
+            $column = new ExternalImageColumn('symbol_klein_rel', 'Symbol klein', $this->dataset, '%symbol_dateiname%');
+            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] . '/');
+            $column->SetSourceSuffix('');
+            $column->SetDescription($this->RenderText('Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit ' . $GLOBALS["rel_files_url"] . '/ zu URL ergänzt werden'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -8966,6 +9186,30 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for symbol_abs field
+            //
+            $column = new ExternalImageColumn('symbol_abs', 'Symbol', $this->dataset, '%symbol_dateiname%');
+            $column->SetSourcePrefix('');
+            $column->SetSourceSuffix('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for symbol_rel field
+            //
+            $column = new ExternalImageColumn('symbol_rel', 'Symbol', $this->dataset, '%symbol_dateiname%');
+            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] . '/');
+            $column->SetSourceSuffix('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for symbol_klein_rel field
+            //
+            $column = new ExternalImageColumn('symbol_klein_rel', 'Symbol klein', $this->dataset, '%symbol_dateiname%');
+            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] . '/');
+            $column->SetSourceSuffix('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -9160,6 +9404,50 @@
             $editor->SetSize(15);
             $editor->SetMaxLength(15);
             $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for symbol_abs field
+            //
+            $editor = new ImageUploader('symbol_abs_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_abs', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+            $editColumn->OnCustomFileName->AddListener('symbol_abs_GenerateFileName_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetGenerationImageThumbnails(
+                'symbol_klein_rel',
+                '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%',
+                Delegate::CreateFromMethod($this, 'symbol_abs_Thumbnail_GenerateFileName_edit'),
+                new ImageFitByHeightResizeFilter(100)
+            );
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for symbol_rel field
+            //
+            $editor = new ImageUploader('symbol_rel_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_rel', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+            $editColumn->OnCustomFileName->AddListener('symbol_rel_GenerateFileName_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for symbol_klein_rel field
+            //
+            $editor = new ImageUploader('symbol_klein_rel_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Symbol klein', 'symbol_klein_rel', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+            $editColumn->OnCustomFileName->AddListener('symbol_klein_rel_GenerateFileName_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -9395,6 +9683,24 @@
             $editor->SetSize(15);
             $editor->SetMaxLength(15);
             $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for symbol_abs field
+            //
+            $editor = new ImageUploader('symbol_abs_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_abs', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+            $editColumn->OnCustomFileName->AddListener('symbol_abs_GenerateFileName_insert', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetGenerationImageThumbnails(
+                'symbol_klein_rel',
+                '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%',
+                Delegate::CreateFromMethod($this, 'symbol_abs_Thumbnail_GenerateFileName_insert'),
+                new ImageFitByHeightResizeFilter(100)
+            );
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -9761,6 +10067,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for symbol_klein_rel field
+            //
+            $column = new ExternalImageColumn('symbol_klein_rel', 'Symbol klein', $this->dataset, '%symbol_dateiname%');
+            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] . '/');
+            $column->SetSourceSuffix('');
+            $column->SetDescription($this->RenderText('Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit ' . $GLOBALS["rel_files_url"] . '/ zu URL ergänzt werden'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -10074,6 +10390,16 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for symbol_klein_rel field
+            //
+            $column = new ExternalImageColumn('symbol_klein_rel', 'Symbol klein', $this->dataset, '%symbol_dateiname%');
+            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] . '/');
+            $column->SetSourceSuffix('');
+            $column->SetDescription($this->RenderText('Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit ' . $GLOBALS["rel_files_url"] . '/ zu URL ergänzt werden'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -10330,6 +10656,117 @@
         {
         customDrawRow('branche', $rowData, $rowCellStyles, $rowStyles);
         }
+        function brancheGrid_BeforeUpdateRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            symbol_remove_old($page, $rowData, $cancel, $message, $tableName);
+            symbol_update_metadata($page, $rowData, $cancel, $message, $tableName);
+        }
+        function brancheGrid_BeforeDeleteRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            symbol_remove($page, $rowData, $cancel, $message, $tableName);
+        }
+        function brancheGrid_BeforeInsertRecord($page, &$rowData, &$cancel, &$message, $tableName)
+        {
+            symbol_update_metadata($page, $rowData, $cancel, $message, $tableName);
+        }
+        public function symbol_abs_Thumbnail_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('small_%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        
+        public function symbol_abs_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        public function symbol_rel_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        public function symbol_klein_rel_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        public function symbol_abs_Thumbnail_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('small_%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
+        
+        public function symbol_abs_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
         public function ShowEditButtonHandler(&$show)
         {
             if ($this->GetRecordPermission() != null)
@@ -10365,6 +10802,9 @@
             $result->SetWidth('');
             $this->OnGetCustomTemplate->AddListener('brancheGrid' . '_OnGetCustomTemplate', $this);
             $result->OnCustomDrawCell->AddListener('brancheGrid' . '_OnCustomDrawRow', $this);
+            $result->BeforeUpdateRecord->AddListener('brancheGrid' . '_' . 'BeforeUpdateRecord', $this);
+            $result->BeforeDeleteRecord->AddListener('brancheGrid' . '_' . 'BeforeDeleteRecord', $this);
+            $result->BeforeInsertRecord->AddListener('brancheGrid' . '_' . 'BeforeInsertRecord', $this);
             $this->CreateGridSearchControl($result);
             $this->CreateGridAdvancedSearchControl($result);
             $this->AddOperationsColumns($result);

@@ -215,6 +215,7 @@ function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$mess
 
     $path_parts = pathinfo($file);
 
+    // Remove path, we want it relative
     $rowData['kleinbild'] = $path_parts['basename'];
   } else {
     $rowData['photo'] = null;
@@ -226,6 +227,16 @@ function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$mess
   }
 }
 
+/**
+ * Used on update.
+ *
+ * @param unknown $page
+ * @param unknown $rowData
+ * @param unknown $cancel
+ * @param unknown $message
+ * @param unknown $tableName
+ * @return void|boolean
+ */
 function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, $tableName)
 {
 //    df($rowData, 'parlamentarier_remove_old_photo $rowData');
@@ -257,6 +268,130 @@ function parlamentarier_remove_old_photo($page, &$rowData, &$cancel, &$message, 
       $result = FileUtils::RemoveFile($old_file);
     $message = "Deleted old photo $old_file";
   }
+}
+
+/**
+ * Used on delete.
+ *
+ * @param unknown $page
+ * @param unknown $rowData
+ * @param unknown $cancel
+ * @param unknown $message
+ * @param unknown $tableName
+ */
+function parlamentarier_remove_photo($page, &$rowData, &$cancel, &$message, $tableName) {
+  $target = $rowData['photo'];
+  $result = -2;
+  if (FileUtils::FileExists($target))
+    $result = FileUtils::RemoveFile($target);
+
+  $message = "Delete file '$target'. Result $result";
+}
+
+function symbol_update_metadata($page, &$rowData, &$cancel, &$message, $tableName)
+{
+  //   df($rowData, 'parlamentarier_update_photo_metadata $rowData');
+  if (isset($rowData['symbol_abs'])) {
+    $file = $rowData['symbol_abs'];
+  } else {
+    return;
+  }
+
+  // A photo filename ending with / means there was no photo
+  if ($file !== null && !endsWith($file, '/')) {
+    $path_parts = pathinfo($file);
+
+    $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
+
+    $rowData['symbol_dateiname_wo_ext'] = $path_parts['filename'];
+    if (isset($path_parts['extension'])) {
+      $rowData['symbol_dateierweiterung'] = $path_parts['extension'];
+    }
+    $rowData['symbol_dateiname'] = $path_parts['basename'];
+    $rowData['symbol_mime_type'] = $finfo_mime->file($file);
+    $rowData['symbol_rel'] = preg_replace('/^.*?files\//', '', $file);
+
+    // Kleinbild
+    $file = $rowData['symbol_klein_rel'];
+
+    $path_parts = pathinfo($file);
+
+    // Remove path, we want it relative
+    //$rowData['symbol_klein'] = $path_parts['basename'];
+    // Remove path to files, we want it relative
+    $rowData['symbol_klein_rel'] = preg_replace('/^.*?files\//', '', $rowData['symbol_klein_rel']);
+  } else {
+    $rowData['symbol_abs'] = null;
+    $rowData['symbol_rel'] = null;
+    $rowData['symbol_dateiname_wo_ext'] = null;
+    $rowData['symbol_dateierweiterung'] = null;
+    $rowData['symbol_dateiname'] = null;
+    $rowData['symbol_mime_type'] = null;
+    $rowData['symbol_klein_rel'] = null;
+  }
+}
+
+function symbol_remove_old($page, &$rowData, &$cancel, &$message, $tableName)
+{
+  //    df($rowData, 'parlamentarier_remove_old_photo $rowData');
+  //    df($tableName);
+  if (isset($rowData['symbol_rel']) && isset($rowData['id'])) {
+    $file = $rowData['symbol_rel'];
+    $small_file = $rowData['symbol_klein_rel'];
+    $id = $rowData['id'];
+  } else {
+    return;
+  }
+
+  // prevent SQL injection
+  if (!is_numeric($id)) {
+    return false;
+  }
+
+  $values = array();
+  $page->GetConnection()->ExecQueryToArray("SELECT `id`, `symbol_rel` FROM $tableName WHERE `id`=$id", $values);
+  //   df("SELECT `photo` FROM $tableName WHERE id=$id");
+  //   df($values);
+  if (count($values) > 0 ) {
+    $old_file = $values[0]['symbol_rel'];
+    $small_old_file= $values[0]['symbol_klein_rel'];
+  } else {
+    return false;
+  }
+  // A symbol filename ending with / means there was no symbol
+  if ($old_file !== null && $old_file !== $file) {
+    $old_file_abs = $public_files_dir_abs . '/' . $old_file;
+    if (FileUtils::FileExists($old_file_abs))
+      $result = FileUtils::RemoveFile($old_file_abs);
+    $message = "Deleted old symbol $old_file. ";
+  }
+
+  // A symbol filename ending with / means there was no symbol
+  if ($small_old_file !== null && $small_old_file !== $small_file) {
+    $small_old_file_abs = $public_files_dir_abs . '/' . $small_old_file;
+    if (FileUtils::FileExists($small_old_file_abs))
+      $result = FileUtils::RemoveFile($small_old_file_abs);
+    $message .= "\nDeleted old small symbol $small_old_file. ";
+  }
+}
+
+/**
+ * Used on delete.
+ *
+ * @param unknown $page
+ * @param unknown $rowData
+ * @param unknown $cancel
+ * @param unknown $message
+ * @param unknown $tableName
+ */
+function symbol_remove($page, &$rowData, &$cancel, &$message, $tableName) {
+  $target = $rowData['symbol_rel'];
+  $result = -2;
+  $target_abs = $public_files_dir_abs . '/' . $target;
+  if (FileUtils::FileExists($target_abs))
+    $result = FileUtils::RemoveFile($target_abs);
+
+  $message = "Delete file '$target_abs'. Result $result";
 }
 
 function datei_anhang_delete($page, &$rowData, &$cancel, &$message, $tableName) {
