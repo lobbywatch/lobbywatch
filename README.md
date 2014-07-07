@@ -1,5 +1,5 @@
-Lobbywatch
-==========
+Lobbywatch.ch
+=============
 
 [Lobbywatch.ch](http://lobbywatch.ch) - the platform for transparent politics.
 
