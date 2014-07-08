@@ -11866,7 +11866,9 @@
             //
             // Edit column for homepage field
             //
-            $editor = new TextAreaEdit('homepage_edit', 50, 8);
+            $editor = new TextEdit('homepage_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -11879,7 +11881,9 @@
             //
             // Edit column for homepage field
             //
-            $editor = new TextAreaEdit('homepage_edit', 50, 8);
+            $editor = new TextEdit('homepage_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -13240,7 +13244,9 @@
             //
             // Edit column for homepage field
             //
-            $editor = new TextAreaEdit('homepage_edit', 50, 8);
+            $editor = new TextEdit('homepage_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -13963,7 +13969,9 @@
             //
             // Edit column for homepage field
             //
-            $editor = new TextAreaEdit('homepage_edit', 50, 8);
+            $editor = new TextEdit('homepage_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -17023,7 +17031,9 @@
             //
             // Edit column for homepage field
             //
-            $editor = new TextAreaEdit('homepage_edit', 50, 8);
+            $editor = new TextEdit('homepage_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -17036,7 +17046,9 @@
             //
             // Edit column for homepage field
             //
-            $editor = new TextAreaEdit('homepage_edit', 50, 8);
+            $editor = new TextEdit('homepage_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
