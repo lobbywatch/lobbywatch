@@ -540,7 +540,7 @@ ORDER BY kommission.abkuerzung;
 -- Parlamenterier einer Kommission
 -- Connector: in_kommission.kommission_id
 CREATE OR REPLACE VIEW `v_in_kommission_parlamentarier` AS
-SELECT parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.partei, in_kommission.*
+SELECT parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.partei, parlamentarier.im_rat_seit, parlamentarier.im_rat_bis, in_kommission.*
 FROM v_in_kommission in_kommission
 INNER JOIN v_parlamentarier parlamentarier
   ON in_kommission.parlamentarier_id = parlamentarier.id

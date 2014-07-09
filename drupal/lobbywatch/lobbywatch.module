@@ -101,7 +101,7 @@ function lobbywatch_menu() {
     'type' => MENU_CALLBACK,
     );
 
-  $items['kommission/%'] = array(
+  $items['daten/kommission/%'] = array(
     'title' => 'Kommission',
     'title callback' => 'lobbywatch_page_title',
     'title arguments' => array('Kommission: ', '', 'kommission', 2),
@@ -528,12 +528,23 @@ function years($date_str) {
   return format_plural($interval->format('%y'), '1 Jahr', '@count Jahre');
 }
 
-function years_months($date_str) {
+/**
+ *
+ * @param unknown $date_str
+ * @param string $ref reference date, today if nothing/null is given
+ * @return string
+ */
+function years_months($date_str, $ref = null) {
 //   dpm($date_str);
-  $today = new DateTime();
+  if ($ref === null) {
+    $ref = new DateTime();
+  } else {
+    $ref = new DateTime($ref);
+  }
+
   $date = new DateTime($date_str);
 //   dpm($date);
-  $interval  = $today->diff($date);
+  $interval  = $ref->diff($date);
 //   dpm($interval);
   $years = $interval->format('%y');
   $months = $interval->format('%m');
@@ -746,7 +757,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
       '<tr><td>Partei:</td><td>' . l($record['partei'], 'daten/partei/' . $record['partei_id']) . '</td></tr>' .
       '<tr><td>Vertretene Bevölkerung:</td><td>' . number_format($vertretung , 0 , '.' , '\'') . '</td></tr>' .
-      '<tr><td>Im Parlament seit:</td><td>' . years_months(check_plain($record['im_rat_seit'])) . ' (' . check_plain($record['im_rat_seit_formatted']) . ')' . '</td></tr>' .
+      '<tr><td>Im Parlament seit:</td><td>' . years_months(check_plain($record['im_rat_seit']), $record['im_rat_bis']) . ' (' . check_plain($record['im_rat_seit_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>' .
       '<tr><td>Kinder:</td><td>' . check_plain($record['anzahl_kinder']) . '</td></tr>' .
@@ -898,12 +909,12 @@ ORDER BY organisation.anzeige_name;
   try {
   $sql_arbeitet = "SELECT organisation.*,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li>', IF(v.bis IS NOT NULL AND v.bis < NOW(), '<s>', ''), '<a href=\"/daten/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, '</a>',
+        CONCAT('<li>', IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), '<s>', ''), '<a href=\"/daten/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, '</a>',
         ', ', parlamentarier.ratstyp,
         IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei)),
         ', ', parlamentarier.kanton,
         IF(FALSE AND v.beziehung = 'indirekt', CONCAT(', <em>', v.beziehung, '</em>'), ''),
-        IF(v.bis IS NOT NULL AND v.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(v.bis, '%Y'), '</s>'), '')
+        IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), ' im Rat', ''), '</s>'), '')
         )
         ORDER BY parlamentarier.anzeige_name
         SEPARATOR ' '
@@ -1124,6 +1135,33 @@ function lobbywatch_kommission_list() {
     return $build;
 }
 
+function lobbywatch_kommission_id_SQL($active) {
+  return "SELECT kommission.*,
+      GROUP_CONCAT(DISTINCT
+        CONCAT('<li><a href=\"/daten/parlamentarier/', parlamentarier.parlamentarier_id, '\">', parlamentarier.parlamentarier_name, '</a>',
+        ', ', parlamentarier.ratstyp,
+        IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei)),
+        ', ', parlamentarier.kanton " .
+//       ,  IF((parlamentarier.bis IS NOT NULL AND parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(parlamentarier.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, parlamentarier.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), ' im Rat', '')), '')
+"        )
+        ORDER BY parlamentarier.parlamentarier_name
+        SEPARATOR ' '
+      ) parlamentarier,
+      GROUP_CONCAT(DISTINCT
+        CONCAT('<li><a href=\"/daten/branche/', branche.id, '\">', branche.anzeige_name, '</a>'
+        )
+        ORDER BY branche.anzeige_name
+        SEPARATOR ' '
+      ) branchen
+  FROM `v_kommission` kommission
+  LEFT JOIN `v_in_kommission_parlamentarier` parlamentarier
+  ON kommission.id = parlamentarier.kommission_id " . ($active ? " AND (parlamentarier.bis IS NULL OR parlamentarier.bis > NOW()) AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())" : " AND (parlamentarier.bis IS NOT NULL AND parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()) ") . "
+  LEFT JOIN `v_branche` branche
+  ON kommission.id = branche.kommission_id
+  WHERE kommission.id=:id
+  GROUP BY kommission.id";
+}
+
 function lobbywatch_kommission_id($id, $name = '') {
 
   //   dpm($id, 'id');
@@ -1143,35 +1181,26 @@ function lobbywatch_kommission_id($id, $name = '') {
     $sql = "SET SESSION group_concat_max_len=5000;";
     db_query($sql);
 
-    $sql = "SELECT kommission.*,
-      GROUP_CONCAT(DISTINCT
-        CONCAT('<li><a href=\"/daten/parlamentarier/', parlamentarier.parlamentarier_id, '\">', parlamentarier.parlamentarier_name, '</a>',
-        ', ', parlamentarier.ratstyp,
-        IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei)),
-        ', ', parlamentarier.kanton
-        )
-        ORDER BY parlamentarier.parlamentarier_name
-        SEPARATOR ' '
-      ) parlamentarier,
-      GROUP_CONCAT(DISTINCT
-        CONCAT('<li><a href=\"/daten/branche/', branche.id, '\">', branche.anzeige_name, '</a>'
-        )
-        ORDER BY branche.anzeige_name
-        SEPARATOR ' '
-      ) branchen
-  FROM `v_kommission` kommission
-  LEFT JOIN `v_in_kommission_parlamentarier` parlamentarier
-  ON kommission.id = parlamentarier.kommission_id
-  LEFT JOIN `v_branche` branche
-  ON kommission.id = branche.kommission_id
-  WHERE kommission.id=:id
-  GROUP BY kommission.id";
+    $sql = lobbywatch_kommission_id_SQL(true);
+
+  // IF(organisation_auftraggeber_fuer.bis IS NOT NULL AND organisation_auftraggeber_fuer.bis < NOW(), '<s>', ''),
 
   $result = db_query($sql, array(':id' => $id));
 
   //     dpm($result, 'result');
 
-  $record = $result->fetchAssoc();
+  $record_active = $result->fetchAssoc();
+
+  $sql = lobbywatch_kommission_id_SQL(false);
+
+  // IF(organisation_auftraggeber_fuer.bis IS NOT NULL AND organisation_auftraggeber_fuer.bis < NOW(), '<s>', ''),
+
+  $result = db_query($sql, array(':id' => $id));
+
+  //     dpm($result, 'result');
+
+  $record_inactive = $result->fetchAssoc();
+
   $interessengruppen = lobbywatch_brancheMitInteressengruppen($id);
 //   dpm($record, '$record');
   } finally {
@@ -1179,30 +1208,34 @@ function lobbywatch_kommission_id($id, $name = '') {
     // otherwise Drupal will not be able to access it's own data later on.
     db_set_active();
   }
-  if ($record) {
-    $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+  if ($record_active) {
+    $markup .= '<h2>' . check_plain($record_active["anzeige_name"]) . '</h2>'
     . '<table border="0">'
-    . '<tr><td>Abkürzung</td><td>' . check_plain($record['abkuerzung']) . '</td></tr>'
-    . '<tr><td>Parlament.ch Link</td><td>' . (isset($record['parlament_url']) ? l($record['anzeige_name'], $record['parlament_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
-    . '<tr><td>Beschreibung</td><td>' . check_plain($record['beschreibung']) . '</td></tr>'
-    . '<tr><td>Typ</td><td>' . check_plain($record['typ']) . '</td></tr>'
-    . '<tr><td>Art</td><td>' . check_plain($record['art']) . '</td></tr>'
+    . '<tr><td>Abkürzung</td><td>' . check_plain($record_active['abkuerzung']) . '</td></tr>'
+    . '<tr><td>Parlament.ch Link</td><td>' . (isset($record_active['parlament_url']) ? l($record_active['anzeige_name'], $record_active['parlament_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
+    . '<tr><td>Beschreibung</td><td>' . check_plain($record_active['beschreibung']) . '</td></tr>'
+    . '<tr><td>Typ</td><td>' . check_plain($record_active['typ']) . '</td></tr>'
+    . '<tr><td>Art</td><td>' . check_plain($record_active['art']) . '</td></tr>'
     . '</table>'
     . '<h3>Sachbereiche</h3>'
     . '<ul>'
-    . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($record['sachbereiche']))))
+    . implode(array_map(function($value) {return '<li>' . $value;}, explode(';', check_plain($record_active['sachbereiche']))))
     . '</ul>'
     // TODO präsidium
     . '<h3>Mitglieder</h3>'
     . '<ul>'
-    . $record['parlamentarier']
+    . $record_active['parlamentarier']
     . '</ul>'
     . '<h3>Branchen</h3>'
     . '<ul>'
-    . $record['branchen']
+    . $record_active['branchen']
     . '</ul>'
     . '<h3>Lobbygruppen</h3>'
     . $interessengruppen
+    . '<h3>Ehemalige Mitglieder</h3>'
+    . '<ul>'
+    . $record_inactive['parlamentarier']
+    . '</ul>'
     ;
 
     $build = array();
