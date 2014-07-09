@@ -479,7 +479,7 @@ SELECT zutrittsberechtigung_anhang.zutrittsberechtigung_id as zutrittsberechtigu
 FROM `zutrittsberechtigung_anhang`;
 
 CREATE OR REPLACE VIEW `v_user` AS
-SELECT CONCAT_WS(' ', u.vorname, u.nachname ) as anzeige_name, u.*
+SELECT IFNULL(CONCAT_WS(' ', u.vorname, u.nachname ), u.name) as anzeige_name, u.name as username, u.*
 FROM `user` u;
 
 CREATE OR REPLACE VIEW `v_user_permission` AS
