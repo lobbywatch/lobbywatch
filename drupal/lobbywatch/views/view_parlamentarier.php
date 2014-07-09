@@ -58,7 +58,7 @@ $handler->display->display_options['fields']['kleinbild']['label'] = '';
 $handler->display->display_options['fields']['kleinbild']['alter']['alter_text'] = TRUE;
 $handler->display->display_options['fields']['kleinbild']['alter']['text'] = '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/[kleinbild]" alt="[name]" />';
 $handler->display->display_options['fields']['kleinbild']['alter']['make_link'] = TRUE;
-$handler->display->display_options['fields']['kleinbild']['alter']['path'] = 'parlamentarier/[id]';
+$handler->display->display_options['fields']['kleinbild']['alter']['path'] = 'daten/parlamentarier/[id]';
 $handler->display->display_options['fields']['kleinbild']['alter']['alt'] = '[name]';
 $handler->display->display_options['fields']['kleinbild']['element_label_colon'] = FALSE;
 /* Feld: Parlamentarier: Anzeigename */
@@ -67,7 +67,7 @@ $handler->display->display_options['fields']['anzeige_name']['table'] = 'v_parla
 $handler->display->display_options['fields']['anzeige_name']['field'] = 'anzeige_name';
 $handler->display->display_options['fields']['anzeige_name']['label'] = '';
 $handler->display->display_options['fields']['anzeige_name']['alter']['make_link'] = TRUE;
-$handler->display->display_options['fields']['anzeige_name']['alter']['path'] = 'parlamentarier/[id]';
+$handler->display->display_options['fields']['anzeige_name']['alter']['path'] = 'daten/parlamentarier/[id]';
 $handler->display->display_options['fields']['anzeige_name']['element_label_colon'] = FALSE;
 /* Feld: Parlamentarier: Rat */
 $handler->display->display_options['fields']['ratstyp']['id'] = 'ratstyp';
@@ -152,18 +152,22 @@ $handler->display->display_options['filters']['kommissionen']['id'] = 'kommissio
 $handler->display->display_options['filters']['kommissionen']['table'] = 'v_parlamentarier';
 $handler->display->display_options['filters']['kommissionen']['field'] = 'kommissionen';
 $handler->display->display_options['filters']['kommissionen']['operator'] = 'contains';
+$handler->display->display_options['filters']['kommissionen']['value'] = array(
+  'SGK' => 'SGK',
+);
 $handler->display->display_options['filters']['kommissionen']['group'] = 1;
 $handler->display->display_options['filters']['kommissionen']['exposed'] = TRUE;
 $handler->display->display_options['filters']['kommissionen']['expose']['operator_id'] = 'kommissionen_op';
 $handler->display->display_options['filters']['kommissionen']['expose']['label'] = 'Kommissionen';
 $handler->display->display_options['filters']['kommissionen']['expose']['operator'] = 'kommissionen_op';
 $handler->display->display_options['filters']['kommissionen']['expose']['identifier'] = 'kommissionen';
+$handler->display->display_options['filters']['kommissionen']['expose']['remember'] = TRUE;
 $handler->display->display_options['filters']['kommissionen']['expose']['remember_roles'] = array(
   2 => '2',
-  1 => 0,
-  4 => 0,
-  5 => 0,
-  3 => 0,
+  1 => '1',
+  4 => '4',
+  5 => '5',
+  3 => '3',
 );
 /* Filter criterion: Parlamentarier: Im Rat bis */
 $handler->display->display_options['filters']['im_rat_bis_1']['id'] = 'im_rat_bis_1';
@@ -183,4 +187,4 @@ $handler->display->display_options['filters']['im_rat_bis']['group'] = 2;
 /* Display: Page */
 $handler = $view->new_display('page', 'Page', 'page');
 $handler->display->display_options['exposed_block'] = TRUE;
-$handler->display->display_options['path'] = 'parlamentarier';
+$handler->display->display_options['path'] = 'daten/parlamentarier';
