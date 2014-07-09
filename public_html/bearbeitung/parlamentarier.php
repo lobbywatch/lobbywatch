@@ -35481,7 +35481,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens  zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -40861,7 +40861,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens  zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -41781,7 +41781,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens  zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -42701,7 +42701,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens  zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -43621,7 +43621,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens  zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -44541,7 +44541,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens  zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -45461,7 +45461,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens  zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -46381,7 +46381,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens  zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -47301,7 +47301,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%id%' , '_self');
-            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens  zeigt auf eine Vorschau des Parlamenteriers.'));
+            $column->SetDescription($this->RenderText('Vornahme des Parlamentariers. Der Link des Vornamens zeigt auf eine Vorschau des Parlamenteriers.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             

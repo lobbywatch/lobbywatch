@@ -11405,7 +11405,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%parlamentarier_id%' , '_self');
-            $column->SetDescription($this->RenderText('Vorname der zutrittsberechtigten Person. Der Link des Vornamens  zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.'));
+            $column->SetDescription($this->RenderText('Vorname der zutrittsberechtigten Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -14644,7 +14644,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%parlamentarier_id%' , '_self');
-            $column->SetDescription($this->RenderText('Vorname der zutrittsberechtigten Person. Der Link des Vornamens  zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.'));
+            $column->SetDescription($this->RenderText('Vorname der zutrittsberechtigten Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -15253,7 +15253,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%parlamentarier_id%' , '_self');
-            $column->SetDescription($this->RenderText('Vorname der zutrittsberechtigten Person. Der Link des Vornamens  zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.'));
+            $column->SetDescription($this->RenderText('Vorname der zutrittsberechtigten Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -15862,7 +15862,7 @@
             $column = new TextViewColumn('vorname', 'Vorname', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier_preview.php?pk0=%parlamentarier_id%' , '_self');
-            $column->SetDescription($this->RenderText('Vorname der zutrittsberechtigten Person. Der Link des Vornamens  zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.'));
+            $column->SetDescription($this->RenderText('Vorname der zutrittsberechtigten Person. Der Link des Vornamens zeigt auf eine Vorschau des zugehörigen Parlamenteriers, welche ebenfalls eine Vorschau der Zutrittsberechtigten enthält.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
