@@ -1355,7 +1355,7 @@ function globalOnBeforeUpdate($page, &$rowData, &$cancel, &$message, $tableName)
 
   //$rowData['created_visa'] = $userName;
   //$rowData['created_date'] = $datetime;
-  $rowData['updated_visa'] = $userName;
+  $rowData['updated_visa'] = strtolower($userName);
   $rowData['updated_date'] = $datetime;
 
   clean_fields(/*$page,*/ $rowData/*, $cancel, $message, $tableName*/);
@@ -1384,10 +1384,10 @@ function globalOnBeforeInsert($page, &$rowData, &$cancel, &$message, $tableName)
 
   //if ($userName != 'admin')
 
-  $rowData['created_visa'] = $userName;
+  $rowData['created_visa'] = strtolower($userName);
   $rowData['created_date'] = $datetime;
 
-  $rowData['updated_visa'] = $userName;
+  $rowData['updated_visa'] = strtolower($userName);
   $rowData['updated_date'] = $datetime;
 
   clean_fields(/*$page,*/ $rowData/*, $cancel, $message, $tableName*/);
