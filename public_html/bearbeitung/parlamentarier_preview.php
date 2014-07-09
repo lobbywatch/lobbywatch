@@ -226,7 +226,17 @@ CASE parlamentarier.geschlecht
   WHEN 'M' THEN CONCAT('Sehr geehrter Herr ', parlamentarier.nachname)
   WHEN 'F' THEN CONCAT('<p>Sehr geehrte Frau ', parlamentarier.nachname)
   ELSE CONCAT('Sehr geehrte(r) Herr/Frau ', parlamentarier.nachname)
-END anrede
+END anrede,
+GROUP_CONCAT(DISTINCT
+    CONCAT('<li>',
+    IF(in_kommission.bis IS NOT NULL AND in_kommission.bis < NOW(), '<s>', ''),
+    in_kommission.name, ' (', in_kommission.abkuerzung, ') ',
+    ', ', CONCAT(UCASE(LEFT(in_kommission.funktion, 1)), SUBSTRING(in_kommission.funktion, 2)),
+    IF(in_kommission.bis IS NOT NULL AND in_kommission.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(in_kommission.bis, '%Y'), '</s>'), '')
+    )
+    ORDER BY in_kommission.abkuerzung
+    SEPARATOR ' '
+) kommissionen
 FROM v_parlamentarier parlamentarier
 LEFT JOIN v_interessenbindung interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
@@ -234,6 +244,8 @@ LEFT JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
 LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id -- AND zutrittsberechtigung.bis IS NULL
+LEFT JOIN v_in_kommission_liste in_kommission
+  ON in_kommission.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
 WHERE
   parlamentarier.id=:id
 GROUP BY parlamentarier.id;";
@@ -318,7 +330,9 @@ GROUP BY parlamentarier.id;";
           'Title' => 'Vorschau: ' . $rowData["parlamentarier_name"],
           'Preview' => '<table style="margin-top: 1em; margin-bottom: 1em;">
               <tr><td style="padding: 16px; '. $rowCellStylesParlam['id'] . '" title="Status des Arbeitsablaufes dieses Parlamenteriers">Arbeitsablauf</td><td style="padding: 16px; '. $rowCellStylesParlam['nachname'] . '" title="Status der Vollständigkeit der Felder dieses Parlamenteriers">Vollständigkeit</td></tr></table>' .
-              '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' . '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .
+              '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' .
+            '<h4>Kommissionen</h4><ul>' . $rowData['kommissionen'] . '</ul>' .
+            '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .
             '<h4>Gäste' . (substr_count($rowData['zutrittsberechtigungen'], '[VALID_Zutrittsberechtigung]') > 2 ? ' <img src="img/icons/warning.gif" alt="Warnung">': '') . '</h4>' . ($rowData['zutrittsberechtigungen'] ? '<ul>' . $rowData['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
             '<h4>Mandate der Gäste</h4>' . $zbRet['gaesteMitMandaten'],
           'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoParlam. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
