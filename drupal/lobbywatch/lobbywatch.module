@@ -648,7 +648,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
     $sql = "SET SESSION group_concat_max_len=5000;";
     db_query($sql);
 
-    $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.kleinbild, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei, parlamentarier.partei_id,
+    $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.im_rat_bis, DATE_FORMAT(parlamentarier.im_rat_bis, '%d.%m.%Y') as im_rat_bis_formatted, parlamentarier.kleinbild, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei, parlamentarier.partei_id,
     parlamentarier.name, parlamentarier.anzahl_kinder, rat.name_de as rat_name_de, kanton.einwohner, kanton.auslaenderanteil, kanton.anzahl_staenderaete, kanton.anzahl_nationalraete,
     GROUP_CONCAT(DISTINCT
       CONCAT('<li>', IF(interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW(), '<s>', ''), '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
@@ -739,6 +739,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       $markup .=
 //       '<h2>' . $parlamentarier_name . '</h2>' .
       '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '">' .
+      ($record['im_rat_bis'] != null ? '<p><strong><em>Nicht mehr im Parlament. War im Parlament bis ' . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
       '<p>Lobbyfaktor: <b>XY</b></p>' .
       '<table border="0">' .
       '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
@@ -1565,7 +1566,7 @@ function lobbywatch_zutrittsberechtigung_id($id, $name = '') {
   db_set_active('lobbywatch');
 
   try {
-  $sql = "SELECT zutrittsberechtigung.*,
+  $sql = "SELECT zutrittsberechtigung.*, DATE_FORMAT(zutrittsberechtigung.bis, '%d.%m.%Y') as bis_formatted,
   GROUP_CONCAT(DISTINCT
     CONCAT('<li>', IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
@@ -1597,9 +1598,10 @@ GROUP BY zutrittsberechtigung.id;";
   }
   if ($record) {
     $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
-   . '<table border="0">'
+    . ($record['bis'] != null ? '<p><strong><em>Nicht mehr zutrittsberechtigt ins Parlament. War zutrittsberechtigt bis ' . check_plain($record['bis_formatted']) . '.</em></strong></p>' : '')
+    . '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
-    . '<tr><td>Parlamentarier</td><td>' . l($record['parlamentarier_name'], 'daten/parlamentarier/' . $record['parlamentarier_id']) . '</td></tr>'
+    . '<tr><td>Eingeladen von:</td><td>' . l($record['parlamentarier_name'], 'daten/parlamentarier/' . $record['parlamentarier_id']) . '</td></tr>'
     .  '<tr><td>Funktion:</td><td>' . check_plain($record['funktion']) . '</td></tr>'
     .  '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>'
     .  '<tr><td>Partei:</td><td>' . l($record['partei'], 'daten/partei/' . $record['partei_id']) . '</td></tr>'
