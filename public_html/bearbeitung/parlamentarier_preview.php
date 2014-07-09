@@ -118,9 +118,9 @@ function fillZutrittsberechtigterEmail($i) {
         'Title' => 'Vorschau: ' . $zbList[$i]["zutrittsberechtigung_name"],
         'Preview' => '<table style="margin-top: 1em; margin-bottom: 1em;">
                     <tr><td style="padding: 16px; '. $rowCellStylesZb[$i]['id'] . '" title="Status des Arbeitsablaufes dieses Zutrittsberechtigten">Arbeitsablauf</td><td style="padding: 16px; '. $rowCellStylesZb[$i]['nachname'] . '" title="Status der Vollständigkeit der Felder dieses Zutrittsberechtigten">Vollständigkeit</td></tr></table>' .
-        '<p>Zutrittsberechtigung von '. $rowData["parlamentarier_name2"] . '<br><b>Funktion</b>: ' . $zbList[0]['funktion'] . '<br><b>Beruf</b>: ' . $zbList[0]['beruf'] . '</p>' . '<h4>Mandate</h4><ul>' . $zbList[$i]['mandate'] . '</ul>',
+        '<p>Zutrittsberechtigung von '. $rowData["parlamentarier_name2"] . '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '</p>' . '<h4>Mandate</h4><ul>' . $zbList[$i]['mandate'] . '</ul>',
         'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoZb[$i]. '" target="_blank">' . $zbList[$i]["zutrittsberechtigung_name"] . '</a>',
-        'EmailText' => '<p>' . $zbList[$i]['anrede'] . '</p>' .  $emailIntroZb[$i] . '<p>' . (isset($rowCellStylesZb[$i]['funktion']) ? '<br><b>Funktion</b>: ' . $rowCellStylesZb[$i]['funktion'] . '' : '') . (isset($rowCellStylesZb[$i]['beruf']) ? '<br><b>Beruf</b>: ' . $rowCellStylesZb[$i]['beruf'] . '' : ''). '</p><p>Ihre <b>Mandate</b>:</p><ul>' . $zbList[$i]['mandate'] . '</ul>' .
+        'EmailText' => '<p>' . $zbList[$i]['anrede'] . '</p>' .  $emailIntroZb[$i] . '<p>' . (isset($zbList[$i]['funktion']) ? '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '' : ''). '</p><p>Ihre <b>Mandate</b>:</p><ul>' . $zbList[$i]['mandate'] . '</ul>' .
         $emailEndZb[$i],
         // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
         'MailTo' => $mailtoZb[$i],
@@ -205,9 +205,9 @@ GROUP_CONCAT(DISTINCT
 ) interessenbindungen_for_email,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li>', IF(zutrittsberechtigung.bis IS NOT NULL AND zutrittsberechtigung.bis < NOW(), '<s>', '<!-- [VALID_Zutrittsberechtigung] -->'),
-    zutrittsberechtigung.name, ', ',
-    zutrittsberechtigung.funktion,
-    IF(zutrittsberechtigung.beruf IS NULL OR TRIM(zutrittsberechtigung.beruf) = '', '', CONCAT(', ', zutrittsberechtigung.beruf)),
+    zutrittsberechtigung.name,
+    IF(zutrittsberechtigung.funktion IS NULL OR TRIM(zutrittsberechtigung.funktion) = '', ', <small><em>Funktion fehlt</em></small>', CONCAT(', ', zutrittsberechtigung.funktion)),
+    IF(zutrittsberechtigung.beruf IS NULL OR TRIM(zutrittsberechtigung.beruf) = '', ', <small><em>Beruf fehlt</em></small>', CONCAT(', ', zutrittsberechtigung.beruf)),
     IF(zutrittsberechtigung.bis IS NOT NULL AND zutrittsberechtigung.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(zutrittsberechtigung.bis, '%Y'), '</s>'), '')
     )
   ORDER BY zutrittsberechtigung.name
