@@ -7611,7 +7611,8 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel der Kommission'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.ch/de/daten/kommission/%id%' , '_blank');
+            $column->SetDescription($this->RenderText('Technischer Schlüssel der Kommission.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -8307,6 +8308,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.ch/de/daten/kommission/%id%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -8923,6 +8925,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.ch/de/daten/kommission/%id%' , '_blank');
             $grid->AddPrintColumn($column);
             
             //
@@ -9074,6 +9077,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.ch/de/daten/kommission/%id%' , '_blank');
             $grid->AddExportColumn($column);
             
             //
@@ -9245,7 +9249,8 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel der Kommission'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.ch/de/daten/kommission/%id%' , '_blank');
+            $column->SetDescription($this->RenderText('Technischer Schlüssel der Kommission.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -9447,6 +9452,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.ch/de/daten/kommission/%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
@@ -9613,7 +9619,8 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Technischer Schlüssel der Kommission'));
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.ch/de/daten/kommission/%id%' , '_blank');
+            $column->SetDescription($this->RenderText('Technischer Schlüssel der Kommission.  Der Link zeigt auf den Eintrag in der Lobbywatch.ch Webseite.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -9815,6 +9822,7 @@
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'http://lobbywatch.ch/de/daten/kommission/%id%' , '_blank');
             $result->AddPrintColumn($column);
             
             //
