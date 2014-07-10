@@ -1,6 +1,6 @@
 <?php
 
-// Run: php -f sql_generator.php
+// Run: /opt/lampp/bin/php -f sql_generator.php
 
 
 // Query form database with
@@ -53,6 +53,7 @@ $table_queries = array();
 $table_views = array();
 $view_queries = array();
 $snapshots = array();
+$worker = array();
 foreach ($tables as $table => $name) {
   //$table_queries2[] = preg_replace('\$table', $table, $table_query);
 //   $table_queries[] = "(SELECT
@@ -95,6 +96,8 @@ foreach ($tables as $table => $name) {
   $snapshots[] = "   INSERT INTO `${table}_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `$table`;";
 
+  $worker[] = "SELECT '$table' as table_name, id, lower(created_visa) as created_visa FROM $table";
+
   // Ref: http://stackoverflow.com/questions/1895110/row-number-in-mysql
   //  @rownum := @rownum + 1 AS rank
 //   (SELECT @rownum := 0) r
@@ -124,6 +127,13 @@ $master_view = "CREATE OR REPLACE VIEW `v_last_updated_tables` AS
 SELECT * FROM `v_last_updated_tables_unordered`
 ORDER BY last_updated DESC;\n";
 
+$worker_query = "SELECT created_visa as label, COUNT(created_visa) as value, NULL as color  FROM (
+SELECT created_visa
+FROM (\n" . implode("\nUNION ALL\n", $worker) . "\n) union_query
+) total_created
+GROUP BY label
+ORDER BY value DESC;\n";
+
 // --UNION
 // --SELECT 'all' table_name, visa, last_updated
 // --FROM ($union_query) union_query
@@ -132,9 +142,14 @@ ORDER BY last_updated DESC;\n";
 // --LIMIT 1
 
 echo $master_query;
+echo "\n---------------------------------------------------------------------\n";
 echo "\n-- Last updated views\n\n";
 echo implode("\n", $table_views) . "\n";
 echo $unordered_views . "\n";
 echo $master_view . "\n";
 
+echo "\n---------------------------------------------------------------------\n";
 echo "\n" . implode("\n\n", $snapshots) . "\n";
+echo "\n---------------------------------------------------------------------\n";
+echo "\n" . $worker_query . "\n";
+
