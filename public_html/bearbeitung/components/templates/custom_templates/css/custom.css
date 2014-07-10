@@ -332,6 +332,14 @@ h3.box-title,
   margin-left: -20px;
 }
 
+.pg-page-list > li > a .state {
+  background-image: url("../../../../img/icons/fugue/chart-pie.png");
+  background-position: left;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  margin-left: -20px;
+}
+
 /* Header */
 #site-name {
   display: inline;
