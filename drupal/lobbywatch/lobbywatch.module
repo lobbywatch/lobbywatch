@@ -747,17 +747,18 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       }
       // TODO security, check content
       $parlamentarier_name = check_plain($record["parlamentarier_name"]);
+      $active = $record['im_rat_bis'] == null;
       $markup .=
 //       '<h2>' . $parlamentarier_name . '</h2>' .
       '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '">' .
-      ($record['im_rat_bis'] != null ? '<p><strong><em>Nicht mehr im Parlament. War im Parlament bis ' . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
+      (!$active ? '<p><strong><em>Nicht mehr im Parlament. War im Parlament bis ' . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
       '<p>Lobbyfaktor: <b>XY</b></p>' .
       '<table border="0">' .
       '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
       '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
       '<tr><td>Partei:</td><td>' . l($record['partei'], 'daten/partei/' . $record['partei_id']) . '</td></tr>' .
       '<tr><td>Vertretene Bevölkerung:</td><td>' . number_format($vertretung , 0 , '.' , '\'') . '</td></tr>' .
-      '<tr><td>Im Parlament seit:</td><td>' . years_months(check_plain($record['im_rat_seit']), $record['im_rat_bis']) . ' (' . check_plain($record['im_rat_seit_formatted']) . ')' . '</td></tr>' .
+      '<tr><td>' . ($active ? 'Im Parlament seit:' : 'Dauer:') . '</td><td>' . years_months(check_plain($record['im_rat_seit']), $record['im_rat_bis']) . ' (' . check_plain($record['im_rat_seit_formatted']) . ($active ? '' : ' – ' . check_plain($record['im_rat_bis_formatted']) ) . ')' . '</td></tr>' .
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>' .
       '<tr><td>Kinder:</td><td>' . check_plain($record['anzahl_kinder']) . '</td></tr>' .
