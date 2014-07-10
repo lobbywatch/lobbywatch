@@ -445,6 +445,6 @@ small.desc {
 }
 
 /* Hide user id text field since user.id value is set by autoincrement. */
-#newuser-id {
+#pg-admin-create-user-dialog #newuser-id {
   visibility: hidden;
 }
