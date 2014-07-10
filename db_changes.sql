@@ -1289,3 +1289,8 @@ ALTER TABLE `branche_log`
   ADD `symbol_dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Dateierweiterung des Symbolbildes' AFTER symbol_dateiname_wo_ext,
   ADD `symbol_dateiname` varchar(255) DEFAULT NULL COMMENT 'Symbolbilddateiname mit Erweiterung' AFTER symbol_dateierweiterung,
   ADD `symbol_mime_type` varchar(100) DEFAULT NULL COMMENT 'MIME Type des Symbolbildes' AFTER symbol_dateiname;
+
+-- 10.07.2014
+
+ALTER TABLE `user`
+  ADD `last_access` TIMESTAMP NULL DEFAULT NULL COMMENT 'Datum des letzten Zugriffs' AFTER `last_login` ;

@@ -152,6 +152,7 @@ function fillHintParams(Page $page, &$params) {
 function before_render(Page $page) {
   // Add custom headers
   $page->OnCustomHTMLHeader->AddListener('add_custom_header');
+  write_user_last_access($page);
 
 //   // Fill info hints
 //   $hints = array();
@@ -163,6 +164,17 @@ function before_render(Page $page) {
 // //      df("Names: $raw_name -> $name");
 //   }
 //   $GLOBALS['customParams'] = array( 'Hints' => $hints);
+}
+
+function write_user_last_access($page) {
+  $connection = getDBConnection();
+
+  // Do not update access time more than once per 180 seconds.
+  // Inspired by Drupal 7 session.inc _drupal_session_write()
+  if (($id = GetApplication()->GetCurrentUserId()) && ($request_time = $_SERVER['REQUEST_TIME']) - $connection->ExecScalarSQL("SELECT UNIX_TIMESTAMP(last_access) FROM user WHERE id= $id;") > 180) {
+    $connection->ExecSQL("UPDATE `user` SET `last_access`= CURRENT_TIMESTAMP WHERE `id` = $id;");
+  }
+
 }
 
 function add_custom_header(&$page, &$result) {

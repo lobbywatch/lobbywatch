@@ -453,14 +453,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -588,6 +580,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -1036,14 +1036,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1171,6 +1163,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -2388,6 +2388,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -2492,6 +2494,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2627,14 +2631,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2762,6 +2758,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -2801,14 +2805,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2936,6 +2932,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -3438,6 +3442,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
+            $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von')));
@@ -3451,14 +3457,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -3587,6 +3585,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -4344,6 +4350,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -4448,6 +4456,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -4583,14 +4593,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4718,6 +4720,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -4757,14 +4767,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -4892,6 +4894,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -5377,6 +5387,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -5428,14 +5440,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -5564,6 +5568,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -5972,6 +5984,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -6023,14 +6037,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
@@ -6159,6 +6165,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -6481,6 +6495,8 @@
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('fraktion_id');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('kanton');
             $this->dataset->AddField($field, true);
@@ -7412,6 +7428,8 @@
             $field = new IntegerField('partei_id');
             $this->dataset->AddField($field, true);
             $field = new IntegerField('fraktion_id');
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('kanton');
             $this->dataset->AddField($field, true);
@@ -9527,14 +9545,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -9662,6 +9672,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -9701,14 +9719,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -9836,6 +9846,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -11497,14 +11515,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -11632,6 +11642,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -11909,14 +11927,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -12044,6 +12054,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -12083,14 +12101,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -12218,6 +12228,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -13744,14 +13762,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -13879,6 +13889,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -14411,14 +14429,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -14546,6 +14556,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -17335,14 +17353,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -17470,6 +17480,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -19123,14 +19141,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -19258,6 +19268,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -19684,14 +19702,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -19819,6 +19829,14 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -20863,6 +20881,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -20967,6 +20987,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -22187,14 +22209,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -22323,6 +22337,14 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommissionen2');
@@ -22426,6 +22448,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -22819,6 +22843,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -22923,6 +22949,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24072,14 +24100,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -24208,6 +24228,14 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommissionen2');
@@ -24332,6 +24360,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -24710,14 +24740,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -24846,6 +24868,14 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommissionen2');
@@ -24971,6 +25001,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -30447,6 +30479,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -30551,6 +30585,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -31531,14 +31567,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -31667,6 +31695,14 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommissionen2');
@@ -31770,6 +31806,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('organisation_id', $this->RenderText('Organisation Id')));
@@ -32006,6 +32044,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
             $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zutrittsberechtigung', 
@@ -32110,6 +32150,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -33012,14 +33054,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -33148,6 +33182,14 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommissionen2');
@@ -33272,6 +33314,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -33522,14 +33566,6 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -33658,6 +33694,14 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('rat');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('ratstyp');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('kommissionen2');
@@ -33783,6 +33827,8 @@
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlamentarier_name');
+            $lookupDataset->AddField($field, false);
+            $field = new DateTimeField('parlamentarier_freigabe_datum');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(

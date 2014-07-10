@@ -61,6 +61,8 @@
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('last_login');
             $this->dataset->AddField($field, false);
+            $field = new DateTimeField('last_access');
+            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
@@ -144,8 +146,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('userssearch', $this->dataset,
-                array('id', 'name', 'nachname', 'vorname', 'email', 'last_login', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Email'), $this->RenderText('Last Login'), $this->RenderText('Notizen')),
+                array('id', 'name', 'nachname', 'vorname', 'email', 'last_login', 'last_access', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Email'), $this->RenderText('Last Login'), $this->RenderText('Last Access'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -171,6 +173,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vorname', $this->RenderText('Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('last_login', $this->RenderText('Last Login')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('last_access', $this->RenderText('Last Access')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
@@ -337,7 +340,41 @@
             $column = new DateTimeViewColumn('last_login', 'Last Login', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for last_login field
+            //
+            $editor = new DateTimeEdit('last_login_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Last Login', 'last_login', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
             $column->SetDescription($this->RenderText('Datum des letzten Login'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for last_access field
+            //
+            $column = new DateTimeViewColumn('last_access', 'Last Access', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for last_access field
+            //
+            $editor = new DateTimeEdit('last_access_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Last Access', 'last_access', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            $column->SetDescription($this->RenderText('Datum des letzten Zugriffs'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -571,6 +608,14 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for last_access field
+            //
+            $column = new DateTimeViewColumn('last_access', 'Last Access', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -669,6 +714,26 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for last_login field
+            //
+            $editor = new DateTimeEdit('last_login_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Last Login', 'last_login', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for last_access field
+            //
+            $editor = new DateTimeEdit('last_access_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
+            $editColumn = new CustomEditColumn('Last Access', 'last_access', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -875,6 +940,14 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for last_access field
+            //
+            $column = new DateTimeViewColumn('last_access', 'Last Access', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -953,6 +1026,14 @@
             // View column for last_login field
             //
             $column = new DateTimeViewColumn('last_login', 'Last Login', $this->dataset);
+            $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for last_access field
+            //
+            $column = new DateTimeViewColumn('last_access', 'Last Access', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
