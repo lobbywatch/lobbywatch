@@ -122,7 +122,7 @@
 
       d3.select("#pagetitle").text(pageTitle);
 
-      var urlData = "GetData.php?option=" + option + (!isNaN(id) && is != null ? "&id=" + id : '');
+      var urlData = "GetData.php?option=" + option + (!isNaN(id) && id != null ? "&id=" + id : '');
 
       //alert (urlData);
       
