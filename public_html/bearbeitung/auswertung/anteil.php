@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="utf-8" />
     <title>Bearbeitungsanteil</title>
    <script src="scripts/d3.js"></script>
 
@@ -121,8 +122,10 @@
 
       d3.select("#pagetitle").text(pageTitle);
 
-      var urlData = "GetData.php?option=" + option + (!isNaN(id) ? "&id=" + id : '');
+      var urlData = "GetData.php?option=" + option + (!isNaN(id) && is != null ? "&id=" + id : '');
 
+      //alert (urlData);
+      
       d3.json(urlData, function (error, pieData) {
          if (error) {
             console.warn(error);

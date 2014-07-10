@@ -31,7 +31,7 @@
    if ($option == "kommission") {
       $kommission_id = (int) @urldecode($_GET["id"]);
 //       df($kommission_id, '$kommission_id init');
-      $kommission_id = !isset($kommission_id) || !is_int($kommission_id) ? 1 : $kommission_id;
+      $kommission_id = !isset($kommission_id) || !is_int($kommission_id) || $kommission_id == 0 ? 1 : $kommission_id;
 //       df($kommission_id, '$kommission_id');
       $cmd = "select count(*) as value, 'nicht bearbeitet' as label, null as color
       from v_parlamentarier p
