@@ -457,7 +457,7 @@ FROM `organisation_anhang`;
 CREATE OR REPLACE VIEW `v_mandat` AS SELECT mandat.* FROM `mandat`;
 
 CREATE OR REPLACE VIEW `v_in_kommission` AS
-SELECT in_kommission.*, rat.abkuerzung as rat, rat.abkuerzung as ratstyp, parlamentarier.partei_id, parlamentarier.fraktion_id, kanton.abkuerzung as kanton
+SELECT in_kommission.*, rat.abkuerzung as rat, rat.abkuerzung as ratstyp, parlamentarier.partei_id, parlamentarier.fraktion_id, parlamentarier.freigabe_datum as parlamentarier_freigabe_datum, kanton.abkuerzung as kanton
 FROM `in_kommission`
 INNER JOIN `parlamentarier`
 ON in_kommission.parlamentarier_id = parlamentarier.id
@@ -491,9 +491,14 @@ SELECT t.*
 FROM `mil_grad` t
 ORDER BY `ranghoehe` ASC;
 
-CREATE OR REPLACE VIEW `v_parlamentarier` AS
+CREATE OR REPLACE VIEW `v_parlamentarier_simple` AS
 SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name,
 CONCAT_WS(' ', p.vorname, p.zweiter_vorname, p.nachname) AS name,
+p.*
+FROM `parlamentarier` p;
+
+CREATE OR REPLACE VIEW `v_parlamentarier` AS
+SELECT p.*,
 rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kanton.abkuerzung as kanton,
 CAST(
 (CASE rat.abkuerzung
@@ -502,11 +507,10 @@ CAST(
   ELSE NULL
 END)
 AS UNSIGNED INTEGER) AS vertretene_bevoelkerung,
-p.*,
 GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_namen,
 --GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen2,
 GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung, partei.abkuerzung AS partei, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad
-FROM `parlamentarier` p
+FROM `v_parlamentarier_simple` p
 LEFT JOIN `v_in_kommission` ik ON p.id = ik.parlamentarier_id AND ik.bis IS NULL
 LEFT JOIN `v_kommission` k ON ik.kommission_id=k.id
 LEFT JOIN `v_partei` partei ON p.partei_id=partei.id
@@ -520,7 +524,7 @@ CREATE OR REPLACE VIEW `v_zutrittsberechtigung` AS
 SELECT CONCAT(zutrittsberechtigung.nachname, ', ', zutrittsberechtigung.vorname) AS anzeige_name, CONCAT(zutrittsberechtigung.vorname, ' ', zutrittsberechtigung.nachname) AS name,
 zutrittsberechtigung.*,
 partei.abkuerzung AS partei,
-parlamentarier.anzeige_name as parlamentarier_name
+parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.freigabe_datum as parlamentarier_freigabe_datum
 FROM `zutrittsberechtigung`
 LEFT JOIN `v_partei` partei
 ON zutrittsberechtigung.partei_id=partei.id
