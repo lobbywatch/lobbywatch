@@ -443,3 +443,8 @@ small.desc {
   /*color: red;*/
   font-style: italic;
 }
+
+/* Hide user id text field since user.id value is set by autoincrement. */
+#newuser-id {
+  visibility: hidden;
+}
