@@ -63,7 +63,10 @@ class UserManagementRequestHandler
     {
         $this->CheckAdminGrant();
         $this->tableBasedGrantsManager->AddUser($userId, $userName, $password);
-        return array('id' => $userId, 'name' => $userName, 'password' => '******');
+
+        $id = $userId == null || $userId == '' ? getDBConnection()->ExecScalarSQL('SELECT MAX(id) FROM user;') : $userId;
+
+        return array('id' => $id, 'name' => $userName, 'password' => '******');
     }
 
     /**
@@ -185,3 +188,4 @@ class UserManagementRequestHandler
         echo $instance->router->HandleRequest($parameters);
     }
 }
+

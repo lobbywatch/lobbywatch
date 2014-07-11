@@ -1275,9 +1275,19 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
   }
 }
 
+function custom_GetConnectionOptions()
+{
+  $result = GetGlobalConnectionOptions();
+  $result['client_encoding'] = 'utf8';
+  GetApplication()->GetUserAuthorizationStrategy()->ApplyIdentityToConnectionOptions($result);
+  return $result;
+}
+
+
 function getDBConnection() {
   $con_factory = new MyPDOConnectionFactory();
-  $options = GetConnectionOptions();
+
+  $options = function_exists('GetConnectionOptions') ? GetConnectionOptions() : custom_GetConnectionOptions();
   $eng_con = $con_factory->CreateConnection($options);
   $eng_con->Connect();
   // TODO close connection
