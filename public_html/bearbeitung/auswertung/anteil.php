@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
-    <title>Bearbeitungsanteil</title>
+    <title>Anteil</title>
    <script src="scripts/d3.js"></script>
 
    <style type="text/css">
@@ -79,7 +79,7 @@
 <body>
    <div id="pageHeader" class="pageHeader">
       <p>
-         <h2>Bearbeitungsanteil</h2>
+         <h2>Anteil</h2>
       </p>
       <p>
          <h3 id="pagetitle">Titel</h3>
