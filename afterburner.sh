@@ -299,6 +299,15 @@ do
   > "$file";
 done
 
+for file in $dir/components/security/user_management_request_handler.php
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  cat "$file.bak" \
+  | perl -p -e's/^((\s*)return array\('\''id'\'' => \$userId, '\''name'\'' => \$userName, '\''password'\'' => '\''\*\*\*\*\*\*'\''\);)$/\n\2\$userId = \$userId == null || \$userId == '\'''\'' ? getDBConnection()->ExecScalarSQL('\''SELECT MAX(id) FROM user;'\'') : \$userId; \/\/ Afterburned\n\n\1\n/' \
+  > "$file";
+done
+
 for file in *.pgtm
 do
   echo "Process $file";

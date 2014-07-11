@@ -64,9 +64,10 @@ class UserManagementRequestHandler
         $this->CheckAdminGrant();
         $this->tableBasedGrantsManager->AddUser($userId, $userName, $password);
 
-        $id = $userId == null || $userId == '' ? getDBConnection()->ExecScalarSQL('SELECT MAX(id) FROM user;') : $userId;
+        $userId = $userId == null || $userId == '' ? getDBConnection()->ExecScalarSQL('SELECT MAX(id) FROM user;') : $userId; // Afterburned
 
-        return array('id' => $id, 'name' => $userName, 'password' => '******');
+        return array('id' => $userId, 'name' => $userName, 'password' => '******');
+
     }
 
     /**
@@ -188,4 +189,3 @@ class UserManagementRequestHandler
         echo $instance->router->HandleRequest($parameters);
     }
 }
-

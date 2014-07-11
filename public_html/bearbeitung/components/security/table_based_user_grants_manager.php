@@ -139,7 +139,7 @@ class TableBasedUserGrantsManager extends UserGrantsManager implements IUserMana
         $dataset->Close();
 
         return !is_null($result) ? $result : new DataSourceSecurityInfo($selectGrant, $updateGrant, $insertGrant, $deleteGrant);
-
+        
     }
 
     /**
@@ -163,7 +163,7 @@ class TableBasedUserGrantsManager extends UserGrantsManager implements IUserMana
             if (!isset($this->securityCache[$userName][$dataSourceName]))
                 $this->securityCache[$userName][$dataSourceName] = $result;
         }
-
+        
         return $result;
     }
 

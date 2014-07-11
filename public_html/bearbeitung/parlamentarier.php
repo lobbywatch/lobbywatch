@@ -6500,6 +6500,14 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('kanton');
             $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_abkuerzung');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_name');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_art');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_typ');
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'kommission_id_anzeige_name', 'kommission_id_anzeige_name_v_kommission'), 'kommission_id_anzeige_name_v_kommission');
         }
     
@@ -7432,6 +7440,14 @@
             $field = new DateTimeField('parlamentarier_freigabe_datum');
             $this->dataset->AddField($field, true);
             $field = new StringField('kanton');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_abkuerzung');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_name');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_art');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('kommission_typ');
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('kommission_id', 'v_kommission', new IntegerField('id'), new StringField('anzeige_name', 'kommission_id_anzeige_name', 'kommission_id_anzeige_name_v_kommission'), 'kommission_id_anzeige_name_v_kommission');
         }
