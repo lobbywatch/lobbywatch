@@ -1240,7 +1240,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       checkAndMarkColumnNotNull('kommission_id', $rowData, $rowCellStyles);
     } elseif ($table_name === 'kommission') {
 //       df(in_kommission_anzahl($rowData['id'])['num'], 'in_kommission_anzahl($rowData[id][num]');
-      if (in_kommission_anzahl($rowData['id'])['num'] != 25 + 13) {
+      if (in_kommission_anzahl($rowData['id'])['num'] != 25 + 13 && $rowData['typ'] == 'kommission') {
         $completeness_styles .= 'background-color: red;';
       } elseif (isset($rowData['parlament_url'])) {
         $completeness_styles .= 'background-color: greenyellow;';
@@ -1352,7 +1352,7 @@ function in_kommission_anzahl($kommission_id) {
     $eng_con = getDBConnection();
     $con = $eng_con->GetConnectionHandle();
     // TODO close connection
-    $sql = "SELECT in_kommission.kommission_id, count( DISTINCT in_kommission.parlamentarier_id) as num, in_kommission.abkuerzung, in_kommission.kommission_name
+    $sql = "SELECT in_kommission.kommission_id, count( DISTINCT in_kommission.parlamentarier_id) as num, in_kommission.abkuerzung, in_kommission.kommission_name, in_kommission.kommission_typ
   FROM v_in_kommission in_kommission
   WHERE in_kommission.bis IS NULL OR in_kommission.bis > NOW()
   GROUP BY in_kommission.kommission_id;";
