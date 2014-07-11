@@ -457,7 +457,7 @@ FROM `organisation_anhang`;
 CREATE OR REPLACE VIEW `v_mandat` AS SELECT mandat.* FROM `mandat`;
 
 CREATE OR REPLACE VIEW `v_in_kommission` AS
-SELECT in_kommission.*, rat.abkuerzung as rat, rat.abkuerzung as ratstyp, parlamentarier.partei_id, parlamentarier.fraktion_id, parlamentarier.freigabe_datum as parlamentarier_freigabe_datum, kanton.abkuerzung as kanton, kommission.abkuerzung, kommission.name as kommission_name
+SELECT in_kommission.*, rat.abkuerzung as rat, rat.abkuerzung as ratstyp, parlamentarier.partei_id, parlamentarier.fraktion_id, parlamentarier.freigabe_datum as parlamentarier_freigabe_datum, kanton.abkuerzung as kanton, kommission.abkuerzung as kommission_abkuerzung, kommission.name as kommission_name
 FROM `in_kommission`
 INNER JOIN `parlamentarier`
 ON in_kommission.parlamentarier_id = parlamentarier.id
