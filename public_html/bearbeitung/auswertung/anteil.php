@@ -1,4 +1,51 @@
-<!DOCTYPE html>
+<?php
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *                                   ATTENTION!
+ * If you see this message in your browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.)
+ * this means that PHP is not properly installed on your web server. Please refer to the PHP manual
+ * for more details: http://php.net/manual/install.php
+ *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ */
+
+/**
+ * This file was written quick and dirty. ;-)
+ */
+
+chdir('..');
+include_once dirname(__FILE__) . '/../' . 'components/utils/check_utils.php';
+CheckPHPVersion();
+CheckTemplatesCacheFolderIsExistsAndWritable();
+
+
+include_once dirname(__FILE__) . '/../' . 'phpgen_settings.php';
+include_once dirname(__FILE__) . '/../' . 'database_engine/mysql_engine.php';
+include_once dirname(__FILE__) . '/../' . 'components/page.php';
+include_once dirname(__FILE__) . '/../' . 'authorization.php';
+
+SetUpUserAuthorization(GetApplication());
+
+try
+{
+      GetApplication()->SetCanUserChangeOwnPassword(
+          !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
+    if (!GetApplication()->IsCurrentUserLoggedIn()) {
+      ShowErrorPage('Not logged in.<br><br>Please <a href="login.php">log in</a>.');
+      exit(1);
+    }
+
+//     if (($num = in_kommission_anzahl($rowData['id'])['num']) != 25 + 13) {
+//       $kommission_message = '<p style="background-color: red;">Achtung: Die Anzahl der Kommissionsmitglieder ist falsch! ' . $num . ' anstatt 38 (25 + 13)</p>.';
+//     }
+
+}
+catch(Exception $e)
+{
+    ShowErrorPage($e->getMessage());
+}
+
+?><!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
@@ -84,7 +131,8 @@
       <p>
          <h3 id="pagetitle">Titel</h3>
       </p>
-   </div>
+       <p id="message"></p>
+      </div>
    <div id="piechart">
    </div>
 
@@ -127,7 +175,7 @@
       var urlData = "GetData.php?option=" + option + (!isNaN(id) && id != null ? "&id=" + id : '');
 
       //alert (urlData);
-      
+
       d3.json(urlData, function (error, pieData) {
          if (error) {
             console.warn(error);
@@ -144,6 +192,12 @@
          var total = d3.sum(pieData, function (d) {
             return d3.sum(d3.values(d));
          });
+
+         if (total < 25 + 13) {
+           d3.select("#message")
+           .text("Falsche Anzahl Parlamentarier! Es sind jeweils total 38 Parlamentarier in Kommissionen (25 NR + 13 SR).")
+           .style("background-color", "red");
+         }
 
          // assign color if color is null
          //alert(JSON.stringify(pieData));

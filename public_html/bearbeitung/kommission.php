@@ -7653,9 +7653,10 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'auswertung/anteil.php?option=kommission&id=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Kürzel der Kommission'));
+            $column->SetDescription($this->RenderText('Kürzel der Kommission; Link zeigt den Bearbeitungstand der Kommissionan an.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -8320,6 +8321,7 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'auswertung/anteil.php?option=kommission&id=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $grid->AddSingleRecordViewColumn($column);
@@ -8937,6 +8939,7 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'auswertung/anteil.php?option=kommission&id=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $grid->AddPrintColumn($column);
@@ -9089,6 +9092,7 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'auswertung/anteil.php?option=kommission&id=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $grid->AddExportColumn($column);
@@ -9263,9 +9267,10 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'auswertung/anteil.php?option=kommission&id=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Kürzel der Kommission'));
+            $column->SetDescription($this->RenderText('Kürzel der Kommission; Link zeigt den Bearbeitungstand der Kommissionan an.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -9464,6 +9469,7 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'auswertung/anteil.php?option=kommission&id=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $result->AddPrintColumn($column);
@@ -9633,9 +9639,10 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'auswertung/anteil.php?option=kommission&id=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $column->SetDescription($this->RenderText('Kürzel der Kommission'));
+            $column->SetDescription($this->RenderText('Kürzel der Kommission; Link zeigt den Bearbeitungstand der Kommissionan an.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -9834,6 +9841,7 @@
             //
             $column = new TextViewColumn('abkuerzung', 'Abkuerzung', $this->dataset);
             $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'auswertung/anteil.php?option=kommission&id=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $result->AddPrintColumn($column);

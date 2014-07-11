@@ -1239,7 +1239,10 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       }
       checkAndMarkColumnNotNull('kommission_id', $rowData, $rowCellStyles);
     } elseif ($table_name === 'kommission') {
-      if (isset($rowData['parlament_url'])) {
+//       df(in_kommission_anzahl($rowData['id'])['num'], 'in_kommission_anzahl($rowData[id][num]');
+      if (in_kommission_anzahl($rowData['id'])['num'] != 25 + 13) {
+        $completeness_styles .= 'background-color: red;';
+      } elseif (isset($rowData['parlament_url'])) {
         $completeness_styles .= 'background-color: greenyellow;';
       }
       checkAndMarkColumnNotNull('parlament_url', $rowData, $rowCellStyles);
@@ -1339,6 +1342,63 @@ function zutrittsberechtigung_state($parlamentarier_id) {
 
   return $zb_state[$parlamentarier_id];
 }
+
+function in_kommission_anzahl($kommission_id) {
+  $cache = &php_static_cache(__FUNCTION__);
+
+  // Load all zutrittsberechtige on first call
+  if (!isset($cache)) {
+    // Fetch all the first time
+    $eng_con = getDBConnection();
+    $con = $eng_con->GetConnectionHandle();
+    // TODO close connection
+    $sql = "SELECT in_kommission.kommission_id, count( DISTINCT in_kommission.parlamentarier_id) as num, in_kommission.abkuerzung, in_kommission.kommission_name
+  FROM v_in_kommission in_kommission
+  WHERE in_kommission.bis IS NULL OR in_kommission.bis > NOW()
+  GROUP BY in_kommission.kommission_id;";
+
+    $zbs = array();
+    $sth = $con->prepare($sql);
+    $sth->execute(array());
+    $zbs = $sth->fetchAll();
+
+    $eng_con->Disconnect();
+
+    foreach($zbs as $zb) {
+      $cache[$zb['kommission_id']] = $zb;
+    }
+    //     df($cache, '$cache');
+  }
+
+//   // Fetch a single parlamentarier, should not be called anymore
+//   if (!isset($cache[$kommission_id])) {
+//     $eng_con = getDBConnection();
+//     $con = $eng_con->GetConnectionHandle();
+//     // TODO close connection
+//     $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum
+//   FROM v_zutrittsberechtigung zutrittsberechtigung
+//   WHERE
+//     zutrittsberechtigung.parlamentarier_id=:id
+//     AND zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW();";
+
+//     $zbs = array();
+//     $sth = $con->prepare($sql);
+//     $sth->execute(array(':id' => $parlamentarier_id));
+//     $zbs = $sth->fetchAll();
+
+//     $eng_con->Disconnect();
+
+//     $cache[$parlamentarier_id] = $zbs;
+
+//     //     df($cache, '$cache');
+//   }
+
+//  df($cache, '$cache');
+//  df($cache[$kommission_id], '$cache[$kommission_id]');
+
+  return $cache[$kommission_id];
+}
+
 
 function checkAndMarkColumnNotNull($column, $rowData, &$rowCellStyles) {
     if (empty($rowData[$column]) || $rowData[$column] == '') {
