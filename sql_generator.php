@@ -17,30 +17,34 @@
  ORDER BY
  TABLES.`TABLE_NAME` ASC
  */
-$tables = array(
-'branche' => 'Branche',
-'interessenbindung' => 'Interessenbindung',
-'interessengruppe' => 'Lobbygruppe',
-'in_kommission' => 'In Kommission',
-'kommission' => 'Kommission',
-'mandat' => 'Mandat',
-'organisation' => 'Organisation',
-'organisation_anhang' => 'Organisationsanhang',
-'organisation_beziehung' => 'Organisation Beziehung',
-'organisation_jahr' => 'Organisationsjahr',
-'parlamentarier' => 'Parlamentarier',
-'parlamentarier_anhang' => 'Parlamentarieranhang',
-'partei' => 'Partei',
-'fraktion' => 'Fraktion',
-'rat' => 'Rat',
-'kanton' => 'Kanton',
-'kanton_jahr' => 'Kantonjahr',
-'settings' => 'Einstellungen',
-'settings_category' => 'Einstellungskategorien',
-'zutrittsberechtigung' => 'Zutrittsberechtigter',
-'zutrittsberechtigung_anhang' => 'Zutrittsberechtigunganhang',
+$workflow_tables = array(
+    'branche' => 'Branche',
+    'interessenbindung' => 'Interessenbindung',
+    'interessengruppe' => 'Lobbygruppe',
+    'in_kommission' => 'In Kommission',
+    'kommission' => 'Kommission',
+    'mandat' => 'Mandat',
+    'organisation' => 'Organisation',
+    'organisation_beziehung' => 'Organisation Beziehung',
+    'organisation_jahr' => 'Organisationsjahr',
+    'parlamentarier' => 'Parlamentarier',
+    'partei' => 'Partei',
+    'fraktion' => 'Fraktion',
+    'rat' => 'Rat',
+    'kanton' => 'Kanton',
+    'kanton_jahr' => 'Kantonjahr',
+    'zutrittsberechtigung' => 'Zutrittsberechtigter',
 );
 
+$meta_tables = array(
+    'parlamentarier_anhang' => 'Parlamentarieranhang',
+    'organisation_anhang' => 'Organisationsanhang',
+    'zutrittsberechtigung_anhang' => 'Zutrittsberechtigunganhang',
+    'settings' => 'Einstellungen',
+    'settings_category' => 'Einstellungskategorien',
+);
+
+$tables = array_merge($workflow_tables, $meta_tables);
 
 // $table_query = "(SELECT
 // '$table' tabe_name,
@@ -96,7 +100,7 @@ foreach ($tables as $table => $name) {
   $snapshots[] = "   INSERT INTO `${table}_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `$table`;";
 
-  $worker[] = "SELECT '$table' as table_name, id, lower(created_visa) as created_visa FROM $table";
+  $created_visa[] = "SELECT '$table' as table_name, id, lower(created_visa) as visa FROM $table";
 
   // Ref: http://stackoverflow.com/questions/1895110/row-number-in-mysql
   //  @rownum := @rownum + 1 AS rank
@@ -114,6 +118,10 @@ foreach ($tables as $table => $name) {
 //   )";
 }
 
+foreach ($workflow_tables as $table => $name) {
+  $eingabe_abgeschlossen[] = "SELECT '$table' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM $table";
+}
+
 $master_query = "SELECT * FROM (
 SELECT *
 FROM (\n" . implode("\nUNION\n", $table_queries) . "\n) union_query
@@ -127,12 +135,20 @@ $master_view = "CREATE OR REPLACE VIEW `v_last_updated_tables` AS
 SELECT * FROM `v_last_updated_tables_unordered`
 ORDER BY last_updated DESC;\n";
 
-$worker_query = "SELECT created_visa as label, COUNT(created_visa) as value, NULL as color  FROM (
-SELECT created_visa
-FROM (\n" . implode("\nUNION ALL\n", $worker) . "\n) union_query
-) total_created
+$creator_query = "SELECT visa as label, COUNT(visa) as value, NULL as color  FROM (
+SELECT visa
+FROM (\n" . implode("\nUNION ALL\n", $created_visa) . "\n) union_query
+) total_visa
 GROUP BY label
 ORDER BY value DESC;\n";
+
+$worker_query = "SELECT visa as label, COUNT(visa) as value, NULL as color  FROM (
+SELECT visa
+FROM (\n" . implode("\nUNION ALL\n", $eingabe_abgeschlossen) . "\n) union_query
+) total_visa
+GROUP BY label
+ORDER BY value DESC;\n";
+
 
 // --UNION
 // --SELECT 'all' table_name, visa, last_updated
@@ -150,6 +166,8 @@ echo $master_view . "\n";
 
 echo "\n---------------------------------------------------------------------\n";
 echo "\n" . implode("\n\n", $snapshots) . "\n";
+echo "\n---------------------------------------------------------------------\n";
+echo "\n" . $creator_query . "\n";
 echo "\n---------------------------------------------------------------------\n";
 echo "\n" . $worker_query . "\n";
 

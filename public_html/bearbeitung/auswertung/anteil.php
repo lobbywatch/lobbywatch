@@ -113,6 +113,8 @@
       if (!option) option = "bearbeitungsanteil";
 
       if (option == "bearbeitungsanteil") {
+         pageTitle = "Bearbeitete Datensätze nach Personen (bearbeitung_abgeschlossen_visa)";
+      } else if (option == "erstellungsanteil") {
          pageTitle = "Erstellte Datensätze nach Personen (created_visa)";
       } else if (option == "kommission") {
          pageTitle = "Bearbeitungs-Status aller Parlamentarier in Kommission " + (!isNaN(id) ? id : "") + " (Nationalrat und Ständerat)";

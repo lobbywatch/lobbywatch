@@ -122,56 +122,98 @@
       $color_map["SVP"] = "#0A7D3A";
    } elseif ($option == "bearbeitungsanteil") {
      $cmd = "
-SELECT created_visa as label, COUNT(created_visa) as value, NULL as color  FROM (
-SELECT *
+SELECT visa as label, COUNT(visa) as value, NULL as color  FROM (
+SELECT visa
 FROM (
-SELECT lower(created_visa) as created_visa FROM branche
+SELECT 'branche' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM branche
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM interessenbindung
+SELECT 'interessenbindung' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM interessenbindung
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM interessengruppe
+SELECT 'interessengruppe' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM interessengruppe
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM in_kommission
+SELECT 'in_kommission' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM in_kommission
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM kommission
+SELECT 'kommission' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM kommission
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM mandat
+SELECT 'mandat' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM mandat
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM organisation
+SELECT 'organisation' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM organisation
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM organisation_anhang
+SELECT 'organisation_beziehung' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM organisation_beziehung
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM organisation_beziehung
+SELECT 'organisation_jahr' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM organisation_jahr
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM organisation_jahr
+SELECT 'parlamentarier' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM parlamentarier
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM parlamentarier
+SELECT 'partei' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM partei
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM parlamentarier_anhang
+SELECT 'fraktion' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM fraktion
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM partei
+SELECT 'rat' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM rat
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM fraktion
+SELECT 'kanton' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM kanton
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM rat
+SELECT 'kanton_jahr' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM kanton_jahr
 UNION ALL
-SELECT lower(created_visa) as created_visa FROM kanton
-UNION ALL
-SELECT lower(created_visa) as created_visa FROM kanton_jahr
-UNION ALL
-SELECT lower(created_visa) as created_visa FROM settings
-UNION ALL
-SELECT lower(created_visa) as created_visa FROM settings_category
-UNION ALL
-SELECT lower(created_visa) as created_visa FROM zutrittsberechtigung
-UNION ALL
-SELECT lower(created_visa) as created_visa FROM zutrittsberechtigung_anhang
+SELECT 'zutrittsberechtigung' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM zutrittsberechtigung
 ) union_query
-) total_created
+) total_visa
 GROUP BY label
 ORDER BY value DESC;
-";
+                                    ";
+         } elseif ($option == "erstellungsanteil") {
+     $cmd = "
+SELECT visa as label, COUNT(visa) as value, NULL as color  FROM (
+SELECT visa
+FROM (
+SELECT 'branche' as table_name, id, lower(created_visa) as visa FROM branche
+UNION ALL
+SELECT 'interessenbindung' as table_name, id, lower(created_visa) as visa FROM interessenbindung
+UNION ALL
+SELECT 'interessengruppe' as table_name, id, lower(created_visa) as visa FROM interessengruppe
+UNION ALL
+SELECT 'in_kommission' as table_name, id, lower(created_visa) as visa FROM in_kommission
+UNION ALL
+SELECT 'kommission' as table_name, id, lower(created_visa) as visa FROM kommission
+UNION ALL
+SELECT 'mandat' as table_name, id, lower(created_visa) as visa FROM mandat
+UNION ALL
+SELECT 'organisation' as table_name, id, lower(created_visa) as visa FROM organisation
+UNION ALL
+SELECT 'organisation_anhang' as table_name, id, lower(created_visa) as visa FROM organisation_anhang
+UNION ALL
+SELECT 'organisation_beziehung' as table_name, id, lower(created_visa) as visa FROM organisation_beziehung
+UNION ALL
+SELECT 'organisation_jahr' as table_name, id, lower(created_visa) as visa FROM organisation_jahr
+UNION ALL
+SELECT 'parlamentarier' as table_name, id, lower(created_visa) as visa FROM parlamentarier
+UNION ALL
+SELECT 'parlamentarier_anhang' as table_name, id, lower(created_visa) as visa FROM parlamentarier_anhang
+UNION ALL
+SELECT 'partei' as table_name, id, lower(created_visa) as visa FROM partei
+UNION ALL
+SELECT 'fraktion' as table_name, id, lower(created_visa) as visa FROM fraktion
+UNION ALL
+SELECT 'rat' as table_name, id, lower(created_visa) as visa FROM rat
+UNION ALL
+SELECT 'kanton' as table_name, id, lower(created_visa) as visa FROM kanton
+UNION ALL
+SELECT 'kanton_jahr' as table_name, id, lower(created_visa) as visa FROM kanton_jahr
+UNION ALL
+SELECT 'settings' as table_name, id, lower(created_visa) as visa FROM settings
+UNION ALL
+SELECT 'settings_category' as table_name, id, lower(created_visa) as visa FROM settings_category
+UNION ALL
+SELECT 'zutrittsberechtigung' as table_name, id, lower(created_visa) as visa FROM zutrittsberechtigung
+UNION ALL
+SELECT 'zutrittsberechtigung_anhang' as table_name, id, lower(created_visa) as visa FROM zutrittsberechtigung_anhang
+) union_query
+) total_visa
+GROUP BY label
+ORDER BY value DESC;
+                  ";
          }
+
 
 //    $query = $connection->query($cmd);
     $stmt = $db->prepare($cmd);
