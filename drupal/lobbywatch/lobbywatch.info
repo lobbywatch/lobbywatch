@@ -14,5 +14,6 @@ files[] = views/lobbywatch_handler_filter_parlamentarier_kommissionen_string.inc
 files[] = views/lobbywatch_handler_filter_parlamentarier_partei.inc
 files[] = views/lobbywatch_handler_filter_parlamentarier_kanton.inc
 files[] = views/lobbywatch_handler_filter_parlamentarier_ratstyp.inc
+files[] = views/lobbywatch_handler_filter_freigabe_datum.inc
 files[] = views/lobbywatch_handler_field_datetime.inc
 files[] = views/lobbywatch_handler_argument_parlamentarier_id.inc

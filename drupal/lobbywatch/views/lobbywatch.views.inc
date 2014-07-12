@@ -461,7 +461,7 @@ function lobbywatch_views_data() {
     ),
   );
 
-  // changed field
+  // updated_date field
   $data['v_parlamentarier']['updated_date'] = array(
     'title' => t('Updated date'), // The item it appears as on the UI,
     'help' => t('The date the content was last updated.'), // The help that appears on the UI,
@@ -476,6 +476,66 @@ function lobbywatch_views_data() {
       'handler' => 'views_handler_filter_date',
     ),
   );
+
+  // freigabe_datum field
+  $data['v_parlamentarier']['freigabe_datum'] = array(
+    'title' => t('Released date'), // The item it appears as on the UI,
+    'help' => t('The date the content was last updated.'), // The help that appears on the UI,
+    'field' => array(
+      'handler' => 'views_handler_field_date',
+      'click sortable' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort_date',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_date',
+    ),
+  );
+
+//   $data['node']['status'] = array(
+//       'title' => t('Published'),
+//       'help' => t('Whether or not the content is published.'),
+//       'field' => array(
+//           'handler' => 'views_handler_field_boolean',
+//           'click sortable' => TRUE,
+//           'output formats' => array(
+//               'published-notpublished' => array(t('Published'), t('Not published')),
+//           ),
+//       ),
+//       'filter' => array(
+//           'handler' => 'views_handler_filter_boolean_operator',
+//           'label' => t('Published'),
+//           'type' => 'yes-no',
+//           'use equal' => TRUE, // Use status = 1 instead of status <> 0 in WHERE statment
+//       ),
+//       'sort' => array(
+//           'handler' => 'views_handler_sort',
+//       ),
+//   );
+
+  // published status + extra
+  $data['v_parlamentarier']['freigabe_datum_extra'] = array(
+      'title' => t('Published or admin'),
+      'help' => t('Filters out unpublished lobbywatch content if the current user cannot view it.'),
+      'filter' => array(
+          'field' => 'freigabe_datum',
+          'handler' => 'lobbywatch_handler_filter_freigabe_datum',
+          'label' => t('Published or admin'),
+      ),
+  );
+
+//   $data['node']['status_extra'] = array(
+//       'title' => t('Published or admin'),
+//       'help' => t('Filters out unpublished content if the current user cannot view it.'),
+//       'filter' => array(
+//           'field' => 'status',
+//           'handler' => 'views_handler_filter_node_status',
+//           'label' => t('Published or admin'),
+//       ),
+//   );
+
+
 
   // ==== Kommission ====
   // Define the base group of this table. Fields that don't
@@ -629,3 +689,13 @@ function lobbywatch_views_data() {
 
   return $data;
 }
+
+/**
+ * Implements hook_views_query_substitutions().
+ */
+function lobbywatch_views_query_substitutions() {
+  return array(
+      '***ACCESS_UNPUBLISHED_LOBBYWATCH_CONTENT***' => intval(user_access('access lobbywatch unpublished content')),
+  );
+}
+

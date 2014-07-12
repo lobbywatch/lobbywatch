@@ -188,6 +188,9 @@ function lobbywatch_permission() {
   return array(
     'access lobbywatch general content' => array(
       'title' => t('Access general content of the lobbywatch module'),
+    ),
+    'access lobbywatch unpublished content' => array(
+      'title' => t('Access unpublished (nicht freigegeben) content of the lobbywatch module'),
     )
   );
 }
@@ -322,8 +325,28 @@ function lobbywatch_form_submit($form, &$form_state) {
 //   }
 }
 
+/*
+ *   if (!user_access('bypass node access')) {
+// If the user is able to view their own unpublished nodes, allow them to
+// see these in addition to published nodes. Check that they actually have
+// some unpublished nodes to view before adding the condition.
+if (user_access('view own unpublished content') && $own_unpublished = db_query('SELECT nid FROM {node} WHERE uid = :uid AND status = :status', array(':uid' => $GLOBALS['user']->uid, ':status' => NODE_NOT_PUBLISHED))->fetchCol()) {
+$query->condition(db_or()
+    ->condition('n.status', NODE_PUBLISHED)
+    ->condition('n.nid', $own_unpublished, 'IN')
+);
+}
+else {
+// If not, restrict the query to published nodes.
+$query->condition('n.status', NODE_PUBLISHED);
+}
+}
+
+
+*/
+
 // Ref https://api.drupal.org/api/examples/ajax_example!ajax_example_autocomplete.inc/7
-function lobbywatch_parlamentarier_autocomplete($str = '') {
+function lobbywatch_parlamentarier_autocomplete($str = '', $check_unpublished = true) {
 
 //   return lobbywatch_parlamentarier_list();
   // Use the database we set up earlier
@@ -332,7 +355,7 @@ function lobbywatch_parlamentarier_autocomplete($str = '') {
 
   try {
     $items = array();
-    $sql = "SELECT parlamentarier.anzeige_name, parlamentarier.id FROM v_parlamentarier parlamentarier WHERE parlamentarier.im_rat_bis IS NULL AND parlamentarier.anzeige_name LIKE :str";
+    $sql = "SELECT parlamentarier.anzeige_name, parlamentarier.id FROM v_parlamentarier parlamentarier WHERE parlamentarier.im_rat_bis IS NULL AND parlamentarier.anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW()' : '');
     $result = db_query($sql, array(':str' => "%$str%"));
 
   //   dpm($result, 'result');
@@ -407,7 +430,7 @@ function lobbywatch_category_lobby_group_list($vid = 2) {
 /**
  * @deprecated Old list, now we use a view
  */
-function lobbywatch_parlamentarier_list() {
+function lobbywatch_parlamentarier_list($check_unpublished = true) {
   $markup = t('<p>Liste der Parlamentarier</p>');
   $markup .= '<table border="0"  class="tablesorter table-medium header-sticky-enabled">
   <thead>
@@ -422,7 +445,8 @@ function lobbywatch_parlamentarier_list() {
   try {
     $result = db_query("SELECT parlamentarier.*
     FROM v_parlamentarier parlamentarier
-    WHERE (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())
+    WHERE (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())"
+     . ($check_unpublished = true && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW()' : '') . "
     ORDER BY parlamentarier.anzeige_name");
 
     while ($record = $result->fetchAssoc()) {
@@ -552,7 +576,7 @@ function years_months($date_str, $ref = null) {
 }
 
 
-function lobbywatch_gaesteMitMandaten($parlamentarier_id) {
+function lobbywatch_gaesteMitMandaten($parlamentarier_id, $only_active_zutrittsberechtigte = true, $check_unpublished = true) {
   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li>', IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
@@ -564,12 +588,13 @@ GROUP_CONCAT(DISTINCT
 ) mandate
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id -- AND mandat.bis IS NULL
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND mandat.freigabe_datum <= NOW() ' : '') . "
 LEFT JOIN v_organisation organisation
-  ON mandat.organisation_id = organisation.id
-WHERE
-  (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())
+  ON mandat.organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
+WHERE 1
+  " . ($only_active_zutrittsberechtigte ? ' AND (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())' : '') . "
   AND zutrittsberechtigung.parlamentarier_id=:id
+" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW()' : '') . "
 GROUP BY zutrittsberechtigung.id;";
 
   $gaeste = array();
@@ -597,7 +622,7 @@ GROUP BY zutrittsberechtigung.id;";
   return $res;
 }
 
-function lobbywatch_brancheMitInteressengruppen($kommission_id) {
+function lobbywatch_brancheMitInteressengruppen($kommission_id, $check_unpublished = true) {
   $sql = "SELECT branche.id, branche.anzeige_name as branche_name,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li><a href=\"/daten/lobbygruppe/', interessengruppe.id, '\">', interessengruppe.anzeige_name, '</a>',
@@ -607,9 +632,10 @@ GROUP_CONCAT(DISTINCT
 ) interessengruppen
 FROM `v_branche` branche
 LEFT JOIN `v_interessengruppe` interessengruppe
-  ON interessengruppe.branche_id = branche.id
+  ON interessengruppe.branche_id = branche.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '') . "
 WHERE
   branche.kommission_id=:id
+" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND branche.freigabe_datum <= NOW() ' : '') . "
 GROUP BY branche.id;";
 
   $branchen = array();
@@ -629,7 +655,7 @@ GROUP BY branche.id;";
 
   $res = '';
   foreach($branchen as $branche) {
-    $res .= '<h5>' . $branche['branche_name'] . '</h5>';
+    $res .= '<h4>' . $branche['branche_name'] . '</h5>';
     //$res .= mandateList($con, $branche['id']);
     $res .= "<ul>\n" . $branche['interessengruppen'] . "\n</ul>";
   }
@@ -640,7 +666,7 @@ GROUP BY branche.id;";
 }
 
 
-function lobbywatch_parlamentarier_id($id, $name='') {
+function lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true) {
 
 //   dpm($id, 'id');
 
@@ -656,8 +682,8 @@ function lobbywatch_parlamentarier_id($id, $name='') {
   db_set_active('lobbywatch');
 
   try {
-    $sql = "SET SESSION group_concat_max_len=5000;";
-    db_query($sql);
+//     $sql = "SET SESSION group_concat_max_len=5000;";
+//     db_query($sql);
 
     $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.im_rat_bis, DATE_FORMAT(parlamentarier.im_rat_bis, '%d.%m.%Y') as im_rat_bis_formatted, parlamentarier.kleinbild, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei, parlamentarier.partei_id,
     parlamentarier.name, parlamentarier.anzahl_kinder, rat.name_de as rat_name_de, kanton.einwohner, kanton.auslaenderanteil, kanton.anzahl_staenderaete, kanton.anzahl_nationalraete,
@@ -701,25 +727,26 @@ function lobbywatch_parlamentarier_id($id, $name='') {
     ) zutrittsberechtigungen
       FROM v_parlamentarier parlamentarier
       LEFT JOIN v_interessenbindung interessenbindung
-      ON interessenbindung.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
+      ON interessenbindung.parlamentarier_id = parlamentarier.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessenbindung.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_organisation organisation
-      ON interessenbindung.organisation_id = organisation.id
+      ON interessenbindung.organisation_id = organisation.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
-      ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id -- AND zutrittsberechtigung.bis IS NULL
+      ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_in_kommission ik
-      ON parlamentarier.id = ik.parlamentarier_id -- AND ik.bis IS NULL
+      ON parlamentarier.id = ik.parlamentarier_id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND ik.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_kommission kommission
-      ON ik.kommission_id=kommission.id
+      ON ik.kommission_id=kommission.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND kommission.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_organisation_parlamentarier_beide_indirekt v
-      ON v.parlamentarier_id = parlamentarier.id -- AND v.bis IS NULL
+      ON v.parlamentarier_id = parlamentarier.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND v.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_organisation organisation2
-      ON organisation2.id = v.connector_organisation_id
+      ON organisation2.id = v.connector_organisation_id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation2.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_kanton kanton
-      ON kanton.id = parlamentarier.kanton_id
+      ON kanton.id = parlamentarier.kanton_id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND kanton.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_rat rat
-      ON rat.id = parlamentarier.rat_id
+      ON rat.id = parlamentarier.rat_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND rat.freigabe_datum <= NOW() ' : '') . "
       WHERE
-      parlamentarier.id=:id
+      parlamentarier.id=:id"
+           . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
       GROUP BY parlamentarier.id";
 
     $result = db_query($sql, array(':id' => $id));
@@ -727,7 +754,7 @@ function lobbywatch_parlamentarier_id($id, $name='') {
   //     dpm($result, 'result');
 
       $record = $result->fetchAssoc();
-      $gaeste = lobbywatch_gaesteMitMandaten($id);
+      $gaeste = lobbywatch_gaesteMitMandaten($id, $check_unpublished);
 
   //     dpm($record, '$record');
 
@@ -762,8 +789,8 @@ function lobbywatch_parlamentarier_id($id, $name='') {
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>' .
       '<tr><td>Kinder:</td><td>' . check_plain($record['anzahl_kinder']) . '</td></tr>' .
-      '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</td></tr>' .
-      '<tr><td>Parlament.ch Webseite:</td><td>' . l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</td></tr>' .
+      '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>' .
+      '<tr><td>Parlament.ch Webseite:</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
       '</table>' .
       '<h4>Kommissionen</h4><ul>' . $record['kommissionen_namen'] . '</ul>' .
       '<h4>Interessenbindungen</h4><ul>' . $record['interessenbindungen'] . '</ul>' .
@@ -783,14 +810,15 @@ function lobbywatch_parlamentarier_id($id, $name='') {
 
       return $build;
   } else {
-    drupal_goto('daten/parlamentarier');
+    //drupal_goto('daten/parlamentarier');
+    drupal_not_found();
   }
 }
 
 /**
  * TODO
  */
-function lobbywatch_organisation_list() {
+function lobbywatch_organisation_list($check_unpublished = true) {
   $markup = t('<p>Liste der Organisationen</p>');
   $markup .= '<ul>';
 
@@ -798,7 +826,7 @@ function lobbywatch_organisation_list() {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT * FROM v_organisation organisation ORDER BY organisation.anzeige_name");
+  $result = db_query("SELECT * FROM v_organisation organisation  WHERE 1 " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "  ORDER BY organisation.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
     $markup .= '<li><a href="/daten/organisation/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>' . (check_plain($record['rechtsform']) ? ', ' . check_plain($record['rechtsform']) : '');
@@ -821,7 +849,7 @@ function lobbywatch_organisation_list() {
     return $build;
 }
 
-function lobbywatch_organisation_id($id, $name = '') {
+function lobbywatch_organisation_id($id, $name = '', $check_unpublished = true) {
 
   //   dpm($id, 'id');
 
@@ -908,7 +936,10 @@ ORDER BY organisation.anzeige_name;
 */
 
   try {
-  $sql_arbeitet = "SELECT organisation.*,
+//     $sql = "SET SESSION group_concat_max_len=5000;";
+//     db_query($sql);
+
+    $sql_arbeitet = "SELECT organisation.*,
       GROUP_CONCAT(DISTINCT
         CONCAT('<li>', IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), '<s>', ''), '<a href=\"/daten/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, '</a>',
         ', ', parlamentarier.ratstyp,
@@ -940,14 +971,15 @@ ORDER BY organisation.anzeige_name;
       ) auftraggeber_fuer
   FROM v_organisation organisation
   LEFT JOIN v_organisation_parlamentarier_beide_indirekt v
-  ON v.connector_organisation_id = organisation.id -- AND v.bis IS NULL
+  ON v.connector_organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND v.freigabe_datum <= NOW() ' : '') . "
   LEFT JOIN v_parlamentarier parlamentarier
-  ON parlamentarier.id = v.parlamentarier_id
+  ON parlamentarier.id = v.parlamentarier_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
   LEFT JOIN v_organisation_beziehung_arbeitet_fuer organisation_arbeitet_fuer
-  ON organisation_arbeitet_fuer.organisation_id = organisation.id
+  ON organisation_arbeitet_fuer.organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation_arbeitet_fuer.freigabe_datum <= NOW() ' : '') . "
   LEFT JOIN v_organisation_beziehung_auftraggeber_fuer organisation_auftraggeber_fuer
-  ON organisation_auftraggeber_fuer.ziel_organisation_id = organisation.id
-  WHERE organisation.id=:id
+  ON organisation_auftraggeber_fuer.ziel_organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation_auftraggeber_fuer.freigabe_datum <= NOW() ' : '') . "
+  WHERE organisation.id=:id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
   GROUP BY organisation.id";
 
     $sql_mitglied = "SELECT organisation.*,
@@ -971,10 +1003,11 @@ ORDER BY organisation.anzeige_name;
       ) mitglieder
   FROM v_organisation organisation
   LEFT JOIN v_organisation_beziehung_mitglied_von organisation_mitglied_von
-  ON organisation_mitglied_von.organisation_id = organisation.id
+  ON organisation_mitglied_von.organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation_mitglied_von.freigabe_datum <= NOW() ' : '') . "
   LEFT JOIN v_organisation_beziehung_mitglieder organisation_mitglieder
-  ON organisation_mitglieder.ziel_organisation_id = organisation.id
-  WHERE organisation.id=:id
+  ON organisation_mitglieder.ziel_organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation_mitglieder.freigabe_datum <= NOW() ' : '') . "
+  WHERE organisation.id=:id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
   GROUP BY organisation.id";
 
      $sql_tochter = "SELECT organisation.*,
@@ -998,10 +1031,11 @@ ORDER BY organisation.anzeige_name;
       ) tochtergesellschaften
   FROM v_organisation organisation
   LEFT JOIN v_organisation_beziehung_muttergesellschaft organisation_muttergesellschaft
-  ON organisation_muttergesellschaft.organisation_id = organisation.id
+  ON organisation_muttergesellschaft.organisation_id = organisation.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation_muttergesellschaft.freigabe_datum <= NOW() ' : '') . "
   LEFT JOIN v_organisation_beziehung_tochtergesellschaften organisation_tochtergesellschaften
-  ON organisation_tochtergesellschaften.ziel_organisation_id = organisation.id
-  WHERE organisation.id=:id
+  ON organisation_tochtergesellschaften.ziel_organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation_tochtergesellschaften.freigabe_datum <= NOW() ' : '') . "
+  WHERE organisation.id=:id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
   GROUP BY organisation.id";
 
   $result_arbeitet = db_query($sql_arbeitet, array(':id' => $id));
@@ -1031,7 +1065,7 @@ ORDER BY organisation.anzeige_name;
     // otherwise Drupal will not be able to access it's own data later on.
     db_set_active();
   }
-  if ($record) {
+  if (isset($record['id'])) {
     $markup .= '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
 //     . '<h3>Informationen</h3>'
     . '<table border="0">'
@@ -1040,8 +1074,8 @@ ORDER BY organisation.anzeige_name;
     . '<tr><td>Ort</td><td>' . check_plain($record['ort']) . '</td></tr>'
     . '<tr><td>Branche</td><td>' . l($record['branche'], 'daten/branche/' . $record['branche_id']) . '</td></tr>'
     . '<tr><td>Lobbygruppe</td><td>' . l($record['interessengruppe'], 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
-    . '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</td></tr>'
-    . '<tr><td>Handelsregister:</td><td>' . l($record['handelsregister_url'], $record['handelsregister_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</td></tr>'
+    . '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
+    . '<tr><td>Handelsregister:</td><td>' . ($record['handelsregister_url'] ? l($record['anzeige_name'], $record['handelsregister_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
     . '</table>';
     if ($record['arbeitet_fuer']) {
       $markup .= '<h3>Arbeitet für</h3>'
@@ -1096,14 +1130,15 @@ ORDER BY organisation.anzeige_name;
 
       return $build;
   } else {
-    drupal_goto('daten/organisation');
+//     drupal_goto('daten/organisation');
+    drupal_not_found();
   }
 }
 
 /**
  * TODO
  */
-function lobbywatch_kommission_list() {
+function lobbywatch_kommission_list($check_unpublished = true) {
   $markup = t('<p>Liste der Kommissionen</p>');
   $markup .= '<ul>';
 
@@ -1112,7 +1147,7 @@ function lobbywatch_kommission_list() {
   db_set_active('lobbywatch');
 
   $result = db_query("SELECT kommission.*
-  FROM `v_kommission` kommission
+  FROM `v_kommission` kommission  WHERE 1 " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND kommission.freigabe_datum <= NOW() ' : '') . "
   ORDER BY kommission.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
@@ -1136,7 +1171,7 @@ function lobbywatch_kommission_list() {
     return $build;
 }
 
-function lobbywatch_kommission_id_SQL($active) {
+function lobbywatch_kommission_id_SQL($only_active_parlamentarier, $check_unpublished = true) {
   return "SELECT kommission.*,
       GROUP_CONCAT(DISTINCT
         CONCAT('<li><a href=\"/daten/parlamentarier/', parlamentarier.parlamentarier_id, '\">', parlamentarier.parlamentarier_name, '</a>',
@@ -1156,10 +1191,11 @@ function lobbywatch_kommission_id_SQL($active) {
       ) branchen
   FROM `v_kommission` kommission
   LEFT JOIN `v_in_kommission_parlamentarier` parlamentarier
-  ON kommission.id = parlamentarier.kommission_id " . ($active ? " AND (parlamentarier.bis IS NULL OR parlamentarier.bis > NOW()) AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())" : " AND (parlamentarier.bis IS NOT NULL AND parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()) ") . "
+  ON kommission.id = parlamentarier.kommission_id " . ($only_active_parlamentarier ? " AND (parlamentarier.bis IS NULL OR parlamentarier.bis > NOW()) AND (parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW())" : " AND (parlamentarier.bis IS NOT NULL AND parlamentarier.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()) ") . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
   LEFT JOIN `v_branche` branche
-  ON kommission.id = branche.kommission_id
-  WHERE kommission.id=:id
+  ON kommission.id = branche.kommission_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND branche.freigabe_datum <= NOW() ' : '') . "
+  WHERE kommission.id=:id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND kommission.freigabe_datum <= NOW() ' : '') . "
   GROUP BY kommission.id";
 }
 
@@ -1179,8 +1215,8 @@ function lobbywatch_kommission_id($id, $name = '') {
   db_set_active('lobbywatch');
 
   try {
-    $sql = "SET SESSION group_concat_max_len=5000;";
-    db_query($sql);
+//     $sql = "SET SESSION group_concat_max_len=5000;";
+//     db_query($sql);
 
     $sql = lobbywatch_kommission_id_SQL(true);
 
@@ -1249,14 +1285,15 @@ function lobbywatch_kommission_id($id, $name = '') {
 
       return $build;
   } else {
-    drupal_goto('daten/kommission');
+//     drupal_goto('daten/kommission');
+    drupal_not_found();
   }
 }
 
   /**
  * TODO
  */
-function lobbywatch_partei_list() {
+function lobbywatch_partei_list($check_unpublished = true) {
   $markup = t('<p>Liste der Parteien</p>');
   $markup .= '<ul>';
 
@@ -1264,7 +1301,8 @@ function lobbywatch_partei_list() {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT * FROM v_partei partei ORDER BY partei.anzeige_name");
+  $result = db_query("SELECT * FROM v_partei partei  WHERE 1 "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND partei.freigabe_datum <= NOW() ' : '') . " ORDER BY partei.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
     $markup .= '<li><a href="/daten/partei/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
@@ -1287,7 +1325,7 @@ function lobbywatch_partei_list() {
     return $build;
 }
 
-function lobbywatch_partei_id($id, $name = '') {
+function lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
 
   //   dpm($id, 'id');
 
@@ -1303,8 +1341,8 @@ function lobbywatch_partei_id($id, $name = '') {
   db_set_active('lobbywatch');
 
   try {
-    $sql = "SET SESSION group_concat_max_len=5000;";
-    db_query($sql);
+//     $sql = "SET SESSION group_concat_max_len=5000;";
+//     db_query($sql);
 
   $sql = "SELECT partei.*,
       GROUP_CONCAT(DISTINCT
@@ -1318,8 +1356,10 @@ function lobbywatch_partei_id($id, $name = '') {
       ) mitglieder
   FROM `v_partei` partei
   LEFT JOIN `v_parlamentarier` parlamentarier
-  ON parlamentarier.partei_id = partei.id
-  WHERE partei.id=:id
+  ON parlamentarier.partei_id = partei.id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
+  WHERE partei.id=:id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND partei.freigabe_datum <= NOW() ' : '') . "
   GROUP BY partei.id";
 
   $result = db_query($sql, array(':id' => $id));
@@ -1350,7 +1390,8 @@ function lobbywatch_partei_id($id, $name = '') {
 
       return $build;
   } else {
-    drupal_goto('daten/partei');
+//     drupal_goto('daten/partei');
+    drupal_not_found();
   }
 
 }
@@ -1358,7 +1399,7 @@ function lobbywatch_partei_id($id, $name = '') {
   /**
  * TODO
  */
-function lobbywatch_branche_list() {
+function lobbywatch_branche_list($check_unpublished = true) {
   $markup = t('<p>Liste der Branchen</p>');
   $markup .= '<ul>';
 
@@ -1366,7 +1407,8 @@ function lobbywatch_branche_list() {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT * FROM v_branche branche ORDER BY branche.anzeige_name");
+  $result = db_query("SELECT * FROM v_branche branche WHERE 1 "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND branche.freigabe_datum <= NOW() ' : '') . " ORDER BY branche.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
     $markup .= '<li><a href="/daten/branche/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
@@ -1389,7 +1431,7 @@ function lobbywatch_branche_list() {
     return $build;
 }
 
-function lobbywatch_branche_id($id, $name = '') {
+function lobbywatch_branche_id($id, $name = '', $check_unpublished = true) {
 
 //   dpm($id, 'id');
 //   dpm($name, '$name');
@@ -1407,8 +1449,8 @@ function lobbywatch_branche_id($id, $name = '') {
   db_set_active('lobbywatch');
 
   try {
-    $sql = "SET SESSION group_concat_max_len=5000;";
-    db_query($sql);
+//     $sql = "SET SESSION group_concat_max_len=10000;";
+//     db_query($sql);
 
   $sql = "SELECT *,
 GROUP_CONCAT(DISTINCT
@@ -1419,8 +1461,10 @@ GROUP_CONCAT(DISTINCT
 ) interessengruppen
   FROM v_branche branche
   LEFT JOIN `v_interessengruppe` interessengruppe
-  ON interessengruppe.branche_id = branche.id
-  WHERE branche.id=:id
+  ON interessengruppe.branche_id = branche.id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '') . "
+  WHERE branche.id=:id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND branche.freigabe_datum <= NOW() ' : '') . "
   GROUP BY branche.id";
 
   $result = db_query($sql, array(':id' => $id));
@@ -1458,7 +1502,8 @@ GROUP_CONCAT(DISTINCT
 
       return $build;
   } else {
-    drupal_goto('daten/branche');
+//     drupal_goto('daten/branche');
+    drupal_not_found();
   }
 
 }
@@ -1466,7 +1511,7 @@ GROUP_CONCAT(DISTINCT
   /**
  * TODO
  */
-function lobbywatch_interessengruppe_list() {
+function lobbywatch_interessengruppe_list($check_unpublished = true) {
   $markup = t('<p>Liste der Lobbygruppen</p>');
   $markup .= '<ul>';
 
@@ -1474,7 +1519,8 @@ function lobbywatch_interessengruppe_list() {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT * FROM v_interessengruppe interessengruppe ORDER BY interessengruppe.anzeige_name");
+  $result = db_query("SELECT * FROM v_interessengruppe interessengruppe WHERE 1 "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '') . " ORDER BY interessengruppe.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
     $markup .= '<li><a href="/daten/lobbygruppe/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
@@ -1497,7 +1543,7 @@ function lobbywatch_interessengruppe_list() {
     return $build;
 }
 
-function lobbywatch_interessengruppe_id($id, $name = '') {
+function lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = true) {
 
   //   dpm($id, 'id');
 
@@ -1513,7 +1559,8 @@ function lobbywatch_interessengruppe_id($id, $name = '') {
   db_set_active('lobbywatch');
 
   try {
-  $sql = "SELECT * FROM v_interessengruppe interessengruppe WHERE interessengruppe.id=:id";
+  $sql = "SELECT * FROM v_interessengruppe interessengruppe WHERE interessengruppe.id=:id"
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '');
 
   $result = db_query($sql, array(':id' => $id));
 
@@ -1545,7 +1592,8 @@ function lobbywatch_interessengruppe_id($id, $name = '') {
 
       return $build;
   } else {
-    drupal_goto('daten/lobbygruppe');
+//     drupal_goto('daten/lobbygruppe');
+    drupal_not_found();
   }
 
 }
@@ -1553,7 +1601,7 @@ function lobbywatch_interessengruppe_id($id, $name = '') {
   /**
  * TODO
  */
-function lobbywatch_zutrittsberechtigung_list() {
+function lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
   $markup = t('<p>Liste der Zutrittsberechtigten</p>');
   $markup .= '<ul>';
 
@@ -1561,7 +1609,8 @@ function lobbywatch_zutrittsberechtigung_list() {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT * FROM v_zutrittsberechtigung zutrittsberechtigung ORDER BY zutrittsberechtigung.anzeige_name");
+  $result = db_query("SELECT * FROM v_zutrittsberechtigung zutrittsberechtigung WHERE 1 "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '') . "  ORDER BY zutrittsberechtigung.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
     $markup .= '<li><a href="/daten/zutrittsberechtigter/' . check_plain($record['id']) . '">' . check_plain($record['anzeige_name']) . '</a>';
@@ -1584,7 +1633,7 @@ function lobbywatch_zutrittsberechtigung_list() {
     return $build;
 }
 
-function lobbywatch_zutrittsberechtigung_id($id, $name = '') {
+function lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished = true) {
 
   //   dpm($id, 'id');
 
@@ -1600,7 +1649,10 @@ function lobbywatch_zutrittsberechtigung_id($id, $name = '') {
   db_set_active('lobbywatch');
 
   try {
-  $sql = "SELECT zutrittsberechtigung.*, DATE_FORMAT(zutrittsberechtigung.bis, '%d.%m.%Y') as bis_formatted,
+//     $sql = "SET SESSION group_concat_max_len=5000;";
+//     db_query($sql);
+
+    $sql = "SELECT zutrittsberechtigung.*, DATE_FORMAT(zutrittsberechtigung.bis, '%d.%m.%Y') as bis_formatted,
   GROUP_CONCAT(DISTINCT
     CONCAT('<li>', IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
@@ -1612,11 +1664,14 @@ function lobbywatch_zutrittsberechtigung_id($id, $name = '') {
 ) mandate
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id -- AND mandat.bis IS NULL
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND mandat.freigabe_datum <= NOW() ' : '') . "
 LEFT JOIN v_organisation organisation
-  ON mandat.organisation_id = organisation.id
+  ON mandat.organisation_id = organisation.id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
 WHERE
-  zutrittsberechtigung.id=:id
+  zutrittsberechtigung.id=:id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '') . "
 GROUP BY zutrittsberechtigung.id;";
 
   $result = db_query($sql, array(':id' => $id));
@@ -1639,7 +1694,7 @@ GROUP BY zutrittsberechtigung.id;";
     .  '<tr><td>Funktion:</td><td>' . check_plain($record['funktion']) . '</td></tr>'
     .  '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>'
     .  '<tr><td>Partei:</td><td>' . l($record['partei'], 'daten/partei/' . $record['partei_id']) . '</td></tr>'
-    .  '<tr><td>Homepage:</td><td>' . l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</td></tr>'
+    .  '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
     . '</table>'
     . '<h3>Mandate</h3>'
     . '<ul>'
@@ -1656,19 +1711,21 @@ GROUP BY zutrittsberechtigung.id;";
 
       return $build;
   } else {
-    drupal_goto('daten/zutrittsberechtigter');
+//     drupal_goto('daten/zutrittsberechtigter');
+    drupal_not_found();
   }
 
 }
 
-function lobbywatch_get_parteien() {
+function lobbywatch_get_parteien($check_unpublished = true) {
   // Cache ref: http://www.lullabot.com/blog/article/beginners-guide-caching-data-drupal-7
   $cache = &drupal_static(__FUNCTION__);
   if (!isset($cache)) {
     db_set_active('lobbywatch');
 
     try {
-      $sql = "SELECT partei.* FROM v_partei partei;";
+      $sql = "SELECT partei.* FROM v_partei partei WHERE 1 "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND partei.freigabe_datum <= NOW() ' : '') . " ;";
 
       $result = db_query($sql);
 
@@ -1684,14 +1741,15 @@ function lobbywatch_get_parteien() {
   return $cache;
 }
 
-function lobbywatch_get_kommissionen() {
+function lobbywatch_get_kommissionen($check_unpublished = true) {
   // Cache ref: http://www.lullabot.com/blog/article/beginners-guide-caching-data-drupal-7
   $cache = &drupal_static(__FUNCTION__);
   if (!isset($cache)) {
     db_set_active('lobbywatch');
 
     try {
-      $sql = "SELECT kommission.* FROM v_kommission kommission;";
+      $sql = "SELECT kommission.* FROM v_kommission kommission WHERE 1 "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND kommission.freigabe_datum <= NOW() ' : '') . " ;";
 
       $result = db_query($sql);
 

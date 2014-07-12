@@ -1294,3 +1294,7 @@ ALTER TABLE `branche_log`
 
 ALTER TABLE `user`
   ADD `last_access` TIMESTAMP NULL DEFAULT NULL COMMENT 'Datum des letzten Zugriffs' AFTER `last_login` ;
+
+-- 12.07.2014
+
+SET GLOBAL group_concat_max_len=10000;
