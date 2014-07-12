@@ -792,7 +792,7 @@ function lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true) 
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>' .
       '<tr><td>Kinder:</td><td>' . check_plain($record['anzahl_kinder']) . '</td></tr>' .
-      '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>' .
+      '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>' .
       '<tr><td>Parlament.ch Webseite:</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
       '</table>' .
       '<h3>Kommissionen</h3><ul>' . $record['kommissionen_namen'] . '</ul>' .
@@ -1075,15 +1075,15 @@ ORDER BY organisation.anzeige_name;
   if (isset($record['id'])) {
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
-   '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+//    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
 //     . '<h3>Informationen</h3>'
-    . '<table border="0">'
+    '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Rechtsform</td><td>' . check_plain($record['rechtsform']) . '</td></tr>'
     . '<tr><td>Ort</td><td>' . check_plain($record['ort']) . '</td></tr>'
     . '<tr><td>Branche</td><td>' . l($record['branche'], 'daten/branche/' . $record['branche_id']) . '</td></tr>'
     . '<tr><td>Lobbygruppe</td><td>' . l($record['interessengruppe'], 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
-    . '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
+    . '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
     . '<tr><td>Handelsregister:</td><td>' . ($record['handelsregister_url'] ? l($record['anzeige_name'], $record['handelsregister_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
     . '</table>';
     if ($record['arbeitet_fuer']) {
@@ -1260,8 +1260,8 @@ function lobbywatch_kommission_id($id, $name = '') {
   if ($record_active) {
     $markup .=
     (!$record_active['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
-     '<h2>' . check_plain($record_active["anzeige_name"]) . '</h2>'
-    . '<table border="0">'
+//      '<h2>' . check_plain($record_active["anzeige_name"]) . '</h2>' .
+    '<table border="0">'
     . '<tr><td>Abkürzung</td><td>' . check_plain($record_active['abkuerzung']) . '</td></tr>'
     . '<tr><td>Parlament.ch Link</td><td>' . (isset($record_active['parlament_url']) ? l($record_active['anzeige_name'], $record_active['parlament_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
     . '<tr><td>Beschreibung</td><td>' . check_plain($record_active['beschreibung']) . '</td></tr>'
@@ -1394,7 +1394,10 @@ function lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
   if ($record) {
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
-   '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+//    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    '<table border=0>'
+        . '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
+            . '</table>'
     . '<h3>Mitglieder</h3>'
     . '<ul>'
     . $record['mitglieder']
@@ -1503,8 +1506,8 @@ GROUP_CONCAT(DISTINCT
   if ($record) {
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
-    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
-    . '<table border="0">'
+//     '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
+    '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Zuständige Kommission</td><td>' . l($record['kommission'], 'daten/kommission/' . $record['kommission_id']) . '</td></tr>'
     . '<tr><td>Beschreibung</td><td>' . check_plain($record['beschreibung']) . '</td></tr>'
@@ -1602,8 +1605,8 @@ function lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = tr
   if ($record) {
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
-    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
-    . '<table border="0">'
+//     '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
+    '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Branche</td><td>' . l($record['branche'], 'daten/branche/' . $record['branche_id']) . '</td></tr>'
     . '<tr><td>Beschreibung</td><td>' . check_plain($record['beschreibung']) . '</td></tr>'
@@ -1718,8 +1721,8 @@ GROUP BY zutrittsberechtigung.id;";
   if ($record) {
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
-   '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
-    . ($record['bis'] != null ? '<p><strong><em>Nicht mehr zutrittsberechtigt ins Parlament. War zutrittsberechtigt bis ' . check_plain($record['bis_formatted']) . '.</em></strong></p>' : '')
+//    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
+    ($record['bis'] != null ? '<p><strong><em>Nicht mehr zutrittsberechtigt ins Parlament. War zutrittsberechtigt bis ' . check_plain($record['bis_formatted']) . '.</em></strong></p>' : '')
     . '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Eingeladen von:</td><td>' . l($record['parlamentarier_name'], 'daten/parlamentarier/' . $record['parlamentarier_id']) . '</td></tr>'
