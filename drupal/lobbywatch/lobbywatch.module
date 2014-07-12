@@ -782,7 +782,7 @@ function lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true) 
 //       '<h2>' . $parlamentarier_name . '</h2>' .
       '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '">' .
       (!$active ? '<p><strong><em>Nicht mehr im Parlament. War im Parlament bis ' . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
-      '<p>Lobbyfaktor: <b>XY</b></p>' .
+      (user_access('access lobbywatch unpublished content') ? '<p class="unpublished">Lobbyfaktor: <b>XY</b></p>' : '') .
       '<table border="0">' .
       '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
       '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
