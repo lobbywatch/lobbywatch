@@ -1810,13 +1810,17 @@ function lobbywatch_get_kommissionen($check_unpublished = true) {
 function lobbywatch_get_workflow_state_line($record) {
       $admin = user_access('access lobbywatch unpublished content');
       return '<p class="lobbywatch-meta-fields-line"><small>'
-        . t('Last update @date', array ('@date' => format_date($record ['updated_date_unix'], 'short_date'))) .
+        . t('Last updated !date', array ('!date' => '<time datetime="'.getISO8601Date($record['updated_date_unix']).'">' . format_date($record['updated_date_unix'], 'short_date') . '</time>')) .
         ($admin ?
-          '/' . $record ['updated_visa'] .
-          '<br>' . t('created  @date', array ('@date' => format_date($record['created_date_unix'], 'short_date'))) . '/' . $record ['created_visa'] .
-          '<br>' . ($record['freigabe_datum'] && $record['freigabe_datum_unix'] < time() ? t('released  @date', array ('@date' => format_date($record['freigabe_datum_unix'], 'short_date') )) . '/' . $record ['freigabe_visa'] : t('unpublished'))
-          . ($record ['eingabe_abgeschlossen_datum_unix'] ? '<br>' . t('eingabe  @date', array ('@date' => format_date($record ['eingabe_abgeschlossen_datum_unix'], 'short_date') )) . '/' .  $record ['eingabe_abgeschlossen_visa'] : '')
-          . ($record ['kontrolliert_datum_unix'] ? '<br>' . t('kontrolliert  @date', array ('@date' => format_date($record ['kontrolliert_datum_unix'], 'short_date') )) . '/' .  $record ['kontrolliert_visa'] : '')
+          '/' . $record ['updated_visa'] : '') .
+          '<br>' . ($record['freigabe_datum'] && $record['freigabe_datum_unix'] < time() ? t('Published  !date', array ('!date' => '<time datetime="'.getISO8601Date($record['freigabe_datum_unix']).'" pubdate="pubdate">' . format_date($record['freigabe_datum_unix'], 'short_date') . '</time>' )) . ($admin ? '/' . $record ['freigabe_visa'] : '') : t('Unpublished')) .
+        ($admin ?  '<br>' . t('Created  @date', array ('@date' => format_date($record['created_date_unix'], 'short_date'))) . '/' . $record ['created_visa'] .
+          ($record ['eingabe_abgeschlossen_datum_unix'] ? '<br>' . t('Eingabe  @date', array ('@date' => format_date($record ['eingabe_abgeschlossen_datum_unix'], 'short_date') )) . '/' .  $record ['eingabe_abgeschlossen_visa'] : '')
+          . ($record ['kontrolliert_datum_unix'] ? '<br>' . t('Kontrolle  @date', array ('@date' => format_date($record ['kontrolliert_datum_unix'], 'short_date') )) . '/' .  $record ['kontrolliert_visa'] : '')
         : '') .
       '</small></p>';
+}
+
+function getISO8601Date($unix_timestamp) {
+  return format_date($unix_timestamp, 'custom', 'Y-m-d\TH:i:sO'); // PHP 'c' format is not proper ISO8601!
 }
