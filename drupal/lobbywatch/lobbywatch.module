@@ -616,7 +616,7 @@ GROUP BY zutrittsberechtigung.id;";
 
   $res = '';
   foreach($gaeste as $gast) {
-    $res .= '<h5>' . $gast['zutrittsberechtigung_name'] . '</h5>';
+    $res .= '<h4>' . $gast['zutrittsberechtigung_name'] . '</h4>';
     //$res .= mandateList($con, $gast['id']);
     $res .= "<ul>\n" . $gast['mandate'] . "\n</ul>";
   }
@@ -795,11 +795,11 @@ function lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true) 
       '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>' .
       '<tr><td>Parlament.ch Webseite:</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
       '</table>' .
-      '<h4>Kommissionen</h4><ul>' . $record['kommissionen_namen'] . '</ul>' .
-      '<h4>Interessenbindungen</h4><ul>' . $record['interessenbindungen'] . '</ul>' .
-      '<h4>Gäste</h4><ul>' . $record['zutrittsberechtigungen'] . '</ul>' .
-      '<h4>Mandate der Gäste</h4>' . $gaeste .
-      '<h4>Organisationen mit einer Verbindung</h4>'
+      '<h3>Kommissionen</h3><ul>' . $record['kommissionen_namen'] . '</ul>' .
+      '<h3>Interessenbindungen</h3><ul>' . $record['interessenbindungen'] . '</ul>' .
+      '<h3>Gäste</h3><ul>' . $record['zutrittsberechtigungen'] . '</ul>' .
+      '<h3>Mandate der Gäste</h3>' . $gaeste .
+      '<h3>Organisationen mit einer Verbindung</h3>'
       . '<p>Auch indirekte Verbindungen werden aufgeführt.</p>'
       . '<ul>' . $record['verbundene_organisationen'] . '</ul>'
       . lobbywatch_get_workflow_state_line($record)
