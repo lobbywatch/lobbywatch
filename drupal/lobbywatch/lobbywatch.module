@@ -1287,7 +1287,8 @@ function lobbywatch_kommission_id($id, $name = '') {
     . '<ul>'
     . $record_inactive['parlamentarier']
     . '</ul>'
-    . '</div>'
+    . lobbywatch_get_workflow_state_line($record)
+      . '</div>'
     ;
 
     $build = array();
@@ -1402,7 +1403,8 @@ function lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
     . '<ul>'
     . $record['mitglieder']
     . '</ul>'
-    . '</div>'
+    . lobbywatch_get_workflow_state_line($record)
+      . '</div>'
     ;
 
     $build = array();
@@ -1518,7 +1520,8 @@ GROUP_CONCAT(DISTINCT
 //     . '<li>Rechtsform: ' . check_plain($record['rechtsform'])
     . $record['interessengruppen']
     . '</ul>'
-    . '</div>'
+    . lobbywatch_get_workflow_state_line($record)
+      . '</div>'
     ;
 
     $build = array();
@@ -1612,7 +1615,8 @@ function lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = tr
     . '<tr><td>Beschreibung</td><td>' . check_plain($record['beschreibung']) . '</td></tr>'
     . '<tr><td>Zuständige Kommission</td><td>' . l($record['kommission'], 'daten/kommission/' . $record['kommission_id']) . '</td></tr>'
     . '</table>'
-    . '</div>'
+    . lobbywatch_get_workflow_state_line($record)
+      . '</div>'
     ;
 
     $build = array();
@@ -1735,7 +1739,8 @@ GROUP BY zutrittsberechtigung.id;";
     . '<ul>'
     .    $record['mandate']
     . '</ul>'
-    . '</div>'
+    . lobbywatch_get_workflow_state_line($record)
+      . '</div>'
     ;
 
     $build = array();
