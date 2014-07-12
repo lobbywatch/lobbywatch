@@ -327,6 +327,31 @@ function lobbywatch_views_data() {
       ),
   );
 
+  // im_rat_bis
+  $data['v_parlamentarier']['active'] = array(
+      'title' => t('Active'), // The item it appears as on the UI,
+      'help' => t('Parlamentarier im Rat'), // The help that appears on the UI,
+      'field' => array(
+          'field' => 'im_rat_bis',
+          'handler' => 'lobbywatch_handler_field_active',
+      ),
+      'filter' => array(
+          'field' => 'im_rat_bis',
+          'handler' => 'lobbywatch_handler_filter_parlamentarier_active',
+          'label' => t('Active or admin'),
+      ),
+  );
+
+  $data['v_parlamentarier']['active_or_admin'] = array(
+      'title' => t('Active or admin'),
+      'help' => t('Filters out inactive parlamentarier if the current user cannot view it.'),
+      'filter' => array(
+          'field' => 'im_rat_bis',
+          'handler' => 'lobbywatch_handler_filter_parlamentarier_active_or_admin',
+          'label' => t('Active or admin'),
+      ),
+  );
+
 //   // im_rat_bis
 //   $data['v_parlamentarier']['im_rat_bis_string'] = array(
 //       'title' => t('Im Rat bis (String)'), // The item it appears as on the UI,
@@ -516,12 +541,12 @@ function lobbywatch_views_data() {
 
   // published status + extra
   $data['v_parlamentarier']['freigabe_datum_extra'] = array(
-      'title' => t('Published or admin'),
+      'title' => t('Released or admin'),
       'help' => t('Filters out unpublished lobbywatch content if the current user cannot view it.'),
       'filter' => array(
           'field' => 'freigabe_datum',
-          'handler' => 'lobbywatch_handler_filter_freigabe_datum',
-          'label' => t('Published or admin'),
+          'handler' => 'lobbywatch_handler_filter_released_or_admin',
+          'label' => t('Released or admin'),
       ),
   );
 
@@ -534,6 +559,20 @@ function lobbywatch_views_data() {
 //           'label' => t('Published or admin'),
 //       ),
 //   );
+
+  $data['v_parlamentarier']['released'] = array(
+      'title' => t('Released'), // The item it appears as on the UI,
+      'help' => t('Released'), // The help that appears on the UI,
+      'field' => array(
+          'field' => 'freigabe_datum',
+          'handler' => 'lobbywatch_handler_field_released',
+      ),
+      'filter' => array(
+          'field' => 'freigabe_datum',
+          'handler' => 'lobbywatch_handler_filter_released',
+          'label' => t('Released'),
+      ),
+  );
 
 
 
