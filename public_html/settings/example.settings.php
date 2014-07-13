@@ -13,7 +13,14 @@ global $env_dir;
 global $env;
 global $debug;
 
-$stage = false;
+global $drupal_running;
+global $lobbywatch_mode;
+
+if (isset($drupal_running) && $drupal_running) {
+  $stage = $lobbywatch_mode === 'PROD';
+} else {
+  $stage = false;
+}
 
 $debug = false;
 
