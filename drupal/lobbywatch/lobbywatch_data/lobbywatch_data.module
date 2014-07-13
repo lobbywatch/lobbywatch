@@ -4,176 +4,25 @@
  * Implements hook_menu().
  */
 function lobbywatch_data_menu() {
-//   dpm('passed');
   $items = array();
 
-//   $items['daten/parlamentarier-old'] = array(
-//     'title' => 'Parlamentarier',
-//     'page callback' => 'lobbywatch_data_parlamentarier_list',
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
+  foreach (Constants::$workflow_tables as $key => $value) {
+    $items["data/interface/v1/json/table/$key/flat/id/%"] = array(
+      'page callback' => '_lobbywatch_data_table_flat_id',
+      'page arguments' => array($key, 8),
+      'access arguments' => array('access lobbywatch data basic content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch_data.interface.inc',
+    );
 
-  $items['data/interface/json/table/partei/flat/id/%'] = array(
-    'page callback' => '_lobbywatch_data_table_flat_id',
-    'page arguments' => array('partei', 7),
-    'access arguments' => array('access lobbywatch data basic content'),
-    'type' => MENU_CALLBACK,
-    'file' => 'lobbywatch_data.interface.inc',
-  );
-
-  $items['data/interface/json/table/partei/flat/all'] = array(
-    'page callback' => '_lobbywatch_data_table_flat_list',
-    'page arguments' => array(7),
-    'access arguments' => array('access lobbywatch data basic content'),
-    'type' => MENU_CALLBACK,
-    'file' => 'lobbywatch_data.interface.inc',
-  );
-
-//   $items['data/interface/json/table/partei/flat/all'] = array(
-//       'title' => 'Parlamentarier',
-//       'title callback' => 'lobbywatch_data_page_title',
-//       'title arguments' => array('Parlamentarier: ', '', 'parlamentarier', 2),
-//       // TODO set 'title callback' for adding name
-//       'page callback' => 'lobbywatch_data_parlamentarier_id',
-//       'page arguments' => array(2),
-//       'access arguments' => array('access lobbywatch general content'),
-//       'type' => MENU_CALLBACK,
-//   );
-
-//   $items['data/interface/json/table/partei/aggregate/id/%'] = array(
-//     'title' => 'Parlamentarier',
-//     'title callback' => 'lobbywatch_data_page_title',
-//     'title arguments' => array('Parlamentarier: ', '', 'parlamentarier', 2),
-//     // TODO set 'title callback' for adding name
-//     'page callback' => 'lobbywatch_data_parlamentarier_id',
-//     'page arguments' => array(2),
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['data/interface/json/table/partei/aggregate/all'] = array(
-//       'title' => 'Parlamentarier',
-//       'title callback' => 'lobbywatch_data_page_title',
-//       'title arguments' => array('Parlamentarier: ', '', 'parlamentarier', 2),
-//       // TODO set 'title callback' for adding name
-//       'page callback' => 'lobbywatch_data_parlamentarier_id',
-//       'page arguments' => array(2),
-//       'access arguments' => array('access lobbywatch general content'),
-//       'type' => MENU_CALLBACK,
-//   );
-
-//   $items['daten/parlamentarier/%/%'] = array(
-//     'title' => 'Parlamentarier',
-//     'title callback' => 'lobbywatch_data_page_title',
-//     'title arguments' => array('Parlamentarier: ', '', 'parlamentarier', 2),
-//     'page callback' => 'lobbywatch_data_parlamentarier_id',
-//     'page arguments' => array(2, 3),
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/organisation'] = array(
-//     'title' => 'Organisationen',
-//     'page callback' => 'lobbywatch_data_organisation_list',
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/organisation/%'] = array(
-//     'title' => 'Organisation',
-//     'title callback' => 'lobbywatch_data_page_title',
-//     'title arguments' => array('Organisation: ', '', 'organisation', 2),
-//     'page callback' => 'lobbywatch_data_organisation_id',
-//     'page arguments' => array(2),
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/partei'] = array(
-//     'title' => 'Parteien',
-//     'page callback' => 'lobbywatch_data_partei_list',
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/partei/%'] = array(
-//     'title' => 'Partei',
-//     'title callback' => 'lobbywatch_data_page_title',
-//     'title arguments' => array('Partei: ', '', 'partei', 2),
-//     'page callback' => 'lobbywatch_data_partei_id',
-//     'page arguments' => array(2),
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/kommission'] = array(
-//     'title' => 'Kommissionen',
-//     'page callback' => 'lobbywatch_data_kommission_list',
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/kommission/%'] = array(
-//     'title' => 'Kommission',
-//     'title callback' => 'lobbywatch_data_page_title',
-//     'title arguments' => array('Kommission: ', '', 'kommission', 2),
-//     'page callback' => 'lobbywatch_data_kommission_id',
-//     'page arguments' => array(2),
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/branche'] = array(
-//     'title' => 'Branchen',
-//     'page callback' => 'lobbywatch_data_branche_list',
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/branche/%'] = array(
-//     'title' => 'Branche',
-//     'title callback' => 'lobbywatch_data_page_title',
-//     'title arguments' => array('Branche: ', '', 'branche', 2),
-//     'page callback' => 'lobbywatch_data_branche_id',
-//     'page arguments' => array(2),
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/lobbygruppe'] = array(
-//     'title' => 'Lobbygruppen',
-//     'page callback' => 'lobbywatch_data_interessengruppe_list',
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/lobbygruppe/%'] = array(
-//     'title' => 'Lobbygruppe',
-//     'title callback' => 'lobbywatch_data_page_title',
-//     'title arguments' => array('Lobbygruppe: ', '', 'interessengruppe', 2),
-//     'page callback' => 'lobbywatch_data_interessengruppe_id',
-//     'page arguments' => array(2),
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/zutrittsberechtigter'] = array(
-//     'title' => 'Zutrittsberechtigte',
-//     'page callback' => 'lobbywatch_data_zutrittsberechtigung_list',
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
-
-//   $items['daten/zutrittsberechtigter/%'] = array(
-//     'title' => 'Zutrittsberechtigte(r)',
-//     'title callback' => 'lobbywatch_data_page_title',
-//     'title arguments' => array('Zutrittsberechtigte(r): ', '', 'zutrittsberechtigung', 2),
-//     'page callback' => 'lobbywatch_data_zutrittsberechtigung_id',
-//     'page arguments' => array(2),
-//     'access arguments' => array('access lobbywatch general content'),
-//     'type' => MENU_CALLBACK,
-//     );
+    $items["data/interface/v1/json/table/$key/flat/all"] = array(
+      'page callback' => '_lobbywatch_data_table_flat_list',
+      'page arguments' => array($key),
+      'access arguments' => array('access lobbywatch data basic content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch_data.interface.inc',
+    );
+  }
 
   return $items;
 }
@@ -196,4 +45,11 @@ function lobbywatch_data_permission() {
       'title' => t('Access unpublished (nicht freigegeben) content of the lobbywatch data module'),
     ),
   );
+}
+
+function lobbywatch_data_init() {
+  //   require_once dirname(__FILE__) . '/../../../lobbywatch.ch/app/settings/settings.php';
+  require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/common/utils.php';
+  require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/settings/settings.php';
+  dpm($public_files_dir_abs, '$public_files_dir_abs lobbywatch_data');
 }

@@ -210,7 +210,7 @@ function parlamentarier_update_photo_metadata($page, &$rowData, &$cancel, &$mess
   }
 
   // A photo filename ending with / means there was no photo
-  if ($file !== null && !endsWith($file, '/')) {
+  if ($file !== null && !utils_endsWith($file, '/')) {
     $path_parts = pathinfo($file);
 
     $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension
@@ -310,7 +310,7 @@ function symbol_update_metadata($page, &$rowData, &$cancel, &$message, $tableNam
   }
 
   // A photo filename ending with / means there was no photo
-  if ($file !== null && !endsWith($file, '/')) {
+  if ($file !== null && !utils_endsWith($file, '/')) {
     $path_parts = pathinfo($file);
 
     $finfo_mime = new finfo(FILEINFO_MIME_TYPE); // return mime type ala mimetype extension

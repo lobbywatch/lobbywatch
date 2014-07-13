@@ -1,5 +1,38 @@
 <?php
 
+class Constants {
+  public static $workflow_tables = array(
+    'branche' => 'Branche',
+    'interessenbindung' => 'Interessenbindung',
+    'interessengruppe' => 'Lobbygruppe',
+    'in_kommission' => 'In Kommission',
+    'kommission' => 'Kommission',
+    'mandat' => 'Mandat',
+    'organisation' => 'Organisation',
+    'organisation_beziehung' => 'Organisation Beziehung',
+    'organisation_jahr' => 'Organisationsjahr',
+    'parlamentarier' => 'Parlamentarier',
+    'partei' => 'Partei',
+    'fraktion' => 'Fraktion',
+    'rat' => 'Rat',
+    'kanton' => 'Kanton',
+    'kanton_jahr' => 'Kantonjahr',
+    'zutrittsberechtigung' => 'Zutrittsberechtigter',
+  );
+
+  public static $meta_tables = array(
+    'parlamentarier_anhang' => 'Parlamentarieranhang',
+    'organisation_anhang' => 'Organisationsanhang',
+    'zutrittsberechtigung_anhang' => 'Zutrittsberechtigunganhang',
+    'settings' => 'Einstellungen',
+    'settings_category' => 'Einstellungskategorien',
+  );
+
+  public static $intern_fields = array('notizen', 'updated_visa', 'created_visa', 'autorisiert_visa', 'freigabe_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa', 'symbol_abs', 'photo');
+
+
+}
+
 /**
 * Implements hook_views_api().
 */
@@ -410,3 +443,9 @@ function lobbywatch_get_kommissionen($check_unpublished = true) {
   return $cache;
 }
 
+function lobbywatch_init() {
+//   require_once dirname(__FILE__) . '/../../../lobbywatch.ch/app/settings/settings.php';
+    require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/common/utils.php';
+    require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/settings/settings.php';
+    dpm($public_files_dir_abs, '$public_files_dir_abs lobbywatch');
+}

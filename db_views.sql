@@ -339,7 +339,8 @@ LEFT JOIN `v_settings_category` settings_category
 ON settings.category_id = settings_category.id;
 
 CREATE OR REPLACE VIEW `v_country` AS
-SELECT country.name_de as anzeige_name, country.*
+SELECT country.name_de as anzeige_name, country.*,
+UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix
 FROM `country`;
 
 CREATE OR REPLACE VIEW `v_rat` AS
@@ -393,6 +394,7 @@ FROM `fraktion`;
 
 CREATE OR REPLACE VIEW `v_interessenbindung` AS
 SELECT interessenbindung.*,
+UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(interessenbindung.created_date) as created_date_unix, UNIX_TIMESTAMP(interessenbindung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessenbindung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessenbindung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessenbindung.freigabe_datum) as freigabe_datum_unix
 FROM `interessenbindung`;
 
@@ -470,11 +472,13 @@ SELECT organisation_anhang.organisation_id as organisation_id2, organisation_anh
 FROM `organisation_anhang`;
 
 CREATE OR REPLACE VIEW `v_mandat` AS SELECT mandat.*,
+UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(mandat.created_date) as created_date_unix, UNIX_TIMESTAMP(mandat.updated_date) as updated_date_unix, UNIX_TIMESTAMP(mandat.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(mandat.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(mandat.freigabe_datum) as freigabe_datum_unix
 FROM `mandat`;
 
 CREATE OR REPLACE VIEW `v_in_kommission` AS
 SELECT in_kommission.*, rat.abkuerzung as rat, rat.abkuerzung as ratstyp, parlamentarier.partei_id, parlamentarier.fraktion_id, parlamentarier.freigabe_datum as parlamentarier_freigabe_datum, kanton.abkuerzung as kanton, kommission.abkuerzung as kommission_abkuerzung, kommission.name as kommission_name, kommission.art as kommission_art, kommission.typ as kommission_typ,
+UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(in_kommission.created_date) as created_date_unix, UNIX_TIMESTAMP(in_kommission.updated_date) as updated_date_unix, UNIX_TIMESTAMP(in_kommission.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(in_kommission.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(in_kommission.freigabe_datum) as freigabe_datum_unix
 FROM `in_kommission`
 INNER JOIN `parlamentarier`
@@ -488,6 +492,7 @@ ON in_kommission.kommission_id = kommission.id;
 
 CREATE OR REPLACE VIEW `v_organisation_beziehung` AS
 SELECT organisation_beziehung.*,
+UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(organisation_beziehung.created_date) as created_date_unix, UNIX_TIMESTAMP(organisation_beziehung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(organisation_beziehung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(organisation_beziehung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(organisation_beziehung.freigabe_datum) as freigabe_datum_unix
 FROM `organisation_beziehung`;
 
@@ -518,6 +523,7 @@ CREATE OR REPLACE VIEW `v_parlamentarier_simple` AS
 SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name,
 CONCAT_WS(' ', p.vorname, p.zweiter_vorname, p.nachname) AS name,
 p.*,
+UNIX_TIMESTAMP(im_rat_seit) as im_rat_seit_unix, UNIX_TIMESTAMP(im_rat_bis) as im_rat_bis_unix,
 UNIX_TIMESTAMP(p.created_date) as created_date_unix, UNIX_TIMESTAMP(p.updated_date) as updated_date_unix, UNIX_TIMESTAMP(p.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(p.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(p.freigabe_datum) as freigabe_datum_unix
 FROM `parlamentarier` p;
 
@@ -549,6 +555,7 @@ SELECT CONCAT(zutrittsberechtigung.nachname, ', ', zutrittsberechtigung.vorname)
 zutrittsberechtigung.*,
 partei.abkuerzung AS partei,
 parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.freigabe_datum as parlamentarier_freigabe_datum, UNIX_TIMESTAMP(parlamentarier.freigabe_datum) as parlamentarier_freigabe_datum_unix,
+UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(zutrittsberechtigung.created_date) as created_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.freigabe_datum) as freigabe_datum_unix
 FROM `zutrittsberechtigung`
 LEFT JOIN `v_partei` partei
