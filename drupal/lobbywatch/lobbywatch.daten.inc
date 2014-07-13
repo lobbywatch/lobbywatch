@@ -10,14 +10,14 @@ function _lobbywatch_parlamentarier_autocomplete($str = '', $check_unpublished =
 
   try {
     $items = array();
-    $sql = "SELECT parlamentarier.anzeige_name, parlamentarier.id FROM v_parlamentarier parlamentarier WHERE parlamentarier.im_rat_bis IS NULL AND parlamentarier.anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW()' : '');
+    $sql = "SELECT parlamentarier.anzeige_name, parlamentarier.id FROM v_parlamentarier parlamentarier WHERE parlamentarier.im_rat_bis IS NULL AND parlamentarier.anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() LIMIT 20' : '');
     $result = db_query($sql, array(':str' => "%$str%"));
 
   //   dpm($result, 'result');
 
     while($record = $result->fetchAssoc()) {
-      $item = check_plain($record['anzeige_name']) . " [" . check_plain($record['id']) . "]";
-      $items[$item] = $item;
+      $key = check_plain($record['anzeige_name']) . " [" . check_plain($record['id']) . "]";
+      $items[$key] = check_plain($record['anzeige_name']);
     }
   } finally {
     // Go back to the default database,

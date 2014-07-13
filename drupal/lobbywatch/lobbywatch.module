@@ -292,7 +292,7 @@ function lobbywatch_form($form, &$form_state) {
   // You can add as much or as little to this form as
   // needed. See the forms api for all possible elements.
 
-  //TODO support auto submit
+  // Autocomplete with min num chars: ref http://drupal.stackexchange.com/questions/78727/enforcing-minimum-number-of-characters-for-autocomplete-path
   $form['search_field'] = array(
     // #type tells drupal what kind of element to build
     '#type' => 'textfield',
