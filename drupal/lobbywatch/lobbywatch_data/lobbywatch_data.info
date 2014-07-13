@@ -1,0 +1,12 @@
+name = Lobbywatch data interface
+description = "Lobbywatch data interface generating JSON for D3 visualizations"
+
+package = "Lobbywatch"
+; dependencies[] = ibexutils
+; dependencies[] = views
+dependencies[] = lobbywatch
+
+core = "7.x"
+
+; Views handlers
+f

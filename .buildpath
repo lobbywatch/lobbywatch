@@ -5,4 +5,5 @@
 	<buildpathentry kind="src" path="drupal/lobbywatch_visual"/>
 	<buildpathentry excluding="wiki/" kind="src" path="public_html"/>
 	<buildpathentry kind="src" path="drupal/lobbywatch"/>
+	<buildpathentry kind="src" path="lobbywatch"/>
 </buildpath>
