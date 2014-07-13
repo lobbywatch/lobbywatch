@@ -250,10 +250,10 @@ function lobbywatch_form($form, &$form_state) {
     // The "label" for this field
     '#title' => t("Parlamentariername"),
     // Optional description
-    '#description' => t('Parlamentariername zur Anzeige'),
+//     '#description' => t('Parlamentariername zur Anzeige'),
     '#autocomplete_path' => 'autocomplete/parlamentarier',
     // Autocomplete, autosubmit, ref: https://drupal.org/node/1772490
-//     '#attributes' => array('class' => array('auto_submit')),
+    '#attributes' => array('class' => array('auto_submit')),
 //     '#attributes' => array('class' => array('use-ajax-submit')),
 );
 
@@ -792,7 +792,7 @@ function lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true) 
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
       '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>' .
       '<tr><td>Kinder:</td><td>' . check_plain($record['anzahl_kinder']) . '</td></tr>' .
-      '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>' .
+      '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>' .
       '<tr><td>Parlament.ch Webseite:</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
       '</table>' .
       '<h3>Kommissionen</h3><ul>' . $record['kommissionen_namen'] . '</ul>' .
@@ -1091,45 +1091,52 @@ ORDER BY organisation.anzeige_name;
       . '<ul>'
       . $record['arbeitet_fuer']
       . '</ul>';
+//       dpm($record['arbeitet_fuer'], 'arbeitet_fuer');
     }
     if ($record['auftraggeber_fuer']) {
       $markup .= '<h3>Auftraggeber für</h3>'
       . '<ul>'
       . $record['auftraggeber_fuer']
       . '</ul>';
+//       dpm($record['auftraggeber_fuer'], 'auftraggeber_fuer');
     }
     if ($record['mitglied_von']) {
       $markup .= '<h3>Mitglied von</h3>'
       . '<ul>'
       . $record['mitglied_von']
       . '</ul>';
+//       dpm($record['mitglied_von'], 'mitglied_von');
     }
     if ($record['mitglieder']) {
       $markup .= '<h3>Mitglieder</h3>'
       . '<ul>'
       . $record['mitglieder']
       . '</ul>';
+//       dpm($record['mitglieder'], 'mitglieder');
     }
     if ($record['muttergesellschaft']) {
       $markup .= '<h3>Muttergesellschaft</h3>'
       . '<ul>'
       . $record['muttergesellschaft']
       . '</ul>';
+//       dpm($record['muttergesellschaft'], 'muttergesellschaft');
     }
     if ($record['tochtergesellschaften']) {
       $markup .= '<h3>Tochtergesellschaften</h3>'
       . '<ul>'
       . $record['tochtergesellschaften']
       . '</ul>';
+//       dpm($record['tochtergesellschaften'], 'tochtergesellschaften');
     }
     if ($record['verbundene_parlamentarier']) {
       $markup .= '<h3>Parlamentarierverbindungen</h3>'
       . '<ul>'
       . $record['verbundene_parlamentarier']
       . '</ul>';
+//       dpm($record['verbundene_parlamentarier'], 'verbundene_parlamentarier');
     }
 
-    $record .= '</div>';
+    $markup .= '</div>';
 
 
     $build = array();
