@@ -10,7 +10,7 @@ function lobbywatch_data_menu() {
     $items["data/interface/v1/json/table/$key/flat/id/%"] = array(
       'page callback' => '_lobbywatch_data_table_flat_id',
       'page arguments' => array($key, 8),
-      'access arguments' => array('access lobbywatch data basic content'),
+      'access arguments' => array('access lobbywatch data general content'),
       'type' => MENU_CALLBACK,
       'file' => 'lobbywatch_data.interface.inc',
     );
@@ -18,7 +18,7 @@ function lobbywatch_data_menu() {
     $items["data/interface/v1/json/table/$key/flat/all"] = array(
       'page callback' => '_lobbywatch_data_table_flat_list',
       'page arguments' => array($key),
-      'access arguments' => array('access lobbywatch data basic content'),
+      'access arguments' => array('access lobbywatch data general content'),
       'type' => MENU_CALLBACK,
       'file' => 'lobbywatch_data.interface.inc',
     );
@@ -32,9 +32,6 @@ function lobbywatch_data_menu() {
 */
 function lobbywatch_data_permission() {
   return array(
-    'access lobbywatch data basic content' => array(
-      'title' => t('Access basic content of the lobbywatch data module'),
-    ),
     'access lobbywatch data general content' => array(
       'title' => t('Access general content of the lobbywatch data module'),
     ),

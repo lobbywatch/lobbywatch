@@ -32,7 +32,7 @@ function _lobbywatch_data_table_flat_id($table, $id) {
     $response = array(
         'success' => $success,
         'message' => $message,
-        'sql' => $sql,
+//         'sql' => $sql,
         'data' => $items[0],
     );
 
@@ -104,7 +104,7 @@ function _lobbywatch_data_table_flat_list($table) {
       $response = array(
           'success' => $success,
           'message' => $message,
-          'sql' => $sql,
+//           'sql' => $sql,
           'data' => $items,
       );
 
