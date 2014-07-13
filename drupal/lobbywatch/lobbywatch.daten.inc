@@ -1470,6 +1470,7 @@ function _lobbywatch_get_kommissionen($check_unpublished = true) {
 }
 
 function _lobbywatch_get_workflow_state_line($record) {
+  global $lobbywatch_mode;
       $admin = user_access('access lobbywatch unpublished content');
       return '<p class="lobbywatch-meta-fields-line"><small>'
         . t('Last updated !date', array ('!date' => '<time datetime="'.getISO8601Date($record['updated_date_unix']).'">' . format_date($record['updated_date_unix'], 'short_date') . '</time>')) .
@@ -1480,7 +1481,8 @@ function _lobbywatch_get_workflow_state_line($record) {
           ($record ['eingabe_abgeschlossen_datum_unix'] ? '<br>' . t('Eingabe  @date', array ('@date' => format_date($record ['eingabe_abgeschlossen_datum_unix'], 'short_date') )) . '/' .  $record ['eingabe_abgeschlossen_visa'] : '')
           . ($record ['kontrolliert_datum_unix'] ? '<br>' . t('Kontrolle  @date', array ('@date' => format_date($record ['kontrolliert_datum_unix'], 'short_date') )) . '/' .  $record ['kontrolliert_visa'] : '')
         : '') .
-      '</small></p>';
+      '</small></p>' .
+      ($admin ? "<p class=\"lobbywatch-meta-fields-line\"><small>Verwendete DB: $lobbywatch_mode</small></p>" : "");
 }
 
 function getISO8601Date($unix_timestamp) {
