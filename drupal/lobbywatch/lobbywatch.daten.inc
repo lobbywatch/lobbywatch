@@ -422,6 +422,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
   }
 
   if ($record) {
+      $admin = user_access('access lobbywatch unpublished content');
       $rat = check_plain($record['rat_name_de']);
       $ratstyp = check_plain($record['ratstyp']);
       if ($ratstyp == 'SR') {
@@ -438,6 +439,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '">' .
       (!$active ? '<p><strong><em>Nicht mehr im Parlament. War im Parlament bis ' . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
       (user_access('access lobbywatch unpublished content') ? '<p class="unpublished">Lobbyfaktor: <b>XY</b></p>' : '') .
+      _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
       '<table border="0">' .
       '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
       '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
@@ -476,6 +478,12 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
   }
 }
 
+function _lobbywatch_get_edit_link($admin, $table, $id) {
+  global $drupal_base;
+  global $env_dir;
+  global $lobbywatch_mode;
+  return ($admin ? '<p class="admin">' . l("Edit $lobbywatch_mode", "{$env_dir}bearbeitung/$table.php?operation=edit&pk0=$id", array('external' => true,'attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</p>' : '');
+}
 /**
  * TODO
  */
@@ -728,10 +736,12 @@ ORDER BY organisation.anzeige_name;
     db_set_active();
   }
   if (isset($record['id'])) {
+    $admin = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
 //     . '<h3>Informationen</h3>'
+    _lobbywatch_get_edit_link($admin, 'organisation', $id) .
     '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Rechtsform</td><td>' . check_plain($record['rechtsform']) . '</td></tr>'
@@ -920,9 +930,11 @@ function _lobbywatch_kommission_id($id, $name = '') {
     db_set_active();
   }
   if ($record_active) {
+    $admin = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record_active['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //      '<h2>' . check_plain($record_active["anzeige_name"]) . '</h2>' .
+    _lobbywatch_get_edit_link($admin, 'kommission', $id) .
     '<table border="0">'
     . '<tr><td>Abkürzung</td><td>' . check_plain($record_active['abkuerzung']) . '</td></tr>'
     . '<tr><td>Parlament.ch Link</td><td>' . (isset($record_active['parlament_url']) ? l($record_active['anzeige_name'], $record_active['parlament_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
@@ -1055,9 +1067,11 @@ function _lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
     db_set_active();
   }
   if ($record) {
+    $admin = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
+    _lobbywatch_get_edit_link($admin, 'partei', $id) .
     '<table border=0>'
         . '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
             . '</table>'
@@ -1168,9 +1182,11 @@ GROUP_CONCAT(DISTINCT
     db_set_active();
   }
   if ($record) {
+    $admin = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //     '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
+    _lobbywatch_get_edit_link($admin, 'branche', $id) .
     '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Zuständige Kommission</td><td>' . l($record['kommission'], 'daten/kommission/' . $record['kommission_id']) . '</td></tr>'
@@ -1268,9 +1284,11 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
     db_set_active();
   }
   if ($record) {
+    $admin = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //     '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
+    _lobbywatch_get_edit_link($admin, 'interessengruppe', $id) .
     '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Branche</td><td>' . l($record['branche'], 'daten/branche/' . $record['branche_id']) . '</td></tr>'
@@ -1385,10 +1403,12 @@ GROUP BY zutrittsberechtigung.id;";
     db_set_active();
   }
   if ($record) {
+    $admin = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
-    ($record['bis'] != null ? '<p><strong><em>Nicht mehr zutrittsberechtigt ins Parlament. War zutrittsberechtigt bis ' . check_plain($record['bis_formatted']) . '.</em></strong></p>' : '')
+    ($record['bis'] != null ? '<p><strong><em>Nicht mehr zutrittsberechtigt ins Parlament. War zutrittsberechtigt bis ' . check_plain($record['bis_formatted']) . '.</em></strong></p>' : '') .
+    _lobbywatch_get_edit_link($admin, 'zutrittsberechtigung', $id)
     . '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Eingeladen von:</td><td>' . l($record['parlamentarier_name'], 'daten/parlamentarier/' . $record['parlamentarier_id']) . '</td></tr>'
@@ -1471,18 +1491,18 @@ function _lobbywatch_get_kommissionen($check_unpublished = true) {
 
 function _lobbywatch_get_workflow_state_line($record) {
   global $lobbywatch_mode;
-      $admin = user_access('access lobbywatch unpublished content');
-      return '<p class="lobbywatch-meta-fields-line"><small>'
-        . t('Last updated !date', array ('!date' => '<time datetime="'.getISO8601Date($record['updated_date_unix']).'">' . format_date($record['updated_date_unix'], 'short_date') . '</time>')) .
-        ($admin ?
-          '/' . $record ['updated_visa'] : '') .
-          '<br>' . ($record['freigabe_datum'] && $record['freigabe_datum_unix'] < time() ? t('Published  !date', array ('!date' => '<time datetime="'.getISO8601Date($record['freigabe_datum_unix']).'" pubdate="pubdate">' . format_date($record['freigabe_datum_unix'], 'short_date') . '</time>' )) . ($admin ? '/' . $record ['freigabe_visa'] : '') : t('Unpublished')) .
-        ($admin ?  '<br>' . t('Created  @date', array ('@date' => format_date($record['created_date_unix'], 'short_date'))) . '/' . $record ['created_visa'] .
-          ($record ['eingabe_abgeschlossen_datum_unix'] ? '<br>' . t('Eingabe  @date', array ('@date' => format_date($record ['eingabe_abgeschlossen_datum_unix'], 'short_date') )) . '/' .  $record ['eingabe_abgeschlossen_visa'] : '')
-          . ($record ['kontrolliert_datum_unix'] ? '<br>' . t('Kontrolle  @date', array ('@date' => format_date($record ['kontrolliert_datum_unix'], 'short_date') )) . '/' .  $record ['kontrolliert_visa'] : '')
-        : '') .
-      '</small></p>' .
-      ($admin ? "<p class=\"lobbywatch-meta-fields-line\"><small>Verwendete DB: $lobbywatch_mode</small></p>" : "");
+  $admin = user_access('access lobbywatch unpublished content');
+  return '<p class="lobbywatch-meta-fields-line"><small>'
+    . t('Last updated !date', array ('!date' => '<time datetime="'.getISO8601Date($record['updated_date_unix']).'">' . format_date($record['updated_date_unix'], 'short_date') . '</time>')) .
+    ($admin ?
+      '/' . $record ['updated_visa'] : '') .
+      '<br>' . ($record['freigabe_datum'] && $record['freigabe_datum_unix'] < time() ? t('Published  !date', array ('!date' => '<time datetime="'.getISO8601Date($record['freigabe_datum_unix']).'" pubdate="pubdate">' . format_date($record['freigabe_datum_unix'], 'short_date') . '</time>' )) . ($admin ? '/' . $record ['freigabe_visa'] : '') : t('Unpublished')) .
+    ($admin ?  '<br>' . t('Created  @date', array ('@date' => format_date($record['created_date_unix'], 'short_date'))) . '/' . $record ['created_visa'] .
+      ($record ['eingabe_abgeschlossen_datum_unix'] ? '<br>' . t('Eingabe  @date', array ('@date' => format_date($record ['eingabe_abgeschlossen_datum_unix'], 'short_date') )) . '/' .  $record ['eingabe_abgeschlossen_visa'] : '')
+      . ($record ['kontrolliert_datum_unix'] ? '<br>' . t('Kontrolle  @date', array ('@date' => format_date($record ['kontrolliert_datum_unix'], 'short_date') )) . '/' .  $record ['kontrolliert_visa'] : '')
+    : '') .
+  '</small></p>' .
+  ($admin ? "<p class=\"lobbywatch-meta-fields-line\"><small>Verwendete DB: $lobbywatch_mode</small></p>" : "");
 }
 
 function getISO8601Date($unix_timestamp) {
