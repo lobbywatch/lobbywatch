@@ -52,15 +52,15 @@ function lobbywatch_menu() {
 //   dpm('passed');
   $items = array();
 
-  $items['autocomplete/parlamentarier'] = array(
-     'title' => 'Autocomplete (simple)',
+  $items['autocomplete/lobbywatch/search'] = array(
+     'title' => 'Autocomplete Suche',
 //     'page callback' => 'drupal_get_form',
 //     'page arguments' => array('ajax_example_simple_autocomplete'),
 //     'access arguments' => array('access user profiles'),
 //     'file' => 'ajax_example_autocomplete.inc',
 //     'weight' => 10,
 //     'path' => 'parlamentarier/autocomplete',
-    'page callback' => '_lobbywatch_parlamentarier_autocomplete',
+    'page callback' => '_lobbywatch_search_autocomplete',
 //     'callback' => '_lobbywatch_parlamentarier_autocomplete',
     'type' => MENU_CALLBACK,
     'access arguments' => array('access lobbywatch general content'),
@@ -74,8 +74,19 @@ function lobbywatch_menu() {
 //     'type' => MENU_CALLBACK,
 //     );
 
+  $items['daten/parlamentarier/%/%'] = array(
+//     'title' => 'Parlamentarier',
+    'title callback' => '_lobbywatch_page_title',
+    'title arguments' => array('Parlamentarier: ', '', 'parlamentarier', 2, 3),
+    'page callback' => '_lobbywatch_parlamentarier_id',
+    'page arguments' => array(2, 3),
+    'access arguments' => array('access lobbywatch general content'),
+    'type' => MENU_CALLBACK,
+    'file' => 'lobbywatch.daten.inc',
+  );
+
   $items['daten/parlamentarier/%'] = array(
-    'title' => 'Parlamentarier',
+//     'title' => 'Parlamentarier',
     'title callback' => '_lobbywatch_page_title',
     'title arguments' => array('Parlamentarier: ', '', 'parlamentarier', 2),
     // TODO set 'title callback' for adding name
@@ -86,17 +97,6 @@ function lobbywatch_menu() {
     'file' => 'lobbywatch.daten.inc',
     );
 
-  $items['daten/parlamentarier/%/%'] = array(
-    'title' => 'Parlamentarier',
-    'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array('Parlamentarier: ', '', 'parlamentarier', 2),
-    'page callback' => '_lobbywatch_parlamentarier_id',
-    'page arguments' => array(2, 3),
-    'access arguments' => array('access lobbywatch general content'),
-    'type' => MENU_CALLBACK,
-    'file' => 'lobbywatch.daten.inc',
-  );
-
   $items['daten/organisation'] = array(
     'title' => 'Organisationen',
     'page callback' => '_lobbywatch_organisation_list',
@@ -106,7 +106,7 @@ function lobbywatch_menu() {
   );
 
   $items['daten/organisation/%'] = array(
-    'title' => 'Organisation',
+//     'title' => 'Organisation',
     'title callback' => '_lobbywatch_page_title',
     'title arguments' => array('Organisation: ', '', 'organisation', 2),
     'page callback' => '_lobbywatch_organisation_id',
@@ -125,7 +125,7 @@ function lobbywatch_menu() {
   );
 
   $items['daten/partei/%'] = array(
-    'title' => 'Partei',
+//     'title' => 'Partei',
     'title callback' => '_lobbywatch_page_title',
     'title arguments' => array('Partei: ', '', 'partei', 2),
     'page callback' => '_lobbywatch_partei_id',
@@ -144,7 +144,7 @@ function lobbywatch_menu() {
   );
 
   $items['daten/kommission/%'] = array(
-    'title' => 'Kommission',
+//     'title' => 'Kommission',
     'title callback' => '_lobbywatch_page_title',
     'title arguments' => array('Kommission: ', '', 'kommission', 2),
     'page callback' => '_lobbywatch_kommission_id',
@@ -163,7 +163,7 @@ function lobbywatch_menu() {
   );
 
   $items['daten/branche/%'] = array(
-    'title' => 'Branche',
+//     'title' => 'Branche',
     'title callback' => '_lobbywatch_page_title',
     'title arguments' => array('Branche: ', '', 'branche', 2),
     'page callback' => '_lobbywatch_branche_id',
@@ -182,7 +182,7 @@ function lobbywatch_menu() {
   );
 
   $items['daten/lobbygruppe/%'] = array(
-    'title' => 'Lobbygruppe',
+//     'title' => 'Lobbygruppe',
     'title callback' => '_lobbywatch_page_title',
     'title arguments' => array('Lobbygruppe: ', '', 'interessengruppe', 2),
     'page callback' => '_lobbywatch_interessengruppe_id',
@@ -201,7 +201,7 @@ function lobbywatch_menu() {
   );
 
   $items['daten/zutrittsberechtigter/%'] = array(
-    'title' => 'Zutrittsberechtigte(r)',
+//     'title' => 'Zutrittsberechtigte(r)',
     'title callback' => '_lobbywatch_page_title',
     'title arguments' => array('Zutrittsberechtigte(r): ', '', 'zutrittsberechtigung', 2),
     'page callback' => '_lobbywatch_zutrittsberechtigung_id',
@@ -252,8 +252,8 @@ function lobbywatch_permission() {
  * Implements hook_block_info().
  */
 function lobbywatch_block_info() {
-  $blocks['parlamentarier_search'] = array(
-    'info' => t('Parlamentariersuche'),
+  $blocks['lobbywatch_search'] = array(
+    'info' => t('Suche'),
     'cache' => DRUPAL_NO_CACHE,
     'weight' => 40,
     );
@@ -269,7 +269,7 @@ function lobbywatch_block_view($delta = '') {
 
   switch ($delta) {
     case 'parlamentarier_search':
-      $block['subject'] = t('Parlamentariersuche');
+      $block['subject'] = t('Suche');
       // Form in a block: http://zerotodrupal.com/content/creating-form-block-drupal-7
       $block['content'] = drupal_get_form('lobbywatch_form');
       break;
@@ -299,10 +299,12 @@ function lobbywatch_form($form, &$form_state) {
     // we want this field to be required
     '#required' => TRUE,
     // The "label" for this field
-    '#title' => t("Parlamentariername"),
+    '#title' => t("Suche Parlamentarier, Organisationen, Lobbygruppen, …"),
+    '#size' => 85,
+    '#maxlength' => 300,
     // Optional description
 //     '#description' => t('Parlamentariername zur Anzeige'),
-    '#autocomplete_path' => 'autocomplete/parlamentarier',
+    '#autocomplete_path' => 'autocomplete/lobbywatch/search',
     // Autocomplete, autosubmit, ref: https://drupal.org/node/1772490
     '#attributes' => array('class' => array('auto_submit')),
 //     '#attributes' => array('class' => array('use-ajax-submit')),
@@ -345,7 +347,7 @@ function lobbywatch_form_validate($form, &$form_state) {
 }
 
 /*
- * Define a submit funciton that drupal will
+ * Define a submit function that drupal will
  * automatically call when submit is pressed (and all validators pass)
  */
 function lobbywatch_form_submit($form, &$form_state) {
@@ -356,12 +358,14 @@ function lobbywatch_form_submit($form, &$form_state) {
 //   $message = drupal_mail('tellafriend', 'notify', $email, language_default());
   // Check the message results and let the user know if php was able to sent the email.
 
-  $result = preg_match('/\[([0-9]+)\]$/', $item, $matches);
+  $result = preg_match('/\[(\w+)=([0-9]+)\]$/', $item, $matches);
   if ($result > 0) {
     // If $result is nonzero, we found a match and can use it as the index into $matches.
-    $id = $matches[$result];
+    $table = $matches[1]; // check_plain() not necessary
+    $id = $matches[2];
+//     df("daten/$table/$id", 'goto');
     // Verify that it's a valid nid.
-    drupal_goto("daten/parlamentarier/$id");
+    drupal_goto("daten/$table/$id");
 //     $node = node_load($nid);
 //     if (empty($node)) {
 //       form_error($form['node'], t('Sorry, no node with nid %nid can be found', array('%nid' => $nid)));

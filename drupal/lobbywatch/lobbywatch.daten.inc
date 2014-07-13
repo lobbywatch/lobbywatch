@@ -1,7 +1,7 @@
 <?php
 
 // Ref https://api.drupal.org/api/examples/ajax_example!ajax_example_autocomplete.inc/7
-function _lobbywatch_parlamentarier_autocomplete($str = '', $check_unpublished = true) {
+function _lobbywatch_search_autocomplete($str = '', $check_unpublished = true) {
 
 //   return _lobbywatch_parlamentarier_list();
   // Use the database we set up earlier
@@ -9,15 +9,22 @@ function _lobbywatch_parlamentarier_autocomplete($str = '', $check_unpublished =
   db_set_active('lobbywatch');
 
   try {
-    $items = array();
-    $sql = "SELECT parlamentarier.anzeige_name, parlamentarier.id FROM v_parlamentarier parlamentarier WHERE parlamentarier.im_rat_bis IS NULL AND parlamentarier.anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() LIMIT 20' : '');
+    $table_sql = array();
+    $table = 'parlamentarier';
+    $table_sql[] = "SELECT 'parlamentarier' as page, anzeige_name as name, id FROM v_parlamentarier WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+    $table_sql[] = "SELECT 'zutrittsberechtigter' as page, anzeige_name as name, id FROM v_zutrittsberechtigung WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+    foreach (array('branche' => 'branche', 'interessengruppe' => 'lobbygruppe', 'kommission' => 'kommission', 'partei' => 'partei','organisation' => 'organisation',) as $table => $page) {
+      $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+    }
+    $sql = 'SELECT * FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
     $result = db_query($sql, array(':str' => "%$str%"));
 
   //   dpm($result, 'result');
 
+    $items = array();
     while($record = $result->fetchAssoc()) {
-      $key = check_plain($record['anzeige_name']) . " [" . check_plain($record['id']) . "]";
-      $items[$key] = check_plain($record['anzeige_name']);
+      $key = check_plain($record['name']) . " [" . check_plain($record['page']). '=' . check_plain($record['id']) . "]";
+      $items[$key] = check_plain(ucfirst($record['page']) . ': ' . $record['name']);
     }
   } finally {
     // Go back to the default database,
@@ -130,8 +137,13 @@ function _lobbywatch_parlamentarier_list($check_unpublished = true) {
 }
 
 
-function _lobbywatch_page_title($prefix, $suffix, $table, $id) {
-  return $prefix . _lobbywatch_fetch_anzeige_name($table, $id) . $suffix;
+function _lobbywatch_page_title($prefix, $suffix, $table, $id, $title = '') {
+//   df("_lobbywatch_page_title $prefix, $suffix, $table, $id");
+//   df($prefix . _lobbywatch_fetch_anzeige_name($table, $id) . $suffix . ' title: '. $title, '_lobbywatch_page_title');
+//   require_once '123';
+  // Workaround, title is otherwise empty, quite a strange thing
+  drupal_set_title($prefix . _lobbywatch_fetch_anzeige_name($table, $id) . $suffix);
+  return $prefix . _lobbywatch_fetch_anzeige_name($table, $id) . $suffix . " Ho Ho ";
 }
 
 
@@ -143,13 +155,15 @@ function _lobbywatch_fetch_anzeige_name($table, $id) {
   db_set_active('lobbywatch');
 
   try {
-    $sql = "SELECT * FROM v_$table WHERE id=:id";
+    $sql = "SELECT id, anzeige_name, name FROM v_$table WHERE id=:id";
     $result = db_query($sql, array(':id' => check_plain($id)));
 
     if ($result) {
       $record = $result->fetchAssoc();
       $url_name = check_plain($record['anzeige_name']);
     }
+//     df($record, '$record');
+//     df($url_name, '$url_name');
   } finally {
     // Go back to the default database,
     // otherwise Drupal will not be able to access it's own data later on.
