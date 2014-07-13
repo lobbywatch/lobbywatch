@@ -339,8 +339,8 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
   db_set_active('lobbywatch');
 
   try {
-//     $sql = "SET SESSION group_concat_max_len=5000;";
-//     db_query($sql);
+    $sql = "SET SESSION group_concat_max_len=10000;";
+    db_query($sql);
 
     $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.im_rat_bis, DATE_FORMAT(parlamentarier.im_rat_bis, '%d.%m.%Y') as im_rat_bis_formatted, parlamentarier.kleinbild, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei, parlamentarier.partei_id,
     parlamentarier.name, parlamentarier.anzahl_kinder, rat.name_de as rat_name_de, kanton.einwohner, kanton.auslaenderanteil, kanton.anzahl_staenderaete, kanton.anzahl_nationalraete, parlamentarier.updated_date, parlamentarier.updated_date_unix, parlamentarier.updated_visa, parlamentarier.created_date, parlamentarier.created_date_unix, parlamentarier.created_visa, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.eingabe_abgeschlossen_datum_unix, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.freigabe_datum, parlamentarier.freigabe_datum_unix, parlamentarier.freigabe_visa, parlamentarier.kontrolliert_datum, parlamentarier.kontrolliert_datum_unix, parlamentarier.kontrolliert_visa,
@@ -598,8 +598,8 @@ ORDER BY organisation.anzeige_name;
 */
 
   try {
-//     $sql = "SET SESSION group_concat_max_len=5000;";
-//     db_query($sql);
+    $sql = "SET SESSION group_concat_max_len=10000;";
+    db_query($sql);
 
     $sql_arbeitet = "SELECT organisation.*,
       GROUP_CONCAT(DISTINCT
@@ -889,8 +889,8 @@ function _lobbywatch_kommission_id($id, $name = '') {
   db_set_active('lobbywatch');
 
   try {
-//     $sql = "SET SESSION group_concat_max_len=5000;";
-//     db_query($sql);
+    $sql = "SET SESSION group_concat_max_len=10000;";
+    db_query($sql);
 
     $sql = _lobbywatch_kommission_id_SQL(true);
 
@@ -1019,10 +1019,10 @@ function _lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
   db_set_active('lobbywatch');
 
   try {
-//     $sql = "SET SESSION group_concat_max_len=5000;";
-//     db_query($sql);
+    $sql = "SET SESSION group_concat_max_len=10000;";
+    db_query($sql);
 
-  $sql = "SELECT partei.*,
+    $sql = "SELECT partei.*,
       GROUP_CONCAT(DISTINCT
         CONCAT('<li',
       IF(parlamentarier.freigabe_datum IS NULL OR parlamentarier.freigabe_datum > NOW(), ' class=\"unreleased\"', ''), '>',
@@ -1138,10 +1138,10 @@ function _lobbywatch_branche_id($id, $name = '', $check_unpublished = true) {
   db_set_active('lobbywatch');
 
   try {
-//     $sql = "SET SESSION group_concat_max_len=10000;";
-//     db_query($sql);
+    $sql = "SET SESSION group_concat_max_len=10000;";
+    db_query($sql);
 
-  $sql = "SELECT *,
+    $sql = "SELECT *,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li><a href=\"/daten/lobbygruppe/', interessengruppe.id, '\">', interessengruppe.anzeige_name, '</a>',
     IF(interessengruppe.beschreibung IS NULL OR TRIM(interessengruppe.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessengruppe.beschreibung, '&quot;</small>')))
@@ -1348,8 +1348,8 @@ function _lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished
   db_set_active('lobbywatch');
 
   try {
-//     $sql = "SET SESSION group_concat_max_len=5000;";
-//     db_query($sql);
+    $sql = "SET SESSION group_concat_max_len=10000;";
+    db_query($sql);
 
     $sql = "SELECT zutrittsberechtigung.*, DATE_FORMAT(zutrittsberechtigung.bis, '%d.%m.%Y') as bis_formatted,
   GROUP_CONCAT(DISTINCT
