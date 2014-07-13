@@ -5,6 +5,14 @@
 
 require_once dirname(__FILE__) . "/maintenance_mode.php";
 
+global $public_files_dir_abs;
+global $db_connection;
+global $rel_files_url;
+global $private_files_dir;
+global $env_dir;
+global $env;
+global $debug;
+
 $stage = false;
 
 $debug = false;

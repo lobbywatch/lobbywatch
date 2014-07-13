@@ -52,10 +52,8 @@ function _lobbywatch_data_clean_fields($record) {
   }
 
   if (true || !empty($record['symbol_klein_rel'])) {
-//     require_once dirname(__FILE__) . '/../../../../lobbywatch.ch/app/settings/settings.php';
-    require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/settings/settings.php';
-    $record['symbol_abs_path'] = $public_files_dir_abs . '/' . $record['symbol_klein_rel'];
-//     dpm($record, '$record');
+    $record['symbol_abs_path'] = $GLOBALS['public_files_dir_abs'] . '/' . $record['symbol_klein_rel'];
+    $record['symbol_url'] = $GLOBALS['base_root'] . '/' . $GLOBALS['public_files_dir_abs'] . '/' . $record['symbol_klein_rel'];
   }
 
   return $record;

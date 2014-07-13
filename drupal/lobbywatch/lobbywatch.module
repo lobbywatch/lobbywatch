@@ -444,8 +444,6 @@ function lobbywatch_get_kommissionen($check_unpublished = true) {
 }
 
 function lobbywatch_init() {
-//   require_once dirname(__FILE__) . '/../../../lobbywatch.ch/app/settings/settings.php';
     require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/common/utils.php';
     require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/settings/settings.php';
-    dpm($public_files_dir_abs, '$public_files_dir_abs lobbywatch');
 }
