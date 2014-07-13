@@ -297,7 +297,7 @@ function lobbywatch_form($form, &$form_state) {
     // #type tells drupal what kind of element to build
     '#type' => 'textfield',
     // we want this field to be required
-    '#required' => TRUE,
+    '#required' => true,
     // The "label" for this field
     '#title' => t("Suche Parlamentarier, Organisationen, Lobbygruppen, …"),
     '#size' => 85,
@@ -306,7 +306,8 @@ function lobbywatch_form($form, &$form_state) {
 //     '#description' => t('Parlamentariername zur Anzeige'),
     '#autocomplete_path' => 'autocomplete/lobbywatch/search',
     // Autocomplete, autosubmit, ref: https://drupal.org/node/1772490
-    '#attributes' => array('class' => array('auto_submit')),
+    '#attributes' => array('class' => array('auto_submit'), 'placeholder' => t("Suche Parlamentarier, Organisationen, Lobbygruppen, …")),
+//     '#attributes' =>array()
 //     '#attributes' => array('class' => array('use-ajax-submit')),
 );
 
