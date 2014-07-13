@@ -28,6 +28,7 @@ $handler->display->display_options['pager']['options']['tags']['previous'] = '�
 $handler->display->display_options['pager']['options']['tags']['next'] = 'nächste Seite ›';
 $handler->display->display_options['pager']['options']['tags']['last'] = 'letzte Seite »';
 $handler->display->display_options['style_plugin'] = 'grid';
+$handler->display->display_options['style_options']['row_class'] = '[active] [released]';
 $handler->display->display_options['row_plugin'] = 'fields';
 $handler->display->display_options['row_options']['inline'] = array(
   'ratstyp' => 'ratstyp',
@@ -36,6 +37,29 @@ $handler->display->display_options['row_options']['inline'] = array(
 );
 $handler->display->display_options['row_options']['separator'] = ', ';
 $handler->display->display_options['row_options']['hide_empty'] = TRUE;
+/* Feld: Parlamentarier: Aktiv */
+$handler->display->display_options['fields']['active']['id'] = 'active';
+$handler->display->display_options['fields']['active']['table'] = 'v_parlamentarier';
+$handler->display->display_options['fields']['active']['field'] = 'active';
+$handler->display->display_options['fields']['active']['label'] = '';
+$handler->display->display_options['fields']['active']['exclude'] = TRUE;
+$handler->display->display_options['fields']['active']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['active']['element_wrapper_class'] = '[active]';
+$handler->display->display_options['fields']['active']['type'] = 'custom';
+$handler->display->display_options['fields']['active']['type_custom_true'] = 'parlam-active';
+$handler->display->display_options['fields']['active']['type_custom_false'] = 'parlam-inactive';
+$handler->display->display_options['fields']['active']['not'] = 0;
+/* Feld: Parlamentarier: Released */
+$handler->display->display_options['fields']['released']['id'] = 'released';
+$handler->display->display_options['fields']['released']['table'] = 'v_parlamentarier';
+$handler->display->display_options['fields']['released']['field'] = 'released';
+$handler->display->display_options['fields']['released']['label'] = '';
+$handler->display->display_options['fields']['released']['exclude'] = TRUE;
+$handler->display->display_options['fields']['released']['element_label_colon'] = FALSE;
+$handler->display->display_options['fields']['released']['type'] = 'custom';
+$handler->display->display_options['fields']['released']['type_custom_true'] = 'released';
+$handler->display->display_options['fields']['released']['type_custom_false'] = 'unreleased';
+$handler->display->display_options['fields']['released']['not'] = 0;
 /* Feld: Parlamentarier: Id */
 $handler->display->display_options['fields']['id']['id'] = 'id';
 $handler->display->display_options['fields']['id']['table'] = 'v_parlamentarier';
@@ -92,10 +116,6 @@ $handler->display->display_options['fields']['kanton']['element_label_colon'] = 
 $handler->display->display_options['sorts']['anzeige_name']['id'] = 'anzeige_name';
 $handler->display->display_options['sorts']['anzeige_name']['table'] = 'v_parlamentarier';
 $handler->display->display_options['sorts']['anzeige_name']['field'] = 'anzeige_name';
-$handler->display->display_options['filter_groups']['groups'] = array(
-  1 => 'AND',
-  2 => 'OR',
-);
 /* Filter criterion: Parlamentarier: Kanton */
 $handler->display->display_options['filters']['kanton']['id'] = 'kanton';
 $handler->display->display_options['filters']['kanton']['table'] = 'v_parlamentarier';
@@ -169,20 +189,15 @@ $handler->display->display_options['filters']['kommissionen']['expose']['remembe
   5 => '5',
   3 => '3',
 );
-/* Filter criterion: Parlamentarier: Im Rat bis */
-$handler->display->display_options['filters']['im_rat_bis_1']['id'] = 'im_rat_bis_1';
-$handler->display->display_options['filters']['im_rat_bis_1']['table'] = 'v_parlamentarier';
-$handler->display->display_options['filters']['im_rat_bis_1']['field'] = 'im_rat_bis';
-$handler->display->display_options['filters']['im_rat_bis_1']['operator'] = 'empty';
-$handler->display->display_options['filters']['im_rat_bis_1']['group'] = 2;
-/* Filter criterion: Parlamentarier: Im Rat bis */
-$handler->display->display_options['filters']['im_rat_bis']['id'] = 'im_rat_bis';
-$handler->display->display_options['filters']['im_rat_bis']['table'] = 'v_parlamentarier';
-$handler->display->display_options['filters']['im_rat_bis']['field'] = 'im_rat_bis';
-$handler->display->display_options['filters']['im_rat_bis']['operator'] = '>';
-$handler->display->display_options['filters']['im_rat_bis']['value']['value'] = 'now';
-$handler->display->display_options['filters']['im_rat_bis']['value']['type'] = 'offset';
-$handler->display->display_options['filters']['im_rat_bis']['group'] = 2;
+/* Filter criterion: Parlamentarier: Released or admin */
+$handler->display->display_options['filters']['freigabe_datum_extra']['id'] = 'freigabe_datum_extra';
+$handler->display->display_options['filters']['freigabe_datum_extra']['table'] = 'v_parlamentarier';
+$handler->display->display_options['filters']['freigabe_datum_extra']['field'] = 'freigabe_datum_extra';
+$handler->display->display_options['filters']['freigabe_datum_extra']['group'] = 1;
+/* Filter criterion: Parlamentarier: Active or admin */
+$handler->display->display_options['filters']['active_or_admin']['id'] = 'active_or_admin';
+$handler->display->display_options['filters']['active_or_admin']['table'] = 'v_parlamentarier';
+$handler->display->display_options['filters']['active_or_admin']['field'] = 'active_or_admin';
 
 /* Display: Page */
 $handler = $view->new_display('page', 'Page', 'page');
