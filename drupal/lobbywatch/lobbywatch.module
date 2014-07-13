@@ -253,7 +253,7 @@ function lobbywatch_permission() {
  */
 function lobbywatch_block_info() {
   $blocks['lobbywatch_search'] = array(
-    'info' => t('Suche'),
+    'info' => t('Lobbywatchsuche'),
     'cache' => DRUPAL_NO_CACHE,
     'weight' => 40,
     );
@@ -268,8 +268,8 @@ function lobbywatch_block_view($delta = '') {
   $block = array();
 
   switch ($delta) {
-    case 'parlamentarier_search':
-      $block['subject'] = t('Suche');
+    case 'lobbywatch_search':
+      $block['subject'] = t('Suchen');
       // Form in a block: http://zerotodrupal.com/content/creating-form-block-drupal-7
       $block['content'] = drupal_get_form('lobbywatch_form');
       break;
