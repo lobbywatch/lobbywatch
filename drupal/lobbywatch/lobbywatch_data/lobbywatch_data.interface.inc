@@ -51,9 +51,16 @@ function _lobbywatch_data_clean_fields($record) {
     }
   }
 
-  if (true || !empty($record['symbol_klein_rel'])) {
-    $record['symbol_abs_path'] = $GLOBALS['public_files_dir_abs'] . '/' . $record['symbol_klein_rel'];
-    $record['symbol_url'] = $GLOBALS['base_root'] . '/' . $GLOBALS['public_files_dir_abs'] . '/' . $record['symbol_klein_rel'];
+  global $public_files_dir_abs;
+  global $base_root;
+  if (isset($record['symbol_klein_rel'])) {
+    $record['symbol_path'] = $rel_files_url . '/' . $record['symbol_klein_rel'];
+    $record['symbol_url'] = $base_root . '/' . $record['symbol_path'];
+  }
+
+  if (isset($record['kleinbild'])) {
+    $record['kleinbild_path'] = $rel_files_url . '/../auswertung/parlamentarierBilder/' . $record['kleinbild'];
+    $record['kleinbild_url'] = $base_root . '/' . $record['kleinbild_path'];
   }
 
   return $record;
