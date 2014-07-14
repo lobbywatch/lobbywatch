@@ -16,7 +16,7 @@ function _lobbywatch_search_autocomplete($str = '', $check_unpublished = true) {
     foreach (array('branche' => 'branche', 'interessengruppe' => 'lobbygruppe', 'kommission' => 'kommission', 'partei' => 'partei','organisation' => 'organisation',) as $table => $page) {
       $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
     }
-    $sql = 'SELECT * FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
+    $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
     $result = db_query($sql, array(':str' => "%$str%"));
 
   //   dpm($result, 'result');
@@ -518,7 +518,7 @@ function _lobbywatch_organisation_list($check_unpublished = true) {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT * FROM v_organisation organisation  WHERE 1 " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "  ORDER BY organisation.anzeige_name");
+  $result = db_query("SELECT organisation.* FROM v_organisation organisation  WHERE 1 " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "  ORDER BY organisation.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
     $markup .=
@@ -1016,7 +1016,7 @@ function _lobbywatch_partei_list($check_unpublished = true) {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT * FROM v_partei partei  WHERE 1 "
+  $result = db_query("SELECT partei.* FROM v_partei partei  WHERE 1 "
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND partei.freigabe_datum <= NOW() ' : '') . " ORDER BY partei.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
@@ -1134,7 +1134,7 @@ function _lobbywatch_branche_list($check_unpublished = true) {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT * FROM v_branche branche WHERE 1 "
+  $result = db_query("SELECT branche.* FROM v_branche branche WHERE 1 "
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND branche.freigabe_datum <= NOW() ' : '') . " ORDER BY branche.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
@@ -1178,7 +1178,7 @@ function _lobbywatch_branche_id($id, $name = '', $check_unpublished = true) {
   try {
     set_db_session_parameters();
 
-    $sql = "SELECT *,
+    $sql = "SELECT branche.*,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li><a href=\"/daten/lobbygruppe/', interessengruppe.id, '\">', interessengruppe.anzeige_name, '</a>',
     IF(interessengruppe.beschreibung IS NULL OR TRIM(interessengruppe.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', " . _lobbywatch_ucase_SQL('interessengruppe.beschreibung') . ", '&quot;</small>')))
@@ -1252,7 +1252,7 @@ function _lobbywatch_interessengruppe_list($check_unpublished = true) {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT * FROM v_interessengruppe interessengruppe WHERE 1 "
+  $result = db_query("SELECT interessengruppe.* FROM v_interessengruppe interessengruppe WHERE 1 "
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '') . " ORDER BY interessengruppe.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
@@ -1292,9 +1292,39 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
   db_set_active('lobbywatch');
 
   try {
-  $sql = "SELECT * FROM v_interessengruppe interessengruppe WHERE interessengruppe.id=:id"
-       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '');
+  $sql = "
+      SELECT interessengruppe.*,
+      GROUP_CONCAT(DISTINCT
+    CONCAT('<li><a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
+    IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
+      IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)),
+      IF(organisation.beschreibung IS NULL OR TRIM(organisation.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', " . _lobbywatch_ucase_SQL('organisation.beschreibung') . ", '&quot;</small>')))
+    ORDER BY organisation.anzeige_name
+    SEPARATOR ' '
+) organisationen
+      FROM v_interessengruppe interessengruppe
+      LEFT JOIN v_organisation organisation
+        ON interessengruppe.id = organisation.interessengruppe_id OR interessengruppe.id = organisation.interessengruppe2_id OR interessengruppe.id = organisation.interessengruppe3_id"
+             . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
+      WHERE interessengruppe.id=:id"
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '') .
+  " GROUP BY interessengruppe.id";
 
+/*
+ * GROUP_CONCAT(DISTINCT
+    CONCAT('<li><a href=\"/daten/lobbygruppe/', interessengruppe.id, '\">', interessengruppe.anzeige_name, '</a>',
+    IF(interessengruppe.beschreibung IS NULL OR TRIM(interessengruppe.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', " . _lobbywatch_ucase_SQL('interessengruppe.beschreibung') . ", '&quot;</small>')))
+    ORDER BY interessengruppe.anzeige_name
+    SEPARATOR ' '
+) interessengruppen
+  FROM v_branche branche
+  LEFT JOIN `v_interessengruppe` interessengruppe
+  ON interessengruppe.branche_id = branche.id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessengruppe.freigabe_datum <= NOW() ' : '') . "
+  WHERE branche.id=:id "
+       . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND branche.freigabe_datum <= NOW() ' : '') . "
+  GROUP BY branche.id
+ */
   $result = db_query($sql, array(':id' => $id));
 
   //     dpm($result, 'result');
@@ -1318,6 +1348,8 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
     . '<tr><td>Zuständige Kommission</td><td>' . l($record['kommission'], 'daten/kommission/' . $record['kommission_id']) . '</td></tr>'
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'interessengruppe', $id)
+     . '<h3>Organisationen</h3>'
+      . '<ul>' . $record['organisationen'] . '</ul>'
     . _lobbywatch_get_workflow_state_line($record)
       . '</div>'
     ;
@@ -1349,7 +1381,7 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
-  $result = db_query("SELECT * FROM v_zutrittsberechtigung zutrittsberechtigung WHERE 1 "
+  $result = db_query("SELECT zutrittsberechtigung.* FROM v_zutrittsberechtigung zutrittsberechtigung WHERE 1 "
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW() ' : '') . "  ORDER BY zutrittsberechtigung.anzeige_name");
 
   while ($record = $result->fetchAssoc()) {
