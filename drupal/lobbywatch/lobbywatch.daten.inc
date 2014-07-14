@@ -1292,6 +1292,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
   db_set_active('lobbywatch');
 
   try {
+    set_db_session_parameters();
   $sql = "
       SELECT interessengruppe.*,
       GROUP_CONCAT(DISTINCT
