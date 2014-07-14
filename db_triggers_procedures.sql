@@ -424,3 +424,19 @@ DELIMITER ;
 --
 --   RETURN ret;
 -- END |
+
+-- UTF-8 URL encode
+
+-- Emulate PHP ucfirst function
+DELIMITER ;
+DROP FUNCTION IF EXISTS UCFIRST;
+DELIMITER |
+CREATE FUNCTION UCFIRST(str VARCHAR(4096) CHARSET utf8) RETURNS VARCHAR(4096) CHARSET utf8
+DETERMINISTIC
+CONTAINS SQL
+COMMENT 'Returns the str with the first character converted to upper case'
+BEGIN
+	RETURN CONCAT(UCASE(LEFT(str, 1)), SUBSTRING(str, 2));
+END;
+|
+DELIMITER ;
