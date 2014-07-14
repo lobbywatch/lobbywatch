@@ -42,7 +42,6 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
         <h3>{$Captions->GetMessageString('CreateUser')}</h3>
-        
     </div>
 
     <div class="modal-body">
@@ -192,7 +191,6 @@
                                 {$Captions->GetMessageString('AddUser')}
                                 </button>
                             </div>
-<!--                             <a href="#" id="global-check-SELECT">Check SELECT</a> -->
                         </div>
                     </td>
                 </tr>
@@ -260,7 +258,7 @@
                                     <tr class="header">
                                         <th>{/literal}{$Captions->GetMessageString('PageName')}{literal}</th>
                                         <th>{/literal}{$Captions->GetMessageString('Admin')}{literal}</th>
-                                        <th>{/literal}{$Captions->GetMessageString('Select')}{literal}<!-- <a href="#" id="check-SELECT">Check SELECT</a>--></th>
+                                        <th>{/literal}{$Captions->GetMessageString('Select')}{literal}</th>
                                         <th>{/literal}{$Captions->GetMessageString('Update')}{literal}</th>
                                         <th>{/literal}{$Captions->GetMessageString('Insert')}{literal}</th>
                                         <th>{/literal}{$Captions->GetMessageString('Delete')}{literal}</th>

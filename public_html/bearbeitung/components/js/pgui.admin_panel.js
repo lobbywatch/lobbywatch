@@ -285,16 +285,5 @@ $(function () {
 
     $("#pg-admin-create-user-dialog").modal({show:false});
     $("#pg-admin-edit-user-dialog").modal({show:false});
-    
-//    $("document").ready(function() {
-//      console.log('passed 1');
-//      //http://stackoverflow.com/questions/10569662/how-to-check-all-checkboxes-in-a-specific-column-javascript
-//      $('#check-SELECT, #global-check-SELECT').click(function() {
-//        console.log('clicked');
-////        alert('clicked');
-//        $(".user-grant-list.pgui-grid tr:not(tr:first-child) td:nth-child(4) input[type=checkbox]").filter(":visible").click(); //.prop("checked", true);    
-//        return false;
-//      });
-//    });
 
 });
