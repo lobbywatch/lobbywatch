@@ -488,7 +488,11 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       return $build;
   } else {
     //drupal_goto('daten/parlamentarier');
-    drupal_not_found();
+    if (!$url_name) {
+      drupal_not_found();
+    } else {
+      drupal_access_denied();
+    }
   }
 }
 
@@ -838,7 +842,11 @@ ORDER BY organisation.anzeige_name;
       return $build;
   } else {
 //     drupal_goto('daten/organisation');
-    drupal_not_found();
+  if (!$url_name) {
+      drupal_not_found();
+    } else {
+      drupal_access_denied();
+    }
   }
 }
 
@@ -1002,7 +1010,11 @@ function _lobbywatch_kommission_id($id, $name = '') {
       return $build;
   } else {
 //     drupal_goto('daten/kommission');
-    drupal_not_found();
+  if (!$url_name) {
+      drupal_not_found();
+    } else {
+      drupal_access_denied();
+    };
   }
 }
 
@@ -1119,7 +1131,11 @@ function _lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
       return $build;
   } else {
 //     drupal_goto('daten/partei');
-    drupal_not_found();
+  if (!$url_name) {
+      drupal_not_found();
+    } else {
+      drupal_access_denied();
+    };
   }
 
 }
@@ -1237,7 +1253,11 @@ GROUP_CONCAT(DISTINCT
       return $build;
   } else {
 //     drupal_goto('daten/branche');
-    drupal_not_found();
+  if (!$url_name) {
+      drupal_not_found();
+    } else {
+      drupal_access_denied();
+    };
   }
 
 }
@@ -1367,7 +1387,11 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
       return $build;
   } else {
 //     drupal_goto('daten/lobbygruppe');
-    drupal_not_found();
+  if (!$url_name) {
+      drupal_not_found();
+    } else {
+      drupal_access_denied();
+    };
   }
 
 }
@@ -1492,7 +1516,11 @@ GROUP BY zutrittsberechtigung.id;";
       return $build;
   } else {
 //     drupal_goto('daten/zutrittsberechtigter');
-    drupal_not_found();
+  if (!$url_name) {
+      drupal_not_found();
+    } else {
+      drupal_access_denied();
+    };
   }
 
 }
