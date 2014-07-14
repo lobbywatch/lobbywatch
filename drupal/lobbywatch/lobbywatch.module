@@ -31,6 +31,16 @@ class Constants {
 
   public static $intern_fields = array('notizen', 'updated_visa', 'created_visa', 'autorisiert_visa', 'freigabe_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa', 'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung');
 
+  /**
+   * table name => website alias
+   */
+  public static $entities_web = array('branche' => 'branche', 'interessengruppe' => 'lobbygruppe', 'kommission' => 'kommission', 'partei' => 'partei','organisation' => 'organisation',);
+
+  public static $entities_special_web = array('parlamentarier' => 'parlamentarier', 'zutrittsberechtigung' => 'zutrittsberechtigter', );
+
+  public function getAllEntities() {
+    return array_merge(Constants::$entities_web, Constants::$entities_special_web);
+  }
 
 }
 

@@ -1,29 +1,31 @@
 <?php
 
+global $show_debug;
+$show_debug = true;
+
 //file:///home/rkurmann/dev/web/staging/public_html/d7/sites/lobbywatch.ch/app/settings/settings.php
 
-function _lobbywatch_data_table_flat_id($table, $id) {
+function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
+  global $show_debug;
   $success = false;
-  $message = null;
+  $message = '';
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
   try {
-    $items = array();
     $sql = "
-      SELECT *
-      FROM v_$table
-      WHERE id=:id" .
-        (!user_access('access lobbywatch data unpublished content') ? ' AND freigabe_datum < NOW()' : '');
+      SELECT $table.*
+      FROM v_$table $table
+      WHERE $table.id=:id" .
+        ($_GET['includeUnpublished'] != 1 && !user_access('access lobbywatch data unpublished content') ? " AND $table.freigabe_datum < NOW()" : '');
 
     $result = db_query($sql, array(':id' => $id));
 
-    while($record = $result->fetchAssoc()) {
-      $items[] = _lobbywatch_data_clean_fields($record);
-    }
+    $items = _lobbywatch_data_clean_records($result);
+
     $success = count($items) == 1;
-    $message = count($items) . " record(s) found";
+    $message .= count($items) . " record(s) found";
   } finally {
     // Go back to the default database,
     // otherwise Drupal will not be able to access it's own data later on.
@@ -32,12 +34,32 @@ function _lobbywatch_data_table_flat_id($table, $id) {
     $response = array(
         'success' => $success,
         'message' => $message,
-//         'sql' => $sql,
+        'debug' => $show_debug? $sql : '',
         'data' => $items[0],
     );
 
-    drupal_json_output($response);
+    if ($json) {
+      drupal_json_output($response);
+    } else {
+      return $response;
+    }
   }
+}
+
+function _lobbywatch_data_clean_records($result) {
+  $items = array();
+  $includeHistorised = $_GET['includeInactive'] == 1 && user_access('access lobbywatch unpublished content');
+
+  // @todo test exclusion of historised records
+  while($record = $result->fetchAssoc()) {
+    if ((!array_key_exists('bis_unix', $record) && !array_key_exists('im_rat_bis_unix', $record))
+        || (!isset($record['bis_unix']) || $record['bis_unix'] > time())
+        || (!isset($record['im_rat_bis_unix']) || $record['im_rat_bis_unix'] > time())
+        || $includeHistorised) {
+          $items[] = _lobbywatch_data_clean_fields($record);
+    }
+  }
+  return $items;
 }
 
 function _lobbywatch_data_clean_fields($record) {
@@ -52,6 +74,7 @@ function _lobbywatch_data_clean_fields($record) {
   }
 
   global $public_files_dir_abs;
+  global $rel_files_url;
   global $base_root;
   if (isset($record['symbol_klein_rel'])) {
     $record['symbol_path'] = $rel_files_url . '/' . $record['symbol_klein_rel'];
@@ -66,48 +89,168 @@ function _lobbywatch_data_clean_fields($record) {
   return $record;
 }
 
-function _lobbywatch_data_table_flat_list($table) {
+function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true) {
+  global $show_debug;
   $success = false;
-  $message = null;
+  $message = '';
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
   try {
-    $items = array();
     $sql = "
-    SELECT *
-    FROM v_$table
-    WHERE 1 " .
-    (!user_access('access lobbywatch data unpublished content') ? ' AND freigabe_datum < NOW()' : '');
+    SELECT $table.*
+    FROM v_$table $table
+    WHERE $condition " .
+    ($_GET['includeUnpublished'] != 1 && !user_access('access lobbywatch data unpublished content') ? " AND $table.freigabe_datum < NOW()" : '');
 
     $result = db_query($sql, array());
 
-    $includeHistorised = false;
+    $items = _lobbywatch_data_clean_records($result);
 
-    // @todo test exclusion of historised records
-    while($record = $result->fetchAssoc()) {
-      if ((!array_key_exists('bis_unix', $record) && !array_key_exists('im_rat_bis_unix', $record))
-          || (!isset($record['bis_unix']) || $record['bis_unix'] > time())
-          || (!isset($record['im_rat_bis_unix']) || $record['im_rat_bis_unix'] > time())
-          || $includeHistorised) {
-        $items[] = _lobbywatch_data_clean_fields($record);
-      }
-    }
     $success = count($items) > 0;
     $message = count($items) . " record(s) found";
   } finally {
   // Go back to the default database,
       // otherwise Drupal will not be able to access it's own data later on.
       db_set_active();
-
       $response = array(
           'success' => $success,
           'message' => $message,
-//           'sql' => $sql,
-          'data' => $items,
+          'debug' => $show_debug ? $sql : '',
+          'data' => $items
       );
 
-      drupal_json_output($response);
+      if ($json) {
+        drupal_json_output($response);
+      } else {
+        return $response;
+      }
     }
+}
+
+function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = true) {
+  global $show_debug;
+  $success = false;
+  $message = '';
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+    if ($table === 'parlamentarier') {
+      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . ($_GET['includeInactive'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($_GET['includeUnpublished'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+    } else if ($table === 'zutrittsberechtigung') {
+      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . ($_GET['includeInactive'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($_GET['includeUnpublished'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+    } else if (in_array($table, Constants::$entities_web)) {
+      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . ($_GET['includeUnpublished'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+    } else {
+      throw new Exception("Table $table does not exist");
+    }
+    $sql .= ' LIMIT 100;';
+    $result = db_query($sql, array(':str' => "%$search_str%"));
+
+    $items = _lobbywatch_data_clean_records($result);
+        $success = count($items) > 0;
+    $message .= count($items) . " record(s) found";
+  } catch(Exception $e) {
+    $message .= $e->getMessage();
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+    $response = array(
+        'success' => $success,
+        'message' => $message,
+        'debug' => $show_debug ? $sql : '',
+        'data' => $items
+    );
+    if ($json) {
+      drupal_json_output(
+          $response);
+    } else {
+      return $response;
+    }
+  }
+}
+
+
+function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = true) {
+  global $show_debug;
+  $success = false;
+  $message = '';
+  $sql = '';
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+  try {
+    $aggregated = _lobbywatch_data_table_flat_id('zutrittsberechtigung', $id, false)['data'];
+
+    $aggregated['mandate'] = _lobbywatch_data_table_flat_list('zutrittsberechtigung_mandate', "zutrittsberechtigung_mandate.zutrittsberechtigung_id = $id", false)['data'];
+
+//     dpm($aggregated, '$aggregated');
+    $success = true;
+    //$sql = $in_kommission['sql'];
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+
+    $response = array(
+        'success' => $success,
+        'message' => $message,
+        'debug' => $show_debug ? $sql : '',
+        'data' => $aggregated
+    );
+    if ($json) {
+      drupal_json_output($response);
+    } else {
+      return $response;
+    }
+  }
+
+}
+
+function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) {
+  global $show_debug;
+  $success = false;
+  $message = '';
+  $sql = '';
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+  try {
+    $aggregated = _lobbywatch_data_table_flat_id('parlamentarier', $id, false)['data'];
+
+    $aggregated['in_kommission'] = _lobbywatch_data_table_flat_list('in_kommission_liste', "in_kommission_liste.parlamentarier_id = $id", false)['data'];
+
+    $aggregated['interessenbindungen'] = _lobbywatch_data_table_flat_list('interessenbindung_liste', "interessenbindung_liste.parlamentarier_id = $id", false)['data'];
+
+    $aggregated['zutrittsberechtigungen'] = _lobbywatch_data_table_flat_list('zutrittsberechtigung', "zutrittsberechtigung.parlamentarier_id = $id", false)['data'];
+
+    foreach ($aggregated['zutrittsberechtigungen'] as $key => $value) {
+      $aggregated['zutrittsberechtigungen'][$key]['mandate'] = _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($value['id'], false)['data']['mandate'];
+    }
+
+    $success = true;
+//     dpm($aggregated, '$aggregated');
+    //$sql = $in_kommission['sql'];
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+
+    $response = array(
+        'success' => $success,
+        'message' => $message,
+        'debug' => $show_debug ? $sql : '',
+        'data' => $aggregated
+    );
+    if ($json) {
+      drupal_json_output($response);
+    } else {
+      return $response;
+    }
+  }
+
 }

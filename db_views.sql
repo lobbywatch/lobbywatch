@@ -523,8 +523,10 @@ CREATE OR REPLACE VIEW `v_parlamentarier_simple` AS
 SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name,
 CONCAT_WS(' ', p.vorname, p.zweiter_vorname, p.nachname) AS name,
 p.*,
+p.im_rat_seit as von, p.im_rat_bis as bis,
 UNIX_TIMESTAMP(im_rat_seit) as im_rat_seit_unix, UNIX_TIMESTAMP(im_rat_bis) as im_rat_bis_unix,
-UNIX_TIMESTAMP(p.created_date) as created_date_unix, UNIX_TIMESTAMP(p.updated_date) as updated_date_unix, UNIX_TIMESTAMP(p.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(p.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(p.freigabe_datum) as freigabe_datum_unix
+UNIX_TIMESTAMP(p.created_date) as created_date_unix, UNIX_TIMESTAMP(p.updated_date) as updated_date_unix, UNIX_TIMESTAMP(p.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(p.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(p.freigabe_datum) as freigabe_datum_unix,
+UNIX_TIMESTAMP(im_rat_seit) as von_unix, UNIX_TIMESTAMP(im_rat_bis) as bis_unix
 FROM `parlamentarier` p;
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
@@ -555,7 +557,7 @@ SELECT CONCAT(zutrittsberechtigung.nachname, ', ', zutrittsberechtigung.vorname)
 zutrittsberechtigung.*,
 partei.abkuerzung AS partei,
 parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.freigabe_datum as parlamentarier_freigabe_datum, UNIX_TIMESTAMP(parlamentarier.freigabe_datum) as parlamentarier_freigabe_datum_unix,
-UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
+UNIX_TIMESTAMP(zutrittsberechtigung.bis) as bis_unix, UNIX_TIMESTAMP(zutrittsberechtigung.von) as von_unix,
 UNIX_TIMESTAMP(zutrittsberechtigung.created_date) as created_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.freigabe_datum) as freigabe_datum_unix
 FROM `zutrittsberechtigung`
 LEFT JOIN `v_partei` partei

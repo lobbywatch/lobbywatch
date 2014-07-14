@@ -22,7 +22,40 @@ function lobbywatch_data_menu() {
       'type' => MENU_CALLBACK,
       'file' => 'lobbywatch_data.interface.inc',
     );
+
+    $items["data/interface/v1/json/table/$key/flat/search/%"] = array(
+      'page callback' => '_lobbywatch_data_table_flat_list_search',
+      'page arguments' => array($key, 8),
+      'access arguments' => array('access lobbywatch data general content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch_data.interface.inc',
+    );
+
   }
+
+  $items["data/interface/v1/json/table/zutrittsberechtigter/aggregated/id/%"] = array(
+      'page callback' => '_lobbywatch_data_table_zutrittsberechtigte_aggregated_id',
+      'page arguments' => array(8),
+      'access arguments' => array('access lobbywatch data general content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch_data.interface.inc',
+  );
+
+  $items["data/interface/v1/json/table/parlamentarier/aggregated/id/%"] = array(
+      'page callback' => '_lobbywatch_data_table_parlamentarier_aggregated_id',
+      'page arguments' => array(8),
+      'access arguments' => array('access lobbywatch data general content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch_data.interface.inc',
+  );
+
+//   $items["data/interface/v1/json/table/parlamentarier/aggregated/all"] = array(
+//       'page callback' => '_lobbywatch_data_table_parlamentarier_aggregated_list',
+//       'page arguments' => array(),
+//       'access arguments' => array('access lobbywatch data general content'),
+//       'type' => MENU_CALLBACK,
+//       'file' => 'lobbywatch_data.interface.inc',
+//   );
 
   return $items;
 }
@@ -33,13 +66,13 @@ function lobbywatch_data_menu() {
 function lobbywatch_data_permission() {
   return array(
     'access lobbywatch data general content' => array(
-      'title' => t('Access general content of the lobbywatch data module'),
+      'title' => t('Access general content of the lobbywatch DB data'),
     ),
     'access lobbywatch data unpublished content' => array(
-      'title' => t('Access unpublished (nicht freigegeben) content of the lobbywatch data module'),
+      'title' => t('Access unpublished (nicht freigegeben) content of the lobbywatch DB data'),
     ),
     'access lobbywatch data confidential content' => array(
-      'title' => t('Access unpublished (nicht freigegeben) content of the lobbywatch data module'),
+      'title' => t('Access confidential (internal) content of the lobbywatch DB data'),
     ),
   );
 }
