@@ -1619,3 +1619,8 @@ function isFullWorkflowUser() {
 function defaultOnAfterLogin($userName, $connection) {
   $connection->ExecSQL("UPDATE `user` SET `last_login`= CURRENT_TIMESTAMP WHERE `name` = '$userName';");
 }
+
+function set_db_session_parameters($con) {
+  $session_sql = "SET SESSION group_concat_max_len=10000;";
+  $con->query($session_sql);
+}

@@ -175,8 +175,7 @@ try
 //         df($con, 'con');
       $cmd = $con_factory->CreateEngCommandImp();
 
-      $session_sql = "SET SESSION group_concat_max_len=5000;";
-      $con->query($session_sql);
+      set_db_session_parameters($con);
 
       $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id,
 GROUP_CONCAT(DISTINCT
