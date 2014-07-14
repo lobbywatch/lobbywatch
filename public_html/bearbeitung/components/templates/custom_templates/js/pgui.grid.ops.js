@@ -323,7 +323,7 @@ define(function(require, exports, module) {
                   return false;
                 }
                 bootbox.animate(false);
-                bootbox.prompt( '&quot;Im Rat bis&quot; bei ' + nRows + ' Parlamentarieren setzen?<small><br><br>Bitte &quot;Im Rat bis&quot; eingeben (leer = heute):</small>'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(date) {
+                bootbox.prompt( '&quot;Im Rat bis&quot; bei ' + nRows + ' Parlamentarieren setzen?<small><br><br>Der Zugang der Gäste erlischt. Das Bis-Datum der Zutrittsberechtigten wird ebenfalls gesetzt.<br><br>Bitte &quot;Im Rat bis&quot; eingeben (leer = heute):</small>'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(date) {
                   //                         console.log(date);
                   //                         console.log(self.isDateValid(date));
                   if (date !== null) {
@@ -349,7 +349,7 @@ define(function(require, exports, module) {
                   return false;
                 }
                 bootbox.animate(false);
-                bootbox.confirm( '&quot;Im Rat bis&quot; bei ' + nRows + ' Einträgen entfernen?'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
+                bootbox.confirm( '&quot;Im Rat bis&quot; bei ' + nRows + ' Einträgen entfernen?<small><br><br>Das Bis-Datum der Zutrittsberechtigten wird ebenfalls entfernt, sofern das Datum gleich wie beim Parlamentarier ist.</small>'/*localizer.getString('DeleteSelectedRecordsQuestion')*/, function(confirmed) {
                   if (confirmed) {
                     self.operateSelectRows('clearimratbissel');
                   }

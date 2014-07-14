@@ -2587,3 +2587,88 @@ thisTrigger: begin
 end
 //
 delimiter ;
+
+-- 14.07.2014
+
+drop trigger if exists `trg_parlamentarier_log_upd`;
+delimiter //
+create trigger `trg_parlamentarier_log_upd` after update on `parlamentarier`
+for each row
+thisTrigger: begin
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate authorization from parlamentarier to his interessenbindungen
+  IF OLD.autorisiert_datum <> NEW.autorisiert_datum
+    OR (OLD.autorisiert_datum IS NULL AND NEW.autorisiert_datum IS NOT NULL)
+    OR (OLD.autorisiert_datum IS NOT NULL AND NEW.autorisiert_datum IS NULL) THEN
+    UPDATE `interessenbindung`
+      SET
+        autorisiert_datum = NEW.autorisiert_datum,
+        autorisiert_visa = CONCAT(NEW.autorisiert_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+        parlamentarier_id=NEW.id AND bis IS NULL;
+  END IF;
+
+  -- Propagate freigabe from parlamentarier to his interessenbindungen
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+	  -- Interessenbindung
+	  UPDATE `interessenbindung`
+	    SET
+	    freigabe_datum = NEW.freigabe_datum,
+	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+	    updated_date = NEW.updated_date,
+	    updated_visa = CONCAT(NEW.updated_visa, '*')
+	    WHERE
+	    parlamentarier_id=NEW.id AND bis IS NULL;
+	
+	  -- zutrittsberechtigung
+	  UPDATE `zutrittsberechtigung`
+	    SET
+	    freigabe_datum = NEW.freigabe_datum,
+	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+	    updated_date = NEW.updated_date,
+	    updated_visa = CONCAT(NEW.updated_visa, '*')
+	    WHERE
+	    parlamentarier_id=NEW.id AND bis IS NULL;
+	
+	  -- in_kommission
+	  SET @disable_parlamentarier_kommissionen_update = 1;
+	  UPDATE `in_kommission`
+	    SET
+	    freigabe_datum = NEW.freigabe_datum,
+	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+	    updated_date = NEW.updated_date,
+	    updated_visa = CONCAT(NEW.updated_visa, '*')
+	    WHERE
+	    parlamentarier_id=NEW.id AND bis IS NULL;
+	  SET @disable_parlamentarier_kommissionen_update = NULL;
+  END IF;
+
+    -- Propagate im_rat_bis from parlamentarier to his zutrittsberechtigte, if NULL or SAME date as parlamentarier
+  IF OLD.im_rat_bis <> NEW.im_rat_bis
+    OR (OLD.im_rat_bis IS NULL AND NEW.im_rat_bis IS NOT NULL)
+    OR (OLD.im_rat_bis IS NOT NULL AND NEW.im_rat_bis IS NULL) THEN
+  
+    -- zutrittsberechtigung
+    UPDATE `zutrittsberechtigung`
+      SET
+      `notizen` = CONCAT_WS('\n\n', CONCAT(DATE_FORMAT(NEW.updated_date,'%d.%m.%Y'), '/', IFNULL(NEW.updated_visa, '?') , '*: Parlamentarier ', NEW.vorname, ' ', NEW.nachname, ' nicht mehr im Rat. Zutrittsberechtigung erloschen. Bis-Datum von ', IFNULL(DATE_FORMAT(bis,'%d.%m.%Y'), 'NULL'), ' auf ',  IFNULL(DATE_FORMAT(NEW.im_rat_bis,'%d.%m.%Y'), 'NULL'), ' gesetzt.'),`notizen`),
+      bis = NEW.im_rat_bis,
+      updated_date = NEW.updated_date,
+      updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+      parlamentarier_id=NEW.id AND (bis IS NULL OR bis = OLD.im_rat_bis);
+  
+  END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `parlamentarier_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `parlamentarier` WHERE id = NEW.id ;
+end
+//
+delimiter ;
