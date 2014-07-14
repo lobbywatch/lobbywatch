@@ -460,9 +460,9 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       '<tr><td>Vertretene Bevölkerung:</td><td>' . number_format($vertretung , 0 , '.' , '\'') . '</td></tr>' .
       '<tr><td>' . ($active ? 'Im Parlament seit:' : 'Dauer:') . '</td><td>' . years_months(check_plain($record['im_rat_seit']), $record['im_rat_bis']) . ' (' . check_plain($record['im_rat_seit_formatted']) . ($active ? '' : ' – ' . check_plain($record['im_rat_bis_formatted']) ) . ')' . '</td></tr>' .
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
-      '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>' .
-      '<tr><td>Kinder:</td><td>' . check_plain($record['anzahl_kinder']) . '</td></tr>' .
-      '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>' .
+      _lobbywatch_get_optional_tr('Beruf:', $record['beruf'], $admin) .
+      _lobbywatch_get_optional_tr('Kinder:', $record['anzahl_kinder'], $admin) .
+      _lobbywatch_get_optional_tr('Homepage:', ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : ''), $admin, true, $record['homepage']) .
       '<tr><td>Parlament.ch Webseite:</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
       '</table>' .
       _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
@@ -498,6 +498,11 @@ function _lobbywatch_get_edit_link($admin, $table, $id) {
   global $lobbywatch_mode;
   return ($admin ? '<p class="admin">' . l("Edit $lobbywatch_mode", "{$env_dir}bearbeitung/$table.php?operation=edit&pk0=$id", array('external' => true,'attributes' => array('class' => array('elf-external', 'elf-icon')))) . '</p>' : '');
 }
+
+function _lobbywatch_get_optional_tr($label, $value, $admin, $html = false, $field_value = null) {
+  return (!$html && $value || $html && $field_value || $admin ? '<tr' . (!$html && !$value && $admin || $html && !$field_value && $admin ? ' class="admin"' : '') . "><td>$label</td><td>" . ($html ? $value: check_plain($value)) . '</td></tr>' : '');
+}
+
 /**
  * TODO
  */
@@ -757,12 +762,12 @@ ORDER BY organisation.anzeige_name;
 //     . '<h3>Informationen</h3>'
     '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
-    . '<tr><td>Rechtsform</td><td>' . check_plain($record['rechtsform']) . '</td></tr>'
-    . '<tr><td>Ort</td><td>' . check_plain($record['ort']) . '</td></tr>'
+       . _lobbywatch_get_optional_tr('Rechtsform:', $record['rechtsform'], $admin)
+       . _lobbywatch_get_optional_tr('Ort:', $record['ort'], $admin)
     . '<tr><td>Branche</td><td>' . l($record['branche'], 'daten/branche/' . $record['branche_id']) . '</td></tr>'
     . '<tr><td>Lobbygruppe</td><td>' . l($record['interessengruppe'], 'daten/lobbygruppe/' . $record['interessengruppe_id']) . '</td></tr>'
-    . '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
-    . '<tr><td>Handelsregister:</td><td>' . ($record['handelsregister_url'] ? l($record['anzeige_name'], $record['handelsregister_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
+       . _lobbywatch_get_optional_tr('Homepage:', _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage'])
+       . _lobbywatch_get_optional_tr('Handelsregister:', _lobbywatch_get_homepage_link($record['handelsregister_url'], $record['anzeige_name']), $admin, true, $record['handelsregister_url'])
     . '</table>' .
     _lobbywatch_get_edit_link($admin, 'organisation', $id);
     if ($record['arbeitet_fuer']) {
@@ -831,6 +836,10 @@ ORDER BY organisation.anzeige_name;
 //     drupal_goto('daten/organisation');
     drupal_not_found();
   }
+}
+
+function _lobbywatch_get_homepage_link($url, $text = null) {
+  return ($url ? l($text ? $text : preg_replace('|https?://|i', '', $url), $url, array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '');
 }
 
 /**
@@ -951,9 +960,9 @@ function _lobbywatch_kommission_id($id, $name = '') {
     '<table border="0">'
     . '<tr><td>Abkürzung</td><td>' . check_plain($record_active['abkuerzung']) . '</td></tr>'
     . '<tr><td>Parlament.ch Link</td><td>' . (isset($record_active['parlament_url']) ? l($record_active['anzeige_name'], $record_active['parlament_url'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
-    . '<tr><td>Beschreibung</td><td>' . check_plain($record_active['beschreibung']) . '</td></tr>'
-    . '<tr><td>Typ</td><td>' . check_plain($record_active['typ']) . '</td></tr>'
-    . '<tr><td>Art</td><td>' . check_plain($record_active['art']) . '</td></tr>'
+    . '<tr><td>Beschreibung</td><td>' . check_plain(ucfirst($record_active['beschreibung'])) . '</td></tr>'
+    . '<tr><td>Typ</td><td>' . check_plain(ucfirst($record_active['typ'])) . '</td></tr>'
+    . '<tr><td>Art</td><td>' . check_plain(ucfirst($record_active['art'])) . '</td></tr>'
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'kommission', $id)
     . '<h3>Sachbereiche</h3>'
@@ -1172,7 +1181,7 @@ function _lobbywatch_branche_id($id, $name = '', $check_unpublished = true) {
     $sql = "SELECT *,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li><a href=\"/daten/lobbygruppe/', interessengruppe.id, '\">', interessengruppe.anzeige_name, '</a>',
-    IF(interessengruppe.beschreibung IS NULL OR TRIM(interessengruppe.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', interessengruppe.beschreibung, '&quot;</small>')))
+    IF(interessengruppe.beschreibung IS NULL OR TRIM(interessengruppe.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', UCFIRST(interessengruppe.beschreibung), '&quot;</small>')))
     ORDER BY interessengruppe.anzeige_name
     SEPARATOR ' '
 ) interessengruppen
@@ -1203,7 +1212,7 @@ GROUP_CONCAT(DISTINCT
     '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Zuständige Kommission</td><td>' . l($record['kommission'], 'daten/kommission/' . $record['kommission_id']) . '</td></tr>'
-    . '<tr><td>Beschreibung</td><td>' . check_plain($record['beschreibung']) . '</td></tr>'
+    . '<tr><td>Beschreibung</td><td>' . check_plain(ucfirst($record['beschreibung'])) . '</td></tr>'
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'branche', $id)
     . '<h3>Lobbygruppen</h3>'
@@ -1305,7 +1314,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
     '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Branche</td><td>' . l($record['branche'], 'daten/branche/' . $record['branche_id']) . '</td></tr>'
-    . '<tr><td>Beschreibung</td><td>' . check_plain($record['beschreibung']) . '</td></tr>'
+    . '<tr><td>Beschreibung</td><td>' . check_plain(ucfirst($record['beschreibung'])) . '</td></tr>'
     . '<tr><td>Zuständige Kommission</td><td>' . l($record['kommission'], 'daten/kommission/' . $record['kommission_id']) . '</td></tr>'
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'interessengruppe', $id)
@@ -1388,7 +1397,7 @@ function _lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished
     CONCAT('<li>', IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
     IF(mandat.funktion_im_gremium IS NULL OR TRIM(mandat.funktion_im_gremium) = '', '', CONCAT(', ',CONCAT(UCASE(LEFT(mandat.funktion_im_gremium, 1)), SUBSTRING(mandat.funktion_im_gremium, 2)))),
-    IF(TRUE AND (mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = ''), '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')),
+    IF(TRUE AND (mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = ''), '', CONCAT('<small class=\"desc\">, &quot;', UCFIRST(mandat.beschreibung), '&quot;</small>')),
     IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
     ORDER BY organisation.anzeige_name
     SEPARATOR ' '
@@ -1426,9 +1435,9 @@ GROUP BY zutrittsberechtigung.id;";
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Eingeladen von:</td><td>' . l($record['parlamentarier_name'], 'daten/parlamentarier/' . $record['parlamentarier_id']) . '</td></tr>'
     .  '<tr><td>Funktion:</td><td>' . check_plain($record['funktion']) . '</td></tr>'
-    .  '<tr><td>Beruf:</td><td>' . check_plain($record['beruf']) . '</td></tr>'
-    .  '<tr><td>Partei:</td><td>' . l($record['partei'], 'daten/partei/' . $record['partei_id']) . '</td></tr>'
-    .  '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
+    .  _lobbywatch_get_optional_tr('Beruf:', $record['beruf'], $admin)
+    .  _lobbywatch_get_optional_tr('Partei:', l($record['partei'], 'daten/partei/' . $record['partei_id']), $admin, true, $record['partei_id'])
+    .  _lobbywatch_get_optional_tr('Homepage:', ($record['homepage'] ? l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : ''), $admin, true)
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'zutrittsberechtigung', $id)
     . '<h3>Mandate</h3>'
@@ -1504,7 +1513,7 @@ function _lobbywatch_get_kommissionen($check_unpublished = true) {
 }
 
 function _lobbywatch_get_workflow_state_line($record) {
-  global $lobbywatch_mode;
+  global $env;
   $admin = user_access('access lobbywatch unpublished content');
   return '<p class="lobbywatch-meta-fields-line"><small>'
     . t('Last updated !date', array ('!date' => '<time datetime="'.getISO8601Date($record['updated_date_unix']).'">' . format_date($record['updated_date_unix'], 'short_date') . '</time>')) .
@@ -1516,7 +1525,7 @@ function _lobbywatch_get_workflow_state_line($record) {
       . ($record ['kontrolliert_datum_unix'] ? '<br>' . t('Kontrolle  @date', array ('@date' => format_date($record ['kontrolliert_datum_unix'], 'short_date') )) . '/' .  $record ['kontrolliert_visa'] : '')
     : '') .
   '</small></p>' .
-  ($admin ? "<p class=\"lobbywatch-meta-fields-line\"><small>Verwendete DB: $lobbywatch_mode</small></p>" : "");
+  ($admin ? "<p class=\"lobbywatch-meta-fields-line\"><small>Verwendete DB: $env</small></p>" : "");
 }
 
 function getISO8601Date($unix_timestamp) {
