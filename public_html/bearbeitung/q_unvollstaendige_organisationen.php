@@ -278,6 +278,18 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe_id', $this->RenderText('Interessengruppe'), $lookupDataset, 'id', 'name', false));
             
             $lookupDataset = new TableDataset(
@@ -342,6 +354,18 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
@@ -651,6 +675,18 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Interessengruppe', 
@@ -717,6 +753,18 @@
             $field = new IntegerField('kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -808,6 +856,18 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Branche', 
@@ -887,6 +947,18 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1314,6 +1386,18 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Interessengruppe', 
@@ -1391,6 +1475,18 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1584,6 +1680,18 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Interessengruppe', 
@@ -1661,6 +1769,18 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommission');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('created_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('updated_date_unix');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kontrolliert_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
