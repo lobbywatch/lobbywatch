@@ -146,8 +146,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('userssearch', $this->dataset,
-                array('id', 'name', 'nachname', 'vorname', 'email', 'last_login', 'last_access', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Email'), $this->RenderText('Last Login'), $this->RenderText('Last Access'), $this->RenderText('Notizen')),
+                array('id', 'name', 'nachname', 'vorname', 'email', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Email'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),

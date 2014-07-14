@@ -185,8 +185,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessenbindungssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'deklarationstyp', 'status', 'behoerden_vertreter', 'von', 'bis', 'verguetung', 'beschreibung', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Status'), $this->RenderText('Behoerden Vertreter'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Verguetung'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
+                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'deklarationstyp', 'status', 'beschreibung', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Status'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),

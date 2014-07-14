@@ -160,8 +160,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisation_beziehungssearch', $this->dataset,
-                array('id', 'organisation_id_anzeige_name', 'art', 'ziel_organisation_id_anzeige_name', 'von', 'bis', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Ziel Organisation'), $this->RenderText('Von'), $this->RenderText('Bis'), $this->RenderText('Notizen')),
+                array('id', 'organisation_id_anzeige_name', 'art', 'ziel_organisation_id_anzeige_name', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Ziel Organisation'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),

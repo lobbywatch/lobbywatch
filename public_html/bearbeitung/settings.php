@@ -144,8 +144,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('settingsssearch', $this->dataset,
-                array('id', 'key_name', 'value', 'description', 'category_id_name', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Key'), $this->RenderText('Value'), $this->RenderText('Description'), $this->RenderText('Category'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'key_name', 'value', 'description', 'category_id_name', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Key'), $this->RenderText('Value'), $this->RenderText('Description'), $this->RenderText('Category'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),

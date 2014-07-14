@@ -10886,8 +10886,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parteissearch', $this->dataset,
-                array('id', 'abkuerzung', 'name', 'beschreibung', 'gruendung', 'position', 'farbcode', 'homepage', 'email', 'twitter_name', 'fraktion_id_anzeige_name', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Beschreibung'), $this->RenderText('Gruendung'), $this->RenderText('Position'), $this->RenderText('Farbcode'), $this->RenderText('Homepage'), $this->RenderText('Email'), $this->RenderText('Twitter Name'), $this->RenderText('Fraktion'), $this->RenderText('Notizen')),
+                array('id', 'abkuerzung', 'name', 'beschreibung', 'gruendung', 'position', 'homepage', 'email', 'twitter_name', 'fraktion_id_anzeige_name', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Beschreibung'), $this->RenderText('Gruendung'), $this->RenderText('Position'), $this->RenderText('Homepage'), $this->RenderText('Email'), $this->RenderText('Twitter Name'), $this->RenderText('Fraktion'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
