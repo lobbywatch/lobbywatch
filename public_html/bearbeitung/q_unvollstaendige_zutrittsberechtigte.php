@@ -40,11 +40,15 @@
     {
         protected function DoBeforeCreate()
         {
-            $selectQuery = 'select * from zutrittsberechtigung where
-            geschlecht is null OR
-            email is null OR trim(email)=\'\' OR
-            beruf is null OR trim(beruf)=\'\' OR
-            funktion is null OR trim(funktion)=\'\'';
+            $selectQuery = 'select zutrittsberechtigung.*, parlamentarier.kommissionen from
+            zutrittsberechtigung zutrittsberechtigung
+            LEFT JOIN v_parlamentarier parlamentarier
+            ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
+            where
+            zutrittsberechtigung.geschlecht is null OR
+            zutrittsberechtigung.email is null OR trim(zutrittsberechtigung.email)=\'\' OR
+            zutrittsberechtigung.beruf is null OR trim(zutrittsberechtigung.beruf)=\'\' OR
+            zutrittsberechtigung.funktion is null OR trim(zutrittsberechtigung.funktion)=\'\'';
             $insertQuery = array();
             $updateQuery = array();
             $deleteQuery = array();
@@ -127,6 +131,8 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('kommissionen');
+            $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe', new IntegerField('id'), new StringField('anzeige_name', 'beruf_interessengruppe_id_anzeige_name', 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe'), 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe');
             $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung', 'partei_id_abkuerzung', 'partei_id_abkuerzung_v_partei'), 'partei_id_abkuerzung_v_partei');
@@ -203,8 +209,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('q_unvollstaendige_zutrittsberechtigtessearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'nachname', 'vorname', 'zweiter_vorname', 'funktion', 'beruf', 'beruf_interessengruppe_id_anzeige_name', 'partei_id_abkuerzung', 'geschlecht', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Funktion'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Partei'), $this->RenderText('Geschlecht'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'parlamentarier_id_anzeige_name', 'kommissionen', 'nachname', 'vorname', 'zweiter_vorname', 'funktion', 'beruf', 'beruf_interessengruppe_id_anzeige_name', 'partei_id_abkuerzung', 'geschlecht', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'notizen', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Kommissionen'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Funktion'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe'), $this->RenderText('Partei'), $this->RenderText('Geschlecht'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Notizen'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -411,6 +417,7 @@
             $field = new StringField('militaerischer_grad');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kommissionen', $this->RenderText('Kommissionen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('nachname', $this->RenderText('Nachname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vorname', $this->RenderText('Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zweiter_vorname', $this->RenderText('Zweiter Vorname')));
@@ -584,6 +591,39 @@
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
             $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText(''));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
             $column->SetDescription($this->RenderText(''));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -1529,6 +1569,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
@@ -1670,6 +1717,16 @@
     
         protected function AddEditColumns(Grid $grid)
         {
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
             //
             // Edit column for nachname field
             //
@@ -2008,6 +2065,16 @@
     
         protected function AddInsertColumns(Grid $grid)
         {
+            //
+            // Edit column for kommissionen field
+            //
+            $editor = new TextEdit('kommissionen_edit');
+            $editColumn = new CustomEditColumn('Kommissionen', 'kommissionen', $editor, $this->dataset);
+            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
             //
             // Edit column for nachname field
             //
@@ -2371,6 +2438,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
@@ -2523,6 +2597,13 @@
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('parlamentarier_id_anzeige_name', 'Parlamentarier', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for kommissionen field
+            //
+            $column = new TextViewColumn('kommissionen', 'Kommissionen', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
