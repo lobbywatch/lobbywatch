@@ -3,8 +3,6 @@
 global $show_debug;
 $show_debug = true;
 
-//file:///home/rkurmann/dev/web/staging/public_html/d7/sites/lobbywatch.ch/app/settings/settings.php
-
 function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
   global $show_debug;
   $success = false;
@@ -18,7 +16,7 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
       SELECT $table.*
       FROM v_$table $table
       WHERE $table.id=:id" .
-        ($_GET['includeUnpublished'] != 1 && !user_access('access lobbywatch data unpublished content') ? " AND $table.freigabe_datum < NOW()" : '');
+        _lobbywatch_data_filter_unpublished_SQL($table);
 
     $result = db_query($sql, array(':id' => $id));
 
@@ -44,6 +42,11 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
       return $response;
     }
   }
+}
+
+/** Filters out unpublished data if not privileged or includeUnpublished == 0 */
+function _lobbywatch_data_filter_unpublished_SQL($table) {
+  return ($_GET['includeUnpublished'] != 1 || !user_access('access lobbywatch data unpublished content') ? " AND $table.freigabe_datum < NOW()" : '');
 }
 
 function _lobbywatch_data_clean_records($result) {
@@ -102,7 +105,7 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
     SELECT $table.*
     FROM v_$table $table
     WHERE $condition " .
-    ($_GET['includeUnpublished'] != 1 && !user_access('access lobbywatch data unpublished content') ? " AND $table.freigabe_datum < NOW()" : '');
+    _lobbywatch_data_filter_unpublished_SQL($table);
 
     $result = db_query($sql, array());
 
@@ -139,11 +142,11 @@ function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = tr
 
   try {
     if ($table === 'parlamentarier') {
-      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . ($_GET['includeInactive'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($_GET['includeUnpublished'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . ($_GET['includeInactive'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . _lobbywatch_data_filter_unpublished_SQL($table);
     } else if ($table === 'zutrittsberechtigung') {
-      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . ($_GET['includeInactive'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($_GET['includeUnpublished'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . ($_GET['includeInactive'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . _lobbywatch_data_filter_unpublished_SQL($table);
     } else if (in_array($table, Constants::$entities_web)) {
-      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . ($_GET['includeUnpublished'] != 1 && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . _lobbywatch_data_filter_unpublished_SQL($table);
     } else {
       throw new Exception("Table $table does not exist");
     }

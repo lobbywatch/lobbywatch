@@ -9,7 +9,7 @@ function lobbywatch_data_menu() {
   foreach (Constants::$workflow_tables as $key => $value) {
     $items["data/interface/v1/json/table/$key/flat/id/%"] = array(
       'page callback' => '_lobbywatch_data_table_flat_id',
-      'page arguments' => array($key, 8),
+      'page arguments' => array($key, 8, true),
       'access arguments' => array('access lobbywatch data general content'),
       'type' => MENU_CALLBACK,
       'file' => 'lobbywatch_data.interface.inc',
@@ -17,7 +17,7 @@ function lobbywatch_data_menu() {
 
     $items["data/interface/v1/json/table/$key/flat/all"] = array(
       'page callback' => '_lobbywatch_data_table_flat_list',
-      'page arguments' => array($key),
+      'page arguments' => array($key, '1', true),
       'access arguments' => array('access lobbywatch data general content'),
       'type' => MENU_CALLBACK,
       'file' => 'lobbywatch_data.interface.inc',
@@ -25,7 +25,7 @@ function lobbywatch_data_menu() {
 
     $items["data/interface/v1/json/table/$key/flat/search/%"] = array(
       'page callback' => '_lobbywatch_data_table_flat_list_search',
-      'page arguments' => array($key, 8),
+      'page arguments' => array($key, 8, true),
       'access arguments' => array('access lobbywatch data general content'),
       'type' => MENU_CALLBACK,
       'file' => 'lobbywatch_data.interface.inc',
@@ -35,7 +35,7 @@ function lobbywatch_data_menu() {
 
   $items["data/interface/v1/json/table/zutrittsberechtigter/aggregated/id/%"] = array(
       'page callback' => '_lobbywatch_data_table_zutrittsberechtigte_aggregated_id',
-      'page arguments' => array(8),
+      'page arguments' => array(8, true),
       'access arguments' => array('access lobbywatch data general content'),
       'type' => MENU_CALLBACK,
       'file' => 'lobbywatch_data.interface.inc',
@@ -43,7 +43,7 @@ function lobbywatch_data_menu() {
 
   $items["data/interface/v1/json/table/parlamentarier/aggregated/id/%"] = array(
       'page callback' => '_lobbywatch_data_table_parlamentarier_aggregated_id',
-      'page arguments' => array(8),
+      'page arguments' => array(8, true),
       'access arguments' => array('access lobbywatch data general content'),
       'type' => MENU_CALLBACK,
       'file' => 'lobbywatch_data.interface.inc',
