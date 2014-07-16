@@ -50501,7 +50501,7 @@
         
         function partition_OnGetPartitionCondition($partitionKey, &$condition)
         {
-            $condition = "upper(left(nachname, 1)) = '$partitionKey'";
+            $condition = "upper(left(parlamentarier.nachname, 1)) = '$partitionKey'";
         }
     
         protected function CreateGrid()

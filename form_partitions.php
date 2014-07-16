@@ -15,7 +15,7 @@ foreach($tmp as $letter) {
 }
 
 //
-$condition = "upper(left(name_de, 1)) = '$partitionKey'";
+$condition = "upper(left(organisation.name_de, 1)) = '$partitionKey'";
 
 
 // Parlamentarier
@@ -33,7 +33,7 @@ foreach($tmp as $letter) {
 }
 
 //
-$condition = "upper(left(nachname, 1)) = '$partitionKey'";
+$condition = "upper(left(parlamentarier.nachname, 1)) = '$partitionKey'";
 
 // Interessengruppe
 
@@ -51,23 +51,6 @@ foreach($tmp as $letter) {
 
 //
 $condition = "upper(left(interessengruppe.name, 1)) = '$partitionKey'";
-
-// Interessenbindung
-
-$tmp = array();
-$this->GetConnection()->ExecQueryToArray("
-SELECT DISTINCT
-upper(left(p.nachname, 1)) as first_letter
-FROM v_parlamentarier p
-ORDER BY first_letter", $tmp
-);
-
-foreach($tmp as $letter) {
-  $partitions[$letter['first_letter']] = convert_ansi($letter['first_letter']);
-}
-
-//
-$condition = "parlamentarier_id IN (SELECT `id` FROM `parlamentarier` WHERE upper(left(nachname, 1)) = '$partitionKey')";
 
 // Interessenbindung
 

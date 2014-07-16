@@ -3631,7 +3631,7 @@
         
         function partition_OnGetPartitionCondition($partitionKey, &$condition)
         {
-            $condition = "parlamentarier_id IN (SELECT `id` FROM `parlamentarier` WHERE upper(left(nachname, 1)) = '$partitionKey')";
+            $condition = "interessenbindung.parlamentarier_id IN (SELECT `id` FROM `v_parlamentarier` s WHERE upper(left(s.nachname, 1)) = '$partitionKey')";
         }
     
         protected function CreateGrid()

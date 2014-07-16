@@ -53419,7 +53419,7 @@
         
         function partition_OnGetPartitionCondition($partitionKey, &$condition)
         {
-            $condition = "upper(left(name_de, 1)) = '$partitionKey'";
+            $condition = "upper(left(organisation.name_de, 1)) = '$partitionKey'";
         }
     
         protected function CreateGrid()
