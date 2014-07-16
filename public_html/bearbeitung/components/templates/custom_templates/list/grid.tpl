@@ -148,7 +148,7 @@
                     {if $DataGrid.ActionsPanel.ReleaseSelectedButton}
                         <button class="btn release-selected">
                             <i class="pg-icon-release-selected"></i>
-                            Freigeben
+                            Veröffentlichen
                             {* $Captions->GetMessageString('ReleaseSelected') *}
                         </button>
                     {/if}
@@ -156,7 +156,7 @@
                     {if $DataGrid.ActionsPanel.ReleaseSelectedButton}
                         <button class="btn de-release-selected">
                             <i class="pg-icon-de-release-selected"></i>
-                            Ent-Freigeben
+                            Un-Veröffentlichen
                             {* $Captions->GetMessageString('ReleaseSelected') *}
                         </button>
                     {/if}
