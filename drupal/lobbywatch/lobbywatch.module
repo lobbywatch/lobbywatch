@@ -2,6 +2,9 @@
 
 // @todo alias für namensänderungen machen
 class Constants {
+
+  /** Data tables containing the workflow fields.
+   */
   public static $workflow_tables = array(
     'branche' => 'Branche',
     'interessenbindung' => 'Interessenbindung',
@@ -21,6 +24,9 @@ class Constants {
     'zutrittsberechtigung' => 'Zutrittsberechtigter',
   );
 
+  /**
+   * Meta tables such as attachments or settings.
+   */
   public static $meta_tables = array(
     'parlamentarier_anhang' => 'Parlamentarieranhang',
     'organisation_anhang' => 'Organisationsanhang',
@@ -29,6 +35,7 @@ class Constants {
     'settings_category' => 'Einstellungskategorien',
   );
 
+  /** Internal fields that are confidential. */
   public static $intern_fields = array('notizen', 'updated_visa', 'created_visa', 'autorisiert_visa', 'freigabe_visa', 'eingabe_abgeschlossen_visa', 'kontrolliert_visa', 'symbol_abs', 'photo', 'ALT_kommission', 'ALT_parlam_verbindung');
 
   /**
@@ -36,6 +43,8 @@ class Constants {
    */
   public static $entities_web = array('branche' => 'branche', 'interessengruppe' => 'lobbygruppe', 'kommission' => 'kommission', 'partei' => 'partei','organisation' => 'organisation',);
 
+  /** Parlamentarier, Zutrittsberechtigung
+   * table name => website alias */
   public static $entities_special_web = array('parlamentarier' => 'parlamentarier', 'zutrittsberechtigung' => 'zutrittsberechtigter', );
 
   public function getAllEntities() {
