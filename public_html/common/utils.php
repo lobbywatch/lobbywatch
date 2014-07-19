@@ -17,7 +17,7 @@ function utils_endsWith($haystack, $needle)
 
 // Logging
 
-function dt($msg, $text = null) {
+function dw($msg, $text = null) {
   global $debug;
   if ($debug !== true)
     return;
@@ -26,7 +26,7 @@ function dt($msg, $text = null) {
   }
   print ("<p style='color:red;'>" . (is_string($text) ? $text . ' => ' : '') . "$msg</p>") ;
 }
-function dtXXX($msg) {
+function dwXXX($msg) {
   // Disabled debug comment: do nothing
 }
 
