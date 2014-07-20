@@ -148,6 +148,7 @@ function _lobbywatch_data_clean_records($result) {
   while($record = $result->fetchAssoc()) {
     if ((array_key_exists('bis_unix', $record) && (is_null($record['bis_unix']) || $record['bis_unix'] > time()))
         || (array_key_exists('im_rat_bis_unix', $record) && (is_null($record['im_rat_bis_unix']) || $record['im_rat_bis_unix'] > time()))
+        || (!array_key_exists('bis_unix', $record) &&!array_key_exists('im_rat_bis_unix', $record))
         || $includeHistorised) {
           $items[] = _lobbywatch_data_clean_fields($record);
     }
@@ -440,6 +441,73 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
       $message .= ' | ' . $mandate['message'];
       $success &= $mandate['success'];
     }
+
+    $count = count($aggregated);
+    $success = true;
+//     dpm($aggregated, '$aggregated');
+    //$sql = $in_kommission['sql'];
+  } catch(Exception $e) {
+    $message .= _lobbywatch_data_add_exeption($e);
+    $success = false;
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+
+    $response = array(
+        'success' => $success,
+        'count' => $count,
+        'message' => $message,
+        'sql' => $show_sql ? $sql : '',
+        'source' => $table,
+        'data' => $aggregated
+    );
+    if ($json) {
+      drupal_json_output($response);
+      exit(intval(!$success));
+    } else {
+      return $response;
+    }
+  }
+
+function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
+  global $show_sql;
+  $success = true;
+  $count = 0;
+  $items = null;
+  $message = '';
+  $sql = '';
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+  try {
+    $parlamentarier = _lobbywatch_data_table_flat_id('organisation', $id, false);
+    $aggregated = $parlamentarier['data'];
+    $message .= ' | ' . $parlamentarier['message'];
+    $success &= $parlamentarier['success'];
+
+    // TODO fill aggregated organisation
+//     $in_kommissionen =  _lobbywatch_data_table_flat_list('in_kommission_liste', "in_kommission_liste.parlamentarier_id = $id", false);
+//     $aggregated['in_kommission'] = $in_kommissionen['data'];
+//     $message .= ' | ' . $in_kommissionen['message'];
+//     $success &= $in_kommissionen['success'];
+
+//     $interessenbindungen = _lobbywatch_data_table_flat_list('interessenbindung_liste', "interessenbindung_liste.parlamentarier_id = $id", false);
+//     $aggregated['interessenbindungen'] = $interessenbindungen['data'];
+//     $message .= ' | ' . $interessenbindungen['message'];
+//     $success &= $interessenbindungen['success'];
+
+//     $zutrittsberechtigungen = _lobbywatch_data_table_flat_list('zutrittsberechtigung', "zutrittsberechtigung.parlamentarier_id = $id", false);
+//     $aggregated['zutrittsberechtigungen'] = $zutrittsberechtigungen['data'];
+//     $message .= ' | ' . $zutrittsberechtigungen['message'];
+//     $success &= $zutrittsberechtigungen['success'];
+
+//     foreach ($aggregated['zutrittsberechtigungen'] as $key => $value) {
+//       $mandate = _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($value['id'], false)['data'];
+//       $aggregated['zutrittsberechtigungen'][$key]['mandate'] = $mandate['mandate'];
+//       $message .= ' | ' . $mandate['message'];
+//       $success &= $mandate['success'];
+//     }
 
     $count = count($aggregated);
     $success = true;

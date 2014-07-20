@@ -58,6 +58,14 @@ function lobbywatch_data_menu() {
       'file' => 'lobbywatch_data.interface.inc',
   );
 
+  $items["data/interface/v1/json/table/organisation/aggregated/id/%"] = array(
+      'page callback' => '_lobbywatch_data_table_organisation_aggregated_id',
+      'page arguments' => array(8, true),
+      'access arguments' => array('access lobbywatch data general content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch_data.interface.inc',
+  );
+
   // TODO error message in case of wrong names
   $items["data/interface/v1/json/%/%"] = array(
       'page callback' => '_lobbywatch_data_not_found',

@@ -369,7 +369,7 @@
          var filterOrganisation = getParameterByName("filterOrganisation");
          var filterPerson = getParameterByName("filterPerson");
 
-         var options = "optionFunction1=" + optionFunction1;
+         /* TODO RKU var options = "optionFunction1=" + optionFunction1;
          options = options + "&optionFunction2=" + optionFunction2;
          options = options + "&optionDeep1=" + optionDeep1;
          options = options + "&optionDeep2=" + optionDeep2;
@@ -379,7 +379,7 @@
          options = options + "&filterBrancheText=" + filterBrancheText;
          options = options + "&filterKommissionText=" + filterKommissionText;
          options = options + "&filterOrganisation=" + filterOrganisation;
-         options = options + "&filterPerson=" + filterPerson;
+         options = options + "&filterPerson=" + filterPerson;*/
 
          return options;
       }
@@ -389,47 +389,53 @@
       $('#lnkParlamentOverview').attr('href', urlParlamentOverview);
 
       var filterOptions = "";
-      filterOptions += "&filterBranche=" + getParameterByName("filterBranche");
-      filterOptions += "&filterKommission=" + getParameterByName("filterKommission");
-      filterOptions += "&filterOrganisation=" + getParameterByName("filterOrganisation");
-      filterOptions += "&filterPerson=" + getParameterByName("filterPerson");
+      // TODO RKU filterOptions += "&filterBranche=" + getParameterByName("filterBranche");
+      // TODO RKU filterOptions += "&filterKommission=" + getParameterByName("filterKommission");
+      // TODO RKU filterOptions += "&filterOrganisation=" + getParameterByName("filterOrganisation");
+      // TODO RKU filterOptions += "&filterPerson=" + getParameterByName("filterPerson");
 
       // read JSON data
       var id = getParameterByName("id");
       // test bl
-      if (id == null || id == "") {
-         id = 19; //12, 94, 98, 154, 261, 411; Mandat: 19, 263, 349, 360, 390
-         filterOptions = "";
-         filterOptions += "&filterBranche=" + "0";
-         filterOptions += "&filterKommission=" + "0";
-      }
+      // TODO RKU if (id == null || id == "") {
+      // TODO RKU    id = 19; //12, 94, 98, 154, 261, 411; Mandat: 19, 263, 349, 360, 390
+      // TODO RKU    filterOptions = "";
+      // TODO RKU    filterOptions += "&filterBranche=" + "0";
+      // TODO RKU    filterOptions += "&filterKommission=" + "0";
+      // TODO RKU }
 
 
       datasource = "/de/data/interface/v1/json/table/organisation/flat/id/" + id + filterOptions;
 
+      console.log(datasource);
+      
       var urlData = datasource;
 
-      d3.json(urlData, function (error, organisationData) {
+      d3.json(urlData, function (error, response) {
          if (error) {
             console.warn(error);
             alert("Error reading JSON data from");
          }
+         var organisationData = response.data;
          if (!organisationData) {
             alert("Error reading JSON data from");
             return;
          }
 
+         console.log(organisationData);
+         
          var str = organisationData.name_de;
          $("#lblSubjectDetail").html(str);
 
          var str = "Branche: " + organisationData.branche;
-         if (organisationData.interessengruppe_list.length > 0) {
+         
+         /* TODO RKU if (organisationData.interessengruppe_list.length > 0) {
             str += ", Interessengruppe(n): ";
             for (var i = 0; i < organisationData.interessengruppe_list.length; i++) {
                str += organisationData.interessengruppe_list[i].name;
                if (i < organisationData.interessengruppe_list.length - 1) str += ", ";
             }
-         }
+         }*/
          $("#lblSubjectDetail2").html(str);
 
          var viewerWidth = $(document).width();
