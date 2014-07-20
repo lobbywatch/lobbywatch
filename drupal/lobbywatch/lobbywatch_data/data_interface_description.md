@@ -170,7 +170,7 @@ Query for a list of records (see [filtering](#filtering) below):
 `http://lobbywatch.dev/de/data/interface/v1/json/table/$table/flat/list`
 
 Query for a list of records by name (see [filtering](#filtering) below):
-`http://lobbywatch.dev/de/data/interface/v1/json/table/$table/flat/search/%`
+`http://lobbywatch.dev/de/data/interface/v1/json/table/$table/flat/list/%`
 
 where `$table` is one of the following tables:
 

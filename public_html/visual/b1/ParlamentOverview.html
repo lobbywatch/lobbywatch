@@ -300,7 +300,7 @@
                            <option value="35">Delegation bei der parlamentarischen Versammlung der OSZE</option>
                            <option value="18">Redaktionskommission</option>
                            <option value="15">Kommissionen für Rechtsfragen</option>
-                           <option value="1">Kommissionen für soziale Sicherheit und Gesundheit </option>
+                           <option value="1" selected>Kommissionen für soziale Sicherheit und Gesundheit </option>
                            <option value="7">Sicherheitspolitische Kommissionen </option>
                            <option value="13">Staatspolitische Kommissionen</option>
                            <option value="3">Kommissionen für Umwelt, Raumplanung und Energie </option>
@@ -556,14 +556,21 @@
       $("#filterPerson").val(filterPerson);
 
       var filterOptions = "";
-      filterOptions += "&filterBranche=" + filterBranche;
-      filterOptions += "&filterKommission=" + filterKommission;
-      filterOptions += "&filterOrganisation=" + filterOrganisation;
-      filterOptions += "&filterPerson=" + filterPerson;
+      if (filterPerson !=  '') {
+          filterOptions += "/" + filterPerson;
+      }
+      if (filterBranche != 0 && filterBranche != '') {
+        filterOptions += "&filter_branche_id=" + filterBranche;
+      }
+      if (filterKommission != 0 && filterKommission != '') {
+        filterOptions += "&filter_kommission_id=" + filterKommission;
+      // TODO RKU: not implemented yet filterOptions += "&filter_organisation_id=" + filterOrganisation;
+      }
 
       // ?option=GetParlamentData&format=json&filterBranche=0&filterKommission=0
-      var datasource = "/LobbywatchData.aspx?option=GetParlamentData&format=json" + filterOptions;
+      var datasource = "/de/data/interface/v1/json/table/parlamentarier/flat/list" + filterOptions;
 
+      console.log('Datasource: ' + datasource);
       //var urlData = "http://localhost/VisualLobby/ParlamentData.json";
       //var urlData = "ParlamentData.json";
       var urlData = datasource;

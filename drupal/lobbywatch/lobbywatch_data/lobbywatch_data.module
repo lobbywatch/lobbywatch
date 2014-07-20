@@ -23,7 +23,7 @@ function lobbywatch_data_menu() {
       'file' => 'lobbywatch_data.interface.inc',
     );
 
-    $items["data/interface/v1/json/table/$key/flat/search/%"] = array(
+    $items["data/interface/v1/json/table/$key/flat/list/%"] = array(
       'page callback' => '_lobbywatch_data_table_flat_list_search',
       'page arguments' => array($key, 8, true),
       'access arguments' => array('access lobbywatch data general content'),
@@ -58,6 +58,7 @@ function lobbywatch_data_menu() {
       'file' => 'lobbywatch_data.interface.inc',
   );
 
+  // TODO error message in case of wrong names
   $items["data/interface/v1/json/%/%"] = array(
       'page callback' => '_lobbywatch_data_not_found',
       'page arguments' => array(4, 5, true),

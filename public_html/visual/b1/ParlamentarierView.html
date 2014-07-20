@@ -544,7 +544,7 @@
 
 
       // read JSON data
-      var datasource = "/LobbywatchData.aspx?option=GetParlamentarierNetworkData&id=" + id + "&format=json" + filterJSONData;
+      var datasource = "/de/data/interface/v1/json/table/parlamentarier/aggregated/id/" + id + filterJSONData;
 
       //var urlData = "http://localhost/VisualLobby/" + datasource;
       //datasource = "http://localhost/VisualLobby/JFehrData_test2.json";
@@ -572,10 +572,10 @@
             tooltip.hideTooltip();
          };
 
-         var str = parlamentarierData.parlamentarier.nachname + ", " + parlamentarierData.parlamentarier.vorname + "(" + parlamentarierData.parlamentarier.id + ")";
+         var str = parlamentarierData.data.nachname + ", " + parlamentarierData.data.vorname + " (" + parlamentarierData.data.id + ")";
          $("#lblSubjectDetail").html(str);
 
-         var str = parlamentarierData.parlamentarier.ratstyp + ", Partei: " + parlamentarierData.parlamentarier.partei + ", Kanton: " + parlamentarierData.parlamentarier.kanton;
+         var str = parlamentarierData.data.ratstyp + ", Partei: " + parlamentarierData.data.partei + ", Kanton: " + parlamentarierData.data.kanton;
          $("#lblSubjectDetail2").html(str);
 
          var viewerWidth = $(document).width();
@@ -610,15 +610,15 @@
          var canvasWidth = viewerWidth;
          var canvasHeight = viewerHeight;
 
-         var lstInteressenbindung = jsonPath(parlamentarierData, "$..parlamentarier.interessenbindung[*]");
+         var lstInteressenbindung = jsonPath(parlamentarierData, "$..data.interessenbindungen[*]");
          if (lstInteressenbindung && lstInteressenbindung.length > 0) {
             var width = organisationStartX + (lstInteressenbindung.length * (organisationWidth + organisationPadding));
             canvasWidth = Math.max(canvasWidth, width + 20);
          }
-         var lstZutrittsberechtigung = jsonPath(parlamentarierData, "$..parlamentarier.zutrittsberechtigung[*]");
+         var lstZutrittsberechtigung = jsonPath(parlamentarierData, "$..data.zutrittsberechtigungen[*]");
          if (lstZutrittsberechtigung && lstZutrittsberechtigung.length > 0) {
             for (var iZutrittsberechtigung = 0; iZutrittsberechtigung < lstZutrittsberechtigung.length; iZutrittsberechtigung++) {
-               var lstMandat = jsonPath(lstZutrittsberechtigung[iZutrittsberechtigung], "$..mandat[*]");
+               var lstMandat = jsonPath(lstZutrittsberechtigung[iZutrittsberechtigung], "$..mandate[*]");
                var width = mandatStartX + (lstZutrittsberechtigung.length * (organisationWidth + organisationPadding));
             }
 
@@ -888,7 +888,7 @@
 
          nodeRoot.moveToFront();
          if (nodeRoot) {
-            var label = parlamentarierData.parlamentarier.nachname + ", " + parlamentarierData.parlamentarier.vorname
+            var label = parlamentarierData.data.nachname + ", " + parlamentarierData.data.vorname
             var lines = wordwrap(label, 12);
 
             lineHeight = 15;
@@ -898,7 +898,7 @@
                .attr("y", rootStartY + parlamentarierIconTextOffsetY)
                .attr("x", rootStartX + parlamentarierIconWidth/2)
                .text(function (d, i) {
-                  var txt = parlamentarierData.parlamentarier.nachname + ", " + parlamentarierData.parlamentarier.vorname;
+                  var txt = parlamentarierData.data.nachname + ", " + parlamentarierData.data.vorname;
                   return txt;
                })
                .call(FitTextToRect, parlamentarierIconWidth);
