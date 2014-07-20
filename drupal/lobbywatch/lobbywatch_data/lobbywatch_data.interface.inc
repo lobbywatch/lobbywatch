@@ -42,12 +42,44 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
         'count' => $count,
         'message' => $message,
         'sql' => $show_sql? $sql : '',
+        'source' => $table,
         'data' => $success ? $items[0] : null,
     );
 
     if ($json) {
       drupal_json_output($response);
       exit(!$success);
+    } else {
+      return $response;
+    }
+  }
+}
+
+function _lobbywatch_data_not_found($type, $table, $json = true) {
+  $message = '';
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+
+  try {
+    $message .= "Data interface call to $type/$table does not exist";
+  } catch(Exception $e) {
+    $message .= _lobbywatch_data_add_exeption($e);
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+
+    $response = array(
+        'success' => false,
+        'count' => 0,
+        'message' => $message,
+        'sql' => '',
+        'source' => $table,
+        'data' => null,
+    );
+
+    if ($json) {
+      drupal_json_output($response);
+      exit(1);
     } else {
       return $response;
     }
@@ -124,13 +156,21 @@ function _lobbywatch_data_clean_records($result) {
 }
 
 function _lobbywatch_data_clean_fields($record) {
-  if (!user_access('access lobbywatch data confidential content')) {
+  if (!(isset($_GET['includeConfidentialData']) && $_GET['includeConfidentialData'] == 0) && user_access('access lobbywatch data confidential content')) {
     foreach ($record as $key => $value) {
       // Clean intern fields
       if (in_array($key, Constants::$intern_fields)) {
         unset($record[$key]);
       }
+    }
+  }
 
+  if (!(isset($_GET['includeMetaData']) && $_GET['includeMetaData'] == 0)) {
+    foreach ($record as $key => $value) {
+      // Clean intern fields
+      if (in_array($key, Constants::$meta_fields)) {
+        unset($record[$key]);
+      }
     }
   }
 
@@ -191,6 +231,7 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
         'count' => $count,
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
+        'source' => $table,
         'data' => $items
     );
 
@@ -240,6 +281,7 @@ function _lobbywatch_data_relation_flat_list($table, $condition = '1', $json = t
         'count' => $count,
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
+        'source' => $table,
         'data' => $items
     );
 
@@ -297,6 +339,7 @@ function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = tr
         'count' => $count,
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
+        'source' => $table,
         'data' => $items
     );
     if ($json) {
@@ -340,6 +383,7 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
         'count' => $count,
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
+        'source' => $table,
         'data' => $aggregated
     );
     if ($json) {
@@ -392,6 +436,7 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
         'count' => $count,
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
+        'source' => $table,
         'data' => $aggregated
     );
     if ($json) {

@@ -567,7 +567,7 @@ LEFT JOIN `v_parlamentarier` parlamentarier
 ON parlamentarier.id = zutrittsberechtigung.parlamentarier_id;
 
 
--- Kommissionen für Parlamenterier
+-- Kommissionen für Parlamentarier
 -- Connector: in_kommission.parlamentarier_id
 CREATE OR REPLACE VIEW `v_in_kommission_liste` AS
 SELECT kommission.abkuerzung, kommission.name, kommission.typ, kommission.art, kommission.beschreibung, kommission.sachbereiche, kommission.mutter_kommission_id, kommission.parlament_url, in_kommission.*
@@ -576,7 +576,7 @@ INNER JOIN v_kommission kommission
   ON in_kommission.kommission_id = kommission.id
 ORDER BY kommission.abkuerzung;
 
--- Parlamenterier einer Kommission
+-- Parlamentarier einer Kommission
 -- Connector: in_kommission.kommission_id
 CREATE OR REPLACE VIEW `v_in_kommission_parlamentarier` AS
 SELECT
@@ -647,7 +647,7 @@ INNER JOIN v_parlamentarier parlamentarier
   ON in_kommission.parlamentarier_id = parlamentarier.id
 ORDER BY parlamentarier.anzeige_name;
 
--- Interessenbindung eines Parlamenteriers
+-- Interessenbindung eines Parlamentariers
 -- Connector: interessenbindung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_interessenbindung_liste` AS
 SELECT
@@ -698,7 +698,7 @@ INNER JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
 ORDER BY organisation.anzeige_name;
 
--- Indirekte Interessenbindungen eines Parlamenteriers
+-- Indirekte Interessenbindungen eines Parlamentariers
 -- Connector: interessenbindung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_interessenbindung_liste_indirekt` AS
 SELECT 'direkt' as beziehung, interessenbindung_liste.* FROM v_interessenbindung_liste interessenbindung_liste
@@ -989,7 +989,7 @@ WHERE
   organisation_beziehung.art = 'tochtergesellschaft von'
 ORDER BY organisation.anzeige_name;
 
--- Parlamenterier, die eine Interessenbindung zu dieser Organisation haben.
+-- Parlamentarier, die eine Interessenbindung zu dieser Organisation haben.
 -- Connector: interessenbindung.organisation_id
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier` AS
 SELECT parlamentarier.anzeige_name as parlamentarier_name, interessenbindung.*
@@ -998,7 +998,7 @@ INNER JOIN v_parlamentarier parlamentarier
   ON interessenbindung.parlamentarier_id = parlamentarier.id
 ORDER BY parlamentarier.anzeige_name;
 
--- Parlamenterier, die eine indirekte Interessenbindung zu dieser Organisation haben.
+-- Parlamentarier, die eine indirekte Interessenbindung zu dieser Organisation haben.
 -- Connector: connector_organisation_id
 -- Reverse Beziehung
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier_indirekt` AS
@@ -1014,7 +1014,7 @@ WHERE
   organisation_beziehung.art = 'arbeitet fuer'
 ORDER BY beziehung, parlamentarier_name;
 
--- Parlamenterier, die eine Zutrittsberechtiung mit Mandant oder Interessenbindung zu dieser Organisation haben.
+-- Parlamentarier, die eine Zutrittsberechtiung mit Mandant oder Interessenbindung zu dieser Organisation haben.
 -- Connector: organisation_id oder parlamentarier_id
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier_beide` AS
 SELECT 'interessenbindung' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, NULL as zutrittsberechtigung_id, NULL as zutrittsberechtigter, interessenbindung.art, interessenbindung.von, interessenbindung.bis,  interessenbindung.organisation_id, interessenbindung.freigabe_datum
@@ -1029,7 +1029,7 @@ INNER JOIN v_mandat mandat
 INNER JOIN v_parlamentarier parlamentarier
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id;
 
--- Parlamenterier, die eine indirekte Interessenbindung oder indirekte Zutrittsberechtiung mit Mandat zu dieser Organisation haben.
+-- Parlamentarier, die eine indirekte Interessenbindung oder indirekte Zutrittsberechtiung mit Mandat zu dieser Organisation haben.
 -- Connector: connector_organisation_id oder parlamentarier_id
 -- Reverse Beziehung
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier_beide_indirekt` AS
@@ -1056,7 +1056,7 @@ INNER JOIN v_parlamentarier parlamentarier
 WHERE
   organisation_beziehung.art = 'arbeitet fuer';
 
--- Authorisieurngsemail Interessenbindung für Parlamenterier
+-- Authorisieurngsemail Interessenbindung für Parlamentarier
 -- Connector: interessenbindung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_interessenbindung_authorisierungs_email` AS
 SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, organisation.anzeige_name as organisation_name, IFNULL(organisation.rechtsform,'') rechtsform, IFNULL(organisation.ort,'') ort, interessenbindung.art, interessenbindung.beschreibung
@@ -1076,7 +1076,7 @@ INNER JOIN v_parlamentarier parlamentarier
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
 GROUP BY parlamentarier.id;
 
--- Authorisieurngsemail Interessenbindung für Parlamenterier
+-- Authorisieurngsemail Interessenbindung für Parlamentarier
 -- Connector: interessenbindung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_interessenbindung_authorisierungs_email` AS
 SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, organisation.anzeige_name as organisation_name, IFNULL(organisation.rechtsform,'') rechtsform, IFNULL(organisation.ort,'') ort, interessenbindung.art, interessenbindung.beschreibung
@@ -1088,7 +1088,7 @@ INNER JOIN v_parlamentarier parlamentarier
 GROUP BY parlamentarier.id
 ORDER BY organisation.anzeige_name;
 
--- Authorisieurngsemail Interessenbindung für Parlamenterier
+-- Authorisieurngsemail Interessenbindung für Parlamentarier
 -- Connector: parlamentarier_id
 CREATE OR REPLACE VIEW `v_parlamentarier_authorisierungs_email` AS
 SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email,

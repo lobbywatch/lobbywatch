@@ -58,6 +58,14 @@ function lobbywatch_data_menu() {
       'file' => 'lobbywatch_data.interface.inc',
   );
 
+  $items["data/interface/v1/json/%/%"] = array(
+      'page callback' => '_lobbywatch_data_not_found',
+      'page arguments' => array(4, 5, true),
+      'access arguments' => array('access lobbywatch data general content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch_data.interface.inc',
+  );
+
 //   $items["data/interface/v1/json/table/parlamentarier/aggregated/all"] = array(
 //       'page callback' => '_lobbywatch_data_table_parlamentarier_aggregated_list',
 //       'page arguments' => array(),
