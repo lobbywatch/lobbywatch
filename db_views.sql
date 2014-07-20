@@ -477,7 +477,7 @@ UNIX_TIMESTAMP(mandat.created_date) as created_date_unix, UNIX_TIMESTAMP(mandat.
 FROM `mandat`;
 
 CREATE OR REPLACE VIEW `v_in_kommission` AS
-SELECT in_kommission.*, rat.abkuerzung as rat, rat.abkuerzung as ratstyp, parlamentarier.partei_id, parlamentarier.fraktion_id, parlamentarier.freigabe_datum as parlamentarier_freigabe_datum, kanton.abkuerzung as kanton, kommission.abkuerzung as kommission_abkuerzung, kommission.name as kommission_name, kommission.art as kommission_art, kommission.typ as kommission_typ,
+SELECT in_kommission.*, rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kommission.abkuerzung as kommission_abkuerzung, kommission.name as kommission_name, kommission.art as kommission_art, kommission.typ as kommission_typ, kommission.beschreibung as kommission_beschreibung, kommission.sachbereiche as kommission_sachbereiche, kommission.mutter_kommission_id as kommission_mutter_kommission_id, kommission.parlament_url as kommission_parlament_url,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(in_kommission.created_date) as created_date_unix, UNIX_TIMESTAMP(in_kommission.updated_date) as updated_date_unix, UNIX_TIMESTAMP(in_kommission.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(in_kommission.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(in_kommission.freigabe_datum) as freigabe_datum_unix
 FROM `in_kommission`
@@ -524,6 +524,7 @@ SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name,
 CONCAT_WS(' ', p.vorname, p.zweiter_vorname, p.nachname) AS name,
 p.*,
 p.im_rat_seit as von, p.im_rat_bis as bis,
+UNIX_TIMESTAMP(geburtstag) as geburtstag_unix, 
 UNIX_TIMESTAMP(im_rat_seit) as im_rat_seit_unix, UNIX_TIMESTAMP(im_rat_bis) as im_rat_bis_unix,
 UNIX_TIMESTAMP(p.created_date) as created_date_unix, UNIX_TIMESTAMP(p.updated_date) as updated_date_unix, UNIX_TIMESTAMP(p.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(p.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(p.freigabe_datum) as freigabe_datum_unix,
 UNIX_TIMESTAMP(im_rat_seit) as von_unix, UNIX_TIMESTAMP(im_rat_bis) as bis_unix
@@ -566,10 +567,10 @@ LEFT JOIN `v_parlamentarier` parlamentarier
 ON parlamentarier.id = zutrittsberechtigung.parlamentarier_id;
 
 
--- Der der Kommissionen für Parlamenterier
+-- Kommissionen für Parlamenterier
 -- Connector: in_kommission.parlamentarier_id
 CREATE OR REPLACE VIEW `v_in_kommission_liste` AS
-SELECT kommission.abkuerzung, kommission.name, in_kommission.*
+SELECT kommission.abkuerzung, kommission.name, kommission.typ, kommission.art, kommission.beschreibung, kommission.sachbereiche, kommission.mutter_kommission_id, kommission.parlament_url, in_kommission.*
 FROM v_in_kommission in_kommission
 INNER JOIN v_kommission kommission
   ON in_kommission.kommission_id = kommission.id
@@ -578,7 +579,69 @@ ORDER BY kommission.abkuerzung;
 -- Parlamenterier einer Kommission
 -- Connector: in_kommission.kommission_id
 CREATE OR REPLACE VIEW `v_in_kommission_parlamentarier` AS
-SELECT parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.partei, parlamentarier.im_rat_seit, parlamentarier.im_rat_bis, in_kommission.*
+SELECT
+`parlamentarier`.`anzeige_name`
+, `parlamentarier`.`anzeige_name` as parlamentarier_name
+, `parlamentarier`.`name`
+, `parlamentarier`.`nachname`
+, `parlamentarier`.`vorname`
+, `parlamentarier`.`zweiter_vorname`
+, `parlamentarier`.`rat_id`
+, `parlamentarier`.`kanton_id`
+, `parlamentarier`.`kommissionen`
+, `parlamentarier`.`partei_id`
+, `parlamentarier`.`parteifunktion`
+, `parlamentarier`.`fraktion_id`
+, `parlamentarier`.`fraktionsfunktion`
+, `parlamentarier`.`im_rat_seit`
+, `parlamentarier`.`im_rat_bis`
+, `parlamentarier`.`ratswechsel`
+, `parlamentarier`.`ratsunterbruch_von`
+, `parlamentarier`.`ratsunterbruch_bis`
+, `parlamentarier`.`beruf`
+, `parlamentarier`.`beruf_interessengruppe_id`
+, `parlamentarier`.`zivilstand`
+, `parlamentarier`.`anzahl_kinder`
+, `parlamentarier`.`militaerischer_grad_id`
+, `parlamentarier`.`geschlecht`
+, `parlamentarier`.`geburtstag`
+, `parlamentarier`.`photo`
+, `parlamentarier`.`photo_dateiname`
+, `parlamentarier`.`photo_dateierweiterung`
+, `parlamentarier`.`photo_dateiname_voll`
+, `parlamentarier`.`photo_mime_type`
+, `parlamentarier`.`kleinbild`
+, `parlamentarier`.`sitzplatz`
+, `parlamentarier`.`email`
+, `parlamentarier`.`homepage`
+, `parlamentarier`.`parlament_biografie_id`
+, `parlamentarier`.`twitter_name`
+, `parlamentarier`.`linkedin_profil_url`
+, `parlamentarier`.`xing_profil_name`
+, `parlamentarier`.`facebook_name`
+, `parlamentarier`.`arbeitssprache`
+, `parlamentarier`.`adresse_firma`
+, `parlamentarier`.`adresse_strasse`
+, `parlamentarier`.`adresse_zusatz`
+, `parlamentarier`.`adresse_plz`
+, `parlamentarier`.`adresse_ort`
+, `parlamentarier`.`im_rat_seit_unix`
+, `parlamentarier`.`im_rat_bis_unix`
+-- , `parlamentarier`.`von`
+-- , `parlamentarier`.`bis`
+-- , `parlamentarier`.`von_unix`
+-- , `parlamentarier`.`bis_unix`
+-- , `parlamentarier`.`rat`
+-- , `parlamentarier`.`ratstyp`
+, `parlamentarier`.`kanton`
+, `parlamentarier`.`vertretene_bevoelkerung`
+, `parlamentarier`.`kommissionen_namen`
+, `parlamentarier`.`kommissionen2`
+, `parlamentarier`.`kommissionen_abkuerzung`
+, `parlamentarier`.`partei`
+, `parlamentarier`.`fraktion`
+, `parlamentarier`.`militaerischer_grad`
+, in_kommission.*
 FROM v_in_kommission in_kommission
 INNER JOIN v_parlamentarier parlamentarier
   ON in_kommission.parlamentarier_id = parlamentarier.id
@@ -587,7 +650,49 @@ ORDER BY parlamentarier.anzeige_name;
 -- Interessenbindung eines Parlamenteriers
 -- Connector: interessenbindung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_interessenbindung_liste` AS
-SELECT organisation.anzeige_name as organisation_name, interessenbindung.*
+SELECT
+`organisation`.`anzeige_name` as `organisation_name`
+, `organisation`.`name`
+-- , `organisation`.`id`
+, `organisation`.`name_de`
+, `organisation`.`name_fr`
+, `organisation`.`name_it`
+, `organisation`.`ort`
+, `organisation`.`land_id`
+, `organisation`.`interessenraum_id`
+, `organisation`.`rechtsform`
+, `organisation`.`typ`
+, `organisation`.`vernehmlassung`
+, `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe2_id`
+, `organisation`.`interessengruppe3_id`
+, `organisation`.`branche_id`
+, `organisation`.`homepage`
+, `organisation`.`handelsregister_url`
+, `organisation`.`twitter_name`
+, `organisation`.`beschreibung` as organisation_beschreibung
+, `organisation`.`adresse_strasse`
+, `organisation`.`adresse_zusatz`
+, `organisation`.`adresse_plz`
+, `organisation`.`branche`
+, `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_branche`
+, `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_branche`
+, `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_branche`
+, `organisation`.`land`
+, `organisation`.`interessenraum`
+, `organisation`.`organisation_jahr_id`
+, `organisation`.`jahr`
+, `organisation`.`umsatz`
+, `organisation`.`gewinn`
+, `organisation`.`kapital`
+, `organisation`.`mitarbeiter_weltweit`
+, `organisation`.`mitarbeiter_schweiz`
+, `organisation`.`geschaeftsbericht_url`
+, `organisation`.`quelle_url`
+, interessenbindung.*
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
@@ -598,7 +703,49 @@ ORDER BY organisation.anzeige_name;
 CREATE OR REPLACE VIEW `v_interessenbindung_liste_indirekt` AS
 SELECT 'direkt' as beziehung, interessenbindung_liste.* FROM v_interessenbindung_liste interessenbindung_liste
 UNION
-SELECT 'indirekt' as beziehung, organisation.anzeige_name as organisation_name, interessenbindung.*
+SELECT 'indirekt' as beziehung, 
+`organisation`.`anzeige_name` as `organisation_name`
+, `organisation`.`name`
+-- , `organisation`.`id`
+, `organisation`.`name_de`
+, `organisation`.`name_fr`
+, `organisation`.`name_it`
+, `organisation`.`ort`
+, `organisation`.`land_id`
+, `organisation`.`interessenraum_id`
+, `organisation`.`rechtsform`
+, `organisation`.`typ`
+, `organisation`.`vernehmlassung`
+, `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe2_id`
+, `organisation`.`interessengruppe3_id`
+, `organisation`.`branche_id`
+, `organisation`.`homepage`
+, `organisation`.`handelsregister_url`
+, `organisation`.`twitter_name`
+, `organisation`.`beschreibung` as organisation_beschreibung
+, `organisation`.`adresse_strasse`
+, `organisation`.`adresse_zusatz`
+, `organisation`.`adresse_plz`
+, `organisation`.`branche`
+, `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_branche`
+, `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_branche`
+, `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_branche`
+, `organisation`.`land`
+, `organisation`.`interessenraum`
+, `organisation`.`organisation_jahr_id`
+, `organisation`.`jahr`
+, `organisation`.`umsatz`
+, `organisation`.`gewinn`
+, `organisation`.`kapital`
+, `organisation`.`mitarbeiter_weltweit`
+, `organisation`.`mitarbeiter_schweiz`
+, `organisation`.`geschaeftsbericht_url`
+, `organisation`.`quelle_url`
+, interessenbindung.*
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_organisation_beziehung organisation_beziehung
   ON interessenbindung.organisation_id = organisation_beziehung.organisation_id
@@ -611,7 +758,49 @@ ORDER BY beziehung, organisation_name;
 -- Mandate einer Zutrittsberechtigung (INNER JOIN)
 -- Connector: zutrittsberechtigung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_mandate` AS
-SELECT zutrittsberechtigung.parlamentarier_id, organisation.anzeige_name as organisation_name, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, mandat.*
+SELECT zutrittsberechtigung.parlamentarier_id, 
+`organisation`.`anzeige_name` as `organisation_name`
+, `organisation`.`name`
+-- , `organisation`.`id`
+, `organisation`.`name_de`
+, `organisation`.`name_fr`
+, `organisation`.`name_it`
+, `organisation`.`ort`
+, `organisation`.`land_id`
+, `organisation`.`interessenraum_id`
+, `organisation`.`rechtsform`
+, `organisation`.`typ`
+, `organisation`.`vernehmlassung`
+, `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe2_id`
+, `organisation`.`interessengruppe3_id`
+, `organisation`.`branche_id`
+, `organisation`.`homepage`
+, `organisation`.`handelsregister_url`
+, `organisation`.`twitter_name`
+, `organisation`.`beschreibung` as organisation_beschreibung
+, `organisation`.`adresse_strasse`
+, `organisation`.`adresse_zusatz`
+, `organisation`.`adresse_plz`
+, `organisation`.`branche`
+, `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_branche`
+, `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_branche`
+, `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_branche`
+, `organisation`.`land`
+, `organisation`.`interessenraum`
+, `organisation`.`organisation_jahr_id`
+, `organisation`.`jahr`
+, `organisation`.`umsatz`
+, `organisation`.`gewinn`
+, `organisation`.`kapital`
+, `organisation`.`mitarbeiter_weltweit`
+, `organisation`.`mitarbeiter_schweiz`
+, `organisation`.`geschaeftsbericht_url`
+, `organisation`.`quelle_url`
+, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, mandat.*
 FROM v_zutrittsberechtigung zutrittsberechtigung
 INNER JOIN v_mandat mandat
   ON zutrittsberechtigung.id = mandat.zutrittsberechtigung_id
@@ -622,7 +811,49 @@ ORDER BY organisation.anzeige_name;
 -- Mandate einer Zutrittsberechtigung (LFET JOIN)
 -- Connector: zutrittsberechtigung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_mit_mandaten` AS
-SELECT organisation.anzeige_name as organisation_name, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, zutrittsberechtigung.parlamentarier_id, mandat.*
+SELECT 
+`organisation`.`anzeige_name` as `organisation_name`
+, `organisation`.`name`
+-- , `organisation`.`id`
+, `organisation`.`name_de`
+, `organisation`.`name_fr`
+, `organisation`.`name_it`
+, `organisation`.`ort`
+, `organisation`.`land_id`
+, `organisation`.`interessenraum_id`
+, `organisation`.`rechtsform`
+, `organisation`.`typ`
+, `organisation`.`vernehmlassung`
+, `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe2_id`
+, `organisation`.`interessengruppe3_id`
+, `organisation`.`branche_id`
+, `organisation`.`homepage`
+, `organisation`.`handelsregister_url`
+, `organisation`.`twitter_name`
+, `organisation`.`beschreibung` as organisation_beschreibung
+, `organisation`.`adresse_strasse`
+, `organisation`.`adresse_zusatz`
+, `organisation`.`adresse_plz`
+, `organisation`.`branche`
+, `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_branche`
+, `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_branche`
+, `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_branche`
+, `organisation`.`land`
+, `organisation`.`interessenraum`
+, `organisation`.`organisation_jahr_id`
+, `organisation`.`jahr`
+, `organisation`.`umsatz`
+, `organisation`.`gewinn`
+, `organisation`.`kapital`
+, `organisation`.`mitarbeiter_weltweit`
+, `organisation`.`mitarbeiter_schweiz`
+, `organisation`.`geschaeftsbericht_url`
+, `organisation`.`quelle_url`
+, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, zutrittsberechtigung.parlamentarier_id, mandat.*
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
   ON zutrittsberechtigung.id = mandat.zutrittsberechtigung_id
@@ -635,7 +866,49 @@ ORDER BY zutrittsberechtigung.anzeige_name;
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_mit_mandaten_indirekt` AS
 SELECT 'direkt' as beziehung, zutrittsberechtigung.* FROM v_zutrittsberechtigung_mit_mandaten zutrittsberechtigung
 UNION
-SELECT 'indirekt' as beziehung, organisation.name as organisation_name, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, zutrittsberechtigung.parlamentarier_id, mandat.*
+SELECT 'indirekt' as beziehung, 
+`organisation`.`anzeige_name` as `organisation_name`
+, `organisation`.`name`
+-- , `organisation`.`id`
+, `organisation`.`name_de`
+, `organisation`.`name_fr`
+, `organisation`.`name_it`
+, `organisation`.`ort`
+, `organisation`.`land_id`
+, `organisation`.`interessenraum_id`
+, `organisation`.`rechtsform`
+, `organisation`.`typ`
+, `organisation`.`vernehmlassung`
+, `organisation`.`interessengruppe_id`
+, `organisation`.`interessengruppe2_id`
+, `organisation`.`interessengruppe3_id`
+, `organisation`.`branche_id`
+, `organisation`.`homepage`
+, `organisation`.`handelsregister_url`
+, `organisation`.`twitter_name`
+, `organisation`.`beschreibung` as organisation_beschreibung
+, `organisation`.`adresse_strasse`
+, `organisation`.`adresse_zusatz`
+, `organisation`.`adresse_plz`
+, `organisation`.`branche`
+, `organisation`.`interessengruppe`
+, `organisation`.`interessengruppe_branche`
+, `organisation`.`interessengruppe2`
+, `organisation`.`interessengruppe2_branche`
+, `organisation`.`interessengruppe3`
+, `organisation`.`interessengruppe3_branche`
+, `organisation`.`land`
+, `organisation`.`interessenraum`
+, `organisation`.`organisation_jahr_id`
+, `organisation`.`jahr`
+, `organisation`.`umsatz`
+, `organisation`.`gewinn`
+, `organisation`.`kapital`
+, `organisation`.`mitarbeiter_weltweit`
+, `organisation`.`mitarbeiter_schweiz`
+, `organisation`.`geschaeftsbericht_url`
+, `organisation`.`quelle_url`
+, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, zutrittsberechtigung.parlamentarier_id, mandat.*
 FROM v_zutrittsberechtigung zutrittsberechtigung
 INNER JOIN v_mandat mandat
   ON zutrittsberechtigung.id = mandat.zutrittsberechtigung_id

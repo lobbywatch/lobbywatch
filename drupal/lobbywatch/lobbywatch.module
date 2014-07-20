@@ -25,6 +25,57 @@ class Constants {
   );
 
   /**
+   * Connector: kommission_id
+   */
+  public static $enriched_relations_kommission = array(
+      'in_kommission_parlamentarier' => 'Parlamenterier einer Kommission',
+  );
+
+  /**
+   * Connector: parlamentarier_id
+   */
+  public static $enriched_relations_parlamentarier = array(
+      'in_kommission_liste' => 'Kommissionen für Parlamenterier',
+      'interessenbindung_liste' => 'Interessenbindung eines Parlamenteriers',
+      'interessenbindung_liste_indirekt' => 'Indirekte Interessenbindungen eines Parlamenteriers',
+      'zutrittsberechtigung_mandate' => 'Mandate einer Zutrittsberechtigung (INNER JOIN)',
+      'zutrittsberechtigung_mit_mandaten' => 'Mandate einer Zutrittsberechtigung (LFET JOIN)',
+      'zutrittsberechtigung_mit_mandaten_indirekt' => 'Indirekte Mandate einer Zutrittsberechtigung (INNER JOIN)',
+      'organisation_parlamentarier' => 'Parlamenterier, die eine Interessenbindung zu dieser Organisation haben',
+      'organisation_parlamentarier_indirekt' => 'Parlamenterier, die eine indirekte Interessenbindung zu dieser Organisation haben',
+      'organisation_parlamentarier_beide' => 'Parlamenterier, die eine Zutrittsberechtiung mit Mandant oder Interessenbindung zu dieser Organisation haben',
+      'organisation_parlamentarier_beide_indirekt' => 'Parlamenterier, die eine indirekte Interessenbindung oder indirekte Zutrittsberechtiung mit Mandat zu dieser Organisation haben',
+  );
+
+  /**
+   * Connector: zutrittsberechtigung_id
+   */
+  public static $enriched_relations_zutrittsberechtigung = array(
+  );
+
+  /**
+   * Connector: organisation_id
+   */
+  public static $enriched_relations_organisation = array(
+      'organisation_beziehung_arbeitet_fuer' => 'Organisationen für welche eine PR-Agentur arbeitet.',
+      'organisation_beziehung_mitglied_von' => 'Organisationen, in welcher eine Organisation Mitglied ist',
+      'organisation_beziehung_muttergesellschaft' => 'Muttergesellschaften',
+      'organisation_parlamentarier' => 'Parlamenterier, die eine Interessenbindung zu dieser Organisation haben',
+      'organisation_parlamentarier_indirekt' => 'Parlamenterier, die eine indirekte Interessenbindung zu dieser Organisation haben',
+      'organisation_parlamentarier_beide' => 'Parlamenterier, die eine Zutrittsberechtiung mit Mandant oder Interessenbindung zu dieser Organisation haben',
+      'organisation_parlamentarier_beide_indirekt' => 'Parlamenterier, die eine indirekte Interessenbindung oder indirekte Zutrittsberechtiung mit Mandat zu dieser Organisation haben',
+  );
+
+  /**
+   * Connector: ziel_organisation_id
+   */
+  public static $enriched_relations_organisation_inverse = array(
+      'organisation_beziehung_auftraggeber_fuer' => 'Organisationen, die eine PR-Firma beauftragt haben',
+      'organisation_beziehung_mitglieder' => 'Mitgliedsorganisationen',
+      'organisation_beziehung_tochtergesellschaften' => 'Tochtergesellschaften',
+  );
+
+  /**
    * Meta tables such as attachments or settings.
    */
   public static $meta_tables = array(
@@ -47,8 +98,20 @@ class Constants {
    * table name => website alias */
   public static $entities_special_web = array('parlamentarier' => 'parlamentarier', 'zutrittsberechtigung' => 'zutrittsberechtigter', );
 
-  public function getAllEntities() {
+  public static function getAllEntities() {
     return array_merge(Constants::$entities_web, Constants::$entities_special_web);
+  }
+
+  public static function getAllEnrichedRelations() {
+    return array_merge(Constants::$enriched_relations_kommission, Constants::$enriched_relations_parlamentarier, Constants::$enriched_relations_zutrittsberechtigung, Constants::$enriched_relations_organisation, Constants::$enriched_relations_organisation_inverse);
+  }
+
+  public static function getPublicTables() {
+    return array_merge($workflow_tables, getAllEnrichedRelations());
+  }
+
+  public static function getAllTables() {
+    return array_merge(getPublicTables(), $meta_tables);
   }
 
 }

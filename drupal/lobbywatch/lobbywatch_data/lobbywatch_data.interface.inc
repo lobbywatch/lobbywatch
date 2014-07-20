@@ -1,10 +1,12 @@
 <?php
 
-global $show_debug;
-$show_debug = true;
+global $show_sql;
+global $show_stacktrace;
+$show_sql = true;
+$show_stacktrace = false;
 
 function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
-  global $show_debug;
+  global $show_sql;
   $success = false;
   $count = 0;
   $message = '';
@@ -39,7 +41,7 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
         'success' => $success,
         'count' => $count,
         'message' => $message,
-        'debug' => $show_debug? $sql : '',
+        'sql' => $show_sql? $sql : '',
         'data' => $success ? $items[0] : null,
     );
 
@@ -59,7 +61,8 @@ function _lobbywatch_data_check_allowd_table($table) {
 }
 
 function _lobbywatch_data_add_exeption($e) {
-  return $debug ? $e->getMessage() . "\n------\n" . $e->getTraceAsString() : '';
+  global $show_stacktrace;
+  return $show_stacktrace ? $e->getMessage() . "\n------\n" . $e->getTraceAsString() : $e->getMessage();
 }
 
 /** Filters out unpublished data if not privileged or includeUnpublished == 0 */
@@ -151,10 +154,8 @@ function _lobbywatch_data_check_intern_field($field) {
   return !user_access('access lobbywatch data confidential content') && in_array($field, Constants::$intern_fields);
 }
 
-
-
 function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true) {
-  global $show_debug;
+  global $show_sql;
   $success = false;
   $message = '';
   $count = 0;
@@ -182,28 +183,77 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
   } catch(Exception $e) {
     $message .= _lobbywatch_data_add_exeption($e);
   } finally {
-  // Go back to the default database,
-      // otherwise Drupal will not be able to access it's own data later on.
-      db_set_active();
-      $response = array(
-          'success' => $success,
-          'count' => $count,
-          'message' => $message,
-          'debug' => $show_debug ? $sql : '',
-          'data' => $items
-      );
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+    $response = array(
+        'success' => $success,
+        'count' => $count,
+        'message' => $message,
+        'sql' => $show_sql ? $sql : '',
+        'data' => $items
+    );
 
-      if ($json) {
-        drupal_json_output($response);
-        exit(!$success);
-      } else {
-        return $response;
-      }
+    if ($json) {
+      drupal_json_output($response);
+      exit(!$success);
+    } else {
+      return $response;
     }
+  }
+}
+
+function _lobbywatch_data_relation_flat_list($table, $condition = '1', $json = true) {
+  global $show_sql;
+  $success = false;
+  $message = '';
+  $count = 0;
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+//     _lobbywatch_data_check_allowd_table($table);
+
+    $sql = "
+    SELECT $table.*
+    FROM v_$table $table
+    WHERE $condition " .
+        _lobbywatch_data_filter_unpublished_SQL($table) .
+        _lobbywatch_data_filter_fields_SQL($table);
+
+    $result = db_query($sql, array());
+
+    $items = _lobbywatch_data_clean_records($result);
+
+    $count = count($items);
+    $success = $count > 0;
+    $message = $count . " record(s) found";
+  } catch(Exception $e) {
+    $message .= _lobbywatch_data_add_exeption($e);
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+    $response = array(
+        'success' => $success,
+        'count' => $count,
+        'message' => $message,
+        'sql' => $show_sql ? $sql : '',
+        'data' => $items
+    );
+
+    if ($json) {
+      drupal_json_output($response);
+      exit(!$success);
+    } else {
+      return $response;
+    }
+  }
 }
 
 function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = true) {
-  global $show_debug;
+  global $show_sql;
   $success = false;
   $count = 0;
   $message = '';
@@ -246,7 +296,7 @@ function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = tr
         'success' => $success,
         'count' => $count,
         'message' => $message,
-        'debug' => $show_debug ? $sql : '',
+        'sql' => $show_sql ? $sql : '',
         'data' => $items
     );
     if ($json) {
@@ -258,9 +308,8 @@ function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = tr
   }
 }
 
-
 function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = true) {
-  global $show_debug;
+  global $show_sql;
   $success = false;
   $count = 0;
   $message = '';
@@ -290,7 +339,7 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
         'success' => $success,
         'count' => $count,
         'message' => $message,
-        'debug' => $show_debug ? $sql : '',
+        'sql' => $show_sql ? $sql : '',
         'data' => $aggregated
     );
     if ($json) {
@@ -304,7 +353,7 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
 }
 
 function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) {
-  global $show_debug;
+  global $show_sql;
   $success = false;
   $count = 0;
   $message = '';
@@ -342,7 +391,7 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
         'success' => $success,
         'count' => $count,
         'message' => $message,
-        'debug' => $show_debug ? $sql : '',
+        'sql' => $show_sql ? $sql : '',
         'data' => $aggregated
     );
     if ($json) {
