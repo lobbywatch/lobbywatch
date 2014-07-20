@@ -269,3 +269,8 @@ The data interface is written as Drupal 7 module. Paths are mangaged by the Drup
 
 The source of the data interface module is available on GitHub
 https://github.com/scito/lobbywatch/tree/master/drupal/lobbywatch/lobbywatch_data
+
+Reference
+---------
+
+http://goessner.net/articles/JsonPath/

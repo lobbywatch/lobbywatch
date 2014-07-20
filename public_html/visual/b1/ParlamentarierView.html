@@ -2,10 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
    <title></title>
-   <script src="Scripts/jquery-1.7.1.js"></script>
-   <script src="Scripts/d3.js"></script>
-   <script src="Scripts/jsonpath-0.8.0.js"></script>
-   <script src="Scripts/ls.datavisual.helper.js"></script>
+   <script src="scripts/jquery-1.7.1.js"></script>
+   <script src="scripts/d3.js"></script>
+   <script src="scripts/jsonpath-0.8.0.js"></script>
+   <script src="scripts/ls.datavisual.helper.js"></script>
 
    <style type="text/css">
       body
@@ -405,8 +405,10 @@
          text.each(function () {
             var text = d3.select(this);
             var organisationData = text.property("__data__");
-            var branche = organisationData.organisation.branche;
-            var company = organisationData.organisation.name_de;
+            // TODO RKU var branche = organisationData.organisation.branche;
+            // TODO RKU var company = organisationData.organisation.name_de;
+            var branche = organisationData.branche;
+            var company = organisationData.name_de;
             var words = text.text().split(/\s+/).reverse();
             var word;
             var line = [];
@@ -425,7 +427,8 @@
                         .attr("dy", dy);
 
             // Branche
-            words = organisationData.organisation.branche.split(/\s+/).reverse();
+            // TODO RKU words = organisationData.organisation.branche.split(/\s+/).reverse();
+            words = organisationData.branche.split(/\s+/).reverse();
             while (word = words.pop()) {
                line.push(word);
                tspan
@@ -452,7 +455,8 @@
                        //.attr("y", y)
                        .attr("dy", dy);
 
-            words = organisationData.organisation.name_de.split(/\s+/).reverse();
+         // TODO RKU words = organisationData.organisation.name_de.split(/\s+/).reverse();
+            words = organisationData.name_de.split(/\s+/).reverse();
             while (word = words.pop()) {
                line.push(word);
                tspan
@@ -519,12 +523,12 @@
          optionDeep2 = true;
 
          filterJSONData = "";
-         filterJSONData += "&filterBranche=" + filterBranche;
-         filterJSONData += "&filterKommission=" + filterKommission;
-         filterJSONData += "&optionFunction1=" + (optionFunction1 ? "1" : "0");
-         filterJSONData += "&optionFunction2=" + (optionFunction2 ? "1" : "0");
-         filterJSONData += "&optionDeep1=" + (optionDeep1 ? "1" : "0");
-         filterJSONData += "&optionDeep2=" + (optionDeep2 ? "1" : "0");
+         // TODO RKU filterJSONData += "&filter_branche_id=" + filterBranche;
+         // TODO RKU filterJSONData += "&filter_kommission_id=" + filterKommission;
+         // TODO RKU filterJSONData += "&optionFunction1=" + (optionFunction1 ? "1" : "0");
+         // TODO RKU filterJSONData += "&optionFunction2=" + (optionFunction2 ? "1" : "0");
+         // TODO RKU filterJSONData += "&optionDeep1=" + (optionDeep1 ? "1" : "0");
+         // TODO RKU filterJSONData += "&optionDeep2=" + (optionDeep2 ? "1" : "0");
       }
 
       var optionText = "";
@@ -610,15 +614,19 @@
          var canvasWidth = viewerWidth;
          var canvasHeight = viewerHeight;
 
+         console.log(parlamentarierData);
          var lstInteressenbindung = jsonPath(parlamentarierData, "$..data.interessenbindungen[*]");
+         console.log(lstInteressenbindung);
          if (lstInteressenbindung && lstInteressenbindung.length > 0) {
             var width = organisationStartX + (lstInteressenbindung.length * (organisationWidth + organisationPadding));
             canvasWidth = Math.max(canvasWidth, width + 20);
          }
          var lstZutrittsberechtigung = jsonPath(parlamentarierData, "$..data.zutrittsberechtigungen[*]");
+         console.log(lstZutrittsberechtigung);
          if (lstZutrittsberechtigung && lstZutrittsberechtigung.length > 0) {
             for (var iZutrittsberechtigung = 0; iZutrittsberechtigung < lstZutrittsberechtigung.length; iZutrittsberechtigung++) {
                var lstMandat = jsonPath(lstZutrittsberechtigung[iZutrittsberechtigung], "$..mandate[*]");
+               console.log(lstMandat);
                var width = mandatStartX + (lstZutrittsberechtigung.length * (organisationWidth + organisationPadding));
             }
 
@@ -671,7 +679,8 @@
                .attr("xlink:href", "images/organisation.gif")
                .style("cursor", "pointer")
                .on("click", function (d, i) {
-                  var options = "id=" + d.organisation.id + "&" + getFilterCriteria();
+                  // TODO RKU var options = "id=" + d.organisation.id + "&" + getFilterCriteria();
+                  var options = "id=" + d.organisation_id + "&" + getFilterCriteria();
                   window.location.href = "OrganisationView.html?" + options;
                });
 
@@ -686,8 +695,10 @@
                   return posX;
                })
                .text(function (d, i) {
-                  var txt = d.organisation.branche + " ";
-                  txt += d.organisation.name_de;
+                  // TODO RKU var txt = d.organisation.branche + " ";
+                  // TODO RKU txt += d.organisation.name_de;
+                  var txt = d.branche + " ";
+                  txt += d.name_de;
                   return txt;
                })
                .call(FitOrganisationTextToRect, organisationWidth - 4);
@@ -706,7 +717,8 @@
          group.selectAll("path")
             .data(lstInteressenbindung, function (d) {
                // key
-               var id = "interessenbindung" + "-" + d.organisation.id;
+               // TODO RKU var id = "interessenbindung" + "-" + d.organisation.id;
+               var id = "interessenbindung" + "-" + d.organisation_id;
                return id;
             })
             .enter()
@@ -787,14 +799,15 @@
 
 
          for (var iZutrittsberechtigung = 0; iZutrittsberechtigung < lstZutrittsberechtigung.length; iZutrittsberechtigung++) {
-            var lstMandat = jsonPath(lstZutrittsberechtigung[iZutrittsberechtigung], "$..mandat[*]");
+            var lstMandat = jsonPath(lstZutrittsberechtigung[iZutrittsberechtigung], "$..mandate[*]");
 
             if (lstMandat != null && lstMandat.length > 0) {
                group.selectAll(".mandat")
                   .data(lstMandat, function (d) {
                      // key
                      var randNumber = Math.floor((Math.random() * 1000) + 1);
-                     var key = "mandat-" + randNumber + "-" + lstZutrittsberechtigung[iZutrittsberechtigung].id + "-" + d.organisation.id;
+                     // TODO RKU var key = "mandat-" + randNumber + "-" + lstZutrittsberechtigung[iZutrittsberechtigung].id + "-" + d.organisation.id;
+                     var key = "mandat-" + randNumber + "-" + lstZutrittsberechtigung[iZutrittsberechtigung].id + "-" + d.organisation_id;
                      return key;
                   })
                   .enter()
@@ -812,7 +825,8 @@
                      .attr("xlink:href", "images/organisation.gif")
                      .style("cursor", "pointer")
                      .on("click", function (d, i) {
-                        var options = "id=" + d.organisation.id + "&" + getFilterCriteria();
+                       // TODO RKU var options = "id=" + d.organisation.id + "&" + getFilterCriteria();
+                        var options = "id=" + d.organisation_id + "&" + getFilterCriteria();
                         window.location.href = "OrganisationView.html?" + options;
                      });
 
@@ -820,7 +834,8 @@
                   .data(lstMandat, function (d) {
                      // key
                      var randNumber = Math.floor((Math.random() * 1000) + 1);
-                     var key = "mandat-" + randNumber + "-" + lstZutrittsberechtigung[iZutrittsberechtigung].id + "-" + d.organisation.id;
+                     // TODO RKU var key = "mandat-" + randNumber + "-" + lstZutrittsberechtigung[iZutrittsberechtigung].id + "-" + d.organisation.id;
+                     var key = "mandat-" + randNumber + "-" + lstZutrittsberechtigung[iZutrittsberechtigung].id + "-" + d.organisation_id;
                      return key;
                   })
                   .enter()
@@ -835,8 +850,10 @@
                         return x;
                      })
                      .text(function (d, i) {
-                        var txt = d.organisation.branche + " ";
-                        txt += d.organisation.name_de;
+                        // TODO RKU var txt = d.organisation.branche + " ";
+                        // TODO RKU txt += d.organisation.name_de;
+                        var txt = d.branche + " ";
+                        txt += d.name_de;
                         return txt;
                      })
                      .call(FitOrganisationTextToRect, organisationWidth - 4);
@@ -864,7 +881,8 @@
                   .data(lstMandat, function (d) {
                      // key
                      var randNumber = Math.floor((Math.random() * 1000) + 1);
-                     var key = "mandat-" + randNumber + "-" + lstZutrittsberechtigung[iZutrittsberechtigung].id + "-" + d.organisation.id;
+                     // TODO RKU var key = "mandat-" + randNumber + "-" + lstZutrittsberechtigung[iZutrittsberechtigung].id + "-" + d.organisation.id;
+                     var key = "mandat-" + randNumber + "-" + lstZutrittsberechtigung[iZutrittsberechtigung].id + "-" + d.organisation_id;
                      return key;
                   })
                   .enter()
