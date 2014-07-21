@@ -17078,8 +17078,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
-            $field = new StringField('quelle_url');
-            $this->dataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -17105,6 +17103,10 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
@@ -18519,8 +18521,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
-            $field = new StringField('quelle_url');
-            $this->dataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -18546,6 +18546,10 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
@@ -22265,8 +22269,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
-            $field = new StringField('quelle_url');
-            $this->dataset->AddField($field, false);
             $field = new StringField('zutrittsberechtigung_name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -22288,6 +22290,10 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
@@ -23928,8 +23934,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
-            $field = new StringField('quelle_url');
-            $this->dataset->AddField($field, false);
             $field = new StringField('zutrittsberechtigung_name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -23951,6 +23955,10 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
@@ -28193,8 +28201,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
-            $field = new StringField('quelle_url');
-            $this->dataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -28220,6 +28226,10 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
@@ -29602,8 +29612,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
-            $field = new StringField('quelle_url');
-            $this->dataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -29629,6 +29637,10 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
@@ -32686,8 +32698,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
-            $field = new StringField('quelle_url');
-            $this->dataset->AddField($field, false);
             $field = new StringField('zutrittsberechtigung_name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -32709,6 +32719,10 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
@@ -34047,8 +34061,6 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('geschaeftsbericht_url');
             $this->dataset->AddField($field, false);
-            $field = new StringField('quelle_url');
-            $this->dataset->AddField($field, false);
             $field = new StringField('zutrittsberechtigung_name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -34070,6 +34082,10 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, true);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);

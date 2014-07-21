@@ -691,7 +691,7 @@ SELECT
 , `organisation`.`mitarbeiter_weltweit`
 , `organisation`.`mitarbeiter_schweiz`
 , `organisation`.`geschaeftsbericht_url`
-, `organisation`.`quelle_url`
+-- , `organisation`.`quelle_url`
 , interessenbindung.*
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_organisation organisation
@@ -744,7 +744,7 @@ SELECT 'indirekt' as beziehung,
 , `organisation`.`mitarbeiter_weltweit`
 , `organisation`.`mitarbeiter_schweiz`
 , `organisation`.`geschaeftsbericht_url`
-, `organisation`.`quelle_url`
+-- , `organisation`.`quelle_url`
 , interessenbindung.*
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_organisation_beziehung organisation_beziehung
@@ -799,7 +799,7 @@ SELECT zutrittsberechtigung.parlamentarier_id,
 , `organisation`.`mitarbeiter_weltweit`
 , `organisation`.`mitarbeiter_schweiz`
 , `organisation`.`geschaeftsbericht_url`
-, `organisation`.`quelle_url`
+-- , `organisation`.`quelle_url`
 , zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, mandat.*
 FROM v_zutrittsberechtigung zutrittsberechtigung
 INNER JOIN v_mandat mandat
@@ -852,7 +852,7 @@ SELECT
 , `organisation`.`mitarbeiter_weltweit`
 , `organisation`.`mitarbeiter_schweiz`
 , `organisation`.`geschaeftsbericht_url`
-, `organisation`.`quelle_url`
+-- , `organisation`.`quelle_url`
 , zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, zutrittsberechtigung.parlamentarier_id, mandat.*
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
@@ -907,7 +907,7 @@ SELECT 'indirekt' as beziehung,
 , `organisation`.`mitarbeiter_weltweit`
 , `organisation`.`mitarbeiter_schweiz`
 , `organisation`.`geschaeftsbericht_url`
-, `organisation`.`quelle_url`
+-- , `organisation`.`quelle_url`
 , zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, zutrittsberechtigung.parlamentarier_id, mandat.*
 FROM v_zutrittsberechtigung zutrittsberechtigung
 INNER JOIN v_mandat mandat
