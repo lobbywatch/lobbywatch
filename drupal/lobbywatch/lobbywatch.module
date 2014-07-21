@@ -391,10 +391,11 @@ function lobbywatch_form($form, &$form_state) {
     '#size' => 85,
     '#maxlength' => 300,
     // Optional description
-    '#description' => t('Namen eingaben, kurz warten und aus Auswahlliste wählen'),
+    '#description' => t('Suchtext eingeben, kurz warten und auswählen'),
     '#autocomplete_path' => 'autocomplete/lobbywatch/search',
     // Autocomplete, autosubmit, ref: https://drupal.org/node/1772490
-    '#attributes' => array('class' => array('auto_submit'), 'placeholder' => t("Suche Parlamentarier, Organisationen, Lobbygruppen, …")),
+    '#attributes' => array('class' => array('auto_submit'), 'placeholder' => t("Suche Parlamentarier, Organisationen, Lobbygruppen, …"),
+      'title' => t("Suchtext eingeben, kurz warten und auswählen")),
 //     '#attributes' =>array()
 //     '#attributes' => array('class' => array('use-ajax-submit')),
 );
