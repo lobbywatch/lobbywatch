@@ -31,7 +31,7 @@ echo -e "<?php\n\$deploy_date = '$NOW';\n\$deploy_date_short = '$NOW_SHORT';" > 
 VERSION=$(git describe --abbrev=0 --tags)
 echo -e "<?php\n\$version = '$VERSION';" >  $public_dir/common/version.php;
 
-fast='--include=/* --include=/auswertung/** --include=/common/** --include=/custom/** --include=/settings/** --include=/bearbeitung/* --include=/bearbeitung/components/css/ --include=/bearbeitung/components/css/user.css --include=/bearbeitung/components/templates/ --include=/bearbeitung/components/templates/custom_templates/ --include=/bearbeitung/components/templates/custom_templates/** --include=/bearbeitung/auswertung/** --exclude-from ./rsync-fast-exclude --exclude=* --prune-empty-dirs'
+fast='--include=/* --include=/auswertung/** --include=/common/** --include=/custom/** --include=/settings/** --include=/bearbeitung/* --include=/bearbeitung/components/css/ --include=/bearbeitung/components/css/user.css --include=/bearbeitung/components/templates/ --include=/bearbeitung/components/templates/custom_templates/ --include=/bearbeitung/components/templates/custom_templates/** --include=/bearbeitung/auswertung/** --include=/visual/** --exclude-from ./rsync-fast-exclude --exclude=* --prune-empty-dirs'
 
 dry_run="";
 #fast="--exclude-from $(readlink -m ./rsync-fast-exclude)"
