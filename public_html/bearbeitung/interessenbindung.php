@@ -189,8 +189,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessenbindungssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'deklarationstyp', 'status', 'beschreibung', 'notizen', 'quelle_url'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Status'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen'), $this->RenderText('Quelle Url')),
+                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'deklarationstyp', 'status', 'beschreibung', 'quelle_url', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Status'), $this->RenderText('Beschreibung'), $this->RenderText('Quelle Url'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -547,6 +547,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('verguetung', $this->RenderText('Verguetung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('quelle_url', $this->RenderText('Quelle Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
@@ -560,7 +561,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('quelle_url', $this->RenderText('Quelle Url')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -1664,6 +1664,48 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for quelle_url field
+            //
+            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('quelle_url_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for quelle_url field
+            //
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for quelle_url field
+            //
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
+            $column->SetDescription($this->RenderText('URL der Quelle; zum Beleg'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -1968,48 +2010,6 @@
             $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('quelle_url_handler');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for quelle_url field
-            //
-            $editor = new TextEdit('quelle_url_edit');
-            $editor->SetSize(70);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for quelle_url field
-            //
-            $editor = new TextEdit('quelle_url_edit');
-            $editor->SetSize(70);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
-            $column->SetDescription($this->RenderText('URL der Quelle; zum Beleg'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -2106,6 +2106,16 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('beschreibung_handler');
             $column->SetReplaceLFByBR(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for quelle_url field
+            //
+            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('quelle_url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2206,16 +2216,6 @@
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('quelle_url_handler');
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -2672,6 +2672,19 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for quelle_url field
+            //
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -2810,19 +2823,6 @@
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for quelle_url field
-            //
-            $editor = new TextEdit('quelle_url_edit');
-            $editor->SetSize(70);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -3283,15 +3283,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for notizen field
-            //
-            $editor = new TextAreaEdit('notizen_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for quelle_url field
             //
             $editor = new TextEdit('quelle_url_edit');
@@ -3301,6 +3292,15 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for notizen field
+            //
+            $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
@@ -3409,6 +3409,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for quelle_url field
+            //
+            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -3502,13 +3509,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -3607,6 +3607,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for quelle_url field
+            //
+            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -3700,13 +3707,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for quelle_url field
-            //
-            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -4531,36 +4531,6 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for notizen field
-            //
-            $editor = new TextAreaEdit('notizen_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for notizen field
-            //
-            $editor = new TextAreaEdit('notizen_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
@@ -4597,6 +4567,36 @@
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_url_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for notizen field
+            //
+            $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for notizen field
+            //
+            $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for notizen field
+            //
+            $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for beschreibung field
             //
@@ -4606,20 +4606,20 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for notizen field
-            //
-            $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_url_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for notizen field
+            //
+            $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetReplaceLFByBR(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),

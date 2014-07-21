@@ -1183,7 +1183,7 @@
         }
         public function userGrid_OnCustomDrawRow($rowData, &$rowCellStyles, &$rowStyles)
         {
-        customDrawRow('user', $rowData, $rowCellStyles, $rowStyles);
+        customDrawRowFarbcode('user', $rowData, $rowCellStyles, $rowStyles);
         }
         public function ShowEditButtonHandler(&$show)
         {
