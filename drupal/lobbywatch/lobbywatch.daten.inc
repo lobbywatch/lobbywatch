@@ -510,7 +510,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
 //       '<h2>' . $parlamentarier_name . '</h2>' .
       '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '">' .
       (!$active ? '<p><strong><em>Nicht mehr im Parlament. War im Parlament bis ' . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
-      (user_access('access lobbywatch unpublished content') ? '<p class="unpublished">Lobbyfaktor: <b>XY</b></p>' : '') .
+      (user_access('access lobbywatch unpublished content') ? '<p class="admin">Lobbyfaktor: <b>XY</b></p>' : '') .
       '<table border="0">' .
       // '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
       // '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
@@ -526,14 +526,14 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
       ($admin ? '<p class="admin"><a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">Visualisierung</a> (noch EXPERIMENTELL!)</p>' : '') .
       "<h3 style=\"display: none\">Interessenbindungen</h3><h3>$titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden</h3><ul>" . $record['interessenbindungen'] . '</ul>' .
-//       ($admin ? "<div class='admin'><h3>Gäste</h3><h3>$titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul></div>' : '') .
       '<h3 style="display: none">Mandate der Gäste</h3>' . "<h3>$titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus</h3>" . $gaeste .
+       ($admin ? "<div class='admin'><h3>Gäste</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul></div>' : '') .
       ($admin ? '<div class="admin"><h3>Organisationen mit einer Verbindung</h3>'
       . '<p>Auch indirekte Verbindungen werden aufgeführt.</p>'
       . '<ul>' . $record['verbundene_organisationen'] . '</ul>'
-      . '<h3>Kommissionen</h3><ul>' . $record['kommissionen_namen'] . '</ul>'
+      . '<h3>Kommissionen</h3><ul>' . $record['kommissionen_namen'] . '</ul></div>' : '')
       . _lobbywatch_get_workflow_state_line($record)
-      . '</div></div>' : '')
+      . '</div>'
       ;
 
     $build = array();
@@ -891,7 +891,8 @@ ORDER BY organisation.anzeige_name;
 //       dpm($record['verbundene_parlamentarier'], 'verbundene_parlamentarier');
     }
 
-    $markup .= '</div>';
+    $markup .= _lobbywatch_get_workflow_state_line($record) .
+    '</div>';
 
 
     $build = array();
