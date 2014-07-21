@@ -193,7 +193,7 @@ function lobbywatch_menu() {
   $items['daten/organisation/%'] = array(
 //     'title' => 'Organisation',
     'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array('Organisation: ', '', 'organisation', 2),
+    'title arguments' => array('', '', 'organisation', 2),
     'page callback' => '_lobbywatch_organisation_id',
     'page arguments' => array(2),
     'access arguments' => array('access lobbywatch general content'),
@@ -231,7 +231,7 @@ function lobbywatch_menu() {
   $items['daten/kommission/%'] = array(
 //     'title' => 'Kommission',
     'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array('Kommission: ', '', 'kommission', 2),
+    'title arguments' => array('', ' des National und des Ständerates', 'kommission', 2),
     'page callback' => '_lobbywatch_kommission_id',
     'page arguments' => array(2),
     'access arguments' => array('access lobbywatch general content'),
@@ -325,6 +325,9 @@ function lobbywatch_permission() {
     'access lobbywatch general content' => array(
       'title' => t('Access general content of the lobbywatch module'),
     ),
+    'access lobbywatch advanced content' => array(
+      'title' => t('Access advanced content of the lobbywatch module'),
+    ),
     'access lobbywatch unpublished content' => array(
       'title' => t('Access unpublished (nicht freigegeben) content of the lobbywatch module'),
     )
@@ -388,7 +391,7 @@ function lobbywatch_form($form, &$form_state) {
     '#size' => 85,
     '#maxlength' => 300,
     // Optional description
-//     '#description' => t('Parlamentariername zur Anzeige'),
+    '#description' => t('Namen eingaben, kurz warten und aus Auswahlliste wählen'),
     '#autocomplete_path' => 'autocomplete/lobbywatch/search',
     // Autocomplete, autosubmit, ref: https://drupal.org/node/1772490
     '#attributes' => array('class' => array('auto_submit'), 'placeholder' => t("Suche Parlamentarier, Organisationen, Lobbygruppen, …")),
