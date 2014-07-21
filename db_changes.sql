@@ -1321,3 +1321,23 @@ ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch g
 
 ALTER TABLE `user` ADD
   `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23' AFTER `last_access`;
+  
+ALTER TABLE `interessenbindung` ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
+
+ALTER TABLE `interessenbindung_log` ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
+
+ALTER TABLE `mandat` ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
+
+ALTER TABLE `mandat_log` ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
+
+ALTER TABLE `organisation_beziehung` ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
+
+ALTER TABLE `organisation_beziehung_log` ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
+
+ALTER TABLE `organisation_jahr` 
+ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?' AFTER `quelle_url`,
+ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
+
+ALTER TABLE `organisation_jahr_log` 
+ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?' AFTER `quelle_url`,
+ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;

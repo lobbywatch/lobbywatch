@@ -1585,6 +1585,10 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('quelle_url');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('quelle');
+            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1961,6 +1965,43 @@
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL der Quelle'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for quelle field
+            //
+            $column = new TextViewColumn('quelle', 'Quelle', $this->dataset);
+            $column->SetOrderable(false);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('quelle_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for quelle field
+            //
+            $editor = new TextEdit('quelle_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for quelle field
+            //
+            $editor = new TextEdit('quelle_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -2475,6 +2516,39 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_url_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for quelle field
+            //
+            $column = new TextViewColumn('quelle', 'Quelle', $this->dataset);
+            $column->SetOrderable(false);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for quelle field
+            //
+            $editor = new TextEdit('quelle_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for quelle field
+            //
+            $editor = new TextEdit('quelle_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -2545,6 +2619,10 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('quelle_url');
             $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('quelle');
+            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -2597,8 +2675,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisation_jahrDetailEdit1organisationssearch', $this->dataset,
-                array('id', 'organisation_id_name_de', 'jahr', 'umsatz', 'gewinn', 'kapital', 'mitarbeiter_weltweit', 'mitarbeiter_schweiz', 'geschaeftsbericht_url', 'quelle_url', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Organisation Id'), $this->RenderText('Jahr'), $this->RenderText('Umsatz'), $this->RenderText('Gewinn'), $this->RenderText('Kapital'), $this->RenderText('Mitarbeiter Weltweit'), $this->RenderText('Mitarbeiter Schweiz'), $this->RenderText('Geschaeftsbericht Url'), $this->RenderText('Quelle Url'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'jahr', 'umsatz', 'gewinn', 'kapital', 'mitarbeiter_weltweit', 'mitarbeiter_schweiz', 'geschaeftsbericht_url', 'quelle_url', 'quelle', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'organisation_id_name_de'),
+                array($this->RenderText('Id'), $this->RenderText('Jahr'), $this->RenderText('Umsatz'), $this->RenderText('Gewinn'), $this->RenderText('Kapital'), $this->RenderText('Mitarbeiter Weltweit'), $this->RenderText('Mitarbeiter Schweiz'), $this->RenderText('Geschaeftsbericht Url'), $this->RenderText('Quelle Url'), $this->RenderText('Quelle'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Organisation Id')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -2619,6 +2697,26 @@
             $this->AdvancedSearchControl = new AdvancedSearchControl('organisation_jahrDetailEdit1organisationasearch', $this->dataset, $this->GetLocalizerCaptions(), $this->GetColumnVariableContainer(), $this->CreateLinkBuilder());
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('jahr', $this->RenderText('Jahr')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('umsatz', $this->RenderText('Umsatz')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('gewinn', $this->RenderText('Gewinn')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kapital', $this->RenderText('Kapital')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('mitarbeiter_weltweit', $this->RenderText('Mitarbeiter Weltweit')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('mitarbeiter_schweiz', $this->RenderText('Mitarbeiter Schweiz')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('geschaeftsbericht_url', $this->RenderText('Geschaeftsbericht Url')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('quelle_url', $this->RenderText('Quelle Url')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('quelle', $this->RenderText('Quelle')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kontrolliert_visa', $this->RenderText('Kontrolliert Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('kontrolliert_datum', $this->RenderText('Kontrolliert Datum')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_visa', $this->RenderText('Freigabe Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('freigabe_datum', $this->RenderText('Freigabe Datum')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -2698,25 +2796,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation Id'), $lookupDataset, 'id', 'name_de', false));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('jahr', $this->RenderText('Jahr')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('umsatz', $this->RenderText('Umsatz')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('gewinn', $this->RenderText('Gewinn')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kapital', $this->RenderText('Kapital')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('mitarbeiter_weltweit', $this->RenderText('Mitarbeiter Weltweit')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('mitarbeiter_schweiz', $this->RenderText('Mitarbeiter Schweiz')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('geschaeftsbericht_url', $this->RenderText('Geschaeftsbericht Url')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('quelle_url', $this->RenderText('Quelle Url')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kontrolliert_visa', $this->RenderText('Kontrolliert Visa')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('kontrolliert_datum', $this->RenderText('Kontrolliert Datum')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_visa', $this->RenderText('Freigabe Visa')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('freigabe_datum', $this->RenderText('Freigabe Datum')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
         }
     
         public function GetPageDirection()
@@ -3106,6 +3185,43 @@
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL der Quelle'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for quelle field
+            //
+            $column = new TextViewColumn('quelle', 'Quelle', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('quelle_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for quelle field
+            //
+            $editor = new TextEdit('quelle_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for quelle field
+            //
+            $editor = new TextEdit('quelle_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -3515,13 +3631,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('organisation_id_name_de', 'Organisation Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for jahr field
             //
             $column = new TextViewColumn('jahr', 'Jahr', $this->dataset);
@@ -3581,6 +3690,15 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('quelle_url_handler');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for quelle field
+            //
+            $column = new TextViewColumn('quelle', 'Quelle', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('quelle_handler');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3665,6 +3783,13 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for name_de field
+            //
+            $column = new TextViewColumn('organisation_id_name_de', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -3783,6 +3908,17 @@
             $editColumn->SetAllowSetToNull(true);
             $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for quelle field
+            //
+            $editor = new TextEdit('quelle_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -4027,6 +4163,17 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for quelle field
+            //
+            $editor = new TextEdit('quelle_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -4056,13 +4203,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('organisation_id_name_de', 'Organisation Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for jahr field
             //
             $column = new TextViewColumn('jahr', 'Jahr', $this->dataset);
@@ -4115,6 +4255,13 @@
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for quelle field
+            //
+            $column = new TextViewColumn('quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -4197,6 +4344,13 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for name_de field
+            //
+            $column = new TextViewColumn('organisation_id_name_de', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -4211,13 +4365,6 @@
             $grid->AddExportColumn($column);
             
             //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('organisation_id_name_de', 'Organisation Id', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
             // View column for jahr field
             //
             $column = new TextViewColumn('jahr', 'Jahr', $this->dataset);
@@ -4270,6 +4417,13 @@
             // View column for quelle_url field
             //
             $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for quelle field
+            //
+            $column = new TextViewColumn('quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -4352,6 +4506,13 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for name_de field
+            //
+            $column = new TextViewColumn('organisation_id_name_de', 'Organisation Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -4517,6 +4678,39 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_url_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for quelle field
+            //
+            $column = new TextViewColumn('quelle', 'Quelle', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for quelle field
+            //
+            $editor = new TextEdit('quelle_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for quelle field
+            //
+            $editor = new TextEdit('quelle_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(80);
+            $editColumn = new CustomEditColumn('Quelle', 'quelle', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -4560,6 +4754,13 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_url_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for quelle field
+            //
+            $column = new TextViewColumn('quelle', 'Quelle', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -17581,6 +17782,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, true);
+            $field = new StringField('quelle');
+            $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
             $field = new DateField('bis');
@@ -19166,6 +19369,8 @@
             $field = new StringField('quelle_url');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('quelle_url_gueltig');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('quelle');
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
@@ -22637,6 +22842,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, true);
+            $field = new StringField('quelle');
+            $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
             $field = new DateField('bis');
@@ -24283,6 +24490,8 @@
             $field = new StringField('quelle_url');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('quelle_url_gueltig');
+            $this->dataset->AddField($field, true);
+            $field = new StringField('quelle');
             $this->dataset->AddField($field, true);
             $field = new DateField('von');
             $this->dataset->AddField($field, true);
@@ -31977,6 +32186,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, false);
+            $field = new StringField('quelle');
+            $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
             $field = new DateField('bis');
@@ -33668,6 +33879,8 @@
             $field = new StringField('quelle_url');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('quelle_url_gueltig');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('quelle');
             $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
@@ -37573,6 +37786,8 @@
             $this->dataset->AddField($field, false);
             $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, false);
+            $field = new StringField('quelle');
+            $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
             $field = new DateField('bis');
@@ -38673,6 +38888,8 @@
             $field = new StringField('quelle_url');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('quelle_url_gueltig');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('quelle');
             $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
