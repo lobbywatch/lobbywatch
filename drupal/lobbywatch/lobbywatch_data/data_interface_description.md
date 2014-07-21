@@ -202,7 +202,8 @@ Query for one aggreaged record by id:
 where `$table` is one of the following tables:
 
 * `parlamentarier`: Parlamentarier
-* `zutrittsberechtigung`: Zutrittsberechtigter
+* `zutrittsberechtigung`: Zutrittsberechtigte
+* `organisation`: Organisationen
 
 `%` is the placeholder for query data, e.g. the id
 

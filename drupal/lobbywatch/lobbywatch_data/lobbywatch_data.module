@@ -42,7 +42,7 @@ function lobbywatch_data_menu() {
     );
   }
 
-  $items["data/interface/v1/json/table/zutrittsberechtigter/aggregated/id/%"] = array(
+  $items["data/interface/v1/json/table/zutrittsberechtigung/aggregated/id/%"] = array(
       'page callback' => '_lobbywatch_data_table_zutrittsberechtigte_aggregated_id',
       'page arguments' => array(8, true),
       'access arguments' => array('access lobbywatch data general content'),
