@@ -580,8 +580,7 @@ ORDER BY kommission.abkuerzung;
 -- Connector: in_kommission.kommission_id
 CREATE OR REPLACE VIEW `v_in_kommission_parlamentarier` AS
 SELECT
-`parlamentarier`.`anzeige_name`
-, `parlamentarier`.`anzeige_name` as parlamentarier_name
+`parlamentarier`.`anzeige_name` as parlamentarier_name
 , `parlamentarier`.`name`
 , `parlamentarier`.`nachname`
 , `parlamentarier`.`vorname`
@@ -992,11 +991,131 @@ ORDER BY organisation.anzeige_name;
 -- Parlamentarier, die eine Interessenbindung zu dieser Organisation haben.
 -- Connector: interessenbindung.organisation_id
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier` AS
-SELECT parlamentarier.anzeige_name as parlamentarier_name, interessenbindung.*
+SELECT 
+`parlamentarier`.`anzeige_name` as parlamentarier_name
+-- , `parlamentarier`.`anzeige_name`
+, `parlamentarier`.`name`
+, `parlamentarier`.`nachname`
+, `parlamentarier`.`vorname`
+, `parlamentarier`.`zweiter_vorname`
+, `parlamentarier`.`rat_id`
+, `parlamentarier`.`kanton_id`
+, `parlamentarier`.`kommissionen`
+, `parlamentarier`.`partei_id`
+, `parlamentarier`.`parteifunktion`
+, `parlamentarier`.`fraktion_id`
+, `parlamentarier`.`fraktionsfunktion`
+, `parlamentarier`.`im_rat_seit`
+, `parlamentarier`.`im_rat_bis`
+, `parlamentarier`.`ratswechsel`
+, `parlamentarier`.`ratsunterbruch_von`
+, `parlamentarier`.`ratsunterbruch_bis`
+, `parlamentarier`.`beruf`
+, `parlamentarier`.`beruf_interessengruppe_id`
+, `parlamentarier`.`zivilstand`
+, `parlamentarier`.`anzahl_kinder`
+, `parlamentarier`.`militaerischer_grad_id`
+, `parlamentarier`.`geschlecht`
+, `parlamentarier`.`geburtstag`
+, `parlamentarier`.`photo`
+, `parlamentarier`.`photo_dateiname`
+, `parlamentarier`.`photo_dateierweiterung`
+, `parlamentarier`.`photo_dateiname_voll`
+, `parlamentarier`.`photo_mime_type`
+, `parlamentarier`.`kleinbild`
+, `parlamentarier`.`sitzplatz`
+, `parlamentarier`.`email`
+, `parlamentarier`.`homepage`
+, `parlamentarier`.`parlament_biografie_id`
+, `parlamentarier`.`twitter_name`
+, `parlamentarier`.`linkedin_profil_url`
+, `parlamentarier`.`xing_profil_name`
+, `parlamentarier`.`facebook_name`
+, `parlamentarier`.`arbeitssprache`
+, `parlamentarier`.`adresse_firma`
+, `parlamentarier`.`adresse_strasse`
+, `parlamentarier`.`adresse_zusatz`
+, `parlamentarier`.`adresse_plz`
+, `parlamentarier`.`adresse_ort`
+, `parlamentarier`.`im_rat_seit_unix`
+, `parlamentarier`.`im_rat_bis_unix`
+-- , `parlamentarier`.`von`
+-- , `parlamentarier`.`bis`
+-- , `parlamentarier`.`von_unix`
+-- , `parlamentarier`.`bis_unix`
+-- , `parlamentarier`.`rat`
+-- , `parlamentarier`.`ratstyp`
+, `parlamentarier`.`kanton`
+, `parlamentarier`.`vertretene_bevoelkerung`
+, `parlamentarier`.`kommissionen_namen`
+, `parlamentarier`.`kommissionen2`
+, `parlamentarier`.`kommissionen_abkuerzung`
+, `parlamentarier`.`partei`
+, `parlamentarier`.`fraktion`
+, `parlamentarier`.`militaerischer_grad`
+, interessenbindung.*
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_parlamentarier parlamentarier
   ON interessenbindung.parlamentarier_id = parlamentarier.id
 ORDER BY parlamentarier.anzeige_name;
+
+-- Parlamentarier, die eine Interessenbindung zu dieser Organisation haben.
+-- Connector: interessenbindung.organisation_id
+CREATE OR REPLACE VIEW `v_organisation_zutrittsberechtigung` AS
+SELECT 
+`zutrittsberechtigung`.`anzeige_name`
+, `zutrittsberechtigung`.`anzeige_name` as zutrittsberechtigung_name
+, `zutrittsberechtigung`.`name`
+-- , `zutrittsberechtigung`.`id`
+, `zutrittsberechtigung`.`parlamentarier_id`
+, `zutrittsberechtigung`.`nachname`
+, `zutrittsberechtigung`.`vorname`
+, `zutrittsberechtigung`.`zweiter_vorname`
+, `zutrittsberechtigung`.`funktion`
+, `zutrittsberechtigung`.`beruf`
+, `zutrittsberechtigung`.`beruf_interessengruppe_id`
+, `zutrittsberechtigung`.`partei_id`
+, `zutrittsberechtigung`.`geschlecht`
+, `zutrittsberechtigung`.`email`
+, `zutrittsberechtigung`.`homepage`
+, `zutrittsberechtigung`.`twitter_name`
+, `zutrittsberechtigung`.`linkedin_profil_url`
+, `zutrittsberechtigung`.`xing_profil_name`
+, `zutrittsberechtigung`.`facebook_name`
+-- , `zutrittsberechtigung`.`von`
+-- , `zutrittsberechtigung`.`bis`
+-- , `zutrittsberechtigung`.`notizen`
+-- , `zutrittsberechtigung`.`eingabe_abgeschlossen_visa`
+-- , `zutrittsberechtigung`.`eingabe_abgeschlossen_datum`
+-- , `zutrittsberechtigung`.`kontrolliert_visa`
+-- , `zutrittsberechtigung`.`kontrolliert_datum`
+-- , `zutrittsberechtigung`.`autorisierung_verschickt_visa`
+-- , `zutrittsberechtigung`.`autorisierung_verschickt_datum`
+-- , `zutrittsberechtigung`.`autorisiert_visa`
+-- , `zutrittsberechtigung`.`autorisiert_datum`
+-- , `zutrittsberechtigung`.`freigabe_visa`
+-- , `zutrittsberechtigung`.`freigabe_datum`
+-- , `zutrittsberechtigung`.`ALT_lobbyorganisation_id`
+-- , `zutrittsberechtigung`.`created_visa`
+-- , `zutrittsberechtigung`.`created_date`
+-- , `zutrittsberechtigung`.`updated_visa`
+-- , `zutrittsberechtigung`.`updated_date`
+, `zutrittsberechtigung`.`partei`
+, `zutrittsberechtigung`.`parlamentarier_name`
+-- , `zutrittsberechtigung`.`parlamentarier_freigabe_datum`
+-- , `zutrittsberechtigung`.`parlamentarier_freigabe_datum_unix`
+-- , `zutrittsberechtigung`.`bis_unix`
+-- , `zutrittsberechtigung`.`von_unix`
+-- , `zutrittsberechtigung`.`created_date_unix`
+-- , `zutrittsberechtigung`.`updated_date_unix`
+-- , `zutrittsberechtigung`.`eingabe_abgeschlossen_datum_unix`
+-- , `zutrittsberechtigung`.`kontrolliert_datum_unix`
+-- , `zutrittsberechtigung`.`freigabe_datum_unix`
+, mandat.*
+FROM v_mandat mandat
+INNER JOIN v_zutrittsberechtigung zutrittsberechtigung
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id
+ORDER BY zutrittsberechtigung.anzeige_name;
 
 -- Parlamentarier, die eine indirekte Interessenbindung zu dieser Organisation haben.
 -- Connector: connector_organisation_id
@@ -1004,7 +1123,68 @@ ORDER BY parlamentarier.anzeige_name;
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier_indirekt` AS
 SELECT 'direkt' as beziehung, organisation_parlamentarier.*, organisation_parlamentarier.organisation_id as connector_organisation_id FROM v_organisation_parlamentarier organisation_parlamentarier
 UNION
-SELECT 'indirekt' as beziehung, parlamentarier.anzeige_name as parlamentarier_name, interessenbindung.*, organisation_beziehung.ziel_organisation_id as connector_organisation_id
+SELECT 'indirekt' as beziehung, 
+`parlamentarier`.`anzeige_name` as parlamentarier_name
+, `parlamentarier`.`name`
+, `parlamentarier`.`nachname`
+, `parlamentarier`.`vorname`
+, `parlamentarier`.`zweiter_vorname`
+, `parlamentarier`.`rat_id`
+, `parlamentarier`.`kanton_id`
+, `parlamentarier`.`kommissionen`
+, `parlamentarier`.`partei_id`
+, `parlamentarier`.`parteifunktion`
+, `parlamentarier`.`fraktion_id`
+, `parlamentarier`.`fraktionsfunktion`
+, `parlamentarier`.`im_rat_seit`
+, `parlamentarier`.`im_rat_bis`
+, `parlamentarier`.`ratswechsel`
+, `parlamentarier`.`ratsunterbruch_von`
+, `parlamentarier`.`ratsunterbruch_bis`
+, `parlamentarier`.`beruf`
+, `parlamentarier`.`beruf_interessengruppe_id`
+, `parlamentarier`.`zivilstand`
+, `parlamentarier`.`anzahl_kinder`
+, `parlamentarier`.`militaerischer_grad_id`
+, `parlamentarier`.`geschlecht`
+, `parlamentarier`.`geburtstag`
+, `parlamentarier`.`photo`
+, `parlamentarier`.`photo_dateiname`
+, `parlamentarier`.`photo_dateierweiterung`
+, `parlamentarier`.`photo_dateiname_voll`
+, `parlamentarier`.`photo_mime_type`
+, `parlamentarier`.`kleinbild`
+, `parlamentarier`.`sitzplatz`
+, `parlamentarier`.`email`
+, `parlamentarier`.`homepage`
+, `parlamentarier`.`parlament_biografie_id`
+, `parlamentarier`.`twitter_name`
+, `parlamentarier`.`linkedin_profil_url`
+, `parlamentarier`.`xing_profil_name`
+, `parlamentarier`.`facebook_name`
+, `parlamentarier`.`arbeitssprache`
+, `parlamentarier`.`adresse_firma`
+, `parlamentarier`.`adresse_strasse`
+, `parlamentarier`.`adresse_zusatz`
+, `parlamentarier`.`adresse_plz`
+, `parlamentarier`.`adresse_ort`
+, `parlamentarier`.`im_rat_seit_unix`
+, `parlamentarier`.`im_rat_bis_unix`
+-- , `parlamentarier`.`von`
+-- , `parlamentarier`.`bis`
+-- , `parlamentarier`.`von_unix`
+-- , `parlamentarier`.`bis_unix`
+-- , `parlamentarier`.`rat`
+-- , `parlamentarier`.`ratstyp`
+, `parlamentarier`.`kanton`
+, `parlamentarier`.`vertretene_bevoelkerung`
+, `parlamentarier`.`kommissionen_namen`
+, `parlamentarier`.`kommissionen2`
+, `parlamentarier`.`kommissionen_abkuerzung`
+, `parlamentarier`.`partei`
+, `parlamentarier`.`fraktion`
+, `parlamentarier`.`militaerischer_grad`
+, interessenbindung.*, organisation_beziehung.ziel_organisation_id as connector_organisation_id
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_interessenbindung interessenbindung
   ON organisation_beziehung.organisation_id = interessenbindung.organisation_id

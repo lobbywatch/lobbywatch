@@ -405,7 +405,7 @@
       // TODO RKU }
 
 
-      datasource = "/de/data/interface/v1/json/table/organisation/flat/id/" + id + filterOptions;
+      datasource = "/de/data/interface/v1/json/table/organisation/aggregated/id/" + id + filterOptions;
 
       console.log(datasource);
       
@@ -424,7 +424,7 @@
 
          console.log(organisationData);
          
-         var str = organisationData.name_de;
+         var str = organisationData.name_de + " ("  + organisationData.id + ")";
          $("#lblSubjectDetail").html(str);
 
          var str = "Branche: " + organisationData.branche;
@@ -502,7 +502,7 @@
             .attr("y", rootStartY + organisationIconTextOffsetY)
             .attr("x", rootStartX + organisationWidth/2)
             .text(function (d, i) {
-               var txt = organisationData.name_de;
+               var txt = organisationData.name_de + " ("  + organisationData.id + ")";
                return txt;
             })
             .call(FitTextToRect, organisationWidth - 4);
@@ -514,7 +514,7 @@
          var sourceRightY2 = Number(nodeRoot.attr("y")) + organisationIconHeight;
 
          // Parlamentarier
-         var lstParlamentarier = jsonPath(organisationData, "$..parlamentarier_list[*]");
+         var lstParlamentarier = jsonPath(organisationData, "$.data.parlamentarier[*]");
 
          group.selectAll(".parlamentarier")
             .data(lstParlamentarier)
@@ -583,7 +583,7 @@
 
 
          // Zutrittsberechtigte
-         var lstZutrittsberechtigte = jsonPath(organisationData, "$..zutrittsberechtigte_list[*]");
+         var lstZutrittsberechtigte = jsonPath(organisationData, "$..zutrittsberechtigte[*]");
 
          group.selectAll(".zutrittsberechtigte")
             .data(lstZutrittsberechtigte)
@@ -599,7 +599,7 @@
                .attr("xlink:href", "images/gast.gif")
                .style("cursor", "pointer")
                .on("click", function (d, i) {
-                  var options = "id=" + d.parlamentarier.id + "&" + getFilterCriteria();
+                  var options = "id=" + d.parlamentarier_id + "&" + getFilterCriteria();
                   window.location.href = "ParlamentarierView.html?" + options;
                });
 
@@ -614,7 +614,7 @@
                   return posX;
                })
                .text(function (d, i) {
-                  var txt = d.nachname + ", " + d.vorname;
+                  var txt = d.nachname + ", " + d.vorname + " ("  + d.id + ")";
                   return txt;
                })
                .call(FitTextToRect, (2 * personR) - 4);
@@ -663,7 +663,7 @@
                .attr("xlink:href", "images/parlamentarier.gif")
                .style("cursor", "pointer")
                .on("click", function (d, i) {
-                  var options = "id=" + d.parlamentarier.id + "&" + getFilterCriteria();
+                  var options = "id=" + d.parlamentarier_id + "&" + getFilterCriteria();
                   window.location.href = "ParlamentarierView.html?" + options;
                });
 
@@ -678,7 +678,7 @@
                   return posX;
                })
                .text(function (d, i) {
-                  var txt = d.parlamentarier.nachname + ", " + d.parlamentarier.vorname;
+                  var txt = d.parlamentarier.nachname + ", " + d.parlamentarier.vorname + " (" + d.parlamentarier.id + ")";
                   txt += ", " + d.parlamentarier.partei;
                   return txt;
                })

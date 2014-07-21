@@ -306,7 +306,7 @@
          var filterOrganisation = getParameterByName("filterOrganisation");
          var filterPerson = getParameterByName("filterPerson");
 
-         var options = "optionFunction1=" + optionFunction1;
+         /* TODO RKU var options = "optionFunction1=" + optionFunction1;
          options = options + "&optionFunction2=" + optionFunction2;
          options = options + "&optionDeep1=" + optionDeep1;
          options = options + "&optionDeep2=" + optionDeep2;
@@ -316,7 +316,7 @@
          options = options + "&filterBrancheText=" + filterBrancheText;
          options = options + "&filterKommissionText=" + filterKommissionText;
          options = options + "&filterOrganisation=" + filterOrganisation;
-         options = options + "&filterPerson=" + filterPerson;
+         options = options + "&filterPerson=" + filterPerson;*/
 
          return options;
       }
@@ -495,14 +495,14 @@
       var optionDeep2 = getParameterByName("optionDeep2") == "1" ? true : false;
 
       var filterJSONData = "";
-      filterJSONData += "&filterBranche=" + getParameterByName("filterBranche");
+      /* TODO RKU filterJSONData += "&filterBranche=" + getParameterByName("filterBranche");
       filterJSONData += "&filterKommission=" + getParameterByName("filterKommission");
       filterJSONData += "&optionFunction1=" + getParameterByName("optionFunction1");
       filterJSONData += "&optionFunction2=" + getParameterByName("optionFunction2");
       filterJSONData += "&optionDeep1=" + getParameterByName("optionDeep1");
       filterJSONData += "&optionDeep2=" + getParameterByName("optionDeep2");
       filterJSONData += "&filterOrganisation=" + getParameterByName("filterOrganisation");
-      filterJSONData += "&filterPerson=" + getParameterByName("filterPerson");
+      filterJSONData += "&filterPerson=" + getParameterByName("filterPerson");*/
 
       var id = getParameterByName("id");
       // test bl
@@ -550,6 +550,7 @@
       // read JSON data
       var datasource = "/de/data/interface/v1/json/table/parlamentarier/aggregated/id/" + id + filterJSONData;
 
+      console.log(datasource);
       //var urlData = "http://localhost/VisualLobby/" + datasource;
       //datasource = "http://localhost/VisualLobby/JFehrData_test2.json";
       var urlData = datasource;
