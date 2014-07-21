@@ -69,10 +69,10 @@ $cCloseWindow='Close window';
 $cBack='Back';
 $cError='Error';
 $cShowErrorDetails='Show details';
-$cCriticalErrorSuggestions='An unexpected error has occurred. It could be due to one of several reasons:<ol>
-<li>you try to insert incorrect data or execute illegal operation,</li>
+$cCriticalErrorSuggestions='An unexpected error has occurred. It could be due to one of several reasons:<ul>
+<li>you try to insert incorrect data or execute illegal operation;</li>
 <li>connection to the server has been lost.</li>
-</ol>';
+</ul>';
 $cNot='Not';
 $cShowHideNavbar='Show/hide navbar';
 $cFirst='First';

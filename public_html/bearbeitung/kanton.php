@@ -741,7 +741,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('kanton_jahrDetailViewGrid0kanton_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -1197,7 +1197,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kanton_jahrDetailViewGrid0kanton_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -2120,7 +2120,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('kanton_jahrDetailEditGrid0kanton_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -2603,7 +2603,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('kanton_jahrDetailEditGrid0kanton_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3649,14 +3649,14 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kanton_jahrDetailEditGrid0kanton_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kanton_jahrDetailEditGrid0kanton_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -3846,7 +3846,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_nachname_handler_list');
             
             /* <inline edit column> */
             //
@@ -4860,7 +4860,7 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_beruf_handler_list');
             
             /* <inline edit column> */
             //
@@ -5261,7 +5261,7 @@
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_photo_handler_list');
             
             /* <inline edit column> */
             //
@@ -5294,7 +5294,7 @@
             $column = new TextViewColumn('photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_dateiname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_photo_dateiname_handler_list');
             
             /* <inline edit column> */
             //
@@ -5362,7 +5362,7 @@
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_dateiname_voll_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_photo_dateiname_voll_handler_list');
             
             /* <inline edit column> */
             //
@@ -5395,7 +5395,7 @@
             $column = new TextViewColumn('photo_mime_type', 'Photo Mime Type', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_mime_type_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_photo_mime_type_handler_list');
             
             /* <inline edit column> */
             //
@@ -5432,7 +5432,7 @@
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_kleinbild_handler_list');
             
             /* <inline edit column> */
             //
@@ -5501,7 +5501,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_email_handler_list');
             
             /* <inline edit column> */
             //
@@ -5538,7 +5538,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_homepage_handler_list');
             
             /* <inline edit column> */
             //
@@ -5637,7 +5637,7 @@
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_linkedin_profil_url_handler_list');
             
             /* <inline edit column> */
             //
@@ -5670,7 +5670,7 @@
             $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_xing_profil_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -5703,7 +5703,7 @@
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_facebook_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -5773,7 +5773,7 @@
             $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_firma_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_adresse_firma_handler_list');
             
             /* <inline edit column> */
             //
@@ -5810,7 +5810,7 @@
             $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_adresse_strasse_handler_list');
             
             /* <inline edit column> */
             //
@@ -5847,7 +5847,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_adresse_zusatz_handler_list');
             
             /* <inline edit column> */
             //
@@ -5919,7 +5919,7 @@
             $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_adresse_ort_handler_list');
             
             /* <inline edit column> */
             //
@@ -5956,7 +5956,7 @@
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ALT_kommission_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_ALT_kommission_handler_list');
             
             /* <inline edit column> */
             //
@@ -5989,7 +5989,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_notizen_handler_list');
             
             /* <inline edit column> */
             //
@@ -6566,7 +6566,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_nachname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beruf field
@@ -6595,7 +6595,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beruf_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_beruf_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo field
@@ -6624,7 +6624,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_photo_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_dateiname field
@@ -6653,7 +6653,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_dateiname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_photo_dateiname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_dateiname_voll field
@@ -6682,7 +6682,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_dateiname_voll_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_photo_dateiname_voll_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_mime_type field
@@ -6715,7 +6715,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_mime_type_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_photo_mime_type_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for kleinbild field
@@ -6749,7 +6749,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kleinbild_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_kleinbild_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -6782,7 +6782,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_email_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -6811,7 +6811,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for linkedin_profil_url field
@@ -6840,7 +6840,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'linkedin_profil_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_linkedin_profil_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for xing_profil_name field
@@ -6869,7 +6869,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'xing_profil_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_xing_profil_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for facebook_name field
@@ -6898,7 +6898,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'facebook_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_facebook_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_firma field
@@ -6931,7 +6931,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_firma_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_adresse_firma_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_strasse field
@@ -6964,7 +6964,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_strasse_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_adresse_strasse_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_zusatz field
@@ -6997,7 +6997,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_zusatz_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_adresse_zusatz_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_ort field
@@ -7030,7 +7030,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_ort_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_adresse_ort_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ALT_kommission field
@@ -7059,7 +7059,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ALT_kommission_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_ALT_kommission_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -7088,7 +7088,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -7709,7 +7709,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_nachname_handler_list');
             
             /* <inline edit column> */
             //
@@ -8723,7 +8723,7 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_beruf_handler_list');
             
             /* <inline edit column> */
             //
@@ -9124,7 +9124,7 @@
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_photo_handler_list');
             
             /* <inline edit column> */
             //
@@ -9157,7 +9157,7 @@
             $column = new TextViewColumn('photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_dateiname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_photo_dateiname_handler_list');
             
             /* <inline edit column> */
             //
@@ -9225,7 +9225,7 @@
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_dateiname_voll_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_photo_dateiname_voll_handler_list');
             
             /* <inline edit column> */
             //
@@ -9258,7 +9258,7 @@
             $column = new TextViewColumn('photo_mime_type', 'Photo Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_mime_type_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_photo_mime_type_handler_list');
             
             /* <inline edit column> */
             //
@@ -9295,7 +9295,7 @@
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_kleinbild_handler_list');
             
             /* <inline edit column> */
             //
@@ -9364,7 +9364,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_email_handler_list');
             
             /* <inline edit column> */
             //
@@ -9401,7 +9401,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_homepage_handler_list');
             
             /* <inline edit column> */
             //
@@ -9500,7 +9500,7 @@
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_linkedin_profil_url_handler_list');
             
             /* <inline edit column> */
             //
@@ -9533,7 +9533,7 @@
             $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_xing_profil_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -9566,7 +9566,7 @@
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_facebook_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -9636,7 +9636,7 @@
             $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_firma_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_adresse_firma_handler_list');
             
             /* <inline edit column> */
             //
@@ -9673,7 +9673,7 @@
             $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_adresse_strasse_handler_list');
             
             /* <inline edit column> */
             //
@@ -9710,7 +9710,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_adresse_zusatz_handler_list');
             
             /* <inline edit column> */
             //
@@ -9782,7 +9782,7 @@
             $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_adresse_ort_handler_list');
             
             /* <inline edit column> */
             //
@@ -9819,7 +9819,7 @@
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ALT_kommission_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_ALT_kommission_handler_list');
             
             /* <inline edit column> */
             //
@@ -9852,7 +9852,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_notizen_handler_list');
             
             /* <inline edit column> */
             //
@@ -10380,7 +10380,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_nachname_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10484,7 +10484,7 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_beruf_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10536,7 +10536,7 @@
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_photo_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10545,7 +10545,7 @@
             $column = new TextViewColumn('photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_dateiname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_photo_dateiname_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10561,7 +10561,7 @@
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_dateiname_voll_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_photo_dateiname_voll_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10570,7 +10570,7 @@
             $column = new TextViewColumn('photo_mime_type', 'Photo Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_mime_type_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_photo_mime_type_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10579,7 +10579,7 @@
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_kleinbild_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10595,7 +10595,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_email_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10604,7 +10604,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_homepage_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10627,7 +10627,7 @@
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_linkedin_profil_url_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10636,7 +10636,7 @@
             $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_xing_profil_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10645,7 +10645,7 @@
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_facebook_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10661,7 +10661,7 @@
             $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_firma_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_adresse_firma_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10670,7 +10670,7 @@
             $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_strasse_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_adresse_strasse_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10679,7 +10679,7 @@
             $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_zusatz_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_adresse_zusatz_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10695,7 +10695,7 @@
             $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('adresse_ort_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_adresse_ort_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10704,7 +10704,7 @@
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ALT_kommission_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_ALT_kommission_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -10713,7 +10713,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -13644,7 +13644,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_nachname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beruf field
@@ -13673,7 +13673,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beruf_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_beruf_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo field
@@ -13702,7 +13702,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_photo_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_dateiname field
@@ -13731,7 +13731,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_dateiname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_photo_dateiname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_dateiname_voll field
@@ -13760,7 +13760,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_dateiname_voll_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_photo_dateiname_voll_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_mime_type field
@@ -13793,7 +13793,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_mime_type_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_photo_mime_type_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for kleinbild field
@@ -13827,7 +13827,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kleinbild_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_kleinbild_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -13860,7 +13860,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_email_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -13889,7 +13889,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for linkedin_profil_url field
@@ -13918,7 +13918,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'linkedin_profil_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_linkedin_profil_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for xing_profil_name field
@@ -13947,7 +13947,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'xing_profil_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_xing_profil_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for facebook_name field
@@ -13976,7 +13976,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'facebook_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_facebook_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_firma field
@@ -14009,7 +14009,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_firma_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_adresse_firma_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_strasse field
@@ -14042,7 +14042,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_strasse_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_adresse_strasse_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_zusatz field
@@ -14075,7 +14075,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_zusatz_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_adresse_zusatz_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_ort field
@@ -14108,7 +14108,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_ort_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_adresse_ort_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ALT_kommission field
@@ -14137,7 +14137,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ALT_kommission_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_ALT_kommission_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -14166,132 +14166,132 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_nachname_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beruf_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_beruf_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_photo_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_dateiname field
             //
             $column = new TextViewColumn('photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_dateiname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_photo_dateiname_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_dateiname_voll field
             //
             $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_dateiname_voll_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_photo_dateiname_voll_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_mime_type field
             //
             $column = new TextViewColumn('photo_mime_type', 'Photo Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_mime_type_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_photo_mime_type_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for kleinbild field
             //
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kleinbild_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_kleinbild_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_email_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_homepage_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for linkedin_profil_url field
             //
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'linkedin_profil_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_linkedin_profil_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for xing_profil_name field
             //
             $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'xing_profil_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_xing_profil_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for facebook_name field
             //
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'facebook_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_facebook_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_firma field
             //
             $column = new TextViewColumn('adresse_firma', 'Adresse Firma', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_firma_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_adresse_firma_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_strasse field
             //
             $column = new TextViewColumn('adresse_strasse', 'Adresse Strasse', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_strasse_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_adresse_strasse_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_zusatz field
             //
             $column = new TextViewColumn('adresse_zusatz', 'Adresse Zusatz', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_zusatz_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_adresse_zusatz_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for adresse_ort field
             //
             $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'adresse_ort_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_adresse_ort_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ALT_kommission_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_ALT_kommission_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -15232,7 +15232,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_homepage_handler_list');
             
             /* <inline edit column> */
             //
@@ -15270,7 +15270,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_beschreibung_handler_list');
             
             /* <inline edit column> */
             //
@@ -15303,7 +15303,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -15683,7 +15683,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_homepage_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -15693,7 +15693,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -15702,7 +15702,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -17012,7 +17012,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_homepage_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Kantons'));
             $column->SetFixedWidth(null);
@@ -17024,7 +17024,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_beschreibung_handler_list');
             $column->SetDescription($this->RenderText('Beschreibung des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -17035,7 +17035,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
@@ -17515,7 +17515,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_homepage_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage des Kantons'));
             $column->SetFixedWidth(null);
@@ -17527,7 +17527,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_beschreibung_handler_list');
             $column->SetDescription($this->RenderText('Beschreibung des Kantons'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -17538,7 +17538,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('kantonGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
@@ -17997,7 +17997,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -18026,7 +18026,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -18056,21 +18056,21 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_homepage_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -18078,7 +18078,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kantonGrid_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }

@@ -41,24 +41,24 @@ class EditRenderer extends Renderer
         );
     }
 
-    function RenderDetailPageEdit($Page) {
+    function RenderDetailPageEdit($page) {
 
         $customParams = array();
-        $layoutTemplate = $Page->GetCustomTemplate(PagePart::Layout, PageMode::Edit, 'common/layout.tpl', $customParams);
+        $layoutTemplate = $page->GetCustomTemplate(PagePart::Layout, $this->getPageMode(), 'common/layout.tpl', $customParams);
 
         $this->DisplayTemplate('edit/page.tpl',
             array(
-                'Page' => $Page
+                'Page' => $page
             ),
             array_merge($customParams,
                 array(
-                    'App' => $Page->GetSeparatedEditViewData(),
-                    'Authentication' => $Page->GetAuthenticationViewData(),
+                    'App' => $this->GetPageViewData($page),
+                    'Authentication' => $page->GetAuthenticationViewData(),
 
-                    'HideSideBarByDefault' => $Page->GetHidePageListByDefault(),
-                    'PageList' => $this->RenderDef($Page->GetReadyPageList()),
+                    'HideSideBarByDefault' => $page->GetHidePageListByDefault(),
+                    'PageList' => $this->RenderDef($page->GetReadyPageList()),
                     'LayoutTemplateName' => $layoutTemplate,
-                    'Grid' => $this->Render($Page->GetGrid())
+                    'Grid' => $this->Render($page->GetGrid())
                 )
             )
         );

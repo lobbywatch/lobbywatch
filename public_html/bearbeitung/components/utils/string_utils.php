@@ -216,7 +216,14 @@ class StringUtils
             return substr($value, $start, $length);
     }
 
+    public static function StringLength($value, $encoding) {
+        if (function_exists('mb_strlen') && $encoding != '')
+            return mb_strlen($value, $encoding);
+        else
+            return strlen($value);
+    }
+
     public static function EscapeString($value, $encoding) {
-        return htmlspecialchars($value, ENT_COMPAT | ENT_HTML401, $encoding);
+        return htmlspecialchars($value, ENT_COMPAT, $encoding);
     }
 }

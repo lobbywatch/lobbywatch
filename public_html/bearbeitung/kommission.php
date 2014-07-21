@@ -895,7 +895,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('v_in_kommissionDetailViewGrid0kommission_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -1080,7 +1080,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_in_kommissionDetailViewGrid0kommission_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -2289,7 +2289,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('v_in_kommissionDetailEditGrid0kommission_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -2476,7 +2476,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('v_in_kommissionDetailEditGrid0kommission_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3628,14 +3628,14 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_in_kommissionDetailEditGrid0kommission_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_in_kommissionDetailEditGrid0kommission_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -3739,7 +3739,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailViewGrid1kommission_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -3954,7 +3954,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailViewGrid1kommission_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -3990,7 +3990,7 @@
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('angaben_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailViewGrid1kommission_angaben_handler_list');
             
             /* <inline edit column> */
             //
@@ -4023,7 +4023,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailViewGrid1kommission_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -4465,7 +4465,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailViewGrid1kommission_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -4497,7 +4497,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailViewGrid1kommission_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for angaben field
@@ -4526,7 +4526,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'angaben_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailViewGrid1kommission_angaben_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -4556,7 +4556,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailViewGrid1kommission_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -4791,7 +4791,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailEditGrid1kommission_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -5006,7 +5006,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailEditGrid1kommission_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -5042,7 +5042,7 @@
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('angaben_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailEditGrid1kommission_angaben_handler_list');
             
             /* <inline edit column> */
             //
@@ -5075,7 +5075,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailEditGrid1kommission_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -5468,7 +5468,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailEditGrid1kommission_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5485,7 +5485,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailEditGrid1kommission_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -5495,7 +5495,7 @@
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('angaben_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailEditGrid1kommission_angaben_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -5504,7 +5504,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('brancheDetailEditGrid1kommission_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -6390,7 +6390,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailEditGrid1kommission_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -6422,7 +6422,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailEditGrid1kommission_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for angaben field
@@ -6451,7 +6451,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'angaben_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailEditGrid1kommission_angaben_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -6481,13 +6481,13 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailEditGrid1kommission_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailEditGrid1kommission_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -6495,14 +6495,14 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailEditGrid1kommission_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'angaben_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailEditGrid1kommission_angaben_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -6510,7 +6510,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheDetailEditGrid1kommission_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -6881,7 +6881,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -7177,7 +7177,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -7211,7 +7211,7 @@
             $column = new TextViewColumn('sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('sachbereiche_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -7247,7 +7247,7 @@
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlament_url_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_parlament_url_handler_list');
             
             /* <inline edit column> */
             //
@@ -7289,7 +7289,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -7571,7 +7571,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -7602,7 +7602,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -7612,7 +7612,7 @@
             $column = new TextViewColumn('sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('sachbereiche_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -7622,7 +7622,7 @@
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlament_url_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_parlament_url_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_url%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -7632,7 +7632,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -8543,7 +8543,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_name_handler_list');
             $column->SetDescription($this->RenderText('Ausgeschriebener Name der Kommission'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -8582,7 +8582,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Beschreibung der Kommission'));
             $column->SetFixedWidth(null);
@@ -8594,7 +8594,7 @@
             $column = new TextViewColumn('sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('sachbereiche_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Liste der Sachbereiche der Kommission, abgetrennt durch ";".'));
             $column->SetFixedWidth(null);
@@ -8606,7 +8606,7 @@
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlament_url_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_parlament_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_url%' , '_blank');
             $column->SetDescription($this->RenderText('Link zur Seite auf Parlament.ch'));
             $column->SetFixedWidth(null);
@@ -8618,7 +8618,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
@@ -8915,7 +8915,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_name_handler_list');
             $column->SetDescription($this->RenderText('Ausgeschriebener Name der Kommission'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -8954,7 +8954,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Beschreibung der Kommission'));
             $column->SetFixedWidth(null);
@@ -8966,7 +8966,7 @@
             $column = new TextViewColumn('sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('sachbereiche_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Liste der Sachbereiche der Kommission, abgetrennt durch ";".'));
             $column->SetFixedWidth(null);
@@ -8978,7 +8978,7 @@
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlament_url_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_parlament_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_url%' , '_blank');
             $column->SetDescription($this->RenderText('Link zur Seite auf Parlament.ch'));
             $column->SetFixedWidth(null);
@@ -8990,7 +8990,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('kommissionGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
@@ -9392,7 +9392,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -9422,7 +9422,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for sachbereiche field
@@ -9454,7 +9454,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'sachbereiche_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_sachbereiche_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for parlament_url field
@@ -9492,7 +9492,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_url%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlament_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_parlament_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -9522,13 +9522,13 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -9536,7 +9536,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for sachbereiche field
@@ -9544,7 +9544,7 @@
             $column = new TextViewColumn('sachbereiche', 'Sachbereiche', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'sachbereiche_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_sachbereiche_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for parlament_url field
@@ -9552,7 +9552,7 @@
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%parlament_url%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlament_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_parlament_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -9560,7 +9560,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kommissionGrid_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }

@@ -376,12 +376,12 @@ abstract class Renderer
                 $value = htmlspecialchars($value);
 
             $columnMaxLength = $column->GetMaxLength();
-            
+
             if ($this->HttpHandlersAvailable() && 
                 $this->ChildPagesAvailable() && 
                 isset($columnMaxLength) && 
                 isset($value) && 
-                strlen($value) > $columnMaxLength) 
+                StringUtils::StringLength($value, $column->GetGrid()->GetPage()->GetContentEncoding()) > $columnMaxLength)
             {
                 $originalValue = $value;
                 if ($this->HtmlMarkupAvailable() && $column->GetReplaceLFByBR())

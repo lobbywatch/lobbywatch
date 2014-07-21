@@ -1222,7 +1222,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('in_kommissionGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -1532,7 +1532,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('in_kommissionGrid_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3185,14 +3185,14 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'in_kommissionGrid_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'in_kommissionGrid_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),

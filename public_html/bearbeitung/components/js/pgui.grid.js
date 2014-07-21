@@ -257,6 +257,15 @@ define(function(require, exports, module) {
             );
         },
 
+        updateHints: function(callback) {
+            callback = callback || function() { };
+            var self = this;
+            require(['pgui.layout'], function(instance){
+                instance.updatePopupHints(self.container);
+            });
+            callback();
+        },
+
         constructPanel: function(callback) {
             var container = this.container;
 
@@ -746,6 +755,9 @@ define(function(require, exports, module) {
                 },
                 function(callback) {
                     detailsPanel.showDetailsPanel(callback);
+                },
+                function(callback) {
+                    detailsPanel.updateHints(callback);
                 }
             ],
                 function(err) {

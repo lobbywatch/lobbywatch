@@ -1,5 +1,26 @@
 /*global $, define*/
+
+/* ToDo: rename to pgui.utils */
+
 define(function (require, exports) {
+
+    exports.updatePopupHints = function($container) {
+        $container.find('.more_hint').each(function() {
+            var $hintLink = $(this);
+            $hintLink.find('a:first').popover({
+                title: '',
+                placement: function() {
+                    if ($hintLink.offset().top - $(window).scrollTop() < $(window).height() / 2)
+                        return 'bottom';
+                    else
+                        return 'top';
+                },
+                html : true,
+                content: $hintLink.find('.box_hidden').html()
+            });
+        });
+    };
+
     exports.fixLayout = function () {
         $(function () {
             var $navbar = $('#navbar'),

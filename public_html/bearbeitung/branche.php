@@ -101,7 +101,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeDetailViewGrid0branche_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -331,7 +331,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeDetailViewGrid0branche_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -367,7 +367,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeDetailViewGrid0branche_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -806,7 +806,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%id%' , '_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeDetailViewGrid0branche_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -838,7 +838,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeDetailViewGrid0branche_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -868,7 +868,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeDetailViewGrid0branche_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -1093,7 +1093,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeDetailEditGrid0branche_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -1323,7 +1323,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeDetailEditGrid0branche_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -1359,7 +1359,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeDetailEditGrid0branche_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -1752,7 +1752,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeDetailEditGrid0branche_name_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1770,7 +1770,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeDetailEditGrid0branche_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1780,7 +1780,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeDetailEditGrid0branche_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2645,7 +2645,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%id%' , '_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeDetailEditGrid0branche_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -2677,7 +2677,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeDetailEditGrid0branche_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -2707,14 +2707,14 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeDetailEditGrid0branche_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%id%' , '_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeDetailEditGrid0branche_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -2722,7 +2722,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeDetailEditGrid0branche_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -2730,7 +2730,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeDetailEditGrid0branche_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -2856,7 +2856,7 @@
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_de_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid1branche_name_de_handler_list');
             
             /* <inline edit column> */
             //
@@ -2891,7 +2891,7 @@
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_fr_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid1branche_name_fr_handler_list');
             
             /* <inline edit column> */
             //
@@ -2924,7 +2924,7 @@
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_it_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid1branche_name_it_handler_list');
             
             /* <inline edit column> */
             //
@@ -2957,7 +2957,7 @@
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ort_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid1branche_ort_handler_list');
             
             /* <inline edit column> */
             //
@@ -3811,7 +3811,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid1branche_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -3892,7 +3892,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid1branche_homepage_handler_list');
             
             /* <inline edit column> */
             //
@@ -3926,7 +3926,7 @@
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('handelsregister_url_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid1branche_handelsregister_url_handler_list');
             
             /* <inline edit column> */
             //
@@ -3960,7 +3960,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid1branche_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -4398,7 +4398,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_de_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid1branche_name_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_fr field
@@ -4427,7 +4427,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_fr_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid1branche_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_it field
@@ -4456,7 +4456,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_it_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid1branche_name_it_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ort field
@@ -4485,7 +4485,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ort_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid1branche_ort_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -4517,7 +4517,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid1branche_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -4547,7 +4547,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid1branche_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for handelsregister_url field
@@ -4577,7 +4577,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'handelsregister_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid1branche_handelsregister_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -4607,7 +4607,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid1branche_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -5072,7 +5072,7 @@
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_de_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_name_de_handler_list');
             
             /* <inline edit column> */
             //
@@ -5107,7 +5107,7 @@
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_fr_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_name_fr_handler_list');
             
             /* <inline edit column> */
             //
@@ -5140,7 +5140,7 @@
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_it_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_name_it_handler_list');
             
             /* <inline edit column> */
             //
@@ -5173,7 +5173,7 @@
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ort_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_ort_handler_list');
             
             /* <inline edit column> */
             //
@@ -6027,7 +6027,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -6108,7 +6108,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_homepage_handler_list');
             
             /* <inline edit column> */
             //
@@ -6142,7 +6142,7 @@
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('handelsregister_url_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_handelsregister_url_handler_list');
             
             /* <inline edit column> */
             //
@@ -6176,7 +6176,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -6569,7 +6569,7 @@
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_de_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -6578,7 +6578,7 @@
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_fr_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -6587,7 +6587,7 @@
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_it_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_name_it_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -6596,7 +6596,7 @@
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ort_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_ort_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -6658,7 +6658,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -6675,7 +6675,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_homepage_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -6685,7 +6685,7 @@
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('handelsregister_url_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_handelsregister_url_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -6695,7 +6695,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid1branche_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -8401,7 +8401,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_de_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_name_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_fr field
@@ -8430,7 +8430,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_fr_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_it field
@@ -8459,7 +8459,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_it_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_name_it_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ort field
@@ -8488,7 +8488,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ort_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_ort_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -8520,7 +8520,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -8550,7 +8550,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for handelsregister_url field
@@ -8580,7 +8580,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'handelsregister_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_handelsregister_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -8610,34 +8610,34 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for name_de field
             //
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_de_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_name_de_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_fr_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_it_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_name_it_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ort_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_ort_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -8645,7 +8645,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -8653,7 +8653,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_homepage_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for handelsregister_url field
@@ -8661,7 +8661,7 @@
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'handelsregister_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_handelsregister_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -8669,7 +8669,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid1branche_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -9003,7 +9003,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -9220,7 +9220,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_beschreibung_handler_list');
             
             /* <inline edit column> */
             //
@@ -9255,7 +9255,7 @@
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('angaben_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_angaben_handler_list');
             
             /* <inline edit column> */
             //
@@ -9333,7 +9333,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -9605,7 +9605,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_name_handler_view');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $grid->AddSingleRecordViewColumn($column);
@@ -9624,7 +9624,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9633,7 +9633,7 @@
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('angaben_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_angaben_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9673,7 +9673,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -10503,7 +10503,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_name_handler_list');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Branche, z.B. Gesundheit, Energie'));
@@ -10526,7 +10526,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_beschreibung_handler_list');
             $column->SetDescription($this->RenderText('Beschreibung der Branche'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -10537,7 +10537,7 @@
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('angaben_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_angaben_handler_list');
             $column->SetDescription($this->RenderText('Angaben zur Branche'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -10567,7 +10567,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
@@ -10828,7 +10828,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_name_handler_list');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Branche, z.B. Gesundheit, Energie'));
@@ -10851,7 +10851,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_beschreibung_handler_list');
             $column->SetDescription($this->RenderText('Beschreibung der Branche'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -10862,7 +10862,7 @@
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('angaben_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_angaben_handler_list');
             $column->SetDescription($this->RenderText('Angaben zur Branche'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -10892,7 +10892,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('brancheGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
@@ -11386,7 +11386,7 @@
             /* </inline insert column> */
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -11417,7 +11417,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for angaben field
@@ -11446,7 +11446,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'angaben_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_angaben_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -11476,7 +11476,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for name field
             //
@@ -11484,21 +11484,21 @@
             $column->SetOrderable(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'angaben_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_angaben_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -11506,7 +11506,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }

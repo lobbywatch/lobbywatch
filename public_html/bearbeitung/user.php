@@ -229,7 +229,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('userGrid_nachname_handler_list');
             
             /* <inline edit column> */
             //
@@ -301,7 +301,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('userGrid_email_handler_list');
             
             /* <inline edit column> */
             //
@@ -422,7 +422,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('userGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -617,7 +617,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('userGrid_nachname_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -633,7 +633,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('userGrid_email_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -666,7 +666,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('userGrid_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -1269,7 +1269,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_nachname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -1307,7 +1307,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_email_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -1337,13 +1337,13 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_nachname_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -1351,7 +1351,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_email_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -1359,7 +1359,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'userGrid_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }

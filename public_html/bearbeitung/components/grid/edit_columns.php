@@ -628,7 +628,9 @@ class FileUploadingColumn extends CustomEditColumn
     {
         if ($value) {
             $tempFileName = FileUtils::GetTempFileName();
-            $this->imageFilter->ApplyFilter(file_get_contents($value), $tempFileName);
+
+            $imageString = file_get_contents($value);
+            $this->imageFilter->ApplyFilter($imageString, $tempFileName);
 
             $this->GetDataset()->SetFieldValueAsFileNameByName($this->GetFieldName(), $tempFileName);
 

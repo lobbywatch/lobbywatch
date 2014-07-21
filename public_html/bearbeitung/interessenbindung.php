@@ -1634,7 +1634,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -1672,7 +1672,7 @@
             $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('quelle_url_handler');
+            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_url_handler_list');
             
             /* <inline edit column> */
             //
@@ -1714,7 +1714,7 @@
             $column = new TextViewColumn('quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('quelle_handler');
+            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_handler_list');
             
             /* <inline edit column> */
             //
@@ -1751,7 +1751,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('interessenbindungGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -2144,7 +2144,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('interessenbindungGrid_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2154,7 +2154,7 @@
             $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('quelle_url_handler');
+            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_url_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -2164,7 +2164,7 @@
             $column = new TextViewColumn('quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('quelle_handler');
+            $column->SetFullTextWindowHandlerName('interessenbindungGrid_quelle_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -2173,7 +2173,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('interessenbindungGrid_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -4613,7 +4613,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for quelle_url field
@@ -4651,7 +4651,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for quelle field
@@ -4684,7 +4684,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -4714,14 +4714,14 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for quelle_url field
@@ -4729,14 +4729,14 @@
             $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for quelle field
             //
             $column = new TextViewColumn('quelle', 'Quelle', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_quelle_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -4744,7 +4744,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessenbindungGrid_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),

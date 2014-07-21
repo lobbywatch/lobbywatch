@@ -261,7 +261,7 @@
             $column = new TextViewColumn('key_name', 'Key', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('key_name_handler');
+            $column->SetFullTextWindowHandlerName('settingsGrid_key_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -300,7 +300,7 @@
             $column = new TextViewColumn('value', 'Value', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('value_handler');
+            $column->SetFullTextWindowHandlerName('settingsGrid_value_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -334,7 +334,7 @@
             $column = new TextViewColumn('description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('description_handler');
+            $column->SetFullTextWindowHandlerName('settingsGrid_description_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -475,7 +475,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('settingsGrid_notizen_handler_list');
             
             /* <inline edit column> */
             //
@@ -611,7 +611,7 @@
             $column = new TextViewColumn('key_name', 'Key', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('key_name_handler');
+            $column->SetFullTextWindowHandlerName('settingsGrid_key_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -620,7 +620,7 @@
             $column = new TextViewColumn('value', 'Value', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('value_handler');
+            $column->SetFullTextWindowHandlerName('settingsGrid_value_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -630,7 +630,7 @@
             $column = new TextViewColumn('description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('description_handler');
+            $column->SetFullTextWindowHandlerName('settingsGrid_description_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -647,7 +647,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('settingsGrid_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1185,7 +1185,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'key_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settingsGrid_key_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for value field
@@ -1215,7 +1215,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'value_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settingsGrid_value_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for description field
@@ -1245,7 +1245,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'description_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settingsGrid_description_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -1274,13 +1274,13 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settingsGrid_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for key_name field
             //
             $column = new TextViewColumn('key_name', 'Key', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'key_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settingsGrid_key_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for value field
@@ -1288,7 +1288,7 @@
             $column = new TextViewColumn('value', 'Value', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'value_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settingsGrid_value_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for description field
@@ -1296,14 +1296,14 @@
             $column = new TextViewColumn('description', 'Description', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'description_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settingsGrid_description_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'settingsGrid_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }

@@ -6,8 +6,10 @@ define(function(require, exports, module) {
         sc = require('pgui.shortcuts');
 
     $(function() {
-        pc.setupPaginationControls($('body'));
-        dtp.setupCalendarControls($('body'));
+        var $body = $('body');
+
+        pc.setupPaginationControls($body);
+        dtp.setupCalendarControls($body);
 
         $('[data-pg-typeahead=true]').each(function() {
             var typeHeadInput = $(this);
@@ -17,22 +19,9 @@ define(function(require, exports, module) {
             })
         });
 
-        $('body').find('.more_hint').each(function() {
-            var $hintLink = $(this);
-
-            $hintLink.find('a:first').popover({
-                title: '',
-                placement: function() {
-                    if ($hintLink.offset().top - $(window).scrollTop() < $(window).height() / 2)
-                        return 'bottom';
-                    else
-                        return 'top';
-                },
-                html : true,
-                content: $hintLink.find('.box_hidden').html()
-            });
+        require(['pgui.layout'], function(instance){
+            instance.updatePopupHints($body);
         });
-
         //if (IsBrowserVersion({msie: 8, opera: 'none'}))
         //{
         if ($('table.pgui-grid.fixed-header').length > 0) {
@@ -50,6 +39,6 @@ define(function(require, exports, module) {
 
         //}
 
-        sc.initializeShortCuts($('body'));
+        sc.initializeShortCuts($body);
     });
 });

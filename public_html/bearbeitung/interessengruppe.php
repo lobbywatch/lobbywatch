@@ -140,7 +140,7 @@
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_de_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid0interessengruppe_name_de_handler_list');
             
             /* <inline edit column> */
             //
@@ -175,7 +175,7 @@
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_fr_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid0interessengruppe_name_fr_handler_list');
             
             /* <inline edit column> */
             //
@@ -208,7 +208,7 @@
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_it_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid0interessengruppe_name_it_handler_list');
             
             /* <inline edit column> */
             //
@@ -241,7 +241,7 @@
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ort_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid0interessengruppe_ort_handler_list');
             
             /* <inline edit column> */
             //
@@ -1094,7 +1094,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid0interessengruppe_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -1130,7 +1130,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid0interessengruppe_homepage_handler_list');
             
             /* <inline edit column> */
             //
@@ -1164,7 +1164,7 @@
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('handelsregister_url_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid0interessengruppe_handelsregister_url_handler_list');
             
             /* <inline edit column> */
             //
@@ -1243,7 +1243,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailViewGrid0interessengruppe_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -1681,7 +1681,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_de_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid0interessengruppe_name_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_fr field
@@ -1710,7 +1710,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_fr_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid0interessengruppe_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_it field
@@ -1739,7 +1739,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_it_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid0interessengruppe_name_it_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ort field
@@ -1768,7 +1768,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ort_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid0interessengruppe_ort_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -1800,7 +1800,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid0interessengruppe_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -1830,7 +1830,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid0interessengruppe_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for handelsregister_url field
@@ -1860,7 +1860,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'handelsregister_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid0interessengruppe_handelsregister_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -1890,7 +1890,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailViewGrid0interessengruppe_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -2355,7 +2355,7 @@
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_de_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_name_de_handler_list');
             
             /* <inline edit column> */
             //
@@ -2390,7 +2390,7 @@
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_fr_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_name_fr_handler_list');
             
             /* <inline edit column> */
             //
@@ -2423,7 +2423,7 @@
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_it_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_name_it_handler_list');
             
             /* <inline edit column> */
             //
@@ -2456,7 +2456,7 @@
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ort_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_ort_handler_list');
             
             /* <inline edit column> */
             //
@@ -3309,7 +3309,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -3345,7 +3345,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_homepage_handler_list');
             
             /* <inline edit column> */
             //
@@ -3379,7 +3379,7 @@
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('handelsregister_url_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_handelsregister_url_handler_list');
             
             /* <inline edit column> */
             //
@@ -3458,7 +3458,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -3851,7 +3851,7 @@
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_de_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_name_de_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3860,7 +3860,7 @@
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_fr_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3869,7 +3869,7 @@
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_it_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_name_it_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3878,7 +3878,7 @@
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ort_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_ort_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -3939,7 +3939,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3949,7 +3949,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_homepage_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3959,7 +3959,7 @@
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('handelsregister_url_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_handelsregister_url_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -3976,7 +3976,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('organisationDetailEditGrid0interessengruppe_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -5680,7 +5680,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_de_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_name_de_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_fr field
@@ -5709,7 +5709,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_fr_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_name_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_it field
@@ -5738,7 +5738,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_it_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_name_it_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ort field
@@ -5767,7 +5767,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ort_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_ort_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -5799,7 +5799,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -5829,7 +5829,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for handelsregister_url field
@@ -5859,7 +5859,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'handelsregister_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_handelsregister_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -5889,34 +5889,34 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for name_de field
             //
             $column = new TextViewColumn('name_de', 'Name De', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_de_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_name_de_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_fr field
             //
             $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_fr_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_name_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_it_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_name_it_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ort_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_ort_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -5924,7 +5924,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -5932,7 +5932,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_homepage_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for handelsregister_url field
@@ -5940,7 +5940,7 @@
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%handelsregister_url%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'handelsregister_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_handelsregister_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -5948,7 +5948,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisationDetailEditGrid0interessengruppe_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -6131,7 +6131,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1interessengruppe_nachname_handler_list');
             
             /* <inline edit column> */
             //
@@ -7204,7 +7204,7 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1interessengruppe_beruf_handler_list');
             
             /* <inline edit column> */
             //
@@ -7479,7 +7479,7 @@
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1interessengruppe_photo_handler_list');
             
             /* <inline edit column> */
             //
@@ -7516,7 +7516,7 @@
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1interessengruppe_kleinbild_handler_list');
             
             /* <inline edit column> */
             //
@@ -7589,7 +7589,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1interessengruppe_email_handler_list');
             
             /* <inline edit column> */
             //
@@ -7627,7 +7627,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1interessengruppe_homepage_handler_list');
             
             /* <inline edit column> */
             //
@@ -7661,7 +7661,7 @@
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ALT_kommission_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1interessengruppe_ALT_kommission_handler_list');
             
             /* <inline edit column> */
             //
@@ -7898,7 +7898,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1interessengruppe_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -8415,7 +8415,7 @@
             $column = new TextViewColumn('photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_dateiname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1interessengruppe_photo_dateiname_handler_list');
             
             /* <inline edit column> */
             //
@@ -8507,7 +8507,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1interessengruppe_nachname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beruf field
@@ -8538,7 +8538,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beruf_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1interessengruppe_beruf_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo field
@@ -8571,7 +8571,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1interessengruppe_photo_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for kleinbild field
@@ -8607,7 +8607,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kleinbild_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1interessengruppe_kleinbild_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -8641,7 +8641,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1interessengruppe_email_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -8671,7 +8671,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1interessengruppe_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ALT_kommission field
@@ -8702,7 +8702,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ALT_kommission_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1interessengruppe_ALT_kommission_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -8732,7 +8732,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1interessengruppe_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_dateiname field
@@ -8761,7 +8761,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_dateiname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1interessengruppe_photo_dateiname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -9411,7 +9411,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_nachname_handler_list');
             
             /* <inline edit column> */
             //
@@ -10484,7 +10484,7 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_beruf_handler_list');
             
             /* <inline edit column> */
             //
@@ -10759,7 +10759,7 @@
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_photo_handler_list');
             
             /* <inline edit column> */
             //
@@ -10796,7 +10796,7 @@
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_kleinbild_handler_list');
             
             /* <inline edit column> */
             //
@@ -10869,7 +10869,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_email_handler_list');
             
             /* <inline edit column> */
             //
@@ -10907,7 +10907,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_homepage_handler_list');
             
             /* <inline edit column> */
             //
@@ -10941,7 +10941,7 @@
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ALT_kommission_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_ALT_kommission_handler_list');
             
             /* <inline edit column> */
             //
@@ -11178,7 +11178,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -11695,7 +11695,7 @@
             $column = new TextViewColumn('photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_dateiname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_photo_dateiname_handler_list');
             
             /* <inline edit column> */
             //
@@ -11738,7 +11738,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_nachname_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11842,7 +11842,7 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_beruf_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11873,7 +11873,7 @@
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_photo_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11882,7 +11882,7 @@
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('kleinbild_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_kleinbild_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11898,7 +11898,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_email_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -11908,7 +11908,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_homepage_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -11918,7 +11918,7 @@
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('ALT_kommission_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_ALT_kommission_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11957,7 +11957,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -12072,7 +12072,7 @@
             $column = new TextViewColumn('photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('photo_dateiname_handler');
+            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_photo_dateiname_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -14558,7 +14558,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_nachname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beruf field
@@ -14589,7 +14589,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beruf_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_beruf_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo field
@@ -14622,7 +14622,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_photo_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for kleinbild field
@@ -14658,7 +14658,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kleinbild_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_kleinbild_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -14692,7 +14692,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_email_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -14722,7 +14722,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ALT_kommission field
@@ -14753,7 +14753,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ALT_kommission_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_ALT_kommission_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -14783,7 +14783,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_dateiname field
@@ -14812,34 +14812,34 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_dateiname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_photo_dateiname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for nachname field
             //
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_nachname_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beruf_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_beruf_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo field
             //
             $column = new TextViewColumn('photo', 'Photo', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_photo_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for kleinbild field
             //
             $column = new TextViewColumn('kleinbild', 'Kleinbild', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'kleinbild_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_kleinbild_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -14847,7 +14847,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_email_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -14855,14 +14855,14 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_homepage_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for ALT_kommission field
             //
             $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'ALT_kommission_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_ALT_kommission_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -14870,14 +14870,14 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for photo_dateiname field
             //
             $column = new TextViewColumn('photo_dateiname', 'Photo Dateiname', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'photo_dateiname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_photo_dateiname_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -15207,7 +15207,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -15442,7 +15442,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -15478,7 +15478,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -15750,7 +15750,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_name_handler_view');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $grid->AddSingleRecordViewColumn($column);
@@ -15769,7 +15769,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -15779,7 +15779,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -16497,7 +16497,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_name_handler_list');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Bezeichnung der Interessengruppe'));
@@ -16520,7 +16520,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Eingrenzung und Beschreibung zur Interessengruppe'));
             $column->SetFixedWidth(null);
@@ -16532,7 +16532,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
@@ -16779,7 +16779,7 @@
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('name_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_name_handler_list');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Bezeichnung der Interessengruppe'));
@@ -16802,7 +16802,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Eingrenzung und Beschreibung zur Interessengruppe'));
             $column->SetFixedWidth(null);
@@ -16814,7 +16814,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
@@ -17200,7 +17200,7 @@
             /* </inline insert column> */
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -17232,7 +17232,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -17262,7 +17262,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for name field
             //
@@ -17270,7 +17270,7 @@
             $column->SetOrderable(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -17278,7 +17278,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -17286,7 +17286,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }

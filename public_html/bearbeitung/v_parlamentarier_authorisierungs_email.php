@@ -210,7 +210,7 @@
             $column = new TextViewColumn('parlamentarier_name', 'Parlamentarier Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_name_handler');
+            $column->SetFullTextWindowHandlerName('v_parlamentarier_authorisierungs_emailGrid_parlamentarier_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -248,7 +248,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('v_parlamentarier_authorisierungs_emailGrid_email_handler_list');
             
             /* <inline edit column> */
             //
@@ -286,7 +286,7 @@
             $column = new TextViewColumn('email_text_html', 'Email Text Html', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_text_html_handler');
+            $column->SetFullTextWindowHandlerName('v_parlamentarier_authorisierungs_emailGrid_email_text_html_handler_list');
             
             /* <inline edit column> */
             //
@@ -330,7 +330,7 @@
             $column = new TextViewColumn('parlamentarier_name', 'Parlamentarier Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarier_name_handler');
+            $column->SetFullTextWindowHandlerName('v_parlamentarier_authorisierungs_emailGrid_parlamentarier_name_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=edit&pk0=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
@@ -342,7 +342,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('v_parlamentarier_authorisierungs_emailGrid_email_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -352,7 +352,7 @@
             $column = new TextViewColumn('email_text_html', 'Email Text Html', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_text_html_handler');
+            $column->SetFullTextWindowHandlerName('v_parlamentarier_authorisierungs_emailGrid_email_text_html_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -631,7 +631,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=edit&pk0=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_parlamentarier_authorisierungs_emailGrid_parlamentarier_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -665,7 +665,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_parlamentarier_authorisierungs_emailGrid_email_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email_text_html field
@@ -695,7 +695,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_text_html_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_parlamentarier_authorisierungs_emailGrid_email_text_html_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for parlamentarier_name field
             //
@@ -704,7 +704,7 @@
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'parlamentarier.php?operation=edit&pk0=%id%' , '_blank');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarier_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_parlamentarier_authorisierungs_emailGrid_parlamentarier_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -712,7 +712,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_parlamentarier_authorisierungs_emailGrid_email_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email_text_html field
@@ -720,7 +720,7 @@
             $column = new TextViewColumn('email_text_html', 'Email Text Html', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%?subject=Interessenbinungen&body=%email_text_for_url%&bcc=info@lobbywatch.ch' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_text_html_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_parlamentarier_authorisierungs_emailGrid_email_text_html_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }

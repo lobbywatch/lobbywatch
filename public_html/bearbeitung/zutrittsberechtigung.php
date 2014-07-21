@@ -113,7 +113,7 @@
             $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung_dateiname_voll_handler_list');
             $column->SetDescription($this->RenderText('Dateiname inkl. Erweiterung'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -124,7 +124,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung_beschreibung_handler_list');
             
             /* <inline edit column> */
             //
@@ -244,7 +244,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(false);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'dateiname_voll_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung_dateiname_voll_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -279,7 +279,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_anhangDetailViewGrid0zutrittsberechtigung_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -576,7 +576,7 @@
             $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_dateiname_voll_handler_list');
             $column->SetDescription($this->RenderText('Dateiname inkl. Erweiterung'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
@@ -587,7 +587,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_beschreibung_handler_list');
             
             /* <inline edit column> */
             //
@@ -688,7 +688,7 @@
             $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('dateiname_voll_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_dateiname_voll_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -697,7 +697,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -713,7 +713,7 @@
             $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('mime_type_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_mime_type_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -1315,7 +1315,7 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'dateiname_voll_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_dateiname_voll_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -1350,7 +1350,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);$handler = new PrivateFileDownloadHTTPHandler($this->dataset, 'datei', 'datei_handler', '%mime_type%', '%datei%', true);
             GetApplication()->RegisterHTTPHandler($handler);
             //
@@ -1358,21 +1358,21 @@
             //
             $column = new TextViewColumn('dateiname_voll', 'Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'dateiname_voll_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_dateiname_voll_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for mime_type field
             //
             $column = new TextViewColumn('mime_type', 'Mime Type', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mime_type_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_anhangDetailEditGrid0zutrittsberechtigung_mime_type_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -2014,7 +2014,7 @@
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung_organisation_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -2047,7 +2047,7 @@
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_name_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung_zutrittsberechtigung_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -2083,7 +2083,7 @@
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('funktion_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung_funktion_handler_list');
             
             /* <inline edit column> */
             //
@@ -2256,7 +2256,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung_beschreibung_handler_list');
             
             /* <inline edit column> */
             //
@@ -2353,7 +2353,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung_notizen_handler_list');
             
             /* <inline edit column> */
             //
@@ -2861,7 +2861,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung_organisation_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for zutrittsberechtigung_name field
@@ -2893,7 +2893,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung_zutrittsberechtigung_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for funktion field
@@ -2922,7 +2922,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'funktion_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung_funktion_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -2951,7 +2951,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -2980,7 +2980,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailViewGrid1zutrittsberechtigung_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -3881,7 +3881,7 @@
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_organisation_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -3914,7 +3914,7 @@
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_name_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_zutrittsberechtigung_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -3950,7 +3950,7 @@
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('funktion_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_funktion_handler_list');
             
             /* <inline edit column> */
             //
@@ -4123,7 +4123,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_beschreibung_handler_list');
             
             /* <inline edit column> */
             //
@@ -4220,7 +4220,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_notizen_handler_list');
             
             /* <inline edit column> */
             //
@@ -4686,7 +4686,7 @@
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('organisation_name_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_organisation_name_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4695,7 +4695,7 @@
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('zutrittsberechtigung_name_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_zutrittsberechtigung_name_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -4705,7 +4705,7 @@
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('funktion_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_funktion_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4744,7 +4744,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_beschreibung_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -4769,7 +4769,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -6256,7 +6256,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_organisation_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for zutrittsberechtigung_name field
@@ -6288,7 +6288,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_zutrittsberechtigung_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for funktion field
@@ -6317,7 +6317,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'funktion_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_funktion_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
@@ -6346,7 +6346,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -6375,13 +6375,13 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for organisation_name field
             //
             $column = new TextViewColumn('organisation_name', 'Organisation Name', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'organisation_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_organisation_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for zutrittsberechtigung_name field
@@ -6389,28 +6389,28 @@
             $column = new TextViewColumn('zutrittsberechtigung_name', 'Zutrittsberechtigung Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'zutrittsberechtigung.php?operation=view&pk0=%zutrittsberechtigung_id%' , '_self');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigung_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_zutrittsberechtigung_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'funktion_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_funktion_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'v_zutrittsberechtigung_mandateDetailEditGrid1zutrittsberechtigung_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -7191,7 +7191,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('mandatDetailViewGrid2zutrittsberechtigung_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -7289,7 +7289,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(false);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('mandatDetailViewGrid2zutrittsberechtigung_notizen_handler_list');
             
             /* <inline edit column> */
             //
@@ -7798,7 +7798,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatDetailViewGrid2zutrittsberechtigung_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -7827,7 +7827,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatDetailViewGrid2zutrittsberechtigung_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -8917,7 +8917,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('mandatDetailEditGrid2zutrittsberechtigung_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -9015,7 +9015,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('mandatDetailEditGrid2zutrittsberechtigung_notizen_handler_list');
             
             /* <inline edit column> */
             //
@@ -9517,7 +9517,7 @@
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beschreibung_handler');
+            $column->SetFullTextWindowHandlerName('mandatDetailEditGrid2zutrittsberechtigung_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -9543,7 +9543,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('mandatDetailEditGrid2zutrittsberechtigung_notizen_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11012,7 +11012,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatDetailEditGrid2zutrittsberechtigung_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -11041,21 +11041,21 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatDetailEditGrid2zutrittsberechtigung_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beschreibung_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatDetailEditGrid2zutrittsberechtigung_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'mandatDetailEditGrid2zutrittsberechtigung_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
@@ -12208,7 +12208,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_nachname_handler_list');
             
             /* <inline edit column> */
             //
@@ -12287,7 +12287,7 @@
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('funktion_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_list');
             
             /* <inline edit column> */
             //
@@ -12324,7 +12324,7 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_beruf_handler_list');
             
             /* <inline edit column> */
             //
@@ -12740,7 +12740,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_email_handler_list');
             
             /* <inline edit column> */
             //
@@ -12782,7 +12782,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_homepage_handler_list');
             
             /* <inline edit column> */
             //
@@ -12864,7 +12864,7 @@
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_linkedin_profil_url_handler_list');
             
             /* <inline edit column> */
             //
@@ -12902,7 +12902,7 @@
             $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_xing_profil_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -12944,7 +12944,7 @@
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_facebook_name_handler_list');
             
             /* <inline edit column> */
             //
@@ -13050,7 +13050,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             
             /* <inline edit column> */
@@ -13522,7 +13522,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_nachname_handler_view');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $grid->AddSingleRecordViewColumn($column);
@@ -13548,7 +13548,7 @@
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('funktion_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -13557,7 +13557,7 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_beruf_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -13589,7 +13589,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_email_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -13599,7 +13599,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_homepage_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -13617,7 +13617,7 @@
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_linkedin_profil_url_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -13627,7 +13627,7 @@
             $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_xing_profil_name_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -13637,7 +13637,7 @@
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_facebook_name_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -13663,7 +13663,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_view');
             $column->SetReplaceLFByBR(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -15673,7 +15673,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_nachname_handler_list');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Nachname des berechtigten Persion'));
@@ -15696,7 +15696,7 @@
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('funktion_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_list');
             $column->SetDescription($this->RenderText('Funktion der zugangsberechtigen Person.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -15707,7 +15707,7 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_beruf_handler_list');
             $column->SetDescription($this->RenderText('Beruf des Zutrittsberechtigten'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -15747,7 +15747,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_email_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('Kontakt E-Mail-Adresse der zutrittsberechtigen Person'));
             $column->SetFixedWidth(null);
@@ -15759,7 +15759,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_homepage_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage der zutrittsberechtigen Person'));
             $column->SetFixedWidth(null);
@@ -15781,7 +15781,7 @@
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_linkedin_profil_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
@@ -15793,7 +15793,7 @@
             $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_xing_profil_name_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
@@ -15805,7 +15805,7 @@
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_facebook_name_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
             $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
             $column->SetFixedWidth(null);
@@ -15837,7 +15837,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
@@ -16282,7 +16282,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_nachname_handler_list');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Nachname des berechtigten Persion'));
@@ -16305,7 +16305,7 @@
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('funktion_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_list');
             $column->SetDescription($this->RenderText('Funktion der zugangsberechtigen Person.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -16316,7 +16316,7 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_beruf_handler_list');
             $column->SetDescription($this->RenderText('Beruf des Zutrittsberechtigten'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -16356,7 +16356,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_email_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('Kontakt E-Mail-Adresse der zutrittsberechtigen Person'));
             $column->SetFixedWidth(null);
@@ -16368,7 +16368,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_homepage_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage der zutrittsberechtigen Person'));
             $column->SetFixedWidth(null);
@@ -16390,7 +16390,7 @@
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_linkedin_profil_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
@@ -16402,7 +16402,7 @@
             $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_xing_profil_name_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
@@ -16414,7 +16414,7 @@
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_facebook_name_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
             $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
             $column->SetFixedWidth(null);
@@ -16446,7 +16446,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
@@ -16891,7 +16891,7 @@
             $column = new TextViewColumn('nachname', 'Nachname', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('nachname_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_nachname_handler_list');
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Nachname des berechtigten Persion'));
@@ -16914,7 +16914,7 @@
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('funktion_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_funktion_handler_list');
             $column->SetDescription($this->RenderText('Funktion der zugangsberechtigen Person.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -16925,7 +16925,7 @@
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('beruf_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_beruf_handler_list');
             $column->SetDescription($this->RenderText('Beruf des Zutrittsberechtigten'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
@@ -16965,7 +16965,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('email_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_email_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $column->SetDescription($this->RenderText('Kontakt E-Mail-Adresse der zutrittsberechtigen Person'));
             $column->SetFixedWidth(null);
@@ -16977,7 +16977,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('homepage_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_homepage_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage der zutrittsberechtigen Person'));
             $column->SetFixedWidth(null);
@@ -16999,7 +16999,7 @@
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('linkedin_profil_url_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_linkedin_profil_url_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
             $column->SetDescription($this->RenderText('URL zum LinkedIn-Profil'));
             $column->SetFixedWidth(null);
@@ -17011,7 +17011,7 @@
             $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('xing_profil_name_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_xing_profil_name_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
             $column->SetDescription($this->RenderText('Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link'));
             $column->SetFixedWidth(null);
@@ -17023,7 +17023,7 @@
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('facebook_name_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_facebook_name_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
             $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
             $column->SetFixedWidth(null);
@@ -17055,7 +17055,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('notizen_handler');
+            $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_notizen_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.'));
             $column->SetFixedWidth(null);
@@ -18051,7 +18051,7 @@
             /* </inline insert column> */
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_nachname_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for funktion field
@@ -18084,7 +18084,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'funktion_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beruf field
@@ -18117,7 +18117,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beruf_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_beruf_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -18155,7 +18155,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_email_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -18193,7 +18193,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for linkedin_profil_url field
@@ -18227,7 +18227,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'linkedin_profil_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_linkedin_profil_url_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for xing_profil_name field
@@ -18265,7 +18265,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'xing_profil_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_xing_profil_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for facebook_name field
@@ -18303,7 +18303,7 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'facebook_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_facebook_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -18333,7 +18333,7 @@
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_notizen_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for nachname field
             //
@@ -18341,21 +18341,21 @@
             $column->SetOrderable(true);
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'nachname_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_nachname_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for funktion field
             //
             $column = new TextViewColumn('funktion', 'Funktion', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'funktion_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_funktion_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
             $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'beruf_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_beruf_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -18363,7 +18363,7 @@
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'email_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_email_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -18371,7 +18371,7 @@
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'homepage_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_homepage_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for linkedin_profil_url field
@@ -18379,7 +18379,7 @@
             $column = new TextViewColumn('linkedin_profil_url', 'Linkedin Profil Url', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%linkedin_profil_url%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'linkedin_profil_url_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_linkedin_profil_url_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for xing_profil_name field
@@ -18387,7 +18387,7 @@
             $column = new TextViewColumn('xing_profil_name', 'Xing Profil Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.xing.com/profile/%xing_profil_name%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'xing_profil_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_xing_profil_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for facebook_name field
@@ -18395,7 +18395,7 @@
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'facebook_name_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_facebook_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -18403,7 +18403,7 @@
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'zutrittsberechtigungGrid_notizen_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
