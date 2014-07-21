@@ -407,13 +407,13 @@
 
       datasource = "/de/data/interface/v1/json/table/organisation/aggregated/id/" + id + filterOptions;
 
-      console.log(datasource);
+      // console.log(datasource);
       
       var urlData = datasource;
 
       d3.json(urlData, function (error, response) {
          if (error) {
-            console.warn(error);
+            // console.warn(error);
             alert("Error reading JSON data from");
          }
          var organisationData = response.data;
@@ -422,7 +422,7 @@
             return;
          }
 
-         console.log(organisationData);
+         // console.log(organisationData);
          
          var str = organisationData.name_de + " ("  + organisationData.id + ")";
          $("#lblSubjectDetail").html(str);
@@ -514,8 +514,10 @@
          var sourceRightY2 = Number(nodeRoot.attr("y")) + organisationIconHeight;
 
          // Parlamentarier
-         var lstParlamentarier = jsonPath(organisationData, "$.data.parlamentarier[*]");
+         var lstParlamentarier = jsonPath(organisationData, "$.parlamentarier[*]");
 
+         // console.log(organisationData);
+         // console.log(lstParlamentarier);
          group.selectAll(".parlamentarier")
             .data(lstParlamentarier)
             .enter()
@@ -548,6 +550,11 @@
                   var txt = d.nachname + ", " + d.vorname;
                   txt += ", " + d.partei;
                   return txt;
+               })
+               .style("cursor", "pointer")
+               .on("click", function (d, i) {
+                  var options = "id=" + d.id + "&" + getFilterCriteria();
+                  window.location.href = "ParlamentarierView.html?" + options;
                })
                .call(FitParlamentarierTextToRect, parlamentarierIconWidth);
 
@@ -616,6 +623,11 @@
                .text(function (d, i) {
                   var txt = d.nachname + ", " + d.vorname + " ("  + d.id + ")";
                   return txt;
+               })
+               .style("cursor", "pointer")
+               .on("click", function (d, i) {
+                  var options = "id=" + d.id + "&" + getFilterCriteria();
+                  window.location.href = "ParlamentarierView.html?" + options;
                })
                .call(FitTextToRect, (2 * personR) - 4);
 

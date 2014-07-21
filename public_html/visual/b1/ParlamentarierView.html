@@ -550,14 +550,14 @@
       // read JSON data
       var datasource = "/de/data/interface/v1/json/table/parlamentarier/aggregated/id/" + id + filterJSONData;
 
-      console.log(datasource);
+      // console.log(datasource);
       //var urlData = "http://localhost/VisualLobby/" + datasource;
       //datasource = "http://localhost/VisualLobby/JFehrData_test2.json";
       var urlData = datasource;
 
       d3.json(urlData, function (error, parlamentarierData) {
          if (error) {
-            console.warn(error);
+            // console.warn(error);
             alert("Error reading JSON data from");
          }
          if (!parlamentarierData) {
@@ -615,19 +615,19 @@
          var canvasWidth = viewerWidth;
          var canvasHeight = viewerHeight;
 
-         console.log(parlamentarierData);
+         // console.log(parlamentarierData);
          var lstInteressenbindung = jsonPath(parlamentarierData, "$..data.interessenbindungen[*]");
-         console.log(lstInteressenbindung);
+         // console.log(lstInteressenbindung);
          if (lstInteressenbindung && lstInteressenbindung.length > 0) {
             var width = organisationStartX + (lstInteressenbindung.length * (organisationWidth + organisationPadding));
             canvasWidth = Math.max(canvasWidth, width + 20);
          }
          var lstZutrittsberechtigung = jsonPath(parlamentarierData, "$..data.zutrittsberechtigungen[*]");
-         console.log(lstZutrittsberechtigung);
+         // console.log(lstZutrittsberechtigung);
          if (lstZutrittsberechtigung && lstZutrittsberechtigung.length > 0) {
             for (var iZutrittsberechtigung = 0; iZutrittsberechtigung < lstZutrittsberechtigung.length; iZutrittsberechtigung++) {
                var lstMandat = jsonPath(lstZutrittsberechtigung[iZutrittsberechtigung], "$..mandate[*]");
-               console.log(lstMandat);
+               // console.log(lstMandat);
                var width = mandatStartX + (lstZutrittsberechtigung.length * (organisationWidth + organisationPadding));
             }
 
@@ -701,6 +701,12 @@
                   var txt = d.branche + " ";
                   txt += d.name_de;
                   return txt;
+               })
+               .style("cursor", "pointer")
+               .on("click", function (d, i) {
+                  // TODO RKU var options = "id=" + d.organisation.id + "&" + getFilterCriteria();
+                  var options = "id=" + d.organisation_id + "&" + getFilterCriteria();
+                  window.location.href = "OrganisationView.html?" + options;
                })
                .call(FitOrganisationTextToRect, organisationWidth - 4);
 
@@ -856,6 +862,12 @@
                         var txt = d.branche + " ";
                         txt += d.name_de;
                         return txt;
+                     })
+                     .style("cursor", "pointer")
+                     .on("click", function (d, i) {
+                        // TODO RKU var options = "id=" + d.organisation.id + "&" + getFilterCriteria();
+                        var options = "id=" + d.organisation_id + "&" + getFilterCriteria();
+                        window.location.href = "OrganisationView.html?" + options;
                      })
                      .call(FitOrganisationTextToRect, organisationWidth - 4);
 
