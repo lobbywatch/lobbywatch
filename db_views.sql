@@ -532,7 +532,7 @@ FROM `parlamentarier` p;
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
 SELECT p.*,
-rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kanton.abkuerzung as kanton,
+rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kanton.abkuerzung as kanton_abkuerzung, kanton.abkuerzung as kanton, kanton.name_de as kanton_name_de,
 CAST(
 (CASE rat.abkuerzung
   WHEN 'SR' THEN ROUND(kanton.einwohner / kanton.anzahl_staenderaete)
@@ -542,7 +542,8 @@ END)
 AS UNSIGNED INTEGER) AS vertretene_bevoelkerung,
 GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_namen,
 --GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen2,
-GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung, partei.abkuerzung AS partei, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad
+GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung, partei.abkuerzung AS partei, partei.name AS partei_name, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad,
+CONCAT(IF(p.geschlecht='M', rat.name_de, ''), IF(p.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', ''), IF(p.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '')) titel_de
 FROM `v_parlamentarier_simple` p
 LEFT JOIN `v_in_kommission` ik ON p.id = ik.parlamentarier_id AND ik.bis IS NULL
 LEFT JOIN `v_kommission` k ON ik.kommission_id=k.id

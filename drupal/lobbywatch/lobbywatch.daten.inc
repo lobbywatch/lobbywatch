@@ -139,9 +139,14 @@ function _lobbywatch_page_title($prefix, $suffix, $table, $id, $title = '') {
 //   df("_lobbywatch_page_title $prefix, $suffix, $table, $id");
 //   df($prefix . _lobbywatch_fetch_anzeige_name($table, $id) . $suffix . ' title: '. $title, '_lobbywatch_page_title');
 //   require_once '123';
+  if ($table == 'parlamentarier') {
+    $title = _lobbywatch_fetch_parlamentarier_title($table, $id);
+  } else {
+    $title = $prefix . _lobbywatch_fetch_anzeige_name($table, $id) . $suffix;
+  }
   // Workaround, title is otherwise empty, quite a strange thing
-  drupal_set_title($prefix . _lobbywatch_fetch_anzeige_name($table, $id) . $suffix);
-  return $prefix . _lobbywatch_fetch_anzeige_name($table, $id) . $suffix . " Ho Ho ";
+  drupal_set_title($title);
+  return $title;
 }
 
 
@@ -169,6 +174,32 @@ function _lobbywatch_fetch_anzeige_name($table, $id) {
   }
   return $url_name;
 }
+
+function _lobbywatch_fetch_parlamentarier_title($table, $id) {
+  $title = '';
+
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+    $sql = "SELECT id, anzeige_name, name, nachname, vorname, geschlecht, rat, titel_de, kanton_abkuerzung, kanton_name_de, partei FROM v_$table WHERE id=:id";
+    $result = db_query($sql, array(':id' => check_plain($id)));
+
+    if ($result) {
+      $record = $result->fetchAssoc();
+      $title = check_plain($record['titel_de'] . ' ' . $record['name'] . ', ' . ($record['partei'] ? $record['partei'] : 'parteilos') . ', ' . $record['kanton_name_de']);
+    }
+    //     df($record, '$record');
+    //     df($url_name, '$url_name');
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+  }
+  return $title;
+}
+
 
 
 function _lobbywatch_anzeige_name_for_url($table, $id) {
@@ -283,7 +314,7 @@ GROUP BY zutrittsberechtigung.id;";
 
   $res = '';
   foreach($gaeste as $gast) {
-    $res .= '<h4>' . $gast['zutrittsberechtigung_name'] . '</h4>';
+    $res .= '<h4>' . $gast['zutrittsberechtigung_name'] . ', ' . $gast['funktion'] . ($gast['beruf'] ? '/' . $gast['beruf'] : '') . '</h4>';
     //$res .= mandateList($con, $gast['id']);
     $res .= "<ul>\n" . $gast['mandate'] . "\n</ul>";
   }
@@ -358,7 +389,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
 
     $sql = //db_session_parameters_SQL() .
     "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.im_rat_bis, DATE_FORMAT(parlamentarier.im_rat_bis, '%d.%m.%Y') as im_rat_bis_formatted, parlamentarier.kleinbild, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei, parlamentarier.partei_id,
-    parlamentarier.name, parlamentarier.anzahl_kinder, rat.name_de as rat_name_de, kanton.einwohner, kanton.auslaenderanteil, kanton.anzahl_staenderaete, kanton.anzahl_nationalraete, parlamentarier.updated_date, parlamentarier.updated_date_unix, parlamentarier.updated_visa, parlamentarier.created_date, parlamentarier.created_date_unix, parlamentarier.created_visa, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.eingabe_abgeschlossen_datum_unix, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.freigabe_datum, parlamentarier.freigabe_datum_unix, parlamentarier.freigabe_visa, parlamentarier.kontrolliert_datum, parlamentarier.kontrolliert_datum_unix, parlamentarier.kontrolliert_visa,
+    parlamentarier.name, parlamentarier.anzahl_kinder, rat.name_de as rat_name_de, kanton.einwohner, kanton.auslaenderanteil, kanton.anzahl_staenderaete, kanton.anzahl_nationalraete, parlamentarier.updated_date, parlamentarier.updated_date_unix, parlamentarier.updated_visa, parlamentarier.created_date, parlamentarier.created_date_unix, parlamentarier.created_visa, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.eingabe_abgeschlossen_datum_unix, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.freigabe_datum, parlamentarier.freigabe_datum_unix, parlamentarier.freigabe_visa, parlamentarier.kontrolliert_datum, parlamentarier.kontrolliert_datum_unix, parlamentarier.kontrolliert_visa, parlamentarier.titel_de, parlamentarier.nachname,
     GROUP_CONCAT(DISTINCT
       CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('interessenbindung', 'organisation') . ", '>', IF(interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW(), '<s>', ''), '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
       IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
@@ -440,6 +471,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       $admin = user_access('access lobbywatch unpublished content');
       $rat = check_plain($record['rat_name_de']);
       $ratstyp = check_plain($record['ratstyp']);
+      $titel_nachname  =  check_plain($record['titel_de'] . ' ' .$record['nachname']);
       if ($ratstyp == 'SR') {
         $vertretung = round($record['einwohner'] / $record['anzahl_staenderaete']);
       } else {
@@ -455,9 +487,9 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       (!$active ? '<p><strong><em>Nicht mehr im Parlament. War im Parlament bis ' . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
       (user_access('access lobbywatch unpublished content') ? '<p class="unpublished">Lobbyfaktor: <b>XY</b></p>' : '') .
       '<table border="0">' .
-      '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
-      '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
-      '<tr><td>Partei:</td><td>' . l($record['partei'], 'daten/partei/' . $record['partei_id']) . '</td></tr>' .
+      // '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
+      // '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
+      ($admin ? '<tr class="admin"><td>Partei:</td><td>' . l($record['partei'], 'daten/partei/' . $record['partei_id']) . '</td></tr>' : '') .
       '<tr><td>Vertretene Bevölkerung:</td><td>' . number_format($vertretung , 0 , '.' , '\'') . '</td></tr>' .
       '<tr><td>' . ($active ? 'Im Parlament seit:' : 'Dauer:') . '</td><td>' . years_months(check_plain($record['im_rat_seit']), $record['im_rat_bis']) . ' (' . check_plain($record['im_rat_seit_formatted']) . ($active ? '' : ' – ' . check_plain($record['im_rat_bis_formatted']) ) . ')' . '</td></tr>' .
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
@@ -467,15 +499,15 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       '<tr><td>Parlament.ch Webseite:</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
       '</table>' .
       _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
-      '<h3>Kommissionen</h3><ul>' . $record['kommissionen_namen'] . '</ul>' .
-      '<h3>Interessenbindungen</h3><ul>' . $record['interessenbindungen'] . '</ul>' .
-      '<h3>Gäste</h3><ul>' . $record['zutrittsberechtigungen'] . '</ul>' .
-      '<h3>Mandate der Gäste</h3>' . $gaeste .
-      '<h3>Organisationen mit einer Verbindung</h3>'
+      "<h3 style=\"display: none\">Interessenbindungen</h3><p>$titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden:</p><ul>" . $record['interessenbindungen'] . '</ul>' .
+      ($admin ? "<div class='admin'><h3>Gäste</h3><p>$titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus:</p><ul>" . $record['zutrittsberechtigungen'] . '</ul></div>' : '') .
+      '<h3 style="display: none">Mandate der Gäste</h3>' . "<p>$titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus:</p>" . $gaeste .
+      ($admin ? '<div class="admin"><h3>Organisationen mit einer Verbindung</h3>'
       . '<p>Auch indirekte Verbindungen werden aufgeführt.</p>'
       . '<ul>' . $record['verbundene_organisationen'] . '</ul>'
       . _lobbywatch_get_workflow_state_line($record)
-      . '</div>'
+      . '</div></div>' : '')
+      . '<h3>Kommissionen</h3><ul>' . $record['kommissionen_namen'] . '</ul>'
       ;
 
     $build = array();
