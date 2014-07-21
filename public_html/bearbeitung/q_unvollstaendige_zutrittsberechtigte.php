@@ -374,6 +374,8 @@
             $lookupDataset->AddField($field, false);
             $field = new DateField('bis');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('geburtstag_unix');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('im_rat_seit_unix');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -400,7 +402,11 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('ratstyp');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton_abkuerzung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('kanton');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kanton_name_de');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
@@ -412,9 +418,13 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('partei_name');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('fraktion');
             $lookupDataset->AddField($field, false);
             $field = new StringField('militaerischer_grad');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('titel_de');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kommissionen', $this->RenderText('Kommissionen')));
