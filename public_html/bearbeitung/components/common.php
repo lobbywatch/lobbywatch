@@ -1,7 +1,4 @@
 <?php
-// Processed by afterburner.sh
-
-
 
 include_once dirname(__FILE__) . '/' . 'utils/file_utils.php';
 include_once dirname(__FILE__) . '/' . 'utils/system_utils.php';
@@ -273,14 +270,6 @@ class ImageHTTPHandler extends HTTPHandler
 
 class ShowTextBlobHandler extends HTTPHandler
 {
-    public function GetName()
-    {
-      $new_name = clean_non_ascii($this->dataset->GetName() . "-" . parent::GetName());
-      //df($new_name, "ShowTextBlobHandler.GetName()");
-      return $new_name;
-    }
- // Afterburner
-
     /** @var IDataset */
     private $dataset;
     private $fieldName;

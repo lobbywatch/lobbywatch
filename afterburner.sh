@@ -162,27 +162,27 @@ do
   > "$file";
 done
 
-for file in $dir/components/grid/columns.php
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  # Read file, process regex and write file
-  cat "$file.bak" \
-  | perl -p -e's/(\$this->fullTextWindowHandlerName = \$value;)/\$this->fullTextWindowHandlerName = clean_non_ascii(\$this->GetDataset()->GetName()) . "-" . \$value; \/\/ Afterburner/' \
-  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
-  > "$file";
-done
-
-for file in $dir/components/common.php
-do
-  echo "Process $file";
-  mv "$file" "$file.bak";
-  # Read file, process regex and write file
-  cat "$file.bak" \
-  | perl -0 -p -e's/(class ShowTextBlobHandler extends HTTPHandler\n{)/\1\n    public function GetName()\n    {\n      \$new_name = clean_non_ascii(\$this->dataset->GetName() . "-" . parent::GetName());\n      \/\/df(\$new_name, "ShowTextBlobHandler.GetName()");\n      return \$new_name;\n    }\n \/\/ Afterburner\n/s' \
-  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
-  > "$file";
-done
+#for file in $dir/components/grid/columns.php
+#do
+#  echo "Process $file";
+#  mv "$file" "$file.bak";
+#  # Read file, process regex and write file
+#  cat "$file.bak" \
+#  | perl -p -e's/(\$this->fullTextWindowHandlerName = \$value;)/\$this->fullTextWindowHandlerName = clean_non_ascii(\$this->GetDataset()->GetName()) . "-" . \$value; \/\/ Afterburner/' \
+#  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+#  > "$file";
+#done
+#
+#for file in $dir/components/common.php
+#do
+#  echo "Process $file";
+#  mv "$file" "$file.bak";
+#  # Read file, process regex and write file
+#  cat "$file.bak" \
+#  | perl -0 -p -e's/(class ShowTextBlobHandler extends HTTPHandler\n{)/\1\n    public function GetName()\n    {\n      \$new_name = clean_non_ascii(\$this->dataset->GetName() . "-" . parent::GetName());\n      \/\/df(\$new_name, "ShowTextBlobHandler.GetName()");\n      return \$new_name;\n    }\n \/\/ Afterburner\n/s' \
+#  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+#  > "$file";
+#done
 
 for file in $dir/components/grid/grid.php
 do
