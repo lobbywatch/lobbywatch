@@ -524,6 +524,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       '<tr><td>Parlament.ch Webseite:</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
       '</table>' .
       _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
+      ($admin ? '<p class="admin"><a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">Visualisierung</a> (noch EXPERIMENTELL!)</p>' : '') .
       "<h3 style=\"display: none\">Interessenbindungen</h3><h3>$titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden</h3><ul>" . $record['interessenbindungen'] . '</ul>' .
 //       ($admin ? "<div class='admin'><h3>Gäste</h3><h3>$titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul></div>' : '') .
       '<h3 style="display: none">Mandate der Gäste</h3>' . "<h3>$titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus</h3>" . $gaeste .
@@ -838,7 +839,8 @@ ORDER BY organisation.anzeige_name;
        . _lobbywatch_get_optional_tr('Homepage:', _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage'])
        . _lobbywatch_get_optional_tr('Handelsregister:', _lobbywatch_get_homepage_link($record['handelsregister_url'], $record['anzeige_name']), $admin, true, $record['handelsregister_url'])
     . '</table>' .
-    _lobbywatch_get_edit_link($admin, 'organisation', $id);
+    _lobbywatch_get_edit_link($admin, 'organisation', $id)
+    . ($admin ? '<p class="admin"><a href="/visual/b1/OrganisationView.html?id=' . $id . '">Visualisierung</a> (noch EXPERIMENTELL!)</p>' : '');
     if ($record['arbeitet_fuer']) {
       $markup .= '<h3>Arbeitet für</h3>'
       . '<ul>'
