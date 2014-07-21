@@ -70,6 +70,10 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
+            $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
             $field = new DateField('bis');
@@ -185,8 +189,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessenbindungssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'deklarationstyp', 'status', 'beschreibung', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Status'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen')),
+                array('id', 'parlamentarier_id_anzeige_name', 'organisation_id_anzeige_name', 'art', 'funktion_im_gremium', 'deklarationstyp', 'status', 'beschreibung', 'notizen', 'quelle_url'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Organisation'), $this->RenderText('Art'), $this->RenderText('Funktion im Gremium'), $this->RenderText('Deklarationstyp'), $this->RenderText('Status'), $this->RenderText('Beschreibung'), $this->RenderText('Notizen'), $this->RenderText('Quelle Url')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -556,6 +560,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('quelle_url', $this->RenderText('Quelle Url')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -1963,6 +1968,48 @@
             $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
+            
+            //
+            // View column for quelle_url field
+            //
+            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('quelle_url_handler');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for quelle_url field
+            //
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for quelle_url field
+            //
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
+            $column->SetDescription($this->RenderText('URL der Quelle; zum Beleg'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -2159,6 +2206,16 @@
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for quelle_url field
+            //
+            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('quelle_url_handler');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -2756,6 +2813,19 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for quelle_url field
+            //
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -3220,6 +3290,19 @@
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for quelle_url field
+            //
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
             {
                 $grid->SetShowAddButton(true);
@@ -3421,6 +3504,13 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
+            
+            //
+            // View column for quelle_url field
+            //
+            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
         }
     
         protected function AddExportColumns(Grid $grid)
@@ -3610,6 +3700,13 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for quelle_url field
+            //
+            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -4462,6 +4559,44 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for quelle_url field
+            //
+            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for quelle_url field
+            //
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for quelle_url field
+            //
+            $editor = new TextEdit('quelle_url_edit');
+            $editor->SetSize(70);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Quelle Url', 'quelle_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_url_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);//
             // View column for beschreibung field
             //
@@ -4477,6 +4612,14 @@
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'notizen_handler', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for quelle_url field
+            //
+            $column = new TextViewColumn('quelle_url', 'Quelle Url', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%quelle_url%' , '');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'quelle_url_handler', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),

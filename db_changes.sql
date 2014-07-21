@@ -1298,3 +1298,24 @@ ALTER TABLE `user`
 -- 12.07.2014
 
 SET GLOBAL group_concat_max_len=10000;
+
+-- 21.07.2014
+
+ALTER TABLE `interessenbindung` ADD `quelle_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg' AFTER `beschreibung` ,
+ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?' AFTER `quelle_url` ;
+
+ALTER TABLE `interessenbindung_log` ADD `quelle_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg' AFTER `beschreibung` ,
+ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?' AFTER `quelle_url` ;
+
+ALTER TABLE `mandat` ADD `quelle_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg' AFTER `beschreibung` ,
+ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?' AFTER `quelle_url` ;
+
+ALTER TABLE `mandat_log` ADD `quelle_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg' AFTER `beschreibung` ,
+ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?' AFTER `quelle_url` ;
+
+ALTER TABLE `organisation_beziehung` ADD `quelle_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg' AFTER `art` ,
+ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?' AFTER `quelle_url` ;
+
+ALTER TABLE `organisation_beziehung_log` ADD `quelle_url` VARCHAR( 255 ) NULL DEFAULT NULL COMMENT 'URL der Quelle; zum Beleg' AFTER `art` ,
+ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?' AFTER `quelle_url` ;
+

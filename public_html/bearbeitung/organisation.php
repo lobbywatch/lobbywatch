@@ -31957,6 +31957,10 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
+            $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
             $field = new DateField('bis');
@@ -33644,6 +33648,10 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
@@ -37545,6 +37553,10 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
+            $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
             $field = new DateField('bis');
@@ -38641,6 +38653,10 @@
             $field = new IntegerField('verguetung');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('quelle_url');
+            $this->dataset->AddField($field, false);
+            $field = new IntegerField('quelle_url_gueltig');
             $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
