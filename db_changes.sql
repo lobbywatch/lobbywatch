@@ -1344,30 +1344,6 @@ ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[P
 
 -- 22.07.2014
 
--- ALTER TABLE `kommission` ADD `anzahl_mitglieder_nationalrat` SMALLINT NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates' AFTER `sachbereiche` ,
--- ADD `anzahl_mitglieder_staenderat` SMALLINT NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates' AFTER `anzahl_mitglieder_nationalrat` ;
---
--- ALTER TABLE `kommission_log` ADD `anzahl_mitglieder_nationalrat` SMALLINT NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates' AFTER `sachbereiche` ,
--- ADD `anzahl_mitglieder_staenderat` SMALLINT NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates' AFTER `anzahl_mitglieder_nationalrat` ;
---
--- ALTER TABLE `kommission` CHANGE `anzahl_mitglieder_nationalrat` `anzahl_mitglieder_nationalrat` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates',
--- CHANGE `anzahl_mitglieder_staenderat` `anzahl_mitglieder_staenderat` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates';
---
--- ALTER TABLE `kommission_log` CHANGE `anzahl_mitglieder_nationalrat` `anzahl_mitglieder_nationalrat` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates',
--- CHANGE `anzahl_mitglieder_staenderat` `anzahl_mitglieder_staenderat` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates';
-
--- ALTER TABLE `kommission` ADD `anzahl_mitglieder_nationalrat` SMALLINT NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates' AFTER `sachbereiche` ,
--- ADD `anzahl_mitglieder_staenderat` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates' AFTER `anzahl_mitglieder_nationalrat` ;
---
--- ALTER TABLE `kommission_log` ADD `anzahl_mitglieder_nationalrat` SMALLINT NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates' AFTER `sachbereiche` ,
--- ADD `anzahl_mitglieder_staenderat` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates' AFTER `anzahl_mitglieder_nationalrat` ;
-
--- ALTER TABLE `kommission` CHANGE `anzahl_mitglieder_nationalrat` `anzahl_nationalraete` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates',
--- CHANGE `anzahl_mitglieder_staenderat` `anzahl_staenderaete` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates';
---
--- ALTER TABLE `kommission_log` CHANGE `anzahl_mitglieder_nationalrat` `anzahl_nationalraete` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates',
--- CHANGE `anzahl_mitglieder_staenderat` `anzahl_staenderaete` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates';
-
 ALTER TABLE `kommission`
 ADD `anzahl_nationalraete` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates' AFTER `sachbereiche`,
 ADD `anzahl_staenderaete` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates' AFTER `anzahl_nationalraete`;
