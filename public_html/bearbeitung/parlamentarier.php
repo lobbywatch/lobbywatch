@@ -7289,6 +7289,10 @@
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
@@ -7372,6 +7376,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
@@ -8241,6 +8249,10 @@
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
@@ -8427,6 +8439,10 @@
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
@@ -8510,6 +8526,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
@@ -9291,6 +9311,10 @@
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('parlament_url');
@@ -9555,6 +9579,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('sachbereiche');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_nationalraete');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('anzahl_staenderaete');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('mutter_kommission_id');
             $lookupDataset->AddField($field, false);
