@@ -6821,6 +6821,8 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('mutter_kommission_id', $this->RenderText('Mutter Kommission'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sachbereiche', $this->RenderText('Sachbereiche')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_nationalraete', $this->RenderText('Anzahl Nationalräte')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_staenderaete', $this->RenderText('Anzahl Ständeräte')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlament_url', $this->RenderText('Parlament Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
@@ -6833,8 +6835,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_nationalraete', $this->RenderText('Anzahl Nationalräte')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_staenderaete', $this->RenderText('Anzahl Ständeräte')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -7316,6 +7316,92 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for anzahl_nationalraete field
+            //
+            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for anzahl_nationalraete field
+            //
+            $editor = new TextEdit('anzahl_nationalraete_edit');
+            $editColumn = new CustomEditColumn('Anzahl Nationalräte', 'anzahl_nationalraete', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new MaxValueValidator(200, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for anzahl_nationalraete field
+            //
+            $editor = new TextEdit('anzahl_nationalraete_edit');
+            $editColumn = new CustomEditColumn('Anzahl Nationalräte', 'anzahl_nationalraete', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new MaxValueValidator(200, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Nationalrates'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for anzahl_staenderaete field
+            //
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for anzahl_staenderaete field
+            //
+            $editor = new TextEdit('anzahl_staenderaete_edit');
+            $editColumn = new CustomEditColumn('Anzahl Ständeräte', 'anzahl_staenderaete', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new MaxValueValidator(46, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for anzahl_staenderaete field
+            //
+            $editor = new TextEdit('anzahl_staenderaete_edit');
+            $editColumn = new CustomEditColumn('Anzahl Ständeräte', 'anzahl_staenderaete', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new MaxValueValidator(46, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for parlament_url field
             //
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
@@ -7617,92 +7703,6 @@
             $column->SetDescription($this->RenderText('Abgeändert am'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzahl_nationalraete field
-            //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for anzahl_nationalraete field
-            //
-            $editor = new TextEdit('anzahl_nationalraete_edit');
-            $editColumn = new CustomEditColumn('Anzahl Nationalräte', 'anzahl_nationalraete', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(200, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for anzahl_nationalraete field
-            //
-            $editor = new TextEdit('anzahl_nationalraete_edit');
-            $editColumn = new CustomEditColumn('Anzahl Nationalräte', 'anzahl_nationalraete', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(200, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Nationalrates'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for anzahl_staenderaete field
-            //
-            $editor = new TextEdit('anzahl_staenderaete_edit');
-            $editColumn = new CustomEditColumn('Anzahl Ständeräte', 'anzahl_staenderaete', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(46, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for anzahl_staenderaete field
-            //
-            $editor = new TextEdit('anzahl_staenderaete_edit');
-            $editColumn = new CustomEditColumn('Anzahl Ständeräte', 'anzahl_staenderaete', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(46, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
         }
     
         protected function AddSingleRecordViewColumns(Grid $grid)
@@ -7774,6 +7774,20 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('kommissionGrid_sachbereiche_handler_view');
             $column->SetReplaceLFByBR(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for anzahl_nationalraete field
+            //
+            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for anzahl_staenderaete field
+            //
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -7868,20 +7882,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for anzahl_nationalraete field
-            //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
         }
@@ -8044,6 +8044,36 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for anzahl_nationalraete field
+            //
+            $editor = new TextEdit('anzahl_nationalraete_edit');
+            $editColumn = new CustomEditColumn('Anzahl Nationalräte', 'anzahl_nationalraete', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new MaxValueValidator(200, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for anzahl_staenderaete field
+            //
+            $editor = new TextEdit('anzahl_staenderaete_edit');
+            $editColumn = new CustomEditColumn('Anzahl Ständeräte', 'anzahl_staenderaete', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new MaxValueValidator(46, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for parlament_url field
             //
             $editor = new TextEdit('parlament_url_edit');
@@ -8173,36 +8203,6 @@
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for anzahl_nationalraete field
-            //
-            $editor = new TextEdit('anzahl_nationalraete_edit');
-            $editColumn = new CustomEditColumn('Anzahl Nationalräte', 'anzahl_nationalraete', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(200, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for anzahl_staenderaete field
-            //
-            $editor = new TextEdit('anzahl_staenderaete_edit');
-            $editColumn = new CustomEditColumn('Anzahl Ständeräte', 'anzahl_staenderaete', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new MaxValueValidator(46, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MaxValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new MinValueValidator(0, StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('MinValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -8367,28 +8367,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for parlament_url field
-            //
-            $editor = new TextEdit('parlament_url_edit');
-            $editor->SetSize(80);
-            $editor->SetMaxLength(255);
-            $editColumn = new CustomEditColumn('Parlament Url', 'parlament_url', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for notizen field
-            //
-            $editor = new TextAreaEdit('notizen_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for anzahl_nationalraete field
             //
             $editor = new TextEdit('anzahl_nationalraete_edit');
@@ -8415,6 +8393,28 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for parlament_url field
+            //
+            $editor = new TextEdit('parlament_url_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(255);
+            $editColumn = new CustomEditColumn('Parlament Url', 'parlament_url', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for notizen field
+            //
+            $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
@@ -8493,6 +8493,20 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for anzahl_nationalraete field
+            //
+            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_staenderaete field
+            //
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for parlament_url field
             //
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
@@ -8578,20 +8592,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for anzahl_nationalraete field
-            //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -8660,6 +8660,20 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for anzahl_nationalraete field
+            //
+            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for anzahl_staenderaete field
+            //
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for parlament_url field
             //
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
@@ -8745,20 +8759,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for anzahl_nationalraete field
-            //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
         }
@@ -8871,6 +8871,24 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzahl_nationalraete field
+            //
+            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Nationalrates'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzahl_staenderaete field
+            //
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for parlament_url field
             //
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
@@ -8990,24 +9008,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzahl_nationalraete field
-            //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Nationalrates'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
@@ -9065,6 +9065,20 @@
             // View column for sachbereiche field
             //
             $column = new TextViewColumn('sachbereiche', 'Sachbereiche', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_nationalraete field
+            //
+            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_staenderaete field
+            //
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -9154,20 +9168,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzahl_nationalraete field
-            //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -9275,6 +9275,24 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for anzahl_nationalraete field
+            //
+            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Nationalrates'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for anzahl_staenderaete field
+            //
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for parlament_url field
             //
             $column = new TextViewColumn('parlament_url', 'Parlament Url', $this->dataset);
@@ -9394,24 +9412,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for anzahl_nationalraete field
-            //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Nationalrates'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Anzahl Kommissionsmitglieder des Ständerates'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for id field
             //
             $column = new TextViewColumn('id', 'Id', $this->dataset);
@@ -9469,6 +9469,20 @@
             // View column for sachbereiche field
             //
             $column = new TextViewColumn('sachbereiche', 'Sachbereiche', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_nationalraete field
+            //
+            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for anzahl_staenderaete field
+            //
+            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -9558,20 +9572,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzahl_nationalraete field
-            //
-            $column = new TextViewColumn('anzahl_nationalraete', 'Anzahl Nationalräte', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzahl_staenderaete field
-            //
-            $column = new TextViewColumn('anzahl_staenderaete', 'Anzahl Ständeräte', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
