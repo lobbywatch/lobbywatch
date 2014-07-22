@@ -1240,12 +1240,16 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       checkAndMarkColumnNotNull('kommission_id', $rowData, $rowCellStyles);
     } elseif ($table_name === 'kommission') {
 //       df(in_kommission_anzahl($rowData['id'])['num'], 'in_kommission_anzahl($rowData[id][num]');
-      if (in_kommission_anzahl($rowData['id'])['num'] != 25 + 13 && $rowData['typ'] == 'kommission') {
-        $completeness_styles .= 'background-color: red;';
+      if (!isset($rowData['anzahl_nationalraete']) || !isset($rowData['anzahl_staenderaete'])) {
+        $completeness_styles .= 'background-color: #FF1493;';
+      } elseif ((in_kommission_anzahl($rowData['id'], 'NR')['num'] != $rowData['anzahl_nationalraete'] || in_kommission_anzahl($rowData['id'], 'SR')['num'] != $rowData['anzahl_staenderaete']) /*&& $rowData['typ'] == 'kommission'*/) {
+        $completeness_styles .= 'background-color: red;'; // deep pink
       } elseif (isset($rowData['parlament_url'])) {
         $completeness_styles .= 'background-color: greenyellow;';
       }
       checkAndMarkColumnNotNull('parlament_url', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('anzahl_nationalraete', $rowData, $rowCellStyles);
+      checkAndMarkColumnNotNull('anzahl_staenderaete', $rowData, $rowCellStyles);
     }
 
     // Write styles
@@ -1353,7 +1357,13 @@ function zutrittsberechtigung_state($parlamentarier_id) {
   return $zb_state[$parlamentarier_id];
 }
 
-function in_kommission_anzahl($kommission_id) {
+/**
+ *
+ * @param int $kommission_id
+ * @param string $rat 'NR', 'SR' or <code>null</code> for both raete
+ * @return number
+ */
+function in_kommission_anzahl($kommission_id, $rat = null) {
   $cache = &php_static_cache(__FUNCTION__);
 
   // Load all zutrittsberechtige on first call
@@ -1364,8 +1374,9 @@ function in_kommission_anzahl($kommission_id) {
     // TODO close connection
     $sql = "SELECT in_kommission.kommission_id, count( DISTINCT in_kommission.parlamentarier_id) as num, in_kommission.abkuerzung, in_kommission.kommission_name, in_kommission.kommission_typ
   FROM v_in_kommission in_kommission
-  WHERE in_kommission.bis IS NULL OR in_kommission.bis > NOW()
-  GROUP BY in_kommission.kommission_id;";
+  WHERE in_kommission.bis IS NULL OR in_kommission.bis > NOW()"
+. ( $rat ? " AND in_kommission.rat='$rat'" : '')
+. "  GROUP BY in_kommission.kommission_id;";
 
     $zbs = array();
     $sth = $con->prepare($sql);
