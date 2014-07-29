@@ -515,10 +515,12 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
 jQuery(document).ready(function() {
     jQuery("#show-bio").click(function () {
       jQuery("#bio").slideToggle("slow");
+      jQuery("#bio-text-show").toggle();
+      jQuery("#bio-text-hide").toggle();
     });
  });
 </script>' .
-      '<div><a id="show-bio" onclick="false">Zeige Angaben zur Person</a></div>' .
+      '<div><a id="show-bio" onclick="false"><span id="bio-text-show">Zeige</span><span id="bio-text-hide" style="display:none">Verstecke</span> Angaben zur Person</a></div>' .
       '<div id="bio" style="display:none">' .
       '<table border="0">' .
       // '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
