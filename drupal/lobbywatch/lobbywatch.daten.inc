@@ -514,9 +514,10 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       '<script>
 jQuery(document).ready(function() {
     jQuery("#show-bio").click(function () {
+      jQuery("#show-bio").slideToggle("slow");
       jQuery("#bio").slideToggle("slow");
-      jQuery("#bio-text-show").toggle();
-      jQuery("#bio-text-hide").toggle();
+      // jQuery("#bio-text-show").toggle();
+      // jQuery("#bio-text-hide").toggle();
     });
  });
 </script>' .
