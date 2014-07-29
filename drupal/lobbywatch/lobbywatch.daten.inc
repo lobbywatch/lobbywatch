@@ -520,7 +520,7 @@ jQuery(document).ready(function() {
     });
  });
 </script>' .
-      '<div><a id="show-bio" onclick="false"><span id="bio-text-show">Zeige</span><span id="bio-text-hide" style="display:none">Verstecke</span> Angaben zur Person</a></div>' .
+      '<div><a id="show-bio" class="toggle-text" onclick="false"><span id="bio-text-show">Zeige</span><span id="bio-text-hide" style="display:none">Verstecke</span> Angaben zur Person</a></div>' .
       '<div id="bio" style="display:none">' .
       '<table border="0">' .
       // '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
