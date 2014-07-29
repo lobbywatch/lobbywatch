@@ -194,6 +194,7 @@ catch(Exception $e)
          });
 
          if (total < 25 + 13) {
+           // TODO use anzahl NR und SR from DB fields
            d3.select("#message")
            .text("Falsche Anzahl Parlamentarier! Es sind jeweils total 38 Parlamentarier in Kommissionen (25 NR + 13 SR).")
            .style("background-color", "red");

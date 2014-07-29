@@ -511,6 +511,15 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '">' .
       (!$active ? '<p><strong><em>Nicht mehr im Parlament. War im Parlament bis ' . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
       (user_access('access lobbywatch unpublished content') ? '<p class="admin">Lobbyfaktor: <b>XY</b></p>' : '') .
+      '<script>
+jQuery(document).ready(function() {
+    jQuery("#show-bio").click(function () {
+      jQuery("#bio").slideToggle("slow");
+    });
+ });
+</script>' .
+      '<div><a id="show-bio" onclick="false">Zeige Angaben zur Person</a></div>' .
+      '<div id="bio" style="display:none">' .
       '<table border="0">' .
       // '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
       // '<tr><td>Kanton:</td><td>' . check_plain($record['kanton']) . '</td></tr>' .
@@ -523,6 +532,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       _lobbywatch_get_optional_tr('Homepage:', ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : ''), $admin, true, $record['homepage']) .
       '<tr><td>Parlament.ch Webseite:</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
       '</table>' .
+      '</div>' .
       _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
       ($admin ? '<p class="admin"><a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">Visualisierung</a> (noch EXPERIMENTELL!)</p>' : '') .
       "<h3 style=\"display: none\">Interessenbindungen</h3><h3>$titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden</h3><ul>" . $record['interessenbindungen'] . '</ul>' .
