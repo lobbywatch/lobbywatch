@@ -2716,3 +2716,85 @@ delimiter ;
 --end
 --//
 --delimiter ;
+
+-- 01.08.2014
+
+drop trigger if exists `trg_in_kommission_log_ins`;
+delimiter //
+create trigger `trg_in_kommission_log_ins` after insert on `in_kommission`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_kommission_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  -- Fill parlamentarier.kommissionen on change
+  SET @disable_table_logging = 1;
+  UPDATE `parlamentarier` p
+    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+      p.updated_date = NEW.updated_date,
+      p.updated_visa = CONCAT(NEW.updated_visa, '*')
+    WHERE p.id=NEW.parlamentarier_id;
+  SET @disable_table_logging = NULL;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_in_kommission_log_upd`;
+delimiter //
+create trigger `trg_in_kommission_log_upd` after update on `in_kommission`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_kommission_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `in_kommission` WHERE id = NEW.id ;
+
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  -- Fill parlamentarier.kommissionen on change
+  SET @disable_table_logging = 1;
+  UPDATE `parlamentarier` p
+    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+      p.updated_date = NEW.updated_date,
+      p.updated_visa = CONCAT(NEW.updated_visa, '*')
+    WHERE p.id=NEW.parlamentarier_id OR p.id=OLD.parlamentarier_id;
+  SET @disable_table_logging = NULL;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_in_kommission_log_del_before`;
+delimiter //
+create trigger `trg_in_kommission_log_del_before` before delete on `in_kommission`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `in_kommission_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `in_kommission` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_in_kommission_log_del_after`;
+delimiter //
+create trigger `trg_in_kommission_log_del_after` after delete on `in_kommission`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `in_kommission_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  -- Fill parlamentarier.kommissionen on change
+  SET @disable_table_logging = 1;
+  UPDATE `parlamentarier` p
+    SET p.kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+      p.updated_date = NOW(),
+      p.updated_visa = CONCAT('*')
+    WHERE p.id=OLD.parlamentarier_id;
+  SET @disable_table_logging = NULL;
+end
+//
+delimiter ;
