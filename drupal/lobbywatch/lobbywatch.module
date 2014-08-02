@@ -359,7 +359,7 @@ function lobbywatch_block_view($delta = '') {
     case 'lobbywatch_search':
       $block['subject'] = t('Suchen');
       // Form in a block: http://zerotodrupal.com/content/creating-form-block-drupal-7
-      $block['content'] = drupal_get_form('lobbywatch_form');
+      $block['content'] = drupal_get_form('lobbywatch_autocomplete_search_form');
       break;
   }
   return $block;
@@ -372,7 +372,7 @@ function lobbywatch_block_view($delta = '') {
  * $form - which holds all of the elements of the form
  * $form_state - a special array of settings & values needed by Drupal
  */
-function lobbywatch_form($form, &$form_state) {
+function lobbywatch_autocomplete_search_form($form, &$form_state) {
   // Now the fun begins. For this simple example,
   // we will only provide two form elements.
   // 1. an input for the friend's email address
@@ -398,17 +398,29 @@ function lobbywatch_form($form, &$form_state) {
       'title' => t("Suchtext eingeben, kurz warten und auswählen")),
 //     '#attributes' =>array()
 //     '#attributes' => array('class' => array('use-ajax-submit')),
-);
+  );
 
-    $form['submit'] = array(
-      '#type' => 'submit',
-      // #value is the text to display inside the button
-      // ctools, autosubmit, ref: https://drupal.org/node/1110222
+  $show_type = array('text' => t('Text'), 'graphic' => t('Graphik'));
+  $form['result_type'] = array(
+      '#type' => 'radios',
+      '#title' => t('Darstellung:'),
+      '#default_value' => 'text',
+      '#options' => $show_type,
+//       '#description' => t(''),
+      '#access' => user_access('access lobbywatch advanced content'),
+      '#attributes' => array('class' => array('admin'),
+          'title' => t("Sollen die Resultate graphisch angezeigt werden?")),
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    // #value is the text to display inside the button
+    // ctools, autosubmit, ref: https://drupal.org/node/1110222
 //       '#attributes' => array('class' => array('use-ajax-submit ctools-auto-submit-click')),
-      '#value' => t('Show'),
-      );
+    '#value' => t('Show'),
+  );
 
-      return $form;
+  return $form;
 }
 
 /*
@@ -420,7 +432,7 @@ function lobbywatch_form($form, &$form_state) {
  * proper. If it's not, we'll use form_set_error()
  * function to tell drupal we didn't pass validation.
  */
-function lobbywatch_form_validate($form, &$form_state) {
+function lobbywatch_autocomplete_search_form_validate($form, &$form_state) {
   // Drupal stows away all of the form elements into
   // $form_state['values']. We find our 'friends_email'
   // element and assign it to a variable for easy
@@ -440,55 +452,39 @@ function lobbywatch_form_validate($form, &$form_state) {
  * Define a submit function that drupal will
  * automatically call when submit is pressed (and all validators pass)
  */
-function lobbywatch_form_submit($form, &$form_state) {
+function lobbywatch_autocomplete_search_form_submit($form, &$form_state) {
   // Get the email value again
-  $item = $form_state['values']['search_field'];
+  $search_text = $form_state['values']['search_field'];
+  $result_type = $form_state['values']['result_type'];
+//   dpm($form_state, '$form_state');
+//   dpm($result_type, '$result_type');
   // Now we call drupal_mail() to send a message to this person.
   // Note that this basically tells drupal to call tellafriend_mail().
 //   $message = drupal_mail('tellafriend', 'notify', $email, language_default());
   // Check the message results and let the user know if php was able to sent the email.
 
-  $result = preg_match('/\[(\w+)=([0-9]+)\]$/', $item, $matches);
+  $result = preg_match('/\[(\w+)=([0-9]+)\]$/', $search_text, $matches);
   if ($result > 0) {
     // If $result is nonzero, we found a match and can use it as the index into $matches.
     $table = $matches[1]; // check_plain() not necessary
     $id = $matches[2];
+    if ($result_type === 'graphic') {
+//       dpm('graphic', 'type');
 //     df("daten/$table/$id", 'goto');
     // Verify that it's a valid nid.
-    drupal_goto("daten/$table/$id");
+      $options = array('query' => array('id' => $id));
+      drupal_goto("daten/grafik/$table", $options);
+    } else {
+//       dpm('text!!', 'type');
+      drupal_goto("daten/$table/$id");
+    }
 //     $node = node_load($nid);
 //     if (empty($node)) {
 //       form_error($form['node'], t('Sorry, no node with nid %nid can be found', array('%nid' => $nid)));
 //       return;
 //     }
   }
-//   if(!empty($message['result'])) {
-//     // TODO drupal goto
-//     drupal_set_message(t('You just told your friend about us!'));
-//   } else {
-//     drupal_set_message(t('There was a problem sending your message', 'error'));
-//   }
 }
-
-/*
- *   if (!user_access('bypass node access')) {
-// If the user is able to view their own unpublished nodes, allow them to
-// see these in addition to published nodes. Check that they actually have
-// some unpublished nodes to view before adding the condition.
-if (user_access('view own unpublished content') && $own_unpublished = db_query('SELECT nid FROM {node} WHERE uid = :uid AND status = :status', array(':uid' => $GLOBALS['user']->uid, ':status' => NODE_NOT_PUBLISHED))->fetchCol()) {
-$query->condition(db_or()
-    ->condition('n.status', NODE_PUBLISHED)
-    ->condition('n.nid', $own_unpublished, 'IN')
-);
-}
-else {
-// If not, restrict the query to published nodes.
-$query->condition('n.status', NODE_PUBLISHED);
-}
-}
-
-
-*/
 
 function lobbywatch_get_parteien($check_unpublished = true) {
   // Cache ref: http://www.lullabot.com/blog/article/beginners-guide-caching-data-drupal-7

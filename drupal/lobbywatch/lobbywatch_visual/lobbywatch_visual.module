@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * Implements hook_menu().
+ */
+function lobbywatch_visual_menu() {
+//   dpm('passed');
+  $items = array();
+
+  $items['daten/grafik/parlamentarier'] = array(
+  //     'title' => 'Parlamentarier',
+      'title callback' => '_lobbywatch_visual_page_title',
+      'title arguments' => array('Parlamentarier: ', '', 'parlamentarier'),
+      // TODO set 'title callback' for adding name
+      'page callback' => '_lobbywatch_visual_parlamentarier_id',
+      //'page arguments' => array(2),
+      'access arguments' => array('access lobbywatch visual content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch.visual.inc',
+  );
+
+  $items['daten/grafik/organisation'] = array(
+  //     'title' => 'Organisation',
+      'title callback' => '_lobbywatch_visual_page_title',
+      'title arguments' => array('', '', 'organisation'),
+      'page callback' => '_lobbywatch_visual_organisation_id',
+      //'page arguments' => array(2),
+      'access arguments' => array('access lobbywatch visual content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch.visual.inc',
+  );
+
+  return $items;
+}
+
+/**
+* Implements hook_permission().
+*/
+function lobbywatch_visual_permission() {
+  return array(
+    'access lobbywatch visual content' => array(
+      'title' => t('Access visual content of the lobbywatch module'),
+    )
+  );
+}
+
+// /**
+//  * Implements hook_libraries_info().
+//  *
+//  * For defining external libraries.
+//  */
+// function lobbywatch_visual_libraries_info() {
+//   // A very simple library. No changing APIs (hence, no versions), no variants.
+//   // Expected to be extracted into 'sites/all/libraries/simple'.
+//   $libraries['jsonpath'] = array(
+//       'name' => 'JSONPATH library',
+//       'vendor url' => 'http://goessner.net/articles/JsonPath/',
+//       'download url' => 'http://goessner.net/articles/JsonPath/',
+//       'version arguments' => array(
+//           'file' => 'jsonpath-0.8.0.js', // Could be any file with version info
+//           'pattern' => '/JSONPath (\d+)/',
+//           'lines' => 5,
+//       ),
+//       'files' => array(
+//           'js' => array('jsonpath-0.8.0.js'),
+//       ),
+//   );
+//   return $libraries;
+// }
+

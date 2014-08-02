@@ -1,0 +1,403 @@
+/* Common */
+.divChart
+{
+   background-color: #f5f5f5;
+   width: 100%;
+}
+
+.pageHeader
+{
+   padding-left: 20px;
+}
+
+#chart
+{
+  position:relative;
+  z-index: 50;
+  background: white;
+}
+
+/* Parlamentarier_view */
+
+.textOrganisation
+{
+   text-anchor: middle;
+   fill: #ffffff;
+   font-weight: normal;
+   font-size: 9pt;
+}
+
+.interessenbindungLabel
+{
+   text-anchor: middle;
+   fill: #777777;
+   font-weight: normal;
+   font-size: 9pt;
+}
+
+.textRoot
+{
+   text-anchor: middle;
+   fill: #ffffff;
+   font-weight: normal;
+   font-size: 9pt;
+}
+
+.organisation
+{
+   fill: #8888ff;
+}
+
+.interessenbindung
+{
+   fill: #8888ff;
+   stroke-width: 2px;
+   stroke: gray;
+}
+
+.parlamentarier
+{
+   fill: #3799FA;
+   stroke-width: 2px;
+   stroke: gray;
+}
+
+.parlamentarierLabel
+{
+   text-anchor: middle;
+   fill: #777777;
+   font-weight: normal;
+   font-size: 9pt;
+}
+
+.zutrittsberechtigung
+{
+   fill: #FAC037;
+   stroke-width: 2px;
+   stroke: gray;
+}
+
+.zutrittsberechtigungLabel
+{
+   text-anchor: middle;
+   fill: #777777;
+   font-weight: normal;
+   font-size: 9pt;
+}
+
+.mandat
+{
+   fill: #8888ff;
+   stroke-width: 2px;
+   stroke: gray;
+}
+
+.mandatLabel
+{
+   text-anchor: middle;
+   fill: #777777;
+   font-weight: normal;
+   font-size: 9pt;
+}
+
+
+div.tooltip
+{
+   position: absolute;
+   text-align: center;
+   width: 200px;
+   height: 100px;
+   padding: 4px;
+   /*font: 10px sans-serif;*/
+   background: #FFFFFF;
+   border: solid 1px #aaa;
+   border-radius: 8px;
+   pointer-events: none;
+}
+
+.headerRow
+{
+   padding-top: 5px;
+   padding-left: 20px;
+}
+
+.filterCheckbox input[type=checkbox]
+{
+   visibility: hidden;
+}
+
+.filterCheckbox
+{
+   width: 80px;
+   height: 26px;
+   background: #555555;
+   margin: 20px auto;
+   border-radius: 50px;
+   position: relative;
+}
+
+.filterCheckbox:before
+{
+  content: 'ON';
+  color: #00bf00;
+  position: absolute;
+  left: 7px;
+  top: 5px;
+  z-index: 0;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.filterCheckbox:after
+{
+  content: 'OFF';
+  color: #ff2222;
+  position: absolute;
+  right: 7px;
+  top: 5px;
+  z-index: 0;
+  font-weight: bold;
+  font-size: 0.8em;
+}
+
+.filterCheckbox label
+{
+  display: block;
+  width: 44px;
+  height: 20px;
+  border-radius: 50px;
+  cursor: pointer;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  z-index: 1;
+  background: #dddddd;
+  text-align: center;
+  font-size: 11pt;
+}
+
+.filterCheckbox input[type=checkbox]:checked + label
+{
+  left: 33px;
+}
+
+
+/* Parlament_view */
+
+.overlay
+{
+   background-color: #EEE;
+}
+
+.rectParteiInfo
+{
+   opacity: 0.8;
+}
+
+.textParteiInfo
+{
+   fill: #fff;
+   /*stroke: #fff;*/
+   font-weight: bold;
+   font-size: 10pt;
+}
+
+.textMember
+{
+   text-anchor: middle;
+   /*fill: #fff;*/
+   font-weight: normal;
+   font-size: 7pt;
+}
+
+div.tooltip
+{
+   position: absolute;
+   text-align: center;
+   width: 200px;
+   height: 70px;
+   padding: 4px;
+   /*font: 10px sans-serif;*/
+   background: #FFFFFF;
+   border: solid 1px #aaa;
+   border-radius: 5px;
+   pointer-events: none;
+}
+
+/*input
+{
+   position: relative;
+   left: 8px;
+   top: 8px;
+   width: 240px;
+}*/
+
+.criteriaCell
+{
+   color: #121010;
+   font-size: 0.8em;
+   background-color: #efefef;
+   width: 50%;
+}
+
+.criteriaTable
+{
+   width: 80%;
+   background-color: #fff;
+   vertical-align: top;
+}
+
+   .criteriaTable td
+   {
+      vertical-align: top;
+      padding: 5px;
+   }
+
+   .criteriaTable th
+   {
+   }
+
+.criteriaInteressenbindungTable
+{
+   vertical-align: top;
+   width: 100%;
+   background-color: #efefef;
+}
+
+   .criteriaInteressenbindungTable td
+   {
+      vertical-align: top;
+      text-anchor: start;
+      border: solid 0px;
+      background-color: #fff;
+   }
+
+   .criteriaInteressenbindungTable th
+   {
+   }
+
+.criteriaInfoTable
+{
+   width: 60%;
+   height: 80px;
+   background-color: #ffffff;
+}
+
+   .criteriaInfoTable td
+   {
+      border: solid 0px;
+      font-size: 0.8em;
+      vertical-align: top;
+   }
+
+   .criteriaInfoTable th
+   {
+   }
+
+.selectFilter
+{
+   width: 100%;
+   background-color: #FFF;
+   border: 1px solid #CCC;
+   border-radius: 4px;
+   display: inline-block;
+   padding: 4px;
+}
+
+.textFilter
+{
+   width: 96%;
+   background-color: #FFF;
+   border: 1px solid #CCC;
+   border-radius: 4px;
+   display: inline-block;
+   padding: 4px;
+}
+
+.criteriaLabel
+{
+   font-size: 1em;
+   font-weight: bold;
+}
+
+/* Organisation_view */
+
+.organisation
+{
+   fill: #8888ff;
+   stroke-width: 2px;
+   stroke: gray;
+}
+
+.organisationLabel
+{
+   text-anchor: middle;
+   fill: #777777;
+   font-weight: normal;
+   font-size: 9pt;
+}
+
+.parlamentarier
+{
+   fill: #3799FA;
+   stroke-width: 2px;
+   stroke: gray;
+}
+
+.parlamentarierLabel
+{
+   text-anchor: middle;
+   fill: #777777;
+   font-weight: normal;
+   font-size: 9pt;
+}
+
+.zutrittsberechtigte
+{
+   fill: #FAC037;
+   stroke-width: 2px;
+   stroke: gray;
+}
+
+.zutrittsberechtigteLabel
+{
+   text-anchor: middle;
+   fill: #777777;
+   font-weight: normal;
+   font-size: 9pt;
+}
+
+.zutrittsberechtigteParlamentarier
+{
+   fill: #3799FA;
+   stroke-width: 2px;
+   stroke: gray;
+}
+
+.zutrittsberechtigteParlamentarierLabel
+{
+   text-anchor: middle;
+   fill: #777777;
+   font-weight: normal;
+   font-size: 9pt;
+}
+
+div.tooltip
+{
+   position: absolute;
+   text-align: center;
+   width: 200px;
+   height: 100px;
+   padding: 4px;
+   /*font: 10px sans-serif;*/
+   background: #FFFFFF;
+   border: solid 1px #aaa;
+   border-radius: 8px;
+   pointer-events: none;
+}
+
+.headerRow
+{
+   padding-top: 5px;
+   padding-left: 20px;
+}

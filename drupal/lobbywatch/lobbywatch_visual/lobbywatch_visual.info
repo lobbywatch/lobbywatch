@@ -1,0 +1,18 @@
+name = Lobbywatch Visual
+description = "Lobbywatch Visual extensions"
+
+package = "Lobbywatch"
+dependencies[] = lobbywatch
+
+php = 5.5
+
+stylesheets[all][] = css/lobbywatch_visual.css
+
+scripts[] = js/jsonpath-0.8.0.js
+scripts[] = js/raphael-min.js
+scripts[] = js/ls.datavisual.helper.js
+
+core = "7.x"
+
+; Views handlers
+

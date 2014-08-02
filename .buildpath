@@ -2,7 +2,6 @@
 <buildpath>
 	<buildpathentry combineaccessrules="false" kind="prj" path="/Drupal"/>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
-	<buildpathentry kind="src" path="drupal/lobbywatch_visual"/>
-	<buildpathentry kind="src" path="drupal/lobbywatch"/>
 	<buildpathentry excluding="wiki/" kind="src" path="public_html"/>
+	<buildpathentry kind="src" path="drupal/lobbywatch"/>
 </buildpath>

@@ -166,10 +166,10 @@ Query for one record by id:
 
 `http://lobbywatch.dev/de/data/interface/v1/json/table/$table/flat/id/%`
 
-Query for a list of records (see [filtering](#filtering) below):
+Query for a list of records (see <a href="#filtering">filtering</a> below):
 `http://lobbywatch.dev/de/data/interface/v1/json/table/$table/flat/list`
 
-Query for a list of records by name (see [filtering](#filtering) below):
+Query for a list of records by name (see <a href="#filtering">filtering</a> below):
 `http://lobbywatch.dev/de/data/interface/v1/json/table/$table/flat/list/%`
 
 where `$table` is one of the following tables:
@@ -209,7 +209,7 @@ where `$table` is one of the following tables:
 
 ### Relations
 
-Query relations (see [filtering](#filtering) below):
+Query relations (see <a href="#filtering">filtering</a> below):
 
 `http://lobbywatch.dev/de/data/interface/v1/json/relation/$relation/flat/list`
 
@@ -237,7 +237,8 @@ where `$relation` is one of the following views:
 * `organisation_beziehung_tochtergesellschaften`: Tochtergesellschaften
 
 
-### Filtering {#filtering}
+### <span id="filtering">Filtering</span>
+
 
 Records of query calls can be filtered by one or serveral fields by appending URL parameters.
 

@@ -123,7 +123,7 @@ function _lobbywatch_parlamentarier_list($check_unpublished = true) {
   }
 
   $build = array();
-  $build['terms'] = array(
+  $build['lobbywatch_parlamentarier_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
     '#markup' => $markup,
@@ -550,7 +550,7 @@ jQuery(document).ready(function() {
       ;
 
     $build = array();
-    $build['terms'] = array(
+    $build['lobbywatch_parlamentarier'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
       '#markup' => $markup,
@@ -612,7 +612,7 @@ function _lobbywatch_organisation_list($check_unpublished = true) {
   db_set_active();
 
   $build = array();
-  $build['terms'] = array(
+  $build['lobbywatch_organisation_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
     '#markup' => $markup,
@@ -909,7 +909,7 @@ ORDER BY organisation.anzeige_name;
 
 
     $build = array();
-    $build['terms'] = array(
+    $build['lobbywatch_organisation'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
       '#markup' => $markup,
@@ -957,7 +957,7 @@ function _lobbywatch_kommission_list($check_unpublished = true) {
   db_set_active();
 
   $build = array();
-  $build['terms'] = array(
+  $build['lobbywatch_kommission_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
     '#markup' => $markup,
@@ -1103,7 +1103,7 @@ function _lobbywatch_kommission_id($id, $name = '') {
     ;
 
     $build = array();
-    $build['terms'] = array(
+    $build['lobbywatch_kommission'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
       '#markup' => $markup,
@@ -1146,7 +1146,7 @@ function _lobbywatch_partei_list($check_unpublished = true) {
   db_set_active();
 
   $build = array();
-  $build['terms'] = array(
+  $build['lobbywatch_partei_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
     '#markup' => $markup,
@@ -1224,7 +1224,7 @@ function _lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
     ;
 
     $build = array();
-    $build['terms'] = array(
+    $build['lobbywatch_partei'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
       '#markup' => $markup,
@@ -1268,7 +1268,7 @@ function _lobbywatch_branche_list($check_unpublished = true) {
   db_set_active();
 
   $build = array();
-  $build['terms'] = array(
+  $build['lobbywatch_branche_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
     '#markup' => $markup,
@@ -1347,7 +1347,7 @@ GROUP_CONCAT(DISTINCT
     ;
 
     $build = array();
-    $build['terms'] = array(
+    $build['lobbywatch_branche'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
       '#markup' => $markup,
@@ -1391,7 +1391,7 @@ function _lobbywatch_interessengruppe_list($check_unpublished = true) {
   db_set_active();
 
   $build = array();
-  $build['terms'] = array(
+  $build['lobbywatch_interessengruppe_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
     '#markup' => $markup,
@@ -1481,7 +1481,7 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
     ;
 
     $build = array();
-    $build['terms'] = array(
+    $build['lobbywatch_interessengruppe'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
       '#markup' => $markup,
@@ -1525,7 +1525,7 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
   db_set_active();
 
   $build = array();
-  $build['terms'] = array(
+  $build['lobbywatch_zutrittsberechtigung_list'] = array(
     '#weight' => -5,
     '#prefix' => '<div class="lobbywatch">',
     '#markup' => $markup,
@@ -1611,7 +1611,7 @@ GROUP BY zutrittsberechtigung.id;";
     ;
 
     $build = array();
-    $build['terms'] = array(
+    $build['lobbywatch_zutrittsberechtigung'] = array(
       '#weight' => -5,
       '#prefix' => '<div class="lobbywatch">',
       '#markup' => $markup,

@@ -49,7 +49,7 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
 
     if ($json) {
       drupal_json_output($response);
-      exit(intval(!$success));
+      drupal_exit();
     } else {
       return $response;
     }
@@ -238,7 +238,7 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
 
     if ($json) {
       drupal_json_output($response);
-      exit(intval(!$success));
+      drupal_exit();
     } else {
       return $response;
     }
@@ -288,7 +288,7 @@ function _lobbywatch_data_relation_flat_list($table, $condition = '1', $json = t
 
     if ($json) {
       drupal_json_output($response);
-      exit(intval(!$success));
+      drupal_exit();
     } else {
       return $response;
     }
@@ -346,7 +346,7 @@ function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = tr
     );
     if ($json) {
       drupal_json_output($response);
-      exit(intval(!$success));
+      drupal_exit();
     } else {
       return $response;
     }
@@ -404,7 +404,7 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
     );
     if ($json) {
       drupal_json_output($response);
-      exit(intval(!$success));
+      drupal_exit();
     } else {
       return $response;
     }
@@ -474,7 +474,7 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
     );
     if ($json) {
       drupal_json_output($response);
-      exit(intval(!$success));
+      drupal_exit();
     } else {
       return $response;
     }
@@ -558,7 +558,7 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
     );
     if ($json) {
       drupal_json_output($response);
-      exit(intval(!$success));
+      drupal_exit();
     } else {
       return $response;
     }

@@ -5,6 +5,7 @@ package = "Lobbywatch"
 dependencies[] = ibexutils
 dependencies[] = views
 
+php = 5.5
 
 core = "7.x"
 
