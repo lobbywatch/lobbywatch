@@ -537,7 +537,7 @@ jQuery(document).ready(function() {
       '</table>' .
       '</div>' .
       _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
-      ($admin ? '<p class="admin"><a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">Visualisierung</a> (noch EXPERIMENTELL!)</p>' : '') .
+      ($admin ? '<p class="admin"><p class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/parlamentarier?id=' . $id . '">intern</a> / <a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">extern</a></p>' : '') .
       "<h3 style=\"display: none\">Interessenbindungen</h3><h3>$titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden</h3><ul>" . $record['interessenbindungen'] . '</ul>' .
       '<h3 style="display: none">Mandate der Gäste</h3>' . "<h3>$titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus</h3>" . $gaeste .
        ($admin ? "<div class='admin'><h3>Gäste</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul></div>' : '') .
@@ -853,7 +853,7 @@ ORDER BY organisation.anzeige_name;
        . _lobbywatch_get_optional_tr('Handelsregister:', _lobbywatch_get_homepage_link($record['handelsregister_url'], $record['anzeige_name']), $admin, true, $record['handelsregister_url'])
     . '</table>' .
     _lobbywatch_get_edit_link($admin, 'organisation', $id)
-    . ($admin ? '<p class="admin"><a href="/visual/b1/OrganisationView.html?id=' . $id . '">Visualisierung</a> (noch EXPERIMENTELL!)</p>' : '');
+    . ($admin ? '<p class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/organisation?id=' . $id . '">intern</a> / <a href="/visual/b1/OrganisationView.html?id=' . $id . '">extern</a></p>' : '');
     if ($record['arbeitet_fuer']) {
       $markup .= '<h3>Arbeitet für</h3>'
       . '<ul>'

@@ -2,7 +2,7 @@
 
 $(function() {
   
-  console.log("ready");
+//  console.log("ready");
   
   var baseVisualPath = '/de/daten/grafik';
 

@@ -4,7 +4,7 @@ $(function() {
   
   var baseVisualPath = '/de/daten/grafik';
 
-  console.log("ready");
+//  console.log("ready");
 
   $('#mainForm').on('change', 'input[type=checkbox]', function (e) {
      if (this.id == "chkFilterOnOff") {
@@ -91,14 +91,14 @@ $(function() {
   // read JSON data
   var datasource = "/de/data/interface/v1/json/table/parlamentarier/aggregated/id/" + id + filterJSONData;
 
-  console.log(datasource);
+//  console.log(datasource);
   //var urlData = "http://localhost/VisualLobby/" + datasource;
   //datasource = "http://localhost/VisualLobby/JFehrData_test2.json";
   var urlData = datasource;
 
   d3.json(urlData, function (error, parlamentarierData) {
-    console.log("json");
-    console.log(parlamentarierData);
+//    console.log("json");
+//    console.log(parlamentarierData);
     
      if (error) {
         // console.warn(error);
