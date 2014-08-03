@@ -1176,7 +1176,7 @@ function _lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
 
     $sql = "SELECT partei.*,
       GROUP_CONCAT(DISTINCT
-        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('parlamentarier') . ", '>',
+        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('parlamentarier') . ",
       IF(parlamentarier.freigabe_datum IS NULL OR parlamentarier.freigabe_datum > NOW(), ' class=\"unpublished\"', ''), '>',
       IF(parlamentarier.im_rat_bis < NOW(), '<s>', ''), '<a href=\"/daten/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, '</a>',
         ', ', parlamentarier.ratstyp,

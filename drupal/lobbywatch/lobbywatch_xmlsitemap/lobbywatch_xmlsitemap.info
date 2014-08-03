@@ -1,0 +1,9 @@
+name = XML sitemap Lobbywatch
+description = Adds lobbywatch data links to the sitemap.
+package = Lobbywatch
+core = 7.x
+dependencies[] = xmlsitemap
+dependencies[] = lobbywatch
+
+core = "7.x"
+

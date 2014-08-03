@@ -118,8 +118,11 @@ foreach ($tables as $table => $name) {
 //   )";
 }
 
+$freigaben = array();
 foreach ($workflow_tables as $table => $name) {
   $eingabe_abgeschlossen[] = "SELECT '$table' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM $table";
+
+  $freigaben[] = "UPDATE $table SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';";
 }
 
 $master_query = "SELECT * FROM (
@@ -158,16 +161,23 @@ ORDER BY value DESC;\n";
 // --LIMIT 1
 
 echo $master_query;
-echo "\n---------------------------------------------------------------------\n";
+echo "\n-- -------------------------------------------------------------------\n";
 echo "\n-- Last updated views\n\n";
 echo implode("\n", $table_views) . "\n";
 echo $unordered_views . "\n";
 echo $master_view . "\n";
 
-echo "\n---------------------------------------------------------------------\n";
+echo "\n-- -------------------------------------------------------------------\n";
+echo "\n-- Snapshots";
 echo "\n" . implode("\n\n", $snapshots) . "\n";
-echo "\n---------------------------------------------------------------------\n";
+echo "\n-- -------------------------------------------------------------------\n";
+echo "\n-- Creators";
 echo "\n" . $creator_query . "\n";
-echo "\n---------------------------------------------------------------------\n";
+echo "\n-- -------------------------------------------------------------------\n";
+echo "\n-- Workers";
 echo "\n" . $worker_query . "\n";
+echo "\n-- -------------------------------------------------------------------\n";
+echo "\n-- Alle freigeben";
+echo "\n" . implode("\n", $freigaben) . "\n";
+echo "\n-- -------------------------------------------------------------------\n";
 
