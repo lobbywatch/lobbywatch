@@ -341,7 +341,7 @@ GROUP BY zutrittsberechtigung.id;";
     $res .= '<h4>' . $gast['zutrittsberechtigung_name'] . ', ' . $gast['funktion'] . (isset($gast['beruf']) ? '/' . $gast['beruf'] : '') . '</h4>';
     $res .= '<p>' . $gast['name'] . '  ist mit folgenden Firmen,Verbänden und Organisationen verbunden:</p>';
     //$res .= mandateList($con, $gast['id']);
-    $res .= "<ul>\n" . $gast['mandate'] . "\n</ul>";
+    $res .= $gast['mandate'] ? "<ul>\n" . $gast['mandate'] . "\n</ul>" : '<p>keine</p>';
   }
 
   return $res;
@@ -538,8 +538,8 @@ jQuery(document).ready(function() {
       '</div>' .
       _lobbywatch_get_edit_link($admin, 'parlamentarier', $id) .
       ($admin ? '<p class="admin"><p class="admin">Visualisierung EXPERIMENTELL: <a href="/de/daten/grafik/parlamentarier?id=' . $id . '">intern</a> / <a href="/visual/b1/ParlamentarierView.html?id=' . $id . '">extern</a></p>' : '') .
-      "<h3 style=\"display: none\">Interessenbindungen</h3><h3>$titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden</h3><ul>" . $record['interessenbindungen'] . '</ul>' .
-      '<h3 style="display: none">Mandate der Gäste</h3>' . "<h3>$titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus</h3>" . $gaeste .
+      "<h3 style=\"display: none\">Interessenbindungen</h3><h3>$titel_nachname ist mit folgenden Firmen, Verbänden und Organisationen verbunden</h3>" . ($record['interessenbindungen'] ? '<ul>' . $record['interessenbindungen'] . '</ul>' : '<p>keine</p>') .
+      '<h3 style="display: none">Mandate der Gäste</h3>' . "<h3>$titel_nachname ermöglicht folgenden Gästen Zutritt zum Bundeshaus</h3>" . ($gaeste ? $gaeste : '<p>keine</p>') .
        ($admin ? "<div class='admin'><h3>Gäste</h3><ul>" . $record['zutrittsberechtigungen'] . '</ul></div>' : '') .
       ($admin ? '<div class="admin"><h3>Organisationen mit einer Verbindung</h3>'
       . '<p>Auch indirekte Verbindungen werden aufgeführt.</p>'
