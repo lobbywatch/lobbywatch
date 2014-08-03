@@ -66,6 +66,14 @@ function lobbywatch_data_menu() {
       'file' => 'lobbywatch_data.interface.inc',
   );
 
+  $items["data/interface/v1/json/query/parlament-partei/aggregated/list"] = array(
+      'page callback' => '_lobbywatch_data_query_parlament_partei_aggregated_list',
+      'page arguments' => array('1', true),
+      'access arguments' => array('access lobbywatch data general content'),
+      'type' => MENU_CALLBACK,
+      'file' => 'lobbywatch_data.interface.inc',
+  );
+
   // TODO error message in case of wrong names
   $items["data/interface/v1/json/%/%"] = array(
       'page callback' => '_lobbywatch_data_not_found',

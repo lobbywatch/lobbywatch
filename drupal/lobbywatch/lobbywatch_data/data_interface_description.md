@@ -1,7 +1,8 @@
 Lobbywatch.ch Data Interface
 ============================
 
-Date: 20.07.2014  
+Created date: 20.07.2014  
+Updated date: 03.08.2014  
 Data interface version: v1  
 Format: JSON  
 State: development  
@@ -236,21 +237,65 @@ where `$relation` is one of the following views:
 * `organisation_beziehung_mitglieder`: Mitgliedsorganisationen
 * `organisation_beziehung_tochtergesellschaften`: Tochtergesellschaften
 
+### Special Queries
+
+Special queries (see <a href="#filtering">filtering</a> below):
+
+#### Parlament-Partei
+
+Parteien mit den Parlamentarieren und deren Anzahl Verbindugnen.
+
+`http://lobbywatch.dev/de/data/interface/v1/json/query/parlament-partei/aggregated/list`
+
+Special result fields:
+
+    "relations": "7",
+    "relations_simple": "6",
+    "relations_executive": "1",
+    "gast_relations": "5",
+    "gast_relations_simple": "0",
+    "gast_relations_executive": "5"
 
 ### <span id="filtering">Filtering</span>
 
 
 Records of query calls can be filtered by one or serveral fields by appending URL parameters.
 
+Filters work for all available fields in the base query view.
+
 Format of filters:
+
+#### Simple field
 
     filter_$field=$value
 
-where `filter_` is the prefix and `$field` is the name of the field.
+where `filter_` is the prefix, `$field` is the name of the field and `$value` is the value.
 
 Example:
 
     filter_branche_id=1
+
+#### List
+
+    filter_${field}_list=$value
+
+where `filter_` is the prefix, `_list` ist the suffix, `$field` is the name of the field and `$value` is a comma separated list of values.
+
+Example:
+
+    filter_branche_id_list=1,2,3
+
+Filters work for all available fields in the base query view.
+
+#### Like
+
+    filter_${field}_like=$value
+
+where `filter_` is the prefix, `_like` ist the suffix, `$field` is the name of the field and `$value` is filter value which can contain `%` (matches any number of characters, even zero charachters) or `_` (matches exactly one character).
+
+Example:
+
+    filter_kommissionen=%SGK%
 
 Filters work for all available fields in the base query view.
 

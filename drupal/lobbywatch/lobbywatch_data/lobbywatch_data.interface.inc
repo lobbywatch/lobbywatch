@@ -5,6 +5,8 @@ global $show_stacktrace;
 $show_sql = true;
 $show_stacktrace = false;
 
+const SUPPORTED_DB_CHARS = '-a-zA-Z0-9_.äöüÄÖÜéèàÉÈâ%';
+
 function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
   global $show_sql;
   $success = true;
@@ -107,20 +109,23 @@ function _lobbywatch_data_clean_DB_value($value) {
   // TODO improve sanitation
 //   $con = Database::getConnection('lobbywatch');
 //   return mysql_escape_string($value);
-  return preg_replace('/[^-a-zA-Z0-9_.äöüÄÖÜéèàÉÈâ]/u', '', $value);
+  return preg_replace('/[^' . SUPPORTED_DB_CHARS . ']/', '', $value);
 }
 
 /** TODO Docu */
 function _lobbywatch_data_filter_field_SQL($table, $field) {
   $paramSingle = "filter_${field}";
   $paramList = "filter_${field}_list";
+  $paramLike = "filter_${field}_like";
   $matches = array();
   if (isset($_GET[$paramSingle]) && is_numeric($_GET[$paramSingle])) {
     return " AND $table.${field} = " . intval($_GET[$paramSingle]);
   } else if (isset($_GET[$paramSingle])) {
     return " AND $table.${field} = '" . _lobbywatch_data_clean_DB_value($_GET[$paramSingle]) . "'";
-  } else if (isset($_GET[$paramList]) && preg_match_all('/([0-9]+)/', $_GET[$paramList], $matches)) {
+  } else if (isset($_GET[$paramList]) && preg_match_all('/([' . SUPPORTED_DB_CHARS . ']+)/', $_GET[$paramList], $matches)) {
     return " AND $table.${field} IN ( " . implode(',', $matches[1]) . ')';
+  } else if (isset($_GET[$paramLike])) {
+    return " AND $table.${field} LIKE '" . _lobbywatch_data_clean_DB_value($_GET[$paramLike]) . "'";
   } else {
     return '';
   }
@@ -132,7 +137,7 @@ function _lobbywatch_data_filter_fields_SQL($table) {
   // TODO filter fields not allowed
   foreach($_GET as $key => $value) {
     $matches = array();
-    if (preg_match('/^filter_([a-z_]+?)(_list)?$/', $key, $matches) && !_lobbywatch_data_check_intern_field($matches[1])) {
+    if (preg_match('/^filter_([a-z0-9_]+?)(_list|_like)?$/', $key, $matches) && !_lobbywatch_data_check_intern_field($matches[1])) {
       $sql .= _lobbywatch_data_filter_field_SQL($table, $matches[1]);
     }
   }
@@ -357,7 +362,6 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
   global $show_sql;
   $success = true;
   $count = 0;
-  $items = null;
   $message = '';
   $sql = '';
   $table = 'zutrittsberechtigung';
@@ -416,7 +420,6 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
   global $show_sql;
   $success = true;
   $count = 0;
-  $items = null;
   $message = '';
   $sql = '';
   $table = 'parlamentarier';
@@ -485,7 +488,6 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
   global $show_sql;
   $success = true;
   $count = 0;
-  $items = null;
   $message = '';
   $sql = '';
   $table = 'organisation';
@@ -493,10 +495,10 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
   try {
-    $parlamentarier = _lobbywatch_data_table_flat_id('organisation', $id, false);
-    $aggregated = $parlamentarier['data'];
-    $message .= ' | ' . $parlamentarier['message'];
-    $success &= $parlamentarier['success'];
+    $organsation = _lobbywatch_data_table_flat_id('organisation', $id, false);
+    $aggregated = $organsation['data'];
+    $message .= ' | ' . $organsation['message'];
+    $success &= $organsation['success'];
 
     // TODO fill aggregated organisation
     $parlamentarier =  _lobbywatch_data_table_flat_list('organisation_parlamentarier', "organisation_parlamentarier.organisation_id = $id", false);
@@ -504,10 +506,10 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
     $message .= ' | ' . $parlamentarier['message'];
     $success &= $parlamentarier['success'];
 
-    $parlamentarier =  _lobbywatch_data_table_flat_list('organisation_zutrittsberechtigung', "organisation_zutrittsberechtigung.organisation_id = $id", false);
-    $aggregated['zutrittsberechtigte'] = $parlamentarier['data'];
-    $message .= ' | ' . $parlamentarier['message'];
-    $success &= $parlamentarier['success'];
+    $zutrittsberechtigung =  _lobbywatch_data_table_flat_list('organisation_zutrittsberechtigung', "organisation_zutrittsberechtigung.organisation_id = $id", false);
+    $aggregated['zutrittsberechtigte'] = $zutrittsberechtigung['data'];
+    $message .= ' | ' . $zutrittsberechtigung['message'];
+    $success &= $zutrittsberechtigung['success'];
 
     //dpm($aggregated['zutrittsberechtigte'], "aggregated['zutrittsberechtigte']");
     foreach ($aggregated['zutrittsberechtigte'] as $key => $value) {
@@ -564,4 +566,144 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
     }
   }
 
+}
+
+function _lobbywatch_data_query_parlament_partei_aggregated_list($condition = '1', $json = true) {
+  global $show_sql;
+  $success = true;
+  $message = '';
+  $count = 0;
+  $items = null;
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+    $table = 'parlamentarier';
+    $sql = "
+select count(*) as anzahl, partei.id, $table.partei as partei_short, partei.anzeige_name as partei_name_de, $table.fraktion
+from v_parlamentarier $table
+inner join v_partei partei
+on partei.id = $table.partei_id
+WHERE $condition " .
+_lobbywatch_data_filter_unpublished_SQL($table) .
+_lobbywatch_data_filter_fields_SQL($table) . "
+group by $table.partei
+order by count(*) desc, $table.partei asc "
+    ;
+
+    $result = db_query($sql, array());
+
+    $items['totalMembers'] = 246;
+    $items['parteien'] = _lobbywatch_data_clean_records($result);
+
+    $count = count($items['parteien']);
+    $message .= $count . " record(s) found";
+    $success = $count > 0;
+
+    foreach ($items['parteien'] as &$record) {
+      $parlamentarier =  _lobbywatch_data_table_flat_list('parlamentarier', "parlamentarier.partei_id = ${record['id']}", false);
+      $record['members'] = $parlamentarier['data'];
+      $message .= ' | ' . $parlamentarier['message'];
+      $success &= $parlamentarier['success'];
+
+      foreach ($record['members'] as &$parlamentarier) {
+        $relation_counts = _lobbywatch_data_parlamentarier_relations_count($parlamentarier['id']);
+        $parlamentarier['relations'] = $relation_counts['anzahlTotal'];
+        $parlamentarier['relations_simple'] = $relation_counts['anzahlSimple'];
+        $parlamentarier['relations_executive'] = $relation_counts['anzahlExecutive'];
+        $relation_counts = _lobbywatch_data_parlamentarier_gast_relations_count($parlamentarier['id']);
+        $parlamentarier['gast_relations'] = $relation_counts['anzahlTotal'];
+        $parlamentarier['gast_relations_simple'] = $relation_counts['anzahlSimple'];
+        $parlamentarier['gast_relations_executive'] = $relation_counts['anzahlExecutive'];
+      }
+    }
+
+  } catch(Exception $e) {
+    $message .= _lobbywatch_data_add_exeption($e);
+    $success = false;
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+    $response = array(
+        'success' => $success,
+        'count' => $count,
+        'message' => $message,
+        'sql' => $show_sql ? $sql : '',
+        'source' => $table,
+        'data' => $items
+    );
+
+    if ($json) {
+      drupal_json_output($response);
+      drupal_exit();
+    } else {
+      return $response;
+    }
+  }
+}
+
+function _lobbywatch_data_parlamentarier_relations_count($id) {
+  // TODO implement filter
+  return _lobbywatch_data_db_query(
+  "select sum(anzahlTotal) as anzahlTotal, sum(anzahlExecutive) as anzahlExecutive, sum(anzahlTotal)-sum(anzahlExecutive) as anzahlSimple
+from
+(
+select count(*) as anzahlTotal, 0 as anzahlExecutive
+from interessenbindung ib
+where ib.parlamentarier_id = :id" .
+      _lobbywatch_data_filter_unpublished_SQL('ib') . "
+union
+select 0 as anzahlTotal, count(*) as anzahlExecutive
+from interessenbindung ib
+where ib.parlamentarier_id = :id
+and ib.art in ('vorstand', 'geschaeftsfuehrend') " .
+      _lobbywatch_data_filter_unpublished_SQL('ib') . "
+) t", array('id' => $id))['0'];
+}
+
+function _lobbywatch_data_parlamentarier_gast_relations_count($id) {
+  // TODO implement filter
+  return _lobbywatch_data_db_query(
+  "select sum(anzahlTotal) as anzahlTotal, sum(anzahlExecutive) as anzahlExecutive, sum(anzahlTotal)-sum(anzahlExecutive) as anzahlSimple
+from
+(
+select count(*) as anzahlTotal, 0 as anzahlExecutive
+from zutrittsberechtigung zb
+inner join mandat ma on ma.zutrittsberechtigung_id = zb.id
+where zb.parlamentarier_id = :id " .
+      _lobbywatch_data_filter_unpublished_SQL('ib') . "
+union
+select 0 as anzahlTotal, count(*) as anzahlExecutive
+from zutrittsberechtigung zb
+inner join mandat ma on ma.zutrittsberechtigung_id = zb.id
+where zb.parlamentarier_id = :id
+and ma.art in ('vorstand', 'geschaeftsfuehrend')
+" . _lobbywatch_data_filter_unpublished_SQL('ib') . "
+) t", array('id' => $id))['0'];
+}
+
+function _lobbywatch_data_db_query($sql, $params = array()) {
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+    $result = db_query($sql, $params);
+
+//     dpm($sql, '$sql');
+//     dpm($params, '$params');
+
+    $items = _lobbywatch_data_clean_records($result);
+
+//     dpm($items);
+
+    $count = count($items);
+    return $items;
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+  }
 }

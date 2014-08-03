@@ -542,7 +542,9 @@ END)
 AS UNSIGNED INTEGER) AS vertretene_bevoelkerung,
 GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_namen,
 --GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen2,
-GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung, partei.abkuerzung AS partei, partei.name AS partei_name, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad,
+GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung,
+COUNT(DISTINCT k.id) AS kommissionen_anzahl,
+partei.abkuerzung AS partei, partei.name AS partei_name, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad,
 CONCAT(IF(p.geschlecht='M', rat.name_de, ''), IF(p.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', ''), IF(p.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '')) titel_de
 FROM `v_parlamentarier_simple` p
 LEFT JOIN `v_in_kommission` ik ON p.id = ik.parlamentarier_id AND ik.bis IS NULL
