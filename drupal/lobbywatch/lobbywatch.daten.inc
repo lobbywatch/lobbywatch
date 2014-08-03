@@ -493,7 +493,8 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
   }
 
   if ($record) {
-      $admin = user_access('access lobbywatch unpublished content');
+      $admin = user_access('access lobbywatch admin');
+      $unpublished = user_access('access lobbywatch unpublished content');
       $rat = check_plain($record['rat_name_de']);
       $ratstyp = check_plain($record['ratstyp']);
       $titel_nachname  =  check_plain($record['titel_de'] . ' ' .$record['nachname']);
@@ -510,7 +511,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
 //       '<h2>' . $parlamentarier_name . '</h2>' .
       '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '">' .
       (!$active ? '<p><strong><em>Nicht mehr im Parlament. War im Parlament bis ' . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
-      (user_access('access lobbywatch unpublished content') ? '<p class="admin">Lobbyfaktor: <b>XY</b></p>' : '') .
+      ($admin ? '<p class="admin">Lobbyfaktor: <b>XY</b></p>' : '') .
       '<script>
 jQuery(document).ready(function() {
     jQuery("#show-bio").click(function () {
@@ -838,7 +839,8 @@ ORDER BY organisation.anzeige_name;
     db_set_active();
   }
   if (isset($record['id'])) {
-    $admin = user_access('access lobbywatch unpublished content');
+    $admin = user_access('access lobbywatch admin');
+    $unpublished = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
@@ -1059,7 +1061,8 @@ function _lobbywatch_kommission_id($id, $name = '') {
     db_set_active();
   }
   if ($record_active) {
-    $admin = user_access('access lobbywatch unpublished content');
+    $admin = user_access('access lobbywatch admin');
+    $unpublished = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record_active['freigabe_datum_unix'] || $record_active['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //      '<h2>' . check_plain($record_active["anzeige_name"]) . '</h2>' .
@@ -1207,7 +1210,8 @@ function _lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
     db_set_active();
   }
   if ($record) {
-    $admin = user_access('access lobbywatch unpublished content');
+    $admin = user_access('access lobbywatch admin');
+    $unpublished = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
@@ -1325,7 +1329,8 @@ GROUP_CONCAT(DISTINCT
     db_set_active();
   }
   if ($record) {
-    $admin = user_access('access lobbywatch unpublished content');
+    $admin = user_access('access lobbywatch admin');
+    $unpublished = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //     '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
@@ -1463,7 +1468,8 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
     db_set_active();
   }
   if ($record) {
-    $admin = user_access('access lobbywatch unpublished content');
+    $admin = user_access('access lobbywatch admin');
+    $unpublished = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //     '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
@@ -1588,7 +1594,8 @@ GROUP BY zutrittsberechtigung.id;";
     db_set_active();
   }
   if ($record) {
-    $admin = user_access('access lobbywatch unpublished content');
+    $admin = user_access('access lobbywatch admin');
+    $unbublished = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
@@ -1684,7 +1691,8 @@ function _lobbywatch_get_kommissionen($check_unpublished = true) {
 
 function _lobbywatch_get_workflow_state_line($record) {
   global $env;
-  $admin = user_access('access lobbywatch unpublished content');
+  $admin = user_access('access lobbywatch admin');
+  $unpublished = user_access('access lobbywatch unpublished content');
   return '<p class="lobbywatch-meta-fields-line"><small>'
     . t('Last updated !date', array ('!date' => '<time datetime="'.getISO8601Date($record['updated_date_unix']).'">' . format_date($record['updated_date_unix'], 'short_date') . '</time>')) .
     ($admin ?

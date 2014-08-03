@@ -326,11 +326,14 @@ function lobbywatch_permission() {
       'title' => t('Access general content of the lobbywatch module'),
     ),
     'access lobbywatch advanced content' => array(
-      'title' => t('Access advanced content of the lobbywatch module'),
+      'title' => t('Access advanced content of the lobbywatch module, e.g. visualization for registered users'),
     ),
     'access lobbywatch unpublished content' => array(
       'title' => t('Access unpublished (nicht freigegeben) content of the lobbywatch module'),
-    )
+    ),
+    'access lobbywatch admin' => array(
+      'title' => t('Access admin content of the lobbywatch module'),
+    ),
   );
 }
 
