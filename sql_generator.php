@@ -119,10 +119,12 @@ foreach ($tables as $table => $name) {
 }
 
 $freigaben = array();
+$entFreigeben = array();
 foreach ($workflow_tables as $table => $name) {
   $eingabe_abgeschlossen[] = "SELECT '$table' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM $table";
 
   $freigaben[] = "UPDATE $table SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';";
+  $entFreigaben[] = "UPDATE $table SET freigabe_datum = NULL, freigabe_visa=NULL, updated_date = NOW(), updated_visa= '*';";
 }
 
 $master_query = "SELECT * FROM (
@@ -179,5 +181,8 @@ echo "\n" . $worker_query . "\n";
 echo "\n-- -------------------------------------------------------------------\n";
 echo "\n-- Alle freigeben";
 echo "\n" . implode("\n", $freigaben) . "\n";
+echo "\n-- -------------------------------------------------------------------\n";
+echo "\n-- Alle ent-freigeben";
+echo "\n" . implode("\n", $entFreigaben) . "\n";
 echo "\n-- -------------------------------------------------------------------\n";
 

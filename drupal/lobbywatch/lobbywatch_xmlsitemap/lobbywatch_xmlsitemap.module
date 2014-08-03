@@ -4,16 +4,16 @@
 
 module_load_include('inc', 'lobbywatch_data', 'lobbywatch.interface');
 
-function lobbywatch_xmlsitemap_xmlsitemap_index_links($limit = 10000, $rebuild = true) {
+function lobbywatch_xmlsitemap_xmlsitemap_index_links($limit = 10000, $rebuild = true, $cron = false) {
 //   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml.', array());
 //   dpm('_lobbywatch_xmlsitemap_xmlsitemap_index_links');
   foreach (Constants::getAllEntities() as $table => $name) {
-    _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $rebuild);
+    _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $rebuild, $cron);
   }
 //   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch sitemap.xml updated.', array());
 }
 
-function _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $rebuild) {
+function _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $rebuild, $cron) {
 //   dpm($table, '_lobbywatch_xmlsitemap_xmlsitemap_index_links');
 //   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch sitemap.xml update: %table', array('%table' => $table));
   try {
@@ -27,29 +27,35 @@ function _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $r
     xmlsitemap_switch_user(0);
     $sql = "SELECT x.id FROM {xmlsitemap} x WHERE x.type = 'lw_$table'";
     //$indexed = xmlsitemap_db_fetch_col($query);
-    $indexed = db_query_range($sql, 0, $limit, array())->fetchCol();
+//     $indexed = db_query_range($sql, 0, $limit, array())->fetchCol();
+    $indexed = db_query($sql, array())->fetchCol();
 
     //there isn't a lot of stuff, it fits in memory, but fetching it is costly.
     $indexed = array_flip($indexed);
     $data = _lobbywatch_sitemap_table_flat_list($table);
     $i = 0;
     foreach ($data as $rec) {
-      if ( !isset($indexed[$rec['id']]) ) {
+      if (!isset($indexed[$rec['id']])) {
         # new record
         xmlsitemap_link_save(_lobbywatch_xmlsitemap_xmlsitemap_make_link($table, $name, $rec));
         $i++;
       }
       unset($indexed[$rec['id']]);
       if ($i == $limit)
-        continue;
+        break;
     }
     $added = $i;
+    $deleted = array();
     #Done indexing new stuff;
-    if ($indexed) {
+    if ($indexed && $i < $limit) {
       $deleted = array_flip($indexed);
       xmlsitemap_link_delete_multiple(array('type'=>"lw_$table", 'id'=>$deleted));
     }
-    drupal_set_message(t('Lobbywatch XML sitemap data %table indexed, %added added, %removed removed', array('%table' => $table, '%added' => $added, '%removed' => count($deleted),)));
+    if ($cron) {
+      watchdog('lobbywatch_xmlsitemap', '%table indexed: %added added, %removed removed', array('%table' => $table, '%added' => $added, '%removed' => count($deleted),));
+    } else {
+      drupal_set_message(t('Lobbywatch XML sitemap data %table indexed, %added added, %removed removed', array('%table' => $table, '%added' => $added, '%removed' => count($deleted),)));
+    }
   } finally {
     xmlsitemap_restore_user();
   }
@@ -160,7 +166,7 @@ function _lobbywatch_xmlsitemap_priority($table) {
  */
 function lobbywatch_xmlsitemap_cron() {
   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml.', array());
-  lobbywatch_xmlsitemap_xmlsitemap_index_links(xmlsitemap_var('batch_limit'), false);
+  lobbywatch_xmlsitemap_xmlsitemap_index_links(xmlsitemap_var('batch_limit'), false, true);
   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch sitemap.xml updated.', array());
 }
 
