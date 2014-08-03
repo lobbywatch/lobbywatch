@@ -56,7 +56,7 @@ function _lobbywatch_visual_parlamentarier_id($name='', $check_unpublished = tru
         <tr>
            <td>
               <a id="lnkParlamentOverview" href="parlament.html">
-                 <img style="border-style: none;" alt="Parlament" src="Images/bundeshaus_symbol.gif" title="Parlament Übersicht" /></a>
+                 <img style="border-style: none;" alt="Parlament" src="/sites/all/modules/lobbywatch/lobbywatch_visual/images//bundeshaus_symbol.gif" title="Parlament Übersicht" /></a>
            </td>
            <td>
               <h2 id="lblSubjectDetail"></h2>
@@ -129,7 +129,7 @@ function _lobbywatch_visual_organisation_id($name='', $check_unpublished = true)
   <table>
      <tr>
         <td>
-           <a id="lnkParlamentOverview" href="ParlamentOverview.html"><img style="border-style: none;" alt="Parlament" src="Images/bundeshaus_symbol.gif" title="Parlament Übersicht" /></a>
+           <a id="lnkParlamentOverview" href="ParlamentOverview.html"><img style="border-style: none;" alt="Parlament" src="/sites/all/modules/lobbywatch/lobbywatch_visual/images/bundeshaus_symbol.gif" title="Parlament Übersicht" /></a>
         </td>
         <td>
            <h2 id="lblSubjectDetail"></h2>
