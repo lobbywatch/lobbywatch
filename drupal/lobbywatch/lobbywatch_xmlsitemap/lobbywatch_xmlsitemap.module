@@ -179,7 +179,7 @@ function _lobbywatch_sitemap_table_flat_list($table, $condition = '1') {
 
   try {
     $sql = "
-    SELECT $table.*
+    SELECT $table.id, $table.updated_date_unix
     FROM v_$table $table
     WHERE $condition " .
     " AND $table.freigabe_datum < NOW()";
