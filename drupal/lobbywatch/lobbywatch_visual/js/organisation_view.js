@@ -103,6 +103,12 @@ $(function() {
 
      var group = canvas.append("g");
 
+     // Clear canvas background
+     group.append("rect")
+       .attr("width", viewerWidth)
+       .attr("height", viewerHeight)
+       .attr("style", "fill:white;stroke:lightblue;stroke-width:2;");
+
      var nodeRoot = group.append("svg:image")
         .attr("y", rootStartY)
         .attr("x", rootStartX)

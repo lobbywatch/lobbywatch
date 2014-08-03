@@ -200,6 +200,12 @@ $(function() {
 
 
      var group = canvas.append("g");
+
+     // Clear canvas background
+     group.append("rect")
+       .attr("width", canvasWidth)
+       .attr("height", canvasHeight)
+       .attr("style", "fill:white;stroke:lightblue;stroke-width:2;");
      
 //     group.attr("opacity", "1.0");
 
