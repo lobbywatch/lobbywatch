@@ -20,91 +20,6 @@ function _lobbywatch_visual_page_title($prefix, $suffix, $table, $title = '') {
   return $title;
 }
 
-// function _lobbywatch_fetch_anzeige_name($table, $id) {
-//   $url_name = '';
-
-//   // Use the database we set up earlier
-//   // Ref: https://drupal.org/node/18429
-//   db_set_active('lobbywatch');
-
-//   try {
-//     $sql = "SELECT id, anzeige_name, name FROM v_$table WHERE id=:id";
-//     $result = db_query($sql, array(':id' => check_plain($id)));
-
-//     if ($result) {
-//       $record = $result->fetchAssoc();
-//       $url_name = check_plain($record['anzeige_name']);
-//     }
-// //     df($record, '$record');
-// //     df($url_name, '$url_name');
-//   } finally {
-//     // Go back to the default database,
-//     // otherwise Drupal will not be able to access it's own data later on.
-//     db_set_active();
-//   }
-//   return $url_name;
-// }
-
-// function _lobbywatch_fetch_parlamentarier_title($table, $id) {
-//   $title = '';
-
-//   // Use the database we set up earlier
-//   // Ref: https://drupal.org/node/18429
-//   db_set_active('lobbywatch');
-
-//   try {
-//     $sql = "SELECT id, anzeige_name, name, nachname, vorname, geschlecht, rat, titel_de, kanton_abkuerzung, kanton_name_de, partei FROM v_$table WHERE id=:id";
-//     $result = db_query($sql, array(':id' => check_plain($id)));
-
-//     if ($result) {
-//       $record = $result->fetchAssoc();
-//       $title = check_plain($record['titel_de'] . ' ' . $record['name'] . ', ' . ($record['partei'] ? $record['partei'] : 'parteilos') . ', ' . $record['kanton_name_de']);
-//     }
-//     //     df($record, '$record');
-//     //     df($url_name, '$url_name');
-//   } finally {
-//     // Go back to the default database,
-//     // otherwise Drupal will not be able to access it's own data later on.
-//     db_set_active();
-//   }
-//   return $title;
-// }
-
-// function _lobbywatch_visual_fetch_organisation_title($table, $id) {
-//   $title = '';
-
-//   // Use the database we set up earlier
-//   // Ref: https://drupal.org/node/18429
-//   db_set_active('lobbywatch');
-
-//   try {
-//     $sql = "SELECT id, anzeige_name, ort FROM v_$table WHERE id=:id";
-//     $result = db_query($sql, array(':id' => check_plain($id)));
-
-//     if ($result) {
-//       $record = $result->fetchAssoc();
-//       $title = check_plain($record['anzeige_name'] . ($record['ort'] ? ', ' . $record['ort'] : ''));
-//     }
-//     //     df($record, '$record');
-//     //     df($url_name, '$url_name');
-//   } finally {
-//     // Go back to the default database,
-//     // otherwise Drupal will not be able to access it's own data later on.
-//     db_set_active();
-//   }
-//   return $title;
-// }
-
-// function _lobbywatch_anzeige_name_for_url($table, $id) {
-//   return _lobbywatch_clean_for_url(_lobbywatch_fetch_anzeige_name($table, $id));
-// }
-
-// function _lobbywatch_clean_for_url($name){
-//   $url_name = preg_replace('/[.,]/i', '', $name);
-//   $url_name = preg_replace('/[\/]/i', '-', $url_name);
-//   return check_plain($url_name);
-// }
-
 function _lobbywatch_visual_get_parameter_id() {
   if (key_exists('id', $_GET)) {
 //     dpm($_GET['id'], 'id');
@@ -120,6 +35,8 @@ function _lobbywatch_visual_parlamentarier_id($name='', $check_unpublished = tru
 
 //   $url_name = _lobbywatch_anzeige_name_for_url('parlamentarier', $id);
   $id = _lobbywatch_visual_get_parameter_id();
+  $table = 'parlamentarier';
+  $name = _lobbywatch_fetch_anzeige_name($table, $id);
 //   $options = array('query' => array('id' => $id));
 //   drupal_goto("daten/grafik/parlamentarier", $options);
 
@@ -138,7 +55,7 @@ function _lobbywatch_visual_parlamentarier_id($name='', $check_unpublished = tru
      <table>
         <tr>
            <td>
-              <a id="lnkParlamentOverview" href="ParlamentOverview.html">
+              <a id="lnkParlamentOverview" href="parlament.html">
                  <img style="border-style: none;" alt="Parlament" src="Images/bundeshaus_symbol.gif" title="Parlament Übersicht" /></a>
            </td>
            <td>
@@ -171,7 +88,8 @@ function _lobbywatch_visual_parlamentarier_id($name='', $check_unpublished = tru
               </table>
            </td>
         </tr>
-     </table>
+     </table>'
+     . "<p><a href='/de/daten/$table/$id'>$name Textansicht</a></p>" . '
   </div>
 
   <div id="chart" class="divChart">
@@ -193,7 +111,9 @@ function _lobbywatch_visual_parlamentarier_id($name='', $check_unpublished = tru
 function _lobbywatch_visual_organisation_id($name='', $check_unpublished = true) {
 
   $id = _lobbywatch_visual_get_parameter_id();
-//   $options = array('query' => array('id' => $id));
+  $table = 'organisation';
+  $name = _lobbywatch_fetch_anzeige_name($table, $id);
+  //   $options = array('query' => array('id' => $id));
 //   drupal_goto("daten/grafik/organisation", $options);
 
   libraries_load('d3.drupal');
@@ -217,7 +137,8 @@ function _lobbywatch_visual_organisation_id($name='', $check_unpublished = true)
            <h5 id="lblSubjectDetail2"></h5>
         </td>
      </tr>
-  </table>
+  </table>'
+     . "<p><a href='/de/daten/$table/$id'>$name Textansicht</a></p>" . '
 </div>
 
 <div id="chart" class="divChart">
