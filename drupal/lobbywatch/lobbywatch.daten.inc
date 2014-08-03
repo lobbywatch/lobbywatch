@@ -509,12 +509,13 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
       $markup .=
       (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //       '<h2>' . $parlamentarier_name . '</h2>' .
-      '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '">' .
+      '<div><a id="parlamentarier-kleinbild" class="parlamentarier-kleinbild" onclick="false"><img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '"></a>' .
+      ' <a id="show-bio" class="toggle-text" onclick="false"><span id="bio-text-show">Zeige</span><span id="bio-text-hide" style="display:none">Verstecke</span> Angaben zur Person</a></div>' .
       (!$active ? '<p><strong><em>Nicht mehr im Parlament. War im Parlament bis ' . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
       ($admin ? '<p class="admin">Lobbyfaktor: <b>XY</b></p>' : '') .
       '<script>
 jQuery(document).ready(function() {
-    jQuery("#show-bio").click(function () {
+    jQuery("#show-bio, #parlamentarier-kleinbild").click(function () {
       jQuery("#show-bio").slideToggle("slow");
       jQuery("#bio").slideToggle("slow");
       // jQuery("#bio-text-show").toggle();
@@ -522,7 +523,6 @@ jQuery(document).ready(function() {
     });
  });
 </script>' .
-      '<div><a id="show-bio" class="toggle-text" onclick="false"><span id="bio-text-show">Zeige</span><span id="bio-text-hide" style="display:none">Verstecke</span> Angaben zur Person</a></div>' .
       '<div id="bio" style="display:none">' .
       '<table border="0">' .
       // '<tr><td>Rat:</td><td>' . $rat . '</td></tr>' .
