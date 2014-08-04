@@ -416,7 +416,7 @@ $(function() {
                  .text(function (d, i) {
                     // TODO RKU var txt = d.organisation.branche + " ";
                     // TODO RKU txt += d.organisation.name_de;
-                    var txt = d.branche + " ";
+                    var txt = d.branche ? d.branche + " " : '';
                     txt += d.name_de;
                     return txt;
                  })
@@ -615,6 +615,7 @@ function FitOrganisationTextToRect(text, width) {
       var organisationData = text.property("__data__");
       // TODO RKU var branche = organisationData.organisation.branche;
       // TODO RKU var company = organisationData.organisation.name_de;
+      //console.log(organisationData);
       var branche = organisationData.branche;
       var company = organisationData.name_de;
       var words = text.text().split(/\s+/).reverse();
@@ -636,25 +637,26 @@ function FitOrganisationTextToRect(text, width) {
 
       // Branche
       // TODO RKU words = organisationData.organisation.branche.split(/\s+/).reverse();
-      words = organisationData.branche.split(/\s+/).reverse();
-      while (word = words.pop()) {
-         line.push(word);
-         tspan
-            .text(line.join(" "));
-         if (tspan.node().getComputedTextLength() > width) {
-            line.pop();
-            tspan
-               .text(line.join(" "));
-            line = [word];
-            tspan = text.append("tspan")
-                     .style("font-weight", "bold")
-                     .attr("x", posX)
-                     //.attr("y", y)
-                     .attr("dy", lineHeight)
-                     .text(word);
-         }
-      }
-
+      if (organisationData.branche) {
+        words = organisationData.branche.split(/\s+/).reverse();
+        while (word = words.pop()) {
+           line.push(word);
+           tspan
+              .text(line.join(" "));
+           if (tspan.node().getComputedTextLength() > width) {
+              line.pop();
+              tspan
+                 .text(line.join(" "));
+              line = [word];
+              tspan = text.append("tspan")
+                       .style("font-weight", "bold")
+                       .attr("x", posX)
+                       //.attr("y", y)
+                       .attr("dy", lineHeight)
+                       .text(word);
+           }
+        }
+     }
       // Company
       line = [];
       tspan = text
