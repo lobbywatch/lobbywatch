@@ -734,7 +734,14 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
  */
 function lobbywatch_form_search_form_alter(&$form, &$form_state, $form_id) {
 
+//   dpm($form_id, '$form_id');
+
   if (isset($form['module']) && $form['module']['#value'] == 'lobbywatch' && user_access('access lobbywatch advanced content')) {
+
+    // Add placeholder
+    $form['basic']['keys']['#attributes']['placeholder'] = t("Suche Parlamentarier, Organisationen, Lobbygruppen, …");
+//     dpm($form, '$form');
+
     $show_type = array('text' => t('Text'), 'graphic' => t('Graphik'));
     $form['result_type'] = array(
         '#type' => 'radios',
@@ -749,6 +756,25 @@ function lobbywatch_form_search_form_alter(&$form, &$form_state, $form_id) {
   }
 
   $form['#validate'][] = '_lobbywatch_search_validate';
+
+}
+
+/**
+ * Implements hook_form_search_form_alter.
+ *
+ * @see https://api.drupal.org/api/drupal/modules!node!node.module/function/node_form_search_form_alter/7
+ *
+ * @param unknown $form
+ * @param unknown $form_state
+ * @param unknown $form_id
+ */
+function lobbywatch_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+
+//   dpm($form_id, '$form_id2');
+
+    // Add placeholder
+  $form[$form_id]['#attributes']['placeholder'] = t("Suche Parlamentarier, Organisationen, Lobbygruppen, …");
+//   dpm($form, '$form2');
 
 }
 
