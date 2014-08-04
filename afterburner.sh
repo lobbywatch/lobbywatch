@@ -231,6 +231,20 @@ do
 done
 
 
+for file in $dir/components/advanced_search_page.php
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  # Read file, process regex and write file
+  cat "$file.bak" \
+  | perl -p -e's/protected function SetApplyNotOperator/\/*afterburner*\/ public function SetApplyNotOperator/' \
+  | perl -p -e's/protected function SetFilterIndex/\/*afterburner*\/ public function SetFilterIndex/' \
+  | perl -p -e's/private function SaveSearchValuesToSession/\/*afterburner*\/ public function SaveSearchValuesToSession/' \
+  | perl -p -e's/(\s*public function GetTarget\(\))/    public function getName() { \/*afterburner*\/\n      return \$this->name;\n    }\n\n\1/' \
+  | perl -p -e's/(<\?php)/\1\n\/\/ Processed by afterburner.sh\n\n/' \
+  > "$file";
+done
+
 for file in $dir/components/rss_feed_generator.php
 do
   echo "Process $file";

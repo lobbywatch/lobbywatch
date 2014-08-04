@@ -1,4 +1,7 @@
 <?php
+// Processed by afterburner.sh
+
+
 
 // require_once 'phpgen_settings.php';
 // require_once 'components/utils/string_utils.php';
@@ -102,7 +105,7 @@ abstract class SearchColumn {
         return $this->applyNotOperator;
     }
 
-    protected function SetApplyNotOperator($value)
+    /*afterburner*/ public function SetApplyNotOperator($value)
     {
         $this->applyNotOperator = $value;
     }
@@ -112,7 +115,7 @@ abstract class SearchColumn {
         return $this->filterIndex;
     }
     
-    protected function SetFilterIndex($value)
+    /*afterburner*/ public function SetFilterIndex($value)
     {
         $this->filterIndex = $value;
     }
@@ -202,7 +205,7 @@ abstract class SearchColumn {
         }
     }
 
-    private function SaveSearchValuesToSession()
+    /*afterburner*/ public function SaveSearchValuesToSession()
     {
         $this->superGlobals->SetSessionVariable('not_' . $this->GetFieldName(), $this->applyNotOperator);
         $this->superGlobals->SetSessionVariable('filtertype_' . $this->GetFieldName(), $this->filterIndex);
@@ -865,6 +868,10 @@ class AdvancedSearchControl {
     }
 
     #region Options
+
+    public function getName() { /*afterburner*/
+      return $this->name;
+    }
 
     public function GetTarget()
     {

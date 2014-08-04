@@ -154,6 +154,8 @@ function before_render(Page $page) {
   $page->OnCustomHTMLHeader->AddListener('add_custom_header');
   write_user_last_access($page);
 
+  applyDefaultFilters($page);
+
 //   // Fill info hints
 //   $hints = array();
 //   foreach($page->GetGrid()->GetViewColumns() as $column) {
@@ -173,6 +175,31 @@ function write_user_last_access($page) {
   // Inspired by Drupal 7 session.inc _drupal_session_write()
   if (($id = GetApplication()->GetCurrentUserId()) && ($request_time = $_SERVER['REQUEST_TIME']) - $connection->ExecScalarSQL("SELECT UNIX_TIMESTAMP(last_access) FROM user WHERE id= $id;") > 180) {
     $connection->ExecSQL("UPDATE `user` SET `last_access`= CURRENT_TIMESTAMP WHERE `id` = $id;");
+  }
+
+}
+
+function applyDefaultFilters(Page $page) {
+  $sessionParamName = 'alreadyCalledDefaultFilter_' . $page->GetDataset()->GetName();
+//   df($_SESSION, 'session before');
+//   df($_POST, 'post before');
+//   df(GetApplication()->IsSessionVariableSet($sessionParamName), $sessionParamName);
+  if(!($column = ($page->AdvancedSearchControl->FindSearchColumnByName('bis')))) {
+    if(!($column = ($page->AdvancedSearchControl->FindSearchColumnByName('im_rat_bis')))) {
+      // no bis or im_rat_bis column found, return
+      return false;
+    }
+  }
+//   df($column->IsFilterActive(), 'IsFilterActive' );
+  if (!GetApplication()->IsSessionVariableSet($sessionParamName) && !$column->GetFilterIndex()) {
+    $column->SetFilterIndex('IS NULL');
+    $column->SetApplyNotOperator(false);
+//     df($column->IsFilterActive(), 'IsFilterActive after' );
+    $column->SaveSearchValuesToSession();
+    GetApplication()->SetSessionVariable($page->AdvancedSearchControl->getName() . 'SearchType', 1);
+//     df($_SESSION, 'session after');
+    $page->AdvancedSearchControl->ProcessMessages();
+    GetApplication()->SetSessionVariable($sessionParamName, true);
   }
 
 }
