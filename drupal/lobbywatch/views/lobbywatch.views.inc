@@ -735,6 +735,7 @@ function lobbywatch_views_data() {
 function lobbywatch_views_query_substitutions() {
   return array(
       '***ACCESS_UNPUBLISHED_LOBBYWATCH_CONTENT***' => intval(user_access('access lobbywatch unpublished content')),
+      '***ACCESS_ADMIN_LOBBYWATCH_CONTENT***' => intval(user_access('access lobbywatch admin')),
   );
 }
 
