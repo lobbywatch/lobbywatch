@@ -1025,6 +1025,9 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     $workflow_styles = '';
 
+    // Check completeness
+    $completeness_styles = '';
+
 //     df(is_object($rowData['freigabe_datum']), 'is_object($rowData[freigabe_datum]');
 //     df(is_string($rowData['freigabe_datum']), 'is_string($rowData[freigabe_datum])');
 //     df(gettype($rowData['freigabe_datum']), 'gettype($rowData[freigabe_datum])');
@@ -1108,12 +1111,11 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 
     if ((isset($rowData['im_rat_bis']) && getTimestamp($rowData['im_rat_bis']) < $now_ts) || (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts)) {
       $workflow_styles .= 'text-decoration: line-through;';
+      $completeness_styles .= 'text-decoration: line-through;';
     } elseif ((isset($rowData['im_rat_bis']) && getTimestamp($rowData['im_rat_bis']) > $now_ts) || (isset($rowData['bis']) && getTimestamp($rowData['bis']) > $now_ts)) {
       $workflow_styles .= 'text-decoration: underline;';
+      $completeness_styles .= 'text-decoration: underline;';
     }
-
-    // Check completeness
-    $completeness_styles = '';
 
     if ($table_name === 'parlamentarier') {
       // Check zutrittsberechtigung workflow state
@@ -1238,10 +1240,12 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
           $workflow_styles .= 'background-image: url(img/tick-small-red.png); background-repeat: no-repeat; background-position: bottom right;';
     }
 
-      if (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts) {
+    if (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts) {
       $workflow_styles .= 'text-decoration: line-through;';
+      $completeness_styles .= 'text-decoration: line-through;';
     } elseif (isset($rowData['bis']) && getTimestamp($rowData['bis']) > $now_ts) {
       $workflow_styles .= 'text-decoration: underline;';
+      $completeness_styles .= 'text-decoration: underline;';
     }
 
     // Check completeness
