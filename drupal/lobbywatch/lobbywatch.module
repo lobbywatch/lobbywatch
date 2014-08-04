@@ -397,7 +397,7 @@ function lobbywatch_autocomplete_search_form($form, &$form_state) {
     '#description' => t('Suchtext eingeben, kurz warten und auswählen'),
     '#autocomplete_path' => 'autocomplete/lobbywatch/search',
     // Autocomplete, autosubmit, ref: https://drupal.org/node/1772490
-    '#attributes' => array('class' => array('auto_submit'), 'placeholder' => t("Suche Parlamentarier, Organisationen, Lobbygruppen, …"),
+    '#attributes' => array('class' => array('auto_submit'), 'placeholder' => t("Schnellsuche: Suchtext eingeben, kurz warten und auswählen"),
       'title' => t("Suchtext eingeben, kurz warten und auswählen")),
 //     '#attributes' =>array()
 //     '#attributes' => array('class' => array('use-ajax-submit')),
@@ -471,7 +471,7 @@ function lobbywatch_autocomplete_search_form_submit($form, &$form_state) {
     // If $result is nonzero, we found a match and can use it as the index into $matches.
     $table = $matches[1]; // check_plain() not necessary
     $id = $matches[2];
-    if ($result_type === 'graphic') {
+    if ($result_type === 'graphic' && in_array($table, array('parlamentarier', 'organisation'), true)) {
 //       dpm('graphic', 'type');
 //     df("daten/$table/$id", 'goto');
     // Verify that it's a valid nid.
@@ -541,3 +541,271 @@ function lobbywatch_init() {
 //     require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/common/utils.php';
 //     require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/settings/settings.php';
 }
+
+function lobbywatch_search_info() {
+  return array(
+      'title' => 'Lobbywatch Daten',
+      'path' => 'daten',
+//       'conditions_callback' => '_lobbywatch_callback_search_conditions',
+  );
+}
+
+// function _lobbywatch_callback_search_conditions($keys) {
+
+// }
+
+/**
+ * Implements hook_search_access().
+ */
+function lobbywatch_search_access() {
+  return user_access('access lobbywatch general content');
+}
+
+/**
+ * Implements hook_search_execute().
+ */
+function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
+  //   return _lobbywatch_parlamentarier_list();
+  // Use the database we set up earlier
+  // Ref: https://drupal.org/node/18429
+  db_set_active('lobbywatch');
+
+  try {
+    $find = array();
+
+//     dpm($keys, '$keys');
+    $result_type = search_expression_extract($keys, 'type');
+    $keys = search_expression_insert($keys, 'type', null); // remove
+    // Replace wildcards with MySQL/PostgreSQL wildcards.
+    $search_str = preg_replace('!\*+!', '%', $keys);
+//     $search_str = '%' . db_like($keys) . '%'
+    if (!preg_match('/[%_]/', $search_str)) {
+      $search_str = "%$search_str%";
+    }
+    $table = 'parlamentarier';
+    $query = db_select("v_$table", $table);
+    $query->fields($table, array('id'));
+    $query->addExpression("'$table'", 'page');
+    $query->addExpression("CONCAT_WS(', ', anzeige_name, rat, partei, kanton)", 'name');
+    $query->condition('anzeige_name', $search_str, 'LIKE');
+    if (!user_access('access lobbywatch unpublished content')) {
+//       $query->where('(im_rat_bis IS NULL OR im_rat_bis > NOW()) AND freigabe_datum <= NOW()');
+      $query->condition(db_or()->isNull('im_rat_bis')->where('im_rat_bis > NOW()'));
+      $query->where('freigabe_datum <= NOW()');
+    }
+
+    $table = 'zutrittsberechtigung';
+    $query2 = db_select("v_$table", $table);
+    $query2->fields($table, array('id'));
+    $query2->addExpression("'$table'", 'page');
+    $query2->addExpression("anzeige_name", 'name');
+    $query2->condition('anzeige_name', $search_str, 'LIKE');
+    if (!user_access('access lobbywatch unpublished content')) {
+//       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
+      $query2->condition(db_or()->isNull('bis')->where('bis > NOW()'));
+      $query2->where('freigabe_datum <= NOW()');
+    }
+    $merged_query = $query->union($query2);
+
+    $query2 = db_select("v_$table", $table);
+    foreach (Constants::$entities_web as $table => $page) {
+      $query2 = db_select("v_$table", $table);
+      $query2->addExpression("'$table'", 'page');
+      $query2->addExpression("anzeige_name", 'name');
+//       $query2->addField("'$table'", "anzeige_name", 'name'); // causes problem with field order
+      $query2->fields($table, array('id'));
+      $query2->condition('anzeige_name', $search_str, 'LIKE');
+      if (!user_access('access lobbywatch unpublished content')) {
+//       $query->where('(im_rat_bis IS NULL OR im_rat_bis > NOW()) AND freigabe_datum <= NOW()');
+        $query2->where('freigabe_datum <= NOW()');
+      }
+
+      $merged_query = $merged_query->union($query2)->extend('PagerDefault');
+    }
+
+    $limit_query = db_select($merged_query, 'limit_query');
+    $limit_query = $limit_query->range(0, 400);
+    $limit_query->fields('limit_query', array('name', 'page', 'id'));
+
+    // Workaround for https://www.drupal.org/node/2303337 / https://www.drupal.org/node/1634908
+    $union_query = db_select($limit_query, 'union_query');
+    $union_query = $union_query->extend('PagerDefault')->limit(20);
+    $union_query->fields('union_query', array('name', 'page', 'id'));
+    $query_result = $union_query->execute();
+
+//     dpm((string) $union_query);
+
+    // Workaround for https://www.drupal.org/node/2303337 / https://www.drupal.org/node/1634908
+//     $count_query = db_select($merged_query, 'count_query');
+//     $count_query->addExpression('COUNT(*)', 'num');
+
+//     dpm((string) $count_query);
+
+//     $paged_query = $merged_query->extend('PagerDefault')->limit(5);
+//     $paged_query->setCountQuery($count_query);
+//     dpm((string) $paged_query);
+//     $query_result = $paged_query->execute();
+
+//     $paged_query = $query->extend('PagerDefault')->limit(5);
+//     dpm((string) $paged_query);
+//     $query_result = $paged_query->execute();
+
+    $results = array();
+    while ($record = $query_result->fetchAssoc()) {
+//     foreach ($query_result as $record) {
+//        dpm($record, '$record');
+
+      //     if ($result_type === 'graphic') {
+      // //       dpm('graphic', 'type');
+      // //     df("daten/$table/$id", 'goto');
+      //     // Verify that it's a valid nid.
+      //       $options = array('query' => array('id' => $id));
+      //       drupal_goto("daten/grafik/$table", $options);
+      //     } else {
+      // //       dpm('text!!', 'type');
+      //       drupal_goto("daten/$table/$id");
+      //     }
+
+      $result = array(
+          'title' => check_plain(ucfirst($record['page']) . ': ' . $record['name']),
+          'link' => $result_type === 'graphic'  && in_array($record['page'], array('parlamentarier', 'organisation'), true) ? url('grafik/' . check_plain($record['page']) . '/' . $record['id'], array('absolute' => TRUE)) : url('daten/' . check_plain($record['page']) . '/' . $record['id'], array('absolute' => TRUE)),
+          'type' => $record['page'],
+          'extra' => '',
+          'snippet' => '',
+          'language' => 'de',
+      );
+      $results[] = $result;
+    }
+
+    return $results;
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+  }
+}
+
+// // Ref https://api.drupal.org/api/examples/ajax_example!ajax_example_autocomplete.inc/7
+// function _lobbywatch_search_autocomplete($str = '', $check_unpublished = true) {
+
+//   //   return _lobbywatch_parlamentarier_list();
+//   // Use the database we set up earlier
+//   // Ref: https://drupal.org/node/18429
+//   db_set_active('lobbywatch');
+
+//   try {
+//     $table_sql = array();
+//     $table = 'parlamentarier';
+//     $table_sql[] = "SELECT '$table' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+//     $table = 'zutrittsberechtigung';
+//     $table_sql[] = "SELECT 'zutrittsberechtigter' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+//     foreach (Constants::$entities_web as $table => $page) {
+//       $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+//     }
+//     $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
+//     $result = db_query($sql, array(':str' => "%$str%"));
+
+//     //   dpm($result, 'result');
+
+//     $items = array();
+//     while($record = $result->fetchAssoc()) {
+//       $key = check_plain($record['name']) . " [" . check_plain($record['page']). '=' . check_plain($record['id']) . "]";
+//       $items[$key] = check_plain(ucfirst($record['page']) . ': ' . $record['name']);
+//     }
+//   } finally {
+//     // Go back to the default database,
+//     // otherwise Drupal will not be able to access it's own data later on.
+//     db_set_active();
+//   }
+
+//   //   dpm($items, 'items');
+
+//   drupal_json_output($items);
+// }
+
+/**
+ * Implements hook_form_search_form_alter.
+ *
+ * @see https://api.drupal.org/api/drupal/modules!node!node.module/function/node_form_search_form_alter/7
+ *
+ * @param unknown $form
+ * @param unknown $form_state
+ * @param unknown $form_id
+ */
+function lobbywatch_form_search_form_alter(&$form, &$form_state, $form_id) {
+
+  if (isset($form['module']) && $form['module']['#value'] == 'lobbywatch' && user_access('access lobbywatch advanced content')) {
+    $show_type = array('text' => t('Text'), 'graphic' => t('Graphik'));
+    $form['result_type'] = array(
+        '#type' => 'radios',
+        '#title' => t('Darstellung:'),
+        '#default_value' => 'text',
+        '#options' => $show_type,
+        //       '#description' => t(''),
+        '#access' => user_access('access lobbywatch advanced content'),
+        '#attributes' => array('class' => array('admin'),
+          'title' => t("Sollen die Resultate graphisch angezeigt werden?")),
+    );
+  }
+
+  $form['#validate'][] = '_lobbywatch_search_validate';
+
+}
+
+/**
+ * Callback for validate.
+ *
+ * @see https://api.drupal.org/api/drupal/modules!node!node.module/function/node_search_validate/7
+ */
+function _lobbywatch_search_validate($form, &$form_state) {
+//   dpm('validate');
+//   search_expression_insert($expression, $option);
+  // Initialize using any existing basic search keywords.
+  $keys = $form_state['values']['processed_keys'];
+
+  // Insert extra restrictions into the search keywords string.
+  if (isset($form_state['values']['result_type']) /*&& is_array($form_state['values']['type'])*/) {
+    // Retrieve selected types - Form API sets the value of unselected
+    // checkboxes to 0.
+//     $form_state['values']['result_type'] = array_filter($form_state['values']['result_type']);
+//     if (count($form_state['values']['type'])) {
+//       $keys = search_expression_insert($keys, 'type', implode(',', array_keys($form_state['values']['type'])));
+//     }
+
+  $keys = search_expression_insert($keys, 'type', $form_state['values']['result_type']);
+  }
+
+//   if (isset($form_state['values']['term']) && is_array($form_state['values']['term']) && count($form_state['values']['term'])) {
+//     $keys = search_expression_insert($keys, 'term', implode(',', $form_state['values']['term']));
+//   }
+//   if (isset($form_state['values']['language']) && is_array($form_state['values']['language'])) {
+//     $languages = array_filter($form_state['values']['language']);
+//     if (count($languages)) {
+//       $keys = search_expression_insert($keys, 'language', implode(',', $languages));
+//     }
+//   }
+//   if ($form_state['values']['or'] != '') {
+//     if (preg_match_all('/ ("[^"]+"|[^" ]+)/i', ' ' . $form_state['values']['or'], $matches)) {
+//       $keys .= ' ' . implode(' OR ', $matches[1]);
+//     }
+//   }
+//   if ($form_state['values']['negative'] != '') {
+//     if (preg_match_all('/ ("[^"]+"|[^" ]+)/i', ' ' . $form_state['values']['negative'], $matches)) {
+//       $keys .= ' -' . implode(' -', $matches[1]);
+//     }
+//   }
+//   if ($form_state['values']['phrase'] != '') {
+//     $keys .= ' "' . str_replace('"', ' ', $form_state['values']['phrase']) . '"';
+//   }
+  if (!empty($keys)) {
+    form_set_value($form['basic']['processed_keys'], trim($keys), $form_state);
+  }
+}
+
+// /**
+//  * Implements hook_search_page
+//  */
+// function lobbywatch_search_page($results) {
+
+// }
+
