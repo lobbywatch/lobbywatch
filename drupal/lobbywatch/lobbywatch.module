@@ -326,7 +326,7 @@ function lobbywatch_permission() {
       'title' => t('Access general content of the lobbywatch module'),
     ),
     'access lobbywatch advanced content' => array(
-      'title' => t('Access advanced content of the lobbywatch module, e.g. visualization for registered users'),
+      'title' => t('Access advanced content of the lobbywatch module, e.g. historised data for registered users'),
     ),
     'access lobbywatch unpublished content' => array(
       'title' => t('Access unpublished (nicht freigegeben) content of the lobbywatch module'),
@@ -410,7 +410,7 @@ function lobbywatch_autocomplete_search_form($form, &$form_state) {
       '#default_value' => 'text',
       '#options' => $show_type,
 //       '#description' => t(''),
-      '#access' => user_access('access lobbywatch advanced content'),
+      '#access' => user_access('access lobbywatch visual content'), // TODO permission: not really proper to acccess sub module permission, but for the moment it's OK
       '#attributes' => array('class' => array('admin'),
           'title' => t("Sollen die Resultate graphisch angezeigt werden?")),
   );
@@ -749,7 +749,7 @@ function lobbywatch_form_search_form_alter(&$form, &$form_state, $form_id) {
         '#default_value' => 'text',
         '#options' => $show_type,
         //       '#description' => t(''),
-        '#access' => user_access('access lobbywatch advanced content'),
+        '#access' => user_access('access lobbywatch visual content'), // TODO permission: not really proper to acccess sub module permission, but for the moment it's OK
         '#attributes' => array('class' => array('admin'),
           'title' => t("Sollen die Resultate graphisch angezeigt werden?")),
     );

@@ -17,6 +17,6 @@ class lobbywatch_handler_filter_parlamentarier_active_or_admin extends views_han
 
   function query() {
     $table = $this->ensure_my_table();
-    $this->query->add_where_expression($this->options['group'], "$table.im_rat_bis IS NULL OR $table.im_rat_bis >= NOW() OR ***ACCESS_ADMIN_LOBBYWATCH_CONTENT*** = 1");
+    $this->query->add_where_expression($this->options['group'], "$table.im_rat_bis IS NULL OR $table.im_rat_bis >= NOW() OR ***ACCESS_ADMIN_LOBBYWATCH_CONTENT*** = 1 OR ***ACCESS_ADVANCED_LOBBYWATCH_CONTENT*** = 1");
   }
 }

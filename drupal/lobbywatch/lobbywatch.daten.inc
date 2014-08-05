@@ -11,9 +11,9 @@ function _lobbywatch_search_autocomplete($str = '', $check_unpublished = true) {
   try {
     $table_sql = array();
     $table = 'parlamentarier';
-    $table_sql[] = "SELECT '$table' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+    $table_sql[] = "SELECT '$table' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
     $table = 'zutrittsberechtigung';
-    $table_sql[] = "SELECT 'zutrittsberechtigter' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+    $table_sql[] = "SELECT 'zutrittsberechtigter' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
     foreach (Constants::$entities_web as $table => $page) {
       $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
     }
@@ -106,7 +106,7 @@ function _lobbywatch_parlamentarier_list($check_unpublished = true) {
     $result = db_query("SELECT parlamentarier.*
     FROM v_parlamentarier parlamentarier
     WHERE "
-     . ($check_unpublished = true && !user_access('access lobbywatch unpublished content') ? '(parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW()) AND parlamentarier.freigabe_datum <= NOW()' : '') . "
+     . ($check_unpublished && !user_access('access lobbywatch advanced content') ? '(parlamentarier.im_rat_bis IS NULL OR parlamentarier.im_rat_bis > NOW()) AND parlamentarier.freigabe_datum <= NOW()' : '') . "
     ORDER BY parlamentarier.anzeige_name");
 
     $inactive = !$record['im_rat_bis'] || $record['im_rat_bis'] < time();
