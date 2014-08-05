@@ -17,7 +17,7 @@ The data are not stored in this repository.
 ## Requirements
 
 * PHP 5.5
-* MySql 5.5
+* MySql 5.5/5.1
 * Drupal 7
 * D3
 * bash
@@ -26,7 +26,7 @@ The data are not stored in this repository.
 
 The edit forms are built with the [PHP Generator for MySQL Professional](http://www.sqlmaestro.com/de/products/mysql/phpgenerator/). Its a commercial tool (about 100$).
 
-PHP Generator for MySQL Professional 12.8.0.16
+PHP Generator for MySQL Professional 12.8.0.18
 
 ## Edit forms
 
@@ -41,6 +41,10 @@ PHP Generator for MySQL Professional 12.8.0.16
 See parameters with
 
     ./deploy.sh -h
+
+## Drupal Theme
+
+The Drupal 7 theme transparent_sky is in a separte git repository: https://github.com/Lobbywatch/transparent_sky
 
 ## License
 
