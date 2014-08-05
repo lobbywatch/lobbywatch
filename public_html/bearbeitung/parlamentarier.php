@@ -628,6 +628,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -1247,6 +1250,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -2966,6 +2972,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -3176,6 +3185,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -3910,6 +3922,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -5167,6 +5182,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -5377,6 +5395,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -6131,6 +6152,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -6806,6 +6830,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -10539,6 +10566,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -10749,6 +10779,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -12631,6 +12664,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -13104,6 +13140,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -13314,6 +13353,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -15061,6 +15103,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -15788,6 +15833,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -19012,6 +19060,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -20873,6 +20924,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -21482,6 +21536,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -24279,6 +24336,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -26297,6 +26357,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -27003,6 +27066,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -34412,6 +34478,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -35990,6 +36059,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -36556,6 +36628,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -39488,54 +39563,65 @@
             //
             // Edit column for beruf_interessengruppe_id field
             //
-            $editor = new ComboBox('beruf_interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('beruf_interessengruppe_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche_name_with_null`');
+            $field = new IntegerField('id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`interessengruppe`');
             $field = new IntegerField('id', null, null, true);
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $dataset1->AddField($field, true);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Beruf Lobbygruppe', 
-                'beruf_interessengruppe_id', 
-                $editor, 
-                $this->dataset, 'id', 'name', $lookupDataset);
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'name', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Beruf Lobbygruppe', 'beruf_interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -39545,54 +39631,65 @@
             //
             // Edit column for beruf_interessengruppe_id field
             //
-            $editor = new ComboBox('beruf_interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('beruf_interessengruppe_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche_name_with_null`');
+            $field = new IntegerField('id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`interessengruppe`');
             $field = new IntegerField('id', null, null, true);
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $dataset1->AddField($field, true);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Beruf Lobbygruppe', 
-                'beruf_interessengruppe_id', 
-                $editor, 
-                $this->dataset, 'id', 'name', $lookupDataset);
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'name', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Beruf Lobbygruppe', 'beruf_interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -41710,54 +41807,65 @@
             //
             // Edit column for beruf_interessengruppe_id field
             //
-            $editor = new ComboBox('beruf_interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('beruf_interessengruppe_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche_name_with_null`');
+            $field = new IntegerField('id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`interessengruppe`');
             $field = new IntegerField('id', null, null, true);
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $dataset1->AddField($field, true);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Beruf Lobbygruppe', 
-                'beruf_interessengruppe_id', 
-                $editor, 
-                $this->dataset, 'id', 'name', $lookupDataset);
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'name', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Beruf Lobbygruppe', 'beruf_interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -42747,54 +42855,65 @@
             //
             // Edit column for beruf_interessengruppe_id field
             //
-            $editor = new ComboBox('beruf_interessengruppe_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
+            $editor = new MultiLevelComboBoxEditor('beruf_interessengruppe_id_edit', $this->CreateLinkBuilder());
+            
+            $dataset0 = new TableDataset(
+                new MyPDOConnectionFactory(),
+                GetConnectionOptions(),
+                '`v_branche_name_with_null`');
+            $field = new IntegerField('id');
+            $dataset0->AddField($field, false);
+            $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $dataset0->AddField($field, false);
+            
+            $editor->AddLevel($dataset0, 'id', 'anzeige_name', $this->RenderText('Branche'), null);
+            
+            $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
                 '`interessengruppe`');
             $field = new IntegerField('id', null, null, true);
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
+            $dataset1->AddField($field, true);
             $field = new StringField('name');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('created_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
+            $dataset1->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Beruf Lobbygruppe', 
-                'beruf_interessengruppe_id', 
-                $editor, 
-                $this->dataset, 'id', 'name', $lookupDataset);
+            $dataset1->AddField($field, false);
+            $dataset1->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
+            
+            $editor->AddLevel($dataset1, 'id', 'name', $this->RenderText('Beruf Lobbygruppe'), new ForeignKeyInfo('id', 'branche_id'));
+            $editColumn = new MultiLevelLookupEditColumn('Beruf Lobbygruppe', 'beruf_interessengruppe_id', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);

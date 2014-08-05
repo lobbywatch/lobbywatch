@@ -1351,3 +1351,11 @@ LEFT JOIN v_organisation organisation2
 WHERE
   parlamentarier.im_rat_bis IS NULL
 GROUP BY parlamentarier.id;
+
+CREATE OR REPLACE VIEW `v_branche_name_with_null` AS
+SELECT branche.id, CONCAT(branche.name) AS anzeige_name
+FROM `branche`
+UNION
+SELECT NULL as ID, 'NULL' as anzeige_name
+;
+

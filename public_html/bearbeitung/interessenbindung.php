@@ -398,6 +398,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -807,6 +810,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -1014,6 +1020,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -2459,6 +2468,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -3078,6 +3090,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -4101,6 +4116,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -4299,6 +4317,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
@@ -4930,6 +4951,9 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei_name');
@@ -5260,6 +5284,9 @@
             $field = new IntegerField('kommissionen2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_abkuerzung');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommissionen_anzahl');
+            $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new StringField('partei');
             $lookupDataset->AddField($field, false);
