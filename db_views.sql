@@ -592,6 +592,15 @@ GROUP BY organisation.id;
 CREATE OR REPLACE VIEW `v_organisation` AS
 SELECT
 organisation.*,
+lobbyeinfluss.anzahl_interessenbindung_tief,
+lobbyeinfluss.anzahl_interessenbindung_mittel,
+lobbyeinfluss.anzahl_interessenbindung_hoch,
+lobbyeinfluss.anzahl_interessenbindung_tief_nach_wahl,
+lobbyeinfluss.anzahl_interessenbindung_mittel_nach_wahl,
+lobbyeinfluss.anzahl_interessenbindung_hoch_nach_wahl,
+lobbyeinfluss.anzahl_mandat_tief,
+lobbyeinfluss.anzahl_mandat_mittel,
+lobbyeinfluss.anzahl_mandat_hoch,
 lobbyeinfluss.lobbyeinfluss
 FROM `v_organisation_simple` organisation
 LEFT JOIN `v_organisation_lobbyeinfluss` lobbyeinfluss
