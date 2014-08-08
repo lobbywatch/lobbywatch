@@ -204,10 +204,18 @@ $(function() {
         .attr("class", "interessenbindungpath")
         .attr("fill", "none")
         .attr("stroke", function (d, i) {
-           var relationColor = "#37D6FA";   // default color
-           if (d.interessenbindung_art == "vorstand" || d.interessenbindung_art == "geschaeftsfuehrend") {
-              relationColor = "#FA5737";   // default color
-           }
+//           var relationColor = "#37D6FA";   // default color
+//           if (d.interessenbindung_art == "vorstand" || d.interessenbindung_art == "geschaeftsfuehrend") {
+//              relationColor = "#FA5737";   // default color
+//           }
+            var relationColor = "#68B3C6";   // default color
+            if (d.wirksamkeit == 'hoch') {
+               relationColor = "#E20025";
+            } else if (d.wirksamkeit == 'mittel') {
+              relationColor = "#F49E00";
+            } else {
+              relationColor = "#68B3C6";
+            }
            return relationColor;
         })
         .attr("stroke-width", 3)
@@ -277,10 +285,18 @@ $(function() {
         .attr("class", "zutrittsberechtigtepath")
         .attr("fill", "none")
         .attr("stroke", function (d, i) {
-           var relationColor = "#37D6FA";   // default color
-           if (d.mandat_art == "vorstand" || d.mandat_art == "geschaeftsfuehrend") {
-              relationColor = "#FA5737";   // default color
-           }
+//           var relationColor = "#37D6FA";   // default color
+//           if (d.mandat_art == "vorstand" || d.mandat_art == "geschaeftsfuehrend") {
+//              relationColor = "#FA5737";   // default color
+//           }
+            var relationColor = "#68B3C6";   // default color
+            if (d.wirksamkeit == 'hoch') {
+               relationColor = "#E20025";
+            } else if (d.wirksamkeit == 'mittel') {
+              relationColor = "#F49E00";
+            } else {
+              relationColor = "#68B3C6";
+            }
            return relationColor;
         })
         .attr("stroke-width", 3)

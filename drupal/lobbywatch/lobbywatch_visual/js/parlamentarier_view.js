@@ -289,9 +289,18 @@ $(function() {
         .append("path")
         .attr("fill", "none")
         .attr("stroke", function (d, i) {
-           var relationColor = "#37D6FA";   // default color
-           if (d.art == "vorstand" || d.art == "geschaeftsfuehrend") {
-              relationColor = "#FA5737";   // default color
+          // TODO RKU
+//           var relationColor = "#37D6FA";   // default color
+//           if (d.art == "vorstand" || d.art == "geschaeftsfuehrend") {
+//              relationColor = "#FA5737";   // default color
+//           }
+           var relationColor = "#68B3C6";   // default color
+           if (d.wirksamkeit == 'hoch') {
+              relationColor = "#E20025";
+           } else if (d.wirksamkeit == 'mittel') {
+             relationColor = "#F49E00";
+           } else {
+             relationColor = "#68B3C6";
            }
            return relationColor;
         })
@@ -300,8 +309,6 @@ $(function() {
         .style("cursor", "pointer")
         .append("svg:title")
         .text(function (d, i) { return d.art; });
-
-
 
      // Zutrittsberechtigung
 
@@ -460,10 +467,18 @@ $(function() {
               .attr("class", "mandatpath")
               .attr("fill", "none")
               .attr("stroke", function (d, i) {
-                 var relationColor = "#37D6FA";   // default color
-                 if (d.art == "vorstand" || d.art == "geschaeftsfuehrend") {
-                    relationColor = "#FA5737";   // default color
-                 }
+//                 var relationColor = "#37D6FA";   // default color
+//                 if (d.art == "vorstand" || d.art == "geschaeftsfuehrend") {
+//                    relationColor = "#FA5737";   // default color
+//                 }
+                  var relationColor = "#68B3C6";   // default color
+                  if (d.wirksamkeit == 'hoch') {
+                     relationColor = "#E20025";
+                  } else if (d.wirksamkeit == 'mittel') {
+                    relationColor = "#F49E00";
+                  } else {
+                    relationColor = "#68B3C6";
+                  }
                  return relationColor;
               })
               .attr("stroke-width", 3)

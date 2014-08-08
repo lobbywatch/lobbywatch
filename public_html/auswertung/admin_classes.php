@@ -434,12 +434,12 @@ ORDER BY Anzahl DESC ";
     // hoch
     // Ergibt alle Datens&auml;tze hoch z.B. Steiert: 4 : kann auch mit count('c.id') AS Anzahl realisiert werden (1 Zeile)
     // AND c.typ LIKE '%dezidierteLobby'
-    $sql = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name FROM v_parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id  AND (c.vernehmlassung='immer' OR c.vernehmlassung='punktuell') AND d.name=:branche AND c.ALT_parlam_verbindung LIKE '%exekutiv,kommission' AND b.id=:id";
+    $sql = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name_de FROM v_parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id  AND (c.vernehmlassung='immer' OR c.vernehmlassung='punktuell') AND d.name=:branche AND c.ALT_parlam_verbindung LIKE '%exekutiv,kommission' AND b.id=:id";
     // mittlere Bedeutung
     // AND c.typ LIKE '%dezidierteLobby'
-    $sql1 = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name FROM v_parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id  AND (c.vernehmlassung='immer' OR c.vernehmlassung='punktuell') AND d.name=:branche AND c.ALT_parlam_verbindung LIKE '%mitglied,kommission' AND b.id=:id";
+    $sql1 = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name_de FROM v_parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id  AND (c.vernehmlassung='immer' OR c.vernehmlassung='punktuell') AND d.name=:branche AND c.ALT_parlam_verbindung LIKE '%mitglied,kommission' AND b.id=:id";
     // Geringe Bedeutung
-    $sql2 = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name FROM v_parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id AND c.vernehmlassung='nie'  AND d.name=:branche AND c.ALT_parlam_verbindung LIKE '%kommission' AND b.id=:id";
+    $sql2 = "SELECT a.nachname,a.vorname,a.ratstyp,p.abkuerzung as partei,a.kanton,d.name,c.name_de FROM v_parlamentarier a LEFT JOIN partei p ON a.partei_id=p.id, interessenbindung b,organisation c, branche d WHERE a.id=b.parlamentarier_id AND b.organisation_id=c.id AND c.branche_id=d.id AND c.vernehmlassung='nie'  AND d.name=:branche AND c.ALT_parlam_verbindung LIKE '%kommission' AND b.id=:id";
     $abfr = $this->db->prepare ( $sql );
     $abfr->execute ( array(':id' => $id, ':branche' => $branche,) );
     $erg = $abfr->fetchAll ( PDO::FETCH_ASSOC );

@@ -392,11 +392,16 @@ SELECT CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name) AS anzeige_name, frak
 UNIX_TIMESTAMP(fraktion.created_date) as created_date_unix, UNIX_TIMESTAMP(fraktion.updated_date) as updated_date_unix, UNIX_TIMESTAMP(fraktion.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(fraktion.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(fraktion.freigabe_datum) as freigabe_datum_unix
 FROM `fraktion`;
 
-CREATE OR REPLACE VIEW `v_interessenbindung` AS
+CREATE OR REPLACE VIEW `v_interessenbindung_simple` AS
 SELECT interessenbindung.*,
 UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
 UNIX_TIMESTAMP(interessenbindung.created_date) as created_date_unix, UNIX_TIMESTAMP(interessenbindung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessenbindung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessenbindung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessenbindung.freigabe_datum) as freigabe_datum_unix
 FROM `interessenbindung`;
+
+CREATE OR REPLACE VIEW `v_mandat_simple` AS SELECT mandat.*,
+UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
+UNIX_TIMESTAMP(mandat.created_date) as created_date_unix, UNIX_TIMESTAMP(mandat.updated_date) as updated_date_unix, UNIX_TIMESTAMP(mandat.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(mandat.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(mandat.freigabe_datum) as freigabe_datum_unix
+FROM `mandat`;
 
 CREATE OR REPLACE VIEW `v_branche` AS
 SELECT CONCAT(branche.name) AS anzeige_name,
@@ -406,6 +411,13 @@ UNIX_TIMESTAMP(branche.created_date) as created_date_unix, UNIX_TIMESTAMP(branch
 FROM `branche`
 LEFT JOIN `v_kommission` kommission
 ON kommission.id = branche.kommission_id
+;
+
+CREATE OR REPLACE VIEW `v_branche_name_with_null` AS
+SELECT branche.id, CONCAT(branche.name) AS anzeige_name
+FROM `branche`
+UNION
+SELECT NULL as ID, 'NULL' as anzeige_name
 ;
 
 CREATE OR REPLACE VIEW `v_interessengruppe` AS
@@ -442,10 +454,13 @@ o.*,
 branche.anzeige_name as branche,
 interessengruppe1.anzeige_name as interessengruppe,
 interessengruppe1.branche as interessengruppe_branche,
+interessengruppe1.branche_id as interessengruppe_branche_id,
 interessengruppe2.anzeige_name as interessengruppe2,
 interessengruppe2.branche as interessengruppe2_branche,
+interessengruppe2.branche_id as interessengruppe2_branche_id,
 interessengruppe3.anzeige_name as interessengruppe3,
 interessengruppe3.branche as interessengruppe3_branche,
+interessengruppe3.branche_id as interessengruppe3_branche_id,
 country.name_de as land,
 interessenraum.anzeige_name as interessenraum,
 organisation_jahr.`id` as organisation_jahr_id, organisation_jahr.jahr, organisation_jahr.umsatz, organisation_jahr.gewinn, organisation_jahr.kapital, organisation_jahr.mitarbeiter_weltweit, organisation_jahr.mitarbeiter_schweiz, organisation_jahr.geschaeftsbericht_url, organisation_jahr.quelle_url,
@@ -470,11 +485,6 @@ ON organisation_jahr.organisation_id = o.id
 CREATE OR REPLACE VIEW `v_organisation_anhang` AS
 SELECT organisation_anhang.organisation_id as organisation_id2, organisation_anhang.*
 FROM `organisation_anhang`;
-
-CREATE OR REPLACE VIEW `v_mandat` AS SELECT mandat.*,
-UNIX_TIMESTAMP(bis) as bis_unix, UNIX_TIMESTAMP(von) as von_unix,
-UNIX_TIMESTAMP(mandat.created_date) as created_date_unix, UNIX_TIMESTAMP(mandat.updated_date) as updated_date_unix, UNIX_TIMESTAMP(mandat.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(mandat.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(mandat.freigabe_datum) as freigabe_datum_unix
-FROM `mandat`;
 
 CREATE OR REPLACE VIEW `v_in_kommission` AS
 SELECT in_kommission.*, rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kommission.abkuerzung as kommission_abkuerzung, kommission.name as kommission_name, kommission.art as kommission_art, kommission.typ as kommission_typ, kommission.beschreibung as kommission_beschreibung, kommission.sachbereiche as kommission_sachbereiche, kommission.mutter_kommission_id as kommission_mutter_kommission_id, kommission.parlament_url as kommission_parlament_url,
@@ -519,19 +529,102 @@ UNIX_TIMESTAMP(mil_grad.created_date) as created_date_unix, UNIX_TIMESTAMP(mil_g
 FROM `mil_grad`
 ORDER BY `ranghoehe` ASC;
 
+CREATE OR REPLACE VIEW `v_interessenbindung` AS
+SELECT interessenbindung.*,
+IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
+  AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand')
+  AND EXISTS (
+    SELECT in_kommission.kommission_id
+    FROM in_kommission in_kommission
+    LEFT JOIN branche branche
+    ON in_kommission.kommission_id = branche.kommission_id
+    WHERE (in_kommission.bis >= NOW() OR in_kommission.bis IS NULL) 
+    AND in_kommission.parlamentarier_id = parlamentarier.id
+    AND branche.id IN (organisation.branche_id, organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch', 
+IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
+  AND interessenbindung.art IN ('taetig','beirat','finanziell'), 'mittel', 'tief')) wirksamkeit
+FROM `v_interessenbindung_simple` interessenbindung
+INNER JOIN `v_organisation` organisation
+ON interessenbindung.organisation_id = organisation.id
+INNER JOIN `parlamentarier` parlamentarier
+ON interessenbindung.parlamentarier_id = parlamentarier.id;
+
+CREATE OR REPLACE VIEW `v_mandat` AS
+SELECT mandat.*,
+IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
+  AND mandat.art IN ('geschaeftsfuehrend','vorstand')
+  , 'hoch', 
+IF((organisation.vernehmlassung IN ('immmer', 'punktuell')
+  AND mandat.art IN ('taetig','beirat','finanziell'))
+  OR (mandat.art IN ('geschaeftsfuehrend','vorstand')), 'mittel', 'tief')) wirksamkeit
+FROM `v_mandat_simple` mandat
+INNER JOIN `organisation` organisation
+ON mandat.organisation_id = organisation.id;
+
 CREATE OR REPLACE VIEW `v_parlamentarier_simple` AS
-SELECT CONCAT(p.nachname, ', ', p.vorname) AS anzeige_name,
-CONCAT_WS(' ', p.vorname, p.zweiter_vorname, p.nachname) AS name,
-p.*,
-p.im_rat_seit as von, p.im_rat_bis as bis,
+SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name,
+CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name,
+parlamentarier.*,
+parlamentarier.im_rat_seit as von, parlamentarier.im_rat_bis as bis,
 UNIX_TIMESTAMP(geburtstag) as geburtstag_unix, 
 UNIX_TIMESTAMP(im_rat_seit) as im_rat_seit_unix, UNIX_TIMESTAMP(im_rat_bis) as im_rat_bis_unix,
-UNIX_TIMESTAMP(p.created_date) as created_date_unix, UNIX_TIMESTAMP(p.updated_date) as updated_date_unix, UNIX_TIMESTAMP(p.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(p.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(p.freigabe_datum) as freigabe_datum_unix,
+UNIX_TIMESTAMP(parlamentarier.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier.freigabe_datum) as freigabe_datum_unix,
 UNIX_TIMESTAMP(im_rat_seit) as von_unix, UNIX_TIMESTAMP(im_rat_bis) as bis_unix
-FROM `parlamentarier` p;
+FROM `parlamentarier` parlamentarier;
+
+CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor` AS
+SELECT zutrittsberechtigung.id,
+COUNT(DISTINCT interessenbindung_tief.id) as anzahl_interessenbindung_tief,
+COUNT(DISTINCT interessenbindung_mittel.id) as anzahl_interessenbindung_mittel,
+COUNT(DISTINCT interessenbindung_hoch.id) as anzahl_interessenbindung_hoch,
+COUNT(DISTINCT interessenbindung_tief.id) + COUNT(DISTINCT interessenbindung_mittel.id) * 5 + COUNT(DISTINCT interessenbindung_hoch.id) * 11 as lobbyfaktor
+FROM `zutrittsberechtigung` zutrittsberechtigung
+LEFT JOIN `v_interessenbindung` interessenbindung_hoch ON zutrittsberechtigung.id = interessenbindung_hoch.parlamentarier_id AND (interessenbindung_hoch.bis IS NULL OR interessenbindung_hoch.bis >= NOW()) AND interessenbindung_hoch.wirksamkeit='hoch'
+LEFT JOIN `v_interessenbindung` interessenbindung_mittel ON zutrittsberechtigung.id = interessenbindung_mittel.parlamentarier_id AND (interessenbindung_mittel.bis IS NULL OR interessenbindung_mittel.bis >= NOW()) AND interessenbindung_mittel.wirksamkeit='mittel'
+LEFT JOIN `v_interessenbindung` interessenbindung_tief ON zutrittsberechtigung.id = interessenbindung_tief.parlamentarier_id AND (interessenbindung_tief.bis IS NULL OR interessenbindung_tief.bis >= NOW()) AND interessenbindung_tief.wirksamkeit='tief'
+GROUP BY zutrittsberechtigung.id;
+
+CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
+SELECT parlamentarier.id,
+COUNT(DISTINCT interessenbindung_tief.id) as anzahl_interessenbindung_tief,
+COUNT(DISTINCT interessenbindung_mittel.id) as anzahl_interessenbindung_mittel,
+COUNT(DISTINCT interessenbindung_hoch.id) as anzahl_interessenbindung_hoch,
+COUNT(DISTINCT interessenbindung_tief_neu.id) as anzahl_interessenbindung_tief_neu,
+COUNT(DISTINCT interessenbindung_mittel_neu.id) as anzahl_interessenbindung_mittel_neu,
+COUNT(DISTINCT interessenbindung_hoch_neu.id) as anzahl_interessenbindung_hoch_neu,
+(COUNT(DISTINCT interessenbindung_tief.id) * 1 + COUNT(DISTINCT interessenbindung_mittel.id) * 5 + COUNT(DISTINCT interessenbindung_hoch.id) * 11) + (COUNT(DISTINCT interessenbindung_tief_neu.id) * 1 + COUNT(DISTINCT interessenbindung_mittel_neu.id) * 5 + COUNT(DISTINCT interessenbindung_hoch_neu.id) * 11) as lobbyfaktor,
+COUNT(DISTINCT interessenbindung_tief.id) * 1 + COUNT(DISTINCT interessenbindung_mittel.id) * 5 + COUNT(DISTINCT interessenbindung_hoch.id) * 11 as lobbyfaktor_einfach
+FROM `v_parlamentarier_simple` parlamentarier
+LEFT JOIN `v_interessenbindung` interessenbindung_hoch ON parlamentarier.id = interessenbindung_hoch.parlamentarier_id AND (interessenbindung_hoch.bis IS NULL OR interessenbindung_hoch.bis >= NOW()) AND interessenbindung_hoch.wirksamkeit='hoch'
+LEFT JOIN `v_interessenbindung` interessenbindung_mittel ON parlamentarier.id = interessenbindung_mittel.parlamentarier_id AND (interessenbindung_mittel.bis IS NULL OR interessenbindung_mittel.bis >= NOW()) AND interessenbindung_mittel.wirksamkeit='mittel'
+LEFT JOIN `v_interessenbindung` interessenbindung_tief ON parlamentarier.id = interessenbindung_tief.parlamentarier_id AND (interessenbindung_tief.bis IS NULL OR interessenbindung_tief.bis >= NOW()) AND interessenbindung_tief.wirksamkeit='tief'
+LEFT JOIN `v_interessenbindung` interessenbindung_hoch_neu ON parlamentarier.id = interessenbindung_hoch_neu.parlamentarier_id AND (interessenbindung_hoch_neu.bis IS NULL OR interessenbindung_hoch_neu.bis >= NOW()) AND interessenbindung_hoch_neu.wirksamkeit='hoch' AND interessenbindung_hoch_neu.von > parlamentarier.im_rat_seit
+LEFT JOIN `v_interessenbindung` interessenbindung_mittel_neu ON parlamentarier.id = interessenbindung_mittel_neu.parlamentarier_id AND (interessenbindung_mittel_neu.bis IS NULL OR interessenbindung_mittel_neu.bis >= NOW()) AND interessenbindung_mittel_neu.wirksamkeit='mittel' AND interessenbindung_mittel_neu.von > parlamentarier.im_rat_seit
+LEFT JOIN `v_interessenbindung` interessenbindung_tief_neu ON parlamentarier.id = interessenbindung_tief_neu.parlamentarier_id AND (interessenbindung_tief_neu.bis IS NULL OR interessenbindung_tief_neu.bis >= NOW()) AND interessenbindung_tief_neu.wirksamkeit='tief' AND interessenbindung_tief_neu.von > parlamentarier.im_rat_seit
+GROUP BY parlamentarier.id;
+
+CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max` AS
+SELECT 
+MAX(lobbyfaktor.anzahl_interessenbindung_tief) as anzahl_interessenbindung_tief_max,
+MAX(lobbyfaktor.anzahl_interessenbindung_mittel) as anzahl_interessenbindung_mittel_max,
+MAX(lobbyfaktor.anzahl_interessenbindung_hoch) as anzahl_interessenbindung_hoch_max,
+MAX(lobbyfaktor) as lobbyfaktor_max
+FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
+-- GROUP BY lobbyfaktor.id
+;
+
+CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS
+SELECT 
+MAX(lobbyfaktor.anzahl_interessenbindung_tief) as anzahl_interessenbindung_tief_max,
+MAX(lobbyfaktor.anzahl_interessenbindung_mittel) as anzahl_interessenbindung_mittel_max,
+MAX(lobbyfaktor.anzahl_interessenbindung_hoch) as anzahl_interessenbindung_hoch_max,
+MAX(lobbyfaktor) as lobbyfaktor_max
+FROM `v_zutrittsberechtigung_lobbyfaktor` lobbyfaktor
+-- GROUP BY lobbyfaktor.id
+;
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
-SELECT p.*,
+SELECT parlamentarier.*,
 rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kanton.abkuerzung as kanton_abkuerzung, kanton.abkuerzung as kanton, kanton.name_de as kanton_name_de,
 CAST(
 (CASE rat.abkuerzung
@@ -541,20 +634,33 @@ CAST(
 END)
 AS UNSIGNED INTEGER) AS vertretene_bevoelkerung,
 GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_namen,
---GROUP_CONCAT(DISTINCT CONCAT(k.name, '(', k.abkuerzung, ')') ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen2,
 GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung,
 COUNT(DISTINCT k.id) AS kommissionen_anzahl,
 partei.abkuerzung AS partei, partei.name AS partei_name, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad,
-CONCAT(IF(p.geschlecht='M', rat.name_de, ''), IF(p.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', ''), IF(p.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '')) titel_de
-FROM `v_parlamentarier_simple` p
-LEFT JOIN `v_in_kommission` ik ON p.id = ik.parlamentarier_id AND ik.bis IS NULL
+CONCAT(IF(parlamentarier.geschlecht='M', rat.name_de, ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '')) titel_de,
+lobbyfaktor.anzahl_interessenbindung_tief,
+lobbyfaktor.anzahl_interessenbindung_mittel,
+lobbyfaktor.anzahl_interessenbindung_hoch,
+lobbyfaktor.anzahl_interessenbindung_tief_neu,
+lobbyfaktor.anzahl_interessenbindung_mittel_neu,
+lobbyfaktor.anzahl_interessenbindung_hoch_neu,
+lobbyfaktor.lobbyfaktor,
+lobbyfaktor_max.lobbyfaktor_max,
+lobbyfaktor.lobbyfaktor / lobbyfaktor_max.lobbyfaktor_max as lobbyfaktor_percent_max,
+lobbyfaktor_max.anzahl_interessenbindung_tief_max,
+lobbyfaktor_max.anzahl_interessenbindung_mittel_max,
+lobbyfaktor_max.anzahl_interessenbindung_hoch_max
+FROM `v_parlamentarier_simple` parlamentarier
+LEFT JOIN `v_in_kommission` ik ON parlamentarier.id = ik.parlamentarier_id AND ik.bis IS NULL
 LEFT JOIN `v_kommission` k ON ik.kommission_id=k.id
-LEFT JOIN `v_partei` partei ON p.partei_id=partei.id
-LEFT JOIN `v_fraktion` fraktion ON p.fraktion_id=fraktion.id
-LEFT JOIN `v_mil_grad` mil_grad ON p.militaerischer_grad_id=mil_grad.id
-LEFT JOIN `v_kanton` kanton ON p.kanton_id = kanton.id
-LEFT JOIN `v_rat` rat ON p.rat_id = rat.id
-GROUP BY p.id;
+LEFT JOIN `v_partei` partei ON parlamentarier.partei_id=partei.id
+LEFT JOIN `v_fraktion` fraktion ON parlamentarier.fraktion_id=fraktion.id
+LEFT JOIN `v_mil_grad` mil_grad ON parlamentarier.militaerischer_grad_id=mil_grad.id
+LEFT JOIN `v_kanton` kanton ON parlamentarier.kanton_id = kanton.id
+LEFT JOIN `v_rat` rat ON parlamentarier.rat_id = rat.id
+LEFT JOIN `v_parlamentarier_lobbyfaktor` lobbyfaktor ON parlamentarier.id = lobbyfaktor.id
+, v_parlamentarier_lobbyfaktor_max lobbyfaktor_max
+GROUP BY parlamentarier.id;
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung` AS
 SELECT CONCAT(zutrittsberechtigung.nachname, ', ', zutrittsberechtigung.vorname) AS anzeige_name, CONCAT(zutrittsberechtigung.vorname, ' ', zutrittsberechtigung.nachname) AS name,
@@ -562,13 +668,24 @@ zutrittsberechtigung.*,
 partei.abkuerzung AS partei,
 parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.freigabe_datum as parlamentarier_freigabe_datum, UNIX_TIMESTAMP(parlamentarier.freigabe_datum) as parlamentarier_freigabe_datum_unix,
 UNIX_TIMESTAMP(zutrittsberechtigung.bis) as bis_unix, UNIX_TIMESTAMP(zutrittsberechtigung.von) as von_unix,
-UNIX_TIMESTAMP(zutrittsberechtigung.created_date) as created_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.freigabe_datum) as freigabe_datum_unix
+UNIX_TIMESTAMP(zutrittsberechtigung.created_date) as created_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.freigabe_datum) as freigabe_datum_unix,
+lobbyfaktor.anzahl_interessenbindung_tief,
+lobbyfaktor.anzahl_interessenbindung_mittel,
+lobbyfaktor.anzahl_interessenbindung_hoch,
+lobbyfaktor.lobbyfaktor,
+lobbyfaktor_max.lobbyfaktor_max,
+lobbyfaktor.lobbyfaktor / lobbyfaktor_max.lobbyfaktor_max as lobbyfaktor_percent_max,
+lobbyfaktor_max.anzahl_interessenbindung_tief_max,
+lobbyfaktor_max.anzahl_interessenbindung_mittel_max,
+lobbyfaktor_max.anzahl_interessenbindung_hoch_max
 FROM `zutrittsberechtigung`
 LEFT JOIN `v_partei` partei
 ON zutrittsberechtigung.partei_id=partei.id
 LEFT JOIN `v_parlamentarier` parlamentarier
-ON parlamentarier.id = zutrittsberechtigung.parlamentarier_id;
-
+ON parlamentarier.id = zutrittsberechtigung.parlamentarier_id
+LEFT JOIN `v_zutrittsberechtigung_lobbyfaktor` lobbyfaktor ON zutrittsberechtigung.id = lobbyfaktor.id
+, v_zutrittsberechtigung_lobbyfaktor_max lobbyfaktor_max
+;
 
 -- Kommissionen für Parlamentarier
 -- Connector: in_kommission.parlamentarier_id
@@ -638,7 +755,6 @@ SELECT
 , `parlamentarier`.`kanton`
 , `parlamentarier`.`vertretene_bevoelkerung`
 , `parlamentarier`.`kommissionen_namen`
-, `parlamentarier`.`kommissionen2`
 , `parlamentarier`.`kommissionen_abkuerzung`
 , `parlamentarier`.`partei`
 , `parlamentarier`.`fraktion`
@@ -679,10 +795,13 @@ SELECT
 , `organisation`.`branche`
 , `organisation`.`interessengruppe`
 , `organisation`.`interessengruppe_branche`
+, `organisation`.`interessengruppe_branche_id`
 , `organisation`.`interessengruppe2`
 , `organisation`.`interessengruppe2_branche`
+, `organisation`.`interessengruppe2_branche_id`
 , `organisation`.`interessengruppe3`
 , `organisation`.`interessengruppe3_branche`
+, `organisation`.`interessengruppe3_branche_id`
 , `organisation`.`land`
 , `organisation`.`interessenraum`
 , `organisation`.`organisation_jahr_id`
@@ -698,7 +817,7 @@ SELECT
 FROM v_interessenbindung interessenbindung
 INNER JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
-ORDER BY organisation.anzeige_name;
+ORDER BY interessenbindung.wirksamkeit, organisation.anzeige_name;
 
 -- Indirekte Interessenbindungen eines Parlamentariers
 -- Connector: interessenbindung.parlamentarier_id
@@ -732,10 +851,13 @@ SELECT 'indirekt' as beziehung,
 , `organisation`.`branche`
 , `organisation`.`interessengruppe`
 , `organisation`.`interessengruppe_branche`
+, `organisation`.`interessengruppe_branche_id`
 , `organisation`.`interessengruppe2`
 , `organisation`.`interessengruppe2_branche`
+, `organisation`.`interessengruppe2_branche_id`
 , `organisation`.`interessengruppe3`
 , `organisation`.`interessengruppe3_branche`
+, `organisation`.`interessengruppe3_branche_id`
 , `organisation`.`land`
 , `organisation`.`interessenraum`
 , `organisation`.`organisation_jahr_id`
@@ -802,13 +924,15 @@ SELECT zutrittsberechtigung.parlamentarier_id,
 , `organisation`.`mitarbeiter_schweiz`
 , `organisation`.`geschaeftsbericht_url`
 -- , `organisation`.`quelle_url`
-, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, mandat.*
+, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name
+, zutrittsberechtigung.funktion
+, mandat.*
 FROM v_zutrittsberechtigung zutrittsberechtigung
 INNER JOIN v_mandat mandat
   ON zutrittsberechtigung.id = mandat.zutrittsberechtigung_id
 INNER JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id
-ORDER BY organisation.anzeige_name;
+ORDER BY mandat.wirksamkeit, organisation.anzeige_name;
 
 -- Mandate einer Zutrittsberechtigung (LFET JOIN)
 -- Connector: zutrittsberechtigung.parlamentarier_id
@@ -1051,7 +1175,6 @@ SELECT
 , `parlamentarier`.`kanton`
 , `parlamentarier`.`vertretene_bevoelkerung`
 , `parlamentarier`.`kommissionen_namen`
-, `parlamentarier`.`kommissionen2`
 , `parlamentarier`.`kommissionen_abkuerzung`
 , `parlamentarier`.`partei`
 , `parlamentarier`.`fraktion`
@@ -1182,7 +1305,6 @@ SELECT 'indirekt' as beziehung,
 , `parlamentarier`.`kanton`
 , `parlamentarier`.`vertretene_bevoelkerung`
 , `parlamentarier`.`kommissionen_namen`
-, `parlamentarier`.`kommissionen2`
 , `parlamentarier`.`kommissionen_abkuerzung`
 , `parlamentarier`.`partei`
 , `parlamentarier`.`fraktion`
@@ -1351,11 +1473,4 @@ LEFT JOIN v_organisation organisation2
 WHERE
   parlamentarier.im_rat_bis IS NULL
 GROUP BY parlamentarier.id;
-
-CREATE OR REPLACE VIEW `v_branche_name_with_null` AS
-SELECT branche.id, CONCAT(branche.name) AS anzeige_name
-FROM `branche`
-UNION
-SELECT NULL as ID, 'NULL' as anzeige_name
-;
 

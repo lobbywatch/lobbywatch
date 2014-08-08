@@ -409,6 +409,26 @@ function lobbywatch_views_data() {
       ),
   );
 
+  // lobbyfaktor
+  $data['v_parlamentarier']['lobbyfaktor'] = array(
+      'title' => t('Lobbyfaktor'), // The item it appears as on the UI,
+      'help' => t('Lobbyfaktor des Parlamentariers.'), // The help that appears on the UI,
+      'field' => array(
+          'handler' => 'views_handler_field_numeric',
+          'click sortable' => TRUE,
+      ),
+      'sort' => array(
+          'handler' => 'views_handler_sort',
+      ),
+      'filter' => array(
+          'handler' => 'views_handler_filter_numeric',
+          'allow empty' => TRUE,
+      ),
+      'argument' => array(
+          'handler' => 'views_handler_argument_numeric',
+      ),
+  );
+
   // email
   $data['v_parlamentarier']['email'] = array(
       'title' => t('E-Mail'), // The item it appears as on the UI,
