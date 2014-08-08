@@ -424,9 +424,9 @@ parlamentarier.lobbyfaktor, parlamentarier.lobbyfaktor_max,
 parlamentarier.anzahl_interessenbindung_tief,
 parlamentarier.anzahl_interessenbindung_mittel,
 parlamentarier.anzahl_interessenbindung_hoch,
-parlamentarier.anzahl_interessenbindung_tief_neu,
-parlamentarier.anzahl_interessenbindung_mittel_neu,
-parlamentarier.anzahl_interessenbindung_hoch_neu,
+parlamentarier.anzahl_interessenbindung_tief_nach_wahl,
+parlamentarier.anzahl_interessenbindung_mittel_nach_wahl,
+parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
             GROUP_CONCAT(DISTINCT
       CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('interessenbindung', 'organisation') . ", ' wirksamkeit-', interessenbindung.wirksamkeit, '\">',
           IF(interessenbindung.bis < NOW(), '<s>', ''),
@@ -527,7 +527,7 @@ parlamentarier.anzahl_interessenbindung_hoch_neu,
 //       '<h2>' . $parlamentarier_name . '</h2>' .
       '<div class="clearfix">' .
       '<div style="float: left;"><a id="parlamentarier-kleinbild" class="parlamentarier-kleinbild" onclick="false"><img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '"></div></a>' .
-      '<p>Lobbyfaktor: <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' . ($admin ? ' <span =  class="admin">[' . $record['anzahl_interessenbindung_hoch'] . '/' . $record['anzahl_interessenbindung_hoch_neu'] . ', ' . $record['anzahl_interessenbindung_mittel'] . '/' . $record['anzahl_interessenbindung_mittel_neu'] . ', ' . $record['anzahl_interessenbindung_tief'] . '/' . $record['anzahl_interessenbindung_tief_neu'] . ']</span></p>' : '') .
+      '<p>Lobbyfaktor: <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' . ($admin ? ' <span =  class="admin">[' . $record['anzahl_interessenbindung_hoch'] . '/' . $record['anzahl_interessenbindung_hoch_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_mittel'] . '/' . $record['anzahl_interessenbindung_mittel_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_tief'] . '/' . $record['anzahl_interessenbindung_tief_nach_wahl'] . ']</span></p>' : '') .
       '<p><a id="show-bio" class="toggle-text" onclick="false"><span id="bio-text-show">Zeige</span><span id="bio-text-hide" style="display:none">Verstecke</span> Angaben zur Person</p>'.
 
       '</div>' .

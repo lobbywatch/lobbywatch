@@ -589,18 +589,18 @@ SELECT parlamentarier.id,
 COUNT(DISTINCT interessenbindung_tief.id) as anzahl_interessenbindung_tief,
 COUNT(DISTINCT interessenbindung_mittel.id) as anzahl_interessenbindung_mittel,
 COUNT(DISTINCT interessenbindung_hoch.id) as anzahl_interessenbindung_hoch,
-COUNT(DISTINCT interessenbindung_tief_neu.id) as anzahl_interessenbindung_tief_neu,
-COUNT(DISTINCT interessenbindung_mittel_neu.id) as anzahl_interessenbindung_mittel_neu,
-COUNT(DISTINCT interessenbindung_hoch_neu.id) as anzahl_interessenbindung_hoch_neu,
-(COUNT(DISTINCT interessenbindung_tief.id) * 1 + COUNT(DISTINCT interessenbindung_mittel.id) * 5 + COUNT(DISTINCT interessenbindung_hoch.id) * 11) + (COUNT(DISTINCT interessenbindung_tief_neu.id) * 1 + COUNT(DISTINCT interessenbindung_mittel_neu.id) * 5 + COUNT(DISTINCT interessenbindung_hoch_neu.id) * 11) as lobbyfaktor,
+COUNT(DISTINCT interessenbindung_tief_nach_wahl.id) as anzahl_interessenbindung_tief_nach_wahl,
+COUNT(DISTINCT interessenbindung_mittel_nach_wahl.id) as anzahl_interessenbindung_mittel_nach_wahl,
+COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) as anzahl_interessenbindung_hoch_nach_wahl,
+(COUNT(DISTINCT interessenbindung_tief.id) * 1 + COUNT(DISTINCT interessenbindung_mittel.id) * 5 + COUNT(DISTINCT interessenbindung_hoch.id) * 11) + (COUNT(DISTINCT interessenbindung_tief_nach_wahl.id) * 1 + COUNT(DISTINCT interessenbindung_mittel_nach_wahl.id) * 5 + COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) * 11) as lobbyfaktor,
 COUNT(DISTINCT interessenbindung_tief.id) * 1 + COUNT(DISTINCT interessenbindung_mittel.id) * 5 + COUNT(DISTINCT interessenbindung_hoch.id) * 11 as lobbyfaktor_einfach
 FROM `v_parlamentarier_simple` parlamentarier
 LEFT JOIN `v_interessenbindung` interessenbindung_hoch ON parlamentarier.id = interessenbindung_hoch.parlamentarier_id AND (interessenbindung_hoch.bis IS NULL OR interessenbindung_hoch.bis >= NOW()) AND interessenbindung_hoch.wirksamkeit='hoch'
 LEFT JOIN `v_interessenbindung` interessenbindung_mittel ON parlamentarier.id = interessenbindung_mittel.parlamentarier_id AND (interessenbindung_mittel.bis IS NULL OR interessenbindung_mittel.bis >= NOW()) AND interessenbindung_mittel.wirksamkeit='mittel'
 LEFT JOIN `v_interessenbindung` interessenbindung_tief ON parlamentarier.id = interessenbindung_tief.parlamentarier_id AND (interessenbindung_tief.bis IS NULL OR interessenbindung_tief.bis >= NOW()) AND interessenbindung_tief.wirksamkeit='tief'
-LEFT JOIN `v_interessenbindung` interessenbindung_hoch_neu ON parlamentarier.id = interessenbindung_hoch_neu.parlamentarier_id AND (interessenbindung_hoch_neu.bis IS NULL OR interessenbindung_hoch_neu.bis >= NOW()) AND interessenbindung_hoch_neu.wirksamkeit='hoch' AND interessenbindung_hoch_neu.von > parlamentarier.im_rat_seit
-LEFT JOIN `v_interessenbindung` interessenbindung_mittel_neu ON parlamentarier.id = interessenbindung_mittel_neu.parlamentarier_id AND (interessenbindung_mittel_neu.bis IS NULL OR interessenbindung_mittel_neu.bis >= NOW()) AND interessenbindung_mittel_neu.wirksamkeit='mittel' AND interessenbindung_mittel_neu.von > parlamentarier.im_rat_seit
-LEFT JOIN `v_interessenbindung` interessenbindung_tief_neu ON parlamentarier.id = interessenbindung_tief_neu.parlamentarier_id AND (interessenbindung_tief_neu.bis IS NULL OR interessenbindung_tief_neu.bis >= NOW()) AND interessenbindung_tief_neu.wirksamkeit='tief' AND interessenbindung_tief_neu.von > parlamentarier.im_rat_seit
+LEFT JOIN `v_interessenbindung` interessenbindung_hoch_nach_wahl ON parlamentarier.id = interessenbindung_hoch_nach_wahl.parlamentarier_id AND (interessenbindung_hoch_nach_wahl.bis IS NULL OR interessenbindung_hoch_nach_wahl.bis >= NOW()) AND interessenbindung_hoch_nach_wahl.wirksamkeit='hoch' AND interessenbindung_hoch_nach_wahl.von > parlamentarier.im_rat_seit
+LEFT JOIN `v_interessenbindung` interessenbindung_mittel_nach_wahl ON parlamentarier.id = interessenbindung_mittel_nach_wahl.parlamentarier_id AND (interessenbindung_mittel_nach_wahl.bis IS NULL OR interessenbindung_mittel_nach_wahl.bis >= NOW()) AND interessenbindung_mittel_nach_wahl.wirksamkeit='mittel' AND interessenbindung_mittel_nach_wahl.von > parlamentarier.im_rat_seit
+LEFT JOIN `v_interessenbindung` interessenbindung_tief_nach_wahl ON parlamentarier.id = interessenbindung_tief_nach_wahl.parlamentarier_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > parlamentarier.im_rat_seit
 GROUP BY parlamentarier.id;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max` AS
@@ -641,9 +641,9 @@ CONCAT(IF(parlamentarier.geschlecht='M', rat.name_de, ''), IF(parlamentarier.ges
 lobbyfaktor.anzahl_interessenbindung_tief,
 lobbyfaktor.anzahl_interessenbindung_mittel,
 lobbyfaktor.anzahl_interessenbindung_hoch,
-lobbyfaktor.anzahl_interessenbindung_tief_neu,
-lobbyfaktor.anzahl_interessenbindung_mittel_neu,
-lobbyfaktor.anzahl_interessenbindung_hoch_neu,
+lobbyfaktor.anzahl_interessenbindung_tief_nach_wahl,
+lobbyfaktor.anzahl_interessenbindung_mittel_nach_wahl,
+lobbyfaktor.anzahl_interessenbindung_hoch_nach_wahl,
 lobbyfaktor.lobbyfaktor,
 lobbyfaktor_max.lobbyfaktor_max,
 lobbyfaktor.lobbyfaktor / lobbyfaktor_max.lobbyfaktor_max as lobbyfaktor_percent_max,

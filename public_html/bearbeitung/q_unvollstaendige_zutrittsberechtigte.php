@@ -433,11 +433,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('anzahl_interessenbindung_hoch');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_neu');
+            $field = new IntegerField('anzahl_interessenbindung_tief_nach_wahl');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_neu');
+            $field = new IntegerField('anzahl_interessenbindung_mittel_nach_wahl');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_neu');
+            $field = new IntegerField('anzahl_interessenbindung_hoch_nach_wahl');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
