@@ -52,7 +52,9 @@ function _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $r
       xmlsitemap_link_delete_multiple(array('type'=>"lw_$table", 'id'=>$deleted));
     }
     if ($cron) {
-      watchdog('lobbywatch_xmlsitemap', '%table indexed: %added added, %removed removed', array('%table' => $table, '%added' => $added, '%removed' => count($deleted),), WATCHDOG_DEBUG);
+      if ($added > 0 || $deleted > 0) {
+        watchdog('lobbywatch_xmlsitemap', '%table indexed: %added added, %removed removed', array('%table' => $table, '%added' => $added, '%removed' => count($deleted),), WATCHDOG_DEBUG);
+      }
     } else {
       drupal_set_message(t('Lobbywatch XML sitemap data %table indexed, %added added, %removed removed', array('%table' => $table, '%added' => $added, '%removed' => count($deleted),)));
     }
@@ -165,7 +167,7 @@ function _lobbywatch_xmlsitemap_priority($table) {
  * Process old menu links not found in the {xmlsitemap} table.
  */
 function lobbywatch_xmlsitemap_cron() {
-  watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml.', array(), WATCHDOG_INFO);
+//   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch start updateing sitemap.xml.', array(), WATCHDOG_INFO);
   lobbywatch_xmlsitemap_xmlsitemap_index_links(xmlsitemap_var('batch_limit'), false, true);
   watchdog('lobbywatch_xmlsitemap', 'Lobbywatch sitemap.xml updated.', array(), WATCHDOG_INFO);
 }
