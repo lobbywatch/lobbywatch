@@ -447,41 +447,6 @@ SELECT MAX(organisation_jahr.jahr) max_jahr, `organisation_jahr`.*
 FROM `organisation_jahr`
 GROUP BY organisation_jahr.organisation_id;
 
-CREATE OR REPLACE VIEW `v_organisation` AS
-SELECT CONCAT_WS('; ', o.name_de, o.name_fr, o.name_it) AS anzeige_name,
-CONCAT_WS('; ', o.name_de , o.name_fr, o.name_it) AS name,
-o.*,
-branche.anzeige_name as branche,
-interessengruppe1.anzeige_name as interessengruppe,
-interessengruppe1.branche as interessengruppe_branche,
-interessengruppe1.branche_id as interessengruppe_branche_id,
-interessengruppe2.anzeige_name as interessengruppe2,
-interessengruppe2.branche as interessengruppe2_branche,
-interessengruppe2.branche_id as interessengruppe2_branche_id,
-interessengruppe3.anzeige_name as interessengruppe3,
-interessengruppe3.branche as interessengruppe3_branche,
-interessengruppe3.branche_id as interessengruppe3_branche_id,
-country.name_de as land,
-interessenraum.anzeige_name as interessenraum,
-organisation_jahr.`id` as organisation_jahr_id, organisation_jahr.jahr, organisation_jahr.umsatz, organisation_jahr.gewinn, organisation_jahr.kapital, organisation_jahr.mitarbeiter_weltweit, organisation_jahr.mitarbeiter_schweiz, organisation_jahr.geschaeftsbericht_url, organisation_jahr.quelle_url,
-UNIX_TIMESTAMP(o.created_date) as created_date_unix, UNIX_TIMESTAMP(o.updated_date) as updated_date_unix, UNIX_TIMESTAMP(o.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(o.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(o.freigabe_datum) as freigabe_datum_unix
-FROM `organisation` o
-LEFT JOIN `v_branche` branche
-ON branche.id = o.branche_id
-LEFT JOIN `v_interessengruppe` interessengruppe1
-ON interessengruppe1.id = o.interessengruppe_id
-LEFT JOIN `v_interessengruppe` interessengruppe2
-ON interessengruppe2.id = o.interessengruppe2_id
-LEFT JOIN `v_interessengruppe` interessengruppe3
-ON interessengruppe3.id = o.interessengruppe3_id
-LEFT JOIN `v_country` country
-ON country.id = o.land_id
-LEFT JOIN `v_interessenraum` interessenraum
-ON interessenraum.id = o.interessenraum_id
-LEFT JOIN `v_organisation_jahr_last` organisation_jahr
-ON organisation_jahr.organisation_id = o.id
-;
-
 CREATE OR REPLACE VIEW `v_organisation_anhang` AS
 SELECT organisation_anhang.organisation_id as organisation_id2, organisation_anhang.*
 FROM `organisation_anhang`;
@@ -529,6 +494,41 @@ UNIX_TIMESTAMP(mil_grad.created_date) as created_date_unix, UNIX_TIMESTAMP(mil_g
 FROM `mil_grad`
 ORDER BY `ranghoehe` ASC;
 
+CREATE OR REPLACE VIEW `v_organisation_simple` AS
+SELECT CONCAT_WS('; ', o.name_de, o.name_fr, o.name_it) AS anzeige_name,
+CONCAT_WS('; ', o.name_de , o.name_fr, o.name_it) AS name,
+o.*,
+branche.anzeige_name as branche,
+interessengruppe1.anzeige_name as interessengruppe,
+interessengruppe1.branche as interessengruppe_branche,
+interessengruppe1.branche_id as interessengruppe_branche_id,
+interessengruppe2.anzeige_name as interessengruppe2,
+interessengruppe2.branche as interessengruppe2_branche,
+interessengruppe2.branche_id as interessengruppe2_branche_id,
+interessengruppe3.anzeige_name as interessengruppe3,
+interessengruppe3.branche as interessengruppe3_branche,
+interessengruppe3.branche_id as interessengruppe3_branche_id,
+country.name_de as land,
+interessenraum.anzeige_name as interessenraum,
+organisation_jahr.`id` as organisation_jahr_id, organisation_jahr.jahr, organisation_jahr.umsatz, organisation_jahr.gewinn, organisation_jahr.kapital, organisation_jahr.mitarbeiter_weltweit, organisation_jahr.mitarbeiter_schweiz, organisation_jahr.geschaeftsbericht_url, organisation_jahr.quelle_url,
+UNIX_TIMESTAMP(o.created_date) as created_date_unix, UNIX_TIMESTAMP(o.updated_date) as updated_date_unix, UNIX_TIMESTAMP(o.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(o.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(o.freigabe_datum) as freigabe_datum_unix
+FROM `organisation` o
+LEFT JOIN `v_branche` branche
+ON branche.id = o.branche_id
+LEFT JOIN `v_interessengruppe` interessengruppe1
+ON interessengruppe1.id = o.interessengruppe_id
+LEFT JOIN `v_interessengruppe` interessengruppe2
+ON interessengruppe2.id = o.interessengruppe2_id
+LEFT JOIN `v_interessengruppe` interessengruppe3
+ON interessengruppe3.id = o.interessengruppe3_id
+LEFT JOIN `v_country` country
+ON country.id = o.land_id
+LEFT JOIN `v_interessenraum` interessenraum
+ON interessenraum.id = o.interessenraum_id
+LEFT JOIN `v_organisation_jahr_last` organisation_jahr
+ON organisation_jahr.organisation_id = o.id
+;
+
 CREATE OR REPLACE VIEW `v_interessenbindung` AS
 SELECT interessenbindung.*,
 IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
@@ -542,9 +542,10 @@ IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
     AND in_kommission.parlamentarier_id = parlamentarier.id
     AND branche.id IN (organisation.branche_id, organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch', 
 IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
-  AND interessenbindung.art IN ('taetig','beirat','finanziell'), 'mittel', 'tief')) wirksamkeit
+  AND interessenbindung.art IN ('taetig','beirat','finanziell'), 'mittel', 'tief')) wirksamkeit,
+parlamentarier.im_rat_seit as parlamentarier_im_rat_seit
 FROM `v_interessenbindung_simple` interessenbindung
-INNER JOIN `v_organisation` organisation
+INNER JOIN `v_organisation_simple` organisation
 ON interessenbindung.organisation_id = organisation.id
 INNER JOIN `parlamentarier` parlamentarier
 ON interessenbindung.parlamentarier_id = parlamentarier.id;
@@ -561,6 +562,42 @@ FROM `v_mandat_simple` mandat
 INNER JOIN `organisation` organisation
 ON mandat.organisation_id = organisation.id;
 
+CREATE OR REPLACE VIEW `v_organisation_lobbyeinfluss` AS
+SELECT organisation.id,
+COUNT(DISTINCT interessenbindung_tief.id) as anzahl_interessenbindung_tief,
+COUNT(DISTINCT interessenbindung_mittel.id) as anzahl_interessenbindung_mittel,
+COUNT(DISTINCT interessenbindung_hoch.id) as anzahl_interessenbindung_hoch,
+COUNT(DISTINCT interessenbindung_tief_nach_wahl.id) as anzahl_interessenbindung_tief_nach_wahl,
+COUNT(DISTINCT interessenbindung_mittel_nach_wahl.id) as anzahl_interessenbindung_mittel_nach_wahl,
+COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) as anzahl_interessenbindung_hoch_nach_wahl,
+COUNT(DISTINCT mandat_tief.id) as anzahl_mandat_tief,
+COUNT(DISTINCT mandat_mittel.id) as anzahl_mandat_mittel,
+COUNT(DISTINCT mandat_hoch.id) as anzahl_mandat_hoch,
+IF(COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) > 0 OR COUNT(DISTINCT interessenbindung_hoch.id) > 1 OR (COUNT(DISTINCT interessenbindung_hoch.id) > 0 AND COUNT(DISTINCT mandat_hoch.id) > 0), 'extrem hoch',
+IF(COUNT(DISTINCT interessenbindung_hoch.id) > 0 OR (COUNT(DISTINCT interessenbindung_mittel.id) > 0 AND COUNT(DISTINCT mandat_mittel.id) > 0), 'hoch', 
+IF(COUNT(DISTINCT interessenbindung_mittel.id) > 0 OR COUNT(DISTINCT mandat_hoch.id) > 0, 'mittel',
+'tief'))) as lobbyeinfluss
+FROM `organisation` organisation
+LEFT JOIN `v_interessenbindung` interessenbindung_hoch ON organisation.id = interessenbindung_hoch.organisation_id AND (interessenbindung_hoch.bis IS NULL OR interessenbindung_hoch.bis >= NOW()) AND interessenbindung_hoch.wirksamkeit='hoch'
+LEFT JOIN `v_interessenbindung` interessenbindung_mittel ON organisation.id = interessenbindung_mittel.organisation_id AND (interessenbindung_mittel.bis IS NULL OR interessenbindung_mittel.bis >= NOW()) AND interessenbindung_mittel.wirksamkeit='mittel'
+LEFT JOIN `v_interessenbindung` interessenbindung_tief ON organisation.id = interessenbindung_tief.organisation_id AND (interessenbindung_tief.bis IS NULL OR interessenbindung_tief.bis >= NOW()) AND interessenbindung_tief.wirksamkeit='tief'
+LEFT JOIN `v_interessenbindung` interessenbindung_hoch_nach_wahl ON organisation.id = interessenbindung_hoch_nach_wahl.organisation_id AND (interessenbindung_hoch_nach_wahl.bis IS NULL OR interessenbindung_hoch_nach_wahl.bis >= NOW()) AND interessenbindung_hoch_nach_wahl.wirksamkeit='hoch' AND interessenbindung_hoch_nach_wahl.von > interessenbindung_hoch_nach_wahl.parlamentarier_im_rat_seit
+LEFT JOIN `v_interessenbindung` interessenbindung_mittel_nach_wahl ON organisation.id = interessenbindung_mittel_nach_wahl.organisation_id AND (interessenbindung_mittel_nach_wahl.bis IS NULL OR interessenbindung_mittel_nach_wahl.bis >= NOW()) AND interessenbindung_mittel_nach_wahl.wirksamkeit='mittel' AND interessenbindung_mittel_nach_wahl.von > interessenbindung_mittel_nach_wahl.parlamentarier_im_rat_seit
+LEFT JOIN `v_interessenbindung` interessenbindung_tief_nach_wahl ON organisation.id = interessenbindung_tief_nach_wahl.organisation_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > interessenbindung_tief_nach_wahl.parlamentarier_im_rat_seit
+LEFT JOIN `v_mandat` mandat_hoch ON organisation.id = mandat_hoch.organisation_id AND (mandat_hoch.bis IS NULL OR mandat_hoch.bis >= NOW()) AND mandat_hoch.wirksamkeit='hoch'
+LEFT JOIN `v_mandat` mandat_mittel ON organisation.id = mandat_mittel.organisation_id AND (mandat_mittel.bis IS NULL OR mandat_mittel.bis >= NOW()) AND mandat_mittel.wirksamkeit='mittel'
+LEFT JOIN `v_mandat` mandat_tief ON organisation.id = mandat_tief.organisation_id AND (mandat_tief.bis IS NULL OR mandat_tief.bis >= NOW()) AND mandat_tief.wirksamkeit='tief'
+GROUP BY organisation.id;
+
+CREATE OR REPLACE VIEW `v_organisation` AS
+SELECT
+organisation.*,
+lobbyeinfluss.lobbyeinfluss
+FROM `v_organisation_simple` organisation
+LEFT JOIN `v_organisation_lobbyeinfluss` lobbyeinfluss
+ON lobbyeinfluss.id = organisation.id
+;
+
 CREATE OR REPLACE VIEW `v_parlamentarier_simple` AS
 SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name,
 CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name,
@@ -574,14 +611,14 @@ FROM `parlamentarier` parlamentarier;
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor` AS
 SELECT zutrittsberechtigung.id,
-COUNT(DISTINCT interessenbindung_tief.id) as anzahl_interessenbindung_tief,
-COUNT(DISTINCT interessenbindung_mittel.id) as anzahl_interessenbindung_mittel,
-COUNT(DISTINCT interessenbindung_hoch.id) as anzahl_interessenbindung_hoch,
-COUNT(DISTINCT interessenbindung_tief.id) + COUNT(DISTINCT interessenbindung_mittel.id) * 5 + COUNT(DISTINCT interessenbindung_hoch.id) * 11 as lobbyfaktor
+COUNT(DISTINCT mandat_tief.id) as anzahl_mandat_tief,
+COUNT(DISTINCT mandat_mittel.id) as anzahl_mandat_mittel,
+COUNT(DISTINCT mandat_hoch.id) as anzahl_mandat_hoch,
+COUNT(DISTINCT mandat_tief.id) + COUNT(DISTINCT mandat_mittel.id) * 5 + COUNT(DISTINCT mandat_hoch.id) * 11 as lobbyfaktor
 FROM `zutrittsberechtigung` zutrittsberechtigung
-LEFT JOIN `v_interessenbindung` interessenbindung_hoch ON zutrittsberechtigung.id = interessenbindung_hoch.parlamentarier_id AND (interessenbindung_hoch.bis IS NULL OR interessenbindung_hoch.bis >= NOW()) AND interessenbindung_hoch.wirksamkeit='hoch'
-LEFT JOIN `v_interessenbindung` interessenbindung_mittel ON zutrittsberechtigung.id = interessenbindung_mittel.parlamentarier_id AND (interessenbindung_mittel.bis IS NULL OR interessenbindung_mittel.bis >= NOW()) AND interessenbindung_mittel.wirksamkeit='mittel'
-LEFT JOIN `v_interessenbindung` interessenbindung_tief ON zutrittsberechtigung.id = interessenbindung_tief.parlamentarier_id AND (interessenbindung_tief.bis IS NULL OR interessenbindung_tief.bis >= NOW()) AND interessenbindung_tief.wirksamkeit='tief'
+LEFT JOIN `v_mandat` mandat_hoch ON zutrittsberechtigung.id = mandat_hoch.zutrittsberechtigung_id AND (mandat_hoch.bis IS NULL OR mandat_hoch.bis >= NOW()) AND mandat_hoch.wirksamkeit='hoch'
+LEFT JOIN `v_mandat` mandat_mittel ON zutrittsberechtigung.id = mandat_mittel.zutrittsberechtigung_id AND (mandat_mittel.bis IS NULL OR mandat_mittel.bis >= NOW()) AND mandat_mittel.wirksamkeit='mittel'
+LEFT JOIN `v_mandat` mandat_tief ON zutrittsberechtigung.id = mandat_tief.zutrittsberechtigung_id AND (mandat_tief.bis IS NULL OR mandat_tief.bis >= NOW()) AND mandat_tief.wirksamkeit='tief'
 GROUP BY zutrittsberechtigung.id;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
@@ -615,9 +652,9 @@ FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS
 SELECT 
-MAX(lobbyfaktor.anzahl_interessenbindung_tief) as anzahl_interessenbindung_tief_max,
-MAX(lobbyfaktor.anzahl_interessenbindung_mittel) as anzahl_interessenbindung_mittel_max,
-MAX(lobbyfaktor.anzahl_interessenbindung_hoch) as anzahl_interessenbindung_hoch_max,
+MAX(lobbyfaktor.anzahl_mandat_tief) as anzahl_mandat_tief_max,
+MAX(lobbyfaktor.anzahl_mandat_mittel) as anzahl_mandat_mittel_max,
+MAX(lobbyfaktor.anzahl_mandat_hoch) as anzahl_mandat_hoch_max,
 MAX(lobbyfaktor) as lobbyfaktor_max
 FROM `v_zutrittsberechtigung_lobbyfaktor` lobbyfaktor
 -- GROUP BY lobbyfaktor.id
@@ -669,15 +706,15 @@ partei.abkuerzung AS partei,
 parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.freigabe_datum as parlamentarier_freigabe_datum, UNIX_TIMESTAMP(parlamentarier.freigabe_datum) as parlamentarier_freigabe_datum_unix,
 UNIX_TIMESTAMP(zutrittsberechtigung.bis) as bis_unix, UNIX_TIMESTAMP(zutrittsberechtigung.von) as von_unix,
 UNIX_TIMESTAMP(zutrittsberechtigung.created_date) as created_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.freigabe_datum) as freigabe_datum_unix,
-lobbyfaktor.anzahl_interessenbindung_tief,
-lobbyfaktor.anzahl_interessenbindung_mittel,
-lobbyfaktor.anzahl_interessenbindung_hoch,
+lobbyfaktor.anzahl_mandat_tief,
+lobbyfaktor.anzahl_mandat_mittel,
+lobbyfaktor.anzahl_mandat_hoch,
 lobbyfaktor.lobbyfaktor,
 lobbyfaktor_max.lobbyfaktor_max,
 lobbyfaktor.lobbyfaktor / lobbyfaktor_max.lobbyfaktor_max as lobbyfaktor_percent_max,
-lobbyfaktor_max.anzahl_interessenbindung_tief_max,
-lobbyfaktor_max.anzahl_interessenbindung_mittel_max,
-lobbyfaktor_max.anzahl_interessenbindung_hoch_max
+lobbyfaktor_max.anzahl_mandat_tief_max,
+lobbyfaktor_max.anzahl_mandat_mittel_max,
+lobbyfaktor_max.anzahl_mandat_hoch_max
 FROM `zutrittsberechtigung`
 LEFT JOIN `v_partei` partei
 ON zutrittsberechtigung.partei_id=partei.id

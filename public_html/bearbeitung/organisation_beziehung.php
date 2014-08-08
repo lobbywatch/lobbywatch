@@ -324,6 +324,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
             
@@ -461,6 +463,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('ziel_organisation_id', $this->RenderText('Ziel Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('quelle_url', $this->RenderText('Quelle Url')));
@@ -672,6 +676,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_name', 'inline_edit_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -820,6 +826,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_name', 'inline_insert_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
@@ -1021,6 +1029,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_anzeige_name', 'inline_edit_ziel_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1169,6 +1179,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_anzeige_name', 'inline_insert_ziel_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
@@ -1882,6 +1894,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_name', 'edit_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2042,6 +2056,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_anzeige_name', 'edit_ziel_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
@@ -2356,6 +2372,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Organisation', 'organisation_id', 'organisation_id_anzeige_name', 'insert_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2516,6 +2534,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new DynamicLookupEditColumn('Ziel Organisation', 'ziel_organisation_id', 'ziel_organisation_id_anzeige_name', 'insert_ziel_organisation_id_anzeige_name_search', $editor, $this->dataset, $lookupDataset, 'id', 'anzeige_name', '');
@@ -3112,6 +3132,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_edit_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
@@ -3252,6 +3274,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'inline_insert_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
@@ -3390,6 +3414,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
@@ -3530,6 +3556,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
@@ -3793,6 +3821,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'edit_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
@@ -3931,6 +3961,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
@@ -4071,6 +4103,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));
             $handler = new DynamicSearchHandler($lookupDataset, $this, 'insert_organisation_id_anzeige_name_search', 'id', 'anzeige_name', null);
@@ -4209,6 +4243,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $lookupDataset->AddCustomCondition(EnvVariablesUtils::EvaluateVariableTemplate($this->GetColumnVariableContainer(), ''));

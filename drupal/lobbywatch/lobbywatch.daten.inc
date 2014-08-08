@@ -301,7 +301,9 @@ function years_months($date_str, $ref = null) {
 
 
 function _lobbywatch_gaesteMitMandaten($parlamentarier_id, $only_active_zutrittsberechtigte = true, $check_unpublished = true) {
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion,
+  $admin = user_access('access lobbywatch admin');
+
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('mandat', 'organisation') . ", ' wirksamkeit-', mandat.wirksamkeit, '\">', IF(mandat.bis < NOW(), '<s>', ''), '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>',
     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ', CONCAT(UCASE(LEFT(mandat.art, 1)), SUBSTRING(mandat.art, 2)),
@@ -339,14 +341,15 @@ GROUP BY zutrittsberechtigung.id;";
 
   $res = '';
   foreach($gaeste as $gast) {
-    $res .= '<h4>' . $gast['zutrittsberechtigung_name'] . ', ' . $gast['funktion'] . (isset($gast['beruf']) ? '/' . $gast['beruf'] : '') . '</h4>';
-    $res .= '<p>' . $gast['name'] . '  ist mit folgenden Firmen, Verbänden und Organisationen verbunden:</p>';
+    $res .= '<h4>' . $gast['zutrittsberechtigung_name'] . ', ' . $gast['funktion'] . (isset($gast['beruf']) ? '/' . $gast['beruf'] : '') . ($admin ? ' <span class="admin">[LF: <b>'. $gast['lobbyfaktor'] . '</b> (' . round($gast['lobbyfaktor'] /$gast['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $gast['lobbyfaktor_max'] . ')'. ($admin ? ' <span =  class="admin">[' . $gast['anzahl_mandat_hoch'] . ', ' . $gast['anzahl_mandat_mittel'] . ', ' . $gast['anzahl_mandat_tief'] . ']</span>' : '') . ']' . '</span>': '') . '' . '</h4>';
+    $res .= '<p><a href="/daten/zutrittsberechtigter/' . $gast['id'] . '">' . $gast['name'] . '</a>  ist mit folgenden Firmen, Verbänden und Organisationen verbunden:</p>';
     //$res .= mandateList($con, $gast['id']);
     $res .= $gast['mandate'] ? "<ul>\n" . $gast['mandate'] . "\n</ul>" : '<p>keine</p>';
   }
 
   return $res;
 }
+
 function _lobbywatch_add_admin_class_for_freigabe($table_relation, $target_table = null) {
   return "IF($table_relation.freigabe_datum IS NULL OR $table_relation.freigabe_datum > NOW()" . ($target_table ? " OR $target_table.freigabe_datum IS NULL OR $target_table.freigabe_datum > NOW()" : '') . ", ' class=\"unpublished\"', '')";
 }
@@ -862,6 +865,7 @@ ORDER BY organisation.anzeige_name;
     $unpublished = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
+    '<p>Lobbyeinfluss: <b>'. $record['lobbyeinfluss'] . '</b></p>' .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
 //     . '<h3>Informationen</h3>'
     '<table border="0">'
@@ -1618,7 +1622,8 @@ GROUP BY zutrittsberechtigung.id;";
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
-    ($record['bis'] != null ? '<p><strong><em>Nicht mehr zutrittsberechtigt ins Parlament. War zutrittsberechtigt bis ' . check_plain($record['bis_formatted']) . '.</em></strong></p>' : '')
+    ($record['bis'] != null ? '<p><strong><em>Nicht mehr zutrittsberechtigt ins Parlament. War zutrittsberechtigt bis ' . check_plain($record['bis_formatted']) . '.</em></strong></p>' : '') .
+      '<p>Lobbyfaktor: <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' . ($admin ? ' <span =  class="admin">[' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']</span></p>' : '')
     . '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']
     . '<tr><td>Eingeladen von:</td><td>' . l($record['parlamentarier_name'], 'daten/parlamentarier/' . $record['parlamentarier_id']) . '</td></tr>'

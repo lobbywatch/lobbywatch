@@ -2005,6 +2005,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zwischenorganisation', 
@@ -2155,6 +2157,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2317,6 +2321,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -2469,6 +2475,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -2606,11 +2614,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -2618,11 +2626,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2749,11 +2757,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -2761,11 +2769,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -3646,6 +3654,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zwischenorganisation_id', $this->RenderText('Zwischenorganisation'), $lookupDataset, 'id', 'anzeige_name', false));
             
             $lookupDataset = new TableDataset(
@@ -3783,6 +3793,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('connector_organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
             
             $lookupDataset = new TableDataset(
@@ -3894,11 +3906,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -3906,11 +3918,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
@@ -4371,6 +4383,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zwischenorganisation', 
@@ -4521,6 +4535,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -4683,6 +4699,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -4835,6 +4853,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -4972,11 +4992,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -4984,11 +5004,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -5115,11 +5135,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -5127,11 +5147,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -5968,6 +5988,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zwischenorganisation', 
@@ -6117,6 +6139,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -6241,11 +6265,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -6253,11 +6277,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -6698,6 +6722,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Zwischenorganisation', 
@@ -6847,6 +6873,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -6972,11 +7000,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -6984,11 +7012,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -17806,6 +17834,9 @@
             $field = new StringField('wirksamkeit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new DateField('parlamentarier_im_rat_seit');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation'), 'organisation_id_name_v_organisation');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
         }
@@ -18169,6 +18200,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -18320,6 +18353,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -19272,6 +19307,9 @@
             $field = new StringField('wirksamkeit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new DateField('parlamentarier_im_rat_seit');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation'), 'organisation_id_name_v_organisation');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
         }
@@ -19462,6 +19500,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum')));
@@ -20075,6 +20115,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -20226,6 +20268,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -21279,6 +21323,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -21916,6 +21962,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -23387,11 +23435,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -23399,11 +23447,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -23530,11 +23578,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -23542,11 +23590,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -23709,6 +23757,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -23859,6 +23909,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25223,11 +25275,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -25235,11 +25287,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -25377,6 +25429,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('art', $this->RenderText('Art')));
@@ -25671,11 +25725,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -25683,11 +25737,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25814,11 +25868,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -25826,11 +25880,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -25993,6 +26047,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -26143,6 +26199,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -27359,11 +27417,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -27371,11 +27429,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -27525,6 +27583,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -28116,11 +28176,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -28128,11 +28188,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -28282,6 +28342,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -29319,6 +29381,9 @@
             $field = new StringField('wirksamkeit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new DateField('parlamentarier_im_rat_seit');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation'), 'organisation_id_name_v_organisation');
         }
     
@@ -29652,6 +29717,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -29803,6 +29870,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -30753,6 +30822,9 @@
             $field = new StringField('wirksamkeit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new DateField('parlamentarier_im_rat_seit');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation'), 'organisation_id_name_v_organisation');
         }
     
@@ -30941,6 +31013,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('organisation_id', $this->RenderText('Organisation'), $lookupDataset, 'id', 'name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum')));
@@ -31305,6 +31379,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -31456,6 +31532,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -32494,6 +32572,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
+            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Organisation', 
@@ -32901,6 +32981,8 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('lobbyeinfluss');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -34091,11 +34173,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -34103,11 +34185,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -34234,11 +34316,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -34246,11 +34328,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -35651,11 +35733,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -35663,11 +35745,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('organisation_id', $this->RenderText('Organisation Id')));
@@ -35924,11 +36006,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -35936,11 +36018,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -36067,11 +36149,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -36079,11 +36161,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -37329,11 +37411,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -37341,11 +37423,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -37940,11 +38022,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
+            $field = new IntegerField('anzahl_mandat_tief');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
+            $field = new IntegerField('anzahl_mandat_mittel');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
+            $field = new IntegerField('anzahl_mandat_hoch');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor');
             $lookupDataset->AddField($field, false);
@@ -37952,11 +38034,11 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('lobbyfaktor_percent_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
+            $field = new IntegerField('anzahl_mandat_tief_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
+            $field = new IntegerField('anzahl_mandat_mittel_max');
             $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
+            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
