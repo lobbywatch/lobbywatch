@@ -695,8 +695,8 @@ DROP TABLE IF EXISTS `mv_organisation`;
 CREATE TABLE IF NOT EXISTS `mv_organisation` AS SELECT * FROM `v_organisation_raw`;
 ALTER TABLE `mv_organisation`
 ADD PRIMARY KEY (`id`),
-ADD KEY `idx_anzeige_name` (`anzeige_name`(900)),
-ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`(900)),
+ADD KEY `idx_anzeige_name` (`anzeige_name`(200)),
+ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`(200)),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_organisation` AS
