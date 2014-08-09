@@ -133,7 +133,7 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('kommissionen');
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier'), 'parlamentarier_id_anzeige_name_v_parlamentarier');
+            $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe', new IntegerField('id'), new StringField('anzeige_name', 'beruf_interessengruppe_id_anzeige_name', 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe'), 'beruf_interessengruppe_id_anzeige_name_v_interessengruppe');
             $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung', 'partei_id_abkuerzung', 'partei_id_abkuerzung_v_partei'), 'partei_id_abkuerzung_v_partei');
         }
@@ -235,7 +235,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_parlamentarier`');
+                '`v_parlamentarier_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -397,59 +397,6 @@
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('bis_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rat');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ratstyp');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton_abkuerzung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kanton_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen_namen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommissionen_abkuerzung');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommissionen_anzahl');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('partei');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('partei_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('fraktion');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('militaerischer_grad');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('titel_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_nach_wahl');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_nach_wahl');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_nach_wahl');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor_percent_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_tief_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_mittel_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_interessenbindung_hoch_max');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('parlamentarier_id', $this->RenderText('Parlamentarier'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('kommissionen', $this->RenderText('Kommissionen')));

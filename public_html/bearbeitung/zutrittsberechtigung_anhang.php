@@ -85,7 +85,7 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
-            $this->dataset->AddLookupField('zutrittsberechtigung_id', 'v_zutrittsberechtigung', new IntegerField('id'), new IntegerField('parlamentarier_id', 'zutrittsberechtigung_id_parlamentarier_id', 'zutrittsberechtigung_id_parlamentarier_id_v_zutrittsberechtigung'), 'zutrittsberechtigung_id_parlamentarier_id_v_zutrittsberechtigung');
+            $this->dataset->AddLookupField('zutrittsberechtigung_id', 'v_zutrittsberechtigung_simple', new IntegerField('id'), new IntegerField('parlamentarier_id', 'zutrittsberechtigung_id_parlamentarier_id', 'zutrittsberechtigung_id_parlamentarier_id_v_zutrittsberechtigung_simple'), 'zutrittsberechtigung_id_parlamentarier_id_v_zutrittsberechtigung_simple');
         }
     
         protected function CreatePageNavigator()
@@ -185,7 +185,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_zutrittsberechtigung`');
+                '`v_zutrittsberechtigung_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -282,32 +282,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('partei');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('parlamentarier_name');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('parlamentarier_freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('parlamentarier_freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_tief');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_mittel');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_hoch');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor_percent_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_tief_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_mittel_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('zutrittsberechtigung_id', $this->RenderText('Zutrittsberechtigung'), $lookupDataset, 'id', 'parlamentarier_id', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('datei', $this->RenderText('Datei')));
@@ -360,7 +334,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_zutrittsberechtigung`');
+                '`v_zutrittsberechtigung_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -457,32 +431,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('partei');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('parlamentarier_name');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('parlamentarier_freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('parlamentarier_freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_tief');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_mittel');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_hoch');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor_percent_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_tief_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_mittel_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('parlamentarier_id', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -504,7 +452,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_zutrittsberechtigung`');
+                '`v_zutrittsberechtigung_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -601,32 +549,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('partei');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('parlamentarier_name');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('parlamentarier_freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('parlamentarier_freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_tief');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_mittel');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_hoch');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor_percent_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_tief_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_mittel_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('parlamentarier_id', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1156,7 +1078,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_zutrittsberechtigung`');
+                '`v_zutrittsberechtigung_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1253,32 +1175,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('partei');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('parlamentarier_name');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('parlamentarier_freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('parlamentarier_freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_tief');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_mittel');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_hoch');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('lobbyfaktor_percent_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_tief_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_mittel_max');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('anzahl_mandat_hoch_max');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('parlamentarier_id', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
