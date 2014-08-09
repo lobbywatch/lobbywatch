@@ -583,9 +583,10 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
       $search_str = "%$search_str%";
     }
     $table = 'parlamentarier_medium';
+    $page = 'parlamentarier';
     $query = db_select("v_$table", $table);
     $query->fields($table, array('id'));
-    $query->addExpression("'$table'", 'page');
+    $query->addExpression("'$page'", 'page');
     $query->addExpression("CONCAT_WS(', ', anzeige_name, rat, partei, kanton)", 'name');
     $query->condition('anzeige_name', $search_str, 'LIKE');
     if (!user_access('access lobbywatch unpublished content')) {
@@ -595,9 +596,10 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
     }
 
     $table = 'zutrittsberechtigung_simple';
+    $page = 'zutrittsberechtigter';
     $query2 = db_select("v_$table", $table);
     $query2->fields($table, array('id'));
-    $query2->addExpression("'$table'", 'page');
+    $query2->addExpression("'$page'", 'page');
     $query2->addExpression("anzeige_name", 'name');
     $query2->condition('anzeige_name', $search_str, 'LIKE');
     if (!user_access('access lobbywatch unpublished content')) {
@@ -608,6 +610,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
     $merged_query = $query->union($query2);
 
     $table = 'organisation_simple';
+    $page = 'organisation';
     $query2 = db_select("v_$table", $table);
     $query2->addExpression("'$table'", 'page');
     $query2->addExpression("anzeige_name", 'name');
@@ -624,7 +627,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
     $query2 = db_select("v_$table", $table);
     foreach (Constants::$entities_web as $table => $page) {
       $query2 = db_select("v_$table", $table);
-      $query2->addExpression("'$table'", 'page');
+      $query2->addExpression("'$page'", 'page');
       $query2->addExpression("anzeige_name", 'name');
 //       $query2->addField("'$table'", "anzeige_name", 'name'); // causes problem with field order
       $query2->fields($table, array('id'));

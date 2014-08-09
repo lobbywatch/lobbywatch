@@ -506,6 +506,8 @@ parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
            . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
       GROUP BY parlamentarier.id";
 
+//     dpm($sql, 'sql');
+
     $result = db_query($sql, array(':id' => $id));
 
   //     dpm($result, 'result');
