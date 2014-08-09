@@ -398,6 +398,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('bis_unix');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ratstyp');
@@ -407,8 +409,6 @@
             $field = new StringField('kanton');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -503,12 +503,6 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('branche');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -520,6 +514,12 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('beruf_interessengruppe_id', $this->RenderText('Beruf Interessengruppe'), $lookupDataset, 'id', 'anzeige_name', false));
             
@@ -884,12 +884,6 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('branche');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -901,6 +895,12 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -963,12 +963,6 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('branche');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -980,6 +974,12 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -1860,12 +1860,6 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('branche');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1877,6 +1871,12 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -2208,12 +2208,6 @@
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
-            $field = new StringField('branche');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
-            $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -2225,6 +2219,12 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('branche');
+            $lookupDataset->AddField($field, false);
+            $field = new IntegerField('kommission_id');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(

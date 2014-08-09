@@ -150,6 +150,9 @@ function fillHintParams(Page $page, &$params) {
 }
 
 function before_render(Page $page) {
+
+  custom_set_db_session_parameters($page);
+
   // Add custom headers
   $page->OnCustomHTMLHeader->AddListener('add_custom_header');
   write_user_last_access($page);
@@ -166,6 +169,13 @@ function before_render(Page $page) {
 // //      df("Names: $raw_name -> $name");
 //   }
 //   $GLOBALS['customParams'] = array( 'Hints' => $hints);
+}
+
+function custom_set_db_session_parameters($page) {
+  $connection = getDBConnection();
+
+  $connection->ExecSQL("SET SESSION wait_timeout=120;");
+
 }
 
 function write_user_last_access($page) {

@@ -348,6 +348,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('bis_unix');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ratstyp');
@@ -357,8 +359,6 @@
             $field = new StringField('kanton');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -614,6 +614,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('bis_unix');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ratstyp');
@@ -623,8 +625,6 @@
             $field = new StringField('kanton');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -850,6 +850,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('bis_unix');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ratstyp');
@@ -859,8 +861,6 @@
             $field = new StringField('kanton');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
@@ -1599,6 +1599,8 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('bis_unix');
             $lookupDataset->AddField($field, false);
+            $field = new IntegerField('vertretene_bevoelkerung');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('rat');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ratstyp');
@@ -1608,8 +1610,6 @@
             $field = new StringField('kanton');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kanton_name_de');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('vertretene_bevoelkerung');
             $lookupDataset->AddField($field, false);
             $field = new StringField('kommissionen_namen');
             $lookupDataset->AddField($field, false);
