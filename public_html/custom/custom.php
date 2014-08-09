@@ -880,10 +880,10 @@ CASE zutrittsberechtigung.geschlecht
     WHEN 'F' THEN CONCAT('Sehr geehrte Frau ', zutrittsberechtigung.nachname)
     ELSE CONCAT('Sehr geehrte(r) Herr/Frau ', zutrittsberechtigung.nachname)
 END anrede
-FROM v_zutrittsberechtigung zutrittsberechtigung
+FROM v_zutrittsberechtigung_simple zutrittsberechtigung
 LEFT JOIN v_mandat mandat
   ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
-LEFT JOIN v_organisation organisation
+LEFT JOIN v_organisation_simple organisation
   ON mandat.organisation_id = organisation.id
 WHERE
   (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())
@@ -1350,7 +1350,7 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     $con = $eng_con->GetConnectionHandle();
     // TODO close connection
     $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum, zutrittsberechtigung.parlamentarier_id
-  FROM v_zutrittsberechtigung zutrittsberechtigung
+  FROM v_zutrittsberechtigung_simple zutrittsberechtigung
   WHERE
     -- zutrittsberechtigung.parlamentarier_id=:id AND
     zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()
@@ -1376,7 +1376,7 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     $con = $eng_con->GetConnectionHandle();
     // TODO close connection
     $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum
-  FROM v_zutrittsberechtigung zutrittsberechtigung
+  FROM v_zutrittsberechtigung_simple zutrittsberechtigung
   WHERE
     zutrittsberechtigung.parlamentarier_id=:id
     AND zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW();";
