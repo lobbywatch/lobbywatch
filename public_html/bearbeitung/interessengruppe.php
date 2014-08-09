@@ -17062,7 +17062,7 @@
             $this->GetConnection()->ExecQueryToArray("
             SELECT DISTINCT
             upper(left(i.name, 1)) as first_letter
-            FROM v_interessengruppe i
+            FROM interessengruppe i
             ORDER BY first_letter", $tmp
             );
             

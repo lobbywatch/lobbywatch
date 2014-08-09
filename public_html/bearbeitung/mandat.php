@@ -2949,7 +2949,7 @@
             $this->GetConnection()->ExecQueryToArray("
             SELECT DISTINCT
             upper(left(p.nachname, 1)) as first_letter
-            FROM v_zutrittsberechtigung p
+            FROM zutrittsberechtigung p
             ORDER BY first_letter", $tmp
             );
             
@@ -2960,7 +2960,7 @@
         
         function partition_OnGetPartitionCondition($partitionKey, &$condition)
         {
-            $condition = "mandat.zutrittsberechtigung_id IN (SELECT `id` FROM `v_zutrittsberechtigung` s WHERE upper(left(s.nachname, 1)) = '$partitionKey')";
+            $condition = "mandat.zutrittsberechtigung_id IN (SELECT `id` FROM `zutrittsberechtigung` s WHERE upper(left(s.nachname, 1)) = '$partitionKey')";
         }
     
         protected function CreateGrid()

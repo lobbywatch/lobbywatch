@@ -10,10 +10,10 @@ require_once dirname(__FILE__) . "/../common/utils.php";
 
 
 //  define('SHOW_VARIABLES', 1);
-  define('DEBUG_LEVEL', 1);
+//  define('DEBUG_LEVEL', 1);
 
-  error_reporting(E_ALL ^ E_NOTICE);
-  ini_set('display_errors', 'On');
+//  error_reporting(E_ALL ^ E_NOTICE);
+//  ini_set('display_errors', 'On');
 
 set_include_path('.' . PATH_SEPARATOR . get_include_path());
 

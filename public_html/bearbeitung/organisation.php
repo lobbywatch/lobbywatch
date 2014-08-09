@@ -54069,7 +54069,7 @@
             $this->GetConnection()->ExecQueryToArray("
             SELECT DISTINCT
             upper(left(o.name_de, 1)) as first_letter
-            FROM v_organisation o
+            FROM organisation o
             ORDER BY first_letter", $tmp
             );
             

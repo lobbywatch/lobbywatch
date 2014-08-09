@@ -53528,7 +53528,7 @@
             $this->GetConnection()->ExecQueryToArray("
             SELECT DISTINCT
             upper(left(p.nachname, 1)) as first_letter
-            FROM v_parlamentarier p
+            FROM parlamentarier p
             ORDER BY first_letter", $tmp
             );
             

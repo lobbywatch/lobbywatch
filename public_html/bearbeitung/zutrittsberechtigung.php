@@ -17920,7 +17920,7 @@
             $this->GetConnection()->ExecQueryToArray("
             SELECT DISTINCT
             upper(left(i.name, 1)) as first_letter
-            FROM v_zutrittsberechtigung i
+            FROM zutrittsberechtigung i
             ORDER BY first_letter", $tmp
             );
             

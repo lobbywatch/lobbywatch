@@ -6,7 +6,7 @@ $tmp = array();
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 upper(left(o.name_de, 1)) as first_letter
-FROM v_organisation o
+FROM organisation o
 ORDER BY first_letter", $tmp
 );
 
@@ -24,7 +24,7 @@ $tmp = array();
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 upper(left(p.nachname, 1)) as first_letter
-FROM v_parlamentarier p
+FROM parlamentarier p
 ORDER BY first_letter", $tmp
 );
 
@@ -41,7 +41,7 @@ $tmp = array();
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 upper(left(i.name, 1)) as first_letter
-FROM v_interessengruppe i
+FROM interessengruppe i
 ORDER BY first_letter", $tmp
 );
 
@@ -58,7 +58,7 @@ $tmp = array();
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 upper(left(p.nachname, 1)) as first_letter
-FROM v_parlamentarier p
+FROM parlamentarier p
 ORDER BY first_letter", $tmp
 );
 
@@ -67,7 +67,7 @@ foreach($tmp as $letter) {
 }
 
 //
-$condition = "interessenbindung.parlamentarier_id IN (SELECT `id` FROM `v_parlamentarier` s WHERE upper(left(s.nachname, 1)) = '$partitionKey')";
+$condition = "interessenbindung.parlamentarier_id IN (SELECT `id` FROM `parlamentarier` s WHERE upper(left(s.nachname, 1)) = '$partitionKey')";
 
 // Zutrittsberechtigung
 
@@ -75,7 +75,7 @@ $tmp = array();
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 upper(left(i.name, 1)) as first_letter
-FROM v_zutrittsberechtigung i
+FROM zutrittsberechtigung i
 ORDER BY first_letter", $tmp
 );
 
@@ -92,7 +92,7 @@ $tmp = array();
 $this->GetConnection()->ExecQueryToArray("
 SELECT DISTINCT
 upper(left(p.nachname, 1)) as first_letter
-FROM v_zutrittsberechtigung p
+FROM zutrittsberechtigung p
 ORDER BY first_letter", $tmp
 );
 
@@ -101,4 +101,4 @@ foreach($tmp as $letter) {
 }
 
 //
-$condition = "mandat.zutrittsberechtigung_id IN (SELECT `id` FROM `v_zutrittsberechtigung` s WHERE upper(left(s.nachname, 1)) = '$partitionKey')";
+$condition = "mandat.zutrittsberechtigung_id IN (SELECT `id` FROM `zutrittsberechtigung` s WHERE upper(left(s.nachname, 1)) = '$partitionKey')";

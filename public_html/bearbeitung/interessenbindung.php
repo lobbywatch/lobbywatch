@@ -3532,7 +3532,7 @@
             $this->GetConnection()->ExecQueryToArray("
             SELECT DISTINCT
             upper(left(p.nachname, 1)) as first_letter
-            FROM v_parlamentarier p
+            FROM parlamentarier p
             ORDER BY first_letter", $tmp
             );
             
@@ -3543,7 +3543,7 @@
         
         function partition_OnGetPartitionCondition($partitionKey, &$condition)
         {
-            $condition = "interessenbindung.parlamentarier_id IN (SELECT `id` FROM `v_parlamentarier` s WHERE upper(left(s.nachname, 1)) = '$partitionKey')";
+            $condition = "interessenbindung.parlamentarier_id IN (SELECT `id` FROM `parlamentarier` s WHERE upper(left(s.nachname, 1)) = '$partitionKey')";
         }
     
         protected function CreateGrid()
