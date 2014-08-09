@@ -1,3 +1,12 @@
+-- Lobbywatch.ch Views
+
+-- Views can be very slow in MySQL, see
+-- http://www.mysqlperformanceblog.com/2007/08/12/mysql-view-as-performance-troublemaker/
+
+-- As a workaround materialized views are created (or better simulated as they do not exist natively in MySQL).
+-- See refreshMaterializedViews() at the end of this file.
+-- The PROCEDURE refreshMaterializedViews() must be called regularly.
+
 -- VIEWS ------------------
 
 -- Last updated views
