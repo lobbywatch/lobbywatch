@@ -38375,10 +38375,10 @@
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('land_id', 'v_country', new IntegerField('id'), new StringField('anzeige_name', 'land_id_anzeige_name', 'land_id_anzeige_name_v_country'), 'land_id_anzeige_name_v_country');
             $this->dataset->AddLookupField('interessenraum_id', 'v_interessenraum', new IntegerField('id'), new StringField('anzeige_name', 'interessenraum_id_anzeige_name', 'interessenraum_id_anzeige_name_v_interessenraum'), 'interessenraum_id_anzeige_name_v_interessenraum');
-            $this->dataset->AddLookupField('branche_id', 'v_branche', new IntegerField('id'), new StringField('anzeige_name', 'branche_id_anzeige_name', 'branche_id_anzeige_name_v_branche'), 'branche_id_anzeige_name_v_branche');
-            $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe_id_anzeige_name_v_interessengruppe'), 'interessengruppe_id_anzeige_name_v_interessengruppe');
-            $this->dataset->AddLookupField('interessengruppe2_id', 'v_interessengruppe', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe2_id_anzeige_name_v_interessengruppe'), 'interessengruppe2_id_anzeige_name_v_interessengruppe');
-            $this->dataset->AddLookupField('interessengruppe3_id', 'v_interessengruppe', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe3_id_anzeige_name', 'interessengruppe3_id_anzeige_name_v_interessengruppe'), 'interessengruppe3_id_anzeige_name_v_interessengruppe');
+            $this->dataset->AddLookupField('branche_id', 'v_branche_simple', new IntegerField('id'), new StringField('anzeige_name', 'branche_id_anzeige_name', 'branche_id_anzeige_name_v_branche_simple'), 'branche_id_anzeige_name_v_branche_simple');
+            $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe_id_anzeige_name_v_interessengruppe_simple');
+            $this->dataset->AddLookupField('interessengruppe2_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe2_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe2_id_anzeige_name_v_interessengruppe_simple');
+            $this->dataset->AddLookupField('interessengruppe3_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe3_id_anzeige_name', 'interessengruppe3_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe3_id_anzeige_name_v_interessengruppe_simple');
         }
     
         protected function CreatePageNavigator()
@@ -38636,7 +38636,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_branche`');
+                '`v_branche_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -38706,14 +38706,12 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
-            $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'anzeige_name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -38765,19 +38763,13 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('branche');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe_id', $this->RenderText('Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -38829,19 +38821,13 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('branche');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe2_id', $this->RenderText('2. Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -38893,12 +38879,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('branche');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('interessengruppe3_id', $this->RenderText('3. Lobbygruppe'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
@@ -39761,7 +39741,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_branche`');
+                '`v_branche_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -39830,8 +39810,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -39852,7 +39830,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_branche`');
+                '`v_branche_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -39921,8 +39899,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
             $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
@@ -39966,7 +39942,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -40018,12 +39994,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
@@ -40055,7 +40025,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -40107,12 +40077,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
@@ -40154,7 +40118,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -40206,12 +40170,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
@@ -40243,7 +40201,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -40295,12 +40253,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
@@ -40342,7 +40294,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -40394,12 +40346,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
@@ -40431,7 +40377,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -40483,12 +40429,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
@@ -41626,7 +41566,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_branche`');
+                '`v_branche_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -41696,8 +41636,6 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
-            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Branche', 
@@ -41728,7 +41666,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -41780,12 +41718,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
@@ -41815,7 +41747,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -41867,12 +41799,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
@@ -41902,7 +41828,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -41954,12 +41880,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
@@ -42469,7 +42389,7 @@
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_branche`');
+                '`v_branche_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -42539,8 +42459,6 @@
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
             $lookupDataset->AddField($field, false);
-            $field = new StringField('kommission');
-            $lookupDataset->AddField($field, false);
             $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             $editColumn = new LookUpEditColumn(
                 'Branche', 
@@ -42571,7 +42489,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -42623,12 +42541,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
@@ -42658,7 +42570,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -42710,12 +42622,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
@@ -42745,7 +42651,7 @@
             $dataset1 = new TableDataset(
                 new MyPDOConnectionFactory(),
                 GetConnectionOptions(),
-                '`v_interessengruppe`');
+                '`v_interessengruppe_simple`');
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
@@ -42797,12 +42703,6 @@
             $field = new IntegerField('kontrolliert_datum_unix');
             $dataset1->AddField($field, false);
             $field = new IntegerField('freigabe_datum_unix');
-            $dataset1->AddField($field, false);
-            $field = new StringField('branche');
-            $dataset1->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $dataset1->AddField($field, false);
-            $field = new StringField('kommission');
             $dataset1->AddField($field, false);
             $dataset1->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
             
