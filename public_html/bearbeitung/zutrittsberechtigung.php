@@ -1564,6 +1564,9 @@
             $field = new StringField('wirksamkeit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new DateTimeField('refreshed_date');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
         }
     
@@ -3106,6 +3109,9 @@
             $field = new IntegerField('freigabe_datum_unix');
             $this->dataset->AddField($field, true);
             $field = new StringField('wirksamkeit');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('refreshed_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');

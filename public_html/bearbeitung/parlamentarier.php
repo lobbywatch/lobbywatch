@@ -16109,6 +16109,9 @@
             $field = new DateField('parlamentarier_im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new DateTimeField('refreshed_date');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation_simple'), 'organisation_id_name_v_organisation_simple');
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
         }
@@ -17492,6 +17495,9 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateField('parlamentarier_im_rat_seit');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('refreshed_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation_simple'), 'organisation_id_name_v_organisation_simple');
@@ -26548,6 +26554,9 @@
             $field = new DateField('parlamentarier_im_rat_seit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new DateTimeField('refreshed_date');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation_simple'), 'organisation_id_name_v_organisation_simple');
         }
     
@@ -27899,6 +27908,9 @@
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $field = new DateField('parlamentarier_im_rat_seit');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new DateTimeField('refreshed_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
             $this->dataset->AddLookupField('organisation_id', 'v_organisation_simple', new IntegerField('id'), new StringField('name', 'organisation_id_name', 'organisation_id_name_v_organisation_simple'), 'organisation_id_name_v_organisation_simple');
