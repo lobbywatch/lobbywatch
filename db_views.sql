@@ -565,6 +565,15 @@ ADD UNIQUE KEY `idx_name_de` (`name_de`),
 ADD KEY `idx_anzeige_name` (`anzeige_name`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
+--	DROP TABLE IF EXISTS `mv_organisation_medium_myisam`;
+--	CREATE TABLE IF NOT EXISTS `mv_organisation_medium_myisam` ENGINE = MYISAM AS SELECT * FROM `v_organisation_medium_raw`;
+--	ALTER TABLE `mv_organisation_medium_myisam`
+--	ADD PRIMARY KEY (`id`),
+--	ADD UNIQUE KEY `idx_name_de` (`name_de`),
+--	ADD KEY `idx_anzeige_name` (`anzeige_name`),
+--	ADD FULLTEXT(`anzeige_name`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
 CREATE OR REPLACE VIEW `v_organisation_medium` AS
 SELECT * FROM `mv_organisation_medium`;
 
@@ -698,6 +707,15 @@ ADD PRIMARY KEY (`id`),
 ADD KEY `idx_anzeige_name` (`anzeige_name`(200)),
 ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`(200)),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+--	DROP TABLE IF EXISTS `mv_organisation_myisam`;
+--	CREATE TABLE IF NOT EXISTS `mv_organisation_myisam` AS SELECT * FROM `v_organisation_raw`;
+--	ALTER TABLE `mv_organisation_myisam`
+--	ADD PRIMARY KEY (`id`),
+--	ADD KEY `idx_anzeige_name` (`anzeige_name`(200)),
+--	ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`(200)),
+--	ADD FULLTEXT(`anzeige_name`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_organisation` AS
 SELECT * FROM `mv_organisation`;
@@ -839,6 +857,14 @@ ADD PRIMARY KEY (`id`),
 ADD KEY `idx_anzeige_name` (`anzeige_name`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
+--	DROP TABLE IF EXISTS `mv_parlamentarier_medium_myisam`;
+--	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium_myisam` ENGINE=MYISAM AS SELECT * FROM `v_parlamentarier_medium_raw`;
+--	ALTER TABLE `mv_parlamentarier_medium_myisam`
+--	ADD PRIMARY KEY (`id`),
+--	ADD KEY `idx_anzeige_name` (`anzeige_name`),
+--	ADD FULLTEXT(`anzeige_name`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
 CREATE OR REPLACE VIEW `v_parlamentarier_medium` AS
 SELECT * FROM `mv_parlamentarier_medium`;
 
@@ -873,6 +899,20 @@ ADD KEY `idx_kanton` (`kanton`),
 ADD KEY `idx_partei` (`partei`),
 ADD KEY `idx_kommissionen` (`kommissionen`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+--	DROP TABLE IF EXISTS `mv_parlamentarier_myisam`;
+--	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_myisam` ENGINE=MYISAM AS SELECT * FROM `v_parlamentarier_raw`;
+--	ALTER TABLE `mv_parlamentarier_myisam`
+--	ADD PRIMARY KEY (`id`),
+--	ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`),
+--	ADD KEY `idx_anzeige_name` (`anzeige_name`),
+--	ADD KEY `idx_ratstyp` (`ratstyp`),
+--	ADD KEY `idx_rat` (`rat`),
+--	ADD KEY `idx_kanton` (`kanton`),
+--	ADD KEY `idx_partei` (`partei`),
+--	ADD KEY `idx_kommissionen` (`kommissionen`),
+--	ADD FULLTEXT(`anzeige_name`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
 SELECT * FROM `mv_parlamentarier`;
@@ -917,6 +957,16 @@ ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`),
 ADD KEY `idx_anzeige_name` (`anzeige_name`),
 ADD KEY `idx_partei` (`partei`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+--	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;
+--	CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_myisam` ENGINE=MYISAM AS SELECT * FROM `v_zutrittsberechtigung_raw`;
+--	ALTER TABLE `mv_zutrittsberechtigung_myisam`
+--	ADD PRIMARY KEY (`id`),
+--	ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`),
+--	ADD KEY `idx_anzeige_name` (`anzeige_name`),
+--	ADD KEY `idx_partei` (`partei`),
+--	ADD FULLTEXT(`anzeige_name`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung` AS
 SELECT * FROM `mv_zutrittsberechtigung`;
@@ -1749,17 +1799,32 @@ BEGIN
 	REPLACE INTO `mv_organisation_medium`
 	  SELECT * FROM `v_organisation_medium_raw`;
 
+--	REPLACE INTO `mv_organisation_medium_myisam`
+--	  SELECT * FROM `v_organisation_medium_raw`;
+
 	REPLACE INTO `mv_organisation`
 	  SELECT * FROM `v_organisation_raw`;
+
+--	REPLACE INTO `mv_organisation_myisam`
+--	  SELECT * FROM `v_organisation_raw`;
 
 	REPLACE INTO `mv_parlamentarier_medium`
 	  SELECT * FROM `v_parlamentarier_medium_raw`;
 
+--	REPLACE INTO `mv_parlamentarier_medium_myisam`
+--	  SELECT * FROM `v_parlamentarier_medium_raw`;
+
 	REPLACE INTO `mv_parlamentarier`
 	  SELECT * FROM `v_parlamentarier_raw`;
 
+--	REPLACE INTO `mv_parlamentarier_myisam`
+--	  SELECT * FROM `v_parlamentarier_raw`;
+
 	REPLACE INTO `mv_zutrittsberechtigung`
 	  SELECT * FROM `v_zutrittsberechtigung_raw`;
+
+--	REPLACE INTO `mv_zutrittsberechtigung_mysiam`
+--	  SELECT * FROM `v_zutrittsberechtigung_raw`;
 
 END
 //

@@ -9,26 +9,8 @@ function _lobbywatch_search_autocomplete($str = '', $check_unpublished = true) {
   db_set_active('lobbywatch');
 
   try {
-    $table_sql = array();
-    // TODO speed up using better view
-    $table = 'parlamentarier_medium';
-    $page = 'parlamentarier';
-    $table_sql[] = "SELECT '$page' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
-
-    // TODO use zutrittsberechtigung_simple
-    $table = 'zutrittsberechtigung_simple';
-    $page = 'zutrittsberechtigter';
-    $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
-
-    $table = 'organisation_simple';
-    $page = 'organisation';
-    $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
-
-    foreach (Constants::$entities_web as $table => $page) {
-      $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
-    }
-    $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
-    $result = db_query($sql, array(':str' => "%$str%"));
+    $result = _lobbywatch_search_autocomplete_LIKE($str);
+//     $result = _lobbywatch_search_autocomplete_FULLTEXT($str);
 
   //   dpm($result, 'result');
 
@@ -47,6 +29,67 @@ function _lobbywatch_search_autocomplete($str = '', $check_unpublished = true) {
 
   drupal_json_output($items);
 }
+
+function _lobbywatch_search_autocomplete_LIKE($str, $check_unpublished = true) {
+  $table_sql = array();
+  $table = 'parlamentarier_medium';
+  $page = 'parlamentarier';
+  $table_sql[] = "SELECT '$page' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+
+  // TODO use zutrittsberechtigung_simple
+  $table = 'zutrittsberechtigung_simple';
+  $page = 'zutrittsberechtigter';
+  $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+
+  $table = 'organisation_simple';
+  $page = 'organisation';
+  $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+
+  foreach (Constants::$entities_web as $table => $page) {
+    $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+  }
+
+  $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
+  //dpm($sql, 'suche');
+  $result = db_query($sql, array(':str' => "%$str%"));
+
+  return $result;
+}
+/**
+ * Does not work.
+ *
+ * @deprecated
+ * http://dev.mysql.com/doc/refman/5.1/en/fulltext-search.html
+ * http://devzone.zend.com/26/using-mysql-full-text-searching/
+ *
+ * @param string $check_unpublished
+ * @return DatabaseStatementInterface
+ */
+function _lobbywatch_search_autocomplete_FULLTEXT($str, $check_unpublished = true) {
+  $table_sql = array();
+  $table = 'mv_parlamentarier_myisam';
+  $page = 'parlamentarier';
+  $table_sql[] = "SELECT '$page' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str) " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+
+  // TODO use zutrittsberechtigung_simple
+  $table = 'mv_zutrittsberechtigung_myisam';
+  $page = 'zutrittsberechtigter';
+  $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str)" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+
+  $table = 'mv_organisation_myisam';
+  $page = 'organisation';
+  $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str)" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+
+  foreach (Constants::$entities_web as $table => $page) {
+    $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :like_str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+  }
+
+  $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
+  //dpm($sql, 'suche');
+  $result = db_query($sql, array(':like_str' => "%$str%", ':str' => $str));
+
+  return $result;
+  }
 
 /**
  * Builds a page which prints hierarchically the kategory taxonomy terms.
