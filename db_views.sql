@@ -561,6 +561,8 @@ DROP TABLE IF EXISTS `mv_organisation_medium`;
 CREATE TABLE IF NOT EXISTS `mv_organisation_medium` AS SELECT * FROM `v_organisation_medium_raw`;
 ALTER TABLE `mv_organisation_medium`
 ADD PRIMARY KEY (`id`),
+ADD UNIQUE KEY `idx_name_de` (`name_de`),
+ADD KEY `idx_anzeige_name` (`anzeige_name`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_organisation_medium` AS
@@ -592,6 +594,9 @@ DROP TABLE IF EXISTS `mv_interessenbindung`;
 CREATE TABLE IF NOT EXISTS `mv_interessenbindung` AS SELECT * FROM `v_interessenbindung_raw`;
 ALTER TABLE `mv_interessenbindung`
 ADD PRIMARY KEY (`id`),
+-- ADD KEY `idx_wirksamkeit` (`wirksamkeit`, `anzeige_name`),
+ADD KEY `idx_wirksamkeit` (`wirksamkeit`),
+-- ADD KEY `idx_anzeige_name` (`anzeige_name`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_interessenbindung` AS
@@ -614,6 +619,9 @@ DROP TABLE IF EXISTS `mv_mandat`;
 CREATE TABLE IF NOT EXISTS `mv_mandat` AS SELECT * FROM `v_mandat_raw`;
 ALTER TABLE `mv_mandat`
 ADD PRIMARY KEY (`id`),
+-- ADD KEY `idx_wirksamkeit` (`wirksamkeit`, `anzeige_name`),
+ADD KEY `idx_wirksamkeit` (`wirksamkeit`),
+-- ADD KEY `idx_anzeige_name` (`anzeige_name`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_mandat` AS
@@ -687,6 +695,8 @@ DROP TABLE IF EXISTS `mv_organisation`;
 CREATE TABLE IF NOT EXISTS `mv_organisation` AS SELECT * FROM `v_organisation_raw`;
 ALTER TABLE `mv_organisation`
 ADD PRIMARY KEY (`id`),
+ADD KEY `idx_anzeige_name` (`anzeige_name`),
+ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_organisation` AS
@@ -826,6 +836,7 @@ DROP TABLE IF EXISTS `mv_parlamentarier_medium`;
 CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium` AS SELECT * FROM `v_parlamentarier_medium_raw`;
 ALTER TABLE `mv_parlamentarier_medium`
 ADD PRIMARY KEY (`id`),
+ADD KEY `idx_anzeige_name` (`anzeige_name`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_parlamentarier_medium` AS
@@ -854,6 +865,13 @@ DROP TABLE IF EXISTS `mv_parlamentarier`;
 CREATE TABLE IF NOT EXISTS `mv_parlamentarier` AS SELECT * FROM `v_parlamentarier_raw`;
 ALTER TABLE `mv_parlamentarier`
 ADD PRIMARY KEY (`id`),
+ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`),
+ADD KEY `idx_anzeige_name` (`anzeige_name`),
+ADD KEY `idx_ratstyp` (`ratstyp`),
+ADD KEY `idx_rat` (`rat`),
+ADD KEY `idx_kanton` (`kanton`),
+ADD KEY `idx_partei` (`partei`),
+ADD KEY `idx_kommissionen` (`kommissionen`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
@@ -867,7 +885,7 @@ UNIX_TIMESTAMP(zutrittsberechtigung.created_date) as created_date_unix, UNIX_TIM
 FROM `zutrittsberechtigung`
 ;
 
-CREATE OR REPLACE VIEW `v_zutrittsberechtigung` AS
+CREATE OR REPLACE VIEW `v_zutrittsberechtigung_raw` AS
 SELECT
 zutrittsberechtigung.*,
 partei.abkuerzung AS partei,
@@ -880,15 +898,28 @@ lobbyfaktor_max.lobbyfaktor_max,
 lobbyfaktor.lobbyfaktor / lobbyfaktor_max.lobbyfaktor_max as lobbyfaktor_percent_max,
 lobbyfaktor_max.anzahl_mandat_tief_max,
 lobbyfaktor_max.anzahl_mandat_mittel_max,
-lobbyfaktor_max.anzahl_mandat_hoch_max
+lobbyfaktor_max.anzahl_mandat_hoch_max,
+NOW() as refreshed_date
 FROM `v_zutrittsberechtigung_simple` zutrittsberechtigung
 LEFT JOIN `v_partei` partei
 ON zutrittsberechtigung.partei_id=partei.id
-LEFT JOIN `v_parlamentarier` parlamentarier
+LEFT JOIN `v_parlamentarier_raw` parlamentarier
 ON parlamentarier.id = zutrittsberechtigung.parlamentarier_id
-LEFT JOIN `v_zutrittsberechtigung_lobbyfaktor` lobbyfaktor ON zutrittsberechtigung.id = lobbyfaktor.id
+LEFT JOIN `v_zutrittsberechtigung_lobbyfaktor_raw` lobbyfaktor ON zutrittsberechtigung.id = lobbyfaktor.id
 , v_zutrittsberechtigung_lobbyfaktor_max lobbyfaktor_max
 ;
+
+DROP TABLE IF EXISTS `mv_zutrittsberechtigung`;
+CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung` AS SELECT * FROM `v_zutrittsberechtigung_raw`;
+ALTER TABLE `mv_zutrittsberechtigung`
+ADD PRIMARY KEY (`id`),
+ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`),
+ADD KEY `idx_anzeige_name` (`anzeige_name`),
+ADD KEY `idx_partei` (`partei`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+CREATE OR REPLACE VIEW `v_zutrittsberechtigung` AS
+SELECT * FROM `mv_zutrittsberechtigung`;
 
 -- Kommissionen für Parlamentarier
 -- Connector: in_kommission.parlamentarier_id
@@ -1726,6 +1757,9 @@ BEGIN
 
 	REPLACE INTO `mv_parlamentarier`
 	  SELECT * FROM `v_parlamentarier_raw`;
+
+	REPLACE INTO `mv_zutrittsberechtigung`
+	  SELECT * FROM `v_zutrittsberechtigung_raw`;
 
 END
 //
