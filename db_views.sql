@@ -580,7 +580,7 @@ FROM `v_mandat_simple` mandat
 INNER JOIN `organisation` organisation
 ON mandat.organisation_id = organisation.id;
 
-CREATE OR REPLACE VIEW `v_organisation_lobbyeinfluss` AS
+CREATE OR REPLACE VIEW `v_organisation_lobbyeinfluss_raw` AS
 SELECT organisation.id,
 COUNT(DISTINCT interessenbindung_tief.id) as anzahl_interessenbindung_tief,
 COUNT(DISTINCT interessenbindung_mittel.id) as anzahl_interessenbindung_mittel,
@@ -594,7 +594,8 @@ COUNT(DISTINCT mandat_hoch.id) as anzahl_mandat_hoch,
 IF(COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) > 0 OR COUNT(DISTINCT interessenbindung_hoch.id) > 1 OR (COUNT(DISTINCT interessenbindung_hoch.id) > 0 AND COUNT(DISTINCT mandat_hoch.id) > 0), 'extrem hoch',
 IF(COUNT(DISTINCT interessenbindung_hoch.id) > 0 OR (COUNT(DISTINCT interessenbindung_mittel.id) > 0 AND COUNT(DISTINCT mandat_mittel.id) > 0), 'hoch', 
 IF(COUNT(DISTINCT interessenbindung_mittel.id) > 0 OR COUNT(DISTINCT mandat_hoch.id) > 0, 'mittel',
-'tief'))) as lobbyeinfluss
+'tief'))) as lobbyeinfluss,
+NOW() as refreshed_date
 FROM `organisation` organisation
 LEFT JOIN `v_interessenbindung` interessenbindung_hoch ON organisation.id = interessenbindung_hoch.organisation_id AND (interessenbindung_hoch.bis IS NULL OR interessenbindung_hoch.bis >= NOW()) AND interessenbindung_hoch.wirksamkeit='hoch'
 LEFT JOIN `v_interessenbindung` interessenbindung_mittel ON organisation.id = interessenbindung_mittel.organisation_id AND (interessenbindung_mittel.bis IS NULL OR interessenbindung_mittel.bis >= NOW()) AND interessenbindung_mittel.wirksamkeit='mittel'
@@ -606,6 +607,15 @@ LEFT JOIN `v_mandat` mandat_hoch ON organisation.id = mandat_hoch.organisation_i
 LEFT JOIN `v_mandat` mandat_mittel ON organisation.id = mandat_mittel.organisation_id AND (mandat_mittel.bis IS NULL OR mandat_mittel.bis >= NOW()) AND mandat_mittel.wirksamkeit='mittel'
 LEFT JOIN `v_mandat` mandat_tief ON organisation.id = mandat_tief.organisation_id AND (mandat_tief.bis IS NULL OR mandat_tief.bis >= NOW()) AND mandat_tief.wirksamkeit='tief'
 GROUP BY organisation.id;
+
+DROP TABLE IF EXISTS `mv_organisation_lobbyeinfluss`;
+CREATE TABLE IF NOT EXISTS `mv_organisation_lobbyeinfluss` AS SELECT * FROM `v_organisation_lobbyeinfluss_raw`;
+ALTER TABLE `mv_organisation_lobbyeinfluss`
+ADD PRIMARY KEY (`id`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+CREATE OR REPLACE VIEW `v_organisation_lobbyeinfluss` AS
+SELECT * FROM `mv_organisation_lobbyeinfluss`;
 
 CREATE OR REPLACE VIEW `v_organisation` AS
 SELECT
@@ -645,19 +655,29 @@ UNIX_TIMESTAMP(parlamentarier.created_date) as created_date_unix, UNIX_TIMESTAMP
 UNIX_TIMESTAMP(im_rat_seit) as von_unix, UNIX_TIMESTAMP(im_rat_bis) as bis_unix
 FROM `parlamentarier` parlamentarier;
 
-CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor` AS
+CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_raw` AS
 SELECT zutrittsberechtigung.id,
 COUNT(DISTINCT mandat_tief.id) as anzahl_mandat_tief,
 COUNT(DISTINCT mandat_mittel.id) as anzahl_mandat_mittel,
 COUNT(DISTINCT mandat_hoch.id) as anzahl_mandat_hoch,
-COUNT(DISTINCT mandat_tief.id) + COUNT(DISTINCT mandat_mittel.id) * 5 + COUNT(DISTINCT mandat_hoch.id) * 11 as lobbyfaktor
+COUNT(DISTINCT mandat_tief.id) + COUNT(DISTINCT mandat_mittel.id) * 5 + COUNT(DISTINCT mandat_hoch.id) * 11 as lobbyfaktor,
+NOW() as refreshed_date
 FROM `zutrittsberechtigung` zutrittsberechtigung
 LEFT JOIN `v_mandat` mandat_hoch ON zutrittsberechtigung.id = mandat_hoch.zutrittsberechtigung_id AND (mandat_hoch.bis IS NULL OR mandat_hoch.bis >= NOW()) AND mandat_hoch.wirksamkeit='hoch'
 LEFT JOIN `v_mandat` mandat_mittel ON zutrittsberechtigung.id = mandat_mittel.zutrittsberechtigung_id AND (mandat_mittel.bis IS NULL OR mandat_mittel.bis >= NOW()) AND mandat_mittel.wirksamkeit='mittel'
 LEFT JOIN `v_mandat` mandat_tief ON zutrittsberechtigung.id = mandat_tief.zutrittsberechtigung_id AND (mandat_tief.bis IS NULL OR mandat_tief.bis >= NOW()) AND mandat_tief.wirksamkeit='tief'
 GROUP BY zutrittsberechtigung.id;
 
-CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
+DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor`;
+CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_lobbyfaktor` AS SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_raw`;
+ALTER TABLE `mv_zutrittsberechtigung_lobbyfaktor`
+ADD PRIMARY KEY (`id`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am' ;
+
+CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor` AS
+SELECT * FROM `mv_zutrittsberechtigung_lobbyfaktor`;
+
+CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_raw` AS
 SELECT parlamentarier.id,
 COUNT(DISTINCT interessenbindung_tief.id) as anzahl_interessenbindung_tief,
 COUNT(DISTINCT interessenbindung_mittel.id) as anzahl_interessenbindung_mittel,
@@ -666,8 +686,9 @@ COUNT(DISTINCT interessenbindung_tief_nach_wahl.id) as anzahl_interessenbindung_
 COUNT(DISTINCT interessenbindung_mittel_nach_wahl.id) as anzahl_interessenbindung_mittel_nach_wahl,
 COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) as anzahl_interessenbindung_hoch_nach_wahl,
 (COUNT(DISTINCT interessenbindung_tief.id) * 1 + COUNT(DISTINCT interessenbindung_mittel.id) * 5 + COUNT(DISTINCT interessenbindung_hoch.id) * 11) + (COUNT(DISTINCT interessenbindung_tief_nach_wahl.id) * 1 + COUNT(DISTINCT interessenbindung_mittel_nach_wahl.id) * 5 + COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) * 11) as lobbyfaktor,
-COUNT(DISTINCT interessenbindung_tief.id) * 1 + COUNT(DISTINCT interessenbindung_mittel.id) * 5 + COUNT(DISTINCT interessenbindung_hoch.id) * 11 as lobbyfaktor_einfach
-FROM `v_parlamentarier_simple` parlamentarier
+COUNT(DISTINCT interessenbindung_tief.id) * 1 + COUNT(DISTINCT interessenbindung_mittel.id) * 5 + COUNT(DISTINCT interessenbindung_hoch.id) * 11 as lobbyfaktor_einfach,
+NOW() as refreshed_date
+FROM `parlamentarier` parlamentarier
 LEFT JOIN `v_interessenbindung` interessenbindung_hoch ON parlamentarier.id = interessenbindung_hoch.parlamentarier_id AND (interessenbindung_hoch.bis IS NULL OR interessenbindung_hoch.bis >= NOW()) AND interessenbindung_hoch.wirksamkeit='hoch'
 LEFT JOIN `v_interessenbindung` interessenbindung_mittel ON parlamentarier.id = interessenbindung_mittel.parlamentarier_id AND (interessenbindung_mittel.bis IS NULL OR interessenbindung_mittel.bis >= NOW()) AND interessenbindung_mittel.wirksamkeit='mittel'
 LEFT JOIN `v_interessenbindung` interessenbindung_tief ON parlamentarier.id = interessenbindung_tief.parlamentarier_id AND (interessenbindung_tief.bis IS NULL OR interessenbindung_tief.bis >= NOW()) AND interessenbindung_tief.wirksamkeit='tief'
@@ -676,25 +697,56 @@ LEFT JOIN `v_interessenbindung` interessenbindung_mittel_nach_wahl ON parlamenta
 LEFT JOIN `v_interessenbindung` interessenbindung_tief_nach_wahl ON parlamentarier.id = interessenbindung_tief_nach_wahl.parlamentarier_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > parlamentarier.im_rat_seit
 GROUP BY parlamentarier.id;
 
-CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max` AS
-SELECT 
+DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
+CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor` AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+ALTER TABLE `mv_parlamentarier_lobbyfaktor`
+ADD PRIMARY KEY (`id`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
+SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
+
+CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS
+SELECT
+1 as id,
 MAX(lobbyfaktor.anzahl_interessenbindung_tief) as anzahl_interessenbindung_tief_max,
 MAX(lobbyfaktor.anzahl_interessenbindung_mittel) as anzahl_interessenbindung_mittel_max,
 MAX(lobbyfaktor.anzahl_interessenbindung_hoch) as anzahl_interessenbindung_hoch_max,
-MAX(lobbyfaktor) as lobbyfaktor_max
-FROM `v_parlamentarier_lobbyfaktor` lobbyfaktor
+MAX(lobbyfaktor) as lobbyfaktor_max,
+NOW() as refreshed_date
+FROM `v_parlamentarier_lobbyfaktor_raw` lobbyfaktor
 -- GROUP BY lobbyfaktor.id
 ;
 
-CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS
-SELECT 
+DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor_max`;
+CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor_max` AS SELECT * FROM `v_parlamentarier_lobbyfaktor_max_raw`;
+ALTER TABLE `mv_parlamentarier_lobbyfaktor_max`
+ADD PRIMARY KEY (`id`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max` AS
+SELECT * FROM `mv_parlamentarier_lobbyfaktor_max`;
+
+CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_max_raw` AS
+SELECT
+1 as id,
 MAX(lobbyfaktor.anzahl_mandat_tief) as anzahl_mandat_tief_max,
 MAX(lobbyfaktor.anzahl_mandat_mittel) as anzahl_mandat_mittel_max,
 MAX(lobbyfaktor.anzahl_mandat_hoch) as anzahl_mandat_hoch_max,
-MAX(lobbyfaktor) as lobbyfaktor_max
-FROM `v_zutrittsberechtigung_lobbyfaktor` lobbyfaktor
+MAX(lobbyfaktor) as lobbyfaktor_max,
+NOW() as refreshed_date
+FROM `v_zutrittsberechtigung_lobbyfaktor_raw` lobbyfaktor
 -- GROUP BY lobbyfaktor.id
 ;
+
+DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max`;
+CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max` AS SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
+ALTER TABLE `mv_zutrittsberechtigung_lobbyfaktor_max`
+ADD PRIMARY KEY (`id`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS
+SELECT * FROM `mv_zutrittsberechtigung_lobbyfaktor_max`;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_medium` AS
 SELECT parlamentarier.*,
@@ -1567,3 +1619,29 @@ WHERE
   parlamentarier.im_rat_bis IS NULL
 GROUP BY parlamentarier.id;
 
+-- CALL `refreshMaterializedViews`()
+DROP PROCEDURE IF EXISTS refreshMaterializedViews;
+delimiter //
+CREATE PROCEDURE refreshMaterializedViews() MODIFIES SQL DATA
+COMMENT 'Aktualisiert die Materialized Views.'
+BEGIN
+  DECLARE ts TIMESTAMP DEFAULT NOW();
+
+	REPLACE INTO `mv_organisation_lobbyeinfluss`
+	  SELECT * FROM `v_organisation_lobbyeinfluss_raw`;
+
+	REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor`
+	  SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_raw`;
+
+	REPLACE INTO `mv_parlamentarier_lobbyfaktor`
+	  SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+
+	REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor_max`
+	  SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
+
+	REPLACE INTO `mv_parlamentarier_lobbyfaktor_max`
+	  SELECT * FROM `v_parlamentarier_lobbyfaktor_max_raw`;
+
+END
+//
+delimiter ;

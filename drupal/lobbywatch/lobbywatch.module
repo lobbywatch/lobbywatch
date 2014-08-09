@@ -852,3 +852,29 @@ function _lobbywatch_search_validate($form, &$form_state) {
 
 // }
 
+function _lobbywatch_refresh_materialized_views() {
+  $start = time();
+  db_set_active('lobbywatch_adv');
+
+  try {
+    db_query('CALL `refreshMaterializedViews`()');
+    $end = time();
+    $elapsed = $end - $start;
+    return $elapsed;
+  } finally {
+    // Go back to the default database,
+    // otherwise Drupal will not be able to access it's own data later on.
+    db_set_active();
+  }
+}
+
+/**
+ * Implements hook_cron().
+ *
+ * Process old menu links not found in the {xmlsitemap} table.
+ */
+function lobbywatch_cron() {
+  $elapsed = _lobbywatch_refresh_materialized_views();
+  watchdog('lobbywatch', 'Refreshed materialized views, execution time %elapsed s.', array('%elapsed' => $elapsed), WATCHDOG_INFO);
+}
+

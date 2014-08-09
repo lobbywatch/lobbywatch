@@ -431,7 +431,7 @@ function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true)
     set_db_session_parameters();
 
     $sql = //db_session_parameters_SQL() .
-    "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.im_rat_bis, DATE_FORMAT(parlamentarier.im_rat_bis, '%d.%m.%Y') as im_rat_bis_formatted, parlamentarier.kleinbild, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei, parlamentarier.partei_id,
+    "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name, parlamentarier.geburtstag, DATE_FORMAT(parlamentarier.geburtstag, '%d.%m.%Y') as geburtstag_formatted, parlamentarier.beruf, parlamentarier.im_rat_seit, DATE_FORMAT(parlamentarier.im_rat_seit, '%d.%m.%Y') as im_rat_seit_formatted, parlamentarier.im_rat_bis, DATE_FORMAT(parlamentarier.im_rat_bis, '%d.%m.%Y') as im_rat_bis_formatted, parlamentarier.kleinbild, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.geschlecht, parlamentarier.homepage, parlamentarier.parlament_biografie_id, parlamentarier.partei, parlamentarier.partei_id,
     parlamentarier.name, parlamentarier.anzahl_kinder, rat.name_de as rat_name_de, kanton.einwohner, kanton.auslaenderanteil, kanton.anzahl_staenderaete, kanton.anzahl_nationalraete, parlamentarier.updated_date, parlamentarier.updated_date_unix, parlamentarier.updated_visa, parlamentarier.created_date, parlamentarier.created_date_unix, parlamentarier.created_visa, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.eingabe_abgeschlossen_datum_unix, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.freigabe_datum, parlamentarier.freigabe_datum_unix, parlamentarier.freigabe_visa, parlamentarier.kontrolliert_datum, parlamentarier.kontrolliert_datum_unix, parlamentarier.kontrolliert_visa, parlamentarier.titel_de, parlamentarier.nachname,
 parlamentarier.lobbyfaktor, parlamentarier.lobbyfaktor_max,
 parlamentarier.anzahl_interessenbindung_tief,
@@ -528,7 +528,7 @@ parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
       $unpublished = user_access('access lobbywatch unpublished content');
       $rat = check_plain($record['rat_name_de']);
       $ratstyp = check_plain($record['ratstyp']);
-      $titel_nachname  =  check_plain($record['titel_de'] . ' ' .$record['nachname']);
+      $titel_nachname  =  check_plain($record['titel_de'] . ' ' . $record['nachname']);
       if ($ratstyp == 'SR') {
         $vertretung = round($record['einwohner'] / $record['anzahl_staenderaete']);
       } else {
@@ -546,7 +546,7 @@ parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
       '<p><a id="show-bio" class="toggle-text" onclick="false"><span id="bio-text-show">Zeige</span><span id="bio-text-hide" style="display:none">Verstecke</span> Angaben zur Person</p>'.
 
       '</div>' .
-      (!$active ? '<p><strong><em>Nicht mehr im Parlament. War im Parlament bis ' . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
+      (!$active ? "<p><strong><em>Nicht mehr im Parlament. ${record['name']} war im Parlament bis " . check_plain($record['im_rat_bis_formatted']) . '.</em></strong></p>' : '') .
       '<script>
 jQuery(document).ready(function() {
     jQuery("#show-bio, #parlamentarier-kleinbild").click(function () {
@@ -609,7 +609,7 @@ function db_session_parameters_SQL() {
 
 function set_db_session_parameters() {
   db_query(db_session_parameters_SQL());
-  db_query("SET SESSION wait_timeout=120;");
+  // db_query("SET SESSION wait_timeout=120;");
 }
 
 function _lobbywatch_get_edit_link($admin, $table, $id) {
@@ -1635,7 +1635,7 @@ GROUP BY zutrittsberechtigung.id;";
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
-    ($record['bis'] != null ? '<p><strong><em>Nicht mehr zutrittsberechtigt ins Parlament. War zutrittsberechtigt bis ' . check_plain($record['bis_formatted']) . '.</em></strong></p>' : '') .
+    ($record['bis'] != null ? "<p><strong><em>Nicht mehr zutrittsberechtigt ins Parlament. ${record['name']} war zutrittsberechtigt bis " . check_plain($record['bis_formatted']) . '.</em></strong></p>' : '') .
       '<p>Lobbyfaktor: <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' . ($admin ? ' <span =  class="admin">[' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']</span></p>' : '')
     . '<table border="0">'
 //     . '<li>Vernehmlassung: ' . $record['vernehmlassung']

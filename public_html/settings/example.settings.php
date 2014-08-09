@@ -61,6 +61,8 @@ if ($stage) {
       'password' => '',
       'reader_username' => '',
       'reader_password' => '',
+      'adv_username' => '',
+      'adv_password' => '',
   );
 
 }

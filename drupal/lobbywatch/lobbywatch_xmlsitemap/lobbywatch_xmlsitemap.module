@@ -39,11 +39,16 @@ function _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $r
         # new record
         xmlsitemap_link_save(_lobbywatch_xmlsitemap_xmlsitemap_make_link($table, $name, $rec));
         $i++;
+//         watchdog('debug', '$rec[id]: ' . $rec['id'], array(), WATCHDOG_DEBUG);
       }
+
       unset($indexed[$rec['id']]);
       if ($i == $limit)
         break;
     }
+//     watchdog('debug', $data, array(), WATCHDOG_DEBUG);
+//     watchdog('debug', "i: $i, limit: $limit", array(), WATCHDOG_DEBUG);
+
     $added = $i;
     $deleted = array();
     #Done indexing new stuff;
@@ -52,7 +57,7 @@ function _lobbywatch_xmlsitemap_xmlsitemap_index_links($table, $name, $limit, $r
       xmlsitemap_link_delete_multiple(array('type'=>"lw_$table", 'id'=>$deleted));
     }
     if ($cron) {
-      if ($added > 0 || $deleted > 0) {
+      if ($added > 0 || count($deleted) > 0) {
         watchdog('lobbywatch_xmlsitemap', '%table indexed: %added added, %removed removed', array('%table' => $table, '%added' => $added, '%removed' => count($deleted),), WATCHDOG_DEBUG);
       }
     } else {
