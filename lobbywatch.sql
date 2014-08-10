@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 09. Aug 2014 um 15:19
+-- Erstellungszeit: 11. Aug 2014 um 01:20
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -34,20 +34,20 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `refreshMaterializedViews`()
 BEGIN
   DECLARE ts TIMESTAMP DEFAULT NOW();
 
-	REPLACE INTO `mv_organisation_lobbyeinfluss`
-	  SELECT * FROM `v_organisation_lobbyeinfluss_raw`;
+--	REPLACE INTO `mv_organisation_lobbyeinfluss`
+--	  SELECT * FROM `v_organisation_lobbyeinfluss_raw`;
 
-	REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor`
-	  SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_raw`;
+--	REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor`
+--	  SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_raw`;
 
-	REPLACE INTO `mv_parlamentarier_lobbyfaktor`
-	  SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+--	REPLACE INTO `mv_parlamentarier_lobbyfaktor`
+--	  SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
 
-	REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor_max`
-	  SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
+--	REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor_max`
+--	  SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
 
-	REPLACE INTO `mv_parlamentarier_lobbyfaktor_max`
-	  SELECT * FROM `v_parlamentarier_lobbyfaktor_max_raw`;
+--	REPLACE INTO `mv_parlamentarier_lobbyfaktor_max`
+--	  SELECT * FROM `v_parlamentarier_lobbyfaktor_max_raw`;
 
 	REPLACE INTO `mv_interessenbindung`
 	  SELECT * FROM `v_interessenbindung_raw`;
@@ -55,20 +55,38 @@ BEGIN
 	REPLACE INTO `mv_mandat`
 	  SELECT * FROM `v_mandat_raw`;
 
-	REPLACE INTO `mv_organisation_medium`
-	  SELECT * FROM `v_organisation_medium_raw`;
+--	REPLACE INTO `mv_organisation_medium`
+--	  SELECT * FROM `v_organisation_medium_raw`;
+--
+--	REPLACE INTO `mv_organisation_medium_myisam`
+--	  SELECT * FROM `v_organisation_medium_raw`;
 
 	REPLACE INTO `mv_organisation`
 	  SELECT * FROM `v_organisation_raw`;
 
-	REPLACE INTO `mv_parlamentarier_medium`
-	  SELECT * FROM `v_parlamentarier_medium_raw`;
+--	REPLACE INTO `mv_organisation_myisam`
+--	  SELECT * FROM `v_organisation_raw`;
+
+--	REPLACE INTO `mv_parlamentarier_medium`
+--	  SELECT * FROM `v_parlamentarier_medium_raw`;
+--
+--	REPLACE INTO `mv_parlamentarier_medium_myisam`
+--	  SELECT * FROM `v_parlamentarier_medium_raw`;
 
 	REPLACE INTO `mv_parlamentarier`
 	  SELECT * FROM `v_parlamentarier_raw`;
 
+--	REPLACE INTO `mv_parlamentarier_myisam`
+--	  SELECT * FROM `v_parlamentarier_raw`;
+
 	REPLACE INTO `mv_zutrittsberechtigung`
 	  SELECT * FROM `v_zutrittsberechtigung_raw`;
+
+--	REPLACE INTO `mv_zutrittsberechtigung_myisam`
+--	  SELECT * FROM `v_zutrittsberechtigung_raw`;
+
+	REPLACE INTO `mv_search_table`
+	  SELECT * FROM `v_search_table_raw`;
 
 END$$
 
@@ -233,7 +251,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche`
 --
--- Erzeugt am: 06. Jul 2014 um 17:39
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `branche`;
@@ -264,7 +282,7 @@ CREATE TABLE IF NOT EXISTS `branche` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `branche_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
-  KEY `kommission_id` (`kommission_id`)
+  KEY `idx_kommission_freigabe` (`kommission_id`,`freigabe_datum`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=19 ;
 
 --
@@ -360,7 +378,7 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
   PRIMARY KEY (`log_id`),
   KEY `kommission_id` (`kommission_id`),
   KEY `fk_branche_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=46 ;
 
 --
 -- RELATIONEN DER TABELLE `branche_log`:
@@ -540,7 +558,7 @@ CREATE TABLE IF NOT EXISTS `fraktion_log` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 21. Jul 2014 um 14:29
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
@@ -575,9 +593,9 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `interessenbindung_art_parlamentarier_organisation_unique` (`art`,`parlamentarier_id`,`organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
-  KEY `idx_parlam` (`parlamentarier_id`),
-  KEY `idx_lobbyorg` (`organisation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=592 ;
+  KEY `parlamentarier_id` (`parlamentarier_id`,`organisation_id`),
+  KEY `organisation_id` (`organisation_id`,`parlamentarier_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=624 ;
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung`:
@@ -679,7 +697,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   KEY `idx_parlam` (`parlamentarier_id`),
   KEY `idx_lobbyorg` (`organisation_id`),
   KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=2008 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=2596 ;
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung_log`:
@@ -692,7 +710,7 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
 --
 -- Tabellenstruktur für Tabelle `interessengruppe`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `interessengruppe`;
@@ -714,8 +732,8 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `interessengruppe_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
-  KEY `idx_lobbytyp` (`branche_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=103 ;
+  KEY `idx_branche_freigabe` (`branche_id`,`freigabe_datum`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=112 ;
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe`:
@@ -801,7 +819,7 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
   PRIMARY KEY (`log_id`),
   KEY `idx_lobbytyp` (`branche_id`),
   KEY `fk_interessengruppe_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=146 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=161 ;
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe_log`:
@@ -844,7 +862,7 @@ CREATE TABLE IF NOT EXISTS `interessenraum` (
 --
 -- Tabellenstruktur für Tabelle `in_kommission`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `in_kommission`;
@@ -868,9 +886,11 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `in_kommission_parlamentarier_kommission_funktion_unique` (`funktion`,`parlamentarier_id`,`kommission_id`,`bis`) COMMENT 'Fachlicher unique constraint',
-  KEY `parlamentarier_id` (`parlamentarier_id`),
-  KEY `kommissions_id` (`kommission_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=159 ;
+  KEY `idx_parlam_freigabe` (`parlamentarier_id`,`freigabe_datum`,`bis`,`kommission_id`),
+  KEY `idx_parlam` (`parlamentarier_id`,`bis`,`kommission_id`),
+  KEY `idx_kommission_freigabe` (`kommission_id`,`freigabe_datum`,`bis`,`parlamentarier_id`),
+  KEY `idx_kommission` (`kommission_id`,`bis`,`parlamentarier_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=635 ;
 
 --
 -- RELATIONEN DER TABELLE `in_kommission`:
@@ -991,7 +1011,7 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `kommissions_id` (`kommission_id`),
   KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=306 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=1353 ;
 
 --
 -- RELATIONEN DER TABELLE `in_kommission_log`:
@@ -1284,7 +1304,7 @@ CREATE TABLE IF NOT EXISTS `kanton_log` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
--- Erzeugt am: 22. Jul 2014 um 18:01
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `kommission`;
@@ -1314,8 +1334,8 @@ CREATE TABLE IF NOT EXISTS `kommission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `kommission_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `kommission_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
-  KEY `zugehoerige_kommission` (`mutter_kommission_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=46 ;
+  KEY `zugehoerige_kommission` (`mutter_kommission_id`,`freigabe_datum`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=47 ;
 
 --
 -- RELATIONEN DER TABELLE `kommission`:
@@ -1408,7 +1428,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
   PRIMARY KEY (`log_id`),
   KEY `zugehoerige_kommission` (`mutter_kommission_id`),
   KEY `fk_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=35 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=38 ;
 
 --
 -- RELATIONEN DER TABELLE `kommission_log`:
@@ -1421,7 +1441,7 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 21. Jul 2014 um 14:29
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `mandat`;
@@ -1453,9 +1473,9 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `mandat_zutrittsberechtigung_organisation_art_unique` (`art`,`zutrittsberechtigung_id`,`organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
-  KEY `organisations_id` (`organisation_id`),
-  KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=247 ;
+  KEY `organisations_id` (`organisation_id`,`zutrittsberechtigung_id`),
+  KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`,`organisation_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=275 ;
 
 --
 -- RELATIONEN DER TABELLE `mandat`:
@@ -1554,7 +1574,7 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
   KEY `organisations_id` (`organisation_id`),
   KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`),
   KEY `fk_mandat_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=635 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=728 ;
 
 --
 -- RELATIONEN DER TABELLE `mandat_log`:
@@ -1672,7 +1692,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `mv_interessenbindung`
 --
--- Erzeugt am: 09. Aug 2014 um 13:19
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `mv_interessenbindung`;
@@ -1716,15 +1736,18 @@ CREATE TABLE IF NOT EXISTS `mv_interessenbindung` (
   `parlamentarier_im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
   `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
   PRIMARY KEY (`id`),
-  KEY `idx_wirksamkeit` (`wirksamkeit`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`,`freigabe_datum`,`bis`,`organisation_id`),
+  KEY `idx_parlam_bis` (`parlamentarier_id`,`bis`,`organisation_id`),
+  KEY `idx_org_freigabe_bis` (`organisation_id`,`freigabe_datum`,`bis`,`parlamentarier_id`),
+  KEY `idx_org_bis` (`organisation_id`,`bis`,`parlamentarier_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for v_interessenbindung';
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `mv_mandat`
 --
--- Erzeugt am: 09. Aug 2014 um 13:19
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `mv_mandat`;
@@ -1764,15 +1787,18 @@ CREATE TABLE IF NOT EXISTS `mv_mandat` (
   `wirksamkeit` varchar(6) NOT NULL DEFAULT '',
   `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
   PRIMARY KEY (`id`),
-  KEY `idx_wirksamkeit` (`wirksamkeit`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `idx_zutritt_freigabe_bis` (`zutrittsberechtigung_id`,`freigabe_datum`,`bis`,`organisation_id`),
+  KEY `idx_zutritt_bis` (`zutrittsberechtigung_id`,`bis`,`organisation_id`),
+  KEY `idx_org_freigabe_bis` (`organisation_id`,`freigabe_datum`,`bis`,`zutrittsberechtigung_id`),
+  KEY `idx_org_bis` (`organisation_id`,`bis`,`zutrittsberechtigung_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for v_mandat';
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `mv_organisation`
 --
--- Erzeugt am: 09. Aug 2014 um 13:19
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `mv_organisation`;
@@ -1839,118 +1865,36 @@ CREATE TABLE IF NOT EXISTS `mv_organisation` (
   `mitarbeiter_schweiz` int(11) unsigned DEFAULT NULL COMMENT 'Anzahl Mitarbeiter in der Schweiz',
   `geschaeftsbericht_url` varchar(255) DEFAULT NULL COMMENT 'Link zum Geschäftsbericht',
   `quelle_url` varchar(255) DEFAULT NULL COMMENT 'URL der Quelle',
-  `anzahl_interessenbindung_tief` bigint(21) DEFAULT NULL,
-  `anzahl_interessenbindung_mittel` bigint(21) DEFAULT NULL,
-  `anzahl_interessenbindung_hoch` bigint(21) DEFAULT NULL,
-  `anzahl_interessenbindung_tief_nach_wahl` bigint(21) DEFAULT NULL,
-  `anzahl_interessenbindung_mittel_nach_wahl` bigint(21) DEFAULT NULL,
-  `anzahl_interessenbindung_hoch_nach_wahl` bigint(21) DEFAULT NULL,
-  `anzahl_mandat_tief` bigint(21) DEFAULT NULL,
-  `anzahl_mandat_mittel` bigint(21) DEFAULT NULL,
-  `anzahl_mandat_hoch` bigint(21) DEFAULT NULL,
+  `anzahl_interessenbindung_tief` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_mittel` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_hoch` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_tief_nach_wahl` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_mittel_nach_wahl` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_hoch_nach_wahl` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_mandat_tief` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_mandat_mittel` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_mandat_hoch` tinyint(3) unsigned DEFAULT NULL,
   `lobbyeinfluss` varchar(11) DEFAULT NULL,
+  `lobbyeinfluss_index` int(0) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_anzeige_name` (`anzeige_name`(255)),
-  KEY `idx_lobbyeinfluss` (`lobbyeinfluss`,`anzeige_name`(255))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `mv_organisation_lobbyeinfluss`
---
--- Erzeugt am: 09. Aug 2014 um 13:19
---
-
-DROP TABLE IF EXISTS `mv_organisation_lobbyeinfluss`;
-CREATE TABLE IF NOT EXISTS `mv_organisation_lobbyeinfluss` (
-  `id` int(11) NOT NULL DEFAULT '0' COMMENT 'Technischer Schlüssel der Lobbyorganisation',
-  `anzahl_interessenbindung_tief` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_interessenbindung_mittel` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_interessenbindung_hoch` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_interessenbindung_tief_nach_wahl` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_interessenbindung_mittel_nach_wahl` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_interessenbindung_hoch_nach_wahl` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_mandat_tief` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_mandat_mittel` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_mandat_hoch` bigint(21) NOT NULL DEFAULT '0',
-  `lobbyeinfluss` varchar(11) NOT NULL DEFAULT '',
-  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `mv_organisation_medium`
---
--- Erzeugt am: 09. Aug 2014 um 13:19
---
-
-DROP TABLE IF EXISTS `mv_organisation_medium`;
-CREATE TABLE IF NOT EXISTS `mv_organisation_medium` (
-  `anzeige_name` varchar(454) DEFAULT NULL,
-  `name` varchar(454) DEFAULT NULL,
-  `id` int(11) NOT NULL DEFAULT '0' COMMENT 'Technischer Schlüssel der Lobbyorganisation',
-  `name_de` varchar(150) NOT NULL COMMENT 'Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.',
-  `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französischer Name',
-  `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
-  `ort` varchar(100) DEFAULT NULL COMMENT 'Ort der Organisation',
-  `land_id` int(11) DEFAULT NULL COMMENT 'Land der Organisation',
-  `interessenraum_id` int(11) DEFAULT NULL COMMENT 'Interessenraum der Organisation',
-  `rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft') DEFAULT NULL COMMENT 'Rechtsform der Organisation',
-  `typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert') NOT NULL COMMENT 'Typ der Organisation. Beziehungen können über Organisation_Beziehung eingegeben werden.',
-  `vernehmlassung` enum('immer','punktuell','nie') NOT NULL COMMENT 'Häufigkeit der Teilname an nationalen Vernehmlassungen',
-  `interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. Hauptinteressengruppe. Über die Interessengruppe wird eine Branche zugeordnet.',
-  `interessengruppe2_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. 2. Interessengruppe der Organisation.',
-  `interessengruppe3_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Interessengruppe. 3. Interessengruppe der Organisation.',
-  `branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche.',
-  `homepage` varchar(255) DEFAULT NULL COMMENT 'Link zur Webseite',
-  `handelsregister_url` varchar(255) DEFAULT NULL COMMENT 'Link zum Eintrag im Handelsregister',
-  `twitter_name` varchar(50) DEFAULT NULL COMMENT 'Twittername',
-  `beschreibung` text COMMENT 'Beschreibung der Organisation, Zweck gemäss Handelsregister oder  Statuten',
-  `adresse_strasse` varchar(100) DEFAULT NULL COMMENT 'Adresse der Organisation',
-  `adresse_zusatz` varchar(100) DEFAULT NULL COMMENT 'Adressezusatz, z.B. Postfach',
-  `adresse_plz` varchar(10) DEFAULT NULL COMMENT 'Postleitzahl der Organisation',
-  `ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission') DEFAULT NULL COMMENT 'Einschätzung der Verbindung der Organisation ins Parlament',
-  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
-  `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
-  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
-  `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
-  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
-  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
-  `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Abgeändert am',
-  `created_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `updated_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `eingabe_abgeschlossen_datum_unix` bigint(11) DEFAULT NULL,
-  `kontrolliert_datum_unix` bigint(11) DEFAULT NULL,
-  `freigabe_datum_unix` bigint(11) DEFAULT NULL,
-  `branche` varchar(100) DEFAULT NULL,
-  `interessengruppe` varchar(150) DEFAULT NULL,
-  `interessengruppe_branche` varchar(100) DEFAULT NULL,
-  `interessengruppe_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
-  `interessengruppe2` varchar(150) DEFAULT NULL,
-  `interessengruppe2_branche` varchar(100) DEFAULT NULL,
-  `interessengruppe2_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
-  `interessengruppe3` varchar(150) DEFAULT NULL,
-  `interessengruppe3_branche` varchar(100) DEFAULT NULL,
-  `interessengruppe3_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
-  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_name_de` (`name_de`),
-  KEY `idx_anzeige_name` (`anzeige_name`(255))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `idx_freigabe` (`freigabe_datum`),
+  KEY `idx_branche_freigabe` (`branche_id`,`freigabe_datum`),
+  KEY `idx_interessengruppe_freigabe` (`interessengruppe_id`,`freigabe_datum`),
+  KEY `idx_interessengruppe2_freigabe` (`interessengruppe2_id`,`freigabe_datum`),
+  KEY `idx_interessengruppe3_freigabe` (`interessengruppe3_id`,`freigabe_datum`),
+  KEY `idx_interessengruppe_branche_freigabe` (`interessengruppe_branche_id`,`freigabe_datum`),
+  KEY `idx_interessengruppe2_branche_freigabe` (`interessengruppe2_branche_id`,`freigabe_datum`),
+  KEY `idx_interessengruppe3_branche_freigabe` (`interessengruppe3_branche_id`,`freigabe_datum`),
+  KEY `land` (`land_id`,`freigabe_datum`),
+  KEY `interessenraum_id` (`interessenraum_id`,`freigabe_datum`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for v_organisation';
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `mv_parlamentarier`
 --
--- Erzeugt am: 09. Aug 2014 um 13:19
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `mv_parlamentarier`;
@@ -2030,8 +1974,8 @@ CREATE TABLE IF NOT EXISTS `mv_parlamentarier` (
   `bis_unix` bigint(11) DEFAULT NULL,
   `vertretene_bevoelkerung` bigint(13) unsigned DEFAULT NULL,
   `rat` varchar(10) COMMENT 'Kürzel des Rates',
-  `ratstyp` varchar(10) COMMENT 'Kürzel des Rates',
-  `kanton_abkuerzung` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') COMMENT 'Kantonskürzel',
+  `ratstyp_BAD` varchar(10) DEFAULT NULL COMMENT 'Not used, duplicate',
+  `kanton_abkuerzung_BAD` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') DEFAULT NULL COMMENT 'Not used, duplicate',
   `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') COMMENT 'Kantonskürzel',
   `kanton_name_de` varchar(50) COMMENT 'Deutscher Name des Kantons',
   `kommissionen_namen` text,
@@ -2041,180 +1985,81 @@ CREATE TABLE IF NOT EXISTS `mv_parlamentarier` (
   `partei_name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
   `fraktion` varchar(20) COMMENT 'Fraktionsabkürzung',
   `militaerischer_grad` varchar(30) COMMENT 'Name des militärischen Grades',
+  `beruf_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
   `titel_de` varchar(74) DEFAULT NULL,
   `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  `anzahl_interessenbindung_tief` bigint(21) DEFAULT '0',
-  `anzahl_interessenbindung_mittel` bigint(21) DEFAULT '0',
-  `anzahl_interessenbindung_hoch` bigint(21) DEFAULT '0',
-  `anzahl_interessenbindung_tief_nach_wahl` bigint(21) DEFAULT '0',
-  `anzahl_interessenbindung_mittel_nach_wahl` bigint(21) DEFAULT '0',
-  `anzahl_interessenbindung_hoch_nach_wahl` bigint(21) DEFAULT '0',
-  `lobbyfaktor` bigint(25) DEFAULT '0',
-  `lobbyfaktor_max` bigint(25) DEFAULT NULL,
-  `lobbyfaktor_percent_max` decimal(28,4) DEFAULT NULL,
-  `anzahl_interessenbindung_tief_max` bigint(21) DEFAULT NULL,
-  `anzahl_interessenbindung_mittel_max` bigint(21) DEFAULT NULL,
-  `anzahl_interessenbindung_hoch_max` bigint(21) DEFAULT NULL,
+  `anzahl_interessenbindung_tief` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_mittel` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_hoch` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_tief_nach_wahl` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_mittel_nach_wahl` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_hoch_nach_wahl` tinyint(3) unsigned DEFAULT NULL,
+  `lobbyfaktor` smallint(5) unsigned DEFAULT NULL,
+  `lobbyfaktor_max` smallint(5) unsigned DEFAULT NULL,
+  `lobbyfaktor_percent_max` decimal(4,3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_tief_max` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_mittel_max` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_interessenbindung_hoch_max` tinyint(3) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_lobbyfaktor` (`lobbyfaktor`,`anzeige_name`),
-  KEY `idx_anzeige_name` (`anzeige_name`),
-  KEY `idx_ratstyp` (`ratstyp`),
-  KEY `idx_rat` (`rat`),
-  KEY `idx_kanton` (`kanton`),
-  KEY `idx_partei` (`partei`),
-  KEY `idx_kommissionen` (`kommissionen`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `idx_freigabe_bis` (`freigabe_datum`,`im_rat_bis`),
+  KEY `idx_bis` (`im_rat_bis`),
+  KEY `idx_rat_freigabe_bis` (`rat`,`freigabe_datum`,`im_rat_bis`),
+  KEY `idx_rat_bis` (`rat`,`im_rat_bis`),
+  KEY `idx_rat_id_freigabe_bis` (`rat_id`,`freigabe_datum`,`im_rat_bis`),
+  KEY `idx_rat_id_bis` (`rat_id`,`im_rat_bis`),
+  KEY `idx_kanton_freigabe_bis` (`kanton`,`freigabe_datum`,`im_rat_bis`),
+  KEY `idx_kanton_bis` (`kanton`,`im_rat_bis`),
+  KEY `idx_kanton_partei_freigabe_bis` (`kanton`,`partei`,`freigabe_datum`,`im_rat_bis`),
+  KEY `idx_kanton_partei_bis` (`kanton`,`partei`,`im_rat_bis`),
+  KEY `idx_kanton_id_freigabe_bis` (`kanton_id`,`freigabe_datum`,`im_rat_bis`),
+  KEY `idx_kanton_id_bis` (`kanton_id`,`im_rat_bis`),
+  KEY `idx_partei_freigabe_bis` (`partei`,`freigabe_datum`,`im_rat_bis`),
+  KEY `idx_partei_bis` (`partei`,`im_rat_bis`),
+  KEY `idx_partei_id_freigabe_bis` (`partei_id`,`freigabe_datum`,`im_rat_bis`),
+  KEY `idx_partei_id_bis` (`partei_id`,`im_rat_bis`),
+  KEY `beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`,`freigabe_datum`,`im_rat_bis`),
+  KEY `beruf_interessengruppe_id` (`beruf_interessengruppe_id`,`im_rat_bis`),
+  KEY `beruf_branche_id_freigabe` (`beruf_branche_id`,`freigabe_datum`,`im_rat_bis`),
+  KEY `beruf_branche_id` (`beruf_branche_id`,`im_rat_bis`),
+  KEY `militaerischer_grad_freigabe` (`militaerischer_grad_id`,`freigabe_datum`,`im_rat_bis`),
+  KEY `militaerischer_grad` (`militaerischer_grad_id`,`im_rat_bis`),
+  KEY `fraktion_freigabe_bis` (`fraktion`,`im_rat_bis`),
+  KEY `fraktion_bis` (`fraktion`,`freigabe_datum`,`im_rat_bis`),
+  KEY `fraktion_id_freigabe_bis` (`fraktion_id`,`freigabe_datum`,`im_rat_bis`),
+  KEY `fraktion_id_bis` (`fraktion_id`,`im_rat_bis`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for v_parlamentarier';
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `mv_parlamentarier_lobbyfaktor`
+-- Tabellenstruktur für Tabelle `mv_search_table`
 --
--- Erzeugt am: 09. Aug 2014 um 13:19
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
-DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
-CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor` (
-  `id` int(11) NOT NULL DEFAULT '0' COMMENT 'Technischer Schlüssel des Parlamentariers',
-  `anzahl_interessenbindung_tief` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_interessenbindung_mittel` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_interessenbindung_hoch` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_interessenbindung_tief_nach_wahl` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_interessenbindung_mittel_nach_wahl` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_interessenbindung_hoch_nach_wahl` bigint(21) NOT NULL DEFAULT '0',
-  `lobbyfaktor` bigint(25) NOT NULL DEFAULT '0',
-  `lobbyfaktor_einfach` bigint(24) NOT NULL DEFAULT '0',
+DROP TABLE IF EXISTS `mv_search_table`;
+CREATE TABLE IF NOT EXISTS `mv_search_table` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `table_name` varchar(20) NOT NULL DEFAULT '',
+  `page` varchar(20) NOT NULL DEFAULT '',
+  `table_weight` bigint(20) NOT NULL DEFAULT '0',
+  `name` varchar(454) DEFAULT NULL,
+  `freigabe_datum` timestamp NULL DEFAULT NULL,
+  `bis` date DEFAULT NULL,
+  `weight` bigint(20) DEFAULT NULL,
   `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `mv_parlamentarier_lobbyfaktor_max`
---
--- Erzeugt am: 09. Aug 2014 um 13:19
---
-
-DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor_max`;
-CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor_max` (
-  `id` int(1) NOT NULL DEFAULT '0',
-  `anzahl_interessenbindung_tief_max` bigint(21) DEFAULT NULL,
-  `anzahl_interessenbindung_mittel_max` bigint(21) DEFAULT NULL,
-  `anzahl_interessenbindung_hoch_max` bigint(21) DEFAULT NULL,
-  `lobbyfaktor_max` bigint(25) DEFAULT NULL,
-  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `mv_parlamentarier_medium`
---
--- Erzeugt am: 09. Aug 2014 um 13:19
---
-
-DROP TABLE IF EXISTS `mv_parlamentarier_medium`;
-CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium` (
-  `anzeige_name` varchar(152) NOT NULL DEFAULT '',
-  `name` varchar(202) DEFAULT NULL,
-  `id` int(11) NOT NULL DEFAULT '0' COMMENT 'Technischer Schlüssel des Parlamentariers',
-  `nachname` varchar(100) NOT NULL COMMENT 'Nachname des Parlamentariers',
-  `vorname` varchar(50) NOT NULL COMMENT 'Vornahme des Parlamentariers',
-  `zweiter_vorname` varchar(50) DEFAULT NULL COMMENT 'Zweiter Vorname des Parlamentariers',
-  `rat_id` int(11) NOT NULL COMMENT 'Ratszugehörigkeit; Fremdschlüssel des Rates',
-  `kanton_id` int(11) NOT NULL COMMENT 'Kantonszugehörigkeit; Fremdschlüssel des Kantons',
-  `kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des Parlamentariers (automatisch erzeugt [in_Kommission Trigger])',
-  `partei_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Partei. Leer bedeutet parteilos.',
-  `parteifunktion` enum('mitglied','praesident','vizepraesident') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Partei',
-  `fraktion_id` int(11) DEFAULT NULL COMMENT 'Fraktionszugehörigkeit im nationalen Parlament. Fremdschlüssel.',
-  `fraktionsfunktion` enum('mitglied','praesident','vizepraesident') DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Fraktion',
-  `im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
-  `im_rat_bis` date DEFAULT NULL COMMENT 'Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag',
-  `ratswechsel` date DEFAULT NULL COMMENT 'Datum in welchem der Parlamentarier den Rat wechselte, in der Regel vom National- in den Ständerat. Leer (NULL) = kein Ratswechsel hat stattgefunden',
-  `ratsunterbruch_von` date DEFAULT NULL COMMENT 'Unterbruch in der Ratstätigkeit von, leer (NULL) = kein Unterbruch',
-  `ratsunterbruch_bis` date DEFAULT NULL COMMENT 'Unterbruch in der Ratstätigkeit bis, leer (NULL) = kein Unterbruch',
-  `beruf` varchar(150) DEFAULT NULL COMMENT 'Beruf des Parlamentariers',
-  `beruf_interessengruppe_id` int(11) DEFAULT NULL COMMENT 'Zuordnung (Fremdschlüssel) zu Interessengruppe für den Beruf des Parlamentariers',
-  `zivilstand` enum('ledig','verheiratet','geschieden','eingetragene partnerschaft') DEFAULT NULL COMMENT 'Zivilstand',
-  `anzahl_kinder` tinyint(3) unsigned DEFAULT NULL COMMENT 'Anzahl der Kinder',
-  `militaerischer_grad_id` int(11) DEFAULT NULL COMMENT 'Militärischer Grad, leer (NULL) = kein Militärdienst',
-  `geschlecht` enum('M','F') DEFAULT 'M' COMMENT 'Geschlecht des Parlamentariers, M=Mann, F=Frau',
-  `geburtstag` date DEFAULT NULL COMMENT 'Geburtstag des Parlamentariers',
-  `photo` varchar(255) DEFAULT NULL COMMENT 'Photo des Parlamentariers (JPEG/jpg)',
-  `photo_dateiname` varchar(255) DEFAULT NULL COMMENT 'Photodateiname ohne Erweiterung',
-  `photo_dateierweiterung` varchar(15) DEFAULT NULL COMMENT 'Erweiterung der Photodatei',
-  `photo_dateiname_voll` varchar(255) DEFAULT NULL COMMENT 'Photodateiname mit Erweiterung',
-  `photo_mime_type` varchar(100) DEFAULT NULL COMMENT 'MIME Type des Photos',
-  `kleinbild` varchar(80) DEFAULT 'leer.png' COMMENT 'Bild 44x62 px oder leer.png',
-  `sitzplatz` int(11) DEFAULT NULL COMMENT 'Sitzplatznr im Parlament. Siehe Sitzordnung auf parlament.ch',
-  `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Parlamentariers',
-  `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage des Parlamentariers',
-  `parlament_biografie_id` int(11) DEFAULT NULL COMMENT 'Biographie ID auf Parlament.ch; Dient zur Herstellung eines Links auf die Parlament.ch Seite des Parlamenteriers. Zudem kann die ID für die automatische Verarbeitung gebraucht werden.',
-  `twitter_name` varchar(50) DEFAULT NULL COMMENT 'Twittername',
-  `linkedin_profil_url` varchar(255) DEFAULT NULL COMMENT 'URL zum LinkedIn-Profil',
-  `xing_profil_name` varchar(150) DEFAULT NULL COMMENT 'Profilname in XING (letzter Teil von Link), wird ergänzt mit https://www.xing.com/profile/ zu einem ganzen Link',
-  `facebook_name` varchar(150) DEFAULT NULL COMMENT 'Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt',
-  `arbeitssprache` enum('de','fr','it') DEFAULT NULL COMMENT 'Arbeitssprache des Parlamentariers, erhältlich auf parlament.ch',
-  `adresse_firma` varchar(100) DEFAULT NULL COMMENT 'Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch',
-  `adresse_strasse` varchar(100) DEFAULT NULL COMMENT 'Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch',
-  `adresse_zusatz` varchar(100) DEFAULT NULL COMMENT 'Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch',
-  `adresse_plz` varchar(10) DEFAULT NULL COMMENT 'Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch',
-  `adresse_ort` varchar(100) DEFAULT NULL COMMENT 'Wohnadresse des Parlamentariers, falls verfügbar, sonst Postadresse; Adressen erhältlich auf parlament.ch',
-  `ALT_kommission` varchar(255) DEFAULT NULL COMMENT 'Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext',
-  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
-  `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
-  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
-  `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
-  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
-  `autorisierung_verschickt_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisierungsanfrage verschickt durch',
-  `autorisierung_verschickt_datum` timestamp NULL DEFAULT NULL COMMENT 'Autorisierungsanfrage verschickt am. (Leer/NULL bedeutet noch keine Anfrage verschickt.)',
-  `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
-  `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass die Interessenbindungen und Zutrittsberechtigungen vom Parlamentarier autorisiert wurden.',
-  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
-  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
-  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
-  `created_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Erstellt am',
-  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT 'Abgeändert am',
-  `von` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
-  `bis` date DEFAULT NULL COMMENT 'Austrittsdatum aus dem Parlament. Leer (NULL) = aktuell im Rat, nicht leer = historischer Eintrag',
-  `geburtstag_unix` bigint(11) DEFAULT NULL,
-  `im_rat_seit_unix` bigint(11) NOT NULL DEFAULT '0',
-  `im_rat_bis_unix` bigint(11) DEFAULT NULL,
-  `created_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `updated_date_unix` bigint(11) NOT NULL DEFAULT '0',
-  `eingabe_abgeschlossen_datum_unix` bigint(11) DEFAULT NULL,
-  `kontrolliert_datum_unix` bigint(11) DEFAULT NULL,
-  `freigabe_datum_unix` bigint(11) DEFAULT NULL,
-  `von_unix` bigint(11) NOT NULL DEFAULT '0',
-  `bis_unix` bigint(11) DEFAULT NULL,
-  `vertretene_bevoelkerung` bigint(13) unsigned DEFAULT NULL,
-  `rat` varchar(10) COMMENT 'Kürzel des Rates',
-  `ratstyp` varchar(10) COMMENT 'Kürzel des Rates',
-  `kanton_abkuerzung` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') COMMENT 'Kantonskürzel',
-  `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') COMMENT 'Kantonskürzel',
-  `kanton_name_de` varchar(50) COMMENT 'Deutscher Name des Kantons',
-  `kommissionen_namen` text,
-  `kommissionen_abkuerzung` text,
-  `kommissionen_anzahl` bigint(21) NOT NULL DEFAULT '0',
-  `partei` varchar(20) COMMENT 'Parteiabkürzung',
-  `partei_name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
-  `fraktion` varchar(20) COMMENT 'Fraktionsabkürzung',
-  `militaerischer_grad` varchar(30) COMMENT 'Name des militärischen Grades',
-  `titel_de` varchar(74) DEFAULT NULL,
-  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  PRIMARY KEY (`id`),
-  KEY `idx_anzeige_name` (`anzeige_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`,`table_name`),
+  KEY `idx_search_str_long` (`freigabe_datum`,`bis`,`table_weight`,`weight`,`name`(255)),
+  KEY `idx_search_str_medium` (`freigabe_datum`,`table_weight`,`weight`,`name`(255)),
+  KEY `idx_search_str_short` (`table_weight`,`weight`,`name`(255))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for parlamentarier, zutrittsberechtigung, branche, interessengruppe, kommission, organisation, partei';
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `mv_zutrittsberechtigung`
 --
--- Erzeugt am: 09. Aug 2014 um 13:19
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `mv_zutrittsberechtigung`;
@@ -2262,63 +2107,33 @@ CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung` (
   `eingabe_abgeschlossen_datum_unix` bigint(11) DEFAULT NULL,
   `kontrolliert_datum_unix` bigint(11) DEFAULT NULL,
   `freigabe_datum_unix` bigint(11) DEFAULT NULL,
+  `beruf_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
   `partei` varchar(20) COMMENT 'Parteiabkürzung',
   `parlamentarier_name` varchar(152) DEFAULT NULL,
   `parlamentarier_freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `parlamentarier_freigabe_datum_unix` bigint(11) DEFAULT NULL,
-  `anzahl_mandat_tief` bigint(21) DEFAULT NULL,
-  `anzahl_mandat_mittel` bigint(21) DEFAULT NULL,
-  `anzahl_mandat_hoch` bigint(21) DEFAULT NULL,
-  `lobbyfaktor` bigint(24) DEFAULT NULL,
-  `lobbyfaktor_max` bigint(24) DEFAULT NULL,
-  `lobbyfaktor_percent_max` decimal(27,4) DEFAULT NULL,
-  `anzahl_mandat_tief_max` bigint(21) DEFAULT NULL,
-  `anzahl_mandat_mittel_max` bigint(21) DEFAULT NULL,
-  `anzahl_mandat_hoch_max` bigint(21) DEFAULT NULL,
+  `anzahl_mandat_tief` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_mandat_mittel` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_mandat_hoch` tinyint(3) unsigned DEFAULT NULL,
+  `lobbyfaktor` smallint(5) unsigned DEFAULT NULL,
+  `lobbyfaktor_max` smallint(5) unsigned DEFAULT NULL,
+  `lobbyfaktor_percent_max` decimal(4,3) unsigned DEFAULT NULL,
+  `anzahl_mandat_tief_max` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_mandat_mittel_max` tinyint(3) unsigned DEFAULT NULL,
+  `anzahl_mandat_hoch_max` tinyint(3) unsigned DEFAULT NULL,
   `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
   PRIMARY KEY (`id`),
-  KEY `idx_lobbyfaktor` (`lobbyfaktor`,`anzeige_name`),
-  KEY `idx_anzeige_name` (`anzeige_name`),
-  KEY `idx_partei` (`partei`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `mv_zutrittsberechtigung_lobbyfaktor`
---
--- Erzeugt am: 09. Aug 2014 um 13:19
---
-
-DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor`;
-CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_lobbyfaktor` (
-  `id` int(11) NOT NULL DEFAULT '0' COMMENT 'Technischer Schlüssel der Zugangsberechtigung',
-  `anzahl_mandat_tief` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_mandat_mittel` bigint(21) NOT NULL DEFAULT '0',
-  `anzahl_mandat_hoch` bigint(21) NOT NULL DEFAULT '0',
-  `lobbyfaktor` bigint(24) NOT NULL DEFAULT '0',
-  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `mv_zutrittsberechtigung_lobbyfaktor_max`
---
--- Erzeugt am: 09. Aug 2014 um 13:19
---
-
-DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max`;
-CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max` (
-  `id` int(1) NOT NULL DEFAULT '0',
-  `anzahl_mandat_tief_max` bigint(21) DEFAULT NULL,
-  `anzahl_mandat_mittel_max` bigint(21) DEFAULT NULL,
-  `anzahl_mandat_hoch_max` bigint(21) DEFAULT NULL,
-  `lobbyfaktor_max` bigint(24) DEFAULT NULL,
-  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`,`freigabe_datum`,`bis`),
+  KEY `idx_parlam_bis` (`parlamentarier_id`,`bis`),
+  KEY `idx_partei_freigabe` (`partei`,`freigabe_datum`,`bis`),
+  KEY `idx_partei` (`partei`,`bis`),
+  KEY `idx_partei_id_freigabe` (`partei_id`,`freigabe_datum`,`bis`),
+  KEY `idx_partei_id` (`partei_id`,`bis`),
+  KEY `idx_beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`,`freigabe_datum`,`bis`),
+  KEY `idx_beruf_interessengruppe_id` (`beruf_interessengruppe_id`,`bis`),
+  KEY `idx_beruf_branche_id_freigabe` (`beruf_branche_id`,`freigabe_datum`,`bis`),
+  KEY `idx_beruf_branche_id` (`beruf_branche_id`,`bis`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for v_zutrittsberechtigung';
 
 -- --------------------------------------------------------
 
@@ -2373,7 +2188,7 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   KEY `interessengruppe3_id` (`interessengruppe3_id`),
   KEY `land` (`land_id`),
   KEY `interessenraum_id` (`interessenraum_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=751 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=815 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation`:
@@ -2584,7 +2399,7 @@ CREATE TABLE IF NOT EXISTS `organisation_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung`
 --
--- Erzeugt am: 21. Jul 2014 um 14:29
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung`;
@@ -2611,9 +2426,13 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   UNIQUE KEY `organisation_beziehung_organisation_zielorganisation_art_unique` (`art`,`organisation_id`,`ziel_organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
-  KEY `organisation_id` (`organisation_id`),
-  KEY `ziel_organisation_id` (`ziel_organisation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=186 ;
+  KEY `idx_org_freigabe` (`organisation_id`,`freigabe_datum`,`bis`,`ziel_organisation_id`),
+  KEY `idx_org` (`organisation_id`,`bis`,`ziel_organisation_id`),
+  KEY `idx_ziel_freigabe` (`ziel_organisation_id`,`freigabe_datum`,`bis`,`organisation_id`),
+  KEY `idx_ziel` (`ziel_organisation_id`,`bis`,`organisation_id`),
+  KEY `organisation_id` (`organisation_id`,`ziel_organisation_id`),
+  KEY `ziel_organisation_id` (`ziel_organisation_id`,`organisation_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=207 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung`:
@@ -2707,7 +2526,7 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
   KEY `organisation_id` (`organisation_id`),
   KEY `ziel_organisation_id` (`ziel_organisation_id`),
   KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=346 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=396 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung_log`:
@@ -2907,7 +2726,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   KEY `interessengruppe2_id` (`interessengruppe2_id`),
   KEY `interessengruppe3_id` (`interessengruppe3_id`),
   KEY `fk_organisation_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=2875 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=3239 ;
 
 --
 -- RELATIONEN DER TABELLE `organisation_log`:
@@ -2920,7 +2739,7 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 06. Jul 2014 um 11:31
+-- Erzeugt am: 10. Aug 2014 um 23:20
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
@@ -2985,15 +2804,15 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `parlamentarier_nachname_vorname_unique` (`nachname`,`vorname`) COMMENT 'Fachlicher unique constraint',
   UNIQUE KEY `parlamentarier_rat_sitzplatz` (`rat_id`,`sitzplatz`,`im_rat_bis`) COMMENT 'Fachlicher unique constraint',
+  UNIQUE KEY `parlamentarier_nachname_vorname_unique` (`nachname`,`vorname`,`zweiter_vorname`) COMMENT 'Fachlicher unique constraint',
   KEY `idx_partei` (`partei_id`),
   KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
   KEY `militaerischer_grad` (`militaerischer_grad_id`),
   KEY `fraktion_id` (`fraktion_id`),
   KEY `rat_id` (`rat_id`),
   KEY `kanton_id` (`kanton_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=254 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=255 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier`:
@@ -3156,7 +2975,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
   `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
   PRIMARY KEY (`id`),
   KEY `parlamentarier_id` (`parlamentarier_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=45 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=48 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_anhang`:
@@ -3242,7 +3061,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
   PRIMARY KEY (`log_id`),
   KEY `parlamentarier_id` (`parlamentarier_id`),
   KEY `fk_parlamentarier_anhang_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=52 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=55 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_anhang_log`:
@@ -3330,7 +3149,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   KEY `militaerischer_grad` (`militaerischer_grad_id`),
   KEY `fraktion_id` (`fraktion_id`),
   KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=1609 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=1872 ;
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -3822,7 +3641,7 @@ CREATE TABLE IF NOT EXISTS `settings_log` (
   `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
   PRIMARY KEY (`log_id`),
   KEY `fk_settings_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=30 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=32 ;
 
 --
 -- RELATIONEN DER TABELLE `settings_log`:
@@ -3875,7 +3694,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator users' AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator users' AUTO_INCREMENT=19 ;
 
 -- --------------------------------------------------------
 
@@ -3893,7 +3712,7 @@ CREATE TABLE IF NOT EXISTS `user_permission` (
   `permission_name` varchar(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions' AUTO_INCREMENT=224 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions' AUTO_INCREMENT=257 ;
 
 -- --------------------------------------------------------
 
@@ -5436,16 +5255,17 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`mitarbeiter_schweiz` int(11) unsigned
 ,`geschaeftsbericht_url` varchar(255)
 ,`quelle_url` varchar(255)
-,`anzahl_interessenbindung_tief` bigint(21)
-,`anzahl_interessenbindung_mittel` bigint(21)
-,`anzahl_interessenbindung_hoch` bigint(21)
-,`anzahl_interessenbindung_tief_nach_wahl` bigint(21)
-,`anzahl_interessenbindung_mittel_nach_wahl` bigint(21)
-,`anzahl_interessenbindung_hoch_nach_wahl` bigint(21)
-,`anzahl_mandat_tief` bigint(21)
-,`anzahl_mandat_mittel` bigint(21)
-,`anzahl_mandat_hoch` bigint(21)
+,`anzahl_interessenbindung_tief` tinyint(3) unsigned
+,`anzahl_interessenbindung_mittel` tinyint(3) unsigned
+,`anzahl_interessenbindung_hoch` tinyint(3) unsigned
+,`anzahl_interessenbindung_tief_nach_wahl` tinyint(3) unsigned
+,`anzahl_interessenbindung_mittel_nach_wahl` tinyint(3) unsigned
+,`anzahl_interessenbindung_hoch_nach_wahl` tinyint(3) unsigned
+,`anzahl_mandat_tief` tinyint(3) unsigned
+,`anzahl_mandat_mittel` tinyint(3) unsigned
+,`anzahl_mandat_hoch` tinyint(3) unsigned
 ,`lobbyeinfluss` varchar(11)
+,`lobbyeinfluss_index` int(0)
 );
 -- --------------------------------------------------------
 
@@ -5703,23 +5523,12 @@ CREATE TABLE IF NOT EXISTS `v_organisation_jahr_last` (
 -- --------------------------------------------------------
 
 --
--- Stellvertreter-Struktur des Views `v_organisation_lobbyeinfluss`
+-- Tabellenstruktur für Tabelle `v_organisation_lobbyeinfluss`
 --
-DROP VIEW IF EXISTS `v_organisation_lobbyeinfluss`;
-CREATE TABLE IF NOT EXISTS `v_organisation_lobbyeinfluss` (
-`id` int(11)
-,`anzahl_interessenbindung_tief` bigint(21)
-,`anzahl_interessenbindung_mittel` bigint(21)
-,`anzahl_interessenbindung_hoch` bigint(21)
-,`anzahl_interessenbindung_tief_nach_wahl` bigint(21)
-,`anzahl_interessenbindung_mittel_nach_wahl` bigint(21)
-,`anzahl_interessenbindung_hoch_nach_wahl` bigint(21)
-,`anzahl_mandat_tief` bigint(21)
-,`anzahl_mandat_mittel` bigint(21)
-,`anzahl_mandat_hoch` bigint(21)
-,`lobbyeinfluss` varchar(11)
-,`refreshed_date` timestamp
-);
+
+DROP TABLE IF EXISTS `v_organisation_lobbyeinfluss`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_lobbyeinfluss` AS select `lobbywatch`.`mv_organisation_lobbyeinfluss`.`id` AS `id`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`lobbyeinfluss` AS `lobbyeinfluss`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`refreshed_date` AS `refreshed_date` from `mv_organisation_lobbyeinfluss`;
+
 -- --------------------------------------------------------
 
 --
@@ -5739,65 +5548,6 @@ CREATE TABLE IF NOT EXISTS `v_organisation_lobbyeinfluss_raw` (
 ,`anzahl_mandat_hoch` bigint(21)
 ,`lobbyeinfluss` varchar(11)
 ,`refreshed_date` datetime
-);
--- --------------------------------------------------------
-
---
--- Stellvertreter-Struktur des Views `v_organisation_medium`
---
-DROP VIEW IF EXISTS `v_organisation_medium`;
-CREATE TABLE IF NOT EXISTS `v_organisation_medium` (
-`anzeige_name` varchar(454)
-,`name` varchar(454)
-,`id` int(11)
-,`name_de` varchar(150)
-,`name_fr` varchar(150)
-,`name_it` varchar(150)
-,`ort` varchar(100)
-,`land_id` int(11)
-,`interessenraum_id` int(11)
-,`rechtsform` enum('AG','GmbH','Stiftung','Verein','Informelle Gruppe','Parlamentarische Gruppe','Oeffentlich-rechtlich','Einzelunternehmen','KG','Genossenschaft','Staatlich','Ausserparlamentarische Kommission','Einfache Gesellschaft')
-,`typ` set('EinzelOrganisation','DachOrganisation','MitgliedsOrganisation','LeistungsErbringer','dezidierteLobby','Gemeinnuetzig','Gewinnorientiert')
-,`vernehmlassung` enum('immer','punktuell','nie')
-,`interessengruppe_id` int(11)
-,`interessengruppe2_id` int(11)
-,`interessengruppe3_id` int(11)
-,`branche_id` int(11)
-,`homepage` varchar(255)
-,`handelsregister_url` varchar(255)
-,`twitter_name` varchar(50)
-,`beschreibung` text
-,`adresse_strasse` varchar(100)
-,`adresse_zusatz` varchar(100)
-,`adresse_plz` varchar(10)
-,`ALT_parlam_verbindung` set('einzel','mehrere','mitglied','exekutiv','kommission')
-,`notizen` text
-,`eingabe_abgeschlossen_visa` varchar(10)
-,`eingabe_abgeschlossen_datum` timestamp
-,`kontrolliert_visa` varchar(10)
-,`kontrolliert_datum` timestamp
-,`freigabe_visa` varchar(10)
-,`freigabe_datum` timestamp
-,`created_visa` varchar(10)
-,`created_date` timestamp
-,`updated_visa` varchar(10)
-,`updated_date` timestamp
-,`created_date_unix` bigint(11)
-,`updated_date_unix` bigint(11)
-,`eingabe_abgeschlossen_datum_unix` bigint(11)
-,`kontrolliert_datum_unix` bigint(11)
-,`freigabe_datum_unix` bigint(11)
-,`branche` varchar(100)
-,`interessengruppe` varchar(150)
-,`interessengruppe_branche` varchar(100)
-,`interessengruppe_branche_id` int(11)
-,`interessengruppe2` varchar(150)
-,`interessengruppe2_branche` varchar(100)
-,`interessengruppe2_branche_id` int(11)
-,`interessengruppe3` varchar(150)
-,`interessengruppe3_branche` varchar(100)
-,`interessengruppe3_branche_id` int(11)
-,`refreshed_date` timestamp
 );
 -- --------------------------------------------------------
 
@@ -6181,6 +5931,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation_raw` (
 ,`anzahl_mandat_mittel` bigint(21)
 ,`anzahl_mandat_hoch` bigint(21)
 ,`lobbyeinfluss` varchar(11)
+,`lobbyeinfluss_index` int(0)
 );
 -- --------------------------------------------------------
 
@@ -6372,8 +6123,8 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`bis_unix` bigint(11)
 ,`vertretene_bevoelkerung` bigint(13) unsigned
 ,`rat` varchar(10)
-,`ratstyp` varchar(10)
-,`kanton_abkuerzung` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH')
+,`ratstyp_BAD` varchar(10)
+,`kanton_abkuerzung_BAD` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH')
 ,`kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH')
 ,`kanton_name_de` varchar(50)
 ,`kommissionen_namen` text
@@ -6383,20 +6134,23 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier` (
 ,`partei_name` varchar(100)
 ,`fraktion` varchar(20)
 ,`militaerischer_grad` varchar(30)
+,`beruf_branche_id` int(11)
 ,`titel_de` varchar(74)
 ,`refreshed_date` timestamp
-,`anzahl_interessenbindung_tief` bigint(21)
-,`anzahl_interessenbindung_mittel` bigint(21)
-,`anzahl_interessenbindung_hoch` bigint(21)
-,`anzahl_interessenbindung_tief_nach_wahl` bigint(21)
-,`anzahl_interessenbindung_mittel_nach_wahl` bigint(21)
-,`anzahl_interessenbindung_hoch_nach_wahl` bigint(21)
-,`lobbyfaktor` bigint(25)
-,`lobbyfaktor_max` bigint(25)
-,`lobbyfaktor_percent_max` decimal(28,4)
-,`anzahl_interessenbindung_tief_max` bigint(21)
-,`anzahl_interessenbindung_mittel_max` bigint(21)
-,`anzahl_interessenbindung_hoch_max` bigint(21)
+,`anzahl_interessenbindung_tief` tinyint(3) unsigned
+,`anzahl_interessenbindung_mittel` tinyint(3) unsigned
+,`anzahl_interessenbindung_hoch` tinyint(3) unsigned
+,`anzahl_interessenbindung_tief_nach_wahl` tinyint(3) unsigned
+,`anzahl_interessenbindung_mittel_nach_wahl` tinyint(3) unsigned
+,`anzahl_interessenbindung_hoch_nach_wahl` tinyint(3) unsigned
+,`lobbyfaktor` smallint(5) unsigned
+,`lobbyfaktor_max` smallint(5) unsigned
+,`lobbyfaktor_percent_max` decimal(4,3) unsigned
+,`anzahl_interessenbindung_tief_max` tinyint(3) unsigned
+,`anzahl_interessenbindung_mittel_max` tinyint(3) unsigned
+,`anzahl_interessenbindung_hoch_max` tinyint(3) unsigned
+,`ratstyp` varchar(10)
+,`kanton_abkuerzung` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH')
 );
 -- --------------------------------------------------------
 
@@ -6438,35 +6192,21 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier_authorisierungs_email` (
 -- --------------------------------------------------------
 
 --
--- Stellvertreter-Struktur des Views `v_parlamentarier_lobbyfaktor`
+-- Tabellenstruktur für Tabelle `v_parlamentarier_lobbyfaktor`
 --
-DROP VIEW IF EXISTS `v_parlamentarier_lobbyfaktor`;
-CREATE TABLE IF NOT EXISTS `v_parlamentarier_lobbyfaktor` (
-`id` int(11)
-,`anzahl_interessenbindung_tief` bigint(21)
-,`anzahl_interessenbindung_mittel` bigint(21)
-,`anzahl_interessenbindung_hoch` bigint(21)
-,`anzahl_interessenbindung_tief_nach_wahl` bigint(21)
-,`anzahl_interessenbindung_mittel_nach_wahl` bigint(21)
-,`anzahl_interessenbindung_hoch_nach_wahl` bigint(21)
-,`lobbyfaktor` bigint(25)
-,`lobbyfaktor_einfach` bigint(24)
-,`refreshed_date` timestamp
-);
+
+DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_lobbyfaktor` AS select `lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`id` AS `id`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`lobbyfaktor_einfach` AS `lobbyfaktor_einfach`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`refreshed_date` AS `refreshed_date` from `mv_parlamentarier_lobbyfaktor`;
+
 -- --------------------------------------------------------
 
 --
--- Stellvertreter-Struktur des Views `v_parlamentarier_lobbyfaktor_max`
+-- Tabellenstruktur für Tabelle `v_parlamentarier_lobbyfaktor_max`
 --
-DROP VIEW IF EXISTS `v_parlamentarier_lobbyfaktor_max`;
-CREATE TABLE IF NOT EXISTS `v_parlamentarier_lobbyfaktor_max` (
-`id` int(1)
-,`anzahl_interessenbindung_tief_max` bigint(21)
-,`anzahl_interessenbindung_mittel_max` bigint(21)
-,`anzahl_interessenbindung_hoch_max` bigint(21)
-,`lobbyfaktor_max` bigint(25)
-,`refreshed_date` timestamp
-);
+
+DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor_max`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_lobbyfaktor_max` AS select `lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`id` AS `id`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`anzahl_interessenbindung_tief_max` AS `anzahl_interessenbindung_tief_max`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`anzahl_interessenbindung_mittel_max` AS `anzahl_interessenbindung_mittel_max`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`anzahl_interessenbindung_hoch_max` AS `anzahl_interessenbindung_hoch_max`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`refreshed_date` AS `refreshed_date` from `mv_parlamentarier_lobbyfaktor_max`;
+
 -- --------------------------------------------------------
 
 --
@@ -6498,102 +6238,6 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier_lobbyfaktor_raw` (
 ,`lobbyfaktor` bigint(25)
 ,`lobbyfaktor_einfach` bigint(24)
 ,`refreshed_date` datetime
-);
--- --------------------------------------------------------
-
---
--- Stellvertreter-Struktur des Views `v_parlamentarier_medium`
---
-DROP VIEW IF EXISTS `v_parlamentarier_medium`;
-CREATE TABLE IF NOT EXISTS `v_parlamentarier_medium` (
-`anzeige_name` varchar(152)
-,`name` varchar(202)
-,`id` int(11)
-,`nachname` varchar(100)
-,`vorname` varchar(50)
-,`zweiter_vorname` varchar(50)
-,`rat_id` int(11)
-,`kanton_id` int(11)
-,`kommissionen` varchar(75)
-,`partei_id` int(11)
-,`parteifunktion` enum('mitglied','praesident','vizepraesident')
-,`fraktion_id` int(11)
-,`fraktionsfunktion` enum('mitglied','praesident','vizepraesident')
-,`im_rat_seit` date
-,`im_rat_bis` date
-,`ratswechsel` date
-,`ratsunterbruch_von` date
-,`ratsunterbruch_bis` date
-,`beruf` varchar(150)
-,`beruf_interessengruppe_id` int(11)
-,`zivilstand` enum('ledig','verheiratet','geschieden','eingetragene partnerschaft')
-,`anzahl_kinder` tinyint(3) unsigned
-,`militaerischer_grad_id` int(11)
-,`geschlecht` enum('M','F')
-,`geburtstag` date
-,`photo` varchar(255)
-,`photo_dateiname` varchar(255)
-,`photo_dateierweiterung` varchar(15)
-,`photo_dateiname_voll` varchar(255)
-,`photo_mime_type` varchar(100)
-,`kleinbild` varchar(80)
-,`sitzplatz` int(11)
-,`email` varchar(100)
-,`homepage` varchar(255)
-,`parlament_biografie_id` int(11)
-,`twitter_name` varchar(50)
-,`linkedin_profil_url` varchar(255)
-,`xing_profil_name` varchar(150)
-,`facebook_name` varchar(150)
-,`arbeitssprache` enum('de','fr','it')
-,`adresse_firma` varchar(100)
-,`adresse_strasse` varchar(100)
-,`adresse_zusatz` varchar(100)
-,`adresse_plz` varchar(10)
-,`adresse_ort` varchar(100)
-,`ALT_kommission` varchar(255)
-,`notizen` text
-,`eingabe_abgeschlossen_visa` varchar(10)
-,`eingabe_abgeschlossen_datum` timestamp
-,`kontrolliert_visa` varchar(10)
-,`kontrolliert_datum` timestamp
-,`autorisierung_verschickt_visa` varchar(10)
-,`autorisierung_verschickt_datum` timestamp
-,`autorisiert_visa` varchar(10)
-,`autorisiert_datum` date
-,`freigabe_visa` varchar(10)
-,`freigabe_datum` timestamp
-,`created_visa` varchar(10)
-,`created_date` timestamp
-,`updated_visa` varchar(10)
-,`updated_date` timestamp
-,`von` date
-,`bis` date
-,`geburtstag_unix` bigint(11)
-,`im_rat_seit_unix` bigint(11)
-,`im_rat_bis_unix` bigint(11)
-,`created_date_unix` bigint(11)
-,`updated_date_unix` bigint(11)
-,`eingabe_abgeschlossen_datum_unix` bigint(11)
-,`kontrolliert_datum_unix` bigint(11)
-,`freigabe_datum_unix` bigint(11)
-,`von_unix` bigint(11)
-,`bis_unix` bigint(11)
-,`vertretene_bevoelkerung` bigint(13) unsigned
-,`rat` varchar(10)
-,`ratstyp` varchar(10)
-,`kanton_abkuerzung` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH')
-,`kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH')
-,`kanton_name_de` varchar(50)
-,`kommissionen_namen` text
-,`kommissionen_abkuerzung` text
-,`kommissionen_anzahl` bigint(21)
-,`partei` varchar(20)
-,`partei_name` varchar(100)
-,`fraktion` varchar(20)
-,`militaerischer_grad` varchar(30)
-,`titel_de` varchar(74)
-,`refreshed_date` timestamp
 );
 -- --------------------------------------------------------
 
@@ -6688,6 +6332,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier_medium_raw` (
 ,`partei_name` varchar(100)
 ,`fraktion` varchar(20)
 ,`militaerischer_grad` varchar(30)
+,`beruf_branche_id` int(11)
 ,`titel_de` varchar(74)
 ,`refreshed_date` datetime
 );
@@ -6784,6 +6429,7 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier_raw` (
 ,`partei_name` varchar(100)
 ,`fraktion` varchar(20)
 ,`militaerischer_grad` varchar(30)
+,`beruf_branche_id` int(11)
 ,`titel_de` varchar(74)
 ,`refreshed_date` datetime
 ,`anzahl_interessenbindung_tief` bigint(21)
@@ -6960,6 +6606,40 @@ CREATE TABLE IF NOT EXISTS `v_rat` (
 -- --------------------------------------------------------
 
 --
+-- Stellvertreter-Struktur des Views `v_search_table`
+--
+DROP VIEW IF EXISTS `v_search_table`;
+CREATE TABLE IF NOT EXISTS `v_search_table` (
+`id` int(11)
+,`table_name` varchar(20)
+,`page` varchar(20)
+,`table_weight` bigint(20)
+,`name` varchar(454)
+,`freigabe_datum` timestamp
+,`bis` date
+,`weight` bigint(20)
+,`refreshed_date` timestamp
+);
+-- --------------------------------------------------------
+
+--
+-- Stellvertreter-Struktur des Views `v_search_table_raw`
+--
+DROP VIEW IF EXISTS `v_search_table_raw`;
+CREATE TABLE IF NOT EXISTS `v_search_table_raw` (
+`id` int(11)
+,`table_name` varchar(20)
+,`page` varchar(20)
+,`table_weight` bigint(20)
+,`name` varchar(454)
+,`freigabe_datum` timestamp
+,`bis` date
+,`weight` bigint(20)
+,`refreshed_date` datetime
+);
+-- --------------------------------------------------------
+
+--
 -- Stellvertreter-Struktur des Views `v_settings`
 --
 DROP VIEW IF EXISTS `v_settings`;
@@ -7084,19 +6764,20 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung` (
 ,`eingabe_abgeschlossen_datum_unix` bigint(11)
 ,`kontrolliert_datum_unix` bigint(11)
 ,`freigabe_datum_unix` bigint(11)
+,`beruf_branche_id` int(11)
 ,`partei` varchar(20)
 ,`parlamentarier_name` varchar(152)
 ,`parlamentarier_freigabe_datum` timestamp
 ,`parlamentarier_freigabe_datum_unix` bigint(11)
-,`anzahl_mandat_tief` bigint(21)
-,`anzahl_mandat_mittel` bigint(21)
-,`anzahl_mandat_hoch` bigint(21)
-,`lobbyfaktor` bigint(24)
-,`lobbyfaktor_max` bigint(24)
-,`lobbyfaktor_percent_max` decimal(27,4)
-,`anzahl_mandat_tief_max` bigint(21)
-,`anzahl_mandat_mittel_max` bigint(21)
-,`anzahl_mandat_hoch_max` bigint(21)
+,`anzahl_mandat_tief` tinyint(3) unsigned
+,`anzahl_mandat_mittel` tinyint(3) unsigned
+,`anzahl_mandat_hoch` tinyint(3) unsigned
+,`lobbyfaktor` smallint(5) unsigned
+,`lobbyfaktor_max` smallint(5) unsigned
+,`lobbyfaktor_percent_max` decimal(4,3) unsigned
+,`anzahl_mandat_tief_max` tinyint(3) unsigned
+,`anzahl_mandat_mittel_max` tinyint(3) unsigned
+,`anzahl_mandat_hoch_max` tinyint(3) unsigned
 ,`refreshed_date` timestamp
 );
 -- --------------------------------------------------------
@@ -7138,31 +6819,21 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_authorisierungs_email` (
 -- --------------------------------------------------------
 
 --
--- Stellvertreter-Struktur des Views `v_zutrittsberechtigung_lobbyfaktor`
+-- Tabellenstruktur für Tabelle `v_zutrittsberechtigung_lobbyfaktor`
 --
-DROP VIEW IF EXISTS `v_zutrittsberechtigung_lobbyfaktor`;
-CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_lobbyfaktor` (
-`id` int(11)
-,`anzahl_mandat_tief` bigint(21)
-,`anzahl_mandat_mittel` bigint(21)
-,`anzahl_mandat_hoch` bigint(21)
-,`lobbyfaktor` bigint(24)
-,`refreshed_date` timestamp
-);
+
+DROP TABLE IF EXISTS `v_zutrittsberechtigung_lobbyfaktor`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung_lobbyfaktor` AS select `lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`id` AS `id`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`refreshed_date` AS `refreshed_date` from `mv_zutrittsberechtigung_lobbyfaktor`;
+
 -- --------------------------------------------------------
 
 --
--- Stellvertreter-Struktur des Views `v_zutrittsberechtigung_lobbyfaktor_max`
+-- Tabellenstruktur für Tabelle `v_zutrittsberechtigung_lobbyfaktor_max`
 --
-DROP VIEW IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_max`;
-CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_lobbyfaktor_max` (
-`id` int(1)
-,`anzahl_mandat_tief_max` bigint(21)
-,`anzahl_mandat_mittel_max` bigint(21)
-,`anzahl_mandat_hoch_max` bigint(21)
-,`lobbyfaktor_max` bigint(24)
-,`refreshed_date` timestamp
-);
+
+DROP TABLE IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_max`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS select `lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`id` AS `id`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`anzahl_mandat_tief_max` AS `anzahl_mandat_tief_max`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`anzahl_mandat_mittel_max` AS `anzahl_mandat_mittel_max`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`anzahl_mandat_hoch_max` AS `anzahl_mandat_hoch_max`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`refreshed_date` AS `refreshed_date` from `mv_zutrittsberechtigung_lobbyfaktor_max`;
+
 -- --------------------------------------------------------
 
 --
@@ -7499,6 +7170,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_raw` (
 ,`eingabe_abgeschlossen_datum_unix` bigint(11)
 ,`kontrolliert_datum_unix` bigint(11)
 ,`freigabe_datum_unix` bigint(11)
+,`beruf_branche_id` int(11)
 ,`partei` varchar(20)
 ,`parlamentarier_name` varchar(152)
 ,`parlamentarier_freigabe_datum` timestamp
@@ -7615,7 +7287,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
   KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`),
   KEY `partei` (`partei_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=423 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=428 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung`:
@@ -7865,7 +7537,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
   KEY `idx_lobbyorg` (`ALT_lobbyorganisation_id`),
   KEY `partei` (`partei_id`),
   KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=665 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=867 ;
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_log`:
@@ -8024,7 +7696,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_in_kommission_parlamentarier`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_in_kommission_parlamentarier` AS select `parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`in_kommission`.`id` AS `id`,`in_kommission`.`parlamentarier_id` AS `parlamentarier_id`,`in_kommission`.`kommission_id` AS `kommission_id`,`in_kommission`.`funktion` AS `funktion`,`in_kommission`.`von` AS `von`,`in_kommission`.`bis` AS `bis`,`in_kommission`.`notizen` AS `notizen`,`in_kommission`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`in_kommission`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`in_kommission`.`kontrolliert_visa` AS `kontrolliert_visa`,`in_kommission`.`kontrolliert_datum` AS `kontrolliert_datum`,`in_kommission`.`freigabe_visa` AS `freigabe_visa`,`in_kommission`.`freigabe_datum` AS `freigabe_datum`,`in_kommission`.`created_visa` AS `created_visa`,`in_kommission`.`created_date` AS `created_date`,`in_kommission`.`updated_visa` AS `updated_visa`,`in_kommission`.`updated_date` AS `updated_date`,`in_kommission`.`bis_unix` AS `bis_unix`,`in_kommission`.`von_unix` AS `von_unix`,`in_kommission`.`created_date_unix` AS `created_date_unix`,`in_kommission`.`updated_date_unix` AS `updated_date_unix`,`in_kommission`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`in_kommission`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`in_kommission`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (`v_in_kommission_simple` `in_kommission` join `v_parlamentarier_medium` `parlamentarier` on((`in_kommission`.`parlamentarier_id` = `parlamentarier`.`id`))) order by `parlamentarier`.`anzeige_name`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_in_kommission_parlamentarier` AS select `parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`in_kommission`.`id` AS `id`,`in_kommission`.`parlamentarier_id` AS `parlamentarier_id`,`in_kommission`.`kommission_id` AS `kommission_id`,`in_kommission`.`funktion` AS `funktion`,`in_kommission`.`von` AS `von`,`in_kommission`.`bis` AS `bis`,`in_kommission`.`notizen` AS `notizen`,`in_kommission`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`in_kommission`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`in_kommission`.`kontrolliert_visa` AS `kontrolliert_visa`,`in_kommission`.`kontrolliert_datum` AS `kontrolliert_datum`,`in_kommission`.`freigabe_visa` AS `freigabe_visa`,`in_kommission`.`freigabe_datum` AS `freigabe_datum`,`in_kommission`.`created_visa` AS `created_visa`,`in_kommission`.`created_date` AS `created_date`,`in_kommission`.`updated_visa` AS `updated_visa`,`in_kommission`.`updated_date` AS `updated_date`,`in_kommission`.`bis_unix` AS `bis_unix`,`in_kommission`.`von_unix` AS `von_unix`,`in_kommission`.`created_date_unix` AS `created_date_unix`,`in_kommission`.`updated_date_unix` AS `updated_date_unix`,`in_kommission`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`in_kommission`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`in_kommission`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (`v_in_kommission_simple` `in_kommission` join `v_parlamentarier` `parlamentarier` on((`in_kommission`.`parlamentarier_id` = `parlamentarier`.`id`))) order by `parlamentarier`.`anzeige_name`;
 
 -- --------------------------------------------------------
 
@@ -8339,7 +8011,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation` AS select `mv_organisation`.`anzeige_name` AS `anzeige_name`,`mv_organisation`.`name` AS `name`,`mv_organisation`.`id` AS `id`,`mv_organisation`.`name_de` AS `name_de`,`mv_organisation`.`name_fr` AS `name_fr`,`mv_organisation`.`name_it` AS `name_it`,`mv_organisation`.`ort` AS `ort`,`mv_organisation`.`land_id` AS `land_id`,`mv_organisation`.`interessenraum_id` AS `interessenraum_id`,`mv_organisation`.`rechtsform` AS `rechtsform`,`mv_organisation`.`typ` AS `typ`,`mv_organisation`.`vernehmlassung` AS `vernehmlassung`,`mv_organisation`.`interessengruppe_id` AS `interessengruppe_id`,`mv_organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`mv_organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`mv_organisation`.`branche_id` AS `branche_id`,`mv_organisation`.`homepage` AS `homepage`,`mv_organisation`.`handelsregister_url` AS `handelsregister_url`,`mv_organisation`.`twitter_name` AS `twitter_name`,`mv_organisation`.`beschreibung` AS `beschreibung`,`mv_organisation`.`adresse_strasse` AS `adresse_strasse`,`mv_organisation`.`adresse_zusatz` AS `adresse_zusatz`,`mv_organisation`.`adresse_plz` AS `adresse_plz`,`mv_organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`mv_organisation`.`notizen` AS `notizen`,`mv_organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_organisation`.`freigabe_visa` AS `freigabe_visa`,`mv_organisation`.`freigabe_datum` AS `freigabe_datum`,`mv_organisation`.`created_visa` AS `created_visa`,`mv_organisation`.`created_date` AS `created_date`,`mv_organisation`.`updated_visa` AS `updated_visa`,`mv_organisation`.`updated_date` AS `updated_date`,`mv_organisation`.`created_date_unix` AS `created_date_unix`,`mv_organisation`.`updated_date_unix` AS `updated_date_unix`,`mv_organisation`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_organisation`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_organisation`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_organisation`.`branche` AS `branche`,`mv_organisation`.`interessengruppe` AS `interessengruppe`,`mv_organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`mv_organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`mv_organisation`.`interessengruppe2` AS `interessengruppe2`,`mv_organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`mv_organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`mv_organisation`.`interessengruppe3` AS `interessengruppe3`,`mv_organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`mv_organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`mv_organisation`.`refreshed_date` AS `refreshed_date`,`mv_organisation`.`land` AS `land`,`mv_organisation`.`interessenraum` AS `interessenraum`,`mv_organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`mv_organisation`.`jahr` AS `jahr`,`mv_organisation`.`umsatz` AS `umsatz`,`mv_organisation`.`gewinn` AS `gewinn`,`mv_organisation`.`kapital` AS `kapital`,`mv_organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`mv_organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`mv_organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`mv_organisation`.`quelle_url` AS `quelle_url`,`mv_organisation`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`mv_organisation`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`mv_organisation`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`mv_organisation`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`mv_organisation`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`mv_organisation`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`mv_organisation`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`mv_organisation`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`mv_organisation`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`mv_organisation`.`lobbyeinfluss` AS `lobbyeinfluss` from `mv_organisation`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation` AS select `mv_organisation`.`anzeige_name` AS `anzeige_name`,`mv_organisation`.`name` AS `name`,`mv_organisation`.`id` AS `id`,`mv_organisation`.`name_de` AS `name_de`,`mv_organisation`.`name_fr` AS `name_fr`,`mv_organisation`.`name_it` AS `name_it`,`mv_organisation`.`ort` AS `ort`,`mv_organisation`.`land_id` AS `land_id`,`mv_organisation`.`interessenraum_id` AS `interessenraum_id`,`mv_organisation`.`rechtsform` AS `rechtsform`,`mv_organisation`.`typ` AS `typ`,`mv_organisation`.`vernehmlassung` AS `vernehmlassung`,`mv_organisation`.`interessengruppe_id` AS `interessengruppe_id`,`mv_organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`mv_organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`mv_organisation`.`branche_id` AS `branche_id`,`mv_organisation`.`homepage` AS `homepage`,`mv_organisation`.`handelsregister_url` AS `handelsregister_url`,`mv_organisation`.`twitter_name` AS `twitter_name`,`mv_organisation`.`beschreibung` AS `beschreibung`,`mv_organisation`.`adresse_strasse` AS `adresse_strasse`,`mv_organisation`.`adresse_zusatz` AS `adresse_zusatz`,`mv_organisation`.`adresse_plz` AS `adresse_plz`,`mv_organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`mv_organisation`.`notizen` AS `notizen`,`mv_organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_organisation`.`freigabe_visa` AS `freigabe_visa`,`mv_organisation`.`freigabe_datum` AS `freigabe_datum`,`mv_organisation`.`created_visa` AS `created_visa`,`mv_organisation`.`created_date` AS `created_date`,`mv_organisation`.`updated_visa` AS `updated_visa`,`mv_organisation`.`updated_date` AS `updated_date`,`mv_organisation`.`created_date_unix` AS `created_date_unix`,`mv_organisation`.`updated_date_unix` AS `updated_date_unix`,`mv_organisation`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_organisation`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_organisation`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_organisation`.`branche` AS `branche`,`mv_organisation`.`interessengruppe` AS `interessengruppe`,`mv_organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`mv_organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`mv_organisation`.`interessengruppe2` AS `interessengruppe2`,`mv_organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`mv_organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`mv_organisation`.`interessengruppe3` AS `interessengruppe3`,`mv_organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`mv_organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`mv_organisation`.`refreshed_date` AS `refreshed_date`,`mv_organisation`.`land` AS `land`,`mv_organisation`.`interessenraum` AS `interessenraum`,`mv_organisation`.`organisation_jahr_id` AS `organisation_jahr_id`,`mv_organisation`.`jahr` AS `jahr`,`mv_organisation`.`umsatz` AS `umsatz`,`mv_organisation`.`gewinn` AS `gewinn`,`mv_organisation`.`kapital` AS `kapital`,`mv_organisation`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`mv_organisation`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`mv_organisation`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`mv_organisation`.`quelle_url` AS `quelle_url`,`mv_organisation`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`mv_organisation`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`mv_organisation`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`mv_organisation`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`mv_organisation`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`mv_organisation`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`mv_organisation`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`mv_organisation`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`mv_organisation`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`mv_organisation`.`lobbyeinfluss` AS `lobbyeinfluss`,`mv_organisation`.`lobbyeinfluss_index` AS `lobbyeinfluss_index` from `mv_organisation`;
 
 -- --------------------------------------------------------
 
@@ -8434,29 +8106,11 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Struktur des Views `v_organisation_lobbyeinfluss`
---
-DROP TABLE IF EXISTS `v_organisation_lobbyeinfluss`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_lobbyeinfluss` AS select `mv_organisation_lobbyeinfluss`.`id` AS `id`,`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`mv_organisation_lobbyeinfluss`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`mv_organisation_lobbyeinfluss`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`mv_organisation_lobbyeinfluss`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`mv_organisation_lobbyeinfluss`.`lobbyeinfluss` AS `lobbyeinfluss`,`mv_organisation_lobbyeinfluss`.`refreshed_date` AS `refreshed_date` from `mv_organisation_lobbyeinfluss`;
-
--- --------------------------------------------------------
-
---
 -- Struktur des Views `v_organisation_lobbyeinfluss_raw`
 --
 DROP TABLE IF EXISTS `v_organisation_lobbyeinfluss_raw`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_lobbyeinfluss_raw` AS select `organisation`.`id` AS `id`,count(distinct `interessenbindung_tief`.`id`) AS `anzahl_interessenbindung_tief`,count(distinct `interessenbindung_mittel`.`id`) AS `anzahl_interessenbindung_mittel`,count(distinct `interessenbindung_hoch`.`id`) AS `anzahl_interessenbindung_hoch`,count(distinct `interessenbindung_tief_nach_wahl`.`id`) AS `anzahl_interessenbindung_tief_nach_wahl`,count(distinct `interessenbindung_mittel_nach_wahl`.`id`) AS `anzahl_interessenbindung_mittel_nach_wahl`,count(distinct `interessenbindung_hoch_nach_wahl`.`id`) AS `anzahl_interessenbindung_hoch_nach_wahl`,count(distinct `mandat_tief`.`id`) AS `anzahl_mandat_tief`,count(distinct `mandat_mittel`.`id`) AS `anzahl_mandat_mittel`,count(distinct `mandat_hoch`.`id`) AS `anzahl_mandat_hoch`,if(((count(distinct `interessenbindung_hoch_nach_wahl`.`id`) > 0) or (count(distinct `interessenbindung_hoch`.`id`) > 1) or ((count(distinct `interessenbindung_hoch`.`id`) > 0) and (count(distinct `mandat_hoch`.`id`) > 0))),'extrem hoch',if(((count(distinct `interessenbindung_hoch`.`id`) > 0) or ((count(distinct `interessenbindung_mittel`.`id`) > 0) and (count(distinct `mandat_mittel`.`id`) > 0))),'hoch',if(((count(distinct `interessenbindung_mittel`.`id`) > 0) or (count(distinct `mandat_hoch`.`id`) > 0)),'mittel','tief'))) AS `lobbyeinfluss`,now() AS `refreshed_date` from (((((((((`organisation` left join `v_interessenbindung_raw` `interessenbindung_hoch` on(((`organisation`.`id` = `interessenbindung_hoch`.`organisation_id`) and (isnull(`interessenbindung_hoch`.`bis`) or (`interessenbindung_hoch`.`bis` >= now())) and (`interessenbindung_hoch`.`wirksamkeit` = 'hoch')))) left join `v_interessenbindung_raw` `interessenbindung_mittel` on(((`organisation`.`id` = `interessenbindung_mittel`.`organisation_id`) and (isnull(`interessenbindung_mittel`.`bis`) or (`interessenbindung_mittel`.`bis` >= now())) and (`interessenbindung_mittel`.`wirksamkeit` = 'mittel')))) left join `v_interessenbindung_raw` `interessenbindung_tief` on(((`organisation`.`id` = `interessenbindung_tief`.`organisation_id`) and (isnull(`interessenbindung_tief`.`bis`) or (`interessenbindung_tief`.`bis` >= now())) and (`interessenbindung_tief`.`wirksamkeit` = 'tief')))) left join `v_interessenbindung_raw` `interessenbindung_hoch_nach_wahl` on(((`organisation`.`id` = `interessenbindung_hoch_nach_wahl`.`organisation_id`) and (isnull(`interessenbindung_hoch_nach_wahl`.`bis`) or (`interessenbindung_hoch_nach_wahl`.`bis` >= now())) and (`interessenbindung_hoch_nach_wahl`.`wirksamkeit` = 'hoch') and (`interessenbindung_hoch_nach_wahl`.`von` > `interessenbindung_hoch_nach_wahl`.`parlamentarier_im_rat_seit`)))) left join `v_interessenbindung_raw` `interessenbindung_mittel_nach_wahl` on(((`organisation`.`id` = `interessenbindung_mittel_nach_wahl`.`organisation_id`) and (isnull(`interessenbindung_mittel_nach_wahl`.`bis`) or (`interessenbindung_mittel_nach_wahl`.`bis` >= now())) and (`interessenbindung_mittel_nach_wahl`.`wirksamkeit` = 'mittel') and (`interessenbindung_mittel_nach_wahl`.`von` > `interessenbindung_mittel_nach_wahl`.`parlamentarier_im_rat_seit`)))) left join `v_interessenbindung_raw` `interessenbindung_tief_nach_wahl` on(((`organisation`.`id` = `interessenbindung_tief_nach_wahl`.`organisation_id`) and (isnull(`interessenbindung_tief_nach_wahl`.`bis`) or (`interessenbindung_tief_nach_wahl`.`bis` >= now())) and (`interessenbindung_tief_nach_wahl`.`wirksamkeit` = 'tief') and (`interessenbindung_tief_nach_wahl`.`von` > `interessenbindung_tief_nach_wahl`.`parlamentarier_im_rat_seit`)))) left join `v_mandat_raw` `mandat_hoch` on(((`organisation`.`id` = `mandat_hoch`.`organisation_id`) and (isnull(`mandat_hoch`.`bis`) or (`mandat_hoch`.`bis` >= now())) and (`mandat_hoch`.`wirksamkeit` = 'hoch')))) left join `v_mandat_raw` `mandat_mittel` on(((`organisation`.`id` = `mandat_mittel`.`organisation_id`) and (isnull(`mandat_mittel`.`bis`) or (`mandat_mittel`.`bis` >= now())) and (`mandat_mittel`.`wirksamkeit` = 'mittel')))) left join `v_mandat_raw` `mandat_tief` on(((`organisation`.`id` = `mandat_tief`.`organisation_id`) and (isnull(`mandat_tief`.`bis`) or (`mandat_tief`.`bis` >= now())) and (`mandat_tief`.`wirksamkeit` = 'tief')))) group by `organisation`.`id`;
-
--- --------------------------------------------------------
-
---
--- Struktur des Views `v_organisation_medium`
---
-DROP TABLE IF EXISTS `v_organisation_medium`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_medium` AS select `mv_organisation_medium`.`anzeige_name` AS `anzeige_name`,`mv_organisation_medium`.`name` AS `name`,`mv_organisation_medium`.`id` AS `id`,`mv_organisation_medium`.`name_de` AS `name_de`,`mv_organisation_medium`.`name_fr` AS `name_fr`,`mv_organisation_medium`.`name_it` AS `name_it`,`mv_organisation_medium`.`ort` AS `ort`,`mv_organisation_medium`.`land_id` AS `land_id`,`mv_organisation_medium`.`interessenraum_id` AS `interessenraum_id`,`mv_organisation_medium`.`rechtsform` AS `rechtsform`,`mv_organisation_medium`.`typ` AS `typ`,`mv_organisation_medium`.`vernehmlassung` AS `vernehmlassung`,`mv_organisation_medium`.`interessengruppe_id` AS `interessengruppe_id`,`mv_organisation_medium`.`interessengruppe2_id` AS `interessengruppe2_id`,`mv_organisation_medium`.`interessengruppe3_id` AS `interessengruppe3_id`,`mv_organisation_medium`.`branche_id` AS `branche_id`,`mv_organisation_medium`.`homepage` AS `homepage`,`mv_organisation_medium`.`handelsregister_url` AS `handelsregister_url`,`mv_organisation_medium`.`twitter_name` AS `twitter_name`,`mv_organisation_medium`.`beschreibung` AS `beschreibung`,`mv_organisation_medium`.`adresse_strasse` AS `adresse_strasse`,`mv_organisation_medium`.`adresse_zusatz` AS `adresse_zusatz`,`mv_organisation_medium`.`adresse_plz` AS `adresse_plz`,`mv_organisation_medium`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`mv_organisation_medium`.`notizen` AS `notizen`,`mv_organisation_medium`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_organisation_medium`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_organisation_medium`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_organisation_medium`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_organisation_medium`.`freigabe_visa` AS `freigabe_visa`,`mv_organisation_medium`.`freigabe_datum` AS `freigabe_datum`,`mv_organisation_medium`.`created_visa` AS `created_visa`,`mv_organisation_medium`.`created_date` AS `created_date`,`mv_organisation_medium`.`updated_visa` AS `updated_visa`,`mv_organisation_medium`.`updated_date` AS `updated_date`,`mv_organisation_medium`.`created_date_unix` AS `created_date_unix`,`mv_organisation_medium`.`updated_date_unix` AS `updated_date_unix`,`mv_organisation_medium`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_organisation_medium`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_organisation_medium`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_organisation_medium`.`branche` AS `branche`,`mv_organisation_medium`.`interessengruppe` AS `interessengruppe`,`mv_organisation_medium`.`interessengruppe_branche` AS `interessengruppe_branche`,`mv_organisation_medium`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`mv_organisation_medium`.`interessengruppe2` AS `interessengruppe2`,`mv_organisation_medium`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`mv_organisation_medium`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`mv_organisation_medium`.`interessengruppe3` AS `interessengruppe3`,`mv_organisation_medium`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`mv_organisation_medium`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`mv_organisation_medium`.`refreshed_date` AS `refreshed_date` from `mv_organisation_medium`;
 
 -- --------------------------------------------------------
 
@@ -8474,7 +8128,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_parlamentarier`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_parlamentarier` AS select `parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`verguetung` AS `verguetung`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (`v_interessenbindung_simple` `interessenbindung` join `v_parlamentarier_medium` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) order by `parlamentarier`.`anzeige_name`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_parlamentarier` AS select `parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`verguetung` AS `verguetung`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix` from (`v_interessenbindung_simple` `interessenbindung` join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) order by `parlamentarier`.`anzeige_name`;
 
 -- --------------------------------------------------------
 
@@ -8483,7 +8137,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_parlamentarier_beide`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_parlamentarier_beide` AS select 'interessenbindung' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,NULL AS `zutrittsberechtigung_id`,NULL AS `zutrittsberechtigter`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum` from (`v_interessenbindung_simple` `interessenbindung` join `v_parlamentarier_medium` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) union select 'zutritt-mandat' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`zutrittsberechtigung`.`id` AS `zutrittsberechtigung_id`,`zutrittsberechtigung`.`anzeige_name` AS `zutrittsberechtigter`,`mandat`.`art` AS `art`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`freigabe_datum` AS `freigabe_datum` from ((`v_zutrittsberechtigung_simple` `zutrittsberechtigung` join `v_mandat_simple` `mandat` on((`mandat`.`zutrittsberechtigung_id` = `zutrittsberechtigung`.`id`))) join `v_parlamentarier_medium` `parlamentarier` on((`zutrittsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_parlamentarier_beide` AS select 'interessenbindung' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,NULL AS `zutrittsberechtigung_id`,NULL AS `zutrittsberechtigter`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum` from (`v_interessenbindung_simple` `interessenbindung` join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) union select 'zutritt-mandat' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`zutrittsberechtigung`.`id` AS `zutrittsberechtigung_id`,`zutrittsberechtigung`.`anzeige_name` AS `zutrittsberechtigter`,`mandat`.`art` AS `art`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`mandat`.`organisation_id` AS `organisation_id`,`mandat`.`freigabe_datum` AS `freigabe_datum` from ((`v_zutrittsberechtigung_simple` `zutrittsberechtigung` join `v_mandat_simple` `mandat` on((`mandat`.`zutrittsberechtigung_id` = `zutrittsberechtigung`.`id`))) join `v_parlamentarier` `parlamentarier` on((`zutrittsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`)));
 
 -- --------------------------------------------------------
 
@@ -8492,7 +8146,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_parlamentarier_beide_indirekt`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_parlamentarier_beide_indirekt` AS select 'direkt' AS `beziehung`,`organisation_parlamentarier`.`verbindung` AS `verbindung`,`organisation_parlamentarier`.`parlamentarier_id` AS `parlamentarier_id`,`organisation_parlamentarier`.`parlamentarier_name` AS `parlamentarier_name`,`organisation_parlamentarier`.`ratstyp` AS `ratstyp`,`organisation_parlamentarier`.`kanton` AS `kanton`,`organisation_parlamentarier`.`partei_id` AS `partei_id`,`organisation_parlamentarier`.`partei` AS `partei`,`organisation_parlamentarier`.`kommissionen` AS `kommissionen`,`organisation_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`organisation_parlamentarier`.`zutrittsberechtigung_id` AS `zutrittsberechtigung_id`,`organisation_parlamentarier`.`zutrittsberechtigter` AS `zutrittsberechtigter`,`organisation_parlamentarier`.`art` AS `art`,`organisation_parlamentarier`.`von` AS `von`,`organisation_parlamentarier`.`bis` AS `bis`,NULL AS `zwischenorganisation_id`,`organisation_parlamentarier`.`organisation_id` AS `connector_organisation_id`,`organisation_parlamentarier`.`freigabe_datum` AS `freigabe_datum` from `v_organisation_parlamentarier_beide` `organisation_parlamentarier` union select 'indirekt' AS `beziehung`,'interessenbindung' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,NULL AS `zutrittsberechtigung_id`,NULL AS `zutrittsberechtigter`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`organisation_beziehung`.`organisation_id` AS `zwischenorganisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum` from ((`v_organisation_beziehung` `organisation_beziehung` join `v_interessenbindung_simple` `interessenbindung` on((`organisation_beziehung`.`organisation_id` = `interessenbindung`.`organisation_id`))) join `v_parlamentarier_medium` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') union select 'indirekt' AS `beziehung`,'zutritt-mandat' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`zutrittsberechtigung`.`id` AS `zutrittsberechtigung_id`,`zutrittsberechtigung`.`anzeige_name` AS `zutrittsberechtigter`,`mandat`.`art` AS `art`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`organisation_beziehung`.`organisation_id` AS `zwischenorganisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum` from (((`v_organisation_beziehung` `organisation_beziehung` join `v_mandat` `mandat` on((`organisation_beziehung`.`organisation_id` = `mandat`.`organisation_id`))) join `v_zutrittsberechtigung_simple` `zutrittsberechtigung` on((`mandat`.`zutrittsberechtigung_id` = `zutrittsberechtigung`.`id`))) join `v_parlamentarier_medium` `parlamentarier` on((`zutrittsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer');
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_parlamentarier_beide_indirekt` AS select 'direkt' AS `beziehung`,`organisation_parlamentarier`.`verbindung` AS `verbindung`,`organisation_parlamentarier`.`parlamentarier_id` AS `parlamentarier_id`,`organisation_parlamentarier`.`parlamentarier_name` AS `parlamentarier_name`,`organisation_parlamentarier`.`ratstyp` AS `ratstyp`,`organisation_parlamentarier`.`kanton` AS `kanton`,`organisation_parlamentarier`.`partei_id` AS `partei_id`,`organisation_parlamentarier`.`partei` AS `partei`,`organisation_parlamentarier`.`kommissionen` AS `kommissionen`,`organisation_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`organisation_parlamentarier`.`zutrittsberechtigung_id` AS `zutrittsberechtigung_id`,`organisation_parlamentarier`.`zutrittsberechtigter` AS `zutrittsberechtigter`,`organisation_parlamentarier`.`art` AS `art`,`organisation_parlamentarier`.`von` AS `von`,`organisation_parlamentarier`.`bis` AS `bis`,NULL AS `zwischenorganisation_id`,`organisation_parlamentarier`.`organisation_id` AS `connector_organisation_id`,`organisation_parlamentarier`.`freigabe_datum` AS `freigabe_datum` from `v_organisation_parlamentarier_beide` `organisation_parlamentarier` union select 'indirekt' AS `beziehung`,'interessenbindung' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,NULL AS `zutrittsberechtigung_id`,NULL AS `zutrittsberechtigter`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`organisation_beziehung`.`organisation_id` AS `zwischenorganisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum` from ((`v_organisation_beziehung` `organisation_beziehung` join `v_interessenbindung_simple` `interessenbindung` on((`organisation_beziehung`.`organisation_id` = `interessenbindung`.`organisation_id`))) join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') union select 'indirekt' AS `beziehung`,'zutritt-mandat' AS `verbindung`,`parlamentarier`.`id` AS `parlamentarier_id`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`zutrittsberechtigung`.`id` AS `zutrittsberechtigung_id`,`zutrittsberechtigung`.`anzeige_name` AS `zutrittsberechtigter`,`mandat`.`art` AS `art`,`mandat`.`von` AS `von`,`mandat`.`bis` AS `bis`,`organisation_beziehung`.`organisation_id` AS `zwischenorganisation_id`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id`,`organisation_beziehung`.`freigabe_datum` AS `freigabe_datum` from (((`v_organisation_beziehung` `organisation_beziehung` join `v_mandat` `mandat` on((`organisation_beziehung`.`organisation_id` = `mandat`.`organisation_id`))) join `v_zutrittsberechtigung_simple` `zutrittsberechtigung` on((`mandat`.`zutrittsberechtigung_id` = `zutrittsberechtigung`.`id`))) join `v_parlamentarier` `parlamentarier` on((`zutrittsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer');
 
 -- --------------------------------------------------------
 
@@ -8501,7 +8155,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_parlamentarier_indirekt`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_parlamentarier_indirekt` AS select 'direkt' AS `beziehung`,`organisation_parlamentarier`.`parlamentarier_name` AS `parlamentarier_name`,`organisation_parlamentarier`.`name` AS `name`,`organisation_parlamentarier`.`nachname` AS `nachname`,`organisation_parlamentarier`.`vorname` AS `vorname`,`organisation_parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`organisation_parlamentarier`.`rat_id` AS `rat_id`,`organisation_parlamentarier`.`kanton_id` AS `kanton_id`,`organisation_parlamentarier`.`kommissionen` AS `kommissionen`,`organisation_parlamentarier`.`partei_id` AS `partei_id`,`organisation_parlamentarier`.`parteifunktion` AS `parteifunktion`,`organisation_parlamentarier`.`fraktion_id` AS `fraktion_id`,`organisation_parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`organisation_parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`organisation_parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`organisation_parlamentarier`.`ratswechsel` AS `ratswechsel`,`organisation_parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`organisation_parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`organisation_parlamentarier`.`beruf` AS `beruf`,`organisation_parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`organisation_parlamentarier`.`zivilstand` AS `zivilstand`,`organisation_parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`organisation_parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`organisation_parlamentarier`.`geschlecht` AS `geschlecht`,`organisation_parlamentarier`.`geburtstag` AS `geburtstag`,`organisation_parlamentarier`.`photo` AS `photo`,`organisation_parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`organisation_parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`organisation_parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`organisation_parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`organisation_parlamentarier`.`kleinbild` AS `kleinbild`,`organisation_parlamentarier`.`sitzplatz` AS `sitzplatz`,`organisation_parlamentarier`.`email` AS `email`,`organisation_parlamentarier`.`homepage` AS `homepage`,`organisation_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`organisation_parlamentarier`.`twitter_name` AS `twitter_name`,`organisation_parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`organisation_parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`organisation_parlamentarier`.`facebook_name` AS `facebook_name`,`organisation_parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`organisation_parlamentarier`.`adresse_firma` AS `adresse_firma`,`organisation_parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`organisation_parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`organisation_parlamentarier`.`adresse_plz` AS `adresse_plz`,`organisation_parlamentarier`.`adresse_ort` AS `adresse_ort`,`organisation_parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`organisation_parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`organisation_parlamentarier`.`kanton` AS `kanton`,`organisation_parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`organisation_parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`organisation_parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`organisation_parlamentarier`.`partei` AS `partei`,`organisation_parlamentarier`.`fraktion` AS `fraktion`,`organisation_parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`organisation_parlamentarier`.`id` AS `id`,`organisation_parlamentarier`.`parlamentarier_id` AS `parlamentarier_id`,`organisation_parlamentarier`.`organisation_id` AS `organisation_id`,`organisation_parlamentarier`.`art` AS `art`,`organisation_parlamentarier`.`funktion_im_gremium` AS `funktion_im_gremium`,`organisation_parlamentarier`.`deklarationstyp` AS `deklarationstyp`,`organisation_parlamentarier`.`status` AS `status`,`organisation_parlamentarier`.`behoerden_vertreter` AS `behoerden_vertreter`,`organisation_parlamentarier`.`verguetung` AS `verguetung`,`organisation_parlamentarier`.`beschreibung` AS `beschreibung`,`organisation_parlamentarier`.`quelle_url` AS `quelle_url`,`organisation_parlamentarier`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`organisation_parlamentarier`.`quelle` AS `quelle`,`organisation_parlamentarier`.`von` AS `von`,`organisation_parlamentarier`.`bis` AS `bis`,`organisation_parlamentarier`.`notizen` AS `notizen`,`organisation_parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`organisation_parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`organisation_parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`organisation_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`organisation_parlamentarier`.`created_visa` AS `created_visa`,`organisation_parlamentarier`.`created_date` AS `created_date`,`organisation_parlamentarier`.`updated_visa` AS `updated_visa`,`organisation_parlamentarier`.`updated_date` AS `updated_date`,`organisation_parlamentarier`.`bis_unix` AS `bis_unix`,`organisation_parlamentarier`.`von_unix` AS `von_unix`,`organisation_parlamentarier`.`created_date_unix` AS `created_date_unix`,`organisation_parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`organisation_parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`organisation_parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`organisation_parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation_parlamentarier`.`organisation_id` AS `connector_organisation_id` from `v_organisation_parlamentarier` `organisation_parlamentarier` union select 'indirekt' AS `beziehung`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`verguetung` AS `verguetung`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id` from ((`v_organisation_beziehung` `organisation_beziehung` join `v_interessenbindung_simple` `interessenbindung` on((`organisation_beziehung`.`organisation_id` = `interessenbindung`.`organisation_id`))) join `v_parlamentarier_medium` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `beziehung`,`parlamentarier_name`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_parlamentarier_indirekt` AS select 'direkt' AS `beziehung`,`organisation_parlamentarier`.`parlamentarier_name` AS `parlamentarier_name`,`organisation_parlamentarier`.`name` AS `name`,`organisation_parlamentarier`.`nachname` AS `nachname`,`organisation_parlamentarier`.`vorname` AS `vorname`,`organisation_parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`organisation_parlamentarier`.`rat_id` AS `rat_id`,`organisation_parlamentarier`.`kanton_id` AS `kanton_id`,`organisation_parlamentarier`.`kommissionen` AS `kommissionen`,`organisation_parlamentarier`.`partei_id` AS `partei_id`,`organisation_parlamentarier`.`parteifunktion` AS `parteifunktion`,`organisation_parlamentarier`.`fraktion_id` AS `fraktion_id`,`organisation_parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`organisation_parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`organisation_parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`organisation_parlamentarier`.`ratswechsel` AS `ratswechsel`,`organisation_parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`organisation_parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`organisation_parlamentarier`.`beruf` AS `beruf`,`organisation_parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`organisation_parlamentarier`.`zivilstand` AS `zivilstand`,`organisation_parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`organisation_parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`organisation_parlamentarier`.`geschlecht` AS `geschlecht`,`organisation_parlamentarier`.`geburtstag` AS `geburtstag`,`organisation_parlamentarier`.`photo` AS `photo`,`organisation_parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`organisation_parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`organisation_parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`organisation_parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`organisation_parlamentarier`.`kleinbild` AS `kleinbild`,`organisation_parlamentarier`.`sitzplatz` AS `sitzplatz`,`organisation_parlamentarier`.`email` AS `email`,`organisation_parlamentarier`.`homepage` AS `homepage`,`organisation_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`organisation_parlamentarier`.`twitter_name` AS `twitter_name`,`organisation_parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`organisation_parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`organisation_parlamentarier`.`facebook_name` AS `facebook_name`,`organisation_parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`organisation_parlamentarier`.`adresse_firma` AS `adresse_firma`,`organisation_parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`organisation_parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`organisation_parlamentarier`.`adresse_plz` AS `adresse_plz`,`organisation_parlamentarier`.`adresse_ort` AS `adresse_ort`,`organisation_parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`organisation_parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`organisation_parlamentarier`.`kanton` AS `kanton`,`organisation_parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`organisation_parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`organisation_parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`organisation_parlamentarier`.`partei` AS `partei`,`organisation_parlamentarier`.`fraktion` AS `fraktion`,`organisation_parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`organisation_parlamentarier`.`id` AS `id`,`organisation_parlamentarier`.`parlamentarier_id` AS `parlamentarier_id`,`organisation_parlamentarier`.`organisation_id` AS `organisation_id`,`organisation_parlamentarier`.`art` AS `art`,`organisation_parlamentarier`.`funktion_im_gremium` AS `funktion_im_gremium`,`organisation_parlamentarier`.`deklarationstyp` AS `deklarationstyp`,`organisation_parlamentarier`.`status` AS `status`,`organisation_parlamentarier`.`behoerden_vertreter` AS `behoerden_vertreter`,`organisation_parlamentarier`.`verguetung` AS `verguetung`,`organisation_parlamentarier`.`beschreibung` AS `beschreibung`,`organisation_parlamentarier`.`quelle_url` AS `quelle_url`,`organisation_parlamentarier`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`organisation_parlamentarier`.`quelle` AS `quelle`,`organisation_parlamentarier`.`von` AS `von`,`organisation_parlamentarier`.`bis` AS `bis`,`organisation_parlamentarier`.`notizen` AS `notizen`,`organisation_parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation_parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation_parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation_parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation_parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`organisation_parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`organisation_parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`organisation_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`organisation_parlamentarier`.`created_visa` AS `created_visa`,`organisation_parlamentarier`.`created_date` AS `created_date`,`organisation_parlamentarier`.`updated_visa` AS `updated_visa`,`organisation_parlamentarier`.`updated_date` AS `updated_date`,`organisation_parlamentarier`.`bis_unix` AS `bis_unix`,`organisation_parlamentarier`.`von_unix` AS `von_unix`,`organisation_parlamentarier`.`created_date_unix` AS `created_date_unix`,`organisation_parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`organisation_parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`organisation_parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`organisation_parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation_parlamentarier`.`organisation_id` AS `connector_organisation_id` from `v_organisation_parlamentarier` `organisation_parlamentarier` union select 'indirekt' AS `beziehung`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`interessenbindung`.`id` AS `id`,`interessenbindung`.`parlamentarier_id` AS `parlamentarier_id`,`interessenbindung`.`organisation_id` AS `organisation_id`,`interessenbindung`.`art` AS `art`,`interessenbindung`.`funktion_im_gremium` AS `funktion_im_gremium`,`interessenbindung`.`deklarationstyp` AS `deklarationstyp`,`interessenbindung`.`status` AS `status`,`interessenbindung`.`behoerden_vertreter` AS `behoerden_vertreter`,`interessenbindung`.`verguetung` AS `verguetung`,`interessenbindung`.`beschreibung` AS `beschreibung`,`interessenbindung`.`quelle_url` AS `quelle_url`,`interessenbindung`.`quelle_url_gueltig` AS `quelle_url_gueltig`,`interessenbindung`.`quelle` AS `quelle`,`interessenbindung`.`von` AS `von`,`interessenbindung`.`bis` AS `bis`,`interessenbindung`.`notizen` AS `notizen`,`interessenbindung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`interessenbindung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`interessenbindung`.`kontrolliert_visa` AS `kontrolliert_visa`,`interessenbindung`.`kontrolliert_datum` AS `kontrolliert_datum`,`interessenbindung`.`autorisiert_visa` AS `autorisiert_visa`,`interessenbindung`.`autorisiert_datum` AS `autorisiert_datum`,`interessenbindung`.`freigabe_visa` AS `freigabe_visa`,`interessenbindung`.`freigabe_datum` AS `freigabe_datum`,`interessenbindung`.`created_visa` AS `created_visa`,`interessenbindung`.`created_date` AS `created_date`,`interessenbindung`.`updated_visa` AS `updated_visa`,`interessenbindung`.`updated_date` AS `updated_date`,`interessenbindung`.`bis_unix` AS `bis_unix`,`interessenbindung`.`von_unix` AS `von_unix`,`interessenbindung`.`created_date_unix` AS `created_date_unix`,`interessenbindung`.`updated_date_unix` AS `updated_date_unix`,`interessenbindung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`interessenbindung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`interessenbindung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation_beziehung`.`ziel_organisation_id` AS `connector_organisation_id` from ((`v_organisation_beziehung` `organisation_beziehung` join `v_interessenbindung_simple` `interessenbindung` on((`organisation_beziehung`.`organisation_id` = `interessenbindung`.`organisation_id`))) join `v_parlamentarier` `parlamentarier` on((`interessenbindung`.`parlamentarier_id` = `parlamentarier`.`id`))) where (`organisation_beziehung`.`art` = 'arbeitet fuer') order by `beziehung`,`parlamentarier_name`;
 
 -- --------------------------------------------------------
 
@@ -8510,7 +8164,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_organisation_raw`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_raw` AS select `organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`created_date_unix` AS `created_date_unix`,`organisation`.`updated_date_unix` AS `updated_date_unix`,`organisation`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`organisation`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`organisation`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`refreshed_date` AS `refreshed_date`,`country`.`name_de` AS `land`,`interessenraum`.`anzeige_name` AS `interessenraum`,`organisation_jahr`.`id` AS `organisation_jahr_id`,`organisation_jahr`.`jahr` AS `jahr`,`organisation_jahr`.`umsatz` AS `umsatz`,`organisation_jahr`.`gewinn` AS `gewinn`,`organisation_jahr`.`kapital` AS `kapital`,`organisation_jahr`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation_jahr`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation_jahr`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation_jahr`.`quelle_url` AS `quelle_url`,`lobbyeinfluss`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`lobbyeinfluss`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`lobbyeinfluss`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`lobbyeinfluss`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`lobbyeinfluss`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`lobbyeinfluss`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`lobbyeinfluss`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`lobbyeinfluss`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`lobbyeinfluss`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`lobbyeinfluss`.`lobbyeinfluss` AS `lobbyeinfluss` from ((((`v_organisation_medium_raw` `organisation` left join `v_organisation_lobbyeinfluss_raw` `lobbyeinfluss` on((`lobbyeinfluss`.`id` = `organisation`.`id`))) left join `v_country` `country` on((`country`.`id` = `organisation`.`land_id`))) left join `v_interessenraum` `interessenraum` on((`interessenraum`.`id` = `organisation`.`interessenraum_id`))) left join `v_organisation_jahr_last` `organisation_jahr` on((`organisation_jahr`.`organisation_id` = `organisation`.`id`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_raw` AS select `organisation`.`anzeige_name` AS `anzeige_name`,`organisation`.`name` AS `name`,`organisation`.`id` AS `id`,`organisation`.`name_de` AS `name_de`,`organisation`.`name_fr` AS `name_fr`,`organisation`.`name_it` AS `name_it`,`organisation`.`ort` AS `ort`,`organisation`.`land_id` AS `land_id`,`organisation`.`interessenraum_id` AS `interessenraum_id`,`organisation`.`rechtsform` AS `rechtsform`,`organisation`.`typ` AS `typ`,`organisation`.`vernehmlassung` AS `vernehmlassung`,`organisation`.`interessengruppe_id` AS `interessengruppe_id`,`organisation`.`interessengruppe2_id` AS `interessengruppe2_id`,`organisation`.`interessengruppe3_id` AS `interessengruppe3_id`,`organisation`.`branche_id` AS `branche_id`,`organisation`.`homepage` AS `homepage`,`organisation`.`handelsregister_url` AS `handelsregister_url`,`organisation`.`twitter_name` AS `twitter_name`,`organisation`.`beschreibung` AS `beschreibung`,`organisation`.`adresse_strasse` AS `adresse_strasse`,`organisation`.`adresse_zusatz` AS `adresse_zusatz`,`organisation`.`adresse_plz` AS `adresse_plz`,`organisation`.`ALT_parlam_verbindung` AS `ALT_parlam_verbindung`,`organisation`.`notizen` AS `notizen`,`organisation`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`organisation`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`organisation`.`kontrolliert_visa` AS `kontrolliert_visa`,`organisation`.`kontrolliert_datum` AS `kontrolliert_datum`,`organisation`.`freigabe_visa` AS `freigabe_visa`,`organisation`.`freigabe_datum` AS `freigabe_datum`,`organisation`.`created_visa` AS `created_visa`,`organisation`.`created_date` AS `created_date`,`organisation`.`updated_visa` AS `updated_visa`,`organisation`.`updated_date` AS `updated_date`,`organisation`.`created_date_unix` AS `created_date_unix`,`organisation`.`updated_date_unix` AS `updated_date_unix`,`organisation`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`organisation`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`organisation`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`organisation`.`branche` AS `branche`,`organisation`.`interessengruppe` AS `interessengruppe`,`organisation`.`interessengruppe_branche` AS `interessengruppe_branche`,`organisation`.`interessengruppe_branche_id` AS `interessengruppe_branche_id`,`organisation`.`interessengruppe2` AS `interessengruppe2`,`organisation`.`interessengruppe2_branche` AS `interessengruppe2_branche`,`organisation`.`interessengruppe2_branche_id` AS `interessengruppe2_branche_id`,`organisation`.`interessengruppe3` AS `interessengruppe3`,`organisation`.`interessengruppe3_branche` AS `interessengruppe3_branche`,`organisation`.`interessengruppe3_branche_id` AS `interessengruppe3_branche_id`,`organisation`.`refreshed_date` AS `refreshed_date`,`country`.`name_de` AS `land`,`interessenraum`.`anzeige_name` AS `interessenraum`,`organisation_jahr`.`id` AS `organisation_jahr_id`,`organisation_jahr`.`jahr` AS `jahr`,`organisation_jahr`.`umsatz` AS `umsatz`,`organisation_jahr`.`gewinn` AS `gewinn`,`organisation_jahr`.`kapital` AS `kapital`,`organisation_jahr`.`mitarbeiter_weltweit` AS `mitarbeiter_weltweit`,`organisation_jahr`.`mitarbeiter_schweiz` AS `mitarbeiter_schweiz`,`organisation_jahr`.`geschaeftsbericht_url` AS `geschaeftsbericht_url`,`organisation_jahr`.`quelle_url` AS `quelle_url`,`lobbyeinfluss`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`lobbyeinfluss`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`lobbyeinfluss`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`lobbyeinfluss`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`lobbyeinfluss`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`lobbyeinfluss`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`lobbyeinfluss`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`lobbyeinfluss`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`lobbyeinfluss`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`lobbyeinfluss`.`lobbyeinfluss` AS `lobbyeinfluss`,(case `lobbyeinfluss`.`lobbyeinfluss` when 'extrem hoch' then 4 when 'hoch' then 3 when 'mittel' then 2 when 'tief' then 1 else 0 end) AS `lobbyeinfluss_index` from ((((`v_organisation_medium_raw` `organisation` left join `v_organisation_lobbyeinfluss_raw` `lobbyeinfluss` on((`lobbyeinfluss`.`id` = `organisation`.`id`))) left join `v_country` `country` on((`country`.`id` = `organisation`.`land_id`))) left join `v_interessenraum` `interessenraum` on((`interessenraum`.`id` = `organisation`.`interessenraum_id`))) left join `v_organisation_jahr_last` `organisation_jahr` on((`organisation_jahr`.`organisation_id` = `organisation`.`id`)));
 
 -- --------------------------------------------------------
 
@@ -8537,7 +8191,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_parlamentarier`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select `mv_parlamentarier`.`anzeige_name` AS `anzeige_name`,`mv_parlamentarier`.`name` AS `name`,`mv_parlamentarier`.`id` AS `id`,`mv_parlamentarier`.`nachname` AS `nachname`,`mv_parlamentarier`.`vorname` AS `vorname`,`mv_parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`mv_parlamentarier`.`rat_id` AS `rat_id`,`mv_parlamentarier`.`kanton_id` AS `kanton_id`,`mv_parlamentarier`.`kommissionen` AS `kommissionen`,`mv_parlamentarier`.`partei_id` AS `partei_id`,`mv_parlamentarier`.`parteifunktion` AS `parteifunktion`,`mv_parlamentarier`.`fraktion_id` AS `fraktion_id`,`mv_parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`mv_parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`mv_parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`mv_parlamentarier`.`ratswechsel` AS `ratswechsel`,`mv_parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`mv_parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`mv_parlamentarier`.`beruf` AS `beruf`,`mv_parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`mv_parlamentarier`.`zivilstand` AS `zivilstand`,`mv_parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`mv_parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`mv_parlamentarier`.`geschlecht` AS `geschlecht`,`mv_parlamentarier`.`geburtstag` AS `geburtstag`,`mv_parlamentarier`.`photo` AS `photo`,`mv_parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`mv_parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`mv_parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`mv_parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`mv_parlamentarier`.`kleinbild` AS `kleinbild`,`mv_parlamentarier`.`sitzplatz` AS `sitzplatz`,`mv_parlamentarier`.`email` AS `email`,`mv_parlamentarier`.`homepage` AS `homepage`,`mv_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`mv_parlamentarier`.`twitter_name` AS `twitter_name`,`mv_parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`mv_parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`mv_parlamentarier`.`facebook_name` AS `facebook_name`,`mv_parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`mv_parlamentarier`.`adresse_firma` AS `adresse_firma`,`mv_parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`mv_parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`mv_parlamentarier`.`adresse_plz` AS `adresse_plz`,`mv_parlamentarier`.`adresse_ort` AS `adresse_ort`,`mv_parlamentarier`.`ALT_kommission` AS `ALT_kommission`,`mv_parlamentarier`.`notizen` AS `notizen`,`mv_parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`mv_parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`mv_parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`mv_parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`mv_parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`mv_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`mv_parlamentarier`.`created_visa` AS `created_visa`,`mv_parlamentarier`.`created_date` AS `created_date`,`mv_parlamentarier`.`updated_visa` AS `updated_visa`,`mv_parlamentarier`.`updated_date` AS `updated_date`,`mv_parlamentarier`.`von` AS `von`,`mv_parlamentarier`.`bis` AS `bis`,`mv_parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`mv_parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`mv_parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`mv_parlamentarier`.`created_date_unix` AS `created_date_unix`,`mv_parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`mv_parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_parlamentarier`.`von_unix` AS `von_unix`,`mv_parlamentarier`.`bis_unix` AS `bis_unix`,`mv_parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`mv_parlamentarier`.`rat` AS `rat`,`mv_parlamentarier`.`ratstyp` AS `ratstyp`,`mv_parlamentarier`.`kanton_abkuerzung` AS `kanton_abkuerzung`,`mv_parlamentarier`.`kanton` AS `kanton`,`mv_parlamentarier`.`kanton_name_de` AS `kanton_name_de`,`mv_parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`mv_parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`mv_parlamentarier`.`kommissionen_anzahl` AS `kommissionen_anzahl`,`mv_parlamentarier`.`partei` AS `partei`,`mv_parlamentarier`.`partei_name` AS `partei_name`,`mv_parlamentarier`.`fraktion` AS `fraktion`,`mv_parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`mv_parlamentarier`.`titel_de` AS `titel_de`,`mv_parlamentarier`.`refreshed_date` AS `refreshed_date`,`mv_parlamentarier`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`mv_parlamentarier`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`mv_parlamentarier`.`lobbyfaktor` AS `lobbyfaktor`,`mv_parlamentarier`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`mv_parlamentarier`.`lobbyfaktor_percent_max` AS `lobbyfaktor_percent_max`,`mv_parlamentarier`.`anzahl_interessenbindung_tief_max` AS `anzahl_interessenbindung_tief_max`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel_max` AS `anzahl_interessenbindung_mittel_max`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch_max` AS `anzahl_interessenbindung_hoch_max` from `mv_parlamentarier`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier` AS select `mv_parlamentarier`.`anzeige_name` AS `anzeige_name`,`mv_parlamentarier`.`name` AS `name`,`mv_parlamentarier`.`id` AS `id`,`mv_parlamentarier`.`nachname` AS `nachname`,`mv_parlamentarier`.`vorname` AS `vorname`,`mv_parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`mv_parlamentarier`.`rat_id` AS `rat_id`,`mv_parlamentarier`.`kanton_id` AS `kanton_id`,`mv_parlamentarier`.`kommissionen` AS `kommissionen`,`mv_parlamentarier`.`partei_id` AS `partei_id`,`mv_parlamentarier`.`parteifunktion` AS `parteifunktion`,`mv_parlamentarier`.`fraktion_id` AS `fraktion_id`,`mv_parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`mv_parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`mv_parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`mv_parlamentarier`.`ratswechsel` AS `ratswechsel`,`mv_parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`mv_parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`mv_parlamentarier`.`beruf` AS `beruf`,`mv_parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`mv_parlamentarier`.`zivilstand` AS `zivilstand`,`mv_parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`mv_parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`mv_parlamentarier`.`geschlecht` AS `geschlecht`,`mv_parlamentarier`.`geburtstag` AS `geburtstag`,`mv_parlamentarier`.`photo` AS `photo`,`mv_parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`mv_parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`mv_parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`mv_parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`mv_parlamentarier`.`kleinbild` AS `kleinbild`,`mv_parlamentarier`.`sitzplatz` AS `sitzplatz`,`mv_parlamentarier`.`email` AS `email`,`mv_parlamentarier`.`homepage` AS `homepage`,`mv_parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`mv_parlamentarier`.`twitter_name` AS `twitter_name`,`mv_parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`mv_parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`mv_parlamentarier`.`facebook_name` AS `facebook_name`,`mv_parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`mv_parlamentarier`.`adresse_firma` AS `adresse_firma`,`mv_parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`mv_parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`mv_parlamentarier`.`adresse_plz` AS `adresse_plz`,`mv_parlamentarier`.`adresse_ort` AS `adresse_ort`,`mv_parlamentarier`.`ALT_kommission` AS `ALT_kommission`,`mv_parlamentarier`.`notizen` AS `notizen`,`mv_parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`mv_parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`mv_parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`mv_parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`mv_parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`mv_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`mv_parlamentarier`.`created_visa` AS `created_visa`,`mv_parlamentarier`.`created_date` AS `created_date`,`mv_parlamentarier`.`updated_visa` AS `updated_visa`,`mv_parlamentarier`.`updated_date` AS `updated_date`,`mv_parlamentarier`.`von` AS `von`,`mv_parlamentarier`.`bis` AS `bis`,`mv_parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`mv_parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`mv_parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`mv_parlamentarier`.`created_date_unix` AS `created_date_unix`,`mv_parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`mv_parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_parlamentarier`.`von_unix` AS `von_unix`,`mv_parlamentarier`.`bis_unix` AS `bis_unix`,`mv_parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`mv_parlamentarier`.`rat` AS `rat`,`mv_parlamentarier`.`ratstyp_BAD` AS `ratstyp_BAD`,`mv_parlamentarier`.`kanton_abkuerzung_BAD` AS `kanton_abkuerzung_BAD`,`mv_parlamentarier`.`kanton` AS `kanton`,`mv_parlamentarier`.`kanton_name_de` AS `kanton_name_de`,`mv_parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`mv_parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`mv_parlamentarier`.`kommissionen_anzahl` AS `kommissionen_anzahl`,`mv_parlamentarier`.`partei` AS `partei`,`mv_parlamentarier`.`partei_name` AS `partei_name`,`mv_parlamentarier`.`fraktion` AS `fraktion`,`mv_parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`mv_parlamentarier`.`beruf_branche_id` AS `beruf_branche_id`,`mv_parlamentarier`.`titel_de` AS `titel_de`,`mv_parlamentarier`.`refreshed_date` AS `refreshed_date`,`mv_parlamentarier`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`mv_parlamentarier`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`mv_parlamentarier`.`lobbyfaktor` AS `lobbyfaktor`,`mv_parlamentarier`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`mv_parlamentarier`.`lobbyfaktor_percent_max` AS `lobbyfaktor_percent_max`,`mv_parlamentarier`.`anzahl_interessenbindung_tief_max` AS `anzahl_interessenbindung_tief_max`,`mv_parlamentarier`.`anzahl_interessenbindung_mittel_max` AS `anzahl_interessenbindung_mittel_max`,`mv_parlamentarier`.`anzahl_interessenbindung_hoch_max` AS `anzahl_interessenbindung_hoch_max`,`mv_parlamentarier`.`rat` AS `ratstyp`,`mv_parlamentarier`.`kanton` AS `kanton_abkuerzung` from `mv_parlamentarier`;
 
 -- --------------------------------------------------------
 
@@ -8560,24 +8214,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Struktur des Views `v_parlamentarier_lobbyfaktor`
---
-DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_lobbyfaktor` AS select `mv_parlamentarier_lobbyfaktor`.`id` AS `id`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`mv_parlamentarier_lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`mv_parlamentarier_lobbyfaktor`.`lobbyfaktor_einfach` AS `lobbyfaktor_einfach`,`mv_parlamentarier_lobbyfaktor`.`refreshed_date` AS `refreshed_date` from `mv_parlamentarier_lobbyfaktor`;
-
--- --------------------------------------------------------
-
---
--- Struktur des Views `v_parlamentarier_lobbyfaktor_max`
---
-DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor_max`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_lobbyfaktor_max` AS select `mv_parlamentarier_lobbyfaktor_max`.`id` AS `id`,`mv_parlamentarier_lobbyfaktor_max`.`anzahl_interessenbindung_tief_max` AS `anzahl_interessenbindung_tief_max`,`mv_parlamentarier_lobbyfaktor_max`.`anzahl_interessenbindung_mittel_max` AS `anzahl_interessenbindung_mittel_max`,`mv_parlamentarier_lobbyfaktor_max`.`anzahl_interessenbindung_hoch_max` AS `anzahl_interessenbindung_hoch_max`,`mv_parlamentarier_lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`mv_parlamentarier_lobbyfaktor_max`.`refreshed_date` AS `refreshed_date` from `mv_parlamentarier_lobbyfaktor_max`;
-
--- --------------------------------------------------------
-
---
 -- Struktur des Views `v_parlamentarier_lobbyfaktor_max_raw`
 --
 DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor_max_raw`;
@@ -8596,20 +8232,11 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Struktur des Views `v_parlamentarier_medium`
---
-DROP TABLE IF EXISTS `v_parlamentarier_medium`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_medium` AS select `mv_parlamentarier_medium`.`anzeige_name` AS `anzeige_name`,`mv_parlamentarier_medium`.`name` AS `name`,`mv_parlamentarier_medium`.`id` AS `id`,`mv_parlamentarier_medium`.`nachname` AS `nachname`,`mv_parlamentarier_medium`.`vorname` AS `vorname`,`mv_parlamentarier_medium`.`zweiter_vorname` AS `zweiter_vorname`,`mv_parlamentarier_medium`.`rat_id` AS `rat_id`,`mv_parlamentarier_medium`.`kanton_id` AS `kanton_id`,`mv_parlamentarier_medium`.`kommissionen` AS `kommissionen`,`mv_parlamentarier_medium`.`partei_id` AS `partei_id`,`mv_parlamentarier_medium`.`parteifunktion` AS `parteifunktion`,`mv_parlamentarier_medium`.`fraktion_id` AS `fraktion_id`,`mv_parlamentarier_medium`.`fraktionsfunktion` AS `fraktionsfunktion`,`mv_parlamentarier_medium`.`im_rat_seit` AS `im_rat_seit`,`mv_parlamentarier_medium`.`im_rat_bis` AS `im_rat_bis`,`mv_parlamentarier_medium`.`ratswechsel` AS `ratswechsel`,`mv_parlamentarier_medium`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`mv_parlamentarier_medium`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`mv_parlamentarier_medium`.`beruf` AS `beruf`,`mv_parlamentarier_medium`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`mv_parlamentarier_medium`.`zivilstand` AS `zivilstand`,`mv_parlamentarier_medium`.`anzahl_kinder` AS `anzahl_kinder`,`mv_parlamentarier_medium`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`mv_parlamentarier_medium`.`geschlecht` AS `geschlecht`,`mv_parlamentarier_medium`.`geburtstag` AS `geburtstag`,`mv_parlamentarier_medium`.`photo` AS `photo`,`mv_parlamentarier_medium`.`photo_dateiname` AS `photo_dateiname`,`mv_parlamentarier_medium`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`mv_parlamentarier_medium`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`mv_parlamentarier_medium`.`photo_mime_type` AS `photo_mime_type`,`mv_parlamentarier_medium`.`kleinbild` AS `kleinbild`,`mv_parlamentarier_medium`.`sitzplatz` AS `sitzplatz`,`mv_parlamentarier_medium`.`email` AS `email`,`mv_parlamentarier_medium`.`homepage` AS `homepage`,`mv_parlamentarier_medium`.`parlament_biografie_id` AS `parlament_biografie_id`,`mv_parlamentarier_medium`.`twitter_name` AS `twitter_name`,`mv_parlamentarier_medium`.`linkedin_profil_url` AS `linkedin_profil_url`,`mv_parlamentarier_medium`.`xing_profil_name` AS `xing_profil_name`,`mv_parlamentarier_medium`.`facebook_name` AS `facebook_name`,`mv_parlamentarier_medium`.`arbeitssprache` AS `arbeitssprache`,`mv_parlamentarier_medium`.`adresse_firma` AS `adresse_firma`,`mv_parlamentarier_medium`.`adresse_strasse` AS `adresse_strasse`,`mv_parlamentarier_medium`.`adresse_zusatz` AS `adresse_zusatz`,`mv_parlamentarier_medium`.`adresse_plz` AS `adresse_plz`,`mv_parlamentarier_medium`.`adresse_ort` AS `adresse_ort`,`mv_parlamentarier_medium`.`ALT_kommission` AS `ALT_kommission`,`mv_parlamentarier_medium`.`notizen` AS `notizen`,`mv_parlamentarier_medium`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_parlamentarier_medium`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_parlamentarier_medium`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_parlamentarier_medium`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_parlamentarier_medium`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`mv_parlamentarier_medium`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`mv_parlamentarier_medium`.`autorisiert_visa` AS `autorisiert_visa`,`mv_parlamentarier_medium`.`autorisiert_datum` AS `autorisiert_datum`,`mv_parlamentarier_medium`.`freigabe_visa` AS `freigabe_visa`,`mv_parlamentarier_medium`.`freigabe_datum` AS `freigabe_datum`,`mv_parlamentarier_medium`.`created_visa` AS `created_visa`,`mv_parlamentarier_medium`.`created_date` AS `created_date`,`mv_parlamentarier_medium`.`updated_visa` AS `updated_visa`,`mv_parlamentarier_medium`.`updated_date` AS `updated_date`,`mv_parlamentarier_medium`.`von` AS `von`,`mv_parlamentarier_medium`.`bis` AS `bis`,`mv_parlamentarier_medium`.`geburtstag_unix` AS `geburtstag_unix`,`mv_parlamentarier_medium`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`mv_parlamentarier_medium`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`mv_parlamentarier_medium`.`created_date_unix` AS `created_date_unix`,`mv_parlamentarier_medium`.`updated_date_unix` AS `updated_date_unix`,`mv_parlamentarier_medium`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_parlamentarier_medium`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_parlamentarier_medium`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_parlamentarier_medium`.`von_unix` AS `von_unix`,`mv_parlamentarier_medium`.`bis_unix` AS `bis_unix`,`mv_parlamentarier_medium`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`mv_parlamentarier_medium`.`rat` AS `rat`,`mv_parlamentarier_medium`.`ratstyp` AS `ratstyp`,`mv_parlamentarier_medium`.`kanton_abkuerzung` AS `kanton_abkuerzung`,`mv_parlamentarier_medium`.`kanton` AS `kanton`,`mv_parlamentarier_medium`.`kanton_name_de` AS `kanton_name_de`,`mv_parlamentarier_medium`.`kommissionen_namen` AS `kommissionen_namen`,`mv_parlamentarier_medium`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`mv_parlamentarier_medium`.`kommissionen_anzahl` AS `kommissionen_anzahl`,`mv_parlamentarier_medium`.`partei` AS `partei`,`mv_parlamentarier_medium`.`partei_name` AS `partei_name`,`mv_parlamentarier_medium`.`fraktion` AS `fraktion`,`mv_parlamentarier_medium`.`militaerischer_grad` AS `militaerischer_grad`,`mv_parlamentarier_medium`.`titel_de` AS `titel_de`,`mv_parlamentarier_medium`.`refreshed_date` AS `refreshed_date` from `mv_parlamentarier_medium`;
-
--- --------------------------------------------------------
-
---
 -- Struktur des Views `v_parlamentarier_medium_raw`
 --
 DROP TABLE IF EXISTS `v_parlamentarier_medium_raw`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_medium_raw` AS select `parlamentarier`.`anzeige_name` AS `anzeige_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`id` AS `id`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`ALT_kommission` AS `ALT_kommission`,`parlamentarier`.`notizen` AS `notizen`,`parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`created_visa` AS `created_visa`,`parlamentarier`.`created_date` AS `created_date`,`parlamentarier`.`updated_visa` AS `updated_visa`,`parlamentarier`.`updated_date` AS `updated_date`,`parlamentarier`.`von` AS `von`,`parlamentarier`.`bis` AS `bis`,`parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`created_date_unix` AS `created_date_unix`,`parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`parlamentarier`.`von_unix` AS `von_unix`,`parlamentarier`.`bis_unix` AS `bis_unix`,cast((case `rat`.`abkuerzung` when 'SR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_staenderaete`),0) when 'NR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_nationalraete`),0) else NULL end) as unsigned) AS `vertretene_bevoelkerung`,`rat`.`abkuerzung` AS `rat`,`rat`.`abkuerzung` AS `ratstyp`,`kanton`.`abkuerzung` AS `kanton_abkuerzung`,`kanton`.`abkuerzung` AS `kanton`,`kanton`.`name_de` AS `kanton_name_de`,group_concat(distinct concat(`kommission`.`name`,'(',`kommission`.`abkuerzung`,')') order by `kommission`.`abkuerzung` ASC separator ', ') AS `kommissionen_namen`,group_concat(distinct `kommission`.`abkuerzung` order by `kommission`.`abkuerzung` ASC separator ', ') AS `kommissionen_abkuerzung`,count(distinct `kommission`.`id`) AS `kommissionen_anzahl`,`partei`.`abkuerzung` AS `partei`,`partei`.`name` AS `partei_name`,`fraktion`.`abkuerzung` AS `fraktion`,`mil_grad`.`name` AS `militaerischer_grad`,concat(if((`parlamentarier`.`geschlecht` = 'M'),`rat`.`name_de`,''),if(((`parlamentarier`.`geschlecht` = 'F') and (`rat`.`abkuerzung` = 'NR')),'Nationalrätin',''),if(((`parlamentarier`.`geschlecht` = 'F') and (`rat`.`abkuerzung` = 'SR')),'Ständerätin','')) AS `titel_de`,now() AS `refreshed_date` from (((((((`v_parlamentarier_simple` `parlamentarier` left join `in_kommission` on(((`parlamentarier`.`id` = `in_kommission`.`parlamentarier_id`) and isnull(`in_kommission`.`bis`)))) left join `kommission` on((`in_kommission`.`kommission_id` = `kommission`.`id`))) left join `v_partei` `partei` on((`parlamentarier`.`partei_id` = `partei`.`id`))) left join `v_fraktion` `fraktion` on((`parlamentarier`.`fraktion_id` = `fraktion`.`id`))) left join `v_mil_grad` `mil_grad` on((`parlamentarier`.`militaerischer_grad_id` = `mil_grad`.`id`))) left join `v_kanton` `kanton` on((`parlamentarier`.`kanton_id` = `kanton`.`id`))) left join `v_rat` `rat` on((`parlamentarier`.`rat_id` = `rat`.`id`))) group by `parlamentarier`.`id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_medium_raw` AS select `parlamentarier`.`anzeige_name` AS `anzeige_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`id` AS `id`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`ALT_kommission` AS `ALT_kommission`,`parlamentarier`.`notizen` AS `notizen`,`parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`created_visa` AS `created_visa`,`parlamentarier`.`created_date` AS `created_date`,`parlamentarier`.`updated_visa` AS `updated_visa`,`parlamentarier`.`updated_date` AS `updated_date`,`parlamentarier`.`von` AS `von`,`parlamentarier`.`bis` AS `bis`,`parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`created_date_unix` AS `created_date_unix`,`parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`parlamentarier`.`von_unix` AS `von_unix`,`parlamentarier`.`bis_unix` AS `bis_unix`,cast((case `rat`.`abkuerzung` when 'SR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_staenderaete`),0) when 'NR' then round((`kanton`.`einwohner` / `kanton`.`anzahl_nationalraete`),0) else NULL end) as unsigned) AS `vertretene_bevoelkerung`,`rat`.`abkuerzung` AS `rat`,`rat`.`abkuerzung` AS `ratstyp`,`kanton`.`abkuerzung` AS `kanton_abkuerzung`,`kanton`.`abkuerzung` AS `kanton`,`kanton`.`name_de` AS `kanton_name_de`,group_concat(distinct concat(`kommission`.`name`,'(',`kommission`.`abkuerzung`,')') order by `kommission`.`abkuerzung` ASC separator ', ') AS `kommissionen_namen`,group_concat(distinct `kommission`.`abkuerzung` order by `kommission`.`abkuerzung` ASC separator ', ') AS `kommissionen_abkuerzung`,count(distinct `kommission`.`id`) AS `kommissionen_anzahl`,`partei`.`abkuerzung` AS `partei`,`partei`.`name` AS `partei_name`,`fraktion`.`abkuerzung` AS `fraktion`,`mil_grad`.`name` AS `militaerischer_grad`,`interessengruppe`.`branche_id` AS `beruf_branche_id`,concat(if((`parlamentarier`.`geschlecht` = 'M'),`rat`.`name_de`,''),if(((`parlamentarier`.`geschlecht` = 'F') and (`rat`.`abkuerzung` = 'NR')),'Nationalrätin',''),if(((`parlamentarier`.`geschlecht` = 'F') and (`rat`.`abkuerzung` = 'SR')),'Ständerätin','')) AS `titel_de`,now() AS `refreshed_date` from ((((((((`v_parlamentarier_simple` `parlamentarier` left join `in_kommission` on(((`parlamentarier`.`id` = `in_kommission`.`parlamentarier_id`) and isnull(`in_kommission`.`bis`)))) left join `kommission` on((`in_kommission`.`kommission_id` = `kommission`.`id`))) left join `v_partei` `partei` on((`parlamentarier`.`partei_id` = `partei`.`id`))) left join `v_fraktion` `fraktion` on((`parlamentarier`.`fraktion_id` = `fraktion`.`id`))) left join `v_mil_grad` `mil_grad` on((`parlamentarier`.`militaerischer_grad_id` = `mil_grad`.`id`))) left join `v_kanton` `kanton` on((`parlamentarier`.`kanton_id` = `kanton`.`id`))) left join `v_rat` `rat` on((`parlamentarier`.`rat_id` = `rat`.`id`))) left join `v_interessengruppe` `interessengruppe` on((`parlamentarier`.`beruf_interessengruppe_id` = `interessengruppe`.`id`))) group by `parlamentarier`.`id`;
 
 -- --------------------------------------------------------
 
@@ -8618,7 +8245,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_parlamentarier_raw`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_raw` AS select `parlamentarier`.`anzeige_name` AS `anzeige_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`id` AS `id`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`ALT_kommission` AS `ALT_kommission`,`parlamentarier`.`notizen` AS `notizen`,`parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`created_visa` AS `created_visa`,`parlamentarier`.`created_date` AS `created_date`,`parlamentarier`.`updated_visa` AS `updated_visa`,`parlamentarier`.`updated_date` AS `updated_date`,`parlamentarier`.`von` AS `von`,`parlamentarier`.`bis` AS `bis`,`parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`created_date_unix` AS `created_date_unix`,`parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`parlamentarier`.`von_unix` AS `von_unix`,`parlamentarier`.`bis_unix` AS `bis_unix`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`rat` AS `rat`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton_abkuerzung` AS `kanton_abkuerzung`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`kanton_name_de` AS `kanton_name_de`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`kommissionen_anzahl` AS `kommissionen_anzahl`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`partei_name` AS `partei_name`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`parlamentarier`.`titel_de` AS `titel_de`,`parlamentarier`.`refreshed_date` AS `refreshed_date`,`lobbyfaktor`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`lobbyfaktor`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`lobbyfaktor`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`lobbyfaktor`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`lobbyfaktor`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`lobbyfaktor`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,(`lobbyfaktor`.`lobbyfaktor` / `lobbyfaktor_max`.`lobbyfaktor_max`) AS `lobbyfaktor_percent_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_tief_max` AS `anzahl_interessenbindung_tief_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_mittel_max` AS `anzahl_interessenbindung_mittel_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_hoch_max` AS `anzahl_interessenbindung_hoch_max` from ((`v_parlamentarier_medium_raw` `parlamentarier` left join `v_parlamentarier_lobbyfaktor_raw` `lobbyfaktor` on((`parlamentarier`.`id` = `lobbyfaktor`.`id`))) join `v_parlamentarier_lobbyfaktor_max` `lobbyfaktor_max`) group by `parlamentarier`.`id`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_raw` AS select `parlamentarier`.`anzeige_name` AS `anzeige_name`,`parlamentarier`.`name` AS `name`,`parlamentarier`.`id` AS `id`,`parlamentarier`.`nachname` AS `nachname`,`parlamentarier`.`vorname` AS `vorname`,`parlamentarier`.`zweiter_vorname` AS `zweiter_vorname`,`parlamentarier`.`rat_id` AS `rat_id`,`parlamentarier`.`kanton_id` AS `kanton_id`,`parlamentarier`.`kommissionen` AS `kommissionen`,`parlamentarier`.`partei_id` AS `partei_id`,`parlamentarier`.`parteifunktion` AS `parteifunktion`,`parlamentarier`.`fraktion_id` AS `fraktion_id`,`parlamentarier`.`fraktionsfunktion` AS `fraktionsfunktion`,`parlamentarier`.`im_rat_seit` AS `im_rat_seit`,`parlamentarier`.`im_rat_bis` AS `im_rat_bis`,`parlamentarier`.`ratswechsel` AS `ratswechsel`,`parlamentarier`.`ratsunterbruch_von` AS `ratsunterbruch_von`,`parlamentarier`.`ratsunterbruch_bis` AS `ratsunterbruch_bis`,`parlamentarier`.`beruf` AS `beruf`,`parlamentarier`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`parlamentarier`.`zivilstand` AS `zivilstand`,`parlamentarier`.`anzahl_kinder` AS `anzahl_kinder`,`parlamentarier`.`militaerischer_grad_id` AS `militaerischer_grad_id`,`parlamentarier`.`geschlecht` AS `geschlecht`,`parlamentarier`.`geburtstag` AS `geburtstag`,`parlamentarier`.`photo` AS `photo`,`parlamentarier`.`photo_dateiname` AS `photo_dateiname`,`parlamentarier`.`photo_dateierweiterung` AS `photo_dateierweiterung`,`parlamentarier`.`photo_dateiname_voll` AS `photo_dateiname_voll`,`parlamentarier`.`photo_mime_type` AS `photo_mime_type`,`parlamentarier`.`kleinbild` AS `kleinbild`,`parlamentarier`.`sitzplatz` AS `sitzplatz`,`parlamentarier`.`email` AS `email`,`parlamentarier`.`homepage` AS `homepage`,`parlamentarier`.`parlament_biografie_id` AS `parlament_biografie_id`,`parlamentarier`.`twitter_name` AS `twitter_name`,`parlamentarier`.`linkedin_profil_url` AS `linkedin_profil_url`,`parlamentarier`.`xing_profil_name` AS `xing_profil_name`,`parlamentarier`.`facebook_name` AS `facebook_name`,`parlamentarier`.`arbeitssprache` AS `arbeitssprache`,`parlamentarier`.`adresse_firma` AS `adresse_firma`,`parlamentarier`.`adresse_strasse` AS `adresse_strasse`,`parlamentarier`.`adresse_zusatz` AS `adresse_zusatz`,`parlamentarier`.`adresse_plz` AS `adresse_plz`,`parlamentarier`.`adresse_ort` AS `adresse_ort`,`parlamentarier`.`ALT_kommission` AS `ALT_kommission`,`parlamentarier`.`notizen` AS `notizen`,`parlamentarier`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`parlamentarier`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`parlamentarier`.`kontrolliert_visa` AS `kontrolliert_visa`,`parlamentarier`.`kontrolliert_datum` AS `kontrolliert_datum`,`parlamentarier`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`parlamentarier`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`parlamentarier`.`autorisiert_visa` AS `autorisiert_visa`,`parlamentarier`.`autorisiert_datum` AS `autorisiert_datum`,`parlamentarier`.`freigabe_visa` AS `freigabe_visa`,`parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`parlamentarier`.`created_visa` AS `created_visa`,`parlamentarier`.`created_date` AS `created_date`,`parlamentarier`.`updated_visa` AS `updated_visa`,`parlamentarier`.`updated_date` AS `updated_date`,`parlamentarier`.`von` AS `von`,`parlamentarier`.`bis` AS `bis`,`parlamentarier`.`geburtstag_unix` AS `geburtstag_unix`,`parlamentarier`.`im_rat_seit_unix` AS `im_rat_seit_unix`,`parlamentarier`.`im_rat_bis_unix` AS `im_rat_bis_unix`,`parlamentarier`.`created_date_unix` AS `created_date_unix`,`parlamentarier`.`updated_date_unix` AS `updated_date_unix`,`parlamentarier`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`parlamentarier`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`parlamentarier`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`parlamentarier`.`von_unix` AS `von_unix`,`parlamentarier`.`bis_unix` AS `bis_unix`,`parlamentarier`.`vertretene_bevoelkerung` AS `vertretene_bevoelkerung`,`parlamentarier`.`rat` AS `rat`,`parlamentarier`.`ratstyp` AS `ratstyp`,`parlamentarier`.`kanton_abkuerzung` AS `kanton_abkuerzung`,`parlamentarier`.`kanton` AS `kanton`,`parlamentarier`.`kanton_name_de` AS `kanton_name_de`,`parlamentarier`.`kommissionen_namen` AS `kommissionen_namen`,`parlamentarier`.`kommissionen_abkuerzung` AS `kommissionen_abkuerzung`,`parlamentarier`.`kommissionen_anzahl` AS `kommissionen_anzahl`,`parlamentarier`.`partei` AS `partei`,`parlamentarier`.`partei_name` AS `partei_name`,`parlamentarier`.`fraktion` AS `fraktion`,`parlamentarier`.`militaerischer_grad` AS `militaerischer_grad`,`parlamentarier`.`beruf_branche_id` AS `beruf_branche_id`,`parlamentarier`.`titel_de` AS `titel_de`,`parlamentarier`.`refreshed_date` AS `refreshed_date`,`lobbyfaktor`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`lobbyfaktor`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`lobbyfaktor`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`lobbyfaktor`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`lobbyfaktor`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`lobbyfaktor`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,(`lobbyfaktor`.`lobbyfaktor` / `lobbyfaktor_max`.`lobbyfaktor_max`) AS `lobbyfaktor_percent_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_tief_max` AS `anzahl_interessenbindung_tief_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_mittel_max` AS `anzahl_interessenbindung_mittel_max`,`lobbyfaktor_max`.`anzahl_interessenbindung_hoch_max` AS `anzahl_interessenbindung_hoch_max` from ((`v_parlamentarier_medium_raw` `parlamentarier` left join `v_parlamentarier_lobbyfaktor_raw` `lobbyfaktor` on((`parlamentarier`.`id` = `lobbyfaktor`.`id`))) join `v_parlamentarier_lobbyfaktor_max_raw` `lobbyfaktor_max`) group by `parlamentarier`.`id`;
 
 -- --------------------------------------------------------
 
@@ -8646,6 +8273,24 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `v_rat`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_rat` AS select `rat`.`name_de` AS `anzeige_name`,`rat`.`id` AS `id`,`rat`.`abkuerzung` AS `abkuerzung`,`rat`.`name_de` AS `name_de`,`rat`.`name_fr` AS `name_fr`,`rat`.`name_it` AS `name_it`,`rat`.`name_en` AS `name_en`,`rat`.`anzahl_mitglieder` AS `anzahl_mitglieder`,`rat`.`typ` AS `typ`,`rat`.`interessenraum_id` AS `interessenraum_id`,`rat`.`anzeigestufe` AS `anzeigestufe`,`rat`.`gewicht` AS `gewicht`,`rat`.`beschreibung` AS `beschreibung`,`rat`.`homepage_de` AS `homepage_de`,`rat`.`homepage_fr` AS `homepage_fr`,`rat`.`homepage_it` AS `homepage_it`,`rat`.`homepage_en` AS `homepage_en`,`rat`.`notizen` AS `notizen`,`rat`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`rat`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`rat`.`kontrolliert_visa` AS `kontrolliert_visa`,`rat`.`kontrolliert_datum` AS `kontrolliert_datum`,`rat`.`freigabe_visa` AS `freigabe_visa`,`rat`.`freigabe_datum` AS `freigabe_datum`,`rat`.`created_visa` AS `created_visa`,`rat`.`created_date` AS `created_date`,`rat`.`updated_visa` AS `updated_visa`,`rat`.`updated_date` AS `updated_date`,unix_timestamp(`rat`.`created_date`) AS `created_date_unix`,unix_timestamp(`rat`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`rat`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`rat`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`rat`.`freigabe_datum`) AS `freigabe_datum_unix` from `rat` order by `rat`.`gewicht`;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur des Views `v_search_table`
+--
+DROP TABLE IF EXISTS `v_search_table`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_search_table` AS select `mv_search_table`.`id` AS `id`,`mv_search_table`.`table_name` AS `table_name`,`mv_search_table`.`page` AS `page`,`mv_search_table`.`table_weight` AS `table_weight`,`mv_search_table`.`name` AS `name`,`mv_search_table`.`freigabe_datum` AS `freigabe_datum`,`mv_search_table`.`bis` AS `bis`,`mv_search_table`.`weight` AS `weight`,`mv_search_table`.`refreshed_date` AS `refreshed_date` from `mv_search_table`;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur des Views `v_search_table_raw`
+--
+DROP TABLE IF EXISTS `v_search_table_raw`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_search_table_raw` AS select `v_parlamentarier`.`id` AS `id`,'parlamentarier' AS `table_name`,'parlamentarier' AS `page`,-(20) AS `table_weight`,concat_ws(', ',`v_parlamentarier`.`anzeige_name`,`v_parlamentarier`.`rat`,`v_parlamentarier`.`partei`,`v_parlamentarier`.`kanton`) AS `name`,`v_parlamentarier`.`freigabe_datum` AS `freigabe_datum`,`v_parlamentarier`.`im_rat_bis` AS `bis`,-(`v_parlamentarier`.`lobbyfaktor`) AS `weight`,now() AS `refreshed_date` from `v_parlamentarier` union all select `v_zutrittsberechtigung`.`id` AS `id`,'zutrittsberechtigung' AS `table_name`,'zutrittsberechtigter' AS `page`,-(15) AS `table_weight`,`v_zutrittsberechtigung`.`anzeige_name` AS `name`,`v_zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`v_zutrittsberechtigung`.`bis` AS `bis`,-(`v_zutrittsberechtigung`.`lobbyfaktor`) AS `weight`,now() AS `refreshed_date` from `v_zutrittsberechtigung` union all select `v_branche`.`id` AS `id`,'branche' AS `table_name`,'branche' AS `page`,-(10) AS `table_weight`,`v_branche`.`anzeige_name` AS `name`,`v_branche`.`freigabe_datum` AS `freigabe_datum`,NULL AS `bis`,0 AS `weight`,now() AS `refreshed_date` from `v_branche` union all select `v_interessengruppe`.`id` AS `id`,'interessengruppe' AS `table_name`,'lobbygruppe' AS `page`,-(5) AS `table_weight`,`v_interessengruppe`.`anzeige_name` AS `name`,`v_interessengruppe`.`freigabe_datum` AS `freigabe_datum`,NULL AS `bis`,0 AS `weight`,now() AS `refreshed_date` from `v_interessengruppe` union all select `v_kommission`.`id` AS `id`,'kommission' AS `table_name`,'kommission' AS `page`,0 AS `table_weight`,`v_kommission`.`anzeige_name` AS `name`,`v_kommission`.`freigabe_datum` AS `freigabe_datum`,NULL AS `bis`,0 AS `weight`,now() AS `refreshed_date` from `v_kommission` union all select `v_organisation`.`id` AS `id`,'organisation' AS `table_name`,'organisation' AS `page`,15 AS `table_weight`,`v_organisation`.`anzeige_name` AS `name`,`v_organisation`.`freigabe_datum` AS `freigabe_datum`,NULL AS `bis`,-(`v_organisation`.`lobbyeinfluss_index`) AS `weight`,now() AS `refreshed_date` from `v_organisation` union all select `v_partei`.`id` AS `id`,'partei' AS `table_name`,'partei' AS `page`,20 AS `table_weight`,`v_partei`.`anzeige_name` AS `name`,`v_partei`.`freigabe_datum` AS `freigabe_datum`,NULL AS `bis`,0 AS `weight`,now() AS `refreshed_date` from `v_partei`;
 
 -- --------------------------------------------------------
 
@@ -8690,7 +8335,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_zutrittsberechtigung`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung` AS select `mv_zutrittsberechtigung`.`anzeige_name` AS `anzeige_name`,`mv_zutrittsberechtigung`.`name` AS `name`,`mv_zutrittsberechtigung`.`id` AS `id`,`mv_zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`mv_zutrittsberechtigung`.`nachname` AS `nachname`,`mv_zutrittsberechtigung`.`vorname` AS `vorname`,`mv_zutrittsberechtigung`.`zweiter_vorname` AS `zweiter_vorname`,`mv_zutrittsberechtigung`.`funktion` AS `funktion`,`mv_zutrittsberechtigung`.`beruf` AS `beruf`,`mv_zutrittsberechtigung`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`mv_zutrittsberechtigung`.`partei_id` AS `partei_id`,`mv_zutrittsberechtigung`.`geschlecht` AS `geschlecht`,`mv_zutrittsberechtigung`.`email` AS `email`,`mv_zutrittsberechtigung`.`homepage` AS `homepage`,`mv_zutrittsberechtigung`.`twitter_name` AS `twitter_name`,`mv_zutrittsberechtigung`.`linkedin_profil_url` AS `linkedin_profil_url`,`mv_zutrittsberechtigung`.`xing_profil_name` AS `xing_profil_name`,`mv_zutrittsberechtigung`.`facebook_name` AS `facebook_name`,`mv_zutrittsberechtigung`.`von` AS `von`,`mv_zutrittsberechtigung`.`bis` AS `bis`,`mv_zutrittsberechtigung`.`notizen` AS `notizen`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_zutrittsberechtigung`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_zutrittsberechtigung`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_zutrittsberechtigung`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`mv_zutrittsberechtigung`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`mv_zutrittsberechtigung`.`autorisiert_visa` AS `autorisiert_visa`,`mv_zutrittsberechtigung`.`autorisiert_datum` AS `autorisiert_datum`,`mv_zutrittsberechtigung`.`freigabe_visa` AS `freigabe_visa`,`mv_zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`mv_zutrittsberechtigung`.`ALT_lobbyorganisation_id` AS `ALT_lobbyorganisation_id`,`mv_zutrittsberechtigung`.`created_visa` AS `created_visa`,`mv_zutrittsberechtigung`.`created_date` AS `created_date`,`mv_zutrittsberechtigung`.`updated_visa` AS `updated_visa`,`mv_zutrittsberechtigung`.`updated_date` AS `updated_date`,`mv_zutrittsberechtigung`.`bis_unix` AS `bis_unix`,`mv_zutrittsberechtigung`.`von_unix` AS `von_unix`,`mv_zutrittsberechtigung`.`created_date_unix` AS `created_date_unix`,`mv_zutrittsberechtigung`.`updated_date_unix` AS `updated_date_unix`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_zutrittsberechtigung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_zutrittsberechtigung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_zutrittsberechtigung`.`partei` AS `partei`,`mv_zutrittsberechtigung`.`parlamentarier_name` AS `parlamentarier_name`,`mv_zutrittsberechtigung`.`parlamentarier_freigabe_datum` AS `parlamentarier_freigabe_datum`,`mv_zutrittsberechtigung`.`parlamentarier_freigabe_datum_unix` AS `parlamentarier_freigabe_datum_unix`,`mv_zutrittsberechtigung`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`mv_zutrittsberechtigung`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`mv_zutrittsberechtigung`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`mv_zutrittsberechtigung`.`lobbyfaktor` AS `lobbyfaktor`,`mv_zutrittsberechtigung`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`mv_zutrittsberechtigung`.`lobbyfaktor_percent_max` AS `lobbyfaktor_percent_max`,`mv_zutrittsberechtigung`.`anzahl_mandat_tief_max` AS `anzahl_mandat_tief_max`,`mv_zutrittsberechtigung`.`anzahl_mandat_mittel_max` AS `anzahl_mandat_mittel_max`,`mv_zutrittsberechtigung`.`anzahl_mandat_hoch_max` AS `anzahl_mandat_hoch_max`,`mv_zutrittsberechtigung`.`refreshed_date` AS `refreshed_date` from `mv_zutrittsberechtigung`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung` AS select `mv_zutrittsberechtigung`.`anzeige_name` AS `anzeige_name`,`mv_zutrittsberechtigung`.`name` AS `name`,`mv_zutrittsberechtigung`.`id` AS `id`,`mv_zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`mv_zutrittsberechtigung`.`nachname` AS `nachname`,`mv_zutrittsberechtigung`.`vorname` AS `vorname`,`mv_zutrittsberechtigung`.`zweiter_vorname` AS `zweiter_vorname`,`mv_zutrittsberechtigung`.`funktion` AS `funktion`,`mv_zutrittsberechtigung`.`beruf` AS `beruf`,`mv_zutrittsberechtigung`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`mv_zutrittsberechtigung`.`partei_id` AS `partei_id`,`mv_zutrittsberechtigung`.`geschlecht` AS `geschlecht`,`mv_zutrittsberechtigung`.`email` AS `email`,`mv_zutrittsberechtigung`.`homepage` AS `homepage`,`mv_zutrittsberechtigung`.`twitter_name` AS `twitter_name`,`mv_zutrittsberechtigung`.`linkedin_profil_url` AS `linkedin_profil_url`,`mv_zutrittsberechtigung`.`xing_profil_name` AS `xing_profil_name`,`mv_zutrittsberechtigung`.`facebook_name` AS `facebook_name`,`mv_zutrittsberechtigung`.`von` AS `von`,`mv_zutrittsberechtigung`.`bis` AS `bis`,`mv_zutrittsberechtigung`.`notizen` AS `notizen`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`mv_zutrittsberechtigung`.`kontrolliert_visa` AS `kontrolliert_visa`,`mv_zutrittsberechtigung`.`kontrolliert_datum` AS `kontrolliert_datum`,`mv_zutrittsberechtigung`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`mv_zutrittsberechtigung`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`mv_zutrittsberechtigung`.`autorisiert_visa` AS `autorisiert_visa`,`mv_zutrittsberechtigung`.`autorisiert_datum` AS `autorisiert_datum`,`mv_zutrittsberechtigung`.`freigabe_visa` AS `freigabe_visa`,`mv_zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`mv_zutrittsberechtigung`.`ALT_lobbyorganisation_id` AS `ALT_lobbyorganisation_id`,`mv_zutrittsberechtigung`.`created_visa` AS `created_visa`,`mv_zutrittsberechtigung`.`created_date` AS `created_date`,`mv_zutrittsberechtigung`.`updated_visa` AS `updated_visa`,`mv_zutrittsberechtigung`.`updated_date` AS `updated_date`,`mv_zutrittsberechtigung`.`bis_unix` AS `bis_unix`,`mv_zutrittsberechtigung`.`von_unix` AS `von_unix`,`mv_zutrittsberechtigung`.`created_date_unix` AS `created_date_unix`,`mv_zutrittsberechtigung`.`updated_date_unix` AS `updated_date_unix`,`mv_zutrittsberechtigung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`mv_zutrittsberechtigung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`mv_zutrittsberechtigung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`mv_zutrittsberechtigung`.`beruf_branche_id` AS `beruf_branche_id`,`mv_zutrittsberechtigung`.`partei` AS `partei`,`mv_zutrittsberechtigung`.`parlamentarier_name` AS `parlamentarier_name`,`mv_zutrittsberechtigung`.`parlamentarier_freigabe_datum` AS `parlamentarier_freigabe_datum`,`mv_zutrittsberechtigung`.`parlamentarier_freigabe_datum_unix` AS `parlamentarier_freigabe_datum_unix`,`mv_zutrittsberechtigung`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`mv_zutrittsberechtigung`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`mv_zutrittsberechtigung`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`mv_zutrittsberechtigung`.`lobbyfaktor` AS `lobbyfaktor`,`mv_zutrittsberechtigung`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`mv_zutrittsberechtigung`.`lobbyfaktor_percent_max` AS `lobbyfaktor_percent_max`,`mv_zutrittsberechtigung`.`anzahl_mandat_tief_max` AS `anzahl_mandat_tief_max`,`mv_zutrittsberechtigung`.`anzahl_mandat_mittel_max` AS `anzahl_mandat_mittel_max`,`mv_zutrittsberechtigung`.`anzahl_mandat_hoch_max` AS `anzahl_mandat_hoch_max`,`mv_zutrittsberechtigung`.`refreshed_date` AS `refreshed_date` from `mv_zutrittsberechtigung`;
 
 -- --------------------------------------------------------
 
@@ -8709,24 +8354,6 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `v_zutrittsberechtigung_authorisierungs_email`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung_authorisierungs_email` AS select `parlamentarier`.`name` AS `parlamentarier_name`,ifnull(`parlamentarier`.`geschlecht`,'') AS `geschlecht`,`zutrittsberechtigung`.`name` AS `zutrittsberechtigung_name`,`zutrittsberechtigung`.`funktion` AS `funktion` from (`v_zutrittsberechtigung_simple` `zutrittsberechtigung` join `v_parlamentarier_simple` `parlamentarier` on((`zutrittsberechtigung`.`parlamentarier_id` = `parlamentarier`.`id`))) group by `parlamentarier`.`id`;
-
--- --------------------------------------------------------
-
---
--- Struktur des Views `v_zutrittsberechtigung_lobbyfaktor`
---
-DROP TABLE IF EXISTS `v_zutrittsberechtigung_lobbyfaktor`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung_lobbyfaktor` AS select `mv_zutrittsberechtigung_lobbyfaktor`.`id` AS `id`,`mv_zutrittsberechtigung_lobbyfaktor`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`mv_zutrittsberechtigung_lobbyfaktor`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`mv_zutrittsberechtigung_lobbyfaktor`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`mv_zutrittsberechtigung_lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`mv_zutrittsberechtigung_lobbyfaktor`.`refreshed_date` AS `refreshed_date` from `mv_zutrittsberechtigung_lobbyfaktor`;
-
--- --------------------------------------------------------
-
---
--- Struktur des Views `v_zutrittsberechtigung_lobbyfaktor_max`
---
-DROP TABLE IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_max`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS select `mv_zutrittsberechtigung_lobbyfaktor_max`.`id` AS `id`,`mv_zutrittsberechtigung_lobbyfaktor_max`.`anzahl_mandat_tief_max` AS `anzahl_mandat_tief_max`,`mv_zutrittsberechtigung_lobbyfaktor_max`.`anzahl_mandat_mittel_max` AS `anzahl_mandat_mittel_max`,`mv_zutrittsberechtigung_lobbyfaktor_max`.`anzahl_mandat_hoch_max` AS `anzahl_mandat_hoch_max`,`mv_zutrittsberechtigung_lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`mv_zutrittsberechtigung_lobbyfaktor_max`.`refreshed_date` AS `refreshed_date` from `mv_zutrittsberechtigung_lobbyfaktor_max`;
 
 -- --------------------------------------------------------
 
@@ -8780,7 +8407,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `v_zutrittsberechtigung_raw`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung_raw` AS select `zutrittsberechtigung`.`anzeige_name` AS `anzeige_name`,`zutrittsberechtigung`.`name` AS `name`,`zutrittsberechtigung`.`id` AS `id`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`zutrittsberechtigung`.`nachname` AS `nachname`,`zutrittsberechtigung`.`vorname` AS `vorname`,`zutrittsberechtigung`.`zweiter_vorname` AS `zweiter_vorname`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`beruf` AS `beruf`,`zutrittsberechtigung`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`zutrittsberechtigung`.`partei_id` AS `partei_id`,`zutrittsberechtigung`.`geschlecht` AS `geschlecht`,`zutrittsberechtigung`.`email` AS `email`,`zutrittsberechtigung`.`homepage` AS `homepage`,`zutrittsberechtigung`.`twitter_name` AS `twitter_name`,`zutrittsberechtigung`.`linkedin_profil_url` AS `linkedin_profil_url`,`zutrittsberechtigung`.`xing_profil_name` AS `xing_profil_name`,`zutrittsberechtigung`.`facebook_name` AS `facebook_name`,`zutrittsberechtigung`.`von` AS `von`,`zutrittsberechtigung`.`bis` AS `bis`,`zutrittsberechtigung`.`notizen` AS `notizen`,`zutrittsberechtigung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`zutrittsberechtigung`.`kontrolliert_visa` AS `kontrolliert_visa`,`zutrittsberechtigung`.`kontrolliert_datum` AS `kontrolliert_datum`,`zutrittsberechtigung`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`zutrittsberechtigung`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`zutrittsberechtigung`.`autorisiert_visa` AS `autorisiert_visa`,`zutrittsberechtigung`.`autorisiert_datum` AS `autorisiert_datum`,`zutrittsberechtigung`.`freigabe_visa` AS `freigabe_visa`,`zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`zutrittsberechtigung`.`ALT_lobbyorganisation_id` AS `ALT_lobbyorganisation_id`,`zutrittsberechtigung`.`created_visa` AS `created_visa`,`zutrittsberechtigung`.`created_date` AS `created_date`,`zutrittsberechtigung`.`updated_visa` AS `updated_visa`,`zutrittsberechtigung`.`updated_date` AS `updated_date`,`zutrittsberechtigung`.`bis_unix` AS `bis_unix`,`zutrittsberechtigung`.`von_unix` AS `von_unix`,`zutrittsberechtigung`.`created_date_unix` AS `created_date_unix`,`zutrittsberechtigung`.`updated_date_unix` AS `updated_date_unix`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`zutrittsberechtigung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`zutrittsberechtigung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`partei`.`abkuerzung` AS `partei`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`freigabe_datum` AS `parlamentarier_freigabe_datum`,unix_timestamp(`parlamentarier`.`freigabe_datum`) AS `parlamentarier_freigabe_datum_unix`,`lobbyfaktor`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`lobbyfaktor`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`lobbyfaktor`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,(`lobbyfaktor`.`lobbyfaktor` / `lobbyfaktor_max`.`lobbyfaktor_max`) AS `lobbyfaktor_percent_max`,`lobbyfaktor_max`.`anzahl_mandat_tief_max` AS `anzahl_mandat_tief_max`,`lobbyfaktor_max`.`anzahl_mandat_mittel_max` AS `anzahl_mandat_mittel_max`,`lobbyfaktor_max`.`anzahl_mandat_hoch_max` AS `anzahl_mandat_hoch_max`,now() AS `refreshed_date` from ((((`v_zutrittsberechtigung_simple` `zutrittsberechtigung` left join `v_partei` `partei` on((`zutrittsberechtigung`.`partei_id` = `partei`.`id`))) left join `v_parlamentarier_raw` `parlamentarier` on((`parlamentarier`.`id` = `zutrittsberechtigung`.`parlamentarier_id`))) left join `v_zutrittsberechtigung_lobbyfaktor_raw` `lobbyfaktor` on((`zutrittsberechtigung`.`id` = `lobbyfaktor`.`id`))) join `v_zutrittsberechtigung_lobbyfaktor_max` `lobbyfaktor_max`);
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung_raw` AS select `zutrittsberechtigung`.`anzeige_name` AS `anzeige_name`,`zutrittsberechtigung`.`name` AS `name`,`zutrittsberechtigung`.`id` AS `id`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`zutrittsberechtigung`.`nachname` AS `nachname`,`zutrittsberechtigung`.`vorname` AS `vorname`,`zutrittsberechtigung`.`zweiter_vorname` AS `zweiter_vorname`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`beruf` AS `beruf`,`zutrittsberechtigung`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`zutrittsberechtigung`.`partei_id` AS `partei_id`,`zutrittsberechtigung`.`geschlecht` AS `geschlecht`,`zutrittsberechtigung`.`email` AS `email`,`zutrittsberechtigung`.`homepage` AS `homepage`,`zutrittsberechtigung`.`twitter_name` AS `twitter_name`,`zutrittsberechtigung`.`linkedin_profil_url` AS `linkedin_profil_url`,`zutrittsberechtigung`.`xing_profil_name` AS `xing_profil_name`,`zutrittsberechtigung`.`facebook_name` AS `facebook_name`,`zutrittsberechtigung`.`von` AS `von`,`zutrittsberechtigung`.`bis` AS `bis`,`zutrittsberechtigung`.`notizen` AS `notizen`,`zutrittsberechtigung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`zutrittsberechtigung`.`kontrolliert_visa` AS `kontrolliert_visa`,`zutrittsberechtigung`.`kontrolliert_datum` AS `kontrolliert_datum`,`zutrittsberechtigung`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`zutrittsberechtigung`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`zutrittsberechtigung`.`autorisiert_visa` AS `autorisiert_visa`,`zutrittsberechtigung`.`autorisiert_datum` AS `autorisiert_datum`,`zutrittsberechtigung`.`freigabe_visa` AS `freigabe_visa`,`zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`zutrittsberechtigung`.`ALT_lobbyorganisation_id` AS `ALT_lobbyorganisation_id`,`zutrittsberechtigung`.`created_visa` AS `created_visa`,`zutrittsberechtigung`.`created_date` AS `created_date`,`zutrittsberechtigung`.`updated_visa` AS `updated_visa`,`zutrittsberechtigung`.`updated_date` AS `updated_date`,`zutrittsberechtigung`.`bis_unix` AS `bis_unix`,`zutrittsberechtigung`.`von_unix` AS `von_unix`,`zutrittsberechtigung`.`created_date_unix` AS `created_date_unix`,`zutrittsberechtigung`.`updated_date_unix` AS `updated_date_unix`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum_unix` AS `eingabe_abgeschlossen_datum_unix`,`zutrittsberechtigung`.`kontrolliert_datum_unix` AS `kontrolliert_datum_unix`,`zutrittsberechtigung`.`freigabe_datum_unix` AS `freigabe_datum_unix`,`interessengruppe`.`branche_id` AS `beruf_branche_id`,`partei`.`abkuerzung` AS `partei`,`parlamentarier`.`anzeige_name` AS `parlamentarier_name`,`parlamentarier`.`freigabe_datum` AS `parlamentarier_freigabe_datum`,unix_timestamp(`parlamentarier`.`freigabe_datum`) AS `parlamentarier_freigabe_datum_unix`,`lobbyfaktor`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`lobbyfaktor`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`lobbyfaktor`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,(`lobbyfaktor`.`lobbyfaktor` / `lobbyfaktor_max`.`lobbyfaktor_max`) AS `lobbyfaktor_percent_max`,`lobbyfaktor_max`.`anzahl_mandat_tief_max` AS `anzahl_mandat_tief_max`,`lobbyfaktor_max`.`anzahl_mandat_mittel_max` AS `anzahl_mandat_mittel_max`,`lobbyfaktor_max`.`anzahl_mandat_hoch_max` AS `anzahl_mandat_hoch_max`,now() AS `refreshed_date` from (((((`v_zutrittsberechtigung_simple` `zutrittsberechtigung` left join `v_partei` `partei` on((`zutrittsberechtigung`.`partei_id` = `partei`.`id`))) left join `v_parlamentarier_raw` `parlamentarier` on((`parlamentarier`.`id` = `zutrittsberechtigung`.`parlamentarier_id`))) left join `v_zutrittsberechtigung_lobbyfaktor_raw` `lobbyfaktor` on((`zutrittsberechtigung`.`id` = `lobbyfaktor`.`id`))) left join `v_interessengruppe` `interessengruppe` on((`zutrittsberechtigung`.`beruf_interessengruppe_id` = `interessengruppe`.`id`))) join `v_zutrittsberechtigung_lobbyfaktor_max_raw` `lobbyfaktor_max`);
 
 -- --------------------------------------------------------
 
