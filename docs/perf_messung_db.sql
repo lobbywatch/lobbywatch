@@ -59,6 +59,9 @@ LIMIT 20;
 SELECT id, page, name
 FROM v_search_table
 WHERE
-name LIKE '%Haus%'
-ORDER BY weight
+name LIKE '%Haus%' AND freigabe_datum < NOW()
+ORDER BY table_weight, weight
 LIMIT 20;
+
+-- 0.0023
+-- 0.0032
