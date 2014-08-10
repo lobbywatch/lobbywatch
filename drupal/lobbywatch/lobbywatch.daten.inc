@@ -51,10 +51,20 @@ function _lobbywatch_search_autocomplete_LIKE($str, $check_unpublished = true) {
 
   $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
   //dpm($sql, 'suche');
-  $result = db_query($sql, array(':str' => "%$str%"));
+  $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($str)));
 
   return $result;
 }
+
+function _lobbywatch_search_keyword_processing($str) {
+  $search_str = preg_replace('!\*+!', '%', $str);
+  //     $search_str = '%' . db_like($keys) . '%'
+  if (!preg_match('/[%_]/', $search_str)) {
+    $search_str = "%$search_str%";
+  }
+  return $search_str;
+}
+
 /**
  * Does not work.
  *

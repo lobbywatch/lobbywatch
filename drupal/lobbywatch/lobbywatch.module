@@ -565,6 +565,9 @@ function lobbywatch_search_access() {
  * Implements hook_search_execute().
  */
 function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
+
+  module_load_include('inc', 'lobbywatch', 'lobbywatch.daten');
+
   //   return _lobbywatch_parlamentarier_list();
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
@@ -577,11 +580,9 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
     $result_type = search_expression_extract($keys, 'type');
     $keys = search_expression_insert($keys, 'type', null); // remove
     // Replace wildcards with MySQL/PostgreSQL wildcards.
-    $search_str = preg_replace('!\*+!', '%', $keys);
-//     $search_str = '%' . db_like($keys) . '%'
-    if (!preg_match('/[%_]/', $search_str)) {
-      $search_str = "%$search_str%";
-    }
+
+    $search_str = _lobbywatch_search_keyword_processing($keys);
+
     $table = 'parlamentarier_medium';
     $page = 'parlamentarier';
     $query = db_select("v_$table", $table);
