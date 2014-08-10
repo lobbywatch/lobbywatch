@@ -95,11 +95,11 @@ class Constants {
   /**
    * table name => website alias
    */
-  public static $entities_web = array('branche' => 'branche', 'interessengruppe' => 'lobbygruppe', 'kommission' => 'kommission', 'partei' => 'partei',);
+  public static $entities_web = array('branche' => 'branche', 'interessengruppe' => 'lobbygruppe', 'kommission' => 'kommission', 'organisation' => 'organisation', 'partei' => 'partei',);
 
   /** Parlamentarier, Zutrittsberechtigung
    * table name => website alias */
-  public static $entities_special_web = array('parlamentarier' => 'parlamentarier', 'zutrittsberechtigung' => 'zutrittsberechtigter','organisation' => 'organisation', );
+  public static $entities_special_web = array('parlamentarier' => 'parlamentarier', 'zutrittsberechtigung' => 'zutrittsberechtigter',);
 
   public static function getAllEntities() {
     return array_merge(Constants::$entities_web, Constants::$entities_special_web);
@@ -583,7 +583,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
 
     $search_str = _lobbywatch_search_keyword_processing($keys);
 
-    $table = 'parlamentarier_medium';
+    $table = 'parlamentarier';
     $page = 'parlamentarier';
     $query = db_select("v_$table", $table);
     $query->fields($table, array('id'));
@@ -608,22 +608,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
       $query2->condition(db_or()->isNull('bis')->where('bis > NOW()'));
       $query2->where('freigabe_datum <= NOW()');
     }
-    $merged_query = $query->union($query2);
-
-    $table = 'organisation_simple';
-    $page = 'organisation';
-    $query2 = db_select("v_$table", $table);
-    $query2->addExpression("'$table'", 'page');
-    $query2->addExpression("anzeige_name", 'name');
-    //       $query2->addField("'$table'", "anzeige_name", 'name'); // causes problem with field order
-    $query2->fields($table, array('id'));
-    $query2->condition('anzeige_name', $search_str, 'LIKE');
-    if (!user_access('access lobbywatch unpublished content')) {
-      //       $query->where('(im_rat_bis IS NULL OR im_rat_bis > NOW()) AND freigabe_datum <= NOW()');
-      $query2->where('freigabe_datum <= NOW()');
-    }
-
-    $merged_query = $merged_query->union($query2)->extend('PagerDefault');
+    $merged_query = $query->union($query2, 'ALL');
 
     $query2 = db_select("v_$table", $table);
     foreach (Constants::$entities_web as $table => $page) {
@@ -637,8 +622,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
 //       $query->where('(im_rat_bis IS NULL OR im_rat_bis > NOW()) AND freigabe_datum <= NOW()');
         $query2->where('freigabe_datum <= NOW()');
       }
-
-      $merged_query = $merged_query->union($query2)->extend('PagerDefault');
+      $merged_query = $merged_query->union($query2, 'ALL')->extend('PagerDefault');
     }
 
     $limit_query = db_select($merged_query, 'limit_query');

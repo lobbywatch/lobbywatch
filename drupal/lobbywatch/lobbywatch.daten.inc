@@ -32,7 +32,7 @@ function _lobbywatch_search_autocomplete($str = '', $check_unpublished = true) {
 
 function _lobbywatch_search_autocomplete_LIKE($str, $check_unpublished = true) {
   $table_sql = array();
-  $table = 'parlamentarier_medium';
+  $table = 'parlamentarier';
   $page = 'parlamentarier';
   $table_sql[] = "SELECT '$page' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
 
@@ -41,15 +41,12 @@ function _lobbywatch_search_autocomplete_LIKE($str, $check_unpublished = true) {
   $page = 'zutrittsberechtigter';
   $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
 
-  $table = 'organisation_simple';
-  $page = 'organisation';
-  $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
-
   foreach (Constants::$entities_web as $table => $page) {
     $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
   }
 
-  $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
+//   $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
+  $sql = implode("\n UNION ALL \n", $table_sql). ' LIMIT 20;'; // LIMIT applies to the whole query, ref http://stackoverflow.com/questions/12684407/how-to-using-order-by-and-limit-in-union-mysql-query
   //dpm($sql, 'suche');
   $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($str)));
 
@@ -86,9 +83,9 @@ function _lobbywatch_search_autocomplete_FULLTEXT($str, $check_unpublished = tru
   $page = 'zutrittsberechtigter';
   $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str)" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
 
-  $table = 'mv_organisation_myisam';
-  $page = 'organisation';
-  $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str)" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+//   $table = 'mv_organisation_myisam';
+//   $page = 'organisation';
+//   $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str)" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
 
   foreach (Constants::$entities_web as $table => $page) {
     $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :like_str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
@@ -378,7 +375,7 @@ GROUP_CONCAT(DISTINCT
 ) mandate
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND mandat.freigabe_datum <= NOW() ' : '') . "
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND mandat.freigabe_datum <= NOW() ' : '') . "
 LEFT JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
 WHERE 1
@@ -537,7 +534,7 @@ parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
     ) zutrittsberechtigungen
       FROM v_parlamentarier parlamentarier
       LEFT JOIN v_interessenbindung interessenbindung
-      ON interessenbindung.parlamentarier_id = parlamentarier.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessenbindung.freigabe_datum <= NOW() ' : '') . "
+      ON interessenbindung.parlamentarier_id = parlamentarier.id" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessenbindung.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_organisation organisation
       ON interessenbindung.organisation_id = organisation.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
@@ -1660,7 +1657,7 @@ function _lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished
 ) mandate
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id "
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '')
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND mandat.freigabe_datum <= NOW() ' : '') . "
 LEFT JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id "

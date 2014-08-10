@@ -320,11 +320,7 @@ function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = tr
       $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str" . (!(isset($_GET['includeInactive']) && $_GET['includeInactive'] != 0 && !user_access('access lobbywatch unpublished content')) ? ' AND (bis IS NULL OR bis > NOW())' : '')
        . _lobbywatch_data_filter_unpublished_SQL($table) .
         _lobbywatch_data_filter_fields_SQL($table);
-    } else if ($table === 'organisation') {
-      $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str"
-           . _lobbywatch_data_filter_unpublished_SQL($table) .
-        _lobbywatch_data_filter_fields_SQL($table);
-          } else if (in_array($table, Constants::$entities_web)) {
+    } else if (in_array($table, Constants::$entities_web)) {
       $sql = "SELECT * FROM v_$table WHERE anzeige_name LIKE :str"
            . _lobbywatch_data_filter_unpublished_SQL($table) .
         _lobbywatch_data_filter_fields_SQL($table);

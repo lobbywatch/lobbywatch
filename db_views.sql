@@ -7,6 +7,8 @@
 -- See refreshMaterializedViews() at the end of this file.
 -- The PROCEDURE refreshMaterializedViews() must be called regularly.
 
+-- Docu on indexes: http://www.percona.com/files/presentations/percona-live/london-2011/PLUK2011-practical-mysql-indexing-guidelines.pdf
+
 -- VIEWS ------------------
 
 -- Last updated views
@@ -557,25 +559,39 @@ LEFT JOIN `v_interessengruppe` interessengruppe3
 ON interessengruppe3.id = organisation.interessengruppe3_id
 ;
 
-DROP TABLE IF EXISTS `mv_organisation_medium`;
-CREATE TABLE IF NOT EXISTS `mv_organisation_medium` AS SELECT * FROM `v_organisation_medium_raw`;
-ALTER TABLE `mv_organisation_medium`
-ADD PRIMARY KEY (`id`),
-ADD UNIQUE KEY `idx_name_de` (`name_de`),
-ADD KEY `idx_anzeige_name` (`anzeige_name`),
-CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
+--	DROP TABLE IF EXISTS `mv_organisation_medium`;
+--	CREATE TABLE IF NOT EXISTS `mv_organisation_medium`
+--	ENGINE = InnoDB
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_organisation_medium'
+--	AS SELECT * FROM `v_organisation_medium_raw`;
+--	ALTER TABLE `mv_organisation_medium`
+--	ADD PRIMARY KEY (`id`),
+--	ADD KEY `idx_id_freigabe` (`id`, `freigabe_datum`),
+--	ADD KEY `idx_name_de` (`name_de`, `freigabe_datum`),
+--	ADD KEY `idx_name_fr` (`name_fr`, `freigabe_datum`),
+--	ADD KEY `idx_name_it` (`name_it`, `freigabe_datum`),
+--	ADD KEY `idx_anzeige_name` (`anzeige_name`, `freigabe_datum`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+--	
 --	DROP TABLE IF EXISTS `mv_organisation_medium_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_organisation_medium_myisam` ENGINE = MYISAM AS SELECT * FROM `v_organisation_medium_raw`;
+--	CREATE TABLE IF NOT EXISTS `mv_organisation_medium_myisam` 
+--	ENGINE = MyISAM
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_organisation_medium'
+--	AS SELECT * FROM `v_organisation_medium_raw`;
 --	ALTER TABLE `mv_organisation_medium_myisam`
 --	ADD PRIMARY KEY (`id`),
---	ADD UNIQUE KEY `idx_name_de` (`name_de`),
---	ADD KEY `idx_anzeige_name` (`anzeige_name`),
+--	ADD UNIQUE KEY `idx_name_de` (`name_de`, `freigabe_datum`),
+--	ADD KEY `idx_name_fr` (`name_fr`, `freigabe_datum`),
+--	ADD KEY `idx_name_it` (`name_it`, `freigabe_datum`),
+--	ADD KEY `idx_anzeige_name` (`anzeige_name`, `freigabe_datum`),
+--	ADD KEY `idx_freigabe` (`freigabe_datum`),
 --	ADD FULLTEXT(`anzeige_name`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
-CREATE OR REPLACE VIEW `v_organisation_medium` AS
-SELECT * FROM `mv_organisation_medium`;
+--	CREATE OR REPLACE VIEW `v_organisation_medium` AS
+--	SELECT * FROM `mv_organisation_medium_raw`;
 
 CREATE OR REPLACE VIEW `v_interessenbindung_raw` AS
 SELECT interessenbindung.*,
@@ -600,12 +616,18 @@ INNER JOIN `parlamentarier` parlamentarier
 ON interessenbindung.parlamentarier_id = parlamentarier.id;
 
 DROP TABLE IF EXISTS `mv_interessenbindung`;
-CREATE TABLE IF NOT EXISTS `mv_interessenbindung` AS SELECT * FROM `v_interessenbindung_raw`;
+CREATE TABLE IF NOT EXISTS `mv_interessenbindung`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+COMMENT='Materialzed view for v_interessenbindung'
+AS SELECT * FROM `v_interessenbindung_raw`;
 ALTER TABLE `mv_interessenbindung`
 ADD PRIMARY KEY (`id`),
--- ADD KEY `idx_wirksamkeit` (`wirksamkeit`, `anzeige_name`),
-ADD KEY `idx_wirksamkeit` (`wirksamkeit`),
--- ADD KEY `idx_anzeige_name` (`anzeige_name`),
+-- indexes for joins on web
+ADD KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`, `freigabe_datum`, `bis`, `organisation_id`),
+ADD KEY `idx_parlam_bis` (`parlamentarier_id`, `bis`, `organisation_id`),
+ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `parlamentarier_id`),
+ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `parlamentarier_id`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_interessenbindung` AS
@@ -625,12 +647,18 @@ INNER JOIN `organisation` organisation
 ON mandat.organisation_id = organisation.id;
 
 DROP TABLE IF EXISTS `mv_mandat`;
-CREATE TABLE IF NOT EXISTS `mv_mandat` AS SELECT * FROM `v_mandat_raw`;
+CREATE TABLE IF NOT EXISTS `mv_mandat`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+COMMENT='Materialzed view for v_mandat'
+AS SELECT * FROM `v_mandat_raw`;
 ALTER TABLE `mv_mandat`
 ADD PRIMARY KEY (`id`),
--- ADD KEY `idx_wirksamkeit` (`wirksamkeit`, `anzeige_name`),
-ADD KEY `idx_wirksamkeit` (`wirksamkeit`),
--- ADD KEY `idx_anzeige_name` (`anzeige_name`),
+-- indexes for joins on web
+ADD KEY `idx_zutritt_freigabe_bis` (`zutrittsberechtigung_id`, `freigabe_datum`, `bis`, `organisation_id`),
+ADD KEY `idx_zutritt_bis` (`zutrittsberechtigung_id`, `bis`, `organisation_id`),
+ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `zutrittsberechtigung_id`),
+ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `zutrittsberechtigung_id`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_mandat` AS
@@ -664,14 +692,18 @@ LEFT JOIN `v_mandat_raw` mandat_mittel ON organisation.id = mandat_mittel.organi
 LEFT JOIN `v_mandat_raw` mandat_tief ON organisation.id = mandat_tief.organisation_id AND (mandat_tief.bis IS NULL OR mandat_tief.bis >= NOW()) AND mandat_tief.wirksamkeit='tief'
 GROUP BY organisation.id;
 
-DROP TABLE IF EXISTS `mv_organisation_lobbyeinfluss`;
-CREATE TABLE IF NOT EXISTS `mv_organisation_lobbyeinfluss` AS SELECT * FROM `v_organisation_lobbyeinfluss_raw`;
-ALTER TABLE `mv_organisation_lobbyeinfluss`
-ADD PRIMARY KEY (`id`),
-CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
-CREATE OR REPLACE VIEW `v_organisation_lobbyeinfluss` AS
-SELECT * FROM `mv_organisation_lobbyeinfluss`;
+--	DROP TABLE IF EXISTS `mv_organisation_lobbyeinfluss`;
+--	CREATE TABLE IF NOT EXISTS `mv_organisation_lobbyeinfluss`
+--	ENGINE = InnoDB
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_organisation_lobbyeinfluss'
+--	AS SELECT * FROM `v_organisation_lobbyeinfluss_raw`;
+--	ALTER TABLE `mv_organisation_lobbyeinfluss`
+--	ADD PRIMARY KEY (`id`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+--	
+--	CREATE OR REPLACE VIEW `v_organisation_lobbyeinfluss` AS
+--	SELECT * FROM `mv_organisation_lobbyeinfluss`;
 
 CREATE OR REPLACE VIEW `v_organisation_raw` AS
 SELECT
@@ -701,20 +733,72 @@ ON organisation_jahr.organisation_id = organisation.id
 ;
 
 DROP TABLE IF EXISTS `mv_organisation`;
-CREATE TABLE IF NOT EXISTS `mv_organisation` AS SELECT * FROM `v_organisation_raw`;
+CREATE TABLE IF NOT EXISTS `mv_organisation`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+COMMENT='Materialzed view for v_organisation'
+AS SELECT * FROM `v_organisation_raw`;
 ALTER TABLE `mv_organisation`
+CHANGE `anzahl_interessenbindung_tief` `anzahl_interessenbindung_tief` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_mittel` `anzahl_interessenbindung_mittel` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_hoch` `anzahl_interessenbindung_hoch` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_tief_nach_wahl` `anzahl_interessenbindung_tief_nach_wahl` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_mittel_nach_wahl` `anzahl_interessenbindung_mittel_nach_wahl` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_hoch_nach_wahl` `anzahl_interessenbindung_hoch_nach_wahl` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_mandat_tief` `anzahl_mandat_tief` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_mandat_mittel` `anzahl_mandat_mittel` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_mandat_hoch` `anzahl_mandat_hoch` TINYINT UNSIGNED NULL DEFAULT NULL,
 ADD PRIMARY KEY (`id`),
-ADD KEY `idx_anzeige_name` (`anzeige_name`(200)),
-ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`(200)),
+-- ADD KEY `idx_name_de` (`name_de`, `freigabe_datum`),
+-- ADD KEY `idx_name_fr` (`name_fr`, `freigabe_datum`),
+-- ADD KEY `idx_name_it` (`name_it`, `freigabe_datum`),
+-- ADD KEY `idx_freigabe` (`freigabe_datum`, `anzeige_name`),
+-- ADD KEY `idx_freigabe_lobbyeinfluss` (`freigabe_datum`, `lobbyeinfluss`, `anzeige_name`),
+-- ADD KEY `idx_anzeige` (`anzeige_name`, `freigabe_datum`),
+-- ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`, `freigabe_datum`),
+ADD KEY `idx_freigabe` (`freigabe_datum`),
+-- indexes for joins on web
+ADD KEY `idx_branche_freigabe` (`branche_id`, `freigabe_datum`),
+ADD KEY `idx_interessengruppe_freigabe` (`interessengruppe_id`, `freigabe_datum`),
+ADD KEY `idx_interessengruppe2_freigabe` (`interessengruppe2_id`, `freigabe_datum`),
+ADD KEY `idx_interessengruppe3_freigabe` (`interessengruppe3_id`, `freigabe_datum`),
+ADD KEY `idx_interessengruppe_branche_freigabe` (`interessengruppe_branche_id`, `freigabe_datum`),
+ADD KEY `idx_interessengruppe2_branche_freigabe` (`interessengruppe2_branche_id`, `freigabe_datum`),
+ADD KEY `idx_interessengruppe3_branche_freigabe` (`interessengruppe3_branche_id`, `freigabe_datum`),
+ADD KEY `land` (`land_id`, `freigabe_datum`),
+ADD KEY `interessenraum_id` (`interessenraum_id`, `freigabe_datum`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_organisation_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_organisation_myisam` AS SELECT * FROM `v_organisation_raw`;
+--	CREATE TABLE IF NOT EXISTS `mv_organisation_myisam` 
+--	ENGINE = MyISAM
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_organisation'
+--	AS SELECT * FROM `v_organisation_raw`;
 --	ALTER TABLE `mv_organisation_myisam`
 --	ADD PRIMARY KEY (`id`),
---	ADD KEY `idx_anzeige_name` (`anzeige_name`(200)),
---	ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`(200)),
---	ADD FULLTEXT(`anzeige_name`),
+--	ADD KEY `idx_name_de` (`name_de`, `freigabe_datum`),
+--	ADD KEY `idx_name_fr` (`name_fr`, `freigabe_datum`),
+--	ADD KEY `idx_name_it` (`name_it`, `freigabe_datum`),
+--	ADD KEY `idx_anzeige_name` (`anzeige_name`, `freigabe_datum`),
+--	ADD KEY `idx_lobbyeinfluss` (`lobbyeinfluss`, `anzeige_name`, `freigabe_datum`),
+--	ADD KEY `idx_branche_freigabe` (`branche_id`, `freigabe_datum`, `anzeige_name`),
+--	ADD KEY `idx_branche` (`branche_id`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe_freigabe` (`interessengruppe_id`, `freigabe_datum`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe` (`interessengruppe_id`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe2_freigabe` (`interessengruppe2_id`, `freigabe_datum`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe2` (`interessengruppe2_id`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe3_freigabe` (`interessengruppe3_id`, `freigabe_datum`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe3` (`interessengruppe3_id`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe_branche_freigabe` (`interessengruppe_branche_id`, `freigabe_datum`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe_branche` (`interessengruppe_branche_id`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe2_branche_freigabe` (`interessengruppe2_branche_id`, `freigabe_datum`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe2_branche` (`interessengruppe2_branche_id`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe3_branche_freigabe` (`interessengruppe3_branche_id`, `freigabe_datum`, `anzeige_name`),
+--	ADD KEY `idx_interessengruppe3_branche` (`interessengruppe3_branche_id`, `anzeige_name`),
+--	ADD KEY `land` (`land_id`, `freigabe_datum`),
+--	ADD KEY `interessenraum_id` (`interessenraum_id`, `freigabe_datum`)
+--  ADD FULLTEXT(`anzeige_name`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_organisation` AS
@@ -744,14 +828,18 @@ LEFT JOIN `v_mandat_raw` mandat_mittel ON zutrittsberechtigung.id = mandat_mitte
 LEFT JOIN `v_mandat_raw` mandat_tief ON zutrittsberechtigung.id = mandat_tief.zutrittsberechtigung_id AND (mandat_tief.bis IS NULL OR mandat_tief.bis >= NOW()) AND mandat_tief.wirksamkeit='tief'
 GROUP BY zutrittsberechtigung.id;
 
-DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor`;
-CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_lobbyfaktor` AS SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_raw`;
-ALTER TABLE `mv_zutrittsberechtigung_lobbyfaktor`
-ADD PRIMARY KEY (`id`),
-CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am' ;
-
-CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor` AS
-SELECT * FROM `mv_zutrittsberechtigung_lobbyfaktor`;
+--	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor`;
+--	CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_lobbyfaktor`
+--	ENGINE = InnoDB
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_zutrittsberechtigung_lobbyfaktor'
+--	AS SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_raw`;
+--	ALTER TABLE `mv_zutrittsberechtigung_lobbyfaktor`
+--	ADD PRIMARY KEY (`id`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am' ;
+--	
+--	CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor` AS
+--	SELECT * FROM `mv_zutrittsberechtigung_lobbyfaktor`;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_raw` AS
 SELECT parlamentarier.id,
@@ -773,14 +861,18 @@ LEFT JOIN `v_interessenbindung_raw` interessenbindung_mittel_nach_wahl ON parlam
 LEFT JOIN `v_interessenbindung_raw` interessenbindung_tief_nach_wahl ON parlamentarier.id = interessenbindung_tief_nach_wahl.parlamentarier_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > parlamentarier.im_rat_seit
 GROUP BY parlamentarier.id;
 
-DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
-CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor` AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
-ALTER TABLE `mv_parlamentarier_lobbyfaktor`
-ADD PRIMARY KEY (`id`),
-CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
-CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
-SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
+--	DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
+--	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor`
+--	ENGINE = InnoDB
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor'
+--	AS SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+--	ALTER TABLE `mv_parlamentarier_lobbyfaktor`
+--	ADD PRIMARY KEY (`id`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+--	
+--	CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
+--	SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max_raw` AS
 SELECT
@@ -794,14 +886,18 @@ FROM `v_parlamentarier_lobbyfaktor_raw` lobbyfaktor
 -- GROUP BY lobbyfaktor.id
 ;
 
-DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor_max`;
-CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor_max` AS SELECT * FROM `v_parlamentarier_lobbyfaktor_max_raw`;
-ALTER TABLE `mv_parlamentarier_lobbyfaktor_max`
-ADD PRIMARY KEY (`id`),
-CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
-CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max` AS
-SELECT * FROM `mv_parlamentarier_lobbyfaktor_max`;
+--	DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor_max`;
+--	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_lobbyfaktor_max`
+--	ENGINE = InnoDB
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_parlamentarier_lobbyfaktor_max'
+--	AS SELECT * FROM `v_parlamentarier_lobbyfaktor_max_raw`;
+--	ALTER TABLE `mv_parlamentarier_lobbyfaktor_max`
+--	ADD PRIMARY KEY (`id`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+--	
+--	CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max` AS
+--	SELECT * FROM `mv_parlamentarier_lobbyfaktor_max`;
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_max_raw` AS
 SELECT
@@ -815,14 +911,18 @@ FROM `v_zutrittsberechtigung_lobbyfaktor_raw` lobbyfaktor
 -- GROUP BY lobbyfaktor.id
 ;
 
-DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max`;
-CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max` AS SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
-ALTER TABLE `mv_zutrittsberechtigung_lobbyfaktor_max`
-ADD PRIMARY KEY (`id`),
-CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
-CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS
-SELECT * FROM `mv_zutrittsberechtigung_lobbyfaktor_max`;
+--	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max`;
+--	CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max`
+--	ENGINE = InnoDB
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_zutrittsberechtigung_lobbyfaktor_max'
+--	AS SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
+--	ALTER TABLE `mv_zutrittsberechtigung_lobbyfaktor_max`
+--	ADD PRIMARY KEY (`id`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+--	
+--	CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS
+--	SELECT * FROM `mv_zutrittsberechtigung_lobbyfaktor_max`;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_medium_raw` AS
 SELECT parlamentarier.*,
@@ -838,6 +938,7 @@ GROUP_CONCAT(DISTINCT CONCAT(kommission.name, '(', kommission.abkuerzung, ')') O
 GROUP_CONCAT(DISTINCT kommission.abkuerzung ORDER BY kommission.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung,
 COUNT(DISTINCT kommission.id) AS kommissionen_anzahl,
 partei.abkuerzung AS partei, partei.name AS partei_name, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad,
+interessengruppe.branche_id as beruf_branche_id,
 CONCAT(IF(parlamentarier.geschlecht='M', rat.name_de, ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '')) titel_de,
 NOW() as refreshed_date
 FROM `v_parlamentarier_simple` parlamentarier
@@ -848,25 +949,38 @@ LEFT JOIN `v_fraktion` fraktion ON parlamentarier.fraktion_id=fraktion.id
 LEFT JOIN `v_mil_grad` mil_grad ON parlamentarier.militaerischer_grad_id=mil_grad.id
 LEFT JOIN `v_kanton` kanton ON parlamentarier.kanton_id = kanton.id
 LEFT JOIN `v_rat` rat ON parlamentarier.rat_id = rat.id
+LEFT JOIN `v_interessengruppe` interessengruppe ON parlamentarier.beruf_interessengruppe_id = interessengruppe.id
 GROUP BY parlamentarier.id;
 
-DROP TABLE IF EXISTS `mv_parlamentarier_medium`;
-CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium` AS SELECT * FROM `v_parlamentarier_medium_raw`;
-ALTER TABLE `mv_parlamentarier_medium`
-ADD PRIMARY KEY (`id`),
-ADD KEY `idx_anzeige_name` (`anzeige_name`),
-CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
+--	DROP TABLE IF EXISTS `mv_parlamentarier_medium`;
+--	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium`
+--	ENGINE = InnoDB
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_parlamentarier_medium'
+--	AS SELECT * FROM `v_parlamentarier_medium_raw`;
+--	ALTER TABLE `mv_parlamentarier_medium`
+--	ADD PRIMARY KEY (`id`),
+--	ADD KEY `idx_id_freigabe_bis` (`id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_id_bis` (`id`, `im_rat_bis`),
+--	ADD KEY `idx_anzeige_name_freigabe_bis` (`anzeige_name`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_anzeige_name_bis` (`anzeige_name`, `im_rat_bis`),
+--	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+--	
 --	DROP TABLE IF EXISTS `mv_parlamentarier_medium_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium_myisam` ENGINE=MYISAM AS SELECT * FROM `v_parlamentarier_medium_raw`;
+--	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium_myisam` 
+--	ENGINE = MyISAM
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_parlamentarier_medium'
+--	AS SELECT * FROM `v_parlamentarier_medium_raw`;
 --	ALTER TABLE `mv_parlamentarier_medium_myisam`
 --	ADD PRIMARY KEY (`id`),
---	ADD KEY `idx_anzeige_name` (`anzeige_name`),
+--	ADD KEY `idx_anzeige_name_freigabe_bis` (`anzeige_name`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_anzeige_name_bis` (`anzeige_name`, `im_rat_bis`),
 --	ADD FULLTEXT(`anzeige_name`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
-CREATE OR REPLACE VIEW `v_parlamentarier_medium` AS
-SELECT * FROM `mv_parlamentarier_medium`;
+--	CREATE OR REPLACE VIEW `v_parlamentarier_medium` AS
+--	SELECT * FROM `mv_parlamentarier_medium_raw`;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_raw` AS
 SELECT parlamentarier.*,
@@ -884,38 +998,107 @@ lobbyfaktor_max.anzahl_interessenbindung_mittel_max,
 lobbyfaktor_max.anzahl_interessenbindung_hoch_max
 FROM `v_parlamentarier_medium_raw` parlamentarier
 LEFT JOIN `v_parlamentarier_lobbyfaktor_raw` lobbyfaktor ON parlamentarier.id = lobbyfaktor.id
-, v_parlamentarier_lobbyfaktor_max lobbyfaktor_max
+, v_parlamentarier_lobbyfaktor_max_raw lobbyfaktor_max
 GROUP BY parlamentarier.id;
 
 DROP TABLE IF EXISTS `mv_parlamentarier`;
-CREATE TABLE IF NOT EXISTS `mv_parlamentarier` AS SELECT * FROM `v_parlamentarier_raw`;
+CREATE TABLE IF NOT EXISTS `mv_parlamentarier`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+COMMENT='Materialzed view for v_parlamentarier'
+AS SELECT * FROM `v_parlamentarier_raw`;
 ALTER TABLE `mv_parlamentarier`
+CHANGE `anzahl_interessenbindung_tief` `anzahl_interessenbindung_tief` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_mittel` `anzahl_interessenbindung_mittel` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_hoch` `anzahl_interessenbindung_hoch` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_tief_nach_wahl` `anzahl_interessenbindung_tief_nach_wahl` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_mittel_nach_wahl` `anzahl_interessenbindung_mittel_nach_wahl` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_hoch_nach_wahl` `anzahl_interessenbindung_hoch_nach_wahl` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `lobbyfaktor` `lobbyfaktor` SMALLINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `lobbyfaktor_max` `lobbyfaktor_max` SMALLINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `lobbyfaktor_percent_max` `lobbyfaktor_percent_max` DECIMAL(4,3) UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_tief_max` `anzahl_interessenbindung_tief_max` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_mittel_max` `anzahl_interessenbindung_mittel_max` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_interessenbindung_hoch_max` `anzahl_interessenbindung_hoch_max` TINYINT UNSIGNED NULL DEFAULT NULL,
 ADD PRIMARY KEY (`id`),
-ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`),
-ADD KEY `idx_anzeige_name` (`anzeige_name`),
-ADD KEY `idx_ratstyp` (`ratstyp`),
-ADD KEY `idx_rat` (`rat`),
-ADD KEY `idx_kanton` (`kanton`),
-ADD KEY `idx_partei` (`partei`),
-ADD KEY `idx_kommissionen` (`kommissionen`),
+DROP COLUMN `ratstyp`,
+DROP COLUMN `kanton_abkuerzung`,
+-- for sort lobbyfaktor, anzeige_name
+ADD KEY `idx_freigabe_bis` (`freigabe_datum`, `im_rat_bis`),
+ADD KEY `idx_bis` (`im_rat_bis`),
+--	ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`),
+--	ADD KEY `idx_freigabe_bis_anzeige` (`freigabe_datum`, `im_rat_bis`, `anzeige_name`),
+--	ADD KEY `idx_freigabe_anzeige` (`freigabe_datum`, `anzeige_name`),
+--	ADD KEY `idx_bis_anzeige` (`im_rat_bis`, `anzeige_name`),
+--	ADD KEY `idx_anzeige` (`anzeige_name`),
+-- indexes for joins on web
+ADD KEY `idx_rat_freigabe_bis` (`rat`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `idx_rat_bis` (`rat`, `im_rat_bis`),
+ADD KEY `idx_rat_id_freigabe_bis` (`rat_id`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `idx_rat_id_bis` (`rat_id`, `im_rat_bis`),
+ADD KEY `idx_kanton_freigabe_bis` (`kanton`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `idx_kanton_bis` (`kanton`, `im_rat_bis`),
+ADD KEY `idx_kanton_partei_freigabe_bis` (`kanton`, `partei`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `idx_kanton_partei_bis` (`kanton`, `partei`, `im_rat_bis`),
+ADD KEY `idx_kanton_id_freigabe_bis` (`kanton_id`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `idx_kanton_id_bis` (`kanton_id`, `im_rat_bis`),
+ADD KEY `idx_partei_freigabe_bis` (`partei`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `idx_partei_bis` (`partei`, `im_rat_bis`),
+ADD KEY `idx_partei_id_freigabe_bis` (`partei_id`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `idx_partei_id_bis` (`partei_id`, `im_rat_bis`),
+-- ADD KEY `idx_kommissionen` (`kommissionen`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `beruf_interessengruppe_id` (`beruf_interessengruppe_id`, `im_rat_bis`),
+ADD KEY `beruf_branche_id_freigabe` (`beruf_branche_id`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `beruf_branche_id` (`beruf_branche_id`, `im_rat_bis`),
+ADD KEY `militaerischer_grad_freigabe` (`militaerischer_grad_id`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `militaerischer_grad` (`militaerischer_grad_id`, `im_rat_bis`),
+ADD KEY `fraktion_freigabe_bis` (`fraktion`, `im_rat_bis`),
+ADD KEY `fraktion_bis` (`fraktion`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `fraktion_id_freigabe_bis` (`fraktion_id`, `freigabe_datum`, `im_rat_bis`),
+ADD KEY `fraktion_id_bis` (`fraktion_id`, `im_rat_bis`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_parlamentarier_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_myisam` ENGINE=MYISAM AS SELECT * FROM `v_parlamentarier_raw`;
+--	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_myisam` 
+--	ENGINE = MyISAM
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_parlamentarier'
+--	AS SELECT * FROM `v_parlamentarier_raw`;
 --	ALTER TABLE `mv_parlamentarier_myisam`
 --	ADD PRIMARY KEY (`id`),
---	ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`),
---	ADD KEY `idx_anzeige_name` (`anzeige_name`),
---	ADD KEY `idx_ratstyp` (`ratstyp`),
---	ADD KEY `idx_rat` (`rat`),
---	ADD KEY `idx_kanton` (`kanton`),
---	ADD KEY `idx_partei` (`partei`),
---	ADD KEY `idx_kommissionen` (`kommissionen`),
---	ADD FULLTEXT(`anzeige_name`),
+--	ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`, `freigabe_datum` `im_rat_bis`),
+--	ADD KEY `idx_anzeige_name_freigabe_bis` (`anzeige_name`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_anzeige_name_bis` (`anzeige_name`, `im_rat_bis`),
+--	ADD KEY `idx_ratstyp_freigabe` (`ratstyp`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_ratstyp` (`ratstyp`, `im_rat_bis`),
+--	ADD KEY `idx_rat_freigabe` (`rat`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_rat` (`rat`, `im_rat_bis`),
+--	ADD KEY `idx_rat_id_freigabe` (`rat_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_rat_id` (`rat_id`, `im_rat_bis`),
+--	ADD KEY `idx_kanton_freigabe` (`kanton`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_kanton` (`kanton`, `im_rat_bis`),
+--	ADD KEY `idx_kanton_id_freigabe` (`kanton_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_kanton_id` (`kanton_id`, `im_rat_bis`),
+--	ADD KEY `idx_partei_freigabe` (`partei`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_partei` (`partei`, `im_rat_bis`),
+--	ADD KEY `idx_partei_id_freigabe` (`partei_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_partei_id` (`partei_id`, `im_rat_bis`),
+--	-- ADD KEY `idx_kommissionen` (`kommissionen`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `beruf_interessengruppe_id` (`beruf_interessengruppe_id`, `im_rat_bis`),
+--	ADD KEY `beruf_branche_id_freigabe` (`beruf_interessengruppe_branche_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `beruf_branche_id` (`beruf_interessengruppe_branche_id`, `im_rat_bis`),
+--	ADD KEY `militaerischer_grad_freigabe` (`militaerischer_grad_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `militaerischer_grad` (`militaerischer_grad_id`, `im_rat_bis`),
+--	ADD KEY `fraktion_freigabe` (`fraktion`, `im_rat_bis`),
+--	ADD KEY `fraktion` (`fraktion`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `fraktion_id_freigabe` (`fraktion_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `fraktion_id` (`fraktion_id`, `im_rat_bis`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_parlamentarier` AS
-SELECT * FROM `mv_parlamentarier`;
+SELECT *, rat as ratstyp, kanton as `kanton_abkuerzung` FROM `mv_parlamentarier`;
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_simple` AS
 SELECT CONCAT(zutrittsberechtigung.nachname, ', ', zutrittsberechtigung.vorname) AS anzeige_name, CONCAT(zutrittsberechtigung.vorname, ' ', zutrittsberechtigung.nachname) AS name,
@@ -928,6 +1111,7 @@ FROM `zutrittsberechtigung`
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_raw` AS
 SELECT
 zutrittsberechtigung.*,
+interessengruppe.branche_id as beruf_branche_id,
 partei.abkuerzung AS partei,
 parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.freigabe_datum as parlamentarier_freigabe_datum, UNIX_TIMESTAMP(parlamentarier.freigabe_datum) as parlamentarier_freigabe_datum_unix,
 lobbyfaktor.anzahl_mandat_tief,
@@ -946,25 +1130,62 @@ ON zutrittsberechtigung.partei_id=partei.id
 LEFT JOIN `v_parlamentarier_raw` parlamentarier
 ON parlamentarier.id = zutrittsberechtigung.parlamentarier_id
 LEFT JOIN `v_zutrittsberechtigung_lobbyfaktor_raw` lobbyfaktor ON zutrittsberechtigung.id = lobbyfaktor.id
-, v_zutrittsberechtigung_lobbyfaktor_max lobbyfaktor_max
+LEFT JOIN `v_interessengruppe` interessengruppe ON zutrittsberechtigung.beruf_interessengruppe_id = interessengruppe.id
+, v_zutrittsberechtigung_lobbyfaktor_max_raw lobbyfaktor_max
 ;
 
 DROP TABLE IF EXISTS `mv_zutrittsberechtigung`;
-CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung` AS SELECT * FROM `v_zutrittsberechtigung_raw`;
+CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+COMMENT='Materialzed view for v_zutrittsberechtigung'
+AS SELECT * FROM `v_zutrittsberechtigung_raw`;
 ALTER TABLE `mv_zutrittsberechtigung`
+CHANGE `anzahl_mandat_tief` `anzahl_mandat_tief` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_mandat_mittel` `anzahl_mandat_mittel` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_mandat_hoch` `anzahl_mandat_hoch` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `lobbyfaktor` `lobbyfaktor` SMALLINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `lobbyfaktor_max` `lobbyfaktor_max` SMALLINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `lobbyfaktor_percent_max` `lobbyfaktor_percent_max` DECIMAL(4,3) UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_mandat_tief_max` `anzahl_mandat_tief_max` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_mandat_mittel_max` `anzahl_mandat_mittel_max` TINYINT UNSIGNED NULL DEFAULT NULL,
+CHANGE `anzahl_mandat_hoch_max` `anzahl_mandat_hoch_max` TINYINT UNSIGNED NULL DEFAULT NULL,
 ADD PRIMARY KEY (`id`),
-ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`),
-ADD KEY `idx_anzeige_name` (`anzeige_name`),
-ADD KEY `idx_partei` (`partei`),
+-- indexes for joins on web
+ADD KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`, `freigabe_datum`, `bis`),
+ADD KEY `idx_parlam_bis` (`parlamentarier_id`, `bis`),
+ADD KEY `idx_partei_freigabe` (`partei`, `freigabe_datum`, `bis`),
+ADD KEY `idx_partei` (`partei`, `bis`),
+ADD KEY `idx_partei_id_freigabe` (`partei_id`, `freigabe_datum`, `bis`),
+ADD KEY `idx_partei_id` (`partei_id`, `bis`),
+ADD KEY `idx_beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`, `freigabe_datum`, `bis`),
+ADD KEY `idx_beruf_interessengruppe_id` (`beruf_interessengruppe_id`, `bis`),
+ADD KEY `idx_beruf_branche_id_freigabe` (`beruf_branche_id`, `freigabe_datum`, `bis`),
+ADD KEY `idx_beruf_branche_id` (`beruf_branche_id`, `bis`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_myisam` ENGINE=MYISAM AS SELECT * FROM `v_zutrittsberechtigung_raw`;
+--	CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_myisam` 
+--	ENGINE = MyISAM
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_zutrittsberechtigung'
+--	AS SELECT * FROM `v_zutrittsberechtigung_raw`;
 --	ALTER TABLE `mv_zutrittsberechtigung_myisam`
 --	ADD PRIMARY KEY (`id`),
+--	ADD KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`, `freigabe_datum`, `bis`, `lobbyfaktor`, `anzeige_name`),
+--	ADD KEY `idx_parlam_bis` (`parlamentarier_id`, `bis`, `lobbyfaktor`, `anzeige_name`),
+--	ADD KEY `idx_parlam_wirksamkeit` (`parlamentarier_id`, `lobbyfaktor`, `anzeige_name`),
+--	ADD KEY `idx_parlam_anzeige` (`parlamentarier_id`, `anzeige_name`),
 --	ADD KEY `idx_lobbyfaktor` (`lobbyfaktor`, `anzeige_name`),
 --	ADD KEY `idx_anzeige_name` (`anzeige_name`),
---	ADD KEY `idx_partei` (`partei`),
+--	ADD KEY `idx_partei_freigabe` (`partei`, `freigabe_datum`, `bis`),
+--	ADD KEY `idx_partei` (`partei`, `bis`),
+--	ADD KEY `idx_partei_id_freigabe` (`partei_id`, `freigabe_datum`, `bis`),
+--	ADD KEY `idx_partei_id` (`partei_id`, `bis`),
+--	ADD KEY `idx_beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`, `freigabe_datum`, `bis`),
+--	ADD KEY `idx_beruf_interessengruppe_id` (`beruf_interessengruppe_id`, `im_rat_bis`),
+--	ADD KEY `idx_beruf_branche_id_freigabe` (`beruf_interessengruppe_branche_id`, `freigabe_datum`, `bis`),
+--	ADD KEY `idx_beruf_branche_id` (`beruf_interessengruppe_branche_id`, `im_rat_bis`),
 --	ADD FULLTEXT(`anzeige_name`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
@@ -1045,7 +1266,7 @@ SELECT
 , `parlamentarier`.`militaerischer_grad`
 , in_kommission.*
 FROM v_in_kommission_simple in_kommission
-INNER JOIN v_parlamentarier_medium parlamentarier
+INNER JOIN v_parlamentarier parlamentarier
   ON in_kommission.parlamentarier_id = parlamentarier.id
 ORDER BY parlamentarier.anzeige_name;
 
@@ -1474,7 +1695,7 @@ SELECT
 , `parlamentarier`.`militaerischer_grad`
 , interessenbindung.*
 FROM v_interessenbindung_simple interessenbindung
-INNER JOIN v_parlamentarier_medium parlamentarier
+INNER JOIN v_parlamentarier parlamentarier
   ON interessenbindung.parlamentarier_id = parlamentarier.id
 ORDER BY parlamentarier.anzeige_name;
 
@@ -1606,7 +1827,7 @@ SELECT 'indirekt' as beziehung,
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_interessenbindung_simple interessenbindung
   ON organisation_beziehung.organisation_id = interessenbindung.organisation_id
-INNER JOIN v_parlamentarier_medium parlamentarier
+INNER JOIN v_parlamentarier parlamentarier
   ON interessenbindung.parlamentarier_id = parlamentarier.id
 WHERE
   organisation_beziehung.art = 'arbeitet fuer'
@@ -1617,14 +1838,14 @@ ORDER BY beziehung, parlamentarier_name;
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier_beide` AS
 SELECT 'interessenbindung' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, NULL as zutrittsberechtigung_id, NULL as zutrittsberechtigter, interessenbindung.art, interessenbindung.von, interessenbindung.bis,  interessenbindung.organisation_id, interessenbindung.freigabe_datum
 FROM v_interessenbindung_simple interessenbindung
-INNER JOIN v_parlamentarier_medium parlamentarier
+INNER JOIN v_parlamentarier parlamentarier
   ON interessenbindung.parlamentarier_id = parlamentarier.id
 UNION
 SELECT 'zutritt-mandat' as verbindung, parlamentarier.id as parlamentarier_id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.ratstyp, parlamentarier.kanton, parlamentarier.partei_id, parlamentarier.partei, parlamentarier.kommissionen, parlamentarier.parlament_biografie_id, zutrittsberechtigung.id as zutrittsberechtigung_id, zutrittsberechtigung.anzeige_name as zutrittsberechtigter, mandat.art, mandat.von, mandat.bis, mandat.organisation_id, mandat.freigabe_datum
 FROM v_zutrittsberechtigung_simple zutrittsberechtigung
 INNER JOIN v_mandat_simple mandat
   ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id
-INNER JOIN v_parlamentarier_medium parlamentarier
+INNER JOIN v_parlamentarier parlamentarier
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id;
 
 -- Parlamentarier, die eine indirekte Interessenbindung oder indirekte Zutrittsberechtiung mit Mandat zu dieser Organisation haben.
@@ -1638,7 +1859,7 @@ SELECT 'indirekt' as beziehung, 'interessenbindung' as verbindung, parlamentarie
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_interessenbindung_simple interessenbindung
   ON organisation_beziehung.organisation_id = interessenbindung.organisation_id
-INNER JOIN v_parlamentarier_medium parlamentarier
+INNER JOIN v_parlamentarier parlamentarier
   ON interessenbindung.parlamentarier_id = parlamentarier.id
 WHERE
   organisation_beziehung.art = 'arbeitet fuer'
@@ -1649,7 +1870,7 @@ INNER JOIN v_mandat mandat
   ON organisation_beziehung.organisation_id = mandat.organisation_id
 INNER JOIN v_zutrittsberechtigung_simple zutrittsberechtigung
   ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id
-INNER JOIN v_parlamentarier_medium parlamentarier
+INNER JOIN v_parlamentarier parlamentarier
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id
 WHERE
   organisation_beziehung.art = 'arbeitet fuer';
@@ -1767,6 +1988,55 @@ WHERE
   parlamentarier.im_rat_bis IS NULL
 GROUP BY parlamentarier.id;
 
+-- search table
+
+CREATE OR REPLACE VIEW `v_search_table_raw`
+AS 
+  SELECT id, 'parlamentarier' as table_name, 'parlamentarier' as page, -20 as table_weight, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight FROM v_parlamentarier
+   UNION ALL
+  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name, freigabe_datum, bis, -lobbyfaktor as weight FROM v_zutrittsberechtigung
+   UNION ALL
+  SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight FROM v_branche
+   UNION ALL
+  SELECT id, 'interessengruppe' as table_name, 'lobbygruppe' as page, -5 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight FROM v_interessengruppe
+   UNION ALL
+  SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight FROM v_kommission
+   UNION ALL
+  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, lobbyeinfluss as weight FROM v_organisation
+   UNION ALL
+  SELECT id, 'partei' as table_name, 'partei' as page, 20 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight FROM v_partei
+;
+
+DROP TABLE IF EXISTS `mv_search_table`;
+CREATE TABLE IF NOT EXISTS `mv_search_table`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+COMMENT='Materialzed view for parlamentarier, zutrittsberechtigung, branche, interessengruppe, kommission, organisation, partei'
+AS SELECT * FROM v_search_table_raw;
+ALTER TABLE `mv_search_table`
+ADD PRIMARY KEY (`id`, `table_name`),
+ADD KEY `idx_search_str_long` (freigabe_datum, bis, table_weight, weight, `name`),
+ADD KEY `idx_search_str_medium` (freigabe_datum, table_weight, weight, `name`),
+ADD KEY `idx_search_str_short` (table_weight, weight, `name`),
+ADD `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+--	DROP TABLE IF EXISTS `mv_search_table_myisam`;
+--	CREATE TABLE IF NOT EXISTS `mv_search_table_myisam` 
+--	ENGINE = MyISAM
+--	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+--	COMMENT='Materialzed view for v_search_table'
+--	AS SELECT * FROM `v_search_table_raw`;
+--	ALTER TABLE `mv_search_table_myisam`
+--	ADD PRIMARY KEY (`id`, `table_name`),
+--	ADD KEY `idx_search_str_long` (`name`, freigabe_datum, bis, weight),
+--	ADD KEY `idx_search_str_medium` (`name`, freigabe_datum, weight),
+--	ADD KEY `idx_search_str_short` (`name`, weight),
+--  ADD FULLTEXT(`name`),
+--	ADD `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+CREATE OR REPLACE VIEW `v_search_table` AS
+SELECT * FROM `mv_search_table`;
+
 -- CALL `refreshMaterializedViews`()
 DROP PROCEDURE IF EXISTS refreshMaterializedViews;
 delimiter //
@@ -1775,20 +2045,20 @@ COMMENT 'Aktualisiert die Materialized Views.'
 BEGIN
   DECLARE ts TIMESTAMP DEFAULT NOW();
 
-	REPLACE INTO `mv_organisation_lobbyeinfluss`
-	  SELECT * FROM `v_organisation_lobbyeinfluss_raw`;
+--	REPLACE INTO `mv_organisation_lobbyeinfluss`
+--	  SELECT * FROM `v_organisation_lobbyeinfluss_raw`;
 
-	REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor`
-	  SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_raw`;
+--	REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor`
+--	  SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_raw`;
 
-	REPLACE INTO `mv_parlamentarier_lobbyfaktor`
-	  SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
+--	REPLACE INTO `mv_parlamentarier_lobbyfaktor`
+--	  SELECT * FROM `v_parlamentarier_lobbyfaktor_raw`;
 
-	REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor_max`
-	  SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
+--	REPLACE INTO `mv_zutrittsberechtigung_lobbyfaktor_max`
+--	  SELECT * FROM `v_zutrittsberechtigung_lobbyfaktor_max_raw`;
 
-	REPLACE INTO `mv_parlamentarier_lobbyfaktor_max`
-	  SELECT * FROM `v_parlamentarier_lobbyfaktor_max_raw`;
+--	REPLACE INTO `mv_parlamentarier_lobbyfaktor_max`
+--	  SELECT * FROM `v_parlamentarier_lobbyfaktor_max_raw`;
 
 	REPLACE INTO `mv_interessenbindung`
 	  SELECT * FROM `v_interessenbindung_raw`;
@@ -1796,9 +2066,9 @@ BEGIN
 	REPLACE INTO `mv_mandat`
 	  SELECT * FROM `v_mandat_raw`;
 
-	REPLACE INTO `mv_organisation_medium`
-	  SELECT * FROM `v_organisation_medium_raw`;
-
+--	REPLACE INTO `mv_organisation_medium`
+--	  SELECT * FROM `v_organisation_medium_raw`;
+--
 --	REPLACE INTO `mv_organisation_medium_myisam`
 --	  SELECT * FROM `v_organisation_medium_raw`;
 
@@ -1808,9 +2078,9 @@ BEGIN
 --	REPLACE INTO `mv_organisation_myisam`
 --	  SELECT * FROM `v_organisation_raw`;
 
-	REPLACE INTO `mv_parlamentarier_medium`
-	  SELECT * FROM `v_parlamentarier_medium_raw`;
-
+--	REPLACE INTO `mv_parlamentarier_medium`
+--	  SELECT * FROM `v_parlamentarier_medium_raw`;
+--
 --	REPLACE INTO `mv_parlamentarier_medium_myisam`
 --	  SELECT * FROM `v_parlamentarier_medium_raw`;
 
@@ -1823,8 +2093,11 @@ BEGIN
 	REPLACE INTO `mv_zutrittsberechtigung`
 	  SELECT * FROM `v_zutrittsberechtigung_raw`;
 
---	REPLACE INTO `mv_zutrittsberechtigung_mysiam`
+--	REPLACE INTO `mv_zutrittsberechtigung_myisam`
 --	  SELECT * FROM `v_zutrittsberechtigung_raw`;
+
+	REPLACE INTO `mv_search_table`
+	  SELECT * FROM `v_search_table_raw`;
 
 END
 //

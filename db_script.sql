@@ -1,3 +1,5 @@
+-- http://explainextended.com/2010/11/03/10-things-in-mysql-that-wont-work-as-expected/
+
 -- 08.02.2014
 
 UPDATE `parlamentarier` p

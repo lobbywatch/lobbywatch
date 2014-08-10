@@ -1351,3 +1351,153 @@ ADD `anzahl_staenderaete` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kom
 ALTER TABLE `kommission_log`
 ADD `anzahl_nationalraete` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates' AFTER `sachbereiche`,
 ADD `anzahl_staenderaete` TINYINT UNSIGNED NULL DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates' AFTER `anzahl_nationalraete`;
+
+-- 10.08.2014
+
+ALTER TABLE `branche`
+DROP KEY `kommission_id`,
+ADD KEY `idx_kommission_freigabe` (`kommission_id`, `freigabe_datum`);
+
+ALTER TABLE `interessenbindung`
+-- MV is used for web
+--	ADD KEY `idx_parlam_freigabe` (`parlamentarier_id`, `freigabe_datum`, `bis`, `organisation_id`),
+--	ADD KEY `idx_parlam` (`parlamentarier_id`, `bis`, `organisation_id`),
+--	ADD KEY `idx_org_freigabe` (`organisation_id`, `freigabe_datum`, `bis`, `parlamentarier_id`),
+--	ADD KEY `idx_org` (`organisation_id`, `bis`, `parlamentarier_id`)
+DROP KEY `idx_parlam`,
+DROP KEY `idx_lobbyorg`,
+ADD KEY `parlamentarier_id` (`parlamentarier_id`, `organisation_id`),
+ADD KEY `organisation_id` (`organisation_id`, `parlamentarier_id`)
+-- most probably not used
+-- ADD KEY `idx_bis` (`bis`)
+;
+
+ALTER TABLE `interessengruppe`
+DROP KEY `idx_lobbytyp`,
+ADD KEY `idx_branche_freigabe` (`branche_id`, `freigabe_datum`);
+
+ALTER TABLE `in_kommission`
+DROP KEY `parlamentarier_id`,
+DROP KEY `kommissions_id`,
+ADD KEY `idx_parlam_freigabe` (`parlamentarier_id`, `freigabe_datum`, `bis`, `kommission_id`),
+ADD KEY `idx_parlam` (`parlamentarier_id`, `bis`, `kommission_id`),
+ADD KEY `idx_kommission_freigabe` (`kommission_id`, `freigabe_datum`, `bis`, `parlamentarier_id`),
+ADD KEY `idx_kommission` (`kommission_id`, `bis`, `parlamentarier_id`)
+-- most probably not used
+-- ADD KEY `idx_bis` (`bis`)
+;
+
+ALTER TABLE `kommission`
+DROP KEY `zugehoerige_kommission`,
+ADD KEY `zugehoerige_kommission` (`mutter_kommission_id`, `freigabe_datum`);
+
+ALTER TABLE `mandat`
+-- MV is used for web
+--	ADD KEY `idx_zutrittsberechtigung_freigabe` (`zutrittsberechtigung_id`, `freigabe_datum`, `bis`),
+--	ADD KEY `idx_zutrittsberechtigung` (`zutrittsberechtigung_id`, `bis`),
+--	ADD KEY `idx_org_freigabe` (`organisation_id`, `freigabe_datum`, `bis`),
+--	ADD KEY `idx_org` (`organisation_id`, `bis`)
+DROP KEY `organisations_id`,
+DROP KEY `zutrittsberechtigung_id`,
+ADD KEY `organisations_id` (`organisation_id`, `zutrittsberechtigung_id`),
+ADD KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`, `organisation_id`)
+-- most probably not used
+-- ADD KEY `idx_bis` (`bis`)
+;
+
+-- MV is used for web
+--	ALTER TABLE `organisation`
+--	ADD KEY `idx_branche_freigabe` (`branche_id`, `freigabe_datum`),
+--	ADD KEY `idx_branche` (`branche_id`),
+--	ADD KEY `idx_interessengruppe_freigabe` (`interessengruppe_id`, `freigabe_datum`),
+--	ADD KEY `idx_interessengruppe` (`interessengruppe_id`),
+--	ADD KEY `idx_interessengruppe2_freigabe` (`interessengruppe2_id`, `freigabe_datum`),
+--	ADD KEY `idx_interessengruppe2` (`interessengruppe2_id`),
+--	ADD KEY `idx_interessengruppe3_freigabe` (`interessengruppe3_id`, `freigabe_datum`),
+--	ADD KEY `idx_interessengruppe3` (`interessengruppe3_id`);
+
+ALTER TABLE `organisation_beziehung`
+ADD KEY `idx_org_freigabe` (`organisation_id`, `freigabe_datum`, `bis`, `ziel_organisation_id`),
+ADD KEY `idx_org` (`organisation_id`, `bis`, `ziel_organisation_id`),
+ADD KEY `idx_ziel_freigabe` (`ziel_organisation_id`, `freigabe_datum`, `bis`, `organisation_id`),
+ADD KEY `idx_ziel` (`ziel_organisation_id`, `bis`, `organisation_id`),
+DROP KEY `organisation_id`,
+DROP KEY `ziel_organisation_id`,
+ADD KEY `organisation_id` (`organisation_id`, `ziel_organisation_id`),
+ADD KEY `ziel_organisation_id` (`ziel_organisation_id`, `organisation_id`)
+;
+
+--	ALTER TABLE `organisation_jahr`
+--	ADD KEY `idx_updated` (`updated_date`, `id`);
+
+ALTER TABLE `parlamentarier`
+-- MV is used for web
+--	ADD KEY `idx_rat_id_freigabe` (`rat_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_rat_id` (`rat_id`, `im_rat_bis`),
+--	ADD KEY `idx_kanton_id_freigabe` (`kanton_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_kanton_id` (`kanton_id`, `im_rat_bis`),
+--	ADD KEY `idx_partei_id_freigabe` (`partei_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_partei_id` (`partei_id`, `im_rat_bis`),
+--	ADD KEY `idx_beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_beruf_interessengruppe_id` (`beruf_interessengruppe_id`, `im_rat_bis`),
+--	ADD KEY `idx_beruf_branche_id_freigabe` (`beruf_interessengruppe_branche_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_beruf_branche_id` (`beruf_interessengruppe_branche_id`, `im_rat_bis`),
+--	ADD KEY `idx_militaerischer_grad_freigabe` (`militaerischer_grad_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_militaerischer_grad` (`militaerischer_grad_id`, `im_rat_bis`),
+--	ADD KEY `idx_fraktion_id_freigabe` (`fraktion_id`, `freigabe_datum`, `im_rat_bis`),
+--	ADD KEY `idx_fraktion_id` (`fraktion_id`, `im_rat_bis`),
+DROP KEY `parlamentarier_nachname_vorname_unique`,
+ADD UNIQUE KEY `parlamentarier_nachname_vorname_unique` (`nachname`,`vorname`,`zweiter_vorname`) COMMENT 'Fachlicher unique constraint'
+-- most probably not used
+-- ADD KEY `idx_bis` (`im_rat_bis`)
+;
+
+--	ALTER TABLE `partei`
+--	ADD KEY `idx_updated` (`updated_date`, `id`);
+
+--	ALTER TABLE `fraktion`
+--	ADD KEY `idx_updated` (`updated_date`, `id`);
+--	
+--	ALTER TABLE `kanton_jahr`
+--	ADD KEY `idx_updated` (`updated_date`, `id`);
+
+-- ALTER TABLE `zutrittsberechtigung`
+-- MV is used for web
+--	ADD KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`, `freigabe_datum`, `bis`),
+--	ADD KEY `idx_parlam_bis` (`parlamentarier_id`, `bis`),
+--	ADD KEY `idx_parlam_anzeige` (`parlamentarier_id`),
+--	ADD KEY `idx_partei_id_freigabe` (`partei_id`, `freigabe_datum`, `bis`),
+--	ADD KEY `idx_partei_id` (`partei_id`, `bis`),
+--	ADD KEY `idx_beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`, `freigabe_datum`, `bis`),
+--	ADD KEY `idx_beruf_interessengruppe_id` (`beruf_interessengruppe_id`, `bis`)
+-- most probably not used
+-- ADD KEY `idx_bis` (`bis`)
+-- ;
+
+--	ALTER TABLE `parlamentarier_anhang`
+--	ADD KEY `idx_updated` (`updated_date`, `id`);
+--	
+--	ALTER TABLE `organisation_anhang`
+--	ADD KEY `idx_updated` (`updated_date`, `id`);
+--	
+--	ALTER TABLE `zutrittsberechtigung_anhang`
+--	ADD KEY `idx_updated` (`updated_date`, `id`);
+--	
+--	ALTER TABLE `settings`
+--	ADD KEY `idx_updated` (`updated_date`, `id`);
+--	
+--	ALTER TABLE `settings_category`
+--	ADD KEY `idx_updated` (`updated_date`, `id`);
+
+DROP VIEW `v_organisation_medium`;
+DROP TABLE IF EXISTS `mv_organisation_medium`;
+DROP TABLE IF EXISTS `mv_organisation_medium_myisam`;
+
+DROP VIEW `v_parlamentarier_medium`;
+DROP TABLE IF EXISTS `mv_parlamentarier_medium`;
+DROP TABLE IF EXISTS `mv_parlamentarier_medium_myisam`;
+DROP TABLE IF EXISTS `mv_organisation_lobbyeinfluss`;
+DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor`;
+DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
+DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor_max`;
+DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max`;
