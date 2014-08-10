@@ -1501,3 +1501,7 @@ DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor`;
 DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
 DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor_max`;
 DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max`;
+
+DROP TABLE IF EXISTS `mv_parlamentarier_myisam`;
+DROP TABLE IF EXISTS `mv_organisation_myisam`;
+DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;

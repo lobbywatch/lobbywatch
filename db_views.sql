@@ -720,7 +720,14 @@ lobbyeinfluss.anzahl_interessenbindung_hoch_nach_wahl,
 lobbyeinfluss.anzahl_mandat_tief,
 lobbyeinfluss.anzahl_mandat_mittel,
 lobbyeinfluss.anzahl_mandat_hoch,
-lobbyeinfluss.lobbyeinfluss
+lobbyeinfluss.lobbyeinfluss,
+CASE lobbyeinfluss.lobbyeinfluss
+WHEN 'extrem hoch' THEN 4
+WHEN 'hoch' THEN 3
+WHEN 'mittel' THEN 2
+WHEN 'tief' THEN 1
+ELSE 0
+END AS lobbyeinfluss_index
 FROM `v_organisation_medium_raw` organisation
 LEFT JOIN `v_organisation_lobbyeinfluss_raw` lobbyeinfluss
 ON lobbyeinfluss.id = organisation.id
@@ -1021,8 +1028,11 @@ CHANGE `anzahl_interessenbindung_tief_max` `anzahl_interessenbindung_tief_max` T
 CHANGE `anzahl_interessenbindung_mittel_max` `anzahl_interessenbindung_mittel_max` TINYINT UNSIGNED NULL DEFAULT NULL,
 CHANGE `anzahl_interessenbindung_hoch_max` `anzahl_interessenbindung_hoch_max` TINYINT UNSIGNED NULL DEFAULT NULL,
 ADD PRIMARY KEY (`id`),
-DROP COLUMN `ratstyp`,
-DROP COLUMN `kanton_abkuerzung`,
+-- DROP COLUMN makes trouble in resfresh from SELECT
+-- DROP COLUMN `ratstyp`,
+-- DROP COLUMN `kanton_abkuerzung`,
+CHANGE `ratstyp` `ratstyp_BAD` VARCHAR( 10 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
+CHANGE `kanton_abkuerzung` `kanton_abkuerzung_BAD` ENUM( 'AG', 'AR', 'AI', 'BL', 'BS', 'BE', 'FR', 'GE', 'GL', 'GR', 'JU', 'LU', 'NE', 'NW', 'OW', 'SH', 'SZ', 'SO', 'SG', 'TI', 'TG', 'UR', 'VD', 'VS', 'ZG', 'ZH' ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Not used, duplicate',
 -- for sort lobbyfaktor, anzeige_name
 ADD KEY `idx_freigabe_bis` (`freigabe_datum`, `im_rat_bis`),
 ADD KEY `idx_bis` (`im_rat_bis`),
@@ -1992,19 +2002,19 @@ GROUP BY parlamentarier.id;
 
 CREATE OR REPLACE VIEW `v_search_table_raw`
 AS 
-  SELECT id, 'parlamentarier' as table_name, 'parlamentarier' as page, -20 as table_weight, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight FROM v_parlamentarier
+  SELECT id, 'parlamentarier' as table_name, 'parlamentarier' as page, -20 as table_weight, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_parlamentarier
    UNION ALL
-  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name, freigabe_datum, bis, -lobbyfaktor as weight FROM v_zutrittsberechtigung
+  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name, freigabe_datum, bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
    UNION ALL
-  SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight FROM v_branche
+  SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_branche
    UNION ALL
-  SELECT id, 'interessengruppe' as table_name, 'lobbygruppe' as page, -5 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight FROM v_interessengruppe
+  SELECT id, 'interessengruppe' as table_name, 'lobbygruppe' as page, -5 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_interessengruppe
    UNION ALL
-  SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight FROM v_kommission
+  SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_kommission
    UNION ALL
-  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, lobbyeinfluss as weight FROM v_organisation
+  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, -lobbyeinfluss_index as weight, NOW() AS `refreshed_date` FROM v_organisation
    UNION ALL
-  SELECT id, 'partei' as table_name, 'partei' as page, 20 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight FROM v_partei
+  SELECT id, 'partei' as table_name, 'partei' as page, 20 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_partei
 ;
 
 DROP TABLE IF EXISTS `mv_search_table`;
@@ -2018,7 +2028,7 @@ ADD PRIMARY KEY (`id`, `table_name`),
 ADD KEY `idx_search_str_long` (freigabe_datum, bis, table_weight, weight, `name`),
 ADD KEY `idx_search_str_medium` (freigabe_datum, table_weight, weight, `name`),
 ADD KEY `idx_search_str_short` (table_weight, weight, `name`),
-ADD `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_search_table_myisam`;
 --	CREATE TABLE IF NOT EXISTS `mv_search_table_myisam` 
@@ -2102,3 +2112,5 @@ BEGIN
 END
 //
 delimiter ;
+
+CALL `refreshMaterializedViews`();
