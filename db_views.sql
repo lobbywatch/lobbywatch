@@ -950,7 +950,8 @@ GROUP_CONCAT(DISTINCT kommission.abkuerzung ORDER BY kommission.abkuerzung SEPAR
 COUNT(DISTINCT kommission.id) AS kommissionen_anzahl,
 partei.abkuerzung AS partei, partei.name AS partei_name, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad,
 interessengruppe.branche_id as beruf_branche_id,
-CONCAT(IF(parlamentarier.geschlecht='M', rat.name_de, ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '')) titel_de,
+-- Workaround: Add  COLLATE utf8_general_ci, otherwise ERROR 1270 (HY000): Illegal mix of collations (latin1_swedish_ci,IMPLICIT), (utf8_general_ci,COERCIBLE), (utf8_general_ci,COERCIBLE) for operation 'concat'
+CONCAT(IF(parlamentarier.geschlecht='M', rat.name_de, ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', '') COLLATE utf8_general_ci, IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '') COLLATE utf8_general_ci) titel_de,
 NOW() as refreshed_date
 FROM `v_parlamentarier_simple` parlamentarier
 LEFT JOIN `in_kommission` in_kommission ON parlamentarier.id = in_kommission.parlamentarier_id AND in_kommission.bis IS NULL
