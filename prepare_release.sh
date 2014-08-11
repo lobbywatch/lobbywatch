@@ -14,6 +14,7 @@ cat ../data/lobbywatch.sql \
 | perl -p -e's/(lobbywatch\.ch\/app\/)(files)/\1'''$env_dir_escaped'''\2/ig' \
 | perl -p -e's/(\/lobbywatch_db_files)/\1'''$env_dir2_escaped'''/ig' \
 | perl -p -e's/(UNIQUE KEY `\w*?` \(`\w*?`\)) COMMENT '.*?',/\1,/ig' \
+| perl -p -e's/COMMENT .Fachlicher unique constraint: Name muss einzigartig sein.//ig' \
 | perl -p -e's/COMMENT .Fachlicher unique constraint.//ig' \
 | perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' \
 | perl -p -e's/DEFINER=`root`@`localhost` //ig' \
