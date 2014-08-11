@@ -1505,3 +1505,22 @@ DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor_max`;
 DROP TABLE IF EXISTS `mv_parlamentarier_myisam`;
 DROP TABLE IF EXISTS `mv_organisation_myisam`;
 DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;
+
+-- These indexes seem not to be useful
+--	ALTER TABLE `parlamentarier`
+--	ADD KEY `idx_bis` (`im_rat_bis`, `nachname`);
+--	
+--	ALTER TABLE `zutrittsberechtigung`
+--	ADD KEY `idx_bis` (`bis`, `nachname`);
+--	
+--	ALTER TABLE `interessenbindung`
+--	ADD KEY `idx_bis` (`bis`);
+--	
+--	ALTER TABLE `mandat`
+--	ADD KEY `idx_bis` (`bis`);
+--	
+--	ALTER TABLE `in_kommission`
+--	ADD KEY `idx_bis` (`bis`);
+--	
+--	ALTER TABLE `organisation_beziehung`
+--	ADD KEY `idx_bis` (`bis`);
