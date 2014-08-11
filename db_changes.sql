@@ -1535,3 +1535,9 @@ ALTER TABLE `user`
 ALTER TABLE `user_permission`
 DROP KEY `user_id`,
 ADD KEY `user_id` (`user_id`, `page_name`, `permission_name`);
+
+DROP VIEW `v_organisation_lobbyeinfluss`;
+DROP VIEW `v_zutrittsberechtigung_lobbyfaktor`;
+DROP VIEW `v_parlamentarier_lobbyfaktor`;
+DROP VIEW `v_parlamentarier_lobbyfaktor_max`;
+DROP VIEW `v_zutrittsberechtigung_lobbyfaktor_max`;
