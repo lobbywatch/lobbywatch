@@ -43,6 +43,7 @@ JSON Response:
       "message" : "1 record(s) found",
       "sql" : "\n      SELECT branche.*\n      FROM v_branche branche\n      WHERE branche.id=:id",
       "source": "branche",
+      "build secs": 0.15,
       "data" : {
         "anzeige_name" : "Gesundheit",
         "id" : "1",
@@ -76,6 +77,7 @@ JSON Response:
       "message" : "13 record(s) found",
       "sql" : "\n    SELECT interessengruppe.*\n    FROM v_interessengruppe interessengruppe\n    WHERE 1  AND interessengruppe.branche_id = 1",
       "source": "interessengruppe",
+      "build secs": 0.18,
       "data" : [
           {
             "anzeige_name" : "Pharma",
@@ -121,6 +123,7 @@ A data interface call returns always a JSON response of the same base structure.
       "message" : "",
       "sql" : "",
       "source": "",
+      "build secs": 0,
       "data" : null
     }
 
@@ -133,6 +136,7 @@ count | int >= 0 | Number of records, 0 in case of errors, never null
 message | string | Messages, e.g. error messages, never null
 sql | string | SQL used in this call, never null
 source | DB data source | Name of view, the prefix `v_` in the DB is omitted
+build secs | float | Time in seconds required to process the request 
 data | array | Data of the call, data can be nested, null in case of errors or if nothing is found
 
 Calls

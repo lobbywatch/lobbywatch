@@ -46,7 +46,7 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
         'message' => $message,
         'sql' => $show_sql? $sql : '',
         'source' => $table,
-        'build_secs' => _lobbywatch_page_build_secs(),
+        'build secs' => _lobbywatch_page_build_secs(),
         'data' => $success ? $items[0] : null,
     );
 
@@ -78,7 +78,7 @@ function _lobbywatch_data_not_found($type, $table, $json = true) {
         'message' => $message,
         'sql' => '',
         'source' => $table,
-        'build_secs' => _lobbywatch_page_build_secs(),
+        'build secs' => _lobbywatch_page_build_secs(),
         'data' => null,
     );
 
@@ -240,7 +240,7 @@ function _lobbywatch_data_table_flat_list($table, $condition = '1', $json = true
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build_secs' => _lobbywatch_page_build_secs(),
+        'build secs' => _lobbywatch_page_build_secs(),
         'data' => $items
     );
 
@@ -291,7 +291,7 @@ function _lobbywatch_data_relation_flat_list($table, $condition = '1', $json = t
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build_secs' => _lobbywatch_page_build_secs(),
+        'build secs' => _lobbywatch_page_build_secs(),
         'data' => $items
     );
 
@@ -351,7 +351,7 @@ function _lobbywatch_data_table_flat_list_search($table, $search_str, $json = tr
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build_secs' => _lobbywatch_page_build_secs(),
+        'build secs' => _lobbywatch_page_build_secs(),
         'data' => $items
     );
     if ($json) {
@@ -409,7 +409,7 @@ function _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($id, $json = t
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build_secs' => _lobbywatch_page_build_secs(),
+        'build secs' => _lobbywatch_page_build_secs(),
         'data' => $aggregated
     );
     if ($json) {
@@ -479,7 +479,7 @@ function _lobbywatch_data_table_parlamentarier_aggregated_id($id, $json = true) 
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build_secs' => _lobbywatch_page_build_secs(),
+        'build secs' => _lobbywatch_page_build_secs(),
         'data' => $aggregated
     );
     if ($json) {
@@ -563,7 +563,7 @@ function _lobbywatch_data_table_organisation_aggregated_id($id, $json = true) {
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build_secs' => _lobbywatch_page_build_secs(),
+        'build secs' => _lobbywatch_page_build_secs(),
         'data' => $aggregated
     );
     if ($json) {
@@ -640,7 +640,7 @@ order by count(*) desc, $table.partei asc "
         'message' => $message,
         'sql' => $show_sql ? $sql : '',
         'source' => $table,
-        'build_secs' => _lobbywatch_page_build_secs(),
+        'build secs' => _lobbywatch_page_build_secs(),
         'data' => $items
     );
 
