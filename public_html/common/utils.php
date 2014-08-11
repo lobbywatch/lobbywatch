@@ -306,3 +306,35 @@ function &php_static_cache($name, $default_value = NULL, $reset = FALSE) {
   // variable.
   return $data;
 }
+
+function get_PDO_lobbywatch_DB_connection() {
+  global $db_connection;
+  global $db;
+  if (empty($db)) {
+    $db = new PDO('mysql:host=localhost;dbname=' . $db_connection['database'] . ';charset=utf8', $db_connection['reader_username'], $db_connection['reader_password'], array(PDO::ATTR_PERSISTENT => true));
+    // Disable prepared statement emulation, http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php
+    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  }
+  return $db;
+}
+
+/**
+ * Encodes special characters in a plain-text string for display as HTML.
+ *
+ * Also validates strings as UTF-8 to prevent cross site scripting attacks on
+ * Internet Explorer 6.
+ *
+ * @param $text
+ *   The text to be checked or processed.
+ *
+ * @return
+ *   An HTML safe version of $text, or an empty string if $text is not
+ *   valid UTF-8.
+ *
+ * @see drupal_validate_utf8()
+ * @ingroup sanitization
+ */
+function common_check_plain($text) {
+  return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+}

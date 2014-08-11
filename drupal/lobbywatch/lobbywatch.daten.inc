@@ -31,6 +31,46 @@ function _lobbywatch_search_autocomplete($str = '', $check_unpublished = true) {
   drupal_json_output($items);
 }
 
+function _lobbywatch_search_autocomplete_LIKE_search_table($str, $check_unpublished = true) {
+  $sql = "
+SELECT id, page, name
+FROM v_search_table
+WHERE
+name LIKE :str ". ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '') . "
+ORDER BY table_weight, weight
+LIMIT 20;";
+  //dpm($sql, 'suche');
+  $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($str)));
+
+  return $result;
+}
+
+function _lobbywatch_search_form_LIKE_search_table($search_str) {
+  $table = 'search_table';
+  $query = db_select("v_$table", $table)->extend('PagerDefault');
+  $query->fields($table, array('id', 'page', 'name'));
+  $query->condition('name', $search_str, 'LIKE');
+  if (!user_access('access lobbywatch unpublished content')) {
+    //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
+    $query2->where('freigabe_datum <= NOW()');
+  }
+  if (!user_access('access lobbywatch advanced content')) {
+    //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
+    $query2->condition(db_or()->isNull('bis')->where('bis > NOW()'));
+  }
+  $query_result = $query->execute();
+  return $query_result;
+}
+
+function _lobbywatch_search_keyword_processing($str) {
+  $search_str = preg_replace('!\*+!', '%', $str);
+  //     $search_str = '%' . db_like($keys) . '%'
+  if (!preg_match('/[%_]/', $search_str)) {
+    $search_str = "%$search_str%";
+  }
+  return $search_str;
+}
+
 /** Currently not used */
 function _lobbywatch_search_autocomplete_LIKE_UNION($str, $check_unpublished = true) {
   $table_sql = array();
@@ -49,20 +89,6 @@ function _lobbywatch_search_autocomplete_LIKE_UNION($str, $check_unpublished = t
 
 //   $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
   $sql = implode("\n UNION ALL \n", $table_sql). ' LIMIT 20;'; // LIMIT applies to the whole query, ref http://stackoverflow.com/questions/12684407/how-to-using-order-by-and-limit-in-union-mysql-query
-  //dpm($sql, 'suche');
-  $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($str)));
-
-  return $result;
-}
-
-function _lobbywatch_search_autocomplete_LIKE_search_table($str, $check_unpublished = true) {
-  $sql = "
-SELECT id, page, name
-FROM v_search_table
-WHERE
-name LIKE :str ". ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '') . "
-ORDER BY table_weight, weight
-LIMIT 20;";
   //dpm($sql, 'suche');
   $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($str)));
 
@@ -129,32 +155,6 @@ function _lobbywatch_search_form_LIKE_UNION($search_str) {
   $union_query->fields('union_query', array('name', 'page', 'id'));
   $query_result = $union_query->execute();
   return $query_result;
-}
-
-function _lobbywatch_search_form_LIKE_search_table($search_str) {
-  $table = 'search_table';
-  $query = db_select("v_$table", $table)->extend('PagerDefault');
-  $query->fields($table, array('id', 'page', 'name'));
-  $query->condition('name', $search_str, 'LIKE');
-  if (!user_access('access lobbywatch unpublished content')) {
-    //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
-    $query2->where('freigabe_datum <= NOW()');
-  }
-  if (!user_access('access lobbywatch advanced content')) {
-    //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
-    $query2->condition(db_or()->isNull('bis')->where('bis > NOW()'));
-  }
-  $query_result = $query->execute();
-  return $query_result;
-}
-
-function _lobbywatch_search_keyword_processing($str) {
-  $search_str = preg_replace('!\*+!', '%', $str);
-  //     $search_str = '%' . db_like($keys) . '%'
-  if (!preg_match('/[%_]/', $search_str)) {
-    $search_str = "%$search_str%";
-  }
-  return $search_str;
 }
 
 /**
