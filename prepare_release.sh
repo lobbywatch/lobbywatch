@@ -18,6 +18,7 @@ cat ../data/lobbywatch.sql \
 | perl -p -e's/COMMENT .Fachlicher unique constraint.//ig' \
 | perl -p -e's/DEFINER=.*? SQL SECURITY DEFINER//ig' \
 | perl -p -e's/DEFINER=`root`@`localhost` //ig' \
+| perl -p -e's/^USE /SET collation_connection = '\''utf8_general_ci'\'';\nUSE /ig' \
 > ../data/deploy_lobbywatch.sql;
 
 cp -u lobbywatch_datenmodell.pdf public_html/
