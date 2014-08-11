@@ -1447,7 +1447,8 @@ ALTER TABLE `parlamentarier`
 --	ADD KEY `idx_fraktion_id_freigabe` (`fraktion_id`, `freigabe_datum`, `im_rat_bis`),
 --	ADD KEY `idx_fraktion_id` (`fraktion_id`, `im_rat_bis`),
 DROP KEY `parlamentarier_nachname_vorname_unique`,
-ADD UNIQUE KEY `parlamentarier_nachname_vorname_unique` (`nachname`,`vorname`,`zweiter_vorname`) COMMENT 'Fachlicher unique constraint'
+ADD UNIQUE KEY `parlamentarier_nachname_vorname_unique` (`nachname`,`vorname`,`zweiter_vorname`)
+-- COMMENT 'Fachlicher unique constraint'
 -- most probably not used
 -- ADD KEY `idx_bis` (`im_rat_bis`)
 ;
@@ -1527,7 +1528,9 @@ DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;
 
 ALTER TABLE `user`
   CHANGE `password` `password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
-  ADD UNIQUE KEY `idx_name_unique` (`name`) COMMENT 'Fachlicher unique constraint: Name muss einzigartig sein';
+  ADD UNIQUE KEY `idx_name_unique` (`name`)
+  -- COMMENT 'Fachlicher unique constraint: Name muss einzigartig sein'
+  ;
 	
 ALTER TABLE `user_permission`
 DROP KEY `user_id`,
