@@ -564,7 +564,7 @@ function _lobbywatch_check_is_html_output() {
 }
 
 function _lobbywatch_shutdown() {
-  if (user_access('access lobbywatch admin') && _lobbywatch_check_is_html_output()) {
+  if (_lobbywatch_check_is_html_output() && function_exists('user_access') && user_access('access lobbywatch admin')) {
     print '<div class="footer-processing admin"><small>Page execution time was ' . _lobbywatch_page_build_secs() . 's</small></div>';
   }
 }
