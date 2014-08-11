@@ -89,7 +89,7 @@ $(function() {
   $("#cellFilterOptionsKommission").html(filterKommissionText);
 
   // read JSON data
-  var datasource = "/de/data/interface/v1/json/table/parlamentarier/aggregated/id/" + id + filterJSONData;
+  var datasource = "/de/data/interface/v1/json/table/parlamentarier/aggregated/id/" + id + '?includeInactive=1' + filterJSONData;
 
 //  console.log(datasource);
   //var urlData = "http://localhost/VisualLobby/" + datasource;
