@@ -553,8 +553,18 @@ function lobbywatch_init() {
 function lobbywatch_exit() {
 }
 
+function _lobbywatch_check_is_json_output() {
+//   print drupal_get_http_header('Content-Type');
+  return drupal_get_http_header('Content-Type') == 'application/json';
+}
+
+function _lobbywatch_check_is_html_output() {
+//   print drupal_get_http_header('Content-Type');
+  return preg_match('/html/', drupal_get_http_header('Content-Type'));
+}
+
 function _lobbywatch_shutdown() {
-  if (user_access('access lobbywatch admin')) {
+  if (user_access('access lobbywatch admin') && _lobbywatch_check_is_html_output()) {
     print '<div class="footer-processing admin"><small>Page execution time was ' . _lobbywatch_page_build_secs() . 's</small></div>';
   }
 }
