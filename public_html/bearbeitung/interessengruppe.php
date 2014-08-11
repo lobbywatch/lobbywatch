@@ -16879,19 +16879,19 @@
             $tmp = array();
             $this->GetConnection()->ExecQueryToArray("
             SELECT DISTINCT
-            upper(left(i.name, 1)) as first_letter
+            left(i.name, 1) as first_letter
             FROM interessengruppe i
             ORDER BY first_letter", $tmp
             );
             
             foreach($tmp as $letter) {
-              $partitions[$letter['first_letter']] = convert_ansi($letter['first_letter']);
+              $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
             }
         }
         
         function partition_OnGetPartitionCondition($partitionKey, &$condition)
         {
-            $condition = "upper(left(interessengruppe.name, 1)) = '$partitionKey'";
+            $condition = "left(interessengruppe.name, 1) = '$partitionKey'";
         }
     
         protected function CreateGrid()

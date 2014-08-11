@@ -50502,19 +50502,19 @@
             $tmp = array();
             $this->GetConnection()->ExecQueryToArray("
             SELECT DISTINCT
-            upper(left(o.name_de, 1)) as first_letter
+            left(o.name_de, 1) as first_letter
             FROM organisation o
             ORDER BY first_letter", $tmp
             );
             
             foreach($tmp as $letter) {
-              $partitions[$letter['first_letter']] = convert_ansi($letter['first_letter']);
+              $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
             }
         }
         
         function partition_OnGetPartitionCondition($partitionKey, &$condition)
         {
-            $condition = "upper(left(organisation.name_de, 1)) = '$partitionKey'";
+            $condition = "left(organisation.name_de, 1) = '$partitionKey'";
         }
     
         protected function CreateGrid()

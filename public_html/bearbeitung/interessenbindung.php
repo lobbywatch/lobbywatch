@@ -3531,19 +3531,19 @@
             $tmp = array();
             $this->GetConnection()->ExecQueryToArray("
             SELECT DISTINCT
-            upper(left(p.nachname, 1)) as first_letter
+            left(p.nachname, 1) as first_letter
             FROM parlamentarier p
             ORDER BY first_letter", $tmp
             );
             
             foreach($tmp as $letter) {
-              $partitions[$letter['first_letter']] = convert_ansi($letter['first_letter']);
+              $partitions[$letter['first_letter']] = convert_ansi(strtoupper($letter['first_letter']));
             }
         }
         
         function partition_OnGetPartitionCondition($partitionKey, &$condition)
         {
-            $condition = "interessenbindung.parlamentarier_id IN (SELECT `id` FROM `parlamentarier` s WHERE upper(left(s.nachname, 1)) = '$partitionKey')";
+            $condition = "interessenbindung.parlamentarier_id IN (SELECT `id` FROM `parlamentarier` s WHERE left(s.nachname, 1) = '$partitionKey')";
         }
     
         protected function CreateGrid()
