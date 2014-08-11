@@ -2,6 +2,8 @@
 
 // ATTENTION: THIS FILE IS ENCODED AS ISO-8859-1
 
+timer_start('page_build');
+
 require_once dirname(__FILE__) . "/../settings/settings.php";
 require_once dirname(__FILE__) . "/../common/utils.php";
 require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_state.php';
@@ -1675,4 +1677,82 @@ function defaultOnAfterLogin($userName, $connection) {
 function set_db_session_parameters($con) {
   $session_sql = "SET SESSION group_concat_max_len=10000;";
   $con->query($session_sql);
+}
+
+function _custom_page_build_secs() {
+  return round(timer_read('page_build')/1000, 2);
+}
+
+/**
+ * Starts the timer with the specified name.
+ *
+ * Copied from Drupal 7.
+ *
+ * If you start and stop the same timer multiple times, the measured intervals
+ * will be accumulated.
+ *
+ * @param $name
+ *   The name of the timer.
+ */
+function timer_start($name) {
+  global $timers;
+
+  $timers[$name]['start'] = microtime(TRUE);
+  $timers[$name]['count'] = isset($timers[$name]['count']) ? ++$timers[$name]['count'] : 1;
+}
+
+/**
+ * Reads the current timer value without stopping the timer.
+ *
+ * Copied from Drupal 7.
+ *
+ * @param $name
+ *   The name of the timer.
+ *
+ * @return
+ *   The current timer value in ms.
+ */
+function timer_read($name) {
+  global $timers;
+
+  if (isset($timers[$name]['start'])) {
+    $stop = microtime(TRUE);
+    $diff = round(($stop - $timers[$name]['start']) * 1000, 2);
+
+    if (isset($timers[$name]['time'])) {
+      $diff += $timers[$name]['time'];
+    }
+    return $diff;
+  }
+  return $timers[$name]['time'];
+}
+
+/**
+ * Stops the timer with the specified name.
+ *
+ * Copied from Drupal 7.
+ *
+ * @param $name
+ *   The name of the timer.
+ *
+ * @return
+ *   A timer array. The array contains the number of times the timer has been
+ *   started and stopped (count) and the accumulated timer value in ms (time).
+ */
+function timer_stop($name) {
+  global $timers;
+
+  if (isset($timers[$name]['start'])) {
+    $stop = microtime(TRUE);
+    $diff = round(($stop - $timers[$name]['start']) * 1000, 2);
+    if (isset($timers[$name]['time'])) {
+      $timers[$name]['time'] += $diff;
+    }
+    else {
+      $timers[$name]['time'] = $diff;
+    }
+    unset($timers[$name]['start']);
+  }
+
+  return $timers[$name];
 }

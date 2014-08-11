@@ -88,6 +88,7 @@ do
   | perl -p -e's/\$deploy_date:\$/'\'' \. \$GLOBALS["deploy_date"] \. '\''/g' \
   | perl -p -e's/\$deploy_date/'\'' \. \$GLOBALS["deploy_date"] \. '\''/g' \
   | perl -p -e's/\$deploy_date_short/'\'' \. \$GLOBALS["deploy_date_short"] \. '\''/g' \
+  | perl -p -e's/\$build_secs/'\'' \. _custom_page_build_secs() \. '\''/g' \
   | perl -p -e's/\$version/'\'' \. \$GLOBALS["version"] \. '\''/g' \
   | perl -p -e's/\$edit_general_hint/'\'' \. \$GLOBALS["edit_general_hint"] \. '\''/g' \
   | perl -p -e's/\$edit_header_message/'\'' \. \$GLOBALS["edit_header_message"] \. '\''/g' \

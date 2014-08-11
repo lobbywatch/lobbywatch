@@ -537,9 +537,20 @@ function lobbywatch_get_kommissionen($check_unpublished = true) {
   return $cache;
 }
 
+function lobbywatch_boot() {
+  timer_start('page_build');
+}
+
+function _lobbywatch_page_build_secs() {
+  return round(timer_read('page_build')/1000, 2);
+}
+
 function lobbywatch_init() {
 //     require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/common/utils.php';
 //     require_once DRUPAL_ROOT . '/sites/lobbywatch.ch/app/settings/settings.php';
+}
+
+function lobbywatch_exit() {
 }
 
 function lobbywatch_search_info() {

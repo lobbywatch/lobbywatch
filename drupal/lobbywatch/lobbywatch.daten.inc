@@ -560,6 +560,7 @@ GROUP BY branche.id;";
 function _lobbywatch_parlamentarier_id($id, $name='', $check_unpublished = true) {
 
 //   dpm($id, 'id');
+  timer_start('lobbywatch_db_read');
 
   $url_name = _lobbywatch_anzeige_name_for_url('parlamentarier', $id);
   if ($name !== $url_name) {
@@ -806,6 +807,7 @@ function _lobbywatch_organisation_list($check_unpublished = true) {
 function _lobbywatch_organisation_id($id, $name = '', $check_unpublished = true) {
 
   //   dpm($id, 'id');
+  timer_start('lobbywatch_db_read');
 
   $url_name = _lobbywatch_anzeige_name_for_url('organisation', $id);
   if ($name !== $url_name) {
@@ -1199,6 +1201,7 @@ function _lobbywatch_kommission_id_SQL($only_active_parlamentarier, $check_unpub
 function _lobbywatch_kommission_id($id, $name = '') {
 
   //   dpm($id, 'id');
+  timer_start('lobbywatch_db_read');
 
   $url_name = _lobbywatch_anzeige_name_for_url('kommission', $id);
   if ($name !== $url_name) {
@@ -1343,6 +1346,7 @@ function _lobbywatch_partei_list($check_unpublished = true) {
 function _lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
 
   //   dpm($id, 'id');
+  timer_start('lobbywatch_db_read');
 
   $url_name = _lobbywatch_anzeige_name_for_url('partei', $id);
   if ($name !== $url_name) {
@@ -1467,6 +1471,7 @@ function _lobbywatch_branche_id($id, $name = '', $check_unpublished = true) {
 
 //   dpm($id, 'id');
 //   dpm($name, '$name');
+  timer_start('lobbywatch_db_read');
 
   $url_name = _lobbywatch_anzeige_name_for_url('branche', $id);
 //   dpm($url_name, '$url_name');
@@ -1590,6 +1595,7 @@ function _lobbywatch_interessengruppe_list($check_unpublished = true) {
 function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = true) {
 
   //   dpm($id, 'id');
+  timer_start('lobbywatch_db_read');
 
   $url_name = _lobbywatch_anzeige_name_for_url('interessengruppe', $id);
   if ($name !== $url_name) {
@@ -1725,6 +1731,7 @@ function _lobbywatch_zutrittsberechtigung_list($check_unpublished = true) {
 function _lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished = true) {
 
   //   dpm($id, 'id');
+  timer_start('lobbywatch_db_read');
 
   $url_name = _lobbywatch_anzeige_name_for_url('zutrittsberechtigung', $id);
   if ($name !== $url_name) {
@@ -1872,6 +1879,8 @@ function _lobbywatch_get_kommissionen($check_unpublished = true) {
 }
 
 function _lobbywatch_get_workflow_state_line($record) {
+  $lobbywatch_db_read_time = round(timer_read('lobbywatch_db_read') / 1000, 2);
+  $page_build_time = _lobbywatch_page_build_secs();
   global $env;
   $admin = user_access('access lobbywatch admin');
   $unpublished = user_access('access lobbywatch unpublished content');
@@ -1880,12 +1889,15 @@ function _lobbywatch_get_workflow_state_line($record) {
     ($admin ?
       '<span class="admin">/' . $record ['updated_visa'] . '</span>' : '') .
       '<br>' . ($record['freigabe_datum'] && $record['freigabe_datum_unix'] < time() ? t('Veröffentlicht !date', array ('!date' => '<time datetime="'.getISO8601Date($record['freigabe_datum_unix']).'" pubdate="pubdate">' . format_date($record['freigabe_datum_unix'], 'short_date') . '</time>' )) . ($admin ? '<span class="admin">/' . $record ['freigabe_visa'] . '</span>' : '') : t('Unveröffentlicht')) .
-    ($admin ?  '<span class="admin"><br>' . t('Created  @date', array ('@date' => format_date($record['created_date_unix'], 'short_date'))) . '/' . $record ['created_visa'] .
+    ($admin ?  '<span class="admin">
+        <br>' . t('Created  @date', array ('@date' => format_date($record['created_date_unix'], 'short_date'))) . '/' . $record ['created_visa'] .
       ($record ['eingabe_abgeschlossen_datum_unix'] ? '<br>' . t('Eingabe  @date', array ('@date' => format_date($record ['eingabe_abgeschlossen_datum_unix'], 'short_date') )) . '/' .  $record ['eingabe_abgeschlossen_visa'] : '')
-      . ($record ['kontrolliert_datum_unix'] ? '<br>' . t('Kontrolle  @date', array ('@date' => format_date($record ['kontrolliert_datum_unix'], 'short_date') )) . '/' .  $record ['kontrolliert_visa'] : '') .'</span>'
+      . ($record ['kontrolliert_datum_unix'] ? '<br>' . t('Kontrolle  @date', array ('@date' => format_date($record ['kontrolliert_datum_unix'], 'short_date') )) . '/' .  $record ['kontrolliert_visa'] : '')
+        . '</span>'
     : '') .
+
   '</small></p>' .
-  ($admin ? "<p class=\"lobbywatch-meta-fields-line admin\"><small>Verwendete DB: $env</small></p>" : "");
+  ($admin ? "<p class=\"lobbywatch-meta-fields-line admin\"><small>Verwendete DB: $env; ${lobbywatch_db_read_time}s; Page build ${page_build_time}s</small></p>" : "");
 }
 
 function getISO8601Date($unix_timestamp) {
