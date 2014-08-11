@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 11. Aug 2014 um 01:20
+-- Erstellungszeit: 11. Aug 2014 um 08:06
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -3674,14 +3674,14 @@ CREATE TABLE IF NOT EXISTS `snapshot` (
 --
 -- Tabellenstruktur für Tabelle `user`
 --
--- Erzeugt am: 21. Jul 2014 um 13:43
+-- Erzeugt am: 11. Aug 2014 um 06:05
 --
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel User',
   `name` varchar(10) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `nachname` varchar(100) DEFAULT NULL COMMENT 'Nachname des Benutzers',
   `vorname` varchar(50) DEFAULT NULL COMMENT 'Vorname des Benutzers',
   `email` varchar(100) DEFAULT NULL COMMENT 'E-Mail-Adresse des Benutzers',
@@ -3693,7 +3693,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_name_unique` (`name`) COMMENT 'Fachlicher unique constraint: Name muss einzigartig sein'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator users' AUTO_INCREMENT=19 ;
 
 -- --------------------------------------------------------
@@ -3701,7 +3702,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 --
 -- Tabellenstruktur für Tabelle `user_permission`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erzeugt am: 11. Aug 2014 um 06:05
 --
 
 DROP TABLE IF EXISTS `user_permission`;
@@ -3711,7 +3712,7 @@ CREATE TABLE IF NOT EXISTS `user_permission` (
   `page_name` varchar(500) DEFAULT NULL,
   `permission_name` varchar(6) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
+  KEY `user_id` (`user_id`,`page_name`(255),`permission_name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions' AUTO_INCREMENT=257 ;
 
 -- --------------------------------------------------------

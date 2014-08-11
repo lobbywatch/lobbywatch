@@ -106,7 +106,7 @@ class MyCommandImp extends EngCommandImp {
     }
 
     protected function CreateCaseInsensitiveLikeExpression($left, $right) {
-        return sprintf('UPPER(%s) LIKE UPPER(%s)', $left, $right);
+        return sprintf('%s LIKE %s' /*afterburner: default is case insensitive (utf8_general_ci), no need for UPPER function which stops indexes in MySQL*/, $left, $right);
     }
 
     public function EscapeString($string) {

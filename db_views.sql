@@ -626,8 +626,10 @@ ADD PRIMARY KEY (`id`),
 -- indexes for joins on web
 ADD KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`, `freigabe_datum`, `bis`, `organisation_id`),
 ADD KEY `idx_parlam_bis` (`parlamentarier_id`, `bis`, `organisation_id`),
+ADD KEY `idx_parlam` (`parlamentarier_id`, `organisation_id`),
 ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `parlamentarier_id`),
 ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `parlamentarier_id`),
+ADD KEY `idx_org` (`organisation_id`, `parlamentarier_id`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_interessenbindung` AS
@@ -657,8 +659,10 @@ ADD PRIMARY KEY (`id`),
 -- indexes for joins on web
 ADD KEY `idx_zutritt_freigabe_bis` (`zutrittsberechtigung_id`, `freigabe_datum`, `bis`, `organisation_id`),
 ADD KEY `idx_zutritt_bis` (`zutrittsberechtigung_id`, `bis`, `organisation_id`),
+ADD KEY `idx_zutritt` (`zutrittsberechtigung_id`, `organisation_id`),
 ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `zutrittsberechtigung_id`),
 ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `zutrittsberechtigung_id`),
+ADD KEY `idx_org` (`organisation_id`, `zutrittsberechtigung_id`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 CREATE OR REPLACE VIEW `v_mandat` AS

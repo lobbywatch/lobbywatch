@@ -322,6 +322,15 @@ do
   > "$file";
 done
 
+for file in $dir/database_engine/mysql_engine.php $dir/database_engine/commands.php
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  cat "$file.bak" \
+| perl -p -e's/'\''UPPER\(%s\) LIKE UPPER\(%s\)'\''/'\''%s LIKE %s'\'' \/*afterburner: default is case insensitive (utf8_general_ci), no need for UPPER function which stops indexes in MySQL*\//' \
+  > "$file";
+done
+
 for file in *.pgtm
 do
   echo "Process $file";

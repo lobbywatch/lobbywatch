@@ -1524,3 +1524,11 @@ DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;
 --	
 --	ALTER TABLE `organisation_beziehung`
 --	ADD KEY `idx_bis` (`bis`);
+
+ALTER TABLE `user`
+  CHANGE `password` `password` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  ADD UNIQUE KEY `idx_name_unique` (`name`) COMMENT 'Fachlicher unique constraint: Name muss einzigartig sein';
+	
+ALTER TABLE `user_permission`
+DROP KEY `user_id`,
+ADD KEY `user_id` (`user_id`, `page_name`, `permission_name`);
