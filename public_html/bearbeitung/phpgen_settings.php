@@ -71,7 +71,7 @@ function GetPagesFooter()
 {
     return
         'Bearbeitungsseiten von <a href="' . $GLOBALS["env_dir"] . '">Lobbywatch ' . $GLOBALS["env"] . '</a>; <!-- a href="' . $GLOBALS["env_dir"] . 'auswertung">Auswertung</a--> <a href="/wiki">Wiki</a><br>
-Mode: ' . $GLOBALS["env"] . ' / Version: ' . $GLOBALS["version"] . ' / Deploy date: ' . $GLOBALS["deploy_date"] . ' / Build date: ' . $GLOBALS["build_date"] . '; Build time: ' . _custom_page_build_secs() . 's'; 
+Mode: ' . $GLOBALS["env"] . ' / Version: ' . $GLOBALS["version"] . ' / Deploy date: ' . $GLOBALS["deploy_date"] . ' / Build date: ' . $GLOBALS["build_date"] . ' / Page process time: ' . _custom_page_build_secs() . 's'; 
     }
 
 function ApplyCommonPageSettings(Page $page, Grid $grid)

@@ -1897,7 +1897,7 @@ function _lobbywatch_get_workflow_state_line($record) {
     : '') .
 
   '</small></p>' .
-  ($admin ? "<p class=\"lobbywatch-meta-fields-line admin\"><small>Verwendete DB: $env; ${lobbywatch_db_read_time}s; Page build ${page_build_time}s</small></p>" : "");
+  ($admin ? "<p class=\"lobbywatch-meta-fields-line admin\"><small>Verwendete DB: $env; DB read time: ${lobbywatch_db_read_time}s; Page proceess time: ${page_build_time}s</small></p>" : "");
 }
 
 function getISO8601Date($unix_timestamp) {
