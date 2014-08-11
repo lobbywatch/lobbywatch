@@ -470,7 +470,7 @@ GROUP_CONCAT(DISTINCT
 ) mandate
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND mandat.freigabe_datum <= NOW() ' : '') . "
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (mandat.bis IS NULL OR mandat.bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND mandat.freigabe_datum <= NOW() ' : '') . "
 LEFT JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
 WHERE 1
@@ -630,7 +630,7 @@ parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
     ) zutrittsberechtigungen
       FROM v_parlamentarier parlamentarier
       LEFT JOIN v_interessenbindung interessenbindung
-      ON interessenbindung.parlamentarier_id = parlamentarier.id" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessenbindung.freigabe_datum <= NOW() ' : '') . "
+      ON interessenbindung.parlamentarier_id = parlamentarier.id" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (interessenbindung.bis IS NULL OR interessenbindung.bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND interessenbindung.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_organisation organisation
       ON interessenbindung.organisation_id = organisation.id" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND organisation.freigabe_datum <= NOW() ' : '') . "
       LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
@@ -1759,7 +1759,7 @@ function _lobbywatch_zutrittsberechtigung_id($id, $name = '', $check_unpublished
 ) mandate
 FROM v_zutrittsberechtigung zutrittsberechtigung
 LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '')
+  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (mandat.bis IS NULL OR mandat.bis > NOW())' : '')
        . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND mandat.freigabe_datum <= NOW() ' : '') . "
 LEFT JOIN v_organisation organisation
   ON mandat.organisation_id = organisation.id "
