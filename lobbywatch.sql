@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 11. Aug 2014 um 08:06
+-- Erstellungszeit: 11. Aug 2014 um 08:53
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -5524,15 +5524,6 @@ CREATE TABLE IF NOT EXISTS `v_organisation_jahr_last` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `v_organisation_lobbyeinfluss`
---
-
-DROP TABLE IF EXISTS `v_organisation_lobbyeinfluss`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_organisation_lobbyeinfluss` AS select `lobbywatch`.`mv_organisation_lobbyeinfluss`.`id` AS `id`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`lobbyeinfluss` AS `lobbyeinfluss`,`lobbywatch`.`mv_organisation_lobbyeinfluss`.`refreshed_date` AS `refreshed_date` from `mv_organisation_lobbyeinfluss`;
-
--- --------------------------------------------------------
-
---
 -- Stellvertreter-Struktur des Views `v_organisation_lobbyeinfluss_raw`
 --
 DROP VIEW IF EXISTS `v_organisation_lobbyeinfluss_raw`;
@@ -6193,24 +6184,6 @@ CREATE TABLE IF NOT EXISTS `v_parlamentarier_authorisierungs_email` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `v_parlamentarier_lobbyfaktor`
---
-
-DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_lobbyfaktor` AS select `lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`id` AS `id`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_tief` AS `anzahl_interessenbindung_tief`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_mittel` AS `anzahl_interessenbindung_mittel`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_hoch` AS `anzahl_interessenbindung_hoch`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_tief_nach_wahl` AS `anzahl_interessenbindung_tief_nach_wahl`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_mittel_nach_wahl` AS `anzahl_interessenbindung_mittel_nach_wahl`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`anzahl_interessenbindung_hoch_nach_wahl` AS `anzahl_interessenbindung_hoch_nach_wahl`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`lobbyfaktor_einfach` AS `lobbyfaktor_einfach`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor`.`refreshed_date` AS `refreshed_date` from `mv_parlamentarier_lobbyfaktor`;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `v_parlamentarier_lobbyfaktor_max`
---
-
-DROP TABLE IF EXISTS `v_parlamentarier_lobbyfaktor_max`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_parlamentarier_lobbyfaktor_max` AS select `lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`id` AS `id`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`anzahl_interessenbindung_tief_max` AS `anzahl_interessenbindung_tief_max`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`anzahl_interessenbindung_mittel_max` AS `anzahl_interessenbindung_mittel_max`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`anzahl_interessenbindung_hoch_max` AS `anzahl_interessenbindung_hoch_max`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`lobbywatch`.`mv_parlamentarier_lobbyfaktor_max`.`refreshed_date` AS `refreshed_date` from `mv_parlamentarier_lobbyfaktor_max`;
-
--- --------------------------------------------------------
-
---
 -- Stellvertreter-Struktur des Views `v_parlamentarier_lobbyfaktor_max_raw`
 --
 DROP VIEW IF EXISTS `v_parlamentarier_lobbyfaktor_max_raw`;
@@ -6817,24 +6790,6 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_authorisierungs_email` (
 ,`zutrittsberechtigung_name` varchar(151)
 ,`funktion` varchar(150)
 );
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `v_zutrittsberechtigung_lobbyfaktor`
---
-
-DROP TABLE IF EXISTS `v_zutrittsberechtigung_lobbyfaktor`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung_lobbyfaktor` AS select `lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`id` AS `id`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`anzahl_mandat_tief` AS `anzahl_mandat_tief`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`anzahl_mandat_mittel` AS `anzahl_mandat_mittel`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`anzahl_mandat_hoch` AS `anzahl_mandat_hoch`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`lobbyfaktor` AS `lobbyfaktor`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor`.`refreshed_date` AS `refreshed_date` from `mv_zutrittsberechtigung_lobbyfaktor`;
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `v_zutrittsberechtigung_lobbyfaktor_max`
---
-
-DROP TABLE IF EXISTS `v_zutrittsberechtigung_lobbyfaktor_max`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS select `lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`id` AS `id`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`anzahl_mandat_tief_max` AS `anzahl_mandat_tief_max`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`anzahl_mandat_mittel_max` AS `anzahl_mandat_mittel_max`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`anzahl_mandat_hoch_max` AS `anzahl_mandat_hoch_max`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`lobbyfaktor_max` AS `lobbyfaktor_max`,`lobbywatch`.`mv_zutrittsberechtigung_lobbyfaktor_max`.`refreshed_date` AS `refreshed_date` from `mv_zutrittsberechtigung_lobbyfaktor_max`;
-
 -- --------------------------------------------------------
 
 --
