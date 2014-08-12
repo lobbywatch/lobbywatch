@@ -7,7 +7,7 @@ function lobbywatch_data_menu() {
   $items = array();
 
   foreach (Constants::$workflow_tables as $key => $value) {
-    $items["data/interface/v1/json/table/$key/flat/id/%"] = array(
+    $items["data2/interface/v1/json/table/$key/flat/id/%"] = array(
       'page callback' => '_lobbywatch_data_table_flat_id',
       'page arguments' => array($key, 8, true),
       'access arguments' => array('access lobbywatch data general content'),
@@ -15,7 +15,7 @@ function lobbywatch_data_menu() {
       'file' => 'lobbywatch_data.interface.inc',
     );
 
-    $items["data/interface/v1/json/table/$key/flat/list"] = array(
+    $items["data2/interface/v1/json/table/$key/flat/list"] = array(
       'page callback' => '_lobbywatch_data_table_flat_list',
       'page arguments' => array($key, '1', true),
       'access arguments' => array('access lobbywatch data general content'),
@@ -23,7 +23,7 @@ function lobbywatch_data_menu() {
       'file' => 'lobbywatch_data.interface.inc',
     );
 
-    $items["data/interface/v1/json/table/$key/flat/list/%"] = array(
+    $items["data2/interface/v1/json/table/$key/flat/list/%"] = array(
       'page callback' => '_lobbywatch_data_table_flat_list_search',
       'page arguments' => array($key, 8, true),
       'access arguments' => array('access lobbywatch data general content'),
@@ -33,7 +33,7 @@ function lobbywatch_data_menu() {
   }
 
   foreach (Constants::getAllEnrichedRelations() as $key => $value) {
-    $items["data/interface/v1/json/relation/$key/flat/list"] = array(
+    $items["data2/interface/v1/json/relation/$key/flat/list"] = array(
       'page callback' => '_lobbywatch_data_relation_flat_list',
       'page arguments' => array($key, '1', true),
       'access arguments' => array('access lobbywatch data general content'),
@@ -42,7 +42,7 @@ function lobbywatch_data_menu() {
     );
   }
 
-  $items["data/interface/v1/json/table/zutrittsberechtigung/aggregated/id/%"] = array(
+  $items["data2/interface/v1/json/table/zutrittsberechtigung/aggregated/id/%"] = array(
       'page callback' => '_lobbywatch_data_table_zutrittsberechtigte_aggregated_id',
       'page arguments' => array(8, true),
       'access arguments' => array('access lobbywatch data general content'),
@@ -50,7 +50,7 @@ function lobbywatch_data_menu() {
       'file' => 'lobbywatch_data.interface.inc',
   );
 
-  $items["data/interface/v1/json/table/parlamentarier/aggregated/id/%"] = array(
+  $items["data2/interface/v1/json/table/parlamentarier/aggregated/id/%"] = array(
       'page callback' => '_lobbywatch_data_table_parlamentarier_aggregated_id',
       'page arguments' => array(8, true),
       'access arguments' => array('access lobbywatch data general content'),
@@ -58,7 +58,7 @@ function lobbywatch_data_menu() {
       'file' => 'lobbywatch_data.interface.inc',
   );
 
-  $items["data/interface/v1/json/table/organisation/aggregated/id/%"] = array(
+  $items["data2/interface/v1/json/table/organisation/aggregated/id/%"] = array(
       'page callback' => '_lobbywatch_data_table_organisation_aggregated_id',
       'page arguments' => array(8, true),
       'access arguments' => array('access lobbywatch data general content'),
@@ -66,7 +66,7 @@ function lobbywatch_data_menu() {
       'file' => 'lobbywatch_data.interface.inc',
   );
 
-  $items["data/interface/v1/json/query/parlament-partei/aggregated/list"] = array(
+  $items["data2/interface/v1/json/query/parlament-partei/aggregated/list"] = array(
       'page callback' => '_lobbywatch_data_query_parlament_partei_aggregated_list',
       'page arguments' => array('1', true),
       'access arguments' => array('access lobbywatch data general content'),
@@ -75,7 +75,7 @@ function lobbywatch_data_menu() {
   );
 
   // TODO error message in case of wrong names
-  $items["data/interface/v1/json/%/%"] = array(
+  $items["data2/interface/v1/json/%/%"] = array(
       'page callback' => '_lobbywatch_data_not_found',
       'page arguments' => array(4, 5, true),
       'access arguments' => array('access lobbywatch data general content'),
@@ -92,6 +92,33 @@ function lobbywatch_data_menu() {
 //   );
 
   return $items;
+}
+
+/**
+ * Implements hook_js().
+ */
+function lobbywatch_data_js() {
+  return lobbywatch_data_data();
+}
+
+/**
+ * Implements hook_js().
+ */
+function lobbywatch_data_data() {
+  $items = array();
+
+//   module_load_include('module', 'lobbywatch');
+
+    $items["v1"] = array(
+      'callback' => '_lobbywatch_data_router',
+      'page arguments' => array(0, 1, 2, 3, 4, 5, 6, false),
+      'access arguments' => array('access lobbywatch data general content'),
+      'file' => 'lobbywatch_data.interface.inc',
+      'dependencies' => array('lobbywatch', 'user'),
+      'skip_hook_init' => TRUE,
+    );
+
+    return $items;
 }
 
 /**

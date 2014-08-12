@@ -12,6 +12,8 @@ function _lobbywatch_data_table_flat_id($table, $id, $json = true) {
   $count = 0;
   $items = null;
   $message = '';
+
+  //df($table, '_lobbywatch_data_table_flat_id');
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
@@ -82,6 +84,7 @@ function _lobbywatch_data_not_found($type, $table, $json = true) {
     );
 
     if ($json) {
+      drupal_add_http_header('Status', '404 Not Found');
       drupal_json_output($response);
       exit(2);
     } else {
@@ -736,4 +739,165 @@ function _lobbywatch_data_db_query($sql, $params = array()) {
     // otherwise Drupal will not be able to access it's own data later on.
     db_set_active();
   }
+}
+
+function _lobbywatch_data_router($version = '', $data_type = '', $call_type = '', $object = '', $response_type = '', $respone_object = '', $parameter = '', $json_output = false) {
+//   df($version, '$version');
+//   df($data_type, '$data_type');
+//   df($call_type, '$call_type');
+//   df($object, '$object');
+//   df($response_type, '$response_type');
+//   df($respone_object, '$respone_object');
+//   df($parameter, '$parameter');
+
+  if ($version !== 'v1' || $data_type !== 'json') {
+    _lobbywatch_data_json_404();
+  }
+  //   foreach (Constants::$workflow_tables as $key => $value) {
+  //     $items["v1/json/table/$key/flat/id/%"] = array(
+  //       'callback' => '_lobbywatch_data_table_flat_id',
+  //       'page arguments' => array($key, 6, false),
+  //       'access arguments' => array('access lobbywatch data general content'),
+  //       'file' => 'lobbywatch_data.interface.inc',
+  //       'dependencies' => array('lobbywatch', 'user'),
+  //       'skip_hook_init' => TRUE,
+  //     );
+
+  //     $items["v1/json/table/$key/flat/list"] = array(
+  //       'callback' => '_lobbywatch_data_table_flat_list',
+  //       'page arguments' => array($key, '1', false),
+  //       'access arguments' => array('access lobbywatch data general content'),
+  //       'file' => 'lobbywatch_data.interface.inc',
+  //       'dependencies' => array('lobbywatch', 'user'),
+  //       'skip_hook_init' => TRUE,
+  //     );
+
+  //     $items["v1/json/table/$key/flat/list/%"] = array(
+  //       'callback' => '_lobbywatch_data_table_flat_list_search',
+  //       'page arguments' => array($key, 6, false),
+  //       'access arguments' => array('access lobbywatch data general content'),
+  //       'file' => 'lobbywatch_data.interface.inc',
+  //       'dependencies' => array('lobbywatch', 'user'),
+  //       'skip_hook_init' => TRUE,
+  //     );
+  //   }
+
+  if ($call_type === 'table' && array_key_exists($object, Constants::$workflow_tables) && $response_type === 'flat' && $respone_object === 'id' && $parameter) {
+//     df($parameter, '_lobbywatch_data_table_flat_id');
+    return _lobbywatch_data_table_flat_id($object, $parameter, false);
+  } else if ($call_type === 'table' && array_key_exists($object, Constants::$workflow_tables) && $response_type === 'flat' && $respone_object === 'list' && $parameter) {
+//     df($parameter, '_lobbywatch_data_table_flat_list_search');
+    return _lobbywatch_data_table_flat_list_search($object, $parameter, false);
+  } else if ($call_type === 'table' && array_key_exists($object, Constants::$workflow_tables) && $response_type === 'flat' && $respone_object === 'list') {
+//     df($parameter, '_lobbywatch_data_table_flat_list');
+    return _lobbywatch_data_table_flat_list($object, 1, false);
+  }
+
+  //   foreach (Constants2::getAllEnrichedRelations() as $key => $value) {
+  //     $items["v1/json/relation/$key/flat/list"] = array(
+  //       'callback' => '_lobbywatch_data_relation_flat_list',
+  //       'page arguments' => array($key, '1', false),
+  //       'access arguments' => array('access lobbywatch data general content'),
+  //       'file' => 'lobbywatch_data.interface.inc',
+  //       'dependencies' => array('lobbywatch', 'user'),
+  //       'skip_hook_init' => TRUE,
+  //     );
+  //   }
+
+  else if ($call_type === 'relation' && array_key_exists($object, Constants::getAllEnrichedRelations()) && $response_type === 'flat' && $respone_object === 'list') {
+//     df($parameter, '_lobbywatch_data_relation_flat_list');
+    return _lobbywatch_data_relation_flat_list($object, 1, false);
+  }
+
+  //   $items["v1/json/table/zutrittsberechtigung/aggregated/id/%"] = array(
+  //       'callback' => '_lobbywatch_data_table_zutrittsberechtigte_aggregated_id',
+  //       'page arguments' => array(8, false),
+  //       'access arguments' => array('access lobbywatch data general content'),
+  //       'file' => 'lobbywatch_data.interface.inc',
+  //       'dependencies' => array('lobbywatch', 'user'),
+  //       'skip_hook_init' => TRUE,
+  //   );
+
+  else if ($call_type === 'table' && $object === 'zutrittsberechtigung' && $response_type === 'aggregated' && $respone_object === 'id' && $parameter) {
+//     df($parameter, '_lobbywatch_data_table_zutrittsberechtigte_aggregated_id');
+    return _lobbywatch_data_table_zutrittsberechtigte_aggregated_id($parameter, false);
+  }
+
+  //   $items["v1/json/table/parlamentarier/aggregated/id/%"] = array(
+  //       'callback' => '_lobbywatch_data_table_parlamentarier_aggregated_id',
+  //       'page arguments' => array(8, false),
+  //       'access arguments' => array('access lobbywatch data general content'),
+  //       'file' => 'lobbywatch_data.interface.inc',
+  //       'dependencies' => array('lobbywatch', 'user'),
+  //       'skip_hook_init' => TRUE,
+  //   );
+
+  else if ($call_type === 'table' && $object === 'parlamentarier' && $response_type === 'aggregated' && $respone_object === 'id' && $parameter) {
+//     df($parameter, '_lobbywatch_data_table_parlamentarier_aggregated_id');
+    return _lobbywatch_data_table_parlamentarier_aggregated_id($parameter, false);
+  }
+
+  //   $items["v1/json/table/organisation/aggregated/id/%"] = array(
+  //       'callback' => '_lobbywatch_data_table_organisation_aggregated_id',
+  //       'page arguments' => array(8, false),
+  //       'access arguments' => array('access lobbywatch data general content'),
+  //       'file' => 'lobbywatch_data.interface.inc',
+  //       'dependencies' => array('lobbywatch', 'user'),
+  //       'skip_hook_init' => TRUE,
+  //   );
+
+  else if ($call_type === 'table' && $object === 'organisation' && $response_type === 'aggregated' && $respone_object === 'id' && $parameter) {
+//     df($parameter, '_lobbywatch_data_table_organisation_aggregated_id');
+    return _lobbywatch_data_table_organisation_aggregated_id($parameter, false);
+  }
+
+  //   $items["v1/json/query/parlament-partei/aggregated/list"] = array(
+  //       'callback' => '_lobbywatch_data_query_parlament_partei_aggregated_list',
+  //       'page arguments' => array('1', false),
+  //       'access arguments' => array('access lobbywatch data general content'),
+  //       'file' => 'lobbywatch_data.interface.inc',
+  //       'dependencies' => array('lobbywatch', 'user'),
+  //       'skip_hook_init' => TRUE,
+  //   );
+
+  else if ($call_type === 'query' && $object === 'parlament-partei' && $response_type === 'aggregated' && $respone_object === 'list') {
+//     df($parameter, '_lobbywatch_data_query_parlament_partei_aggregated_list');
+    return _lobbywatch_data_query_parlament_partei_aggregated_list(1, false);
+  }
+
+  //   // TODO error message in case of wrong names
+  //   $items["v1/json/%/%"] = array(
+  //       'callback' => '_lobbywatch_data_not_found',
+  //       'page arguments' => array(4, 5, false),
+  //       'access arguments' => array('access lobbywatch data general content'),
+  //       'file' => 'lobbywatch_data.interface.inc',
+  //       'dependencies' => array('lobbywatch', 'user'),
+  //       'skip_hook_init' => TRUE,
+  //   );
+
+  //   $items["v1/json/table/parlamentarier/aggregated/all"] = array(
+  //       'page callback' => '_lobbywatch_data_table_parlamentarier_aggregated_list',
+  //       'page arguments' => array(),
+  //       'access arguments' => array('access lobbywatch data general content'),
+  //       'type' => MENU_CALLBACK,
+  //       'file' => 'lobbywatch_data.interface.inc',
+  //   );
+
+
+  _lobbywatch_data_json_404();
+}
+
+function _lobbywatch_data_json_404() {
+  drupal_add_http_header('Status', '404 Not Found');
+  $response = array(
+      'success' => false,
+      'count' => 0,
+      'message' => '404 Not Found. The requested URL "' . check_plain(request_uri()) . '" was not found on this server.',
+      'sql' => '',
+      'source' => '',
+      'build secs' => _lobbywatch_page_build_secs(),
+      'data' => null,
+  );
+  print drupal_json_output($response);
+  exit;
 }
