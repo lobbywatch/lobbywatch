@@ -13,6 +13,12 @@
  * - hist: show historised data
  * - all: not filtered, all data
  *
+ * http://lobbywatch.ch/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php/all/gr
+ * 160ms
+ *
+ * http://lobbywatch.ch/de/autocomplete/lobbywatch/search/gr
+ * 450ms
+ *
  * Partial bootstrap of Drupal could also be a solution:
  * https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_bootstrap/7
  *
