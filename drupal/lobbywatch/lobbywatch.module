@@ -383,6 +383,21 @@ function lobbywatch_autocomplete_search_form($form, &$form_state) {
   // You can add as much or as little to this form as
   // needed. See the forms api for all possible elements.
 
+  // Fast JSON response without Drupal
+  // No caching of forms in Drupal, so we are save to change the path according to the user permissions
+  $auto_path = $GLOBALS['base_url'] . '/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php';
+  if (user_access('access lobbywatch admin') || (user_access('access lobbywatch advanced content') && user_access('access lobbywatch unpublished content'))) {
+    $auto_path .= '/all';
+  } else if (user_access('access lobbywatch advanced content')) {
+    $auto_path .= '/hist';
+  } else if (user_access('access lobbywatch unpublished content')) {
+    $auto_path .= '/unpubl';
+  } else {
+    $auto_path .= '/publ';
+  }
+  // Normal Drupal menu call back path
+  //$auto_path = 'autocomplete/lobbywatch/search';
+
   // Autocomplete with min num chars: ref http://drupal.stackexchange.com/questions/78727/enforcing-minimum-number-of-characters-for-autocomplete-path
   $form['search_field'] = array(
     // #type tells drupal what kind of element to build
@@ -395,7 +410,8 @@ function lobbywatch_autocomplete_search_form($form, &$form_state) {
     '#maxlength' => 300,
     // Optional description
     '#description' => t('Suchtext eingeben, kurz warten und auswählen'),
-    '#autocomplete_path' => (user_access('access lobbywatch advanced content') || user_access('access lobbywatch unpublished content') || user_access('access lobbywatch admin') ? 'autocomplete/lobbywatch/search' : $GLOBALS['base_url'] . '/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php'),
+//     '#autocomplete_path' => (user_access('access lobbywatch advanced content') || user_access('access lobbywatch unpublished content') || user_access('access lobbywatch admin') ? 'autocomplete/lobbywatch/search' : $GLOBALS['base_url'] . '/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php'),
+    '#autocomplete_path' => $auto_path,
     // Autocomplete, autosubmit, ref: https://drupal.org/node/1772490
     '#attributes' => array('class' => array('auto_submit'), 'placeholder' => t("Schnellsuche: Suchtext eingeben, kurz warten und auswählen"),
       'title' => t("Suchtext eingeben, kurz warten und auswählen")),
@@ -422,6 +438,8 @@ function lobbywatch_autocomplete_search_form($form, &$form_state) {
 //       '#attributes' => array('class' => array('use-ajax-submit ctools-auto-submit-click')),
     '#value' => t('Show'),
   );
+
+//   dpm($form['search_field'], 'lobbywatch_autocomplete_search_form');
 
   return $form;
 }

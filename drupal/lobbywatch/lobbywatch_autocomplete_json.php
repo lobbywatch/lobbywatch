@@ -3,6 +3,21 @@
 /**
  * Fast JSON response for autocomplete AJAX. Avoids Drupal boot overhead.
  * Currently only for published and non historised data.
+ *
+ * http://lobbywatch.dev/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php/[type]/[query]
+ * http://lobbywatch.dev/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php/[query]
+ *
+ * type:
+ * - publ: default, only published and active values
+ * - unpubl: show unpublished data
+ * - hist: show historised data
+ * - all: not filtered, all data
+ *
+ * Partial bootstrap of Drupal could also be a solution:
+ * https://api.drupal.org/api/drupal/includes!bootstrap.inc/function/drupal_bootstrap/7
+ *
+ * Module js could also be an alternative:
+ * https://www.drupal.org/project/js
  */
 
 require_once dirname(__FILE__) . '/../../../lobbywatch.ch/app/settings/settings.php';
@@ -21,12 +36,19 @@ _lobbywatch_search_autocomplete();
 function _lobbywatch_search_autocomplete($str = '') {
 //   df($_SERVER, '$$$$_SERVER');
 
+  $type = 'publ';
   if (!$str) {
-    $str = preg_replace('|^/|', '', $_SERVER['PATH_INFO']);
+//     $str = preg_replace('|^/|', '', $_SERVER['PATH_INFO']);
+      $matches = array();
+      if (preg_match('%(/(.+))?/(.*)%', $_SERVER['PATH_INFO'], $matches)) {
+        $type = $matches[2];
+        $str = $matches[3];
+//         df($matches, '$matches');
+      }
   }
 
 //     $result = _lobbywatch_search_autocomplete_LIKE_UNION($str);
-    $result = _lobbywatch_search_autocomplete_LIKE_search_table($str);
+    $result = _lobbywatch_search_autocomplete_LIKE_search_table($str, !($type == 'all' || $type == 'unpubl'), !($type == 'all' || $type == 'hist'));
 //     $result = _lobbywatch_search_autocomplete_FULLTEXT($str);
 
   //   dpm($result, 'result');
@@ -63,7 +85,7 @@ SELECT id, page, name
 -- , freigabe_datum, bis
 FROM v_search_table
 WHERE
-name LIKE :str ". ($filter_unpublished ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($filter_historised ? ' AND freigabe_datum <= NOW()' : '') . "
+name LIKE :str ". ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($filter_unpublished ? ' AND freigabe_datum <= NOW()' : '') . "
 ORDER BY table_weight, weight
 LIMIT 20;";
   //dpm($sql, 'suche');
