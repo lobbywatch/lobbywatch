@@ -1564,6 +1564,11 @@
             $field = new StringField('wirksamkeit');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
+            $field = new IntegerField('wirksamkeit_index');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('organisation_lobbyeinfluss');
+            $this->dataset->AddField($field, true);
             $field = new DateTimeField('refreshed_date');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, true);
@@ -3110,6 +3115,11 @@
             $this->dataset->AddField($field, true);
             $field = new StringField('wirksamkeit');
             $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new IntegerField('wirksamkeit_index');
+            $field->SetIsNotNull(true);
+            $this->dataset->AddField($field, true);
+            $field = new StringField('organisation_lobbyeinfluss');
             $this->dataset->AddField($field, true);
             $field = new DateTimeField('refreshed_date');
             $field->SetIsNotNull(true);

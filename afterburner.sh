@@ -351,6 +351,9 @@ do
   > "lobbywatch_bearbeitung_public.pgtm";
 done
 
+# instead of import custom.css, copy it, avoids a HTTP request
+cp public_html/bearbeitung/components/templates/custom_templates/css/custom.css public_html/bearbeitung/components/css/user.css
+
 git st
 
 # Sed: http://www.grymoire.com/Unix/Sed.html
