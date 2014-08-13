@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# $1: /path/to/css/file
+# Copied from http://stackoverflow.com/questions/5465446/replacing-all-images-in-a-css-file-with-base64-encoded-strings-from-the-command
+
+# $ data_image_css_converter.sh file
 
 awk -F'[()]' '
 
