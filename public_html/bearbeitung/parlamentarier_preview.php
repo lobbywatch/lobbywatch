@@ -236,12 +236,12 @@ GROUP_CONCAT(DISTINCT
     ORDER BY in_kommission.abkuerzung
     SEPARATOR ' '
 ) kommissionen
-FROM v_parlamentarier parlamentarier
-LEFT JOIN v_interessenbindung interessenbindung
+FROM v_parlamentarier_simple parlamentarier
+LEFT JOIN v_interessenbindung_simple interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
-LEFT JOIN v_organisation organisation
+LEFT JOIN v_organisation_simple organisation
   ON interessenbindung.organisation_id = organisation.id
-LEFT JOIN v_zutrittsberechtigung zutrittsberechtigung
+LEFT JOIN v_zutrittsberechtigung_simple zutrittsberechtigung
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id -- AND zutrittsberechtigung.bis IS NULL
 LEFT JOIN v_in_kommission_liste in_kommission
   ON in_kommission.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
