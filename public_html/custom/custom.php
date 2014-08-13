@@ -158,7 +158,7 @@ function getTableName(Page $page) {
   return preg_replace('/`/', '', $page->GetDataset()->GetName());
 }
 function is_minimal_field($table, $field) {
-  df("$table.$field", 'is_minimal_field');
+//   df("$table.$field", 'is_minimal_field');
   switch ($table) {
     case 'parlamentarier':
       switch ($field) {
