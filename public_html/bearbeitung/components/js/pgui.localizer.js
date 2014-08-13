@@ -1,7 +1,7 @@
 define(function(require, exports, module)
 {
     var Class       = require('class'),
-        resource    = require('components/js/jslang.php?').resource,
+        resource    = require('components/js/jslang.js?').resource,
         _           = require('underscore');
 
 

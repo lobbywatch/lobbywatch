@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PHP=/opt/lampp/bin/php
+
 # diff -urw --exclude=".git" --exclude="*.bak" ../lobbydev_wo_afterburner/ . > afterburner_changes.diff
 
 clean="true";
@@ -341,6 +343,25 @@ do
   > "$file";
 done
 
+# Instead of import custom.css, copy it, avoids a HTTP request
+echo "Copy custom.css to user.css"
+cp public_html/bearbeitung/components/css/custom.css public_html/bearbeitung/components/css/user.css
+
+# We support currently only 1 language, avoid PHP call and create static file
+echo "jslang.php > jslang.js"
+cd public_html/bearbeitung/
+$PHP -f components/js/jslang.php > components/js/jslang.js
+cd -
+
+for file in $dir/components/js/pgui.localizer.js
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  cat "$file.bak" \
+  | perl -0 -p -e's/jslang\.php/jslang.js/s' \
+  > "$file";
+done
+
 for file in lobbywatch_bearbeitung.pgtm
 do
   echo "Process $file";
@@ -350,9 +371,6 @@ do
   | perl -p -e's/(database\s*=\s*)".*?"/\1""/ig' \
   > "lobbywatch_bearbeitung_public.pgtm";
 done
-
-# instead of import custom.css, copy it, avoids a HTTP request
-cp public_html/bearbeitung/components/css/custom.css public_html/bearbeitung/components/css/user.css
 
 git st
 
