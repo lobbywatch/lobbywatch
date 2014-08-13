@@ -1270,7 +1270,7 @@ SELECT
 -- , `parlamentarier`.`bis`
 -- , `parlamentarier`.`von_unix`
 -- , `parlamentarier`.`bis_unix`
--- , `parlamentarier`.`rat`
+, `parlamentarier`.`rat`
 -- , `parlamentarier`.`ratstyp`
 , `parlamentarier`.`kanton`
 , `parlamentarier`.`vertretene_bevoelkerung`
