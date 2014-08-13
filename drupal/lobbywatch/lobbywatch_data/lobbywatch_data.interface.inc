@@ -783,7 +783,7 @@ function _lobbywatch_data_router($path = '', $version = '', $data_type = '', $ca
   //     );
   //   }
 
-  // Idea: We could alternatively use regex instead of ifs, maybe more readable
+  // Idea: We could alternatively use regex with path instead of ifs, maybe more convenient
   if ($call_type === 'table' && array_key_exists($object, Constants::$workflow_tables) && $response_type === 'flat' && $respone_object === 'id' && $parameter) {
 //     df($parameter, '_lobbywatch_data_table_flat_id');
     return _lobbywatch_data_table_flat_id($object, $parameter, false);
