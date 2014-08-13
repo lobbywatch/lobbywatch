@@ -267,7 +267,7 @@ function _lobbywatch_parlamentarier_list($check_unpublished = true) {
     $inactive = !$record['im_rat_bis'] || $record['im_rat_bis'] < time();
 
     while ($record = $result->fetchAssoc()) {
-      $markup .= '<tr' . (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? ' class="unpublished"': '') . '><td>' . ($inactive ? '<s>': '') . '<a href="/daten/parlamentarier/' . check_plain($record['id']) . '/' . _lobbywatch_clean_for_url($record['anzeige_name']) . '">' . check_plain($record['anzeige_name']) . '</a>' . ($inactive ? '</s>': '') . '</td><td><a href="/daten/parlamentarier/' . check_plain($record['id']) . '/' . _lobbywatch_clean_for_url($record['anzeige_name']) . '">' . '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . check_plain($record['anzeige_name']) . '">' . '</a></td><td>' . check_plain($record['partei']) . '</td><td>' . check_plain($record['ratstyp']) . '</td><td>' . check_plain($record['kanton']) . '</td></tr>';
+      $markup .= '<tr' . (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? ' class="unpublished"': '') . '><td>' . ($inactive ? '<s>': '') . '<a href="/daten/parlamentarier/' . check_plain($record['id']) . '/' . _lobbywatch_clean_for_url($record['anzeige_name']) . '">' . check_plain($record['anzeige_name']) . '</a>' . ($inactive ? '</s>': '') . '</td><td><a href="/daten/parlamentarier/' . check_plain($record['id']) . '/' . _lobbywatch_clean_for_url($record['anzeige_name']) . '">' . '<img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . check_plain($record['anzeige_name']) . '">' . '</a></td><td>' . check_plain($record['partei']) . '</td><td>' . check_plain($record['rat']) . '</td><td>' . check_plain($record['kanton']) . '</td></tr>';
     }
 
     $markup .= '</tbody></table>';
@@ -465,7 +465,7 @@ GROUP_CONCAT(DISTINCT
     IF(mandat.funktion_im_gremium IS NULL OR TRIM(mandat.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT(mandat.funktion_im_gremium, 1)), SUBSTRING(mandat.funktion_im_gremium, 2)))),
     IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>')),
     IF(mandat.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
-    ORDER BY mandat.wirksamkeit ASC, organisation.anzeige_name
+    ORDER BY mandat.wirksamkeit_index DESC, organisation.anzeige_name
     SEPARATOR ' '
 ) mandate
 FROM v_zutrittsberechtigung zutrittsberechtigung
@@ -597,7 +597,7 @@ parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
       IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung)),
       IF(interessenbindung.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(interessenbindung.bis, '%Y'), '</s>'), ''),
       IF(interessenbindung.von > parlamentarier.im_rat_seit, CONCAT(', seit ', DATE_FORMAT(interessenbindung.von, '%Y'), '</i>'), ''))
-      ORDER BY interessenbindung.wirksamkeit ASC, organisation.anzeige_name
+      ORDER BY interessenbindung.wirksamkeit_index DESC, organisation.anzeige_name
       SEPARATOR ' '
     ) interessenbindungen,
     GROUP_CONCAT(DISTINCT
@@ -673,9 +673,9 @@ parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
       $admin = user_access('access lobbywatch admin');
       $unpublished = user_access('access lobbywatch unpublished content');
       $rat = check_plain($record['rat_name_de']);
-      $ratstyp = check_plain($record['ratstyp']);
+      $rat = check_plain($record['rat']);
       $titel_nachname  =  check_plain($record['titel_de'] . ' ' . $record['nachname']);
-      if ($ratstyp == 'SR') {
+      if ($rat == 'SR') {
         $vertretung = round($record['einwohner'] / $record['anzahl_staenderaete']);
       } else {
         $vertretung = round($record['einwohner'] / $record['anzahl_nationalraete']);

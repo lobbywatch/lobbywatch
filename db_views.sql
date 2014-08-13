@@ -593,7 +593,7 @@ ON interessengruppe3.id = organisation.interessengruppe3_id
 --	CREATE OR REPLACE VIEW `v_organisation_medium` AS
 --	SELECT * FROM `mv_organisation_medium_raw`;
 
-CREATE OR REPLACE VIEW `v_interessenbindung_raw` AS
+CREATE OR REPLACE VIEW `v_interessenbindung_medium_raw` AS
 SELECT interessenbindung.*,
 IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
   AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand')
@@ -607,66 +607,24 @@ IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
     AND branche.id IN (organisation.branche_id, organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch', 
 IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
   AND interessenbindung.art IN ('taetig','beirat','finanziell'), 'mittel', 'tief')) wirksamkeit,
-parlamentarier.im_rat_seit as parlamentarier_im_rat_seit,
-NOW() as refreshed_date
+parlamentarier.im_rat_seit as parlamentarier_im_rat_seit
 FROM `v_interessenbindung_simple` interessenbindung
 INNER JOIN `v_organisation_medium_raw` organisation
 ON interessenbindung.organisation_id = organisation.id
 INNER JOIN `parlamentarier` parlamentarier
 ON interessenbindung.parlamentarier_id = parlamentarier.id;
 
-DROP TABLE IF EXISTS `mv_interessenbindung`;
-CREATE TABLE IF NOT EXISTS `mv_interessenbindung`
-ENGINE = InnoDB
-DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
-COMMENT='Materialzed view for v_interessenbindung'
-AS SELECT * FROM `v_interessenbindung_raw`;
-ALTER TABLE `mv_interessenbindung`
-ADD PRIMARY KEY (`id`),
--- indexes for joins on web
-ADD KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`, `freigabe_datum`, `bis`, `organisation_id`),
-ADD KEY `idx_parlam_bis` (`parlamentarier_id`, `bis`, `organisation_id`),
-ADD KEY `idx_parlam` (`parlamentarier_id`, `organisation_id`),
-ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `parlamentarier_id`),
-ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `parlamentarier_id`),
-ADD KEY `idx_org` (`organisation_id`, `parlamentarier_id`),
-CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
-CREATE OR REPLACE VIEW `v_interessenbindung` AS
-SELECT * FROM `mv_interessenbindung`;
-
-CREATE OR REPLACE VIEW `v_mandat_raw` AS
+CREATE OR REPLACE VIEW `v_mandat_medium_raw` AS
 SELECT mandat.*,
 IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
   AND mandat.art IN ('geschaeftsfuehrend','vorstand')
   , 'hoch', 
 IF((organisation.vernehmlassung IN ('immmer', 'punktuell')
   AND mandat.art IN ('taetig','beirat','finanziell'))
-  OR (mandat.art IN ('geschaeftsfuehrend','vorstand')), 'mittel', 'tief')) wirksamkeit,
-NOW() as refreshed_date
+  OR (mandat.art IN ('geschaeftsfuehrend','vorstand')), 'mittel', 'tief')) wirksamkeit
 FROM `v_mandat_simple` mandat
 INNER JOIN `organisation` organisation
 ON mandat.organisation_id = organisation.id;
-
-DROP TABLE IF EXISTS `mv_mandat`;
-CREATE TABLE IF NOT EXISTS `mv_mandat`
-ENGINE = InnoDB
-DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
-COMMENT='Materialzed view for v_mandat'
-AS SELECT * FROM `v_mandat_raw`;
-ALTER TABLE `mv_mandat`
-ADD PRIMARY KEY (`id`),
--- indexes for joins on web
-ADD KEY `idx_zutritt_freigabe_bis` (`zutrittsberechtigung_id`, `freigabe_datum`, `bis`, `organisation_id`),
-ADD KEY `idx_zutritt_bis` (`zutrittsberechtigung_id`, `bis`, `organisation_id`),
-ADD KEY `idx_zutritt` (`zutrittsberechtigung_id`, `organisation_id`),
-ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `zutrittsberechtigung_id`),
-ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `zutrittsberechtigung_id`),
-ADD KEY `idx_org` (`organisation_id`, `zutrittsberechtigung_id`),
-CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
-
-CREATE OR REPLACE VIEW `v_mandat` AS
-SELECT * FROM `mv_mandat`;
 
 CREATE OR REPLACE VIEW `v_organisation_lobbyeinfluss_raw` AS
 SELECT organisation.id,
@@ -679,21 +637,21 @@ COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) as anzahl_interessenbindung_
 COUNT(DISTINCT mandat_tief.id) as anzahl_mandat_tief,
 COUNT(DISTINCT mandat_mittel.id) as anzahl_mandat_mittel,
 COUNT(DISTINCT mandat_hoch.id) as anzahl_mandat_hoch,
-IF(COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) > 0 OR COUNT(DISTINCT interessenbindung_hoch.id) > 1 OR (COUNT(DISTINCT interessenbindung_hoch.id) > 0 AND COUNT(DISTINCT mandat_hoch.id) > 0), 'extrem hoch',
+IF(COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) > 0 OR COUNT(DISTINCT interessenbindung_hoch.id) > 1 OR (COUNT(DISTINCT interessenbindung_hoch.id) > 0 AND COUNT(DISTINCT mandat_hoch.id) > 0), 'sehr hoch',
 IF(COUNT(DISTINCT interessenbindung_hoch.id) > 0 OR (COUNT(DISTINCT interessenbindung_mittel.id) > 0 AND COUNT(DISTINCT mandat_mittel.id) > 0), 'hoch', 
 IF(COUNT(DISTINCT interessenbindung_mittel.id) > 0 OR COUNT(DISTINCT mandat_hoch.id) > 0, 'mittel',
 'tief'))) as lobbyeinfluss,
 NOW() as refreshed_date
 FROM `organisation` organisation
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_hoch ON organisation.id = interessenbindung_hoch.organisation_id AND (interessenbindung_hoch.bis IS NULL OR interessenbindung_hoch.bis >= NOW()) AND interessenbindung_hoch.wirksamkeit='hoch'
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_mittel ON organisation.id = interessenbindung_mittel.organisation_id AND (interessenbindung_mittel.bis IS NULL OR interessenbindung_mittel.bis >= NOW()) AND interessenbindung_mittel.wirksamkeit='mittel'
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_tief ON organisation.id = interessenbindung_tief.organisation_id AND (interessenbindung_tief.bis IS NULL OR interessenbindung_tief.bis >= NOW()) AND interessenbindung_tief.wirksamkeit='tief'
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_hoch_nach_wahl ON organisation.id = interessenbindung_hoch_nach_wahl.organisation_id AND (interessenbindung_hoch_nach_wahl.bis IS NULL OR interessenbindung_hoch_nach_wahl.bis >= NOW()) AND interessenbindung_hoch_nach_wahl.wirksamkeit='hoch' AND interessenbindung_hoch_nach_wahl.von > interessenbindung_hoch_nach_wahl.parlamentarier_im_rat_seit
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_mittel_nach_wahl ON organisation.id = interessenbindung_mittel_nach_wahl.organisation_id AND (interessenbindung_mittel_nach_wahl.bis IS NULL OR interessenbindung_mittel_nach_wahl.bis >= NOW()) AND interessenbindung_mittel_nach_wahl.wirksamkeit='mittel' AND interessenbindung_mittel_nach_wahl.von > interessenbindung_mittel_nach_wahl.parlamentarier_im_rat_seit
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_tief_nach_wahl ON organisation.id = interessenbindung_tief_nach_wahl.organisation_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > interessenbindung_tief_nach_wahl.parlamentarier_im_rat_seit
-LEFT JOIN `v_mandat_raw` mandat_hoch ON organisation.id = mandat_hoch.organisation_id AND (mandat_hoch.bis IS NULL OR mandat_hoch.bis >= NOW()) AND mandat_hoch.wirksamkeit='hoch'
-LEFT JOIN `v_mandat_raw` mandat_mittel ON organisation.id = mandat_mittel.organisation_id AND (mandat_mittel.bis IS NULL OR mandat_mittel.bis >= NOW()) AND mandat_mittel.wirksamkeit='mittel'
-LEFT JOIN `v_mandat_raw` mandat_tief ON organisation.id = mandat_tief.organisation_id AND (mandat_tief.bis IS NULL OR mandat_tief.bis >= NOW()) AND mandat_tief.wirksamkeit='tief'
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_hoch ON organisation.id = interessenbindung_hoch.organisation_id AND (interessenbindung_hoch.bis IS NULL OR interessenbindung_hoch.bis >= NOW()) AND interessenbindung_hoch.wirksamkeit='hoch'
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_mittel ON organisation.id = interessenbindung_mittel.organisation_id AND (interessenbindung_mittel.bis IS NULL OR interessenbindung_mittel.bis >= NOW()) AND interessenbindung_mittel.wirksamkeit='mittel'
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_tief ON organisation.id = interessenbindung_tief.organisation_id AND (interessenbindung_tief.bis IS NULL OR interessenbindung_tief.bis >= NOW()) AND interessenbindung_tief.wirksamkeit='tief'
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_hoch_nach_wahl ON organisation.id = interessenbindung_hoch_nach_wahl.organisation_id AND (interessenbindung_hoch_nach_wahl.bis IS NULL OR interessenbindung_hoch_nach_wahl.bis >= NOW()) AND interessenbindung_hoch_nach_wahl.wirksamkeit='hoch' AND interessenbindung_hoch_nach_wahl.von > interessenbindung_hoch_nach_wahl.parlamentarier_im_rat_seit
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_mittel_nach_wahl ON organisation.id = interessenbindung_mittel_nach_wahl.organisation_id AND (interessenbindung_mittel_nach_wahl.bis IS NULL OR interessenbindung_mittel_nach_wahl.bis >= NOW()) AND interessenbindung_mittel_nach_wahl.wirksamkeit='mittel' AND interessenbindung_mittel_nach_wahl.von > interessenbindung_mittel_nach_wahl.parlamentarier_im_rat_seit
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_tief_nach_wahl ON organisation.id = interessenbindung_tief_nach_wahl.organisation_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > interessenbindung_tief_nach_wahl.parlamentarier_im_rat_seit
+LEFT JOIN `v_mandat_medium_raw` mandat_hoch ON organisation.id = mandat_hoch.organisation_id AND (mandat_hoch.bis IS NULL OR mandat_hoch.bis >= NOW()) AND mandat_hoch.wirksamkeit='hoch'
+LEFT JOIN `v_mandat_medium_raw` mandat_mittel ON organisation.id = mandat_mittel.organisation_id AND (mandat_mittel.bis IS NULL OR mandat_mittel.bis >= NOW()) AND mandat_mittel.wirksamkeit='mittel'
+LEFT JOIN `v_mandat_medium_raw` mandat_tief ON organisation.id = mandat_tief.organisation_id AND (mandat_tief.bis IS NULL OR mandat_tief.bis >= NOW()) AND mandat_tief.wirksamkeit='tief'
 GROUP BY organisation.id;
 
 --	DROP TABLE IF EXISTS `mv_organisation_lobbyeinfluss`;
@@ -726,7 +684,7 @@ lobbyeinfluss.anzahl_mandat_mittel,
 lobbyeinfluss.anzahl_mandat_hoch,
 lobbyeinfluss.lobbyeinfluss,
 CASE lobbyeinfluss.lobbyeinfluss
-WHEN 'extrem hoch' THEN 4
+WHEN 'sehr hoch' THEN 4
 WHEN 'hoch' THEN 3
 WHEN 'mittel' THEN 2
 WHEN 'tief' THEN 1
@@ -834,9 +792,9 @@ COUNT(DISTINCT mandat_hoch.id) as anzahl_mandat_hoch,
 COUNT(DISTINCT mandat_tief.id) + COUNT(DISTINCT mandat_mittel.id) * 5 + COUNT(DISTINCT mandat_hoch.id) * 11 as lobbyfaktor,
 NOW() as refreshed_date
 FROM `zutrittsberechtigung` zutrittsberechtigung
-LEFT JOIN `v_mandat_raw` mandat_hoch ON zutrittsberechtigung.id = mandat_hoch.zutrittsberechtigung_id AND (mandat_hoch.bis IS NULL OR mandat_hoch.bis >= NOW()) AND mandat_hoch.wirksamkeit='hoch'
-LEFT JOIN `v_mandat_raw` mandat_mittel ON zutrittsberechtigung.id = mandat_mittel.zutrittsberechtigung_id AND (mandat_mittel.bis IS NULL OR mandat_mittel.bis >= NOW()) AND mandat_mittel.wirksamkeit='mittel'
-LEFT JOIN `v_mandat_raw` mandat_tief ON zutrittsberechtigung.id = mandat_tief.zutrittsberechtigung_id AND (mandat_tief.bis IS NULL OR mandat_tief.bis >= NOW()) AND mandat_tief.wirksamkeit='tief'
+LEFT JOIN `v_mandat_medium_raw` mandat_hoch ON zutrittsberechtigung.id = mandat_hoch.zutrittsberechtigung_id AND (mandat_hoch.bis IS NULL OR mandat_hoch.bis >= NOW()) AND mandat_hoch.wirksamkeit='hoch'
+LEFT JOIN `v_mandat_medium_raw` mandat_mittel ON zutrittsberechtigung.id = mandat_mittel.zutrittsberechtigung_id AND (mandat_mittel.bis IS NULL OR mandat_mittel.bis >= NOW()) AND mandat_mittel.wirksamkeit='mittel'
+LEFT JOIN `v_mandat_medium_raw` mandat_tief ON zutrittsberechtigung.id = mandat_tief.zutrittsberechtigung_id AND (mandat_tief.bis IS NULL OR mandat_tief.bis >= NOW()) AND mandat_tief.wirksamkeit='tief'
 GROUP BY zutrittsberechtigung.id;
 
 --	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_lobbyfaktor`;
@@ -864,12 +822,12 @@ COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) as anzahl_interessenbindung_
 COUNT(DISTINCT interessenbindung_tief.id) * 1 + COUNT(DISTINCT interessenbindung_mittel.id) * 5 + COUNT(DISTINCT interessenbindung_hoch.id) * 11 as lobbyfaktor_einfach,
 NOW() as refreshed_date
 FROM `parlamentarier` parlamentarier
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_hoch ON parlamentarier.id = interessenbindung_hoch.parlamentarier_id AND (interessenbindung_hoch.bis IS NULL OR interessenbindung_hoch.bis >= NOW()) AND interessenbindung_hoch.wirksamkeit='hoch'
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_mittel ON parlamentarier.id = interessenbindung_mittel.parlamentarier_id AND (interessenbindung_mittel.bis IS NULL OR interessenbindung_mittel.bis >= NOW()) AND interessenbindung_mittel.wirksamkeit='mittel'
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_tief ON parlamentarier.id = interessenbindung_tief.parlamentarier_id AND (interessenbindung_tief.bis IS NULL OR interessenbindung_tief.bis >= NOW()) AND interessenbindung_tief.wirksamkeit='tief'
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_hoch_nach_wahl ON parlamentarier.id = interessenbindung_hoch_nach_wahl.parlamentarier_id AND (interessenbindung_hoch_nach_wahl.bis IS NULL OR interessenbindung_hoch_nach_wahl.bis >= NOW()) AND interessenbindung_hoch_nach_wahl.wirksamkeit='hoch' AND interessenbindung_hoch_nach_wahl.von > parlamentarier.im_rat_seit
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_mittel_nach_wahl ON parlamentarier.id = interessenbindung_mittel_nach_wahl.parlamentarier_id AND (interessenbindung_mittel_nach_wahl.bis IS NULL OR interessenbindung_mittel_nach_wahl.bis >= NOW()) AND interessenbindung_mittel_nach_wahl.wirksamkeit='mittel' AND interessenbindung_mittel_nach_wahl.von > parlamentarier.im_rat_seit
-LEFT JOIN `v_interessenbindung_raw` interessenbindung_tief_nach_wahl ON parlamentarier.id = interessenbindung_tief_nach_wahl.parlamentarier_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > parlamentarier.im_rat_seit
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_hoch ON parlamentarier.id = interessenbindung_hoch.parlamentarier_id AND (interessenbindung_hoch.bis IS NULL OR interessenbindung_hoch.bis >= NOW()) AND interessenbindung_hoch.wirksamkeit='hoch'
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_mittel ON parlamentarier.id = interessenbindung_mittel.parlamentarier_id AND (interessenbindung_mittel.bis IS NULL OR interessenbindung_mittel.bis >= NOW()) AND interessenbindung_mittel.wirksamkeit='mittel'
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_tief ON parlamentarier.id = interessenbindung_tief.parlamentarier_id AND (interessenbindung_tief.bis IS NULL OR interessenbindung_tief.bis >= NOW()) AND interessenbindung_tief.wirksamkeit='tief'
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_hoch_nach_wahl ON parlamentarier.id = interessenbindung_hoch_nach_wahl.parlamentarier_id AND (interessenbindung_hoch_nach_wahl.bis IS NULL OR interessenbindung_hoch_nach_wahl.bis >= NOW()) AND interessenbindung_hoch_nach_wahl.wirksamkeit='hoch' AND interessenbindung_hoch_nach_wahl.von > parlamentarier.im_rat_seit
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_mittel_nach_wahl ON parlamentarier.id = interessenbindung_mittel_nach_wahl.parlamentarier_id AND (interessenbindung_mittel_nach_wahl.bis IS NULL OR interessenbindung_mittel_nach_wahl.bis >= NOW()) AND interessenbindung_mittel_nach_wahl.wirksamkeit='mittel' AND interessenbindung_mittel_nach_wahl.von > parlamentarier.im_rat_seit
+LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung_tief_nach_wahl ON parlamentarier.id = interessenbindung_tief_nach_wahl.parlamentarier_id AND (interessenbindung_tief_nach_wahl.bis IS NULL OR interessenbindung_tief_nach_wahl.bis >= NOW()) AND interessenbindung_tief_nach_wahl.wirksamkeit='tief' AND interessenbindung_tief_nach_wahl.von > parlamentarier.im_rat_seit
 GROUP BY parlamentarier.id;
 
 --	DROP TABLE IF EXISTS `mv_parlamentarier_lobbyfaktor`;
@@ -1206,6 +1164,78 @@ CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIME
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung` AS
 SELECT * FROM `mv_zutrittsberechtigung`;
+
+CREATE OR REPLACE VIEW `v_mandat_raw` AS
+SELECT mandat.*,
+CASE mandat.wirksamkeit
+WHEN 'hoch' THEN 3
+WHEN 'mittel' THEN 2
+WHEN 'tief' THEN 1
+ELSE 0
+END AS wirksamkeit_index,
+organisation.lobbyeinfluss organisation_lobbyeinfluss,
+-- parlamentarier.lobbyfaktor parlamentarier_lobbyfaktor,
+NOW() as refreshed_date
+FROM `v_mandat_medium_raw` mandat
+INNER JOIN `v_organisation_raw` organisation
+ON mandat.organisation_id = organisation.id;
+
+DROP TABLE IF EXISTS `mv_mandat`;
+CREATE TABLE IF NOT EXISTS `mv_mandat`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+COMMENT='Materialzed view for v_mandat'
+AS SELECT * FROM `v_mandat_raw`;
+ALTER TABLE `mv_mandat`
+ADD PRIMARY KEY (`id`),
+-- indexes for joins on web
+ADD KEY `idx_zutritt_freigabe_bis` (`zutrittsberechtigung_id`, `freigabe_datum`, `bis`, `organisation_id`),
+ADD KEY `idx_zutritt_bis` (`zutrittsberechtigung_id`, `bis`, `organisation_id`),
+ADD KEY `idx_zutritt` (`zutrittsberechtigung_id`, `organisation_id`),
+ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `zutrittsberechtigung_id`),
+ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `zutrittsberechtigung_id`),
+ADD KEY `idx_org` (`organisation_id`, `zutrittsberechtigung_id`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+CREATE OR REPLACE VIEW `v_mandat` AS
+SELECT * FROM `mv_mandat`;
+
+CREATE OR REPLACE VIEW `v_interessenbindung_raw` AS
+SELECT interessenbindung.*,
+CASE interessenbindung.wirksamkeit
+WHEN 'hoch' THEN 3
+WHEN 'mittel' THEN 2
+WHEN 'tief' THEN 1
+ELSE 0
+END AS wirksamkeit_index,
+organisation.lobbyeinfluss organisation_lobbyeinfluss,
+parlamentarier.lobbyfaktor parlamentarier_lobbyfaktor,
+NOW() as refreshed_date
+FROM `v_interessenbindung_medium_raw` interessenbindung
+INNER JOIN `v_organisation_raw` organisation
+ON interessenbindung.organisation_id = organisation.id
+INNER JOIN `v_parlamentarier_raw` parlamentarier
+ON interessenbindung.parlamentarier_id = parlamentarier.id;
+
+DROP TABLE IF EXISTS `mv_interessenbindung`;
+CREATE TABLE IF NOT EXISTS `mv_interessenbindung`
+ENGINE = InnoDB
+DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+COMMENT='Materialzed view for v_interessenbindung'
+AS SELECT * FROM `v_interessenbindung_raw`;
+ALTER TABLE `mv_interessenbindung`
+ADD PRIMARY KEY (`id`),
+-- indexes for joins on web
+ADD KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`, `freigabe_datum`, `bis`, `organisation_id`),
+ADD KEY `idx_parlam_bis` (`parlamentarier_id`, `bis`, `organisation_id`),
+ADD KEY `idx_parlam` (`parlamentarier_id`, `organisation_id`),
+ADD KEY `idx_org_freigabe_bis` (`organisation_id`, `freigabe_datum`, `bis`, `parlamentarier_id`),
+ADD KEY `idx_org_bis` (`organisation_id`, `bis`, `parlamentarier_id`),
+ADD KEY `idx_org` (`organisation_id`, `parlamentarier_id`),
+CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
+
+CREATE OR REPLACE VIEW `v_interessenbindung` AS
+SELECT * FROM `mv_interessenbindung`;
 
 -- Kommissionen für Parlamentarier
 -- Connector: in_kommission.parlamentarier_id
