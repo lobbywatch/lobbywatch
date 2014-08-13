@@ -111,7 +111,7 @@ function lobbywatch_data_data() {
 
     $items["v1"] = array(
       'callback' => '_lobbywatch_data_router',
-      'page arguments' => array(0, 1, 2, 3, 4, 5, 6, false),
+      'page arguments' => array(-1, 0, 1, 2, 3, 4, 5, 6, false),
       'access arguments' => array('access lobbywatch data general content'),
       'file' => 'lobbywatch_data.interface.inc',
       'dependencies' => array('lobbywatch', 'user'),

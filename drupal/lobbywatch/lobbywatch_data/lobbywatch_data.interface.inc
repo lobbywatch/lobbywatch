@@ -741,7 +741,8 @@ function _lobbywatch_data_db_query($sql, $params = array()) {
   }
 }
 
-function _lobbywatch_data_router($version = '', $data_type = '', $call_type = '', $object = '', $response_type = '', $respone_object = '', $parameter = '', $json_output = false) {
+function _lobbywatch_data_router($path = '', $version = '', $data_type = '', $call_type = '', $object = '', $response_type = '', $respone_object = '', $parameter = '', $json_output = false) {
+//   df($path, '$path');
 //   df($version, '$version');
 //   df($data_type, '$data_type');
 //   df($call_type, '$call_type');
@@ -782,6 +783,7 @@ function _lobbywatch_data_router($version = '', $data_type = '', $call_type = ''
   //     );
   //   }
 
+  // Idea: We could alternatively use regex instead of ifs, maybe more readable
   if ($call_type === 'table' && array_key_exists($object, Constants::$workflow_tables) && $response_type === 'flat' && $respone_object === 'id' && $parameter) {
 //     df($parameter, '_lobbywatch_data_table_flat_id');
     return _lobbywatch_data_table_flat_id($object, $parameter, false);

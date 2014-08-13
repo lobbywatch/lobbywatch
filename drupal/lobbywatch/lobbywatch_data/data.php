@@ -296,7 +296,7 @@ function js_execute_callback(&$delivery_callback = 'drupal_json_output') {
  *   The arguments array replaced with correct path values.
  */
 function js_replace_callback_args(array $args = array()) {
-  df($args, '$args');
+//   df($args, '$args');
   // Retrieve the original arguments again, but strip first and second
   // arguments ('data' and 'module').
   $original_args = array_slice(explode('/', $_GET['q']), 2);
@@ -304,6 +304,8 @@ function js_replace_callback_args(array $args = array()) {
     // Numeric argument exists, replace it.
     if (is_int($value) && !empty($original_args[$value])) {
       $args[$key] = $original_args[$value];
+    } else if (is_int($value) && $value === -1) {
+      $args[$key] = $_GET['q'];
     }
     // Numeric argument does not exist, remove it.
     elseif (is_int($value)) {
