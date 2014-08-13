@@ -456,3 +456,8 @@ small.desc {
 #pg-admin-create-user-dialog #newuser-id {
   visibility: hidden;
 }
+
+.pgui-edit-form .minimal-mark {
+  color: red;
+  font-weight: normal;
+}

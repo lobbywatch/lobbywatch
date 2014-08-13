@@ -140,17 +140,88 @@ function defaultOnGetCustomTemplate(Page $page, $part, $mode, &$result, &$params
 function fillHintParams(Page $page, &$params) {
   // Fill info hints
   $hints = array();
+  $minimal_fields = array();
   foreach($page->GetGrid()->GetViewColumns() as $column) {
     $raw_name = $column->GetName();
     $name = preg_replace('/^(.*?_id).*/', '\1', $raw_name);
     $name = preg_replace('/_anzeige_name$/', '', $name);
     $hints[$name] = htmlspecialchars($column->GetDescription());
+
+    $minimal_fields[$name] = is_minimal_field(getTableName($page), $name);
     //      df("Names: $raw_name -> $name");
   }
-  $params = array_merge($params, array( 'Hints' => $hints));
+  $params = array_merge($params, array( 'Hints' => $hints, 'MinimalFields' => $minimal_fields));
 //   df($params, 'params');
 }
 
+function getTableName(Page $page) {
+  return preg_replace('/`/', '', $page->GetDataset()->GetName());
+}
+function is_minimal_field($table, $field) {
+  df("$table.$field", 'is_minimal_field');
+  switch ($table) {
+    case 'parlamentarier':
+      switch ($field) {
+        case 'email':
+        case 'geburtstag':
+//         case 'im_rat_seit': is required
+        case 'geschlecht':
+        case 'kleinbild':
+        case 'parlament_biografie_id':
+        case 'beruf':
+          return true;
+        default:
+          return false;
+      }
+    case 'zutrittsberechtigung':
+      switch ($field) {
+        case 'email':
+        case 'geburtstag':
+        case 'geschlecht':
+        case 'beruf':
+          return true;
+        default:
+          return false;
+      }
+    case 'partei':
+      switch ($field) {
+        case 'name':
+          return true;
+        default:
+          return false;
+      }
+    case 'organisation':
+      switch ($field) {
+//         case 'rechtsform': now required
+        case 'interessengruppe_id':
+          return true;
+        default:
+          return false;
+      }
+    case 'branche':
+      switch ($field) {
+        case 'kommission_id':
+          return true;
+        default:
+          return false;
+      }
+    case 'kommission':
+      switch ($field) {
+        case 'parlament_url':
+        case 'anzahl_nationalraete':
+        case 'anzahl_staenderaete':
+          return true;
+        default:
+          return false;
+      }
+    default:
+      return false;
+  }
+}
+
+/*
+
+ */
 function before_render(Page $page) {
 
   custom_set_db_session_parameters($page);
@@ -1270,12 +1341,11 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
     } elseif ($table_name === 'organisation') {
       if (isset($rowData['rechtsform']) && isset($rowData['interessengruppe_id']) && isset($rowData['branche_id'])) {
         $completeness_styles .= 'background-color: greenyellow;';
-      } elseif (isset($rowData['rechtsform']) || isset($rowData['interessengruppe_id']) || isset($rowData['branche_id'])) {
+      } elseif (isset($rowData['rechtsform']) || isset($rowData['interessengruppe_id'])) {
         $completeness_styles .= 'background-color: orange;';
       }
       checkAndMarkColumnNotNull('rechtsform', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('interessengruppe_id', $rowData, $rowCellStyles);
-      checkAndMarkColumnNotNull('branche_id', $rowData, $rowCellStyles);
     } elseif ($table_name === 'branche') {
       if (isset($rowData['kommission_id'])) {
         $completeness_styles .= 'background-color: greenyellow;';

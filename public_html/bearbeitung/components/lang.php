@@ -84,7 +84,7 @@ $cequals='gleich';
 $cdoesNotEquals='ungleich';
 $cisLessThan='ist kleiner als';
 $cisLessThanOrEqualsTo='ist kleiner als oder gleich';
-$cisGreaterThan='ist grösser als'; 
+$cisGreaterThan='ist grösser als';
 $cisGreaterThanOrEqualsTo='ist grösser als oder gleich';
 $cLike='wie, ungefähr';
 $cAnyField='jedes Feld';
@@ -223,3 +223,6 @@ $cConfirmPassword='Confirm password';
 $cConfirmedPasswordError="Passwords do not match. Please try again.";
 $cChangeYourPassword  = 'Change your password';
 $cCurrentPassword = 'Current password';
+
+// Lobbywatch additions
+$cMinimalField='Benötigtes Feld zum Funktionieren von Lobbywatch. Der Datensatz kann ohne dieses Feld abgespeichert werden. Vor einer Veröffentlichtung muss es jedoch gefüllt werden.';
