@@ -344,11 +344,45 @@ do
   > "$file";
 done
 
+for file in $dir/components/templates/common/layout.tpl
+do
+  echo "Process $file";
+  mv "$file" "$file.bak";
+  cat "$file.bak" \
+  | perl -p -e's%(<link rel="stylesheet" type="text/css" href="components/css/main.css" />)%<!-- \1 afterburner -->\n<link rel="stylesheet" type="text/css" href="components/css/aggregated.css" /> <!-- afterburner -->%is' \
+  | perl -p -e's%(<link rel="stylesheet" type="text/css" href="components/css/user.css" />)%<!-- \1 afterburner -->%is' \
+  | perl -p -e's%(<script src="components/js/.+"></script>)%<!-- \1 afterburner -->%is' \
+  | perl -p -e's%(<script type="text/javascript" src="components/js/require-config.js"></script>)%<!-- \1 afterburner -->%is' \
+  | perl -p -e's%(<script type="text/javascript"(.*)src="components/js/require.js"></script>)%<!-- \1 afterburner -->\n<script \2 src="components/js/aggregated.js"></script>%is' \
+  > "$file";
+done
+
+#    <script src="components/js/jquery/jquery.min.js"></script>
+#    <script src="components/js/libs/amplify.store.js"></script>
+#    <script src="components/js/bootstrap/bootstrap.js"></script>
+#
+#    <script type="text/javascript" src="components/js/require-config.js"></script>
+
+#    {if $JavaScriptMain}
+#        <script type="text/javascript" data-main="{$JavaScriptMain}" src="components/js/require.js"></script>
+#    {else}
+#        <script type="text/javascript" src="components/js/require.js"></script>
+#    {/if}
+
+#<script type="text/javascript" src="components/js/pg.user_management_api.js"></script>
+#<script type="text/javascript" src="components/js/pgui.change_password_dialog.js"></script>
+#<script type="text/javascript" src="components/js/pgui.password_dialog_utils.js"></script>
+#<script type="text/javascript" src="components/js/pgui.self_change_password.js"></script>
+
+echo "Aggregate JS"
+cat $dir/components/js/jquery/jquery.min.js $dir/components/js/libs/amplify.store.js $dir/components/js/bootstrap/bootstrap.js $dir/components/js/require-config.js $dir/components/js/require.js $dir/components/js/pg.user_management_api.js $dir/components/js/pgui.change_password_dialog.js $dir/components/js/pgui.password_dialog_utils.js $dir/components/js/pgui.self_change_password.js > $dir/components/js/aggregated.js
+
 # Instead of import custom.css, copy it, avoids a HTTP request
-echo "Copy custom.css to user.css"
+echo "Aggregate CSS"
 cd public_html/bearbeitung/components/css
 #cp public_html/bearbeitung/components/css/custom.css public_html/bearbeitung/components/css/user.css
 ../../../../data_image_css_converter.sh custom.css > user.css
+cat main.css user.css > aggregated.css
 cd -
 
 # We support currently only 1 language, avoid PHP call and create static file
