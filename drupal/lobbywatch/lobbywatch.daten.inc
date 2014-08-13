@@ -496,7 +496,7 @@ GROUP BY zutrittsberechtigung.id;";
 
   $res = '';
   foreach($gaeste as $gast) {
-    $res .= '<h4>' . $gast['zutrittsberechtigung_name'] . ', ' . $gast['funktion'] . (isset($gast['beruf']) ? '/' . $gast['beruf'] : '') . ($admin ? ' <span class="admin">[LF: <b>'. $gast['lobbyfaktor'] . '</b> (' . round($gast['lobbyfaktor'] /$gast['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $gast['lobbyfaktor_max'] . ')'. ($admin ? ' <span =  class="admin">[' . $gast['anzahl_mandat_hoch'] . ', ' . $gast['anzahl_mandat_mittel'] . ', ' . $gast['anzahl_mandat_tief'] . ']</span>' : '') . ']' . '</span>': '') . '' . '</h4>';
+    $res .= '<h4>' . $gast['zutrittsberechtigung_name'] . ', ' . $gast['funktion'] . (isset($gast['beruf']) ? '/' . $gast['beruf'] : '') . ($admin ? ' <span class="admin">[LF: <b>'. $gast['lobbyfaktor'] . '</b>' . ($admin ? ' (' . round($gast['lobbyfaktor'] /$gast['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $gast['lobbyfaktor_max'] . ')' .  ' <span class="admin">[' . $gast['anzahl_mandat_hoch'] . ', ' . $gast['anzahl_mandat_mittel'] . ', ' . $gast['anzahl_mandat_tief'] . ']</span>' : '') . ']' . '</span>': '') . '' . '</h4>';
     $res .= '<p><a href="/daten/zutrittsberechtigter/' . $gast['id'] . '">' . $gast['name'] . '</a>  ist mit folgenden Firmen, Verbänden und Organisationen verbunden:</p>';
     //$res .= mandateList($con, $gast['id']);
     $res .= $gast['mandate'] ? "<ul>\n" . $gast['mandate'] . "\n</ul>" : '<p>keine</p>';
@@ -688,7 +688,7 @@ parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
 //       '<h2>' . $parlamentarier_name . '</h2>' .
       '<div class="clearfix">' .
       '<div style="float: left;"><a id="parlamentarier-kleinbild" class="parlamentarier-kleinbild" onclick="false"><img src="/sites/lobbywatch.ch/app/auswertung/parlamentarierBilder/' . check_plain($record['kleinbild']) . '" alt="' . $parlamentarier_name . '"></a></div>' .
-      '<p>Lobbyfaktor: <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' . ($admin ? ' <span =  class="admin">[' . $record['anzahl_interessenbindung_hoch'] . '/' . $record['anzahl_interessenbindung_hoch_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_mittel'] . '/' . $record['anzahl_interessenbindung_mittel_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_tief'] . '/' . $record['anzahl_interessenbindung_tief_nach_wahl'] . ']</span>' : '') . '</p>' .
+      ($admin ? '<p class="admin">Lobbyfaktor: <b>'. $record['lobbyfaktor'] . '</b> (' . round($record['lobbyfaktor'] /$record['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $record['lobbyfaktor_max'] . ')' .  ' <span class="admin">[' . $record['anzahl_interessenbindung_hoch'] . '/' . $record['anzahl_interessenbindung_hoch_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_mittel'] . '/' . $record['anzahl_interessenbindung_mittel_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_tief'] . '/' . $record['anzahl_interessenbindung_tief_nach_wahl'] . ']</span>' : '') . '</p>' .
       '<p><a id="show-bio" class="toggle-text" onclick="false"><span id="bio-text-show">Zeige</span><span id="bio-text-hide" style="display:none">Verstecke</span> Angaben zur Person</a></p>'.
 
       '</div>' .
@@ -1025,7 +1025,7 @@ ORDER BY organisation.anzeige_name;
     $unpublished = user_access('access lobbywatch unpublished content');
     $markup .=
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
-    '<p>Lobbyeinfluss: <b>'. $record['lobbyeinfluss'] . '</b>' . ($admin ? ' <span =  class="admin">[' . $record['anzahl_interessenbindung_hoch'] . '/' . $record['anzahl_interessenbindung_hoch_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_mittel'] . '/' . $record['anzahl_interessenbindung_mittel_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_tief'] . '/' . $record['anzahl_interessenbindung_tief_nach_wahl'] . '], [' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']' . '</span>' : '') . '</p>' .
+    ($admin ? '<p class="admin">Lobbyeinfluss: <b>'. $record['lobbyeinfluss'] . '</b>' .  ' <span class="admin">[' . $record['anzahl_interessenbindung_hoch'] . '/' . $record['anzahl_interessenbindung_hoch_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_mittel'] . '/' . $record['anzahl_interessenbindung_mittel_nach_wahl'] . ', ' . $record['anzahl_interessenbindung_tief'] . '/' . $record['anzahl_interessenbindung_tief_nach_wahl'] . '], [' . $record['anzahl_mandat_hoch'] . ', ' . $record['anzahl_mandat_mittel'] . ', ' . $record['anzahl_mandat_tief'] . ']' . '</span>' : '') . '</p>' .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>' .
 //     . '<h3>Informationen</h3>'
     '<table border="0">'
