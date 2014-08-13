@@ -546,7 +546,7 @@ GROUP BY branche.id;";
 
   $res = '';
   foreach($branchen as $branche) {
-    $res .= '<h4>Lobbygruppen in der Branche' . $branche['branche_name'] . '</h5>';
+    $res .= '<h4>Lobbygruppen in der Branche ' . $branche['branche_name'] . '</h5>';
     //$res .= mandateList($con, $branche['id']);
     $res .= "<ul>\n" . $branche['interessengruppen'] . "\n</ul>";
   }

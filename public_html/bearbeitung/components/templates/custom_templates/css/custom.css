@@ -316,12 +316,15 @@ h3.box-title,
 }
 
 .pg-page-list > li > a .website,
-.pg-page-list > li > a .auswertung {
+.pg-page-list > li > a .kommissionen {
   background-image: url("/favicon.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;
   margin-left: -20px;
+}
+.pg-page-list > li > a .auswertung {
+  text-decoration: line-through;
 }
 
 .pg-page-list > li > a .wiki {
