@@ -9716,13 +9716,13 @@
     <p><a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/Seiten/default.aspx" rel="_blank external nofollow">Kommissionen</a> und <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/DELEGATIONEN/Seiten/default.aspx" rel="_blank external nofollow">Delegationen</a> des Parlamentes.
     </p>
     
-    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" height="16" width="16"><span>Hinweis</span></div><div class="rbox-data">
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/information.png') . '" alt="Hinweis" title="Hinweis" class="icon" height="16" width="16"><span>Hinweis</span></div><div class="rbox-data">
     <ul><li> Delegationen im engeren Sinne (Bsp GPDel - Geschäftsprüfungsdelegation) sind Subkommissionen [Typ=subkommission]. Die zugehörige "Mutterkommission" muss angegeben werden.
     </li><li> Delegationen im weiteren Sinne (Bsp ER - Parlamentarische Versammlung des Europarates) sind Spezialkommissionen [Typ=spezialkommission].
     </li></ul></div></div>
     <p>
     </p>
-    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" height="16" width="16"><span>Hinweis</span></div><div class="rbox-data">
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/information.png') . '" alt="Hinweis" title="Hinweis" class="icon" height="16" width="16"><span>Hinweis</span></div><div class="rbox-data">
     <p>Das Feld Sachbereiche enthält eine Aufzählung der Sachbereiche dieser Kommission wie auf parlament.ch angegeben. Die einzelnen Punkte werden durch ";" (ein Strichpunkt) getrennt. Siehe Beispiel <a class="wiki external" target="_blank" href="http://lobbywatch.ch/bearbeitung/kommission.php?operation=view&amp;pk0=1" rel="_blank external nofollow">SGK</a> (<a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/KOMMISSIONEN/LEGISLATIVKOMMISSIONEN/KOMMISSIONEN-SGK/Seiten/default.aspx" rel="_blank external nofollow">parlament.ch</a>)
     </p>
     </div></div>

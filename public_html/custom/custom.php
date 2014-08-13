@@ -31,7 +31,7 @@ $edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version " . 
 <li>Das Bearbeiten von alten und das Erfassen von neuen Daten sollte systematisch und abgesprochen erfolgen, wegen der grossen Datenmenge und der Neuheit der Eingabeformulare.</ul></div>";
 */
 
-$edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/book_open.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_simplified.pdf">Vereinfachtes Datenmodell</a> (Komplex: <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_1page.pdf">1 Seite</a> /<a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell.pdf">4 Seiten</a>).</div></div>';
+$edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/book_open.png') . '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_simplified.pdf">Vereinfachtes Datenmodell</a> (Komplex: <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_1page.pdf">1 Seite</a> /<a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell.pdf">4 Seiten</a>).</div></div>';
 
 // $params = session_get_cookie_params();
 // df($params, "Session params");
@@ -1154,7 +1154,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //       df(!getTimestamp($rowData['eingabe_abgeschlossen_datum']), '!getTimestamp($rowData[eingabe_abgeschlossen_datum]');
 
 //       $workflow_styles .= 'background-color: red;';
-          $workflow_styles .= 'background-image: url(img/icons/warning.gif); background-repeat: no-repeat;';
+          $workflow_styles .= 'background-image: url(' . util_data_uri('img/icons/warning.gif') . '); background-repeat: no-repeat;';
 
     }
 
@@ -1181,7 +1181,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       )
     ) {
       //$workflow_styles .= 'border-color: green; border-width: 3px;';
-          $workflow_styles .= 'background-image: url(img/tick.png); background-repeat: no-repeat; background-position: bottom right;';
+          $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick.png') . '); background-repeat: no-repeat; background-position: bottom right;';
 //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye.png); background-repeat: no-repeat; background-position: bottom right;';
     } elseif (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
     && !preg_match('/background-image/',$workflow_styles)
@@ -1190,7 +1190,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
     ) {
       //$workflow_styles .= 'border-color: green; border-width: 3px;';
 //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye-half.png); background-repeat: no-repeat; background-position: bottom right;';
-          $workflow_styles .= 'background-image: url(img/tick-small-red.png); background-repeat: no-repeat; background-position: bottom right;';
+          $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick-small-red.png') . '); background-repeat: no-repeat; background-position: bottom right;';
     }
 
     if ((isset($rowData['im_rat_bis']) && getTimestamp($rowData['im_rat_bis']) < $now_ts) || (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts)) {
@@ -1211,11 +1211,11 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
         $zb_controlled &= getTimestamp($zb['kontrolliert_datum']) >= $update_threshold_ts && getTimestamp($zb['kontrolliert_datum']) > getTimestamp($zb['eingabe_abgeschlossen_datum']);
       }
       if ($zb_state && $zb_controlled) {
-        $completeness_styles .= 'background-image: url(img/icons/fugue/user-green-female.png); background-repeat: no-repeat; background-position: bottom right;';
+        $completeness_styles .= 'background-image: url(' . util_data_uri('img/icons/fugue/user-green-female.png') . '); background-repeat: no-repeat; background-position: bottom right;';
       } elseif ($zb_state) {
-        $completeness_styles .= 'background-image: url(img/icons/fugue/user.png); background-repeat: no-repeat; background-position: bottom right;';
+        $completeness_styles .= 'background-image: url(' . util_data_uri('img/icons/fugue/user.png') . '); background-repeat: no-repeat; background-position: bottom right;';
       } elseif (getTimestamp($rowData['eingabe_abgeschlossen_datum']) >= $update_threshold_ts) {
-        $completeness_styles .= 'background-image: url(img/icons/fugue/user--exclamation.png); background-repeat: no-repeat; background-position: bottom right;';
+        $completeness_styles .= 'background-image: url(' . util_data_uri('img/icons/fugue/user--exclamation.png') . '); background-repeat: no-repeat; background-position: bottom right;';
       } // else nothing
 
       if (/*isset($rowData['sitzplatz']) &&*/ isset($rowData['email']) && isset($rowData['geburtstag']) && isset($rowData['im_rat_seit']) && isset($rowData['geschlecht']) && isset($rowData['kleinbild']) && isset($rowData['parlament_biografie_id']) && isset($rowData['beruf']) && $zb_state) {
@@ -1286,7 +1286,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //       df(!getTimestamp($rowData['eingabe_abgeschlossen_datum']), '!getTimestamp($rowData[eingabe_abgeschlossen_datum]');
 
 //           $workflow_styles .= 'background-color: red;';
-          $workflow_styles .= 'background-image: url(img/icons/warning.gif); background-repeat: no-repeat;';
+          $workflow_styles .= 'background-image: url(' . util_data_uri('img/icons/warning.gif') . '); background-repeat: no-repeat;';
     }
     // Color states
 
@@ -1312,7 +1312,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       )
     ) {
       //$workflow_styles .= 'border-color: green; border-width: 3px;';
-          $workflow_styles .= 'background-image: url(img/tick.png); background-repeat: no-repeat; background-position: bottom right;';
+          $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick.png') . '); background-repeat: no-repeat; background-position: bottom right;';
 //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye.png); background-repeat: no-repeat; background-position: bottom right;';
     } elseif (getTimestamp($rowData['kontrolliert_datum']) >= $update_threshold_ts
     && !preg_match('/background-image/', $workflow_styles)
@@ -1321,7 +1321,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
     ) {
       //$workflow_styles .= 'border-color: green; border-width: 3px;';
 //           $workflow_styles .= 'background-image: url(img/icons/fugue/eye-half.png); background-repeat: no-repeat; background-position: bottom right;';
-          $workflow_styles .= 'background-image: url(img/tick-small-red.png); background-repeat: no-repeat; background-position: bottom right;';
+          $workflow_styles .= 'background-image: url(' . util_data_uri('img/tick-small-red.png') . '); background-repeat: no-repeat; background-position: bottom right;';
     }
 
     if (isset($rowData['bis']) && getTimestamp($rowData['bis']) < $now_ts) {
@@ -1540,7 +1540,7 @@ function checkAndMarkColumnNotNull($column, $rowData, &$rowCellStyles) {
       if (empty($rowCellStyles[$column])) {
         $rowCellStyles[$column] = '';
       }
-      $rowCellStyles[$column] .= 'background-image: url(img/book-question.png); background-repeat: no-repeat; background-position: top left;';
+      $rowCellStyles[$column] .= 'background-image: url(' . util_data_uri('img/book-question.png') . '); background-repeat: no-repeat; background-position: top left;';
     }
 }
 

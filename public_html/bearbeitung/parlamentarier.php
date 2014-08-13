@@ -49913,12 +49913,12 @@
     <p><a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/Seiten/default.aspx" rel="_blank external nofollow">Parlamentarier</a> des Parlamentes.
     </p>
     
-    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Ohne Zuordnung einer Partei, gilt ein Parlamentarier als parteilos.</div></div>
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/information.png') . '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Ohne Zuordnung einer Partei, gilt ein Parlamentarier als parteilos.</div></div>
     <p>
     <br>Partei erfassen, deshalb nicht vergessen.
     </p>
     
-    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Tip</span></div><div class="rbox-data">Der Sitzplatz eines Parlamentariers kann auf <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/NATIONALRAT/SITZORDNUNG/Seiten/default.aspx" rel="external nofollow">Parlament.ch Sitzordnung</a> und das Photo kann auf der Biographie des jeweiligen <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/NATIONALRAT/Seiten/default.aspx" rel="_blank external nofollow">Parlamentariers</a> abgerufen werden.</div></div>
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/information.png') . '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Tip</span></div><div class="rbox-data">Der Sitzplatz eines Parlamentariers kann auf <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/NATIONALRAT/SITZORDNUNG/Seiten/default.aspx" rel="external nofollow">Parlament.ch Sitzordnung</a> und das Photo kann auf der Biographie des jeweiligen <a class="wiki external" target="_blank" href="http://www.parlament.ch/D/ORGANE-MITGLIEDER/NATIONALRAT/Seiten/default.aspx" rel="_blank external nofollow">Parlamentariers</a> abgerufen werden.</div></div>
     </div>
     
     <b>Parlamentarieranhang</b>

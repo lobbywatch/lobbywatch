@@ -317,7 +317,7 @@ h3.box-title,
 
 .pg-page-list > li > a .website,
 .pg-page-list > li > a .kommissionen {
-  background-image: url("/favicon.png");
+  background-image: url("../../img/favicon.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;
@@ -328,7 +328,7 @@ h3.box-title,
 }
 
 .pg-page-list > li > a .wiki {
-  background-image: url("/sites/lobbywatch.ch/wiki/favicon.png");
+  background-image: url("../../img/tiki_favicon.png");
   background-position: left;
   background-repeat: no-repeat;
   padding-left: 20px;

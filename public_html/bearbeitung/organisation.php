@@ -50212,17 +50212,17 @@
     <p>Organisationen, die Lobbying im Parlament betreiben.
     </p>
     
-    <div class="clearfix rbox warning"><div class="rbox-title"><img src="img/icons/exclamation.png" alt="Warnung" title="Warnung" class="icon" width="16" height="16"><span>Warnung</span></div><div class="rbox-data">Der Name sollte nur den Namen enthalten. Andere Informationen wie Orte sollen in den dafür vorgesehenen Feldern erfasst werden.</div></div>
+    <div class="clearfix rbox warning"><div class="rbox-title"><img src="' . util_data_uri('img/icons/exclamation.png') . '" alt="Warnung" title="Warnung" class="icon" width="16" height="16"><span>Warnung</span></div><div class="rbox-data">Der Name sollte nur den Namen enthalten. Andere Informationen wie Orte sollen in den dafür vorgesehenen Feldern erfasst werden.</div></div>
     <p>
     <br>Grund: Wenn mehrere Daten in einem Feld abgelegt sind können diese Felder nicht mehr automatisch ausgewertet werden.
     </p>
     
-    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Durch die Interessengruppe wird eine Organisation einer Branche zugeordnet.</div></div>
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/information.png') . '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Durch die Interessengruppe wird eine Organisation einer Branche zugeordnet.</div></div>
     <p>
     <br>Das Erfassen der Interessengruppe bei einer Organisation ist deshalb wichtig.
     </p>
     
-    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Durch die Rechtsform einer Organisation wird bei einer Interessenbindung bestimmt, ob ein Vorstand ein Stiftungsrat oder ein Verwaltungsrat ist.</div></div>
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/information.png') . '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Durch die Rechtsform einer Organisation wird bei einer Interessenbindung bestimmt, ob ein Vorstand ein Stiftungsrat oder ein Verwaltungsrat ist.</div></div>
     </div>
     
     ' . $GLOBALS["edit_general_hint"] . '';

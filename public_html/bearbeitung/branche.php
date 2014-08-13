@@ -11390,7 +11390,7 @@
     <p>Tabelle der Wirtschaftsbranchen
     </p>
     
-    <div class="clearfix rbox note"><div class="rbox-title"><img src="img/icons/information.png" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Branchen sollen einer zuständigen Kommission zugeordnet werden.</div></div>
+    <div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/information.png') . '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Branchen sollen einer zuständigen Kommission zugeordnet werden.</div></div>
     </div>
     
     ' . $GLOBALS["edit_general_hint"] . '';

@@ -97,6 +97,7 @@ do
   | perl -p -e's/<a id="plugin-edit-remarksbox.*?<\/a>//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" height="14" width="15">//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" width="15" height="14">//g' \
+  | perl -p -e's%(src=")([^"]+)"%\1'\'' . util_data_uri('\''\2'\'') . '\''"%g' \
   | perl -p -e's/^((\s*)\$this->userIdentityStorage->ClearUserIdentity\(\);)/\2session_unset(); \/\/ Afterburned\n\1/g' \
   | perl -p -e's/(^\s*)(\$result->AddPage\(new PageLink\(\$this->GetLocalizerCaptions\(\)->GetMessageString\(.AdminPage.\), .phpgen_admin\.php., \$this->GetLocalizerCaptions\(\)->GetMessageString\(.AdminPage.\), false, true\)\);)/\1\2\n\n            add_more_navigation_links(\$result); \/\/ Afterburned/g' \
   | perl -p -e's/(DownloadHTTPHandler\(\$this->dataset, '\''(datei)'\'')/PrivateFile\1/g' \
@@ -345,7 +346,10 @@ done
 
 # Instead of import custom.css, copy it, avoids a HTTP request
 echo "Copy custom.css to user.css"
-cp public_html/bearbeitung/components/css/custom.css public_html/bearbeitung/components/css/user.css
+cd public_html/bearbeitung/components/css
+#cp public_html/bearbeitung/components/css/custom.css public_html/bearbeitung/components/css/user.css
+../../../../data_image_css_converter.sh custom.css > user.css
+cd -
 
 # We support currently only 1 language, avoid PHP call and create static file
 echo "jslang.php > jslang.js"

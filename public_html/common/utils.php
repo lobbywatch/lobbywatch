@@ -338,3 +338,19 @@ function get_PDO_lobbywatch_DB_connection() {
 function common_check_plain($text) {
   return htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
 }
+
+/**
+ * Return data uri.
+ * Files can be replaced by data uris.
+ *
+ * Ref http://stackoverflow.com/questions/2329364/how-to-embed-images-in-a-single-html-php-file
+ */
+function util_data_uri($file, $mime = '') {
+  $relative = preg_replace('/\/?(.*)/u', '$1', $file);
+  $contents = file_get_contents($relative);
+  $base64   = base64_encode($contents);
+  if (!$mime) {
+    $mime = 'image/' . substr($file, -3);
+  }
+  return 'data:' . $mime . ';base64,' . $base64;
+}
