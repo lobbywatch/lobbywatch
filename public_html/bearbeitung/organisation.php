@@ -38375,7 +38375,6 @@
             $this->dataset->AddField($field, false);
             $this->dataset->AddLookupField('land_id', 'v_country', new IntegerField('id'), new StringField('anzeige_name', 'land_id_anzeige_name', 'land_id_anzeige_name_v_country'), 'land_id_anzeige_name_v_country');
             $this->dataset->AddLookupField('interessenraum_id', 'v_interessenraum', new IntegerField('id'), new StringField('anzeige_name', 'interessenraum_id_anzeige_name', 'interessenraum_id_anzeige_name_v_interessenraum'), 'interessenraum_id_anzeige_name_v_interessenraum');
-            $this->dataset->AddLookupField('branche_id', 'v_branche_simple', new IntegerField('id'), new StringField('anzeige_name', 'branche_id_anzeige_name', 'branche_id_anzeige_name_v_branche_simple'), 'branche_id_anzeige_name_v_branche_simple');
             $this->dataset->AddLookupField('interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe_id_anzeige_name_v_interessengruppe_simple');
             $this->dataset->AddLookupField('interessengruppe2_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe2_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe2_id_anzeige_name_v_interessengruppe_simple');
             $this->dataset->AddLookupField('interessengruppe3_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('anzeige_name', 'interessengruppe3_id_anzeige_name', 'interessengruppe3_id_anzeige_name_v_interessengruppe_simple'), 'interessengruppe3_id_anzeige_name_v_interessengruppe_simple');
@@ -38459,8 +38458,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'typ', 'branche_id_anzeige_name', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Typ'), $this->RenderText('Branche'), $this->RenderText('Lobbygruppe'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse Plz'), $this->RenderText('Notizen')),
+                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'typ', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Typ'), $this->RenderText('Lobbygruppe'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse Plz'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -38632,81 +38631,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('rechtsform', $this->RenderText('Rechtsform')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('typ', $this->RenderText('Typ')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vernehmlassung', $this->RenderText('Vernehmlassung')));
-            
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_branche_simple`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('angaben');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('farbcode');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_abs');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_rel');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_klein_rel');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateiname_wo_ext');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateierweiterung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateiname');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_mime_type');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'anzeige_name', false));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -38888,7 +38812,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_strasse', $this->RenderText('Adresse Strasse')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_zusatz', $this->RenderText('Adresse Zusatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_plz', $this->RenderText('Adresse Plz')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_parlam_verbindung', $this->RenderText('ALT Parlam Verbindung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
@@ -39730,194 +39653,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for branche_id field
-            //
-            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_branche_simple`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('angaben');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('farbcode');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_abs');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_rel');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_klein_rel');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateiname_wo_ext');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateierweiterung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateiname');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_mime_type');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Branche', 
-                'branche_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for branche_id field
-            //
-            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_branche_simple`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('angaben');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('farbcode');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_abs');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_rel');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_klein_rel');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateiname_wo_ext');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateierweiterung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateiname');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_mime_type');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Branche', 
-                'branche_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             
@@ -40711,49 +40446,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::InlineMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::InlineMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -41101,14 +40793,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -41190,13 +40874,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -41560,93 +41237,6 @@
             $grid->AddEditColumn($editColumn);
             
             //
-            // Edit column for branche_id field
-            //
-            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_branche_simple`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('angaben');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('farbcode');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_abs');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_rel');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_klein_rel');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateiname_wo_ext');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateierweiterung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateiname');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_mime_type');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Branche', 
-                'branche_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
             // Edit column for interessengruppe_id field
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe_id_edit', $this->CreateLinkBuilder());
@@ -41966,21 +41556,6 @@
             $editor->SetSize(10);
             $editor->SetMaxLength(10);
             $editColumn = new CustomEditColumn('Adresse Plz', 'adresse_plz', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::InlineMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -42383,93 +41958,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for branche_id field
-            //
-            $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`v_branche_simple`');
-            $field = new StringField('anzeige_name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('id');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kommission_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('angaben');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('farbcode');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_abs');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_rel');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_klein_rel');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateiname_wo_ext');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateierweiterung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_dateiname');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('symbol_mime_type');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('created_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('updated_date_unix');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('eingabe_abgeschlossen_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('kontrolliert_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('freigabe_datum_unix');
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('anzeige_name', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'Branche', 
-                'branche_id', 
-                $editor, 
-                $this->dataset, 'id', 'anzeige_name', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for interessengruppe_id field
             //
             $editor = new MultiLevelComboBoxEditor('interessengruppe_id_edit', $this->CreateLinkBuilder());
@@ -42794,21 +42282,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::InlineMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -42904,14 +42377,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -42980,13 +42445,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -43149,14 +42607,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -43225,13 +42675,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -43444,16 +42887,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -43555,15 +42988,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -43748,14 +43172,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -43824,13 +43240,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -44038,16 +43447,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -44149,15 +43548,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -44342,14 +43732,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -44418,13 +43800,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -44632,16 +44007,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -44743,15 +44108,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -44936,14 +44292,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -45012,13 +44360,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -45226,16 +44567,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -45337,15 +44668,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -45530,14 +44852,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -45606,13 +44920,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -45820,16 +45127,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -45931,15 +45228,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -46124,14 +45412,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -46200,13 +45480,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -46414,16 +45687,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -46525,15 +45788,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -46718,14 +45972,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -46794,13 +46040,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -47008,16 +46247,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -47119,15 +46348,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -47312,14 +46532,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -47388,13 +46600,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -47602,16 +46807,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -47713,15 +46908,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -47906,14 +47092,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -47982,13 +47160,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -48196,16 +47367,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -48307,15 +47468,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -48500,14 +47652,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -48576,13 +47720,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -48790,16 +47927,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -48901,15 +48028,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -49094,14 +48212,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -49170,13 +48280,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -49384,16 +48487,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -49495,15 +48588,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -49688,14 +48772,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -49764,13 +48840,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -49978,16 +49047,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $column->SetDescription($this->RenderText('Fremdschlüssel Branche.'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -50089,15 +49148,6 @@
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
             $column->SetOrderable(true);
             $column->SetDescription($this->RenderText('Postleitzahl der Organisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -50282,14 +49332,6 @@
             //
             // View column for anzeige_name field
             //
-            $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
-            $column->SetOrderable(true);
-            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'branche.php?operation=view&pk0=%branche_id%' , '_self');
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for anzeige_name field
-            //
             $column = new TextViewColumn('interessengruppe_id_anzeige_name', 'Lobbygruppe', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'interessengruppe.php?operation=view&pk0=%interessengruppe_id%' , '_self');
@@ -50358,13 +49400,6 @@
             // View column for adresse_plz field
             //
             $column = new TextViewColumn('adresse_plz', 'Adresse Plz', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
