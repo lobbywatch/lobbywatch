@@ -162,6 +162,7 @@ DirectoryIndex index.php index.html index.htm
     AddOutputFilterByType DEFLATE application/rss+xml
     AddOutputFilterByType DEFLATE application/javascript
     AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
     # remove browser bugs
     # BrowserMatch ^Mozilla/4 gzip-only-text/html
     # BrowserMatch ^Mozilla/4\.0[678] no-gzip
