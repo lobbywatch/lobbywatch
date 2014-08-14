@@ -41,9 +41,9 @@ class UserIdentityCookieStorage
     public function SaveUserIdentity(UserIdentity $identity)
     {
         $expire = $this->CalculateCookieExpirationTime($identity->persistent);
-        setcookie(self::userNameCookie, $identity->userName, $expire);
+         // afterburned setcookie(self::userNameCookie, $identity->userName, $expire);
         $this->SetPasswordCookieEncrypted($identity->password, $expire);
-        setcookie(self::persistentCookie, strval((int)$identity->persistent), $expire);
+         // afterburned setcookie(self::persistentCookie, strval((int)$identity->persistent), $expire);
     }
 
     public function ClearUserIdentity()
@@ -78,7 +78,7 @@ class UserIdentityCookieStorage
      */
     private function SetPasswordCookieEncrypted($plainPassword, $expire)
     {
-        setcookie(self::passwordCookie, $this->identityCheckStrategy->GetEncryptedPassword($plainPassword), $expire);
+         // afterburned setcookie(self::passwordCookie, $this->identityCheckStrategy->GetEncryptedPassword($plainPassword), $expire);
     }
 
     /**
@@ -103,6 +103,6 @@ class UserIdentityCookieStorage
      */
     private function ClearCookie($cookie)
     {
-        setcookie($cookie, '', time() - 3600);
+         // afterburned setcookie($cookie, '', time() - 3600);
     }
 }

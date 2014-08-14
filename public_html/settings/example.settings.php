@@ -69,8 +69,9 @@ if ($stage) {
 
 if (!isset($drupal_running) || !$drupal_running) {
   session_set_cookie_params(3600 * 24 * 30, '/bearbeitung/');
-  ini_set('session.gc_maxlifetime', 200000);
+  ini_set('session.gc_maxlifetime', 3600 * 24 * 30);
   ini_set('session.cookie_httponly', true);
+  session_name('lwdb_sess');
 
 //   $users = array (
 //       'otto' => '',
