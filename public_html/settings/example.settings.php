@@ -72,6 +72,8 @@ if (!isset($drupal_running) || !$drupal_running) {
   ini_set('session.gc_maxlifetime', 3600 * 24 * 30);
   ini_set('session.cookie_httponly', true);
   session_name('lwdb_sess');
+  session_save_path('/path/for/sessions');
+//   phpinfo();
 
 //   $users = array (
 //       'otto' => '',
