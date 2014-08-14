@@ -13,7 +13,7 @@
     {/if}
 
     <!-- <link rel="stylesheet" type="text/css" href="components/css/main.css" /> afterburner -->
-<link rel="stylesheet" type="text/css" href="components/css/aggregated.css" /> <!-- afterburner -->
+<link rel="stylesheet" type="text/css" href="components/css/aggregated.css.gz" /> <!-- afterburner -->
     <!-- <link rel="stylesheet" type="text/css" href="components/css/user.css" /> afterburner -->
 
     <!-- <script src="components/js/jquery/jquery.min.js"></script> afterburner -->
@@ -23,10 +23,10 @@
     <!-- <script type="text/javascript" src="components/js/require-config.js"></script> afterburner -->
     {if $JavaScriptMain}
         <!-- <script type="text/javascript" data-main="{$JavaScriptMain}" src="components/js/require.js"></script> afterburner -->
-<script  data-main="{$JavaScriptMain}"  src="components/js/aggregated.js"></script>
+<script  data-main="{$JavaScriptMain}"  src="components/js/aggregated.js.gz"></script>
     {else}
         <!-- <script type="text/javascript" src="components/js/require.js"></script> afterburner -->
-<script   src="components/js/aggregated.js"></script>
+<script   src="components/js/aggregated.js.gz"></script>
     {/if}
 
     <script>{literal}

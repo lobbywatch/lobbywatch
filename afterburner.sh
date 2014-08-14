@@ -349,11 +349,11 @@ do
   echo "Process $file";
   mv "$file" "$file.bak";
   cat "$file.bak" \
-  | perl -p -e's%(<link rel="stylesheet" type="text/css" href="components/css/main.css" />)%<!-- \1 afterburner -->\n<link rel="stylesheet" type="text/css" href="components/css/aggregated.css" /> <!-- afterburner -->%is' \
+  | perl -p -e's%(<link rel="stylesheet" type="text/css" href="components/css/main.css" />)%<!-- \1 afterburner -->\n<link rel="stylesheet" type="text/css" href="components/css/aggregated.css.gz" /> <!-- afterburner -->%is' \
   | perl -p -e's%(<link rel="stylesheet" type="text/css" href="components/css/user.css" />)%<!-- \1 afterburner -->%is' \
   | perl -p -e's%(<script src="components/js/.+"></script>)%<!-- \1 afterburner -->%is' \
   | perl -p -e's%(<script type="text/javascript" src="components/js/require-config.js"></script>)%<!-- \1 afterburner -->%is' \
-  | perl -p -e's%(<script type="text/javascript"(.*)src="components/js/require.js"></script>)%<!-- \1 afterburner -->\n<script \2 src="components/js/aggregated.js"></script>%is' \
+  | perl -p -e's%(<script type="text/javascript"(.*)src="components/js/require.js"></script>)%<!-- \1 afterburner -->\n<script \2 src="components/js/aggregated.js.gz"></script>%is' \
   > "$file";
 done
 
@@ -376,13 +376,18 @@ done
 
 echo "Aggregate JS"
 cat $dir/components/js/jquery/jquery.min.js $dir/components/js/libs/amplify.store.js $dir/components/js/bootstrap/bootstrap.js $dir/components/js/require-config.js $dir/components/js/require.js $dir/components/js/pg.user_management_api.js $dir/components/js/pgui.change_password_dialog.js $dir/components/js/pgui.password_dialog_utils.js $dir/components/js/pgui.self_change_password.js > $dir/components/js/aggregated.js
+# parameter -k for keeping original file
+gzip -9 -f -k $dir/components/js/aggregated.js
 
 # Instead of import custom.css, copy it, avoids a HTTP request
 echo "Aggregate CSS"
 cd public_html/bearbeitung/components/css
 #cp public_html/bearbeitung/components/css/custom.css public_html/bearbeitung/components/css/user.css
 ../../../../data_image_css_converter.sh custom.css > user.css
-cat main.css user.css > aggregated.css
+cat main.css user.css > aggregated_raw.css
+$PHP -f ../../../../minify_css.php aggregated_raw.css > aggregated.css
+# parameter -k for keeping original file
+gzip -9 -f -k aggregated.css
 cd -
 
 # We support currently only 1 language, avoid PHP call and create static file
