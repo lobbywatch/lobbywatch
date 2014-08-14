@@ -177,10 +177,10 @@
 </div>
 
 {include file='common/change_password_dialog.tpl'}
-<script type="text/javascript" src="components/js/pg.user_management_api.js"></script>
-<script type="text/javascript" src="components/js/pgui.change_password_dialog.js"></script>
-<script type="text/javascript" src="components/js/pgui.password_dialog_utils.js"></script>
-<script type="text/javascript" src="components/js/pgui.self_change_password.js"></script>
+<!-- <script type="text/javascript" src="components/js/pg.user_management_api.js"></script> afterburner -->
+<!-- <script type="text/javascript" src="components/js/pgui.change_password_dialog.js"></script> afterburner -->
+<!-- <script type="text/javascript" src="components/js/pgui.password_dialog_utils.js"></script> afterburner -->
+<!-- <script type="text/javascript" src="components/js/pgui.self_change_password.js"></script> afterburner -->
 
 </body>
 </html>

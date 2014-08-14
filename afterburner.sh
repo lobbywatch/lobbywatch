@@ -354,6 +354,7 @@ do
   | perl -p -e's%(<script src="components/js/.+"></script>)%<!-- \1 afterburner -->%is' \
   | perl -p -e's%(<script type="text/javascript" src="components/js/require-config.js"></script>)%<!-- \1 afterburner -->%is' \
   | perl -p -e's%(<script type="text/javascript"(.*)src="components/js/require.js"></script>)%<!-- \1 afterburner -->\n<script \2 src="components/js/aggregated.js.gz"></script>%is' \
+  | perl -p -e's%(<script type="text/javascript" src="components/js/p.*\.js"></script>)%<!-- \1 afterburner -->%is' \
   > "$file";
 done
 
