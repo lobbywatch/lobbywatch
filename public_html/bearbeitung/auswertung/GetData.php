@@ -42,6 +42,7 @@
          p.autorisierung_verschickt_datum is null and
          p.autorisiert_datum is null and
          p.freigabe_datum is null
+         and p.bis is null
       union
       select count(*) as value, 'Erfasst' as label, null as color
       from v_parlamentarier p
@@ -52,6 +53,7 @@
          p.autorisierung_verschickt_datum is null and
          p.autorisiert_datum is null and
          p.freigabe_datum is null
+         and p.bis is null
       union
       select count(*) as value, 'Kontrolliert' as label, null as color
       from v_parlamentarier p
@@ -61,6 +63,7 @@
          p.autorisierung_verschickt_datum is null and
          p.autorisiert_datum is null and
          p.freigabe_datum is null
+         and p.bis is null
       union
       select count(*) as value, 'Verschickt' as label, null as color
       from v_parlamentarier p
@@ -69,6 +72,7 @@
          p.autorisierung_verschickt_datum is not null and
          p.autorisiert_datum is null and
          p.freigabe_datum is null
+         and p.bis is null
       union
       select count(*) as value, 'Autorisiert' as label, null as color
       from v_parlamentarier p
@@ -76,13 +80,15 @@
          exists (select * from in_kommission ik where ik.parlamentarier_id = p.id AND ik.kommission_id =  $kommission_id) and
          p.autorisiert_datum is not null and
          p.freigabe_datum is null
+         and p.bis is null
       union
       select count(*) as value, 'Freigegeben' as label, null as color
       from v_parlamentarier p
       where
          exists (select * from in_kommission ik where ik.parlamentarier_id = p.id AND ik.kommission_id =  $kommission_id) and
          p.freigabe_datum is not null
-      ";
+         and p.bis is null
+         ";
 
       /*
       nicht bearbeitet: #FFFFB1
