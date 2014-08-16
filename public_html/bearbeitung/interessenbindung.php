@@ -142,9 +142,9 @@
             if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="entity">Zutrittsberechtigter</span>'), 'zutrittsberechtigung.php', $this->RenderText('Zutrittsberechtigter'), $currentPageCaption == $this->RenderText('<span class="entity">Zutrittsberechtigter</span>')));
             if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('<span class="relation">Interessenbindung (Parlam.)</span>'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('<span class="relation">Interessenbindung (Parlam.)</span>')));
+                $result->AddPage(new PageLink($this->RenderText('<span class="relation" title="Interessenbindungen der Parlamentarier">Interessenbindung (Parlam.)</span>'), 'interessenbindung.php', $this->RenderText('Interessenbindung'), $currentPageCaption == $this->RenderText('<span class="relation" title="Interessenbindungen der Parlamentarier">Interessenbindung (Parlam.)</span>')));
             if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
-                $result->AddPage(new PageLink($this->RenderText('<span class="relation">Mandat (Zutrittsbe.)</span>'), 'mandat.php', $this->RenderText('Mandat'), $currentPageCaption == $this->RenderText('<span class="relation">Mandat (Zutrittsbe.)</span>')));
+                $result->AddPage(new PageLink($this->RenderText('<span class="relation" title="Mandate der Zutrittsberechtigten">Mandat (Zutrittsbe.)</span>'), 'mandat.php', $this->RenderText('Mandat'), $currentPageCaption == $this->RenderText('<span class="relation" title="Mandate der Zutrittsberechtigten">Mandat (Zutrittsbe.)</span>')));
             if (GetCurrentUserGrantForDataSource('in_kommission')->HasViewGrant())
                 $result->AddPage(new PageLink($this->RenderText('<span class="relation">In Kommission</span>'), 'in_kommission.php', $this->RenderText('In Kommission'), $currentPageCaption == $this->RenderText('<span class="relation">In Kommission</span>')));
             if (GetCurrentUserGrantForDataSource('organisation_beziehung')->HasViewGrant())
@@ -4860,7 +4860,7 @@
     try
     {
         $Page = new interessenbindungPage("interessenbindung.php", "interessenbindung", GetCurrentUserGrantForDataSource("interessenbindung"), 'UTF-8');
-        $Page->SetShortCaption('<span class="relation">Interessenbindung (Parlam.)</span>');
+        $Page->SetShortCaption('<span class="relation" title="Interessenbindungen der Parlamentarier">Interessenbindung (Parlam.)</span>');
         $Page->SetHeader(GetPagesHeader());
         $Page->SetFooter(GetPagesFooter());
         $Page->SetCaption('Interessenbindung');
