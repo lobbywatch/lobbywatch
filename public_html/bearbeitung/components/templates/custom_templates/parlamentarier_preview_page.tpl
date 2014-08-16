@@ -57,6 +57,10 @@
               </div>
             </div> {*container-fluid*}
 
+            <div {*style="padding-left: 20px;"*} class="span8">
+              {$Parlamentarier.State}
+            </div>
+
             <div {*style="padding-left: 20px;"*} class="preview-content span8">
                 {$Parlamentarier.Preview}
             </div>
@@ -134,6 +138,10 @@
             {* <button id="email-select-button">E-Mail selektieren</button>
             <button id="email-open-parlam">E-Mail öffnen</button>
             <button id="email-sent-parlam">Autorisierungsanfrage verschickt</button> *} 
+
+            <div {*style="padding-left: 20px;"*} class="span8">
+              {$Parlamentarier.State}
+            </div>
 
             <div id="email-content-parlam" {*style="padding-left: 20px;"*} class="email-content span8">
                 {$Parlamentarier.EmailText}
@@ -213,6 +221,10 @@
             <button id="email-open-zb0">E-Mail öffnen</button>
             <button id="email-sent-zb0">Autorisierungsanfrage verschickt</button> *} 
 
+            <div {*style="padding-left: 20px;"*} class="span8">
+              {$Zutrittsberechtigter0.State}
+            </div>
+
             <div id="email-content-zb0" {*style="padding-left: 20px;"*} class="email-content span8">
                 {$Zutrittsberechtigter0.EmailText}
             </div>
@@ -290,6 +302,10 @@
             {* <button id="email-select-button">E-Mail selektieren</button>
             <button id="email-open-zb1">E-Mail öffnen</button>
             <button id="email-sent-zb1">Autorisierungsanfrage verschickt</button> *} 
+
+            <div {*style="padding-left: 20px;"*} class="span8">
+              {$Zutrittsberechtigter1.State}
+            </div>
 
             <div id="email-content-zb1" {*style="padding-left: 20px;"*} class="email-content span8">
                 {$Zutrittsberechtigter1.EmailText}

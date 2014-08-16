@@ -118,10 +118,10 @@ function fillZutrittsberechtigterEmail($i) {
     $res = array(
         'Id'  => $zbList[$i]['id'],
         'Title' => 'Vorschau: ' . $zbList[$i]["zutrittsberechtigung_name"],
-        'Preview' =>  $state .
-        '<p>Zutrittsberechtigung von '. $rowData["parlamentarier_name2"] . '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '</p>' . '<h4>Mandate</h4><ul>' . $zbList[$i]['mandate'] . '</ul>',
+        'State' =>  $state,
+        'Preview' =>  '<p>Zutrittsberechtigung von '. $rowData["parlamentarier_name2"] . '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '</p>' . '<h4>Mandate</h4><ul>' . $zbList[$i]['mandate'] . '</ul>',
         'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoZb[$i]. '" target="_blank">' . $zbList[$i]["zutrittsberechtigung_name"] . '</a>',
-        'EmailText' => $state . '<p>' . $zbList[$i]['anrede'] . '</p>' .  $emailIntroZb[$i] . '<p>' . (isset($zbList[$i]['funktion']) ? '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '' : ''). '</p><p><b>Ihre Mandate</b>:</p><ul>' . $zbList[$i]['mandate'] . '</ul>' .
+        'EmailText' => '<p>' . $zbList[$i]['anrede'] . '</p>' .  $emailIntroZb[$i] . '<p>' . (isset($zbList[$i]['funktion']) ? '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '' : ''). '</p><p><b>Ihre Mandate</b>:</p><ul>' . $zbList[$i]['mandate'] . '</ul>' .
         $emailEndZb[$i],
         // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
         'MailTo' => $mailtoZb[$i],
@@ -332,14 +332,14 @@ GROUP BY parlamentarier.id;";
         'Parlamentarier' => array(
           'Id'  => $id,
           'Title' => 'Vorschau: ' . $rowData["parlamentarier_name"],
-          'Preview' =>  $state .
-              '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' .
+          'State' =>  $state,
+          'Preview' => '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' .
             '<h4>Kommissionen</h4><ul>' . $rowData['kommissionen'] . '</ul>' .
             '<h4>Interessenbindungen</h4><ul>' . $rowData['interessenbindungen'] . '</ul>' .
             '<h4>Gäste' . (substr_count($rowData['zutrittsberechtigungen'], '[VALID_Zutrittsberechtigung]') > 2 ? ' <img src="img/icons/warning.gif" alt="Warnung">': '') . '</h4>' . ($rowData['zutrittsberechtigungen'] ? '<ul>' . $rowData['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
             '<h4>Mandate der Gäste</h4>' . $zbRet['gaesteMitMandaten'],
           'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoParlam. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
-          'EmailText' => $state . '<p>' . $rowData['anrede'] . '</p>' . $emailIntroParlam . (isset($rowData['beruf']) ? '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' : '') . '<p><b>Ihre Interessenbindungen</b>:</p><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
+          'EmailText' => '<p>' . $rowData['anrede'] . '</p>' . $emailIntroParlam . (isset($rowData['beruf']) ? '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' : '') . '<p><b>Ihre Interessenbindungen</b>:</p><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
             '<p><b>Ihre Gäste</b>:</p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<p>keine</p>') .
             $emailEndParlam,
             // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
