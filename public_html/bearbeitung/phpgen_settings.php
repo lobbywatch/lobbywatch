@@ -41,8 +41,8 @@ function GetPageInfos()
     $result[] = array('caption' => '<span class="entity important-entity">Organisation</span>', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation');
     $result[] = array('caption' => '<span class="entity important-entity">Parlamentarier</span>', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier');
     $result[] = array('caption' => '<span class="entity">Zutrittsberechtigter</span>', 'short_caption' => 'Zutrittsberechtigter', 'filename' => 'zutrittsberechtigung.php', 'name' => 'zutrittsberechtigung');
-    $result[] = array('caption' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Interessenbindung (Parlam.)</span>', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung');
-    $result[] = array('caption' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandat (Zutrittsbe.)</span>', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat');
+    $result[] = array('caption' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. (von NR/SR)</span>', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung');
+    $result[] = array('caption' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate (von Zutrittsber.)</span>', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat');
     $result[] = array('caption' => '<span class="relation">In Kommission</span>', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission');
     $result[] = array('caption' => '<span class="relation">Organisation Beziehung</span>', 'short_caption' => 'Organisation Beziehung', 'filename' => 'organisation_beziehung.php', 'name' => 'organisation_beziehung');
     $result[] = array('caption' => '<span class="entity">Branche</span>', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche');
