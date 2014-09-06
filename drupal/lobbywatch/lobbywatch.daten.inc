@@ -52,11 +52,11 @@ function _lobbywatch_search_form_LIKE_search_table($search_str) {
   $query->condition('name', $search_str, 'LIKE');
   if (!user_access('access lobbywatch unpublished content')) {
     //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
-    $query2->where('freigabe_datum <= NOW()');
+    $query->where('freigabe_datum <= NOW()');
   }
   if (!user_access('access lobbywatch advanced content')) {
     //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
-    $query2->condition(db_or()->isNull('bis')->where('bis > NOW()'));
+    $query->condition(db_or()->isNull('bis')->where('bis > NOW()'));
   }
   $query_result = $query->execute();
   return $query_result;
