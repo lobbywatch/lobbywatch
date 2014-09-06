@@ -23,7 +23,6 @@ $handler->display->display_options['exposed_form']['options']['reset_button_labe
 $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortierung';
 $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Aufsteigend';
 $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Absteigend';
-$handler->display->display_options['exposed_form']['options']['autosubmit'] = TRUE;
 $handler->display->display_options['exposed_form']['options']['autosubmit_hide'] = FALSE;
 $handler->display->display_options['pager']['type'] = 'full';
 $handler->display->display_options['pager']['options']['items_per_page'] = '100';
@@ -122,19 +121,18 @@ $handler->display->display_options['fields']['lobbyfaktor']['id'] = 'lobbyfaktor
 $handler->display->display_options['fields']['lobbyfaktor']['table'] = 'v_parlamentarier';
 $handler->display->display_options['fields']['lobbyfaktor']['field'] = 'lobbyfaktor';
 $handler->display->display_options['fields']['lobbyfaktor']['label'] = 'LF';
+$handler->display->display_options['fields']['lobbyfaktor']['exclude'] = TRUE;
+/* Sort criterion: Parlamentarier: Anzeigename */
+$handler->display->display_options['sorts']['anzeige_name']['id'] = 'anzeige_name';
+$handler->display->display_options['sorts']['anzeige_name']['table'] = 'v_parlamentarier';
+$handler->display->display_options['sorts']['anzeige_name']['field'] = 'anzeige_name';
+$handler->display->display_options['sorts']['anzeige_name']['expose']['label'] = 'Anzeigename';
 /* Sort criterion: Parlamentarier: Lobbyfaktor */
 $handler->display->display_options['sorts']['lobbyfaktor']['id'] = 'lobbyfaktor';
 $handler->display->display_options['sorts']['lobbyfaktor']['table'] = 'v_parlamentarier';
 $handler->display->display_options['sorts']['lobbyfaktor']['field'] = 'lobbyfaktor';
 $handler->display->display_options['sorts']['lobbyfaktor']['order'] = 'DESC';
-$handler->display->display_options['sorts']['lobbyfaktor']['exposed'] = TRUE;
 $handler->display->display_options['sorts']['lobbyfaktor']['expose']['label'] = 'Lobbyfaktor';
-/* Sort criterion: Parlamentarier: Anzeigename */
-$handler->display->display_options['sorts']['anzeige_name']['id'] = 'anzeige_name';
-$handler->display->display_options['sorts']['anzeige_name']['table'] = 'v_parlamentarier';
-$handler->display->display_options['sorts']['anzeige_name']['field'] = 'anzeige_name';
-$handler->display->display_options['sorts']['anzeige_name']['exposed'] = TRUE;
-$handler->display->display_options['sorts']['anzeige_name']['expose']['label'] = 'Anzeigename';
 /* Filter criterion: Parlamentarier: Kanton */
 $handler->display->display_options['filters']['kanton']['id'] = 'kanton';
 $handler->display->display_options['filters']['kanton']['table'] = 'v_parlamentarier';
