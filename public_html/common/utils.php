@@ -354,3 +354,62 @@ function util_data_uri($file, $mime = '') {
   }
   return 'data:' . $mime . ';base64,' . $base64;
 }
+
+function _lobbywatch_bindungsart($pers, $ib, $org) {
+  //   return "'XXX'";
+  $art = "CASE $ib.art
+  WHEN 'taetig' THEN 'tätig'
+  WHEN 'geschaeftsfuehrend' THEN 'geschäftsführend'
+  ELSE $ib.art
+  END";
+  $funktion_im_gremium = "REPLACE($ib.funktion_im_gremium, 'ae', 'ä')";
+  return "CASE
+  -- Stiftung
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Stiftungsratspräsidentin'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Stiftungsratspräsident'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Stiftungsratsvizepräsidentin'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Stiftungsratsvizepräsident'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'F' THEN 'Stiftungsrätin'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'M' THEN 'Stiftungsrat'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Geschäftsführerin'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Geschäftsführer'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Vizegeschäftsführerin'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vizegeschäftsführer'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN 'Geschäftsleitung'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN 'Geschäftsleitung'
+  -- AG
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Verwaltungsratspräsidentin'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Verwaltungsratspräsident'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Verwaltungsratsvizepräsidentin'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Verwaltungsratsvizepräsident'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $pers.geschlecht = 'F' THEN 'Stiftungsrätin'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $pers.geschlecht = 'M' THEN 'Stiftungsrat'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Geschäftsführerin (CEO)'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Geschäftsführer (CEO)'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Vizegeschäftsführerin'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vizegeschäftsführer'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN 'Geschäftsleitung'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN 'Geschäftsleitung'
+  -- Verein
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Vorstandspräsidentin'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Vorstandspräsident'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Vorstandsvizepräsidentin'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vorstandsratsvizepräsident'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'F' THEN 'Vorstand'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'M' THEN 'Vorstand'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Geschäftsführerin'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Geschäftsführer'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Vizegeschäftsführerin'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vizegeschäftsführer'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN 'Geschäftsleitung'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN 'Geschäftsleitung'
+    -- Beirat/Patronatskomitee/Expertenkommission/Advisory Board
+    WHEN $ib.art = 'beirat' THEN CONCAT('Beirat/Patronatskomitee/Expertenkommission/Advisory Board',
+    IF($ib.funktion_im_gremium IS NULL OR TRIM($ib.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT($funktion_im_gremium, 1)), SUBSTRING($funktion_im_gremium, 2)))))
+  -- Else
+    ELSE CONCAT(CONCAT(UCASE(LEFT($art, 1)), SUBSTRING($art, 2)),
+    IF($ib.funktion_im_gremium IS NULL OR TRIM($ib.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT($funktion_im_gremium, 1)), SUBSTRING($funktion_im_gremium, 2)))))
+    END";
+          //   return "CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
+//       IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2))))";
+}
