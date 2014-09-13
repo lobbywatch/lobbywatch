@@ -362,7 +362,14 @@ function _lobbywatch_bindungsart($pers, $ib, $org) {
   WHEN 'geschaeftsfuehrend' THEN 'geschäftsführend'
   ELSE $ib.art
   END";
-  $funktion_im_gremium = "REPLACE($ib.funktion_im_gremium, 'ae', 'ä')";
+  $funktion_im_gremium = "CASE
+  WHEN $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Präsidentin'
+  WHEN $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Präsident'
+  WHEN $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Vizepräsidentin'
+  WHEN $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vizepräsident'
+  WHEN $ib.funktion_im_gremium = 'mitglied' THEN 'Mitglied'
+  ELSE $ib.funktion_im_gremium
+  END";
   return "CASE
   -- Stiftung
     WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Stiftungsratspräsidentin'
