@@ -1058,7 +1058,7 @@
             //
             $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('praesident', $this->RenderText('PräsidentIn'));
-            $editor->AddValue('co-praesident', $this->RenderText('Co-Präsident'));
+            $editor->AddValue('co-praesident', $this->RenderText('Co-PräsidentIn'));
             $editor->AddValue('vizepraesident', $this->RenderText('VizepräsidentIn'));
             $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
@@ -1074,7 +1074,7 @@
             //
             $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('praesident', $this->RenderText('PräsidentIn'));
-            $editor->AddValue('co-praesident', $this->RenderText('Co-Präsident'));
+            $editor->AddValue('co-praesident', $this->RenderText('Co-PräsidentIn'));
             $editor->AddValue('vizepraesident', $this->RenderText('VizepräsidentIn'));
             $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
@@ -1821,7 +1821,7 @@
             //
             $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('praesident', $this->RenderText('PräsidentIn'));
-            $editor->AddValue('co-praesident', $this->RenderText('Co-Präsident'));
+            $editor->AddValue('co-praesident', $this->RenderText('Co-PräsidentIn'));
             $editor->AddValue('vizepraesident', $this->RenderText('VizepräsidentIn'));
             $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
@@ -2243,7 +2243,7 @@
             //
             $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
             $editor->AddValue('praesident', $this->RenderText('PräsidentIn'));
-            $editor->AddValue('co-praesident', $this->RenderText('Co-Präsident'));
+            $editor->AddValue('co-praesident', $this->RenderText('Co-PräsidentIn'));
             $editor->AddValue('vizepraesident', $this->RenderText('VizepräsidentIn'));
             $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);

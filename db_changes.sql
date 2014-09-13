@@ -1577,16 +1577,10 @@ ALTER TABLE `in_kommission` CHANGE `funktion` `funktion` ENUM( 'praesident', 'vi
 ALTER TABLE `in_kommission_log` CHANGE `funktion` `funktion` ENUM( 'praesident', 'vizepraesident', 'mitglied', 'co-praesident' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Kommission';
 
 ALTER TABLE `zutrittsberechtigung`
-ADD `kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])';
+ADD `parlamentarier_kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])' AFTER funktion;
 
 ALTER TABLE `zutrittsberechtigung_log`
-ADD `kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])';
-
-ALTER TABLE `zutrittsberechtigung`
-CHANGE `parlamentarier_kommissionen` `parlamentarier_kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])' AFTER funktion;
-
-ALTER TABLE `zutrittsberechtigung_log`
-CHANGE `parlamentarier_kommissionen` `parlamentarier_kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])' AFTER funktion;
+ADD `parlamentarier_kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])' AFTER funktion;
 
 ALTER TABLE `zutrittsberechtigung` ADD `telephon_1` VARCHAR( 25 ) NULL DEFAULT NULL COMMENT 'Telephonnummer 1, z.B. Festnetz' AFTER `facebook_name` ,
 ADD `telephon_2` VARCHAR( 25 ) NULL DEFAULT NULL COMMENT 'Telephonnummer 2, z.B. Mobiltelephon' AFTER `telephon_1` ;
