@@ -39527,7 +39527,6 @@
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
-            $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
@@ -39553,7 +39552,6 @@
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
-            $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
@@ -41198,7 +41196,6 @@
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
-            $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);
@@ -41919,7 +41916,6 @@
             $editor->AddValue('KG', $this->RenderText('KG'));
             $editor->AddValue('Genossenschaft', $this->RenderText('Genossenschaft'));
             $editor->AddValue('Staatlich', $this->RenderText('Staatlich'));
-            $editor->AddValue('Patronatskomitee', $this->RenderText('Patronats-/Unterstützungskomitee'));
             $editor->AddValue('Ausserparlamentarische Kommission', $this->RenderText('Ausserparlamentarische Kommission'));
             $editor->AddValue('Einfache Gesellschaft', $this->RenderText('Einfache Gesellschaft'));
             $editColumn = new CustomEditColumn('Rechtsform', 'rechtsform', $editor, $this->dataset);

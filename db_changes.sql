@@ -1541,3 +1541,6 @@ DROP VIEW `v_zutrittsberechtigung_lobbyfaktor`;
 DROP VIEW `v_parlamentarier_lobbyfaktor`;
 DROP VIEW `v_parlamentarier_lobbyfaktor_max`;
 DROP VIEW `v_zutrittsberechtigung_lobbyfaktor_max`;
+
+-- 13.09.2014
+
