@@ -416,6 +416,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -435,6 +437,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -461,8 +467,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -889,6 +893,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -908,6 +914,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -934,8 +944,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -1690,6 +1698,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1870,6 +1882,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -3270,6 +3286,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -3484,6 +3504,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -3664,6 +3688,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4839,6 +4867,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -5266,6 +5298,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -6357,6 +6393,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -6376,6 +6414,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -6402,8 +6444,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -6475,6 +6515,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -6494,6 +6536,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -6520,8 +6566,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -7697,6 +7741,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -7716,6 +7762,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -7742,8 +7792,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -7945,6 +7993,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -7964,6 +8014,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -7990,8 +8044,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -8063,6 +8115,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -8082,6 +8136,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -8108,8 +8166,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -9247,6 +9303,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -9266,6 +9324,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -9292,8 +9354,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -9672,6 +9732,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -9691,6 +9753,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -9717,8 +9783,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -10585,6 +10649,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion');
             $this->dataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $this->dataset->AddField($field, false);
             $field = new StringField('beruf');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -10604,6 +10670,10 @@
             $field = new StringField('xing_profil_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
@@ -10631,8 +10701,6 @@
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
             $this->dataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
-            $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
@@ -10647,7 +10715,6 @@
             $this->dataset->AddLookupField('parlamentarier_id', 'v_parlamentarier_simple', new IntegerField('id'), new StringField('anzeige_name', 'parlamentarier_id_anzeige_name', 'parlamentarier_id_anzeige_name_v_parlamentarier_simple'), 'parlamentarier_id_anzeige_name_v_parlamentarier_simple');
             $this->dataset->AddLookupField('beruf_interessengruppe_id', 'v_interessengruppe_simple', new IntegerField('id'), new StringField('name', 'beruf_interessengruppe_id_name', 'beruf_interessengruppe_id_name_v_interessengruppe_simple'), 'beruf_interessengruppe_id_name_v_interessengruppe_simple');
             $this->dataset->AddLookupField('partei_id', 'v_partei', new IntegerField('id'), new StringField('abkuerzung', 'partei_id_abkuerzung', 'partei_id_abkuerzung_v_partei'), 'partei_id_abkuerzung_v_partei');
-            $this->dataset->AddLookupField('ALT_lobbyorganisation_id', 'organisation', new IntegerField('id', null, null, true), new StringField('name_de', 'ALT_lobbyorganisation_id_name_de', 'ALT_lobbyorganisation_id_name_de_organisation'), 'ALT_lobbyorganisation_id_name_de_organisation');
         }
     
         protected function CreatePageNavigator()
@@ -10728,8 +10795,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('zutrittsberechtigungssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'nachname', 'vorname', 'funktion', 'beruf', 'beruf_interessengruppe_id_name', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'notizen', 'zweiter_vorname'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Funktion'), $this->RenderText('Beruf'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Notizen'), $this->RenderText('Zweiter Vorname')),
+                array('id', 'parlamentarier_id_anzeige_name', 'nachname', 'vorname', 'zweiter_vorname', 'funktion', 'parlamentarier_kommissionen', 'beruf', 'beruf_interessengruppe_id_name', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'telephon_1', 'telephon_2', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Funktion'), $this->RenderText('Kommissionen des Parlamentariers'), $this->RenderText('Beruf'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -10853,6 +10920,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -10920,6 +10991,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('vorname', $this->RenderText('Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('zweiter_vorname', $this->RenderText('Zweiter Vorname')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('funktion', $this->RenderText('Funktion')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('parlamentarier_kommissionen', $this->RenderText('Kommissionen des Parlamentariers')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beruf', $this->RenderText('Beruf')));
             
             $lookupDataset = new TableDataset(
@@ -11055,6 +11127,8 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('linkedin_profil_url', $this->RenderText('Linkedin Profil Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('xing_profil_name', $this->RenderText('Xing Profil Name')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('facebook_name', $this->RenderText('Facebook Name')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('telephon_1', $this->RenderText('Telephon 1')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('telephon_2', $this->RenderText('Telephon 2')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('von', $this->RenderText('Von')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('bis', $this->RenderText('Bis')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
@@ -11068,83 +11142,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('autorisiert_datum', $this->RenderText('Autorisiert Datum')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('freigabe_visa', $this->RenderText('Freigabe Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('freigabe_datum', $this->RenderText('Freigabe Datum')));
-            
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`organisation`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_it');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ort');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('land_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessenraum_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rechtsform');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('typ');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vernehmlassung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe2_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe3_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('handelsregister_url');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_strasse');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_zusatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_plz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('ALT_lobbyorganisation_id', $this->RenderText('ALT Lobbyorganisation Id'), $lookupDataset, 'id', 'name_de', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('created_visa', $this->RenderText('Created Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
@@ -11338,6 +11335,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -11515,6 +11516,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -11707,6 +11712,43 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for parlamentarier_kommissionen field
+            //
+            $editor = new TextEdit('parlamentarier_kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen des Parlamentariers', 'parlamentarier_kommissionen', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for parlamentarier_kommissionen field
+            //
+            $editor = new TextEdit('parlamentarier_kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen des Parlamentariers', 'parlamentarier_kommissionen', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -12379,6 +12421,76 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for telephon_1 field
+            //
+            $column = new TextViewColumn('telephon_1', 'Telephon 1', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for telephon_1 field
+            //
+            $editor = new TextEdit('telephon_1_edit');
+            $editor->SetSize(25);
+            $editor->SetMaxLength(25);
+            $editColumn = new CustomEditColumn('Telephon 1', 'telephon_1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for telephon_1 field
+            //
+            $editor = new TextEdit('telephon_1_edit');
+            $editor->SetSize(25);
+            $editor->SetMaxLength(25);
+            $editColumn = new CustomEditColumn('Telephon 1', 'telephon_1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Telephonnummer 1, z.B. Festnetz'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for telephon_2 field
+            //
+            $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for telephon_2 field
+            //
+            $editor = new TextEdit('telephon_2_edit');
+            $editor->SetSize(25);
+            $editor->SetMaxLength(25);
+            $editColumn = new CustomEditColumn('Telephon 2', 'telephon_2', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for telephon_2 field
+            //
+            $editor = new TextEdit('telephon_2_edit');
+            $editor->SetSize(25);
+            $editor->SetMaxLength(25);
+            $editColumn = new CustomEditColumn('Telephon 2', 'telephon_2', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Telephonnummer 2, z.B. Mobiltelephon'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for von field
             //
             $column = new DateTimeViewColumn('von', 'Von', $this->dataset);
@@ -12702,106 +12814,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_lobbyorganisation_id field
-            //
-            $editor = new ComboBox('alt_lobbyorganisation_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`organisation`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_it');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ort');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('land_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessenraum_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rechtsform');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('typ');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vernehmlassung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe2_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe3_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('handelsregister_url');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_strasse');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_zusatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_plz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name_de', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'ALT Lobbyorganisation Id', 
-                'ALT_lobbyorganisation_id', 
-                $editor, 
-                $this->dataset, 'id', 'name_de', $lookupDataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            $column->SetDescription($this->RenderText('Wird später entfernt. Fremschlüssel zur Lobbyorganisation'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
@@ -12948,6 +12960,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -13035,6 +13054,20 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_facebook_name_handler_view');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for telephon_1 field
+            //
+            $column = new TextViewColumn('telephon_1', 'Telephon 1', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for telephon_2 field
+            //
+            $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -13135,13 +13168,6 @@
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
@@ -13285,6 +13311,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -13396,6 +13426,18 @@
             $editor->SetSize(80);
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for parlamentarier_kommissionen field
+            //
+            $editor = new TextEdit('parlamentarier_kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen des Parlamentariers', 'parlamentarier_kommissionen', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -13661,6 +13703,28 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for telephon_1 field
+            //
+            $editor = new TextEdit('telephon_1_edit');
+            $editor->SetSize(25);
+            $editor->SetMaxLength(25);
+            $editColumn = new CustomEditColumn('Telephon 1', 'telephon_1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for telephon_2 field
+            //
+            $editor = new TextEdit('telephon_2_edit');
+            $editor->SetSize(25);
+            $editor->SetMaxLength(25);
+            $editColumn = new CustomEditColumn('Telephon 2', 'telephon_2', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for von field
             //
             $editor = new DateTimeEdit('von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
@@ -13793,95 +13857,6 @@
             $editor = new DateTimeEdit('freigabe_datum_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Freigabe Datum', 'freigabe_datum', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for ALT_lobbyorganisation_id field
-            //
-            $editor = new ComboBox('alt_lobbyorganisation_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $lookupDataset = new TableDataset(
-                new MyPDOConnectionFactory(),
-                GetConnectionOptions(),
-                '`organisation`');
-            $field = new IntegerField('id', null, null, true);
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, true);
-            $field = new StringField('name_de');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_fr');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('name_it');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('ort');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('land_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessenraum_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('rechtsform');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('typ');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('vernehmlassung');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe2_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('interessengruppe3_id');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('branche_id');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('homepage');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('handelsregister_url');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('twitter_name');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('beschreibung');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_strasse');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_zusatz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('adresse_plz');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('notizen');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('eingabe_abgeschlossen_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('eingabe_abgeschlossen_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('kontrolliert_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('kontrolliert_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('freigabe_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('created_visa');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('created_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $field = new StringField('updated_visa');
-            $lookupDataset->AddField($field, false);
-            $field = new DateTimeField('updated_date');
-            $field->SetIsNotNull(true);
-            $lookupDataset->AddField($field, false);
-            $lookupDataset->SetOrderBy('name_de', GetOrderTypeAsSQL(otAscending));
-            $editColumn = new LookUpEditColumn(
-                'ALT Lobbyorganisation Id', 
-                'ALT_lobbyorganisation_id', 
-                $editor, 
-                $this->dataset, 'id', 'name_de', $lookupDataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -14042,6 +14017,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -14153,6 +14132,18 @@
             $editor->SetSize(80);
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for parlamentarier_kommissionen field
+            //
+            $editor = new TextEdit('parlamentarier_kommissionen_edit');
+            $editor->SetSize(75);
+            $editor->SetMaxLength(75);
+            $editColumn = new CustomEditColumn('Kommissionen des Parlamentariers', 'parlamentarier_kommissionen', $editor, $this->dataset);
+            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -14420,6 +14411,28 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for telephon_1 field
+            //
+            $editor = new TextEdit('telephon_1_edit');
+            $editor->SetSize(25);
+            $editor->SetMaxLength(25);
+            $editColumn = new CustomEditColumn('Telephon 1', 'telephon_1', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for telephon_2 field
+            //
+            $editor = new TextEdit('telephon_2_edit');
+            $editor->SetSize(25);
+            $editor->SetMaxLength(25);
+            $editColumn = new CustomEditColumn('Telephon 2', 'telephon_2', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for von field
             //
             $editor = new DateTimeEdit('von_edit', false, 'd.m.Y', GetFirstDayOfWeek());
@@ -14505,6 +14518,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -14574,6 +14594,20 @@
             // View column for facebook_name field
             //
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for telephon_1 field
+            //
+            $column = new TextViewColumn('telephon_1', 'Telephon 1', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for telephon_2 field
+            //
+            $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -14672,13 +14706,6 @@
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -14761,6 +14788,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -14830,6 +14864,20 @@
             // View column for facebook_name field
             //
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for telephon_1 field
+            //
+            $column = new TextViewColumn('telephon_1', 'Telephon 1', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for telephon_2 field
+            //
+            $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -14928,13 +14976,6 @@
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -15046,6 +15087,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -15152,6 +15202,24 @@
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_facebook_name_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
             $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for telephon_1 field
+            //
+            $column = new TextViewColumn('telephon_1', 'Telephon 1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Telephonnummer 1, z.B. Festnetz'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for telephon_2 field
+            //
+            $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Telephonnummer 2, z.B. Mobiltelephon'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -15283,15 +15351,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Wird später entfernt. Fremschlüssel zur Lobbyorganisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
@@ -15375,6 +15434,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -15444,6 +15510,20 @@
             // View column for facebook_name field
             //
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for telephon_1 field
+            //
+            $column = new TextViewColumn('telephon_1', 'Telephon 1', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for telephon_2 field
+            //
+            $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -15542,13 +15622,6 @@
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -15655,6 +15728,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -15761,6 +15843,24 @@
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_facebook_name_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
             $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for telephon_1 field
+            //
+            $column = new TextViewColumn('telephon_1', 'Telephon 1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Telephonnummer 1, z.B. Festnetz'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for telephon_2 field
+            //
+            $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Telephonnummer 2, z.B. Mobiltelephon'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -15892,15 +15992,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Wird später entfernt. Fremschlüssel zur Lobbyorganisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
@@ -15984,6 +16075,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -16053,6 +16151,20 @@
             // View column for facebook_name field
             //
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for telephon_1 field
+            //
+            $column = new TextViewColumn('telephon_1', 'Telephon 1', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for telephon_2 field
+            //
+            $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -16151,13 +16263,6 @@
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -16264,6 +16369,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -16370,6 +16484,24 @@
             $column->SetFullTextWindowHandlerName('zutrittsberechtigungGrid_facebook_name_handler_list');
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://www.facebook.com/%facebook_name%' , '_blank');
             $column->SetDescription($this->RenderText('Facebookname (letzter Teil von Link), wird mit https://www.facebook.com/ zu einem ganzen Link ergänzt'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for telephon_1 field
+            //
+            $column = new TextViewColumn('telephon_1', 'Telephon 1', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Telephonnummer 1, z.B. Festnetz'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for telephon_2 field
+            //
+            $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Telephonnummer 2, z.B. Mobiltelephon'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -16501,15 +16633,6 @@
             $result->AddViewColumn($column);
             
             //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetDescription($this->RenderText('Wird später entfernt. Fremschlüssel zur Lobbyorganisation'));
-            $column->SetFixedWidth(null);
-            $result->AddViewColumn($column);
-            
-            //
             // View column for created_visa field
             //
             $column = new TextViewColumn('created_visa', 'Created Visa', $this->dataset);
@@ -16593,6 +16716,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for parlamentarier_kommissionen field
+            //
+            $column = new TextViewColumn('parlamentarier_kommissionen', 'Kommissionen des Parlamentariers', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beruf field
             //
             $column = new TextViewColumn('beruf', 'Beruf', $this->dataset);
@@ -16662,6 +16792,20 @@
             // View column for facebook_name field
             //
             $column = new TextViewColumn('facebook_name', 'Facebook Name', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for telephon_1 field
+            //
+            $column = new TextViewColumn('telephon_1', 'Telephon 1', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for telephon_2 field
+            //
+            $column = new TextViewColumn('telephon_2', 'Telephon 2', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -16760,13 +16904,6 @@
             //
             $column = new DateTimeViewColumn('freigabe_datum', 'Freigabe Datum', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for name_de field
-            //
-            $column = new TextViewColumn('ALT_lobbyorganisation_id_name_de', 'ALT Lobbyorganisation Id', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -17065,6 +17202,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -17233,6 +17374,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -17791,6 +17936,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -17958,6 +18107,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);

@@ -316,6 +316,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -657,6 +661,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -834,6 +842,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1148,6 +1160,7 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
+            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1166,6 +1179,7 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
+            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(false);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2173,6 +2187,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -2355,6 +2373,7 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
+            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -2725,6 +2744,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -2907,6 +2930,7 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
+            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(false);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -3679,6 +3703,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -3847,6 +3875,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -4372,6 +4404,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -4634,6 +4670,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);

@@ -1548,4 +1548,53 @@ ALTER TABLE `organisation` DROP FOREIGN KEY `fk_lo_lt` ;
 
 ALTER TABLE `parlamentarier` DROP `ALT_kommission` ;
 
+ALTER TABLE `parlamentarier_log` DROP `ALT_kommission` ;
+
 ALTER TABLE `organisation` DROP `ALT_parlam_verbindung` ;
+
+ALTER TABLE `organisation_log` DROP `ALT_parlam_verbindung` ;
+
+ALTER TABLE `zutrittsberechtigung` DROP `ALT_lobbyorganisation_id` ;
+
+ALTER TABLE `zutrittsberechtigung_log` DROP `ALT_lobbyorganisation_id` ;
+
+ALTER TABLE `parlamentarier` ADD `telephon_1` VARCHAR( 25 ) NULL DEFAULT NULL COMMENT 'Telephonnummer 1, z.B. Festnetz' AFTER `adresse_ort` ,
+ADD `telephon_2` VARCHAR( 25 ) NULL DEFAULT NULL COMMENT 'Telephonnummer 2, z.B. Mobiltelephon' AFTER `telephon_1` ;
+
+ALTER TABLE `parlamentarier_log` ADD `telephon_1` VARCHAR( 25 ) NULL DEFAULT NULL COMMENT 'Telephonnummer 1, z.B. Festnetz' AFTER `adresse_ort` ,
+ADD `telephon_2` VARCHAR( 25 ) NULL DEFAULT NULL COMMENT 'Telephonnummer 2, z.B. Mobiltelephon' AFTER `telephon_1` ;
+
+ALTER TABLE `interessenbindung` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'finanziell', 'gesellschafter' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung';
+
+ALTER TABLE `interessenbindung_log` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'finanziell', 'gesellschafter' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung';
+
+ALTER TABLE `mandat` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'finanziell', 'gesellschafter' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation';
+
+ALTER TABLE `mandat_log` CHANGE `art` `art` ENUM( 'mitglied', 'geschaeftsfuehrend', 'vorstand', 'taetig', 'beirat', 'finanziell', 'gesellschafter' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation';
+
+ALTER TABLE `in_kommission` CHANGE `funktion` `funktion` ENUM( 'praesident', 'vizepraesident', 'mitglied', 'co-praesident' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Kommission';
+
+ALTER TABLE `in_kommission_log` CHANGE `funktion` `funktion` ENUM( 'praesident', 'vizepraesident', 'mitglied', 'co-praesident' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Kommission';
+
+ALTER TABLE `zutrittsberechtigung`
+ADD `kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])';
+
+ALTER TABLE `zutrittsberechtigung_log`
+ADD `kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])';
+
+ALTER TABLE `zutrittsberechtigung`
+CHANGE `parlamentarier_kommissionen` `parlamentarier_kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])' AFTER funktion;
+
+ALTER TABLE `zutrittsberechtigung_log`
+CHANGE `parlamentarier_kommissionen` `parlamentarier_kommissionen` varchar(75) DEFAULT NULL COMMENT 'Abkürzungen der Kommissionen des zugehörigen Parlamentariers (automatisch erzeugt [in_Kommission Trigger])' AFTER funktion;
+
+ALTER TABLE `zutrittsberechtigung` ADD `telephon_1` VARCHAR( 25 ) NULL DEFAULT NULL COMMENT 'Telephonnummer 1, z.B. Festnetz' AFTER `facebook_name` ,
+ADD `telephon_2` VARCHAR( 25 ) NULL DEFAULT NULL COMMENT 'Telephonnummer 2, z.B. Mobiltelephon' AFTER `telephon_1` ;
+
+ALTER TABLE `zutrittsberechtigung_log` ADD `telephon_1` VARCHAR( 25 ) NULL DEFAULT NULL COMMENT 'Telephonnummer 1, z.B. Festnetz' AFTER `facebook_name` ,
+ADD `telephon_2` VARCHAR( 25 ) NULL DEFAULT NULL COMMENT 'Telephonnummer 2, z.B. Mobiltelephon' AFTER `telephon_1` ;
+
+UPDATE `zutrittsberechtigung` p
+    SET p.parlamentarier_kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
+	p.updated_visa='roland',
+	p.updated_date=NOW();

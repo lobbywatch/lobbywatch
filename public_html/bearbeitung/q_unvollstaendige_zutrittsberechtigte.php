@@ -72,6 +72,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('funktion');
             $this->dataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $this->dataset->AddField($field, false);
             $field = new StringField('beruf');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -91,6 +93,10 @@
             $field = new StringField('xing_profil_name');
             $this->dataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
@@ -117,8 +123,6 @@
             $field = new StringField('freigabe_visa');
             $this->dataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $this->dataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -333,6 +337,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);

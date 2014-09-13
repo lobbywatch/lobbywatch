@@ -232,6 +232,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -251,6 +253,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -277,8 +283,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -507,6 +511,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -526,6 +532,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -552,8 +562,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -622,6 +630,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -641,6 +651,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -667,8 +681,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -948,6 +960,7 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
+            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -966,6 +979,7 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
+            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1763,6 +1777,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -1782,6 +1798,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -1808,8 +1828,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -1958,6 +1976,7 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
+            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -2218,6 +2237,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -2237,6 +2258,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -2263,8 +2288,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -2413,6 +2436,7 @@
             $editor->AddValue('taetig', $this->RenderText('Tätig'));
             $editor->AddValue('beirat', $this->RenderText('Beirat/Patronatskomitee/Expertenkommission/Advisory Board'));
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
+            $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -3030,6 +3054,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -3049,6 +3075,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -3075,8 +3105,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -3136,6 +3164,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -3155,6 +3185,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -3181,8 +3215,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -3595,6 +3627,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -3614,6 +3648,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -3640,8 +3678,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);
@@ -3795,6 +3831,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('funktion');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('parlamentarier_kommissionen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('beruf');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('beruf_interessengruppe_id');
@@ -3814,6 +3852,10 @@
             $field = new StringField('xing_profil_name');
             $lookupDataset->AddField($field, false);
             $field = new StringField('facebook_name');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new DateField('von');
             $lookupDataset->AddField($field, false);
@@ -3840,8 +3882,6 @@
             $field = new StringField('freigabe_visa');
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('freigabe_datum');
-            $lookupDataset->AddField($field, false);
-            $field = new IntegerField('ALT_lobbyorganisation_id');
             $lookupDataset->AddField($field, false);
             $field = new StringField('created_visa');
             $field->SetIsNotNull(true);

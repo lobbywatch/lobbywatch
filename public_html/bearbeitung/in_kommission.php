@@ -285,6 +285,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -596,6 +600,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -773,6 +781,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -1045,9 +1057,10 @@
             // Edit column for funktion field
             //
             $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('praesident', $this->RenderText('praesident'));
-            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('praesident', $this->RenderText('PräsidentIn'));
+            $editor->AddValue('co-praesident', $this->RenderText('Co-Präsident'));
+            $editor->AddValue('vizepraesident', $this->RenderText('VizepräsidentIn'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1060,9 +1073,10 @@
             // Edit column for funktion field
             //
             $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('praesident', $this->RenderText('praesident'));
-            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('praesident', $this->RenderText('PräsidentIn'));
+            $editor->AddValue('co-praesident', $this->RenderText('Co-Präsident'));
+            $editor->AddValue('vizepraesident', $this->RenderText('VizepräsidentIn'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(false);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1643,6 +1657,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1802,9 +1820,10 @@
             // Edit column for funktion field
             //
             $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('praesident', $this->RenderText('praesident'));
-            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('praesident', $this->RenderText('PräsidentIn'));
+            $editor->AddValue('co-praesident', $this->RenderText('Co-Präsident'));
+            $editor->AddValue('vizepraesident', $this->RenderText('VizepräsidentIn'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -2060,6 +2079,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -2219,9 +2242,10 @@
             // Edit column for funktion field
             //
             $editor = new ComboBox('funktion_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
-            $editor->AddValue('praesident', $this->RenderText('praesident'));
-            $editor->AddValue('vizepraesident', $this->RenderText('vizepraesident'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
+            $editor->AddValue('praesident', $this->RenderText('PräsidentIn'));
+            $editor->AddValue('co-praesident', $this->RenderText('Co-Präsident'));
+            $editor->AddValue('vizepraesident', $this->RenderText('VizepräsidentIn'));
+            $editor->AddValue('mitglied', $this->RenderText('Mitglied'));
             $editColumn = new CustomEditColumn('Funktion', 'funktion', $editor, $this->dataset);
             $editColumn->SetAllowSetToDefault(false);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -2732,6 +2756,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -2900,6 +2928,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -3106,6 +3138,10 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -3273,6 +3309,10 @@
             $field = new StringField('adresse_plz');
             $lookupDataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);

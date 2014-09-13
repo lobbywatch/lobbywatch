@@ -137,6 +137,10 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $this->dataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('telephon_2');
+            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -2809,6 +2813,10 @@
             $field = new StringField('adresse_plz');
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_ort');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('telephon_1');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('telephon_2');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
