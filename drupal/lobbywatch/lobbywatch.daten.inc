@@ -460,7 +460,7 @@ function _lobbywatch_gaesteMitMandaten($parlamentarier_id, $only_active_zutritts
 
   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief,
 GROUP_CONCAT(DISTINCT
-    CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('mandat', 'organisation') . ", ' wirksamkeit-', mandat.wirksamkeit, '\">', IF(mandat.bis < NOW(), '<s>', ''), '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>', " .
+    CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('mandat', 'organisation') . ", ' wirksamkeit-', mandat.wirksamkeit, '\", title=\"Einflusstärke: ', REPLACE(mandat.wirksamkeit, 'tief', 'gering'), '\" >', IF(mandat.bis < NOW(), '<s>', ''), '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>', " .
 //     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
 //     IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)),
 "     ', ', " . _lobbywatch_bindungsart('zutrittsberechtigung', 'mandat', 'organisation') . "," .
@@ -500,7 +500,7 @@ GROUP BY zutrittsberechtigung.id;";
     $res .= '<h4>' . $gast['zutrittsberechtigung_name'] . ', ' . $gast['funktion'] . (isset($gast['beruf']) ? '/' . $gast['beruf'] : '') . ($admin ? ' <span class="admin">[LF: <b>'. $gast['lobbyfaktor'] . '</b>' . ($admin ? ' (' . round($gast['lobbyfaktor'] /$gast['lobbyfaktor_max'] * 100, 0) . '% von akt. max ' . $gast['lobbyfaktor_max'] . ')' .  ' <span class="admin">[' . $gast['anzahl_mandat_hoch'] . ', ' . $gast['anzahl_mandat_mittel'] . ', ' . $gast['anzahl_mandat_tief'] . ']</span>' : '') . ']' . '</span>': '') . '' . '</h4>';
     $res .= '<p><a href="/daten/zutrittsberechtigter/' . $gast['id'] . '">' . $gast['name'] . '</a>  ist mit folgenden Firmen, Verbänden und Organisationen verbunden:</p>';
     //$res .= mandateList($con, $gast['id']);
-    $res .= $gast['mandate'] ? _lobbywatch_legende_wirksamkeit() . "<ul>\n" . $gast['mandate'] . "\n</ul>" : '<p>keine</p>';
+    $res .= $gast['mandate'] ? /*_lobbywatch_legende_wirksamkeit() .*/ "<ul>\n" . $gast['mandate'] . "\n</ul>" : '<p>keine</p>';
   }
 
   return $res;
@@ -588,7 +588,7 @@ parlamentarier.anzahl_interessenbindung_tief_nach_wahl,
 parlamentarier.anzahl_interessenbindung_mittel_nach_wahl,
 parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
             GROUP_CONCAT(DISTINCT
-      CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('interessenbindung', 'organisation') . ", ' wirksamkeit-', interessenbindung.wirksamkeit, '\">',
+      CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('interessenbindung', 'organisation') . ", ' wirksamkeit-', interessenbindung.wirksamkeit, '\" title=\"Einflusstärke: ', REPLACE(interessenbindung.wirksamkeit, 'tief', 'gering'), '\" >',
           IF(interessenbindung.bis < NOW(), '<s>', ''),
           IF(interessenbindung.von > parlamentarier.im_rat_seit, '<i>', ''),
           '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>', " .
