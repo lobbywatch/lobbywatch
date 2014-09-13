@@ -90,8 +90,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_plz');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_parlam_verbindung');
-            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1153,51 +1151,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(false);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -1916,8 +1869,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_plz');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_parlam_verbindung');
-            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -1973,8 +1924,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationDetailEdit0interessengruppessearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'typ', 'vernehmlassung', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'branche_id_anzeige_name', 'beschreibung', 'homepage', 'handelsregister_url', 'ALT_parlam_verbindung', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe'), $this->RenderText('2. Interessengruppe'), $this->RenderText('3. Interessengruppe'), $this->RenderText('Branche'), $this->RenderText('Beschreibung'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('ALT Parlam Verbindung'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'typ', 'vernehmlassung', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'branche_id_anzeige_name', 'beschreibung', 'homepage', 'handelsregister_url', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe'), $this->RenderText('2. Interessengruppe'), $this->RenderText('3. Interessengruppe'), $this->RenderText('Branche'), $this->RenderText('Beschreibung'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -2254,7 +2205,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('handelsregister_url', $this->RenderText('Handelsregister Url')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_parlam_verbindung', $this->RenderText('ALT Parlam Verbindung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
@@ -3308,51 +3258,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -3864,13 +3769,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -4363,22 +4261,6 @@
             $editor = new TextAreaEdit('handelsregister_url_edit', 50, 8);
             $editColumn = new CustomEditColumn('Handelsregister Url', 'handelsregister_url', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -4909,22 +4791,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -5163,13 +5029,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -5359,13 +5218,6 @@
             // View column for handelsregister_url field
             //
             $column = new TextViewColumn('handelsregister_url', 'Handelsregister Url', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -5930,8 +5782,6 @@
             $field = new StringField('adresse_plz');
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_ort');
-            $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_kommission');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -7504,41 +7354,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(false);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1interessengruppe_ALT_kommission_handler_list');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for geburtstag field
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
@@ -8522,37 +8337,6 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1interessengruppe_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(false);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1interessengruppe_ALT_kommission_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -8722,8 +8506,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_kommission');
-            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -8789,8 +8571,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierDetailEdit1interessengruppessearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'rat_id_abkuerzung', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_anzeige_name', 'zivilstand', 'geschlecht', 'photo', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'ALT_kommission', 'geburtstag', 'anzahl_kinder', 'militaerischer_grad_id_name', 'parlament_biografie_id', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'autorisiert_visa', 'autorisiert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'photo_dateiname'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Zivilstand'), $this->RenderText('Geschlecht'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('ALT Kommission'), $this->RenderText('Geburtstag'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad Id'), $this->RenderText('Parlament Biografie'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Autorisierung Verschickt Visa'), $this->RenderText('Autorisierung Verschickt Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Photo Dateiname')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'rat_id_abkuerzung', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_anzeige_name', 'zivilstand', 'geschlecht', 'photo', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'geburtstag', 'anzahl_kinder', 'militaerischer_grad_id_name', 'parlament_biografie_id', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'autorisiert_visa', 'autorisiert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date', 'photo_dateiname'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Rat'), $this->RenderText('Kanton'), $this->RenderText('Kommissionen'), $this->RenderText('Partei'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Zivilstand'), $this->RenderText('Geschlecht'), $this->RenderText('Photo'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Geburtstag'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad Id'), $this->RenderText('Parlament Biografie'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Autorisierung Verschickt Visa'), $this->RenderText('Autorisierung Verschickt Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date'), $this->RenderText('Photo Dateiname')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -9169,7 +8951,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('sitzplatz', $this->RenderText('Sitzplatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_kommission', $this->RenderText('ALT Kommission')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('geburtstag', $this->RenderText('Geburtstag')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('anzahl_kinder', $this->RenderText('Anzahl Kinder')));
             
@@ -10766,41 +10547,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_ALT_kommission_handler_list');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for geburtstag field
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
@@ -11743,15 +11489,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1interessengruppe_ALT_kommission_handler_view');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for geburtstag field
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
@@ -12504,16 +12241,6 @@
             $editor = new TextAreaEdit('homepage_edit', 50, 8);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -13360,16 +13087,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for geburtstag field
             //
             $editor = new DateTimeEdit('geburtstag_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
@@ -13796,13 +13513,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for geburtstag field
             //
             $column = new DateTimeViewColumn('geburtstag', 'Geburtstag', $this->dataset);
@@ -14124,13 +13834,6 @@
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -14543,37 +14246,6 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_homepage_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_ALT_kommission_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -14674,13 +14346,6 @@
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_homepage_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1interessengruppe_ALT_kommission_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field

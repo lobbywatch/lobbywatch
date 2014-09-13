@@ -1544,3 +1544,8 @@ DROP VIEW `v_zutrittsberechtigung_lobbyfaktor_max`;
 
 -- 13.09.2014
 
+ALTER TABLE `organisation` DROP FOREIGN KEY `fk_lo_lt` ;
+
+ALTER TABLE `parlamentarier` DROP `ALT_kommission` ;
+
+ALTER TABLE `organisation` DROP `ALT_parlam_verbindung` ;

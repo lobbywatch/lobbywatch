@@ -3786,8 +3786,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_kommission');
-            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -5951,39 +5949,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(false);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierDetailViewGrid1kanton_ALT_kommission_handler_list');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -7033,35 +6998,6 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_adresse_ort_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(false);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailViewGrid1kanton_ALT_kommission_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -7201,8 +7137,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_kommission');
-            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -7268,8 +7202,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parlamentarierDetailEdit1kantonssearch', $this->dataset,
-                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'rat_id_abkuerzung', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'geschlecht', 'geburtstag', 'photo', 'photo_dateiname', 'photo_dateierweiterung', 'photo_dateiname_voll', 'photo_mime_type', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'arbeitssprache', 'adresse_firma', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'adresse_ort', 'ALT_kommission', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'autorisiert_visa', 'autorisiert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Rat Id'), $this->RenderText('Kanton Id'), $this->RenderText('Kommissionen'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion Id'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad Id'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Photo'), $this->RenderText('Photo Dateiname'), $this->RenderText('Photo Dateierweiterung'), $this->RenderText('Photo Dateiname Voll'), $this->RenderText('Photo Mime Type'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament Biografie Id'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Arbeitssprache'), $this->RenderText('Adresse Firma'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse Plz'), $this->RenderText('Adresse Ort'), $this->RenderText('ALT Kommission'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Autorisierung Verschickt Visa'), $this->RenderText('Autorisierung Verschickt Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'nachname', 'vorname', 'zweiter_vorname', 'rat_id_abkuerzung', 'kanton_id_abkuerzung', 'kommissionen', 'partei_id_abkuerzung', 'parteifunktion', 'fraktion_id_abkuerzung', 'fraktionsfunktion', 'im_rat_seit', 'im_rat_bis', 'ratsunterbruch_von', 'ratsunterbruch_bis', 'beruf', 'beruf_interessengruppe_id_name', 'zivilstand', 'anzahl_kinder', 'militaerischer_grad_id_name', 'geschlecht', 'geburtstag', 'photo', 'photo_dateiname', 'photo_dateierweiterung', 'photo_dateiname_voll', 'photo_mime_type', 'kleinbild', 'sitzplatz', 'email', 'homepage', 'parlament_biografie_id', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'arbeitssprache', 'adresse_firma', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'adresse_ort', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'autorisierung_verschickt_visa', 'autorisierung_verschickt_datum', 'autorisiert_visa', 'autorisiert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Rat Id'), $this->RenderText('Kanton Id'), $this->RenderText('Kommissionen'), $this->RenderText('Partei Id'), $this->RenderText('Parteifunktion'), $this->RenderText('Fraktion Id'), $this->RenderText('Fraktionsfunktion'), $this->RenderText('Im Rat Seit'), $this->RenderText('Im Rat Bis'), $this->RenderText('Ratsunterbruch Von'), $this->RenderText('Ratsunterbruch Bis'), $this->RenderText('Beruf'), $this->RenderText('Beruf Interessengruppe Id'), $this->RenderText('Zivilstand'), $this->RenderText('Anzahl Kinder'), $this->RenderText('Militaerischer Grad Id'), $this->RenderText('Geschlecht'), $this->RenderText('Geburtstag'), $this->RenderText('Photo'), $this->RenderText('Photo Dateiname'), $this->RenderText('Photo Dateierweiterung'), $this->RenderText('Photo Dateiname Voll'), $this->RenderText('Photo Mime Type'), $this->RenderText('Kleinbild'), $this->RenderText('Sitzplatz'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Parlament Biografie Id'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Arbeitssprache'), $this->RenderText('Adresse Firma'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse Plz'), $this->RenderText('Adresse Ort'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Autorisierung Verschickt Visa'), $this->RenderText('Autorisierung Verschickt Datum'), $this->RenderText('Autorisiert Visa'), $this->RenderText('Autorisiert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -7657,7 +7591,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_zusatz', $this->RenderText('Adresse Zusatz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_plz', $this->RenderText('Adresse Plz')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('adresse_ort', $this->RenderText('Adresse Ort')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_kommission', $this->RenderText('ALT Kommission')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
@@ -9814,39 +9747,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_ALT_kommission_handler_list');
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Kommissionen als Einträge in Tabelle "in_kommission" erfassen. Wird später entfernt. Mitglied in Kommission(en) als Freitext'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -10696,15 +10596,6 @@
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_adresse_ort_handler_view');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierDetailEditGrid1kanton_ALT_kommission_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11588,15 +11479,6 @@
             $editor->SetSize(100);
             $editor->SetMaxLength(100);
             $editColumn = new CustomEditColumn('Adresse Ort', 'adresse_ort', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -12533,15 +12415,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for notizen field
             //
             $editor = new TextAreaEdit('notizen_edit', 50, 8);
@@ -13012,13 +12885,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -13429,13 +13295,6 @@
             // View column for adresse_ort field
             //
             $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -14111,35 +13970,6 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_adresse_ort_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_kommission field
-            //
-            $editor = new TextAreaEdit('alt_kommission_edit', 50, 8);
-            $editColumn = new CustomEditColumn('ALT Kommission', 'ALT_kommission', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_ALT_kommission_handler_list', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -14278,13 +14108,6 @@
             $column = new TextViewColumn('adresse_ort', 'Adresse Ort', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_adresse_ort_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for ALT_kommission field
-            //
-            $column = new TextViewColumn('ALT_kommission', 'ALT Kommission', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierDetailEditGrid1kanton_ALT_kommission_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field

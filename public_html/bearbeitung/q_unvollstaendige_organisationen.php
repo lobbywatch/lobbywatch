@@ -97,8 +97,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_plz');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_parlam_verbindung');
-            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');

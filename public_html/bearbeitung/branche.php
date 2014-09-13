@@ -2792,8 +2792,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_plz');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_parlam_verbindung');
-            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -3788,51 +3786,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(false);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -4619,8 +4572,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_plz');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_parlam_verbindung');
-            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -4676,8 +4627,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationDetailEdit1branchessearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'typ', 'vernehmlassung', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'branche_id_anzeige_name', 'beschreibung', 'ALT_parlam_verbindung', 'homepage', 'handelsregister_url', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe'), $this->RenderText('2. Interessengruppe'), $this->RenderText('3. Interessengruppe'), $this->RenderText('Branche'), $this->RenderText('Beschreibung'), $this->RenderText('ALT Parlam Verbindung'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
+                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'rechtsform', 'typ', 'vernehmlassung', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'branche_id_anzeige_name', 'beschreibung', 'homepage', 'handelsregister_url', 'notizen', 'eingabe_abgeschlossen_visa', 'eingabe_abgeschlossen_datum', 'kontrolliert_visa', 'kontrolliert_datum', 'freigabe_visa', 'freigabe_datum', 'created_visa', 'created_date', 'updated_visa', 'updated_date'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Rechtsform'), $this->RenderText('Typ'), $this->RenderText('Vernehmlassung'), $this->RenderText('Interessengruppe'), $this->RenderText('2. Interessengruppe'), $this->RenderText('3. Interessengruppe'), $this->RenderText('Branche'), $this->RenderText('Beschreibung'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Notizen'), $this->RenderText('Eingabe Abgeschlossen Visa'), $this->RenderText('Eingabe Abgeschlossen Datum'), $this->RenderText('Kontrolliert Visa'), $this->RenderText('Kontrolliert Datum'), $this->RenderText('Freigabe Visa'), $this->RenderText('Freigabe Datum'), $this->RenderText('Created Visa'), $this->RenderText('Created Date'), $this->RenderText('Updated Visa'), $this->RenderText('Updated Date')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -4955,7 +4906,6 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ALT_parlam_verbindung', $this->RenderText('ALT Parlam Verbindung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('handelsregister_url', $this->RenderText('Handelsregister Url')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
@@ -5944,51 +5894,6 @@
             $grid->AddViewColumn($column);
             
             //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            
-            /* <inline edit column> */
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetEditOperationColumn($editColumn);
-            /* </inline edit column> */
-            
-            /* <inline insert column> */
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $column->SetInsertOperationColumn($editColumn);
-            /* </inline insert column> */
-            $column->SetDescription($this->RenderText('Bisherige Verbindung der Organisation ins Parlament'));
-            $column->SetFixedWidth(null);
-            $grid->AddViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -6549,13 +6454,6 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -7048,22 +6946,6 @@
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7596,22 +7478,6 @@
             $grid->AddInsertColumn($editColumn);
             
             //
-            // Edit column for ALT_parlam_verbindung field
-            //
-            $editor = new CheckBoxGroup('alt_parlam_verbindung_edit');
-            $editor->SetDisplayMode(CheckBoxGroup::StackedMode);
-            $editor->AddValue('einzel', $this->RenderText('einzel'));
-            $editor->AddValue('mehrere', $this->RenderText('mehrere'));
-            $editor->AddValue('mitglied', $this->RenderText('mitglied'));
-            $editor->AddValue('exekutiv', $this->RenderText('exekutiv'));
-            $editor->AddValue('kommission', $this->RenderText('kommission'));
-            $editColumn = new CustomEditColumn('ALT Parlam Verbindung', 'ALT_parlam_verbindung', $editor, $this->dataset);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
             // Edit column for homepage field
             //
             $editor = new TextAreaEdit('homepage_edit', 50, 8);
@@ -7855,13 +7721,6 @@
             $grid->AddPrintColumn($column);
             
             //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -8052,13 +7911,6 @@
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
-            $column->SetOrderable(true);
-            $grid->AddExportColumn($column);
-            
-            //
-            // View column for ALT_parlam_verbindung field
-            //
-            $column = new TextViewColumn('ALT_parlam_verbindung', 'ALT Parlam Verbindung', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             

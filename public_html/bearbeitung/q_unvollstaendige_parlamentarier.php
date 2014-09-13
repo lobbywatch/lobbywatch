@@ -148,8 +148,6 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_ort');
             $this->dataset->AddField($field, false);
-            $field = new StringField('ALT_kommission');
-            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
