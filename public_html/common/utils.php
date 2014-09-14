@@ -401,7 +401,7 @@ function _lobbywatch_bindungsart($pers, $ib, $org) {
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Vorstandspräsidentin'
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Vorstandspräsident'
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Vorstandsvizepräsidentin'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vorstandsratsvizepräsident'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vorstandsvizepräsident'
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'F' THEN 'Vorstand'
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'M' THEN 'Vorstand'
     WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Geschäftsführerin'
