@@ -460,7 +460,7 @@ function _lobbywatch_gaesteMitMandaten($parlamentarier_id, $only_active_zutritts
 
   $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.nachname, zutrittsberechtigung.vorname, zutrittsberechtigung.name, zutrittsberechtigung.funktion, zutrittsberechtigung.lobbyfaktor, zutrittsberechtigung.lobbyfaktor_max, zutrittsberechtigung.anzahl_mandat_hoch, zutrittsberechtigung.anzahl_mandat_mittel, zutrittsberechtigung.anzahl_mandat_tief,
 GROUP_CONCAT(DISTINCT
-    CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('mandat', 'organisation') . ", ' wirksamkeit-', mandat.wirksamkeit, '\", title=\"Einflusstärke: ', REPLACE(mandat.wirksamkeit, 'tief', 'gering'), '\" >', IF(mandat.bis < NOW(), '<s>', ''), '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>', " .
+    CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('mandat', 'organisation') . ", ' wirksamkeit-', mandat.wirksamkeit, '\" title=\"Wirksamkeit: ', REPLACE(mandat.wirksamkeit, 'tief', 'gering'), '\" >', IF(mandat.bis < NOW(), '<s>', ''), '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>', " .
 //     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
 //     IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)),
 "     ', ', " . _lobbywatch_bindungsart('zutrittsberechtigung', 'mandat', 'organisation') . "," .
@@ -588,7 +588,7 @@ parlamentarier.anzahl_interessenbindung_tief_nach_wahl,
 parlamentarier.anzahl_interessenbindung_mittel_nach_wahl,
 parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
             GROUP_CONCAT(DISTINCT
-      CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('interessenbindung', 'organisation') . ", ' wirksamkeit-', interessenbindung.wirksamkeit, '\" title=\"Einflusstärke: ', REPLACE(interessenbindung.wirksamkeit, 'tief', 'gering'), '\" >',
+      CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('interessenbindung', 'organisation') . ", ' wirksamkeit-', interessenbindung.wirksamkeit, '\" title=\"Wirksamkeit: ', REPLACE(interessenbindung.wirksamkeit, 'tief', 'gering'), '\" >',
           IF(interessenbindung.bis < NOW(), '<s>', ''),
           IF(interessenbindung.von > parlamentarier.im_rat_seit, '<i>', ''),
           '<a href=\"/daten/organisation/', organisation.id, '\">', organisation.anzeige_name, '</a>', " .
@@ -751,7 +751,43 @@ jQuery(document).ready(function() {
 }
 
 function _lobbywatch_legende_wirksamkeit() {
-  return '<div class="legend clearfix">Einflussstärke:<ul><li class="wirksamkeit-hoch">● = hoch</li> <li class="wirksamkeit-mittel">● = mittel</li> <li class="wirksamkeit-tief">● = gering</li></ul></div>';
+  $rnd = rand();
+  return '<div class="legend clearfix">Wirksamkeit:
+      <ul class="legend-list-short" id="legend-short-'. $rnd . '"><li class="wirksamkeit-hoch">● = hoch</li> <li class="wirksamkeit-mittel">● = mittel</li> <li class="wirksamkeit-tief">● = gering</li></ul>' .
+      '<div><a id="show-legend-detail" class="toggle-text" onclick="false"><span id="legend-text-show">Zeige</span><span id="legend-text-hide" style="display:none">Verstecke</span> Erklärung</a></div>' .
+      '<div id="legend-detail-'. $rnd . '" style="display:none">
+          <h3>Wirksame und weniger wirksame Lobbys</h3>
+          <p>Anhand der Farbe lässt sich die Wirksamkeit einer Lobbyorganisation ablesen (<span class="wirksamkeit-hoch">hoch</span>, <span class="wirksamkeit-mittel">mittel</span>, <span class="wirksamkeit-tief">gering</span>).</p>
+          <ul id="legend-long-'. $rnd . '" class="legend-list-long">
+          <li><span class="wirksamkeit-hoch">● Für den Einflussfaktor «hoch», muss die Lobbyorganisation</span>
+              <ul><li>immer oder punktuell an Gesetzesrevisionen mitarbeiten (Vernehmlassungen);</li>
+              <li>im Parlament mit einer Person vertreten sein, die im Verband, in der Organisation et cetera eine Führungsaufgabe wahrnimmt (Geschäftsstelle, Verwaltungsrat, Stiftungsrat, Beirat);</li>
+              <li>mit ihrem Parlamentsmitglied in der behandelnden Kommission (z.B. Gesundheitskommission) vertreten sein</li></ul></li>
+              <li><span class="wirksamkeit-mittel">● Für den Einflussfaktor «mittel» muss die Lobbyorganisation</span>
+              <ul>
+              <li>punktuell an Gesetzesrevisionen mitarbeiten (Vernehmlassungen);</li>
+              <li>im Parlament mit einem Mitglied oder Beirat (Patronatskomitee et cetera) vertreten sein.</li>
+              </ul></li>
+              <li><span class="wirksamkeit-tief">● Für den Einflussfaktor «gering» muss die Lobbyorganisation</span>
+              <ul>
+              <li>nie an Gesetzesrevisionen mitarbeiten (Vernehmlassungen);</li>
+              <li>im Parlament mit einer Person vertreten sein.</li>
+              </ul>
+              </li>
+              </ul>
+      </div>' .
+
+      '<script>
+jQuery(document).ready(function() {
+    jQuery("#show-legend-detail").click(function () {
+      jQuery("#show-legend-detail-'. $rnd . '").slideToggle("slow");
+      jQuery("#legend-detail-'. $rnd . '").slideToggle("slow");
+      jQuery("#legend-text-show").toggle();
+      jQuery("#legend-text-hide").toggle();
+    });
+ });
+</script>' .
+            '</div>';
 }
 
 function db_session_parameters_SQL() {
