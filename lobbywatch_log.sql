@@ -2638,9 +2638,8 @@ thisTrigger: begin
 	    updated_visa = CONCAT(NEW.updated_visa, '*')
 	    WHERE
 	    parlamentarier_id=NEW.id AND bis IS NULL;
-	    
-    -- TODO mandate von zutrittsberechtigten?
-    -- TODO organisationen von zutrittsberechtigten?
+
+	  -- TODO organisationen von zutrittsberechtigten?
 	
 	  -- in_kommission
 	  SET @disable_parlamentarier_kommissionen_update = 1;
@@ -2681,41 +2680,41 @@ delimiter ;
 
 -- 15.07.2014
 
---drop trigger if exists `trg_interessengruppe_log_upd`;
---delimiter //
---create trigger `trg_interessengruppe_log_upd` after update on `interessengruppe`
---for each row
---thisTrigger: begin
---  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
---  INSERT INTO `interessengruppe_log`
---    SELECT *, null, 'update', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
---end
---//
---delimiter ;
+-- drop trigger if exists `trg_interessengruppe_log_upd`;
+-- delimiter //
+-- create trigger `trg_interessengruppe_log_upd` after update on `interessengruppe`
+-- for each row
+-- thisTrigger: begin
+--   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+--   INSERT INTO `interessengruppe_log`
+--     SELECT *, null, 'update', null, NOW(), null FROM `interessengruppe` WHERE id = NEW.id ;
+-- end
+-- //
+-- delimiter ;
 --
---drop trigger if exists `trg_branche_log_upd`;
---delimiter //
---create trigger `trg_branche_log_upd` after update on `branche`
---for each row
---thisTrigger: begin
---  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
---  INSERT INTO `branche_log`
---    SELECT *, null, 'update', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
---end
---//
---delimiter ;
+-- drop trigger if exists `trg_branche_log_upd`;
+-- delimiter //
+-- create trigger `trg_branche_log_upd` after update on `branche`
+-- for each row
+-- thisTrigger: begin
+--   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+--   INSERT INTO `branche_log`
+--     SELECT *, null, 'update', null, NOW(), null FROM `branche` WHERE id = NEW.id ;
+-- end
+-- //
+-- delimiter ;
 --
---drop trigger if exists `trg_kommission_log_upd`;
---delimiter //
---create trigger `trg_kommission_log_upd` after update on `kommission`
---for each row
---thisTrigger: begin
---  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
---  INSERT INTO `kommission_log`
---    SELECT *, null, 'update', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
---end
---//
---delimiter ;
+-- drop trigger if exists `trg_kommission_log_upd`;
+-- delimiter //
+-- create trigger `trg_kommission_log_upd` after update on `kommission`
+-- for each row
+-- thisTrigger: begin
+--   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+--   INSERT INTO `kommission_log`
+--     SELECT *, null, 'update', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
+-- end
+-- //
+-- delimiter ;
 
 -- 01.08.2014
 

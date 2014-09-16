@@ -123,7 +123,7 @@ $entFreigeben = array();
 foreach ($workflow_tables as $table => $name) {
   $eingabe_abgeschlossen[] = "SELECT '$table' as table_name, id, lower(eingabe_abgeschlossen_visa) as visa FROM $table";
 
-  $freigaben[] = "UPDATE $table SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';";
+  $freigaben[] = "UPDATE $table SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';";
   $entFreigaben[] = "UPDATE $table SET freigabe_datum = NULL, freigabe_visa=NULL, updated_date = NOW(), updated_visa= '*';";
 }
 

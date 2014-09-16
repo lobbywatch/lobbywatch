@@ -27,22 +27,22 @@ UPDATE branche SET `symbol_klein_rel`='branche_symbole/default_branche.png' WHER
 
 -- 03.08.2014
 -- Alle freigeben
-UPDATE branche SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE interessenbindung SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE interessengruppe SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE in_kommission SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE kommission SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE mandat SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE organisation SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE organisation_beziehung SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE organisation_jahr SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE parlamentarier SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE partei SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE fraktion SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE rat SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE kanton SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE kanton_jahr SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
-UPDATE zutrittsberechtigung SET freigabe_datum = NOW(), freigabe_visa='*', updated_date = NOW(), updated_visa= '*';
+UPDATE branche SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+-- UPDATE interessenbindung SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+UPDATE interessengruppe SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+-- UPDATE in_kommission SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+-- UPDATE kommission SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+-- UPDATE mandat SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+UPDATE organisation SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+UPDATE organisation_beziehung SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+UPDATE organisation_jahr SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+-- UPDATE parlamentarier SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+UPDATE partei SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+UPDATE fraktion SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+UPDATE rat SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+UPDATE kanton SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+UPDATE kanton_jahr SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
+-- UPDATE zutrittsberechtigung SET freigabe_datum = NOW(), freigabe_visa='roland*', updated_date = NOW(), updated_visa= 'roland*';
 
 -- Alle ent-freigeben
 UPDATE branche SET freigabe_datum = NULL, freigabe_visa=NULL, updated_date = NOW(), updated_visa= '*';
@@ -61,3 +61,26 @@ UPDATE rat SET freigabe_datum = NULL, freigabe_visa=NULL, updated_date = NOW(), 
 UPDATE kanton SET freigabe_datum = NULL, freigabe_visa=NULL, updated_date = NOW(), updated_visa= '*';
 UPDATE kanton_jahr SET freigabe_datum = NULL, freigabe_visa=NULL, updated_date = NOW(), updated_visa= '*';
 UPDATE zutrittsberechtigung SET freigabe_datum = NULL, freigabe_visa=NULL, updated_date = NOW(), updated_visa= '*';
+
+
+-- 16.09.2014
+
+-- Alle freigeben
+SET @freigabe_date = STR_TO_DATE('16.09.2014', '%d.%m.%Y');
+SET @freigabe_name = 'roland*';
+UPDATE branche SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+-- UPDATE interessenbindung SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+UPDATE interessengruppe SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+-- UPDATE in_kommission SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+-- UPDATE kommission SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+-- UPDATE mandat SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+UPDATE organisation SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+UPDATE organisation_beziehung SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+UPDATE organisation_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+-- UPDATE parlamentarier SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+UPDATE partei SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+UPDATE fraktion SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+UPDATE rat SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+UPDATE kanton SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+UPDATE kanton_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
+-- UPDATE zutrittsberechtigung SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name;
