@@ -135,6 +135,8 @@ catch(Exception $e)
       </div>
    <div id="piechart">
    </div>
+   <div id="piechart2">
+   </div>
 
    <script type="text/javascript">
       // helper function: extract Request parameter

@@ -33,7 +33,7 @@
 //       df($kommission_id, '$kommission_id init');
       $kommission_id = !isset($kommission_id) || !is_int($kommission_id) || $kommission_id == 0 ? 1 : $kommission_id;
 //       df($kommission_id, '$kommission_id');
-      $cmd = "select count(*) as value, 'nicht bearbeitet' as label, null as color
+      $cmd = "select 'parlamentarier' as type, count(*) as value, 'nicht bearbeitet' as label, null as color
       from v_parlamentarier p
       where
          exists (select * from in_kommission ik where ik.parlamentarier_id = p.id AND ik.kommission_id =  $kommission_id) and
@@ -44,7 +44,7 @@
          p.freigabe_datum is null
          and p.bis is null
       union
-      select count(*) as value, 'Erfasst' as label, null as color
+      select 'parlamentarier' as type, count(*) as value, 'Erfasst' as label, null as color
       from v_parlamentarier p
       where
          exists (select * from in_kommission ik where ik.parlamentarier_id = p.id AND ik.kommission_id =  $kommission_id) and
@@ -55,7 +55,7 @@
          p.freigabe_datum is null
          and p.bis is null
       union
-      select count(*) as value, 'Kontrolliert' as label, null as color
+      select 'parlamentarier' as type, count(*) as value, 'Kontrolliert' as label, null as color
       from v_parlamentarier p
       where
          exists (select * from in_kommission ik where ik.parlamentarier_id = p.id AND ik.kommission_id =  $kommission_id) and
@@ -65,7 +65,7 @@
          p.freigabe_datum is null
          and p.bis is null
       union
-      select count(*) as value, 'Verschickt' as label, null as color
+      select 'parlamentarier' as type, count(*) as value, 'Verschickt' as label, null as color
       from v_parlamentarier p
       where
          exists (select * from in_kommission ik where ik.parlamentarier_id = p.id AND ik.kommission_id =  $kommission_id) and
@@ -74,7 +74,7 @@
          p.freigabe_datum is null
          and p.bis is null
       union
-      select count(*) as value, 'Autorisiert' as label, null as color
+      select 'parlamentarier' as type, count(*) as value, 'Autorisiert' as label, null as color
       from v_parlamentarier p
       where
          exists (select * from in_kommission ik where ik.parlamentarier_id = p.id AND ik.kommission_id =  $kommission_id) and
@@ -82,7 +82,7 @@
          p.freigabe_datum is null
          and p.bis is null
       union
-      select count(*) as value, 'Freigegeben' as label, null as color
+      select 'parlamentarier' as type, count(*) as value, 'Freigegeben' as label, null as color
       from v_parlamentarier p
       where
          exists (select * from in_kommission ik where ik.parlamentarier_id = p.id AND ik.kommission_id =  $kommission_id) and
@@ -238,6 +238,7 @@ ORDER BY value DESC;
       /*echo "Label: {$row["label"]}, value: {$row["value"]}, color:{$row["color"]} \n";*/
 
       $rowdata = [
+         "type" => $row["type"],
          "label" => $row["label"],
          "value" => $row["value"],
          "color" => $row["color"] != null ? $row["value"] : @$color_map[$row["label"]]
