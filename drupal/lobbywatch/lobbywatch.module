@@ -413,7 +413,7 @@ function lobbywatch_autocomplete_search_form($form, &$form_state) {
 //     '#autocomplete_path' => (user_access('access lobbywatch advanced content') || user_access('access lobbywatch unpublished content') || user_access('access lobbywatch admin') ? 'autocomplete/lobbywatch/search' : $GLOBALS['base_url'] . '/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php'),
     '#autocomplete_path' => $auto_path,
     // Autocomplete, autosubmit, ref: https://drupal.org/node/1772490
-    '#attributes' => array('class' => array('auto_submit'), 'placeholder' => t("Auswahllistensuche: Suchtext eingeben, eine Sekunde warten und auswählen"),
+    '#attributes' => array('class' => array('auto_submit'), 'placeholder' => t("Suche via Auswahlliste: Suchtext eingeben, eine Sekunde warten und auswählen"),
       'title' => t("Suchtext eingeben, kurz warten und auswählen")),
 //     '#attributes' =>array()
 //     '#attributes' => array('class' => array('use-ajax-submit')),
