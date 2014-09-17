@@ -1125,7 +1125,7 @@ ORDER BY organisation.anzeige_name;
     }
     if ($record['verbundene_parlamentarier']) {
       $markup .= '<h3>Parlamentarierverbindungen</h3>'
-      . '<p>Verbindungen sind direkt über Parlamentarier oder indirekt über seine zutrittsberechtigten Gäste.</p>'
+      . '<p>Verbindungen sind direkt über Parlamentarier, indirekt über zutrittsberechtigte Gäste oder indirekt über Mandate von verbundenen PR oder Beratungsunternehmen.</p>'
       . '<ul>'
       . $record['verbundene_parlamentarier']
       . '</ul>';
