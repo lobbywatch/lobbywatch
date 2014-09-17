@@ -761,7 +761,7 @@ function _lobbywatch_legende_wirksamkeit() {
           <ul id="legend-long-'. $rnd . '" class="legend-list-long">
           <li><span class="wirksamkeit-hoch">● Für den Einflussfaktor «hoch», muss die Lobbyorganisation</span>
               <ul><li>immer oder punktuell an Gesetzesrevisionen mitarbeiten (Vernehmlassungen);</li>
-              <li>im Parlament mit einer Person vertreten sein, die im Verband, in der Organisation et cetera eine Führungsaufgabe wahrnimmt (Geschäftsstelle, Verwaltungsrat, Stiftungsrat, Beirat);</li>
+              <li>im Parlament mit einer Person vertreten sein, die im Verband, in der Organisation et cetera eine Führungsaufgabe wahrnimmt (Geschäftsleitung, Verwaltungsrat, Stiftungsrat);</li>
               <li>mit ihrem Parlamentsmitglied in der behandelnden Kommission (z.B. Gesundheitskommission) vertreten sein</li></ul></li>
               <li><span class="wirksamkeit-mittel">● Für den Einflussfaktor «mittel» muss die Lobbyorganisation</span>
               <ul>
