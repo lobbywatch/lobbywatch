@@ -36,7 +36,7 @@ function _lobbywatch_search_autocomplete_LIKE_search_table($str, $check_unpublis
 SELECT id, page, name
 FROM v_search_table
 WHERE
-name LIKE :str ". ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '') . "
+search_keywords LIKE :str ". ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '') . "
 ORDER BY table_weight, weight
 LIMIT 20;";
   //dpm($sql, 'suche');
@@ -49,7 +49,7 @@ function _lobbywatch_search_form_LIKE_search_table($search_str) {
   $table = 'search_table';
   $query = db_select("v_$table", $table)->extend('PagerDefault');
   $query->fields($table, array('id', 'page', 'name'));
-  $query->condition('name', $search_str, 'LIKE');
+  $query->condition('search_keywords', $search_str, 'LIKE');
   if (!user_access('access lobbywatch unpublished content')) {
     //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
     $query->where('freigabe_datum <= NOW()');
@@ -72,90 +72,90 @@ function _lobbywatch_search_keyword_processing($str) {
 }
 
 /** Currently not used */
-function _lobbywatch_search_autocomplete_LIKE_UNION($str, $check_unpublished = true) {
-  $table_sql = array();
-  $table = 'parlamentarier';
-  $page = 'parlamentarier';
-  $table_sql[] = "SELECT '$page' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+// function _lobbywatch_search_autocomplete_LIKE_UNION($str, $check_unpublished = true) {
+//   $table_sql = array();
+//   $table = 'parlamentarier';
+//   $page = 'parlamentarier';
+//   $table_sql[] = "SELECT '$page' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
 
-  // TODO use zutrittsberechtigung_simple
-  $table = 'zutrittsberechtigung_simple';
-  $page = 'zutrittsberechtigter';
-  $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+//   // TODO use zutrittsberechtigung_simple
+//   $table = 'zutrittsberechtigung_simple';
+//   $page = 'zutrittsberechtigter';
+//   $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
 
-  foreach (Constants::$entities_web as $table => $page) {
-    $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
-  }
+//   foreach (Constants::$entities_web as $table => $page) {
+//     $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+//   }
 
-//   $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
-  $sql = implode("\n UNION ALL \n", $table_sql). ' LIMIT 20;'; // LIMIT applies to the whole query, ref http://stackoverflow.com/questions/12684407/how-to-using-order-by-and-limit-in-union-mysql-query
-  //dpm($sql, 'suche');
-  $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($str)));
+// //   $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
+//   $sql = implode("\n UNION ALL \n", $table_sql). ' LIMIT 20;'; // LIMIT applies to the whole query, ref http://stackoverflow.com/questions/12684407/how-to-using-order-by-and-limit-in-union-mysql-query
+//   //dpm($sql, 'suche');
+//   $result = db_query($sql, array(':str' => _lobbywatch_search_keyword_processing($str)));
 
-  return $result;
-}
+//   return $result;
+// }
 
 /** Currently not used */
-function _lobbywatch_search_form_LIKE_UNION($search_str) {
-  $table = 'parlamentarier';
-  $page = 'parlamentarier';
-  $query = db_select("v_$table", $table);
-  $query->fields($table, array('id'));
-  $query->addExpression("'$page'", 'page');
-  $query->addExpression("CONCAT_WS(', ', anzeige_name, rat, partei, kanton)", 'name');
-  $query->condition('anzeige_name', $search_str, 'LIKE');
-  if (!user_access('access lobbywatch unpublished content')) {
-    //       $query->where('(im_rat_bis IS NULL OR im_rat_bis > NOW()) AND freigabe_datum <= NOW()');
-    $query->where('freigabe_datum <= NOW()');
-  }
-  if (!user_access('access lobbywatch advanced content')) {
-    //       $query->where('(im_rat_bis IS NULL OR im_rat_bis > NOW()) AND freigabe_datum <= NOW()');
-    $query->condition(db_or()->isNull('im_rat_bis')->where('im_rat_bis > NOW()'));
-  }
+// function _lobbywatch_search_form_LIKE_UNION($search_str) {
+//   $table = 'parlamentarier';
+//   $page = 'parlamentarier';
+//   $query = db_select("v_$table", $table);
+//   $query->fields($table, array('id'));
+//   $query->addExpression("'$page'", 'page');
+//   $query->addExpression("CONCAT_WS(', ', anzeige_name, rat, partei, kanton)", 'name');
+//   $query->condition('anzeige_name', $search_str, 'LIKE');
+//   if (!user_access('access lobbywatch unpublished content')) {
+//     //       $query->where('(im_rat_bis IS NULL OR im_rat_bis > NOW()) AND freigabe_datum <= NOW()');
+//     $query->where('freigabe_datum <= NOW()');
+//   }
+//   if (!user_access('access lobbywatch advanced content')) {
+//     //       $query->where('(im_rat_bis IS NULL OR im_rat_bis > NOW()) AND freigabe_datum <= NOW()');
+//     $query->condition(db_or()->isNull('im_rat_bis')->where('im_rat_bis > NOW()'));
+//   }
 
-  $table = 'zutrittsberechtigung_simple';
-  $page = 'zutrittsberechtigter';
-  $query2 = db_select("v_$table", $table);
-  $query2->fields($table, array('id'));
-  $query2->addExpression("'$page'", 'page');
-  $query2->addExpression("anzeige_name", 'name');
-  $query2->condition('anzeige_name', $search_str, 'LIKE');
-  if (!user_access('access lobbywatch unpublished content')) {
-    //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
-    $query2->where('freigabe_datum <= NOW()');
-  }
-  if (!user_access('access lobbywatch advanced content')) {
-    //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
-    $query2->condition(db_or()->isNull('bis')->where('bis > NOW()'));
-  }
-  $merged_query = $query->union($query2, 'ALL');
+//   $table = 'zutrittsberechtigung_simple';
+//   $page = 'zutrittsberechtigter';
+//   $query2 = db_select("v_$table", $table);
+//   $query2->fields($table, array('id'));
+//   $query2->addExpression("'$page'", 'page');
+//   $query2->addExpression("anzeige_name", 'name');
+//   $query2->condition('anzeige_name', $search_str, 'LIKE');
+//   if (!user_access('access lobbywatch unpublished content')) {
+//     //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
+//     $query2->where('freigabe_datum <= NOW()');
+//   }
+//   if (!user_access('access lobbywatch advanced content')) {
+//     //       $query->where('(bis IS NULL OR bis > NOW()) AND freigabe_datum <= NOW()');
+//     $query2->condition(db_or()->isNull('bis')->where('bis > NOW()'));
+//   }
+//   $merged_query = $query->union($query2, 'ALL');
 
-  $query2 = db_select("v_$table", $table);
-  foreach (Constants::$entities_web as $table => $page) {
-    $query2 = db_select("v_$table", $table);
-    $query2->addExpression("'$page'", 'page');
-    $query2->addExpression("anzeige_name", 'name');
-    //       $query2->addField("'$table'", "anzeige_name", 'name'); // causes problem with field order
-    $query2->fields($table, array('id'));
-    $query2->condition('anzeige_name', $search_str, 'LIKE');
-    if (!user_access('access lobbywatch unpublished content')) {
-      //       $query->where('(im_rat_bis IS NULL OR im_rat_bis > NOW()) AND freigabe_datum <= NOW()');
-      $query2->where('freigabe_datum <= NOW()');
-    }
-    $merged_query = $merged_query->union($query2, 'ALL')->extend('PagerDefault');
-  }
+//   $query2 = db_select("v_$table", $table);
+//   foreach (Constants::$entities_web as $table => $page) {
+//     $query2 = db_select("v_$table", $table);
+//     $query2->addExpression("'$page'", 'page');
+//     $query2->addExpression("anzeige_name", 'name');
+//     //       $query2->addField("'$table'", "anzeige_name", 'name'); // causes problem with field order
+//     $query2->fields($table, array('id'));
+//     $query2->condition('anzeige_name', $search_str, 'LIKE');
+//     if (!user_access('access lobbywatch unpublished content')) {
+//       //       $query->where('(im_rat_bis IS NULL OR im_rat_bis > NOW()) AND freigabe_datum <= NOW()');
+//       $query2->where('freigabe_datum <= NOW()');
+//     }
+//     $merged_query = $merged_query->union($query2, 'ALL')->extend('PagerDefault');
+//   }
 
-  $limit_query = db_select($merged_query, 'limit_query');
-  $limit_query = $limit_query->range(0, 400);
-  $limit_query->fields('limit_query', array('name', 'page', 'id'));
+//   $limit_query = db_select($merged_query, 'limit_query');
+//   $limit_query = $limit_query->range(0, 400);
+//   $limit_query->fields('limit_query', array('name', 'page', 'id'));
 
-  // Workaround for https://www.drupal.org/node/2303337 / https://www.drupal.org/node/1634908
-  $union_query = db_select($limit_query, 'union_query');
-  $union_query = $union_query->extend('PagerDefault')->limit(20);
-  $union_query->fields('union_query', array('name', 'page', 'id'));
-  $query_result = $union_query->execute();
-  return $query_result;
-}
+//   // Workaround for https://www.drupal.org/node/2303337 / https://www.drupal.org/node/1634908
+//   $union_query = db_select($limit_query, 'union_query');
+//   $union_query = $union_query->extend('PagerDefault')->limit(20);
+//   $union_query->fields('union_query', array('name', 'page', 'id'));
+//   $query_result = $union_query->execute();
+//   return $query_result;
+// }
 
 /**
  * Does not work.
@@ -167,31 +167,31 @@ function _lobbywatch_search_form_LIKE_UNION($search_str) {
  * @param string $check_unpublished
  * @return DatabaseStatementInterface
  */
-function _lobbywatch_search_autocomplete_FULLTEXT($str, $check_unpublished = true) {
-  $table_sql = array();
-  $table = 'mv_parlamentarier_myisam';
-  $page = 'parlamentarier';
-  $table_sql[] = "SELECT '$page' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str) " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+// function _lobbywatch_search_autocomplete_FULLTEXT($str, $check_unpublished = true) {
+//   $table_sql = array();
+//   $table = 'mv_parlamentarier_myisam';
+//   $page = 'parlamentarier';
+//   $table_sql[] = "SELECT '$page' as page, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str) " . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (im_rat_bis IS NULL OR im_rat_bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
 
-  // TODO use zutrittsberechtigung_simple
-  $table = 'mv_zutrittsberechtigung_myisam';
-  $page = 'zutrittsberechtigter';
-  $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str)" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+//   // TODO use zutrittsberechtigung_simple
+//   $table = 'mv_zutrittsberechtigung_myisam';
+//   $page = 'zutrittsberechtigter';
+//   $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str)" . ($check_unpublished && !user_access('access lobbywatch advanced content') ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
 
-//   $table = 'mv_organisation_myisam';
-//   $page = 'organisation';
-//   $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str)" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+// //   $table = 'mv_organisation_myisam';
+// //   $page = 'organisation';
+// //   $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM $table WHERE MATCH(`anzeige_name`) AGAINST(:str)" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
 
-  foreach (Constants::$entities_web as $table => $page) {
-    $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :like_str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
-  }
+//   foreach (Constants::$entities_web as $table => $page) {
+//     $table_sql[] = "SELECT '$page' as page, anzeige_name as name, id FROM v_$table WHERE anzeige_name LIKE :like_str" . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND freigabe_datum <= NOW()' : '');
+//   }
 
-  $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
-  //dpm($sql, 'suche');
-  $result = db_query($sql, array(':like_str' => "%$str%", ':str' => $str));
+//   $sql = 'SELECT tables.* FROM (' . implode("\n UNION \n", $table_sql) . ') tables LIMIT 20;';
+//   //dpm($sql, 'suche');
+//   $result = db_query($sql, array(':like_str' => "%$str%", ':str' => $str));
 
-  return $result;
-  }
+//   return $result;
+//   }
 
 /**
  * Builds a page which prints hierarchically the kategory taxonomy terms.
@@ -479,6 +479,8 @@ WHERE 1
   AND zutrittsberechtigung.parlamentarier_id=:id
 " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND zutrittsberechtigung.freigabe_datum <= NOW()' : '') . "
 GROUP BY zutrittsberechtigung.id;";
+
+//   dpm($sql);
 
   $gaeste = array();
 //   $sth = $con->prepare($sql);
@@ -1693,6 +1695,33 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
   //     dpm($result, 'result');
 
   $record = $result->fetchAssoc();
+
+  // Parlamentarier
+  $sql = "SELECT
+      GROUP_CONCAT(DISTINCT
+        CONCAT('<li'," ._lobbywatch_add_admin_class_for_freigabe('v', 'parlamentarier') . ", '>', IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), '<s>', ''), '<a href=\"/daten/parlamentarier/', parlamentarier.id, '\">', parlamentarier.anzeige_name, '</a>',
+        ', ', parlamentarier.rat,
+        IF(parlamentarier.partei IS NULL, '', CONCAT(', ', parlamentarier.partei)),
+        ', ', parlamentarier.kanton,
+        IF((v.bis IS NOT NULL AND v.bis < NOW()) OR (parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW()), CONCAT(', bis ', DATE_FORMAT(LEAST(IFNULL(v.bis, parlamentarier.im_rat_bis), IFNULL(parlamentarier.im_rat_bis, v.bis)), '%Y'), IF(parlamentarier.im_rat_bis IS NOT NULL AND parlamentarier.im_rat_bis < NOW(), ' im Rat', ''), '</s>'), '')
+        )
+        ORDER BY parlamentarier.anzeige_name
+        SEPARATOR ' '
+      ) verbundene_parlamentarier
+  FROM v_interessenbindung_liste v "
+   . "
+  LEFT JOIN v_parlamentarier parlamentarier
+  ON parlamentarier.id = v.parlamentarier_id " . ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND parlamentarier.freigabe_datum <= NOW() ' : '') . "
+  WHERE  "
+. " (v.interessengruppe_id = :id OR v.interessengruppe2_id = :id OR v.interessengruppe3_id = :id) "
+. ($check_unpublished && !user_access('access lobbywatch unpublished content') ? ' AND v.freigabe_datum <= NOW() ' : '')
+. " GROUP BY parlamentarier.id";
+
+  $result = db_query($sql, array(':id' => $id));
+
+  //     dpm($result, 'result');
+
+  $record_parlamentarier_direkt = $result->fetchAssoc();
 //   dpm($record, '$record');
   } finally {
     // Go back to the default database,
@@ -1714,6 +1743,8 @@ function _lobbywatch_interessengruppe_id($id, $name = '', $check_unpublished = t
     . _lobbywatch_get_edit_link($admin, 'interessengruppe', $id)
      . '<h3>Organisationen</h3>'
       . '<ul>' . $record['organisationen'] . '</ul>'
+//      . '<h3>Parlamentarier mit einer Interessenbindung</h3>'
+//       . '<ul>' . $record_parlamentarier_direkt['verbundene_parlamentarier'] . '</ul>'
     . _lobbywatch_get_workflow_state_line($record)
       . '</div>'
     ;

@@ -91,7 +91,7 @@ SELECT id, page, name
 -- , freigabe_datum, bis
 FROM v_search_table
 WHERE
-name LIKE :str ". ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($filter_unpublished ? ' AND freigabe_datum <= NOW()' : '') . "
+search_keywords LIKE :str ". ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($filter_unpublished ? ' AND freigabe_datum <= NOW()' : '') . "
 ORDER BY table_weight, weight
 LIMIT 20;";
   //dpm($sql, 'suche');

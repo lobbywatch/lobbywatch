@@ -449,7 +449,7 @@ FROM `interessengruppe`
 ;
 
 CREATE OR REPLACE VIEW `v_interessengruppe` AS
-SELECT 
+SELECT
 interessengruppe.*,
 branche.anzeige_name as branche,
 branche.kommission_id as kommission_id,
@@ -573,9 +573,9 @@ ON interessengruppe3.id = organisation.interessengruppe3_id
 --	ADD KEY `idx_name_it` (`name_it`, `freigabe_datum`),
 --	ADD KEY `idx_anzeige_name` (`anzeige_name`, `freigabe_datum`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
---	
+--
 --	DROP TABLE IF EXISTS `mv_organisation_medium_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_organisation_medium_myisam` 
+--	CREATE TABLE IF NOT EXISTS `mv_organisation_medium_myisam`
 --	ENGINE = MyISAM
 --	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
 --	COMMENT='Materialzed view for v_organisation_medium'
@@ -602,9 +602,9 @@ IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
     FROM in_kommission in_kommission
     LEFT JOIN branche branche
     ON in_kommission.kommission_id = branche.kommission_id
-    WHERE (in_kommission.bis >= NOW() OR in_kommission.bis IS NULL) 
+    WHERE (in_kommission.bis >= NOW() OR in_kommission.bis IS NULL)
     AND in_kommission.parlamentarier_id = parlamentarier.id
-    AND branche.id IN (organisation.branche_id, organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch', 
+    AND branche.id IN (organisation.branche_id, organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch',
 IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
   AND interessenbindung.art IN ('taetig','beirat','finanziell'), 'mittel', 'tief')) wirksamkeit,
 parlamentarier.im_rat_seit as parlamentarier_im_rat_seit
@@ -618,7 +618,7 @@ CREATE OR REPLACE VIEW `v_mandat_medium_raw` AS
 SELECT mandat.*,
 IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
   AND mandat.art IN ('geschaeftsfuehrend','vorstand')
-  , 'hoch', 
+  , 'hoch',
 IF((organisation.vernehmlassung IN ('immmer', 'punktuell')
   AND mandat.art IN ('taetig','beirat','finanziell'))
   OR (mandat.art IN ('geschaeftsfuehrend','vorstand')), 'mittel', 'tief')) wirksamkeit
@@ -638,7 +638,7 @@ COUNT(DISTINCT mandat_tief.id) as anzahl_mandat_tief,
 COUNT(DISTINCT mandat_mittel.id) as anzahl_mandat_mittel,
 COUNT(DISTINCT mandat_hoch.id) as anzahl_mandat_hoch,
 IF(COUNT(DISTINCT interessenbindung_hoch_nach_wahl.id) > 0 OR COUNT(DISTINCT interessenbindung_hoch.id) > 1 OR (COUNT(DISTINCT interessenbindung_hoch.id) > 0 AND COUNT(DISTINCT mandat_hoch.id) > 0), 'sehr hoch',
-IF(COUNT(DISTINCT interessenbindung_hoch.id) > 0 OR (COUNT(DISTINCT interessenbindung_mittel.id) > 0 AND COUNT(DISTINCT mandat_mittel.id) > 0), 'hoch', 
+IF(COUNT(DISTINCT interessenbindung_hoch.id) > 0 OR (COUNT(DISTINCT interessenbindung_mittel.id) > 0 AND COUNT(DISTINCT mandat_mittel.id) > 0), 'hoch',
 IF(COUNT(DISTINCT interessenbindung_mittel.id) > 0 OR COUNT(DISTINCT mandat_hoch.id) > 0, 'mittel',
 'tief'))) as lobbyeinfluss,
 NOW() as refreshed_date
@@ -663,7 +663,7 @@ GROUP BY organisation.id;
 --	ALTER TABLE `mv_organisation_lobbyeinfluss`
 --	ADD PRIMARY KEY (`id`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
---	
+--
 --	CREATE OR REPLACE VIEW `v_organisation_lobbyeinfluss` AS
 --	SELECT * FROM `mv_organisation_lobbyeinfluss`;
 
@@ -739,7 +739,7 @@ ADD KEY `interessenraum_id` (`interessenraum_id`, `freigabe_datum`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_organisation_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_organisation_myisam` 
+--	CREATE TABLE IF NOT EXISTS `mv_organisation_myisam`
 --	ENGINE = MyISAM
 --	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
 --	COMMENT='Materialzed view for v_organisation'
@@ -778,7 +778,7 @@ SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_
 CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name,
 parlamentarier.*,
 parlamentarier.im_rat_seit as von, parlamentarier.im_rat_bis as bis,
-UNIX_TIMESTAMP(geburtstag) as geburtstag_unix, 
+UNIX_TIMESTAMP(geburtstag) as geburtstag_unix,
 UNIX_TIMESTAMP(im_rat_seit) as im_rat_seit_unix, UNIX_TIMESTAMP(im_rat_bis) as im_rat_bis_unix,
 UNIX_TIMESTAMP(parlamentarier.created_date) as created_date_unix, UNIX_TIMESTAMP(parlamentarier.updated_date) as updated_date_unix, UNIX_TIMESTAMP(parlamentarier.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(parlamentarier.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(parlamentarier.freigabe_datum) as freigabe_datum_unix,
 UNIX_TIMESTAMP(im_rat_seit) as von_unix, UNIX_TIMESTAMP(im_rat_bis) as bis_unix
@@ -806,7 +806,7 @@ GROUP BY zutrittsberechtigung.id;
 --	ALTER TABLE `mv_zutrittsberechtigung_lobbyfaktor`
 --	ADD PRIMARY KEY (`id`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am' ;
---	
+--
 --	CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor` AS
 --	SELECT * FROM `mv_zutrittsberechtigung_lobbyfaktor`;
 
@@ -839,7 +839,7 @@ GROUP BY parlamentarier.id;
 --	ALTER TABLE `mv_parlamentarier_lobbyfaktor`
 --	ADD PRIMARY KEY (`id`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
---	
+--
 --	CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor` AS
 --	SELECT * FROM `mv_parlamentarier_lobbyfaktor`;
 
@@ -864,7 +864,7 @@ FROM `v_parlamentarier_lobbyfaktor_raw` lobbyfaktor
 --	ALTER TABLE `mv_parlamentarier_lobbyfaktor_max`
 --	ADD PRIMARY KEY (`id`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
---	
+--
 --	CREATE OR REPLACE VIEW `v_parlamentarier_lobbyfaktor_max` AS
 --	SELECT * FROM `mv_parlamentarier_lobbyfaktor_max`;
 
@@ -889,7 +889,7 @@ FROM `v_zutrittsberechtigung_lobbyfaktor_raw` lobbyfaktor
 --	ALTER TABLE `mv_zutrittsberechtigung_lobbyfaktor_max`
 --	ADD PRIMARY KEY (`id`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
---	
+--
 --	CREATE OR REPLACE VIEW `v_zutrittsberechtigung_lobbyfaktor_max` AS
 --	SELECT * FROM `mv_zutrittsberechtigung_lobbyfaktor_max`;
 
@@ -935,9 +935,9 @@ GROUP BY parlamentarier.id;
 --	ADD KEY `idx_anzeige_name_freigabe_bis` (`anzeige_name`, `freigabe_datum`, `im_rat_bis`),
 --	ADD KEY `idx_anzeige_name_bis` (`anzeige_name`, `im_rat_bis`),
 --	CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
---	
+--
 --	DROP TABLE IF EXISTS `mv_parlamentarier_medium_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium_myisam` 
+--	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_medium_myisam`
 --	ENGINE = MyISAM
 --	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
 --	COMMENT='Materialzed view for v_parlamentarier_medium'
@@ -1033,7 +1033,7 @@ ADD KEY `fraktion_id_bis` (`fraktion_id`, `im_rat_bis`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_parlamentarier_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_myisam` 
+--	CREATE TABLE IF NOT EXISTS `mv_parlamentarier_myisam`
 --	ENGINE = MyISAM
 --	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
 --	COMMENT='Materialzed view for v_parlamentarier'
@@ -1138,7 +1138,7 @@ ADD KEY `idx_beruf_branche_id` (`beruf_branche_id`, `bis`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_myisam` 
+--	CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung_myisam`
 --	ENGINE = MyISAM
 --	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
 --	COMMENT='Materialzed view for v_zutrittsberechtigung'
@@ -1374,7 +1374,7 @@ ORDER BY interessenbindung.wirksamkeit, organisation.anzeige_name;
 CREATE OR REPLACE VIEW `v_interessenbindung_liste_indirekt` AS
 SELECT 'direkt' as beziehung, interessenbindung_liste.* FROM v_interessenbindung_liste interessenbindung_liste
 UNION
-SELECT 'indirekt' as beziehung, 
+SELECT 'indirekt' as beziehung,
 `organisation`.`anzeige_name` as `organisation_name`
 , `organisation`.`name`
 -- , `organisation`.`id`
@@ -1432,7 +1432,7 @@ ORDER BY beziehung, organisation_name;
 -- Mandate einer Zutrittsberechtigung (INNER JOIN)
 -- Connector: zutrittsberechtigung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_mandate` AS
-SELECT zutrittsberechtigung.parlamentarier_id, 
+SELECT zutrittsberechtigung.parlamentarier_id,
 `organisation`.`anzeige_name` as `organisation_name`
 , `organisation`.`name`
 -- , `organisation`.`id`
@@ -1490,7 +1490,7 @@ ORDER BY mandat.wirksamkeit, organisation.anzeige_name;
 -- Mandate einer Zutrittsberechtigung (LFET JOIN)
 -- Connector: zutrittsberechtigung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_mit_mandaten` AS
-SELECT 
+SELECT
 `organisation`.`anzeige_name` as `organisation_name`
 , `organisation`.`name`
 -- , `organisation`.`id`
@@ -1548,7 +1548,7 @@ ORDER BY zutrittsberechtigung.anzeige_name;
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_mit_mandaten_indirekt` AS
 SELECT 'direkt' as beziehung, zutrittsberechtigung.* FROM v_zutrittsberechtigung_mit_mandaten zutrittsberechtigung
 UNION
-SELECT 'indirekt' as beziehung, 
+SELECT 'indirekt' as beziehung,
 `organisation`.`anzeige_name` as `organisation_name`
 , `organisation`.`name`
 -- , `organisation`.`id`
@@ -1677,7 +1677,7 @@ ORDER BY organisation.anzeige_name;
 -- Parlamentarier, die eine Interessenbindung zu dieser Organisation haben.
 -- Connector: interessenbindung.organisation_id
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier` AS
-SELECT 
+SELECT
 `parlamentarier`.`anzeige_name` as parlamentarier_name
 -- , `parlamentarier`.`anzeige_name`
 , `parlamentarier`.`name`
@@ -1747,7 +1747,7 @@ ORDER BY parlamentarier.anzeige_name;
 -- Parlamentarier, die eine Interessenbindung zu dieser Organisation haben.
 -- Connector: interessenbindung.organisation_id
 CREATE OR REPLACE VIEW `v_organisation_zutrittsberechtigung` AS
-SELECT 
+SELECT
 `zutrittsberechtigung`.`anzeige_name`
 , `zutrittsberechtigung`.`anzeige_name` as zutrittsberechtigung_name
 , `zutrittsberechtigung`.`name`
@@ -1808,7 +1808,7 @@ ORDER BY zutrittsberechtigung.anzeige_name;
 CREATE OR REPLACE VIEW `v_organisation_parlamentarier_indirekt` AS
 SELECT 'direkt' as beziehung, organisation_parlamentarier.*, organisation_parlamentarier.organisation_id as connector_organisation_id FROM v_organisation_parlamentarier organisation_parlamentarier
 UNION
-SELECT 'indirekt' as beziehung, 
+SELECT 'indirekt' as beziehung,
 `parlamentarier`.`anzeige_name` as parlamentarier_name
 , `parlamentarier`.`name`
 , `parlamentarier`.`nachname`
@@ -2036,20 +2036,20 @@ GROUP BY parlamentarier.id;
 -- search table
 
 CREATE OR REPLACE VIEW `v_search_table_raw`
-AS 
-  SELECT id, 'parlamentarier' as table_name, 'parlamentarier' as page, -20 as table_weight, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_parlamentarier
+AS
+  SELECT id, 'parlamentarier' as table_name, 'parlamentarier' as page, -20 as table_weight, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, CONCAT_WS('; ', anzeige_name, CONCAT(vorname, ' ', nachname), CONCAT(vorname, ' ', zweiter_vorname, ' ', nachname)) as search_text, freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_parlamentarier
    UNION ALL
-  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name, freigabe_datum, bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
+  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
    UNION ALL
-  SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_branche
+  SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_branche
    UNION ALL
-  SELECT id, 'interessengruppe' as table_name, 'lobbygruppe' as page, -5 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_interessengruppe
+  SELECT id, 'interessengruppe' as table_name, 'lobbygruppe' as page, -5 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_interessengruppe
    UNION ALL
-  SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_kommission
+  SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_kommission
    UNION ALL
-  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, -lobbyeinfluss_index as weight, NOW() AS `refreshed_date` FROM v_organisation
+  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, NULL as bis, -lobbyeinfluss_index as weight, NOW() AS `refreshed_date` FROM v_organisation
    UNION ALL
-  SELECT id, 'partei' as table_name, 'partei' as page, 20 as table_weight, anzeige_name as name, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_partei
+  SELECT id, 'partei' as table_name, 'partei' as page, 20 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_partei
 ;
 
 DROP TABLE IF EXISTS `mv_search_table`;
@@ -2066,7 +2066,7 @@ ADD KEY `idx_search_str_short` (table_weight, weight, `name`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_search_table_myisam`;
---	CREATE TABLE IF NOT EXISTS `mv_search_table_myisam` 
+--	CREATE TABLE IF NOT EXISTS `mv_search_table_myisam`
 --	ENGINE = MyISAM
 --	DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
 --	COMMENT='Materialzed view for v_search_table'
