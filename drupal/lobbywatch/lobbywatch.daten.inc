@@ -1159,7 +1159,7 @@ ORDER BY organisation.anzeige_name;
 
 function _lobbywatch_get_homepage_link($url, $text = null) {
   // preg_replace('|(?!https?://)(.*)|i', '//\1', $url)
-  if (!preg_match('|(https?://)|i', $url)) {
+  if (!preg_match('|^(https?://)|i', $url)) {
     $url = 'http://' . $url;
   }
   return ($url ? l($text ? $text : preg_replace('|https?://|i', '', $url), $url, array('attributes' => array('external' => true, 'absolute' => true, 'class' => array('elf-external', 'elf-icon')))) : '');
