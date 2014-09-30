@@ -716,7 +716,7 @@ jQuery(document).ready(function() {
       '<tr><td>Alter:</td><td>' . years(check_plain($record['geburtstag'])) . ' (' . check_plain($record['geburtstag_formatted']) . ')' . '</td></tr>' .
       _lobbywatch_get_optional_tr('Beruf:', $record['beruf'], $admin) .
       _lobbywatch_get_optional_tr('Kinder:', $record['anzahl_kinder'], $admin) .
-      _lobbywatch_get_optional_tr('Homepage:', ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : ''), $admin, true, $record['homepage']) .
+      _lobbywatch_get_optional_tr('Homepage:', _lobbywatch_get_homepage_link($record['homepage']), $admin, true, $record['homepage']) .
       '<tr><td>Parlament.ch Webseite:</td><td>' . ($record['parlament_biografie_id'] ? l($record['name'], 'http://www.parlament.ch/d/suche/seiten/biografie.aspx?biografie_id=' . $record['parlament_biografie_id'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '' ) . '</td></tr>' .
       '</table>' .
       '</div>' .
@@ -1450,7 +1450,7 @@ function _lobbywatch_partei_id($id, $name = '', $check_unpublished = true) {
     (!$record['freigabe_datum_unix'] || $record['freigabe_datum_unix'] > time() ? '<div class="record-unpublished"><p class="unpublished">' . t('Unpublished') . '</p>': '<div>') .
 //    '<h2>' . check_plain($record["anzeige_name"]) . '</h2>'
     '<table border=0>'
-        . '<tr><td>Homepage:</td><td>' . ($record['homepage'] ? l(preg_replace('|https?://|i', '', $record['homepage']), $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : '') . '</td></tr>'
+        . '<tr><td>Homepage:</td><td>' . _lobbywatch_get_homepage_link($record['homepage']) . '</td></tr>'
             . '</table>'
     . _lobbywatch_get_edit_link($admin, 'partei', $id)
     . '<h3>Mitglieder</h3>'
@@ -1876,7 +1876,7 @@ GROUP BY zutrittsberechtigung.id;";
     .  '<tr><td>Funktion:</td><td>' . check_plain($record['funktion']) . '</td></tr>'
     .  _lobbywatch_get_optional_tr('Beruf:', $record['beruf'], $admin)
     .  _lobbywatch_get_optional_tr('Partei:', l($record['partei'], 'daten/partei/' . $record['partei_id']), $admin, true, $record['partei_id'])
-    .  _lobbywatch_get_optional_tr('Homepage:', ($record['homepage'] ? l($record['homepage'], $record['homepage'], array('attributes' => array('class' => array('elf-external', 'elf-icon')))) : ''), $admin, true)
+    .  _lobbywatch_get_optional_tr('Homepage:', _lobbywatch_get_homepage_link($record['homepage']), $admin, true)
     . '</table>'
     . _lobbywatch_get_edit_link($admin, 'zutrittsberechtigung', $id)
     . '<h3>Mandate</h3>'

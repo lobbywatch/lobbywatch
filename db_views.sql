@@ -2037,19 +2037,19 @@ GROUP BY parlamentarier.id;
 
 CREATE OR REPLACE VIEW `v_search_table_raw`
 AS
-  SELECT id, 'parlamentarier' as table_name, 'parlamentarier' as page, -20 as table_weight, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, CONCAT_WS('; ', anzeige_name, CONCAT(vorname, ' ', nachname), CONCAT(vorname, ' ', zweiter_vorname, ' ', nachname)) as search_text, freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_parlamentarier
+  SELECT id, 'parlamentarier' as table_name, 'parlamentarier' as page, -20 as table_weight, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, CONCAT_WS('; ', anzeige_name, CONCAT(vorname, ' ', nachname), CONCAT(vorname, ' ', zweiter_vorname, ' ', nachname)) as search_keywords, freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_parlamentarier
    UNION ALL
-  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
+  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
    UNION ALL
-  SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_branche
+  SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_branche
    UNION ALL
-  SELECT id, 'interessengruppe' as table_name, 'lobbygruppe' as page, -5 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_interessengruppe
+  SELECT id, 'interessengruppe' as table_name, 'lobbygruppe' as page, -5 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_interessengruppe
    UNION ALL
-  SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_kommission
+  SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_kommission
    UNION ALL
-  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, NULL as bis, -lobbyeinfluss_index as weight, NOW() AS `refreshed_date` FROM v_organisation
+  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, -lobbyeinfluss_index as weight, NOW() AS `refreshed_date` FROM v_organisation
    UNION ALL
-  SELECT id, 'partei' as table_name, 'partei' as page, 20 as table_weight, anzeige_name as name, anzeige_name as search_text, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_partei
+  SELECT id, 'partei' as table_name, 'partei' as page, 20 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_partei
 ;
 
 DROP TABLE IF EXISTS `mv_search_table`;
