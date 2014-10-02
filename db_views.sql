@@ -910,6 +910,7 @@ partei.abkuerzung AS partei, partei.name AS partei_name, fraktion.abkuerzung AS 
 interessengruppe.branche_id as beruf_branche_id,
 -- Workaround: Add  COLLATE utf8_general_ci, otherwise ERROR 1270 (HY000): Illegal mix of collations (latin1_swedish_ci,IMPLICIT), (utf8_general_ci,COERCIBLE), (utf8_general_ci,COERCIBLE) for operation 'concat'
 CONCAT(IF(parlamentarier.geschlecht='M', rat.name_de, ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', '') COLLATE utf8_general_ci, IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '') COLLATE utf8_general_ci) titel_de,
+-- GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_date_unix)) as combined_updated_date_unix,
 NOW() as refreshed_date
 FROM `v_parlamentarier_simple` parlamentarier
 LEFT JOIN `in_kommission` in_kommission ON parlamentarier.id = in_kommission.parlamentarier_id AND in_kommission.bis IS NULL
@@ -920,6 +921,7 @@ LEFT JOIN `v_mil_grad` mil_grad ON parlamentarier.militaerischer_grad_id=mil_gra
 LEFT JOIN `v_kanton` kanton ON parlamentarier.kanton_id = kanton.id
 LEFT JOIN `v_rat` rat ON parlamentarier.rat_id = rat.id
 LEFT JOIN `v_interessengruppe` interessengruppe ON parlamentarier.beruf_interessengruppe_id = interessengruppe.id
+-- LEFT JOIN `v_interessenbindung_medium_raw` interessenbindung ON parlamentarier.id = interessenbindung.parlamentarier_id AND interessenbindung.freigabe_datum > NOW()
 GROUP BY parlamentarier.id;
 
 --	DROP TABLE IF EXISTS `mv_parlamentarier_medium`;

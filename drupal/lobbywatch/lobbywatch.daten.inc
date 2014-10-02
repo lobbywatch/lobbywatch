@@ -589,6 +589,7 @@ parlamentarier.anzahl_interessenbindung_hoch,
 parlamentarier.anzahl_interessenbindung_tief_nach_wahl,
 parlamentarier.anzahl_interessenbindung_mittel_nach_wahl,
 parlamentarier.anzahl_interessenbindung_hoch_nach_wahl,
+GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_date_unix)) as combined_updated_date_unix,
             GROUP_CONCAT(DISTINCT
       CONCAT('<li class=\"'," ._lobbywatch_add_admin_class_value_for_freigabe('interessenbindung', 'organisation') . ", ' wirksamkeit-', interessenbindung.wirksamkeit, '\" title=\"Wirksamkeit: ', REPLACE(interessenbindung.wirksamkeit, 'tief', 'gering'), '\" >',
           IF(interessenbindung.bis < NOW(), '<s>', ''),
@@ -1965,8 +1966,11 @@ function _lobbywatch_get_workflow_state_line($record) {
   global $env;
   $admin = user_access('access lobbywatch admin');
   $unpublished = user_access('access lobbywatch unpublished content');
+
+  $update_date = !empty($record['combined_updated_date_unix']) ? $record['combined_updated_date_unix'] : $record['updated_date_unix'];
+//   dpm($record);
   return '<p class="lobbywatch-meta-fields-line"><small>'
-    . t('Last updated !date', array ('!date' => '<time datetime="'.getISO8601Date($record['updated_date_unix']).'">' . format_date($record['updated_date_unix'], 'short_date') . '</time>')) .
+    . t('Last updated !date', array ('!date' => '<time datetime="'.getISO8601Date($update_date).'">' . format_date($update_date, 'short_date') . '</time>')) .
     ($admin ?
       '<span class="admin">/' . $record ['updated_visa'] . '</span>' : '') .
       '<br>' . ($record['freigabe_datum'] && $record['freigabe_datum_unix'] < time() ? t('Veröffentlicht !date', array ('!date' => '<time datetime="'.getISO8601Date($record['freigabe_datum_unix']).'" pubdate="pubdate">' . format_date($record['freigabe_datum_unix'], 'short_date') . '</time>' )) . ($admin ? '<span class="admin">/' . $record ['freigabe_visa'] . '</span>' : '') : t('Unveröffentlicht')) .
