@@ -144,7 +144,8 @@ function lobbywatch_xmlsitemap_link_info() {
  */
 function _lobbywatch_xmlsitemap_xmlsitemap_make_link($table, $name, $rec) {
   $id = $rec['id'];
-  $path = "daten/$name/$id";
+  $url_name = _lobbywatch_anzeige_name_for_url($table, $id);
+  $path = substr("daten/$name/$id/$url_name", 0, 255); // xmlsitemap.loc is limited to 255 chars
   return array(
       'loc' => $path,
       'type' => "lw_$table",
