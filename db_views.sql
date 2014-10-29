@@ -606,7 +606,7 @@ IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
     AND in_kommission.parlamentarier_id = parlamentarier.id
     AND branche.id IN (organisation.branche_id, organisation.interessengruppe_branche_id, organisation.interessengruppe2_branche_id, organisation.interessengruppe3_branche_id)), 'hoch',
 IF(organisation.vernehmlassung IN ('immmer', 'punktuell')
-  AND interessenbindung.art IN ('taetig','beirat','finanziell'), 'mittel', 'tief')) wirksamkeit,
+  AND interessenbindung.art IN ('geschaeftsfuehrend','vorstand','taetig','beirat','finanziell'), 'mittel', 'tief')) wirksamkeit,
 parlamentarier.im_rat_seit as parlamentarier_im_rat_seit
 FROM `v_interessenbindung_simple` interessenbindung
 INNER JOIN `v_organisation_medium_raw` organisation
