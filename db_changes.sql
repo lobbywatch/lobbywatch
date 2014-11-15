@@ -1596,3 +1596,11 @@ UPDATE `zutrittsberechtigung` p
     SET p.parlamentarier_kommissionen=(SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id=p.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id),
 	p.updated_visa='roland',
 	p.updated_date=NOW();
+
+-- 15.11.2014
+
+ALTER TABLE `zutrittsberechtigung`
+  ADD `arbeitssprache` enum('de','fr','it') DEFAULT NULL COMMENT 'Arbeitssprache des Zutrittsberechtigten' AFTER `geschlecht`;
+
+ALTER TABLE `zutrittsberechtigung_log`
+  ADD `arbeitssprache` enum('de','fr','it') DEFAULT NULL COMMENT 'Arbeitssprache des Zutrittsberechtigten' AFTER `geschlecht`;

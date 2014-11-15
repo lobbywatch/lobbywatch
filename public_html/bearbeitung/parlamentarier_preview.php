@@ -178,7 +178,7 @@ try
 
       set_db_session_parameters($con);
 
-      $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id,
+      $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id, parlamentarier.arbeitssprache,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li>',
     IF(interessenbindung.bis IS NOT NULL AND interessenbindung.bis < NOW(), '<s>', ''),
@@ -278,9 +278,15 @@ GROUP BY parlamentarier.id;";
 
     $rowData = $result[0];
 
-    $emailSubjectParlam = getSettingValue('parlamentarierAutorisierungEmailSubject', false, 'Interessenbindungen');
-    $emailIntroParlam = getSettingValue('parlamentarierAutorisierungEmailEinleitung', false, '<p>[Einleitung]</p>');
-    $emailEndParlam = getSettingValue('parlamentarierAutorisierungEmailSchluss', false, '<p>Freundliche Grüsse<br>%name%</p>');
+    if ($rowData['arbeitssprache'] == 'fr') {
+      $lang_suffix = '_fr';
+    } else {
+      $lang_suffix = '_de';
+    }
+
+    $emailSubjectParlam = getSettingValue("parlamentarierAutorisierungEmailSubject$lang_suffix", false, 'Interessenbindungen');
+    $emailIntroParlam = getSettingValue("parlamentarierAutorisierungEmailEinleitung$lang_suffix", false, '<p>[Einleitung]</p>');
+    $emailEndParlam = getSettingValue("parlamentarierAutorisierungEmailSchluss$lang_suffix", false, '<p>Freundliche Grüsse<br>%name%</p>');
     $emailEndParlam = StringUtils::ReplaceVariableInTemplate($emailEndParlam, 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
     //df($rowData);
@@ -297,9 +303,15 @@ GROUP BY parlamentarier.id;";
     $i = 0;
     foreach ($zbList as $zb) {
 
-      $emailSubjectZb[$i] = getSettingValue('zutrittsberechtigterAutorisierungEmailSubject', false, 'Zugangsberechtigung ins Parlament');
-      $emailIntroZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue('zutrittsberechtigterAutorisierungEmailEinleitung', false, '<p>[Einleitung]</p><p>Zutrittsberechtigung erhalten von %parlamentarierName%.</p>'), 'parlamentarierName', $rowData["parlamentarier_name2"]);
-      $emailEndZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue('zutrittsberechtigterAutorisierungEmailSchluss', false, '<p>Freundliche Grüsse<br>%name%</p>'), 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
+      if ($zb['arbeitssprache'] == 'fr') {
+        $lang_suffix = '_fr';
+      } else {
+        $lang_suffix = '_de';
+      }
+
+      $emailSubjectZb[$i] = getSettingValue("zutrittsberechtigterAutorisierungEmailSubject$lang_suffix", false, 'Zugangsberechtigung ins Parlament');
+      $emailIntroZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigterAutorisierungEmailEinleitung$lang_suffix", false, '<p>[Einleitung]</p><p>Zutrittsberechtigung erhalten von %parlamentarierName%.</p>'), 'parlamentarierName', $rowData["parlamentarier_name2"]);
+      $emailEndZb[$i] = StringUtils::ReplaceVariableInTemplate(getSettingValue("zutrittsberechtigterAutorisierungEmailSchluss$lang_suffix", false, '<p>Freundliche Grüsse<br>%name%</p>'), 'name', getFullUsername(Application::Instance()->GetCurrentUser()));
 
       $rowCellStylesZb[$i] = '';
       $rowStyles = '';

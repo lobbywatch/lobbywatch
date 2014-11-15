@@ -939,7 +939,7 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
 }
 
 function zutrittsberechtigteForParlamentarier($con, $parlamentarier_id, $for_email = false) {
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, zutrittsberechtigung.beruf, zutrittsberechtigung.email,
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, zutrittsberechtigung.beruf, zutrittsberechtigung.email, zutrittsberechtigung.arbeitssprache,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li>', IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), organisation.anzeige_name,
     IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', " . (!$for_email ? "'<span class=\"preview-missing-data\">, Rechtsform fehlt</span>'" : "''") . ", CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',

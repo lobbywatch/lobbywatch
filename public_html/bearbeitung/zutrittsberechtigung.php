@@ -10659,6 +10659,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $this->dataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $this->dataset->AddField($field, false);
             $field = new StringField('email');
             $this->dataset->AddField($field, false);
             $field = new StringField('homepage');
@@ -10795,8 +10797,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('zutrittsberechtigungssearch', $this->dataset,
-                array('id', 'parlamentarier_id_anzeige_name', 'nachname', 'vorname', 'zweiter_vorname', 'funktion', 'parlamentarier_kommissionen', 'beruf', 'beruf_interessengruppe_id_name', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'telephon_1', 'telephon_2', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Funktion'), $this->RenderText('Kommissionen des Parlamentariers'), $this->RenderText('Beruf'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
+                array('id', 'parlamentarier_id_anzeige_name', 'nachname', 'vorname', 'zweiter_vorname', 'funktion', 'parlamentarier_kommissionen', 'beruf', 'beruf_interessengruppe_id_name', 'arbeitssprache', 'email', 'homepage', 'twitter_name', 'linkedin_profil_url', 'xing_profil_name', 'facebook_name', 'telephon_1', 'telephon_2', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Parlamentarier'), $this->RenderText('Nachname'), $this->RenderText('Vorname'), $this->RenderText('Zweiter Vorname'), $this->RenderText('Funktion'), $this->RenderText('Kommissionen des Parlamentariers'), $this->RenderText('Beruf'), $this->RenderText('Beruf Lobbygruppe'), $this->RenderText('Arbeitssprache'), $this->RenderText('Email'), $this->RenderText('Homepage'), $this->RenderText('Twitter Name'), $this->RenderText('Linkedin Profil Url'), $this->RenderText('Xing Profil Name'), $this->RenderText('Facebook Name'), $this->RenderText('Telephon 1'), $this->RenderText('Telephon 2'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -11121,6 +11123,7 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('partei_id', $this->RenderText('Partei'), $lookupDataset, 'id', 'abkuerzung', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('geschlecht', $this->RenderText('Geschlecht')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('arbeitssprache', $this->RenderText('Arbeitssprache')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name', $this->RenderText('Twitter Name')));
@@ -12175,6 +12178,43 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for arbeitssprache field
+            //
+            $editor = new ComboBox('arbeitssprache_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('de', $this->RenderText('de'));
+            $editor->AddValue('fr', $this->RenderText('fr'));
+            $editor->AddValue('it', $this->RenderText('it'));
+            $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for arbeitssprache field
+            //
+            $editor = new ComboBox('arbeitssprache_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('de', $this->RenderText('de'));
+            $editor->AddValue('fr', $this->RenderText('fr'));
+            $editor->AddValue('it', $this->RenderText('it'));
+            $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Arbeitssprache des Zutrittsberechtigten'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
@@ -12999,6 +13039,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
@@ -13622,6 +13669,18 @@
             $editor->AddValue('M', $this->RenderText('M'));
             $editor->AddValue('F', $this->RenderText('F'));
             $editColumn = new CustomEditColumn('Geschlecht', 'geschlecht', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for arbeitssprache field
+            //
+            $editor = new ComboBox('arbeitssprache_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('de', $this->RenderText('de'));
+            $editor->AddValue('fr', $this->RenderText('fr'));
+            $editor->AddValue('it', $this->RenderText('it'));
+            $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -14335,6 +14394,18 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for arbeitssprache field
+            //
+            $editor = new ComboBox('arbeitssprache_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
+            $editor->AddValue('de', $this->RenderText('de'));
+            $editor->AddValue('fr', $this->RenderText('fr'));
+            $editor->AddValue('it', $this->RenderText('it'));
+            $editColumn = new CustomEditColumn('Arbeitssprache', 'arbeitssprache', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for email field
             //
             $editor = new TextEdit('email_edit');
@@ -14551,6 +14622,13 @@
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -14821,6 +14899,13 @@
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -15136,6 +15221,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Arbeitssprache des Zutrittsberechtigten'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
@@ -15467,6 +15561,13 @@
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -15777,6 +15878,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Arbeitssprache des Zutrittsberechtigten'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
@@ -16108,6 +16218,13 @@
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -16418,6 +16535,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Arbeitssprache des Zutrittsberechtigten'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
@@ -16749,6 +16875,13 @@
             // View column for geschlecht field
             //
             $column = new TextViewColumn('geschlecht', 'Geschlecht', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for arbeitssprache field
+            //
+            $column = new TextViewColumn('arbeitssprache', 'Arbeitssprache', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

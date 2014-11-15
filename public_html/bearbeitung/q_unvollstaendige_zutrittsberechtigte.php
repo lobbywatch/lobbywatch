@@ -82,6 +82,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('geschlecht');
             $this->dataset->AddField($field, false);
+            $field = new StringField('arbeitssprache');
+            $this->dataset->AddField($field, false);
             $field = new StringField('email');
             $this->dataset->AddField($field, false);
             $field = new StringField('homepage');
