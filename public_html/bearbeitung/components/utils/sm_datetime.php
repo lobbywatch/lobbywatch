@@ -97,13 +97,17 @@ class SMDateTime {
             if (is_object($stringValue) && (get_class($stringValue) == 'SMDateTime')) {
                 return $stringValue;
             } else {
-                $timestamp = strToTimestamp($stringValue, $format);
-                if ($timestamp === false) {
-                    $timestamp = strToTimestamp2($stringValue, $format);
-                    if ($timestamp === false) {
-                        $timestamp = strtotime($stringValue);
-                    }
+                if ($format) {
+                  $timestamp = strToTimestamp($stringValue, $format);
+                  if ($timestamp === false) {
+                      $timestamp = strToTimestamp2($stringValue, $format);
+                      if ($timestamp === false) {
+                          $timestamp = strtotime($stringValue);
+                      }
+                  }
                 }
+                else
+                  $timestamp = strtotime($stringValue);
                 return new SMDateTime($timestamp);
             }
         }
