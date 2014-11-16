@@ -333,6 +333,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -759,6 +761,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -863,6 +867,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -1894,6 +1900,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -2355,6 +2363,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -3279,6 +3289,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -3374,6 +3386,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -3744,6 +3758,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -3949,6 +3965,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);

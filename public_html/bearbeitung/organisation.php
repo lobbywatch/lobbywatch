@@ -463,6 +463,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -980,6 +982,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -2659,6 +2663,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -5917,6 +5923,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -6023,6 +6031,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -6141,6 +6151,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -6248,6 +6260,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -6859,6 +6873,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -6951,6 +6967,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -8163,6 +8181,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -8269,6 +8289,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -8387,6 +8409,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -8494,6 +8518,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -9184,6 +9210,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -9288,6 +9316,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -9871,6 +9901,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -9975,6 +10007,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -11768,6 +11802,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -11860,6 +11896,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -12233,6 +12271,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -12338,6 +12378,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -12496,6 +12538,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -12601,6 +12645,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -13361,6 +13407,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -13453,6 +13501,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -13826,6 +13876,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -13931,6 +13983,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -14089,6 +14143,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -14194,6 +14250,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -14956,6 +15014,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -15048,6 +15108,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -15428,6 +15490,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -15533,6 +15597,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -15691,6 +15757,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -15796,6 +15864,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -26944,6 +27014,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -27051,6 +27123,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -27581,6 +27655,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -28471,6 +28547,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -28578,6 +28656,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -29096,6 +29176,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -29549,6 +29631,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -30337,6 +30421,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -30444,6 +30530,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -31718,6 +31806,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -32246,6 +32336,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -32353,6 +32445,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -33613,6 +33707,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -34138,6 +34234,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -35108,6 +35206,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -35215,6 +35315,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -36160,6 +36262,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -36304,6 +36408,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -36411,6 +36517,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -37302,6 +37410,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -37596,6 +37706,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -38500,8 +38612,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('organisationssearch', $this->dataset,
-                array('id', 'name_de', 'name_fr', 'name_it', 'ort', 'typ', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Ort'), $this->RenderText('Typ'), $this->RenderText('Lobbygruppe'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse Plz'), $this->RenderText('Notizen')),
+                array('id', 'name_de', 'name_fr', 'name_it', 'uid', 'ort', 'typ', 'interessengruppe_id_anzeige_name', 'interessengruppe2_id_anzeige_name', 'interessengruppe3_id_anzeige_name', 'homepage', 'handelsregister_url', 'twitter_name', 'beschreibung', 'adresse_strasse', 'adresse_zusatz', 'adresse_plz', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name De'), $this->RenderText('Name Fr'), $this->RenderText('Name It'), $this->RenderText('Handelsregister UID'), $this->RenderText('Ort'), $this->RenderText('Typ'), $this->RenderText('Lobbygruppe'), $this->RenderText('2. Lobbygruppe'), $this->RenderText('3. Lobbygruppe'), $this->RenderText('Homepage'), $this->RenderText('Handelsregister Url'), $this->RenderText('Twitter Name'), $this->RenderText('Beschreibung'), $this->RenderText('Adresse Strasse'), $this->RenderText('Adresse Zusatz'), $this->RenderText('Adresse Plz'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -38525,6 +38637,7 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_de', $this->RenderText('Name De')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_fr', $this->RenderText('Name Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_it', $this->RenderText('Name It')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('uid', $this->RenderText('Handelsregister UID')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('ort', $this->RenderText('Ort')));
             
             $lookupDataset = new TableDataset(
@@ -38693,6 +38806,8 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('alias_namen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -38751,6 +38866,8 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('alias_namen');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -38808,6 +38925,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('alias_namen');
             $lookupDataset->AddField($field, false);
             $field = new StringField('notizen');
             $lookupDataset->AddField($field, false);
@@ -39133,6 +39252,45 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Italienischer Name'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for uid field
+            //
+            $editor = new TextEdit('uid_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('CHE-\d\d\d\.\d\d\d\.\d\d\d', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for uid field
+            //
+            $editor = new TextEdit('uid_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('CHE-\d\d\d\.\d\d\d\.\d\d\d', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -39733,6 +39891,8 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -39815,6 +39975,8 @@
             $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
+            $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
             $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
@@ -39909,6 +40071,8 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -39991,6 +40155,8 @@
             $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
+            $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
             $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
@@ -40085,6 +40251,8 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -40167,6 +40335,8 @@
             $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
+            $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
             $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
@@ -40787,6 +40957,13 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -41036,6 +41213,19 @@
             $editor->SetMaxLength(150);
             $editColumn = new CustomEditColumn('Name It', 'name_it', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for uid field
+            //
+            $editor = new TextEdit('uid_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('CHE-\d\d\d\.\d\d\d\.\d\d\d', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -41311,6 +41501,8 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -41392,6 +41584,8 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -41472,6 +41666,8 @@
             $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
+            $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
             $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
@@ -41758,6 +41954,19 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for uid field
+            //
+            $editor = new TextEdit('uid_edit');
+            $editor->SetSize(15);
+            $editor->SetMaxLength(15);
+            $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('CHE-\d\d\d\.\d\d\d\.\d\d\d', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for ort field
             //
             $editor = new TextEdit('ort_edit');
@@ -42031,6 +42240,8 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -42112,6 +42323,8 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
+            $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -42192,6 +42405,8 @@
             $dataset1->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
+            $dataset1->AddField($field, false);
+            $field = new StringField('alias_namen');
             $dataset1->AddField($field, false);
             $field = new StringField('notizen');
             $dataset1->AddField($field, false);
@@ -42367,6 +42582,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -42597,6 +42819,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -42867,6 +43096,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -43162,6 +43400,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -43427,6 +43672,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -43722,6 +43976,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -43987,6 +44248,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -44282,6 +44552,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -44547,6 +44824,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -44842,6 +45128,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -45107,6 +45400,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -45402,6 +45704,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -45667,6 +45976,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -45962,6 +46280,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -46227,6 +46552,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -46522,6 +46856,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -46787,6 +47128,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -47082,6 +47432,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -47347,6 +47704,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -47642,6 +48008,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -47907,6 +48280,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -48202,6 +48584,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -48467,6 +48856,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -48762,6 +49160,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -49027,6 +49432,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('UID des Handelsregisters; Schweizweit eindeutige ID (http://www.bfs.admin.ch/bfs/portal/de/index/themen/00/05/blank/03/02.html); Format: CHE-999.999.999'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for ort field
             //
             $column = new TextViewColumn('ort', 'Ort', $this->dataset);
@@ -49322,6 +49736,13 @@
             // View column for name_it field
             //
             $column = new TextViewColumn('name_it', 'Name It', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for uid field
+            //
+            $column = new TextViewColumn('uid', 'Handelsregister UID', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             

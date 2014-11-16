@@ -207,6 +207,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -300,6 +302,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -467,6 +471,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -572,6 +578,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -672,6 +680,7 @@
             $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
             $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
             $editor->AddValue('partner von', $this->RenderText('Partner von'));
+            $editor->AddValue('beteiligt an', $this->RenderText('Beteiligt an'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -688,6 +697,7 @@
             $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
             $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
             $editor->AddValue('partner von', $this->RenderText('Partner von'));
+            $editor->AddValue('beteiligt an', $this->RenderText('Beteiligt an'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -727,6 +737,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -832,6 +844,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -1501,6 +1515,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -1589,6 +1605,7 @@
             $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
             $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
             $editor->AddValue('partner von', $this->RenderText('Partner von'));
+            $editor->AddValue('beteiligt an', $this->RenderText('Beteiligt an'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -1617,6 +1634,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -1887,6 +1906,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -1975,6 +1996,7 @@
             $editor->AddValue('arbeitet fuer', $this->RenderText('Arbeitet für'));
             $editor->AddValue('tochtergesellschaft von', $this->RenderText('Tochtergesellschaft von'));
             $editor->AddValue('partner von', $this->RenderText('Partner von'));
+            $editor->AddValue('beteiligt an', $this->RenderText('Beteiligt an'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -2003,6 +2025,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -2555,6 +2579,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -2651,6 +2677,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -2745,6 +2773,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -2841,6 +2871,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -3060,6 +3092,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -3154,6 +3188,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
@@ -3250,6 +3286,8 @@
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -3344,6 +3382,8 @@
             $field = new StringField('name_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('name_it');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('uid');
             $lookupDataset->AddField($field, false);
             $field = new StringField('ort');
             $lookupDataset->AddField($field, false);
