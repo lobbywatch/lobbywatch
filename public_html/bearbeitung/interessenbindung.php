@@ -184,7 +184,7 @@
         }
     
         protected function CreateRssGenerator() {
-            return setupRSS($this, $this->dataset);
+            return setupRSS($this, $this->dataset); /*afterburner*/ 
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -1181,7 +1181,7 @@
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
             $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1293,7 +1293,7 @@
             $editor->AddValue('deklariert', $this->RenderText('deklariert'));
             $editor->AddValue('nicht-deklariert', $this->RenderText('nicht-deklariert'));
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2932,7 +2932,7 @@
             $editor->AddValue('finanziell', $this->RenderText('Finanziell (Aktienbesitz)'));
             $editor->AddValue('gesellschafter', $this->RenderText('GmbH-Gesellschafter'));
             $editColumn = new CustomEditColumn('Art', 'art', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2969,7 +2969,7 @@
             $editor->AddValue('deklariert', $this->RenderText('deklariert'));
             $editor->AddValue('nicht-deklariert', $this->RenderText('nicht-deklariert'));
             $editColumn = new CustomEditColumn('Status', 'status', $editor, $this->dataset);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4846,7 +4846,7 @@
     
         protected function DoGetGridHeader()
         {
-            return '' . $GLOBALS["edit_header_message"] . '
+            return '' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
     
     <div class="wiki-table-help">
     <p>Zuordnung der Interessenbindungen der <a class="wiki external" target="_blank" href="http://www.parlament.ch/d/organe-mitglieder/nationalrat/Documents/ra-nr-interessen.pdf" rel="_blank external nofollow">National</a>- und <a class="wiki external" target="_blank" href="http://www.parlament.ch/d/organe-mitglieder/staenderat/Documents/ra-sr-interessen.pdf" rel="_blank external nofollow">Ständeräte</a>.
@@ -4855,7 +4855,7 @@
     <div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/information.png') . '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Das Feld Interessenbindung.beschreibung soll den Bearbeitern einen Hinweis geben. Das Feld wird nicht automatisch ausgewertet.</div></div>
     </div>
     
-    ' . $GLOBALS["edit_general_hint"] . '';
+    ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '';
         }
     }
 
@@ -4873,7 +4873,7 @@
         GetApplication()->SetCanUserChangeOwnPassword(
             !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
-        before_render($Page);
+        before_render($Page); /*afterburner*/ 
         GetApplication()->Run();
     }
     catch(Exception $e)

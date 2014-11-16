@@ -2148,8 +2148,7 @@ BEGIN
 	  SELECT * FROM `v_search_table_raw`;
 
 END
-//
-delimiter ;
+// delimiter ;
 
 CALL `refreshMaterializedViews`();
 

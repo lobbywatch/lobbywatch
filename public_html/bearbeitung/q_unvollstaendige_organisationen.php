@@ -61,6 +61,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('name_it');
             $this->dataset->AddField($field, false);
+            $field = new StringField('uid');
+            $this->dataset->AddField($field, false);
             $field = new StringField('ort');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -190,7 +192,7 @@
         }
     
         protected function CreateRssGenerator() {
-            return setupRSS($this, $this->dataset);
+            return setupRSS($this, $this->dataset); /*afterburner*/ 
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -2117,7 +2119,7 @@
     
         protected function DoGetGridHeader()
         {
-            return '' . $GLOBALS["edit_header_message"] . '
+            return '' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
     
     <p>Auflistung der Organisationen mit unvollständigen Angaben.</p>
     
@@ -2130,7 +2132,7 @@
     
     <p>Diese Kritieren werden nach Bedarf angepasst.</p>
     
-    ' . $GLOBALS["edit_general_hint"] . '';
+    ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '';
         }
     }
 
@@ -2148,7 +2150,7 @@
         GetApplication()->SetCanUserChangeOwnPassword(
             !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
-        before_render($Page);
+        before_render($Page); /*afterburner*/ 
         GetApplication()->Run();
     }
     catch(Exception $e)

@@ -141,7 +141,7 @@
         }
     
         protected function CreateRssGenerator() {
-            return setupRSS($this, $this->dataset);
+            return setupRSS($this, $this->dataset); /*afterburner*/ 
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -514,7 +514,7 @@
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -586,7 +586,7 @@
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
@@ -923,7 +923,7 @@
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -946,7 +946,7 @@
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             if ($this->GetSecurityInfo()->HasAddGrant())
@@ -1389,7 +1389,7 @@
         GetApplication()->SetCanUserChangeOwnPassword(
             !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
-        before_render($Page);
+        before_render($Page); /*afterburner*/ 
         GetApplication()->Run();
     }
     catch(Exception $e)

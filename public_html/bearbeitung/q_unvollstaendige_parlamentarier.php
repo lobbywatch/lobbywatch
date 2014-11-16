@@ -251,7 +251,7 @@
         }
     
         protected function CreateRssGenerator() {
-            return setupRSS($this, $this->dataset);
+            return setupRSS($this, $this->dataset); /*afterburner*/ 
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -1740,7 +1740,7 @@
     
         protected function DoGetGridHeader()
         {
-            return '' . $GLOBALS["edit_header_message"] . '
+            return '' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
     
     <div class="wiki-table-help">
     <p>Für Auswertungen müssen die Daten in genügender Qualität vorhanden sein. Nicht alle für die Auswertung benötigten Felder sind obligatorisch. Daten müssen deshalb nacherfasst werden. Eine Auflistung der Parlamentarier mit unvollständigen Angaben.
@@ -1757,7 +1757,7 @@
     </p>
     </div>
     
-    ' . $GLOBALS["edit_general_hint"] . '';
+    ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '';
         }
     }
 
@@ -1775,7 +1775,7 @@
         GetApplication()->SetCanUserChangeOwnPassword(
             !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
-        before_render($Page);
+        before_render($Page); /*afterburner*/ 
         GetApplication()->Run();
     }
     catch(Exception $e)

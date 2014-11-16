@@ -12,7 +12,7 @@ include_once dirname(__FILE__) . '/' . 'user_identity_cookie_storage.php';
 
 function SetCurrentUser($userName)
 {
-    $_SESSION['user'] = $userName;
+    $_SESSION['user'] = $userName; /*afterburner*/ 
 }
 
 function GetCurrentUser()

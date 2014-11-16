@@ -64,14 +64,14 @@ function GetPageInfos()
 function GetPagesHeader()
 {
     return
-    '<a href="/"><img id="site-logo" width="30px" height="auto" typeof="foaf:Image" src="' . util_data_uri('lobbywatch-eye-transparent-bg-cut-75px-tiny.png') . '" alt="Lobbywatch"></a> <h1 id="site-name"><a href="/">Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] . '</a></h1>';
+    '<a href="/"><img id="site-logo" width="30px" height="auto" typeof="foaf:Image" src="' . util_data_uri('lobbywatch-eye-transparent-bg-cut-75px-tiny.png') . '" alt="Lobbywatch"></a> <h1 id="site-name"><a href="/">Lobbywatch Datenbearbeitung ' . $GLOBALS["env"] /*afterburner*/  . '</a></h1>';
 }
 
 function GetPagesFooter()
 {
     return
-        'Bearbeitungsseiten von <a href="' . $GLOBALS["env_dir"] . '">Lobbywatch ' . $GLOBALS["env"] . '</a>; <!-- a href="' . $GLOBALS["env_dir"] . 'auswertung">Auswertung</a--> <a href="/wiki">Wiki</a><br>
-Mode: ' . $GLOBALS["env"] . ' / Version: ' . $GLOBALS["version"] . ' / Deploy date: ' . $GLOBALS["deploy_date"] . ' / Build date: ' . $GLOBALS["build_date"] . ' / Page execution time: ' . _custom_page_build_secs() . 's'; 
+        'Bearbeitungsseiten von <a href="' . $GLOBALS["env_dir"] /*afterburner*/  . '">Lobbywatch ' . $GLOBALS["env"] /*afterburner*/  . '</a>; <!-- a href="' . $GLOBALS["env_dir"] /*afterburner*/  . 'auswertung">Auswertung</a--> <a href="/wiki">Wiki</a><br>
+Mode: ' . $GLOBALS["env"] /*afterburner*/  . ' / Version: ' . $GLOBALS["version"] /*afterburner*/  . ' / Deploy date: ' . $GLOBALS["deploy_date"] /*afterburner*/  . ' / Build date: ' . $GLOBALS["build_date"] /*afterburner*/  . ' / Page execution time: ' . _custom_page_build_secs() /*afterburner*/  . 's'; 
     }
 
 function ApplyCommonPageSettings(Page $page, Grid $grid)

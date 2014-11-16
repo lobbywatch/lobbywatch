@@ -72,28 +72,28 @@ do
   mv "$file" "$file.bak";
   # Read file, process regex and write file
   cat "$file.bak" \
-  | perl -p -e's/\$editColumn->SetAllowSetToDefault\(true\);/\$editColumn->SetAllowSetToDefault(false);/g' \
-  | perl -p -e's/^(\s*)(GetApplication\(\)->SetMainPage\(\$Page\);)/\1\2\n\1before_render\(\$Page\);/' \
-  | perl -p -e's/CanLoginAsGuest\(\)\s*\{\s*return true;\s*\}/CanLoginAsGuest\(\) \{ return false; \}/g' \
-  | perl -p -e's/'\''guest'\''\s*=>\s*new\s+DataSourceSecurityInfo\(\s*true/'\''guest'\'' => new DataSourceSecurityInfo\(GetApplication\(\)->GetOperation\(\) === '\''rss'\''/g' \
-  | perl -0 -p -e's/(?<=CreateRssGenerator\(\)).*?(?=\})/ \{\n            return setupRSS\(\$this, \$this->dataset\);\n        /sg' \
-  | perl -p -e's/\$env_dir/'\'' \. \$GLOBALS["env_dir"] \. '\''/g' \
-  | perl -p -e's/\$env(?!_dir)/'\'' \. \$GLOBALS["env"] \. '\''/g' \
-  | perl -p -e's/\$rel_files_url/'\'' \. \$GLOBALS["rel_files_url"] \. '\''/g' \
-  | perl -p -e's/\$public_files_dir_rel/'\'' \. \$GLOBALS["public_files_dir_rel"] \. '\''/g' \
-  | perl -p -e's/\$public_files_dir_abs/'\'' \. \$GLOBALS["public_files_dir_abs"] \. '\''/g' \
-  | perl -p -e's/\$public_files_dir/'\'' \. \$GLOBALS["public_files_dir"] \. '\''/g' \
-  | perl -p -e's/\$private_files_dir/'\'' \. \$GLOBALS["private_files_dir"] \. '\''/g' \
-  | perl -p -e's/\$build_date:\$/'\'' \. \$GLOBALS["build_date"] \. '\''/g' \
-  | perl -p -e's/\$build_date/'\'' \. \$GLOBALS["build_date"] \. '\''/g' \
-  | perl -p -e's/\$build_date_short/'\'' \. \$GLOBALS["build_date_short"] \. '\''/g' \
-  | perl -p -e's/\$deploy_date:\$/'\'' \. \$GLOBALS["deploy_date"] \. '\''/g' \
-  | perl -p -e's/\$deploy_date/'\'' \. \$GLOBALS["deploy_date"] \. '\''/g' \
-  | perl -p -e's/\$deploy_date_short/'\'' \. \$GLOBALS["deploy_date_short"] \. '\''/g' \
-  | perl -p -e's/\$build_secs/'\'' \. _custom_page_build_secs() \. '\''/g' \
-  | perl -p -e's/\$version/'\'' \. \$GLOBALS["version"] \. '\''/g' \
-  | perl -p -e's/\$edit_general_hint/'\'' \. \$GLOBALS["edit_general_hint"] \. '\''/g' \
-  | perl -p -e's/\$edit_header_message/'\'' \. \$GLOBALS["edit_header_message"] \. '\''/g' \
+  | perl -p -e's/\$editColumn->SetAllowSetToDefault\(true\);/\$editColumn->SetAllowSetToDefault(false); \/*afterburner*\/ /g' \
+  | perl -p -e's/^(\s*)(GetApplication\(\)->SetMainPage\(\$Page\);)/\1\2\n\1before_render\(\$Page\); \/*afterburner*\/ /' \
+  | perl -p -e's/CanLoginAsGuest\(\)\s*\{\s*return true;\s*\}/CanLoginAsGuest\(\) \{ return false;  \/*afterburner*\/ \}/g' \
+  | perl -p -e's/'\''guest'\''\s*=>\s*new\s+DataSourceSecurityInfo\(\s*true/'\''guest'\'' => new DataSourceSecurityInfo\(GetApplication\(\)->GetOperation\(\) === '\''rss'\'' \/*afterburner*\/ /g' \
+  | perl -0 -p -e's/(?<=CreateRssGenerator\(\)).*?(?=\})/ \{\n            return setupRSS\(\$this, \$this->dataset\); \/*afterburner*\/ \n        /sg' \
+  | perl -p -e's/\$env_dir/'\'' \. \$GLOBALS["env_dir"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$env(?!_dir)/'\'' \. \$GLOBALS["env"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$rel_files_url/'\'' \. \$GLOBALS["rel_files_url"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$public_files_dir_rel/'\'' \. \$GLOBALS["public_files_dir_rel"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$public_files_dir_abs/'\'' \. \$GLOBALS["public_files_dir_abs"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$public_files_dir/'\'' \. \$GLOBALS["public_files_dir"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$private_files_dir/'\'' \. \$GLOBALS["private_files_dir"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$build_date:\$/'\'' \. \$GLOBALS["build_date"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$build_date/'\'' \. \$GLOBALS["build_date"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$build_date_short/'\'' \. \$GLOBALS["build_date_short"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$deploy_date:\$/'\'' \. \$GLOBALS["deploy_date"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$deploy_date/'\'' \. \$GLOBALS["deploy_date"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$deploy_date_short/'\'' \. \$GLOBALS["deploy_date_short"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$build_secs/'\'' \. _custom_page_build_secs() \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$version/'\'' \. \$GLOBALS["version"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$edit_general_hint/'\'' \. \$GLOBALS["edit_general_hint"] \/*afterburner*\/  \. '\''/g' \
+  | perl -p -e's/\$edit_header_message/'\'' \. \$GLOBALS["edit_header_message"] \/*afterburner*\/  \. '\''/g' \
   | perl -p -e's/<a id="plugin-edit-remarksbox.*?<\/a>//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" height="14" width="15">//g' \
   | perl -p -e's/<img src="img\/icons\/external_link.gif" alt="\(externer Link\)" title="\(externer Link\)" class="icon" width="15" height="14">//g' \
@@ -302,7 +302,7 @@ do
   mv "$file" "$file.bak";
   cat "$file.bak" \
   | perl -p -e's/^(\s*\$currentUser = null;)$/\/\/\1 Afterburned/' \
-  | perl -0 -p -e's/global \$currentUser;\s*\$currentUser = \$userName;/\$_SESSION['\''user'\''] = \$userName;/s' \
+  | perl -0 -p -e's/global \$currentUser;\s*\$currentUser = \$userName;/\$_SESSION['\''user'\''] = \$userName; \/*afterburner*\/ /s' \
   | perl -p -e's/^(\s*global \$currentUser;)$/\/\/\1 Afterburned/' \
   | perl -0 -p -e's/isset\(\$currentUser\)\s*\)\s*return \$currentUser;/isset(\$_SESSION['\''user'\''])) \/\/ Afterburned\n     return \$_SESSION['\''user'\'']; \/\/ Afterburned/' \
   > "$file";

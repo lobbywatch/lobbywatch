@@ -56,6 +56,8 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('alias_namen');
+            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -656,7 +658,7 @@
             $editor = new DateTimeEdit('created_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -730,7 +732,7 @@
             $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -896,6 +898,8 @@
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('alias_namen');
+            $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
             $field = new StringField('eingabe_abgeschlossen_visa');
@@ -941,7 +945,7 @@
         }
     
         protected function CreateRssGenerator() {
-            return setupRSS($this, $this->dataset);
+            return setupRSS($this, $this->dataset); /*afterburner*/ 
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -1642,7 +1646,7 @@
             $editor = new DateTimeEdit('created_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -1716,7 +1720,7 @@
             $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2273,7 +2277,7 @@
             $editor = new DateTimeEdit('created_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2297,7 +2301,7 @@
             $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -2755,6 +2759,8 @@
             $field = new StringField('name_fr');
             $this->dataset->AddField($field, false);
             $field = new StringField('name_it');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('uid');
             $this->dataset->AddField($field, false);
             $field = new StringField('ort');
             $this->dataset->AddField($field, false);
@@ -4152,7 +4158,7 @@
             $editor = new DateTimeEdit('created_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4226,7 +4232,7 @@
             $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -4536,6 +4542,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('name_it');
             $this->dataset->AddField($field, false);
+            $field = new StringField('uid');
+            $this->dataset->AddField($field, false);
             $field = new StringField('ort');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('land_id');
@@ -4620,7 +4628,7 @@
         }
     
         protected function CreateRssGenerator() {
-            return setupRSS($this, $this->dataset);
+            return setupRSS($this, $this->dataset); /*afterburner*/ 
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -6260,7 +6268,7 @@
             $editor = new DateTimeEdit('created_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -6334,7 +6342,7 @@
             $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7582,7 +7590,7 @@
             $editor = new DateTimeEdit('created_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Created Date', 'created_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -7606,7 +7614,7 @@
             $editor = new DateTimeEdit('updated_date_edit', true, 'Y-m-d H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
-            $editColumn->SetAllowSetToDefault(false);
+            $editColumn->SetAllowSetToDefault(false); /*afterburner*/ 
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
@@ -8516,7 +8524,7 @@
         }
     
         protected function CreateRssGenerator() {
-            return setupRSS($this, $this->dataset);
+            return setupRSS($this, $this->dataset); /*afterburner*/ 
         }
     
         protected function CreateGridSearchControl(Grid $grid)
@@ -9031,9 +9039,9 @@
             // View column for symbol_klein_rel field
             //
             $column = new ExternalImageColumn('symbol_klein_rel', 'Symbol klein', $this->dataset, '%symbol_dateiname%');
-            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] . '/');
+            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] /*afterburner*/  . '/');
             $column->SetSourceSuffix('');
-            $column->SetDescription($this->RenderText('Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit ' . $GLOBALS["rel_files_url"] . '/ zu URL ergänzt werden'));
+            $column->SetDescription($this->RenderText('Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit ' . $GLOBALS["rel_files_url"] /*afterburner*/  . '/ zu URL ergänzt werden'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -9365,7 +9373,7 @@
             // View column for symbol_rel field
             //
             $column = new ExternalImageColumn('symbol_rel', 'Symbol', $this->dataset, '%symbol_dateiname%');
-            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] . '/');
+            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] /*afterburner*/  . '/');
             $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -9373,7 +9381,7 @@
             // View column for symbol_klein_rel field
             //
             $column = new ExternalImageColumn('symbol_klein_rel', 'Symbol klein', $this->dataset, '%symbol_dateiname%');
-            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] . '/');
+            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] /*afterburner*/  . '/');
             $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
             
@@ -9597,12 +9605,12 @@
             //
             $editor = new ImageUploader('symbol_abs_edit');
             $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_abs', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_abs', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
             $editColumn->OnCustomFileName->AddListener('symbol_abs_GenerateFileName_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
                 'symbol_klein_rel',
-                '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%',
+                '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%',
                 Delegate::CreateFromMethod($this, 'symbol_abs_Thumbnail_GenerateFileName_edit'),
                 new ImageFitByHeightResizeFilter(100)
             );
@@ -9615,7 +9623,7 @@
             //
             $editor = new ImageUploader('symbol_rel_edit');
             $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_rel', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_rel', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
             $editColumn->OnCustomFileName->AddListener('symbol_rel_GenerateFileName_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetReadOnly(true);
@@ -9628,7 +9636,7 @@
             //
             $editor = new ImageUploader('symbol_klein_rel_edit');
             $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Symbol klein', 'symbol_klein_rel', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+            $editColumn = new UploadFileToFolderColumn('Symbol klein', 'symbol_klein_rel', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
             $editColumn->OnCustomFileName->AddListener('symbol_klein_rel_GenerateFileName_edit', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetReadOnly(true);
@@ -9892,12 +9900,12 @@
             //
             $editor = new ImageUploader('symbol_abs_edit');
             $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_abs', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_abs', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
             $editColumn->OnCustomFileName->AddListener('symbol_abs_GenerateFileName_insert', $this);
             $editColumn->SetReplaceUploadedFileIfExist(true);
             $editColumn->SetGenerationImageThumbnails(
                 'symbol_klein_rel',
-                '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%',
+                '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%',
                 Delegate::CreateFromMethod($this, 'symbol_abs_Thumbnail_GenerateFileName_insert'),
                 new ImageFitByHeightResizeFilter(100)
             );
@@ -10273,9 +10281,9 @@
             // View column for symbol_klein_rel field
             //
             $column = new ExternalImageColumn('symbol_klein_rel', 'Symbol klein', $this->dataset, '%symbol_dateiname%');
-            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] . '/');
+            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] /*afterburner*/  . '/');
             $column->SetSourceSuffix('');
-            $column->SetDescription($this->RenderText('Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit ' . $GLOBALS["rel_files_url"] . '/ zu URL ergänzt werden'));
+            $column->SetDescription($this->RenderText('Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit ' . $GLOBALS["rel_files_url"] /*afterburner*/  . '/ zu URL ergänzt werden'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -10598,9 +10606,9 @@
             // View column for symbol_klein_rel field
             //
             $column = new ExternalImageColumn('symbol_klein_rel', 'Symbol klein', $this->dataset, '%symbol_dateiname%');
-            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] . '/');
+            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] /*afterburner*/  . '/');
             $column->SetSourceSuffix('');
-            $column->SetDescription($this->RenderText('Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit ' . $GLOBALS["rel_files_url"] . '/ zu URL ergänzt werden'));
+            $column->SetDescription($this->RenderText('Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit ' . $GLOBALS["rel_files_url"] /*afterburner*/  . '/ zu URL ergänzt werden'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -10877,7 +10885,7 @@
         }
         public function symbol_abs_Thumbnail_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('small_%original_file_name%',
@@ -10894,7 +10902,7 @@
         
         public function symbol_abs_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -10910,7 +10918,7 @@
         }
         public function symbol_rel_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -10926,7 +10934,7 @@
         }
         public function symbol_klein_rel_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -10942,7 +10950,7 @@
         }
         public function symbol_abs_Thumbnail_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('small_%original_file_name%',
@@ -10959,7 +10967,7 @@
         
         public function symbol_abs_GenerateFileName_insert(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] . '/branche_symbole/%id%');
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
         FileUtils::ForceDirectories($targetFolder);
         
         $filename = ApplyVarablesMapToTemplate('%original_file_name%',
@@ -11236,7 +11244,7 @@
     
         protected function DoGetGridHeader()
         {
-            return '' . $GLOBALS["edit_header_message"] . '
+            return '' . $GLOBALS["edit_header_message"] /*afterburner*/  . '
     
     <div class="wiki-table-help">
     <p>Tabelle der Wirtschaftsbranchen
@@ -11245,7 +11253,7 @@
     <div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/information.png') . '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Branchen sollen einer zuständigen Kommission zugeordnet werden.</div></div>
     </div>
     
-    ' . $GLOBALS["edit_general_hint"] . '';
+    ' . $GLOBALS["edit_general_hint"] /*afterburner*/  . '';
         }
     }
 
@@ -11263,7 +11271,7 @@
         GetApplication()->SetCanUserChangeOwnPassword(
             !function_exists('CanUserChangeOwnPassword') || CanUserChangeOwnPassword());
         GetApplication()->SetMainPage($Page);
-        before_render($Page);
+        before_render($Page); /*afterburner*/ 
         GetApplication()->Run();
     }
     catch(Exception $e)
