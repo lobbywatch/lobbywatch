@@ -298,7 +298,7 @@ GROUP BY parlamentarier.id;";
     $zbList = $zbRet['zutrittsberechtigte'];
 //         df($zbRet, '$zbRet');
 
-    $mailtoParlam = 'mailto:' . urlencode($rowData["email"]) . '?subject=' . urlencode($emailSubjectParlam) . '&body=' . urlencode('[Kopiere von Vorlage]') . '&bcc=info@lobbywatch.ch';
+    $mailtoParlam = 'mailto:' . urlencode($rowData["email"]) . '?subject=' . urlencode($emailSubjectParlam) . '&body=' . urlencode('[Kopiere von Vorlage]') . '&bcc=redaktion@lobbywatch.ch';
 
     $i = 0;
     foreach ($zbList as $zb) {
@@ -317,7 +317,7 @@ GROUP BY parlamentarier.id;";
       $rowStyles = '';
       customDrawRow('zutrittsberechtigung', $rowData, $rowCellStylesZb[$i], $rowStyles);
 
-      $mailtoZb[$i] = 'mailto:' . urlencode($zb["email"]) . '?subject=' . urlencode($emailSubjectZb[$i]) . '&body=' . urlencode('[Kopiere von Vorlage]') . '&bcc=info@lobbywatch.ch';
+      $mailtoZb[$i] = 'mailto:' . urlencode($zb["email"]) . '?subject=' . urlencode($emailSubjectZb[$i]) . '&body=' . urlencode('[Kopiere von Vorlage]') . '&bcc=redaktion@lobbywatch.ch';
 
       $i++;
     }
