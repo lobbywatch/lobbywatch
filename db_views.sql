@@ -2046,7 +2046,7 @@ AS
    UNION ALL
   SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_branche
    UNION ALL
-  SELECT id, 'interessengruppe' as table_name, 'lobbygruppe' as page, -5 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_interessengruppe
+  SELECT id, 'interessengruppe' as table_name, 'lobbygruppe' as page, -5 as table_weight, anzeige_name as name, CONCAT_WS('; ', anzeige_name, alias_namen) as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_interessengruppe
    UNION ALL
   SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_kommission
    UNION ALL
