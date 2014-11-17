@@ -39270,7 +39270,7 @@
             $editor->SetMaxLength(15);
             $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('CHE-\d\d\d\.\d\d\d\.\d\d\d', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new CustomRegExpValidator('(CHE-\d\d\d\.\d\d\d\.\d\d\d|)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
@@ -39285,7 +39285,7 @@
             $editor->SetMaxLength(15);
             $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('CHE-\d\d\d\.\d\d\d\.\d\d\d', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new CustomRegExpValidator('(CHE-\d\d\d\.\d\d\d\.\d\d\d|)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
@@ -41224,7 +41224,7 @@
             $editor->SetMaxLength(15);
             $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('CHE-\d\d\d\.\d\d\d\.\d\d\d', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new CustomRegExpValidator('(CHE-\d\d\d\.\d\d\d\.\d\d\d|)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -41961,7 +41961,7 @@
             $editor->SetMaxLength(15);
             $editColumn = new CustomEditColumn('Handelsregister UID', 'uid', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('CHE-\d\d\d\.\d\d\d\.\d\d\d', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new CustomRegExpValidator('(CHE-\d\d\d\.\d\d\d\.\d\d\d|)', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
