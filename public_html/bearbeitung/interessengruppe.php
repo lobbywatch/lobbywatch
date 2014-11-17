@@ -7491,8 +7491,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -7540,8 +7544,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -9024,8 +9032,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -10694,8 +10706,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -10743,8 +10759,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -12342,8 +12362,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -13186,8 +13210,12 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $lookupDataset->AddField($field, false);
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
             $lookupDataset->AddField($field, false);
             $field = new StringField('typ');
             $field->SetIsNotNull(true);
@@ -14462,13 +14490,19 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
+            $this->dataset->AddField($field, false);
             $field = new StringField('alias_namen');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('alias_namen_fr');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -14576,8 +14610,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('interessengruppessearch', $this->dataset,
-                array('id', 'name', 'branche_id_anzeige_name', 'beschreibung', 'alias_namen', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Branche'), $this->RenderText('Beschreibung'), $this->RenderText('Alias Namen'), $this->RenderText('Notizen')),
+                array('id', 'name', 'name_fr', 'branche_id_anzeige_name', 'beschreibung', 'beschreibung_fr', 'alias_namen', 'alias_namen_fr', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Name Fr'), $this->RenderText('Branche'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Alias Namen'), $this->RenderText('Alias Namen Fr'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -14599,6 +14633,7 @@
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_fr', $this->RenderText('Name Fr')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -14675,7 +14710,9 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('branche_id', $this->RenderText('Branche'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_fr', $this->RenderText('Beschreibung Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('alias_namen', $this->RenderText('Alias Namen')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('alias_namen_fr', $this->RenderText('Alias Namen Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('eingabe_abgeschlossen_datum', $this->RenderText('Eingabe Abgeschlossen Datum')));
@@ -14791,6 +14828,43 @@
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Bezeichnung der Interessengruppe'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_name_fr_handler_list');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Französische Bezeichnung der Interessengruppe'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -15021,6 +15095,39 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_beschreibung_fr_handler_list');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Eingrenzung und Beschreibung zur Interessengruppe auf französisch'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for alias_namen field
             //
             $column = new TextViewColumn('alias_namen', 'Alias Namen', $this->dataset);
@@ -15050,6 +15157,39 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_alias_namen_fr_handler_list');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for alias_namen_fr field
+            //
+            $editor = new TextAreaEdit('alias_namen_fr_edit', 80, 2);
+            $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for alias_namen_fr field
+            //
+            $editor = new TextAreaEdit('alias_namen_fr_edit', 80, 2);
+            $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternativen französischen Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -15337,6 +15477,15 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_name_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
@@ -15355,12 +15504,30 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_beschreibung_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for alias_namen field
             //
             $column = new TextViewColumn('alias_namen', 'Alias Namen', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('interessengruppeGrid_alias_namen_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_alias_namen_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -15464,6 +15631,17 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for branche_id field
             //
             $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -15562,10 +15740,28 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for alias_namen field
             //
             $editor = new TextAreaEdit('alias_namen_edit', 80, 2);
             $editColumn = new CustomEditColumn('Alias Namen', 'alias_namen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for alias_namen_fr field
+            //
+            $editor = new TextAreaEdit('alias_namen_fr_edit', 80, 2);
+            $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -15707,6 +15903,17 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for branche_id field
             //
             $editor = new ComboBox('branche_id_edit', $this->GetLocalizerCaptions()->GetMessageString('PleaseSelect'));
@@ -15805,10 +16012,28 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for alias_namen field
             //
             $editor = new TextAreaEdit('alias_namen_edit', 80, 2);
             $editColumn = new CustomEditColumn('Alias Namen', 'alias_namen', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for alias_namen_fr field
+            //
+            $editor = new TextAreaEdit('alias_namen_fr_edit', 80, 2);
+            $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -15851,6 +16076,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
@@ -15866,9 +16098,23 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for alias_namen field
             //
             $column = new TextViewColumn('alias_namen', 'Alias Namen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -15973,6 +16219,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
@@ -15988,9 +16241,23 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for alias_namen field
             //
             $column = new TextViewColumn('alias_namen', 'Alias Namen', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -16123,6 +16390,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Bezeichnung der Interessengruppe'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
@@ -16145,6 +16423,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_beschreibung_fr_handler_list');
+            $column->SetDescription($this->RenderText('Eingrenzung und Beschreibung zur Interessengruppe auf französisch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for alias_namen field
             //
             $column = new TextViewColumn('alias_namen', 'Alias Namen', $this->dataset);
@@ -16152,6 +16441,17 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('interessengruppeGrid_alias_namen_handler_list');
             $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_alias_namen_fr_handler_list');
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternativen französischen Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -16278,6 +16578,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
@@ -16293,9 +16600,23 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for alias_namen field
             //
             $column = new TextViewColumn('alias_namen', 'Alias Namen', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -16423,6 +16744,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Bezeichnung der Interessengruppe'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
@@ -16445,6 +16777,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_beschreibung_fr_handler_list');
+            $column->SetDescription($this->RenderText('Eingrenzung und Beschreibung zur Interessengruppe auf französisch'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for alias_namen field
             //
             $column = new TextViewColumn('alias_namen', 'Alias Namen', $this->dataset);
@@ -16452,6 +16795,17 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('interessengruppeGrid_alias_namen_handler_list');
             $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternative Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('interessengruppeGrid_alias_namen_fr_handler_list');
+            $column->SetDescription($this->RenderText('Strichpunkt-getrennte Aufzählung von alternativen französischen Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -16578,6 +16932,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('branche_id_anzeige_name', 'Branche', $this->dataset);
@@ -16593,9 +16954,23 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for alias_namen field
             //
             $column = new TextViewColumn('alias_namen', 'Alias Namen', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -16857,6 +17232,39 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(80);
+            $editor->SetMaxLength(150);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_name_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -16889,6 +17297,35 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_beschreibung_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for alias_namen field
             //
             $column = new TextViewColumn('alias_namen', 'Alias Namen', $this->dataset);
@@ -16916,6 +17353,35 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_alias_namen_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for alias_namen_fr field
+            //
+            $editor = new TextAreaEdit('alias_namen_fr_edit', 80, 2);
+            $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for alias_namen_fr field
+            //
+            $editor = new TextAreaEdit('alias_namen_fr_edit', 80, 2);
+            $editColumn = new CustomEditColumn('Alias Namen Fr', 'alias_namen_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_alias_namen_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -16956,6 +17422,13 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_name_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -16964,11 +17437,25 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_beschreibung_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for alias_namen field
             //
             $column = new TextViewColumn('alias_namen', 'Alias Namen', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_alias_namen_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for alias_namen_fr field
+            //
+            $column = new TextViewColumn('alias_namen_fr', 'Alias Namen Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'interessengruppeGrid_alias_namen_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field

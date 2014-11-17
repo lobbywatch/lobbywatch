@@ -8643,11 +8643,15 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('name');
             $this->dataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $this->dataset->AddField($field, false);
             $field = new StringField('position');
             $this->dataset->AddField($field, false);
             $field = new StringField('farbcode');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
             $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
@@ -9186,11 +9190,15 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('name');
             $this->dataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $this->dataset->AddField($field, false);
             $field = new StringField('position');
             $this->dataset->AddField($field, false);
             $field = new StringField('farbcode');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
             $this->dataset->AddField($field, false);
             $field = new DateField('von');
             $this->dataset->AddField($field, false);
@@ -10562,7 +10570,11 @@
             $field = new StringField('abkuerzung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('abkuerzung_fr');
+            $this->dataset->AddField($field, false);
             $field = new StringField('name');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('name_fr');
             $this->dataset->AddField($field, false);
             $field = new IntegerField('fraktion_id');
             $this->dataset->AddField($field, false);
@@ -10574,11 +10586,19 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('homepage');
             $this->dataset->AddField($field, false);
+            $field = new StringField('homepage_fr');
+            $this->dataset->AddField($field, false);
             $field = new StringField('email');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('email_fr');
             $this->dataset->AddField($field, false);
             $field = new StringField('twitter_name');
             $this->dataset->AddField($field, false);
+            $field = new StringField('twitter_name_fr');
+            $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -10679,8 +10699,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('parteissearch', $this->dataset,
-                array('id', 'abkuerzung', 'name', 'beschreibung', 'gruendung', 'position', 'homepage', 'email', 'twitter_name', 'fraktion_id_anzeige_name', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Name'), $this->RenderText('Beschreibung'), $this->RenderText('Gruendung'), $this->RenderText('Position'), $this->RenderText('Homepage'), $this->RenderText('Email'), $this->RenderText('Twitter Name'), $this->RenderText('Fraktion'), $this->RenderText('Notizen')),
+                array('id', 'abkuerzung', 'abkuerzung_fr', 'name', 'name_fr', 'beschreibung', 'beschreibung_fr', 'gruendung', 'position', 'homepage', 'homepage_fr', 'email', 'email_fr', 'twitter_name', 'twitter_name_fr', 'fraktion_id_anzeige_name', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Abkuerzung'), $this->RenderText('Abkuerzung Fr'), $this->RenderText('Name'), $this->RenderText('Name Fr'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Gruendung'), $this->RenderText('Position'), $this->RenderText('Homepage'), $this->RenderText('Homepage Fr'), $this->RenderText('Email'), $this->RenderText('Email Fr'), $this->RenderText('Twitter Name'), $this->RenderText('Twitter Name Fr'), $this->RenderText('Fraktion'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -10702,14 +10722,20 @@
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('abkuerzung', $this->RenderText('Abkuerzung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('abkuerzung_fr', $this->RenderText('Abkuerzung Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_fr', $this->RenderText('Name Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_fr', $this->RenderText('Beschreibung Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('gruendung', $this->RenderText('Gruendung')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('position', $this->RenderText('Position')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('farbcode', $this->RenderText('Farbcode')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage', $this->RenderText('Homepage')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('homepage_fr', $this->RenderText('Homepage Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email', $this->RenderText('Email')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('email_fr', $this->RenderText('Email Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name', $this->RenderText('Twitter Name')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('twitter_name_fr', $this->RenderText('Twitter Name Fr')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -10890,6 +10916,41 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for abkuerzung_fr field
+            //
+            $editor = new TextEdit('abkuerzung_fr_edit');
+            $editor->SetSize(20);
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung Fr', 'abkuerzung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for abkuerzung_fr field
+            //
+            $editor = new TextEdit('abkuerzung_fr_edit');
+            $editor->SetSize(20);
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung Fr', 'abkuerzung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Französische Parteiabkürzung'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
@@ -10927,6 +10988,43 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_name_fr_handler_list');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Ausgeschriebener französischer Name der Partei'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -10957,6 +11055,39 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Beschreibung der Partei'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_beschreibung_fr_handler_list');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Französische Beschreibung der Partei'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -11081,6 +11212,8 @@
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -11094,11 +11227,51 @@
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $column->SetDescription($this->RenderText('Homepage der Partei'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for homepage_fr field
+            //
+            $column = new TextViewColumn('homepage_fr', 'Homepage Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_homepage_fr_handler_list');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for homepage_fr field
+            //
+            $editor = new TextAreaEdit('homepage_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Homepage Fr', 'homepage_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for homepage_fr field
+            //
+            $editor = new TextAreaEdit('homepage_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Homepage Fr', 'homepage_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_fr%' , '_blank');
+            $column->SetDescription($this->RenderText('Französische Homepage der Partei'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -11145,6 +11318,47 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for email_fr field
+            //
+            $column = new TextViewColumn('email_fr', 'Email Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_email_fr_handler_list');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for email_fr field
+            //
+            $editor = new TextEdit('email_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email Fr', 'email_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for email_fr field
+            //
+            $editor = new TextEdit('email_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email Fr', 'email_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Französische Kontakt E-Mail-Adresse der Partei'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
@@ -11181,6 +11395,45 @@
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $column->SetDescription($this->RenderText('Twittername, nur Name, ohne https://twitter.com'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for twitter_name_fr field
+            //
+            $column = new TextViewColumn('twitter_name_fr', 'Twitter Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for twitter_name_fr field
+            //
+            $editor = new TextEdit('twitter_name_fr_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name Fr', 'twitter_name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('Matches to \'^(?!http).*$\'', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for twitter_name_fr field
+            //
+            $editor = new TextEdit('twitter_name_fr_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name Fr', 'twitter_name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('Matches to \'^(?!http).*$\'', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Französischer Twittername'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -11628,12 +11881,28 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
             $column->SetOrderable(true);
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parteiGrid_name_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_name_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11644,6 +11913,15 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parteiGrid_beschreibung_handler_view');
             $column->SetReplaceLFByBR(true);
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_beschreibung_fr_handler_view');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11679,6 +11957,16 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for homepage_fr field
+            //
+            $column = new TextViewColumn('homepage_fr', 'Homepage Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_homepage_fr_handler_view');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_fr%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
@@ -11689,11 +11977,27 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for email_fr field
+            //
+            $column = new TextViewColumn('email_fr', 'Email Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_email_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for twitter_name_fr field
+            //
+            $column = new TextViewColumn('twitter_name_fr', 'Twitter Name Fr', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -11805,6 +12109,17 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for abkuerzung_fr field
+            //
+            $editor = new TextEdit('abkuerzung_fr_edit');
+            $editor->SetSize(20);
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung Fr', 'abkuerzung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for name field
             //
             $editor = new TextEdit('name_edit');
@@ -11816,10 +12131,30 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -11864,6 +12199,19 @@
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for homepage_fr field
+            //
+            $editor = new TextAreaEdit('homepage_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Homepage Fr', 'homepage_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -11881,6 +12229,19 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for email_fr field
+            //
+            $editor = new TextEdit('email_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email Fr', 'email_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for twitter_name field
             //
             $editor = new TextEdit('twitter_name_edit');
@@ -11889,6 +12250,19 @@
             $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for twitter_name_fr field
+            //
+            $editor = new TextEdit('twitter_name_fr_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name Fr', 'twitter_name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('Matches to \'^(?!http).*$\'', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -12103,6 +12477,17 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for abkuerzung_fr field
+            //
+            $editor = new TextEdit('abkuerzung_fr_edit');
+            $editor->SetSize(20);
+            $editor->SetMaxLength(20);
+            $editColumn = new CustomEditColumn('Abkuerzung Fr', 'abkuerzung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for name field
             //
             $editor = new TextEdit('name_edit');
@@ -12114,10 +12499,30 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for beschreibung field
             //
             $editor = new TextAreaEdit('beschreibung_edit', 50, 8);
             $editColumn = new CustomEditColumn('Beschreibung', 'beschreibung', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -12162,6 +12567,19 @@
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for homepage_fr field
+            //
+            $editor = new TextAreaEdit('homepage_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Homepage Fr', 'homepage_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -12179,6 +12597,19 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for email_fr field
+            //
+            $editor = new TextEdit('email_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email Fr', 'email_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for twitter_name field
             //
             $editor = new TextEdit('twitter_name_edit');
@@ -12187,6 +12618,19 @@
             $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for twitter_name_fr field
+            //
+            $editor = new TextEdit('twitter_name_fr_edit');
+            $editor->SetSize(50);
+            $editor->SetMaxLength(50);
+            $editColumn = new CustomEditColumn('Twitter Name Fr', 'twitter_name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new CustomRegExpValidator('Matches to \'^(?!http).*$\'', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -12306,6 +12750,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
@@ -12313,9 +12764,23 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -12349,9 +12814,23 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for homepage_fr field
+            //
+            $column = new TextViewColumn('homepage_fr', 'Homepage Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for email_fr field
+            //
+            $column = new TextViewColumn('email_fr', 'Email Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -12361,6 +12840,13 @@
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name_fr field
+            //
+            $column = new TextViewColumn('twitter_name_fr', 'Twitter Name Fr', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
             //
@@ -12474,6 +12960,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
@@ -12481,9 +12974,23 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -12517,9 +13024,23 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for homepage_fr field
+            //
+            $column = new TextViewColumn('homepage_fr', 'Homepage Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for email_fr field
+            //
+            $column = new TextViewColumn('email_fr', 'Email Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -12529,6 +13050,13 @@
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for twitter_name_fr field
+            //
+            $column = new TextViewColumn('twitter_name_fr', 'Twitter Name Fr', $this->dataset);
+            $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
             //
@@ -12666,6 +13194,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Französische Parteiabkürzung'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
@@ -12673,6 +13210,17 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parteiGrid_name_handler_list');
             $column->SetDescription($this->RenderText('Ausgeschriebener Name der Partei'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Ausgeschriebener französischer Name der Partei'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -12685,6 +13233,17 @@
             $column->SetFullTextWindowHandlerName('parteiGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Beschreibung der Partei'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_beschreibung_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Beschreibung der Partei'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -12729,6 +13288,18 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for homepage_fr field
+            //
+            $column = new TextViewColumn('homepage_fr', 'Homepage Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_homepage_fr_handler_list');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_fr%' , '_blank');
+            $column->SetDescription($this->RenderText('Französische Homepage der Partei'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
@@ -12741,12 +13312,32 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for email_fr field
+            //
+            $column = new TextViewColumn('email_fr', 'Email Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_email_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Kontakt E-Mail-Adresse der Partei'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $column->SetDescription($this->RenderText('Twittername, nur Name, ohne https://twitter.com'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for twitter_name_fr field
+            //
+            $column = new TextViewColumn('twitter_name_fr', 'Twitter Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Französischer Twittername'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -12885,6 +13476,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
@@ -12892,9 +13490,23 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -12928,9 +13540,23 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for homepage_fr field
+            //
+            $column = new TextViewColumn('homepage_fr', 'Homepage Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for email_fr field
+            //
+            $column = new TextViewColumn('email_fr', 'Email Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -12940,6 +13566,13 @@
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name_fr field
+            //
+            $column = new TextViewColumn('twitter_name_fr', 'Twitter Name Fr', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -13072,6 +13705,15 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Französische Parteiabkürzung'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
@@ -13079,6 +13721,17 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('parteiGrid_name_handler_list');
             $column->SetDescription($this->RenderText('Ausgeschriebener Name der Partei'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Ausgeschriebener französischer Name der Partei'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -13091,6 +13744,17 @@
             $column->SetFullTextWindowHandlerName('parteiGrid_beschreibung_handler_list');
             $column->SetReplaceLFByBR(true);
             $column->SetDescription($this->RenderText('Beschreibung der Partei'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_beschreibung_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Beschreibung der Partei'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -13135,6 +13799,18 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for homepage_fr field
+            //
+            $column = new TextViewColumn('homepage_fr', 'Homepage Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_homepage_fr_handler_list');
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_fr%' , '_blank');
+            $column->SetDescription($this->RenderText('Französische Homepage der Partei'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
@@ -13147,12 +13823,32 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for email_fr field
+            //
+            $column = new TextViewColumn('email_fr', 'Email Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('parteiGrid_email_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Kontakt E-Mail-Adresse der Partei'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for twitter_name field
             //
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
             $column->SetDescription($this->RenderText('Twittername, nur Name, ohne https://twitter.com'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for twitter_name_fr field
+            //
+            $column = new TextViewColumn('twitter_name_fr', 'Twitter Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetDescription($this->RenderText('Französischer Twittername'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -13291,6 +13987,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for abkuerzung_fr field
+            //
+            $column = new TextViewColumn('abkuerzung_fr', 'Abkuerzung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for name field
             //
             $column = new TextViewColumn('name', 'Name', $this->dataset);
@@ -13298,9 +14001,23 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -13334,9 +14051,23 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for homepage_fr field
+            //
+            $column = new TextViewColumn('homepage_fr', 'Homepage Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for email_fr field
+            //
+            $column = new TextViewColumn('email_fr', 'Email Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -13346,6 +14077,13 @@
             $column = new TextViewColumn('twitter_name', 'Twitter Name', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'https://twitter.com/%twitter_name%' , '_blank');
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for twitter_name_fr field
+            //
+            $column = new TextViewColumn('twitter_name_fr', 'Twitter Name Fr', $this->dataset);
+            $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
             //
@@ -13590,6 +14328,39 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_name_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -13620,6 +14391,35 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_beschreibung_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for homepage field
             //
             $column = new TextViewColumn('homepage', 'Homepage', $this->dataset);
@@ -13634,6 +14434,8 @@
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetEditOperationColumn($editColumn);
             /* </inline edit column> */
@@ -13647,11 +14449,47 @@
             $editor->SetMaxLength(255);
             $editColumn = new CustomEditColumn('Homepage', 'homepage', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_homepage_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for homepage_fr field
+            //
+            $column = new TextViewColumn('homepage_fr', 'Homepage Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for homepage_fr field
+            //
+            $editor = new TextAreaEdit('homepage_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Homepage Fr', 'homepage_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for homepage_fr field
+            //
+            $editor = new TextAreaEdit('homepage_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Homepage Fr', 'homepage_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new UrlValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('UrlValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_fr%' , '_blank');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_homepage_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for email field
@@ -13692,6 +14530,43 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_email_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for email_fr field
+            //
+            $column = new TextViewColumn('email_fr', 'Email Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for email_fr field
+            //
+            $editor = new TextEdit('email_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email Fr', 'email_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for email_fr field
+            //
+            $editor = new TextEdit('email_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Email Fr', 'email_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $validator = new EMailValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('EmailValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_email_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for notizen field
             //
             $column = new TextViewColumn('notizen', 'Notizen', $this->dataset);
@@ -13728,12 +14603,26 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_name_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_beschreibung_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_beschreibung_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for homepage field
@@ -13744,12 +14633,27 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_homepage_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for homepage_fr field
+            //
+            $column = new TextViewColumn('homepage_fr', 'Homepage Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, '%homepage_fr%' , '_blank');
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_homepage_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for email field
             //
             $column = new TextViewColumn('email', 'Email', $this->dataset);
             $column->SetOrderable(true);
             $column = new ExtendedHyperLinkColumnDecorator($column, $this->dataset, 'mailto:%email%' , '_blank');
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_email_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for email_fr field
+            //
+            $column = new TextViewColumn('email_fr', 'Email Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parteiGrid_email_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field

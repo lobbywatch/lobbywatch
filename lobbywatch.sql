@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 17. Nov 2014 um 08:49
+-- Erstellungszeit: 17. Nov 2014 um 10:06
 -- Server Version: 5.6.12
 -- PHP-Version: 5.5.1
 
@@ -251,16 +251,19 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche`
 --
--- Erzeugt am: 10. Aug 2014 um 23:20
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `branche`;
 CREATE TABLE IF NOT EXISTS `branche` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Branche',
   `name` varchar(100) NOT NULL COMMENT 'Name der Branche, z.B. Gesundheit, Energie',
+  `name_fr` varchar(100) DEFAULT NULL COMMENT 'Französischer Name der Branche, z.B. Gesundheit, Energie',
   `kommission_id` int(11) DEFAULT NULL COMMENT 'Zuständige Kommission im Parlament',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
+  `beschreibung_fr` text COMMENT 'Französische Beschreibung der Branche',
   `angaben` text COMMENT 'Angaben zur Branche',
+  `angaben_fr` text COMMENT 'Angaben zur Branche auf Französisch',
   `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23',
   `symbol_abs` varchar(255) DEFAULT NULL COMMENT 'Symbolbild (Icon) der Branche, absoluter Pfad',
   `symbol_rel` varchar(255) DEFAULT NULL COMMENT 'Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit $rel_files_url/ zu URL ergänzt werden',
@@ -341,16 +344,19 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche_log`
 --
--- Erzeugt am: 06. Jul 2014 um 17:39
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `branche_log`;
 CREATE TABLE IF NOT EXISTS `branche_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `name` varchar(100) NOT NULL COMMENT 'Name der Branche, z.B. Gesundheit, Energie',
+  `name_fr` varchar(100) DEFAULT NULL COMMENT 'Französischer Name der Branche, z.B. Gesundheit, Energie',
   `kommission_id` int(11) DEFAULT NULL COMMENT 'Zuständige Kommission im Parlament',
   `beschreibung` text NOT NULL COMMENT 'Beschreibung der Branche',
+  `beschreibung_fr` text COMMENT 'Französische Beschreibung der Branche',
   `angaben` text COMMENT 'Angaben zur Branche',
+  `angaben_fr` text COMMENT 'Angaben zur Branche auf Französisch',
   `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23',
   `symbol_abs` varchar(255) DEFAULT NULL COMMENT 'Symbolbild (Icon) der Branche, absoluter Pfad',
   `symbol_rel` varchar(255) DEFAULT NULL COMMENT 'Kleines Symbolbild (Icon) der Branche, relativer Pfad, kann mit $rel_files_url/ zu URL ergänzt werden',
@@ -435,7 +441,7 @@ CREATE TABLE IF NOT EXISTS `country` (
 --
 -- Tabellenstruktur für Tabelle `fraktion`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `fraktion`;
@@ -443,9 +449,11 @@ CREATE TABLE IF NOT EXISTS `fraktion` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Fraktion',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Fraktionsabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Fraktion',
+  `name_fr` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Fraktion',
   `position` enum('links','rechts','mitte') DEFAULT NULL COMMENT 'Politische Position der Fraktion',
   `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23',
   `beschreibung` text COMMENT 'Beschreibung der Fraktion',
+  `beschreibung_fr` text COMMENT 'Französische Beschreibung der Fraktion',
   `von` date DEFAULT NULL COMMENT 'Beginn der Fraktion, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Fraktion, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -514,7 +522,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `fraktion_log`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `fraktion_log`;
@@ -522,9 +530,11 @@ CREATE TABLE IF NOT EXISTS `fraktion_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Fraktionsabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Fraktion',
+  `name_fr` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Fraktion',
   `position` enum('links','rechts','mitte') DEFAULT NULL COMMENT 'Politische Position der Fraktion',
   `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23',
   `beschreibung` text COMMENT 'Beschreibung der Fraktion',
+  `beschreibung_fr` text COMMENT 'Französische Beschreibung der Fraktion',
   `von` date DEFAULT NULL COMMENT 'Beginn der Fraktion, leer (NULL) = unbekannt',
   `bis` date DEFAULT NULL COMMENT 'Ende der Fraktion, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
@@ -710,16 +720,19 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
 --
 -- Tabellenstruktur für Tabelle `interessengruppe`
 --
--- Erzeugt am: 16. Nov 2014 um 15:59
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `interessengruppe`;
 CREATE TABLE IF NOT EXISTS `interessengruppe` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessengruppe',
   `name` varchar(150) NOT NULL COMMENT 'Bezeichnung der Interessengruppe',
+  `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französische Bezeichnung der Interessengruppe',
   `branche_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Branche',
   `beschreibung` text NOT NULL COMMENT 'Eingrenzung und Beschreibung zur Interessengruppe',
+  `beschreibung_fr` text COMMENT 'Eingrenzung und Beschreibung zur Interessengruppe auf französisch',
   `alias_namen` varchar(255) DEFAULT NULL COMMENT 'Strichpunkt-getrennte Aufzählung von alternative Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.',
+  `alias_namen_fr` varchar(255) DEFAULT NULL COMMENT 'Strichpunkt-getrennte Aufzählung von alternativen französischen Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
@@ -792,16 +805,19 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessengruppe_log`
 --
--- Erzeugt am: 16. Nov 2014 um 20:19
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
 CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `name` varchar(150) NOT NULL COMMENT 'Bezeichnung der Interessengruppe',
+  `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französische Bezeichnung der Interessengruppe',
   `branche_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Branche',
   `beschreibung` text NOT NULL COMMENT 'Eingrenzung und Beschreibung zur Interessengruppe',
+  `beschreibung_fr` text COMMENT 'Eingrenzung und Beschreibung zur Interessengruppe auf französisch',
   `alias_namen` varchar(255) DEFAULT NULL COMMENT 'Strichpunkt-getrennte Aufzählung von alternative Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.',
+  `alias_namen_fr` varchar(255) DEFAULT NULL COMMENT 'Strichpunkt-getrennte Aufzählung von alternativen französischen Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
@@ -834,14 +850,16 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
 --
 -- Tabellenstruktur für Tabelle `interessenraum`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `interessenraum`;
 CREATE TABLE IF NOT EXISTS `interessenraum` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Interessenraumes',
   `name` varchar(50) NOT NULL COMMENT 'Name des Interessenbereiches',
+  `name_fr` varchar(50) DEFAULT NULL COMMENT 'Französischer Name des Interessenbereiches',
   `beschreibung` text COMMENT 'Beschreibung des Interessenraumes',
+  `beschreibung_fr` text COMMENT 'Französische Beschreibung des Interessenraumes',
   `reihenfolge` int(11) DEFAULT NULL COMMENT 'Anzeigereihenfolge (je kleiner desto höher)',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
@@ -1321,18 +1339,22 @@ CREATE TABLE IF NOT EXISTS `kanton_log` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
--- Erzeugt am: 10. Aug 2014 um 23:20
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `kommission`;
 CREATE TABLE IF NOT EXISTS `kommission` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Kommission',
   `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
+  `abkuerzung_fr` varchar(15) DEFAULT NULL COMMENT 'Französisches Kürzel der Kommission',
   `name` varchar(100) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
+  `name_fr` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Kommission',
   `typ` enum('kommission','subkommission','spezialkommission') NOT NULL DEFAULT 'kommission' COMMENT 'Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne).',
   `art` enum('legislativkommission','aufsichtskommission','parlam verwaltungskontrolle','weitere kommission','delegation im weiteren sinne') DEFAULT NULL COMMENT 'Art der Kommission gemäss Einteilung auf Parlament.ch. Achtung für Delegationen im engeren Sinne (= Subkommissionen) sollte die Art der Mutterkommission gewählt werden, z.B. GPDel ist eine Subkommission der GPK und gehört somit zu den Aufsichtskommissionen.',
   `beschreibung` text COMMENT 'Beschreibung der Kommission',
+  `beschreibung_fr` text COMMENT 'Französische Beschreibung der Kommission',
   `sachbereiche` text NOT NULL COMMENT 'Liste der Sachbereiche der Kommission, abgetrennt durch ";".',
+  `sachbereiche_fr` text COMMENT 'Liste der Sachbereiche der Kommission auf französisch, abgetrennt durch ";".',
   `anzahl_nationalraete` tinyint(3) unsigned DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates',
   `anzahl_staenderaete` tinyint(3) unsigned DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates',
   `mutter_kommission_id` int(11) DEFAULT NULL COMMENT 'Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die "Oberkommission".',
@@ -1410,18 +1432,22 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 22. Jul 2014 um 18:03
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
 CREATE TABLE IF NOT EXISTS `kommission_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
+  `abkuerzung_fr` varchar(15) DEFAULT NULL COMMENT 'Französisches Kürzel der Kommission',
   `name` varchar(100) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
+  `name_fr` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Kommission',
   `typ` enum('kommission','subkommission','spezialkommission') NOT NULL DEFAULT 'kommission' COMMENT 'Typ einer Kommission (Spezialkommission ist eine Delegation im weiteren Sinne).',
   `art` enum('legislativkommission','aufsichtskommission','parlam verwaltungskontrolle','weitere kommission','delegation im weiteren sinne') DEFAULT NULL COMMENT 'Art der Kommission gemäss Einteilung auf Parlament.ch. Achtung für Delegationen im engeren Sinne (= Subkommissionen) sollte die Art der Mutterkommission gewählt werden, z.B. GPDel ist eine Subkommission der GPK und gehört somit zu den Aufsichtskommissionen.',
   `beschreibung` text COMMENT 'Beschreibung der Kommission',
+  `beschreibung_fr` text COMMENT 'Französische Beschreibung der Kommission',
   `sachbereiche` text NOT NULL COMMENT 'Liste der Sachbereiche der Kommission, abgetrennt durch ";".',
+  `sachbereiche_fr` text COMMENT 'Liste der Sachbereiche der Kommission auf französisch, abgetrennt durch ";".',
   `anzahl_nationalraete` tinyint(3) unsigned DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Nationalrates',
   `anzahl_staenderaete` tinyint(3) unsigned DEFAULT NULL COMMENT 'Anzahl Kommissionsmitglieder des Ständerates',
   `mutter_kommission_id` int(11) DEFAULT NULL COMMENT 'Zugehörige Kommission von Delegationen im engeren Sinne (=Subkommissionen).  Also die "Oberkommission".',
@@ -1604,14 +1630,16 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
 --
 -- Tabellenstruktur für Tabelle `mil_grad`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `mil_grad`;
 CREATE TABLE IF NOT EXISTS `mil_grad` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel Militärischer Grad',
   `name` varchar(30) NOT NULL COMMENT 'Name des militärischen Grades',
+  `name_fr` varchar(30) DEFAULT NULL COMMENT 'Französischer Name des militärischen Grades',
   `abkuerzung` varchar(10) NOT NULL COMMENT 'Abkürzung des militärischen Grades',
+  `abkuerzung_fr` varchar(10) DEFAULT NULL COMMENT 'Französische Abkürzung des militärischen Grades',
   `typ` enum('Mannschaft','Unteroffizier','Hoeherer Unteroffizier','Offizier','Hoeherer Stabsoffizier') NOT NULL COMMENT 'Stufe des militärischen Grades',
   `ranghoehe` int(11) NOT NULL COMMENT 'Ranghöhe des Grades',
   `anzeigestufe` int(11) NOT NULL COMMENT 'Anzeigestufe, je höher desto selektiver, >=0 = alle werden angezeigt, >0 = Standardanzeige',
@@ -1674,14 +1702,16 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mil_grad_log`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `mil_grad_log`;
 CREATE TABLE IF NOT EXISTS `mil_grad_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `name` varchar(30) NOT NULL COMMENT 'Name des militärischen Grades',
+  `name_fr` varchar(30) DEFAULT NULL COMMENT 'Französischer Name des militärischen Grades',
   `abkuerzung` varchar(10) NOT NULL COMMENT 'Abkürzung des militärischen Grades',
+  `abkuerzung_fr` varchar(10) DEFAULT NULL COMMENT 'Französische Abkürzung des militärischen Grades',
   `typ` enum('Mannschaft','Unteroffizier','Hoeherer Unteroffizier','Offizier','Hoeherer Stabsoffizier') NOT NULL COMMENT 'Stufe des militärischen Grades',
   `ranghoehe` int(11) NOT NULL COMMENT 'Ranghöhe des Grades',
   `anzeigestufe` int(11) NOT NULL COMMENT 'Anzeigestufe, je höher desto selektiver, >=0 = alle werden angezeigt, >0 = Standardanzeige',
@@ -3193,22 +3223,28 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `partei`;
 CREATE TABLE IF NOT EXISTS `partei` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Partei',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Parteiabkürzung',
+  `abkuerzung_fr` varchar(20) DEFAULT NULL COMMENT 'Französische Parteiabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
+  `name_fr` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Partei',
   `fraktion_id` int(11) DEFAULT NULL COMMENT 'Fraktionszugehörigkeit der Partei im nationalen Parlament',
   `gruendung` date DEFAULT NULL COMMENT 'Gründungsjahr der Partei. Wenn der genaue Tag unbekannt ist, den 1. Januar wählen.',
   `position` enum('links','rechts','mitte') DEFAULT NULL COMMENT 'Politische Position der Partei',
   `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23',
   `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage der Partei',
+  `homepage_fr` varchar(255) DEFAULT NULL COMMENT 'Französische Homepage der Partei',
   `email` varchar(100) DEFAULT NULL COMMENT 'Kontakt E-Mail-Adresse der Partei',
+  `email_fr` varchar(100) DEFAULT NULL COMMENT 'Französische Kontakt E-Mail-Adresse der Partei',
   `twitter_name` varchar(50) DEFAULT NULL COMMENT 'Twittername',
+  `twitter_name_fr` varchar(50) DEFAULT NULL COMMENT 'Französischer Twittername',
   `beschreibung` text COMMENT 'Beschreibung der Partei',
+  `beschreibung_fr` text COMMENT 'Französische Beschreibung der Partei',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
@@ -3282,22 +3318,28 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erzeugt am: 17. Nov 2014 um 08:56
 --
 
 DROP TABLE IF EXISTS `partei_log`;
 CREATE TABLE IF NOT EXISTS `partei_log` (
   `id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Parteiabkürzung',
+  `abkuerzung_fr` varchar(20) DEFAULT NULL COMMENT 'Französische Parteiabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
+  `name_fr` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Partei',
   `fraktion_id` int(11) DEFAULT NULL COMMENT 'Fraktionszugehörigkeit der Partei im nationalen Parlament',
   `gruendung` date DEFAULT NULL COMMENT 'Gründungsjahr der Partei. Wenn der genaue Tag unbekannt ist, den 1. Januar wählen.',
   `position` enum('links','rechts','mitte') DEFAULT NULL COMMENT 'Politische Position der Partei',
   `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23',
   `homepage` varchar(255) DEFAULT NULL COMMENT 'Homepage der Partei',
+  `homepage_fr` varchar(255) DEFAULT NULL COMMENT 'Französische Homepage der Partei',
   `email` varchar(100) DEFAULT NULL COMMENT 'Kontakt E-Mail-Adresse der Partei',
+  `email_fr` varchar(100) DEFAULT NULL COMMENT 'Französische Kontakt E-Mail-Adresse der Partei',
   `twitter_name` varchar(50) DEFAULT NULL COMMENT 'Twittername',
+  `twitter_name_fr` varchar(50) DEFAULT NULL COMMENT 'Französischer Twittername',
   `beschreibung` text COMMENT 'Beschreibung der Partei',
+  `beschreibung_fr` text COMMENT 'Französische Beschreibung der Partei',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
   `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',

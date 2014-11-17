@@ -50,13 +50,19 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
+            $this->dataset->AddField($field, false);
             $field = new StringField('alias_namen');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('alias_namen_fr');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -892,13 +898,19 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('branche_id');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
+            $this->dataset->AddField($field, false);
             $field = new StringField('alias_namen');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('alias_namen_fr');
             $this->dataset->AddField($field, false);
             $field = new StringField('notizen');
             $this->dataset->AddField($field, false);
@@ -8451,12 +8463,18 @@
             $field = new StringField('name');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('name_fr');
+            $this->dataset->AddField($field, false);
             $field = new IntegerField('kommission_id');
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $field->SetIsNotNull(true);
             $this->dataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
+            $this->dataset->AddField($field, false);
             $field = new StringField('angaben');
+            $this->dataset->AddField($field, false);
+            $field = new StringField('angaben_fr');
             $this->dataset->AddField($field, false);
             $field = new StringField('farbcode');
             $this->dataset->AddField($field, false);
@@ -8573,8 +8591,8 @@
         {
             $grid->UseFilter = true;
             $grid->SearchControl = new SimpleSearch('branchessearch', $this->dataset,
-                array('id', 'name', 'kommission_id_anzeige_name', 'beschreibung', 'angaben', 'notizen'),
-                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Kommission'), $this->RenderText('Beschreibung'), $this->RenderText('Angaben'), $this->RenderText('Notizen')),
+                array('id', 'name', 'name_fr', 'kommission_id_anzeige_name', 'beschreibung', 'beschreibung_fr', 'angaben', 'angaben_fr', 'notizen'),
+                array($this->RenderText('Id'), $this->RenderText('Name'), $this->RenderText('Name Fr'), $this->RenderText('Kommission'), $this->RenderText('Beschreibung'), $this->RenderText('Beschreibung Fr'), $this->RenderText('Angaben'), $this->RenderText('Angaben Fr'), $this->RenderText('Notizen')),
                 array(
                     '=' => $this->GetLocalizerCaptions()->GetMessageString('equals'),
                     '<>' => $this->GetLocalizerCaptions()->GetMessageString('doesNotEquals'),
@@ -8596,6 +8614,7 @@
             $this->AdvancedSearchControl->setTimerInterval(1000);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('id', $this->RenderText('Id')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name', $this->RenderText('Name')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('name_fr', $this->RenderText('Name Fr')));
             
             $lookupDataset = new TableDataset(
                 new MyPDOConnectionFactory(),
@@ -8670,7 +8689,9 @@
             $lookupDataset->AddField($field, false);
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateLookupSearchInput('kommission_id', $this->RenderText('Kommission'), $lookupDataset, 'id', 'anzeige_name', false));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung', $this->RenderText('Beschreibung')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('beschreibung_fr', $this->RenderText('Beschreibung Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('angaben', $this->RenderText('Angaben')));
+            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('angaben_fr', $this->RenderText('Angaben Fr')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('farbcode', $this->RenderText('Farbcode')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('notizen', $this->RenderText('Notizen')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('eingabe_abgeschlossen_visa', $this->RenderText('Eingabe Abgeschlossen Visa')));
@@ -8787,6 +8808,43 @@
             $column = new DivTagViewColumnDecorator($column);
             $column->Bold = true;
             $column->SetDescription($this->RenderText('Name der Branche, z.B. Gesundheit, Energie'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_name_fr_handler_list');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Französischer Name der Branche, z.B. Gesundheit, Energie'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -9010,6 +9068,39 @@
             $grid->AddViewColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_beschreibung_fr_handler_list');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Französische Beschreibung der Branche'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
@@ -9039,6 +9130,39 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $column->SetDescription($this->RenderText('Angaben zur Branche'));
+            $column->SetFixedWidth(null);
+            $grid->AddViewColumn($column);
+            
+            //
+            // View column for angaben_fr field
+            //
+            $column = new TextViewColumn('angaben_fr', 'Angaben Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_angaben_fr_handler_list');
+            
+            /* <inline edit column> */
+            //
+            // Edit column for angaben_fr field
+            //
+            $editor = new TextAreaEdit('angaben_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Angaben Fr', 'angaben_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for angaben_fr field
+            //
+            $editor = new TextAreaEdit('angaben_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Angaben Fr', 'angaben_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $column->SetDescription($this->RenderText('Angaben zur Branche auf Französisch'));
             $column->SetFixedWidth(null);
             $grid->AddViewColumn($column);
             
@@ -9371,6 +9495,15 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_name_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
@@ -9388,6 +9521,15 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_beschreibung_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
@@ -9397,26 +9539,19 @@
             $grid->AddSingleRecordViewColumn($column);
             
             //
+            // View column for angaben_fr field
+            //
+            $column = new TextViewColumn('angaben_fr', 'Angaben Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_angaben_fr_handler_view');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
             // View column for farbcode field
             //
             $column = new TextViewColumn('farbcode', 'Farbcode', $this->dataset);
             $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for symbol_abs field
-            //
-            $column = new ExternalImageColumn('symbol_abs', 'Symbol', $this->dataset, '%symbol_dateiname%');
-            $column->SetSourcePrefix('');
-            $column->SetSourceSuffix('');
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for symbol_rel field
-            //
-            $column = new ExternalImageColumn('symbol_rel', 'Symbol', $this->dataset, '%symbol_dateiname%');
-            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] /*afterburner*/  . '/');
-            $column->SetSourceSuffix('');
             $grid->AddSingleRecordViewColumn($column);
             
             //
@@ -9511,6 +9646,22 @@
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
             $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for symbol_abs field
+            //
+            $column = new ExternalImageColumn('symbol_abs', 'Symbol', $this->dataset, '%symbol_dateiname%');
+            $column->SetSourcePrefix('');
+            $column->SetSourceSuffix('');
+            $grid->AddSingleRecordViewColumn($column);
+            
+            //
+            // View column for symbol_rel field
+            //
+            $column = new ExternalImageColumn('symbol_rel', 'Symbol', $this->dataset, '%symbol_dateiname%');
+            $column->SetSourcePrefix('' . $GLOBALS["rel_files_url"] /*afterburner*/  . '/');
+            $column->SetSourceSuffix('');
+            $grid->AddSingleRecordViewColumn($column);
         }
     
         protected function AddEditColumns(Grid $grid)
@@ -9524,6 +9675,17 @@
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
             
@@ -9623,10 +9785,28 @@
             $grid->AddEditColumn($editColumn);
             
             //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
             // Edit column for angaben field
             //
             $editor = new TextAreaEdit('angaben_edit', 50, 8);
             $editColumn = new CustomEditColumn('Angaben', 'angaben', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for angaben_fr field
+            //
+            $editor = new TextAreaEdit('angaben_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Angaben Fr', 'angaben_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -9638,37 +9818,6 @@
             $editor->SetSize(15);
             $editor->SetMaxLength(15);
             $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for symbol_abs field
-            //
-            $editor = new ImageUploader('symbol_abs_edit');
-            $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_abs', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
-            $editColumn->OnCustomFileName->AddListener('symbol_abs_GenerateFileName_edit', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $editColumn->SetGenerationImageThumbnails(
-                'symbol_klein_rel',
-                '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%',
-                Delegate::CreateFromMethod($this, 'symbol_abs_Thumbnail_GenerateFileName_edit'),
-                new ImageFitByHeightResizeFilter(100)
-            );
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for symbol_rel field
-            //
-            $editor = new ImageUploader('symbol_rel_edit');
-            $editor->SetShowImage(true);
-            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_rel', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
-            $editColumn->OnCustomFileName->AddListener('symbol_rel_GenerateFileName_edit', $this);
-            $editColumn->SetReplaceUploadedFileIfExist(true);
-            $editColumn->SetReadOnly(true);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -9806,6 +9955,37 @@
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for symbol_abs field
+            //
+            $editor = new ImageUploader('symbol_abs_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_abs', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
+            $editColumn->OnCustomFileName->AddListener('symbol_abs_GenerateFileName_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetGenerationImageThumbnails(
+                'symbol_klein_rel',
+                '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%',
+                Delegate::CreateFromMethod($this, 'symbol_abs_Thumbnail_GenerateFileName_edit'),
+                new ImageFitByHeightResizeFilter(100)
+            );
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
+            
+            //
+            // Edit column for symbol_rel field
+            //
+            $editor = new ImageUploader('symbol_rel_edit');
+            $editor->SetShowImage(true);
+            $editColumn = new UploadFileToFolderColumn('Symbol', 'symbol_rel', $editor, $this->dataset, false, false, '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
+            $editColumn->OnCustomFileName->AddListener('symbol_rel_GenerateFileName_edit', $this);
+            $editColumn->SetReplaceUploadedFileIfExist(true);
+            $editColumn->SetReadOnly(true);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddEditColumn($editColumn);
         }
     
         protected function AddInsertColumns(Grid $grid)
@@ -9819,6 +9999,17 @@
             $editColumn = new CustomEditColumn('Name', 'name', $editor, $this->dataset);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
             
@@ -9918,10 +10109,28 @@
             $grid->AddInsertColumn($editColumn);
             
             //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
             // Edit column for angaben field
             //
             $editor = new TextAreaEdit('angaben_edit', 50, 8);
             $editColumn = new CustomEditColumn('Angaben', 'angaben', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for angaben_fr field
+            //
+            $editor = new TextAreaEdit('angaben_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Angaben Fr', 'angaben_fr', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -9933,6 +10142,15 @@
             $editor->SetSize(15);
             $editor->SetMaxLength(15);
             $editColumn = new CustomEditColumn('Farbcode', 'farbcode', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $grid->AddInsertColumn($editColumn);
+            
+            //
+            // Edit column for notizen field
+            //
+            $editor = new TextAreaEdit('notizen_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -9951,15 +10169,6 @@
                 Delegate::CreateFromMethod($this, 'symbol_abs_Thumbnail_GenerateFileName_insert'),
                 new ImageFitByHeightResizeFilter(100)
             );
-            $editColumn->SetAllowSetToNull(true);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddInsertColumn($editColumn);
-            
-            //
-            // Edit column for notizen field
-            //
-            $editor = new TextAreaEdit('notizen_edit', 50, 8);
-            $editColumn = new CustomEditColumn('Notizen', 'notizen', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
@@ -9993,6 +10202,13 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
@@ -10008,9 +10224,23 @@
             $grid->AddPrintColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddPrintColumn($column);
+            
+            //
+            // View column for angaben_fr field
+            //
+            $column = new TextViewColumn('angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
             
@@ -10122,6 +10352,13 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
@@ -10137,9 +10374,23 @@
             $grid->AddExportColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column->SetOrderable(true);
+            $grid->AddExportColumn($column);
+            
+            //
+            // View column for angaben_fr field
+            //
+            $column = new TextViewColumn('angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddExportColumn($column);
             
@@ -10279,6 +10530,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name der Branche, z.B. Gesundheit, Energie'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
@@ -10300,6 +10562,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_beschreibung_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Beschreibung der Branche'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
@@ -10307,6 +10580,17 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('brancheGrid_angaben_handler_list');
             $column->SetDescription($this->RenderText('Angaben zur Branche'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for angaben_fr field
+            //
+            $column = new TextViewColumn('angaben_fr', 'Angaben Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_angaben_fr_handler_list');
+            $column->SetDescription($this->RenderText('Angaben zur Branche auf Französisch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -10452,6 +10736,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
@@ -10467,9 +10758,23 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for angaben_fr field
+            //
+            $column = new TextViewColumn('angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -10604,6 +10909,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_name_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französischer Name der Branche, z.B. Gesundheit, Energie'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
@@ -10625,6 +10941,17 @@
             $result->AddViewColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_beschreibung_fr_handler_list');
+            $column->SetDescription($this->RenderText('Französische Beschreibung der Branche'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
@@ -10632,6 +10959,17 @@
             $column->SetMaxLength(75);
             $column->SetFullTextWindowHandlerName('brancheGrid_angaben_handler_list');
             $column->SetDescription($this->RenderText('Angaben zur Branche'));
+            $column->SetFixedWidth(null);
+            $result->AddViewColumn($column);
+            
+            //
+            // View column for angaben_fr field
+            //
+            $column = new TextViewColumn('angaben_fr', 'Angaben Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $column->SetMaxLength(75);
+            $column->SetFullTextWindowHandlerName('brancheGrid_angaben_fr_handler_list');
+            $column->SetDescription($this->RenderText('Angaben zur Branche auf Französisch'));
             $column->SetFixedWidth(null);
             $result->AddViewColumn($column);
             
@@ -10777,6 +11115,13 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for anzeige_name field
             //
             $column = new TextViewColumn('kommission_id_anzeige_name', 'Kommission', $this->dataset);
@@ -10792,9 +11137,23 @@
             $result->AddPrintColumn($column);
             
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
+            $column->SetOrderable(true);
+            $result->AddPrintColumn($column);
+            
+            //
+            // View column for angaben_fr field
+            //
+            $column = new TextViewColumn('angaben_fr', 'Angaben Fr', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -10925,6 +11284,22 @@
         {
             symbol_update_metadata($page, $rowData, $cancel, $message, $tableName);
         }
+        public function symbol_klein_rel_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
+        {
+        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
+        FileUtils::ForceDirectories($targetFolder);
+        
+        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
+            array(
+                'original_file_name' => $original_file_name,
+                'original_file_extension' => $original_file_extension,
+                'file_size' => $file_size
+            )
+        );
+        $filepath = Path::Combine($targetFolder, $filename);
+        
+        $handled = true;
+        }
         public function symbol_abs_Thumbnail_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
@@ -10959,22 +11334,6 @@
         $handled = true;
         }
         public function symbol_rel_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
-        {
-        $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
-        FileUtils::ForceDirectories($targetFolder);
-        
-        $filename = ApplyVarablesMapToTemplate('%original_file_name%',
-            array(
-                'original_file_name' => $original_file_name,
-                'original_file_extension' => $original_file_extension,
-                'file_size' => $file_size
-            )
-        );
-        $filepath = Path::Combine($targetFolder, $filename);
-        
-        $handled = true;
-        }
-        public function symbol_klein_rel_GenerateFileName_edit(&$filepath, &$handled, $original_file_name, $original_file_extension, $file_size)
         {
         $targetFolder = FormatDatasetFieldsTemplate($this->GetDataset(), '' . $GLOBALS["public_files_dir_abs"] /*afterburner*/  . '/branche_symbole/%id%');
         FileUtils::ForceDirectories($targetFolder);
@@ -11157,6 +11516,39 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_name_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for name_fr field
+            //
+            $editor = new TextEdit('name_fr_edit');
+            $editor->SetSize(100);
+            $editor->SetMaxLength(100);
+            $editColumn = new CustomEditColumn('Name Fr', 'name_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_name_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -11188,6 +11580,35 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_beschreibung_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for beschreibung_fr field
+            //
+            $editor = new TextAreaEdit('beschreibung_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Beschreibung Fr', 'beschreibung_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_beschreibung_fr_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
@@ -11215,6 +11636,35 @@
             $column->SetInsertOperationColumn($editColumn);
             /* </inline insert column> */
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_angaben_handler_list', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for angaben_fr field
+            //
+            $column = new TextViewColumn('angaben_fr', 'Angaben Fr', $this->dataset);
+            $column->SetOrderable(true);
+            
+            /* <inline edit column> */
+            //
+            // Edit column for angaben_fr field
+            //
+            $editor = new TextAreaEdit('angaben_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Angaben Fr', 'angaben_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetEditOperationColumn($editColumn);
+            /* </inline edit column> */
+            
+            /* <inline insert column> */
+            //
+            // Edit column for angaben_fr field
+            //
+            $editor = new TextAreaEdit('angaben_fr_edit', 50, 8);
+            $editColumn = new CustomEditColumn('Angaben Fr', 'angaben_fr', $editor, $this->dataset);
+            $editColumn->SetAllowSetToNull(true);
+            $this->ApplyCommonColumnEditProperties($editColumn);
+            $column->SetInsertOperationColumn($editColumn);
+            /* </inline insert column> */
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_angaben_fr_handler_list', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field
@@ -11255,6 +11705,13 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_name_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for name_fr field
+            //
+            $column = new TextViewColumn('name_fr', 'Name Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_name_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for beschreibung field
             //
             $column = new TextViewColumn('beschreibung', 'Beschreibung', $this->dataset);
@@ -11262,11 +11719,25 @@
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_beschreibung_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
+            // View column for beschreibung_fr field
+            //
+            $column = new TextViewColumn('beschreibung_fr', 'Beschreibung Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_beschreibung_fr_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
             // View column for angaben field
             //
             $column = new TextViewColumn('angaben', 'Angaben', $this->dataset);
             $column->SetOrderable(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_angaben_handler_view', $column);
+            GetApplication()->RegisterHTTPHandler($handler);
+            //
+            // View column for angaben_fr field
+            //
+            $column = new TextViewColumn('angaben_fr', 'Angaben Fr', $this->dataset);
+            $column->SetOrderable(true);
+            $handler = new ShowTextBlobHandler($this->dataset, $this, 'brancheGrid_angaben_fr_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             //
             // View column for notizen field

@@ -1618,3 +1618,145 @@ ALTER TABLE `interessengruppe_log` ADD `alias_namen` VARCHAR( 255 ) NULL DEFAULT
 ALTER TABLE `organisation_beziehung` CHANGE `art` `art` ENUM( 'arbeitet fuer', 'mitglied von', 'tochtergesellschaft von', 'partner von', 'beteiligt an' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation';
 
 ALTER TABLE `organisation_beziehung_log` CHANGE `art` `art` ENUM( 'arbeitet fuer', 'mitglied von', 'tochtergesellschaft von', 'partner von', 'beteiligt an' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation';
+
+-- 17.11.2014 DEV
+
+ALTER TABLE `branche`
+  DROP `name_fr`,
+  DROP `beschreibung_fr`,
+  DROP `angaben_fr`;
+
+ALTER TABLE `fraktion`
+  DROP `name_fr`,
+  DROP `beschreibung_fr`;
+
+ALTER TABLE `interessengruppe`
+  DROP `name_fr`,
+  DROP `beschreibung_fr`,
+  DROP `alias_namen_fr`;
+
+ALTER TABLE `interessenraum`
+  DROP `name_fr`,
+  DROP `beschreibung_fr`;
+
+ALTER TABLE `kommission`
+  DROP `abkuerzung_fr`,
+  DROP `name_fr`,
+  DROP `beschreibung_fr`,
+  DROP `sachbereiche_fr`;
+
+ALTER TABLE `mil_grad`
+  DROP `name_fr`,
+  DROP `abkuerzung_fr`;
+
+ALTER TABLE `partei`
+  DROP `abkuerzung_fr`,
+  DROP `name_fr`,
+  DROP `homepage_fr`,
+  DROP `email_fr`,
+  DROP `twitter_name_fr`,
+  DROP `beschreibung_fr`;
+
+
+ALTER TABLE `branche_log`
+  DROP `name_fr`,
+  DROP `beschreibung_fr`,
+  DROP `angaben_fr`;
+
+ALTER TABLE `fraktion_log`
+  DROP `name_fr`,
+  DROP `beschreibung_fr`;
+
+ALTER TABLE `interessengruppe_log`
+  DROP `name_fr`,
+  DROP `beschreibung_fr`,
+  DROP `alias_namen_fr`;
+
+ALTER TABLE `kommission_log`
+  DROP `abkuerzung_fr`,
+  DROP `name_fr`,
+  DROP `beschreibung_fr`,
+  DROP `sachbereiche_fr`;
+
+ALTER TABLE `mil_grad_log`
+  DROP `name_fr`,
+  DROP `abkuerzung_fr`;
+
+ALTER TABLE `partei_log`
+  DROP `abkuerzung_fr`,
+  DROP `name_fr`,
+  DROP `homepage_fr`,
+  DROP `email_fr`,
+  DROP `twitter_name_fr`,
+  DROP `beschreibung_fr`;
+
+-- 17.11.2014
+
+ALTER TABLE `branche`
+  ADD `name_fr` varchar(100) DEFAULT NULL COMMENT 'Französischer Name der Branche, z.B. Gesundheit, Energie' AFTER `name`,
+  ADD `beschreibung_fr` text DEFAULT NULL COMMENT 'Französische Beschreibung der Branche' AFTER `beschreibung`,
+  ADD `angaben_fr` text DEFAULT NULL COMMENT 'Angaben zur Branche auf Französisch' AFTER `angaben`;
+
+ALTER TABLE `fraktion`
+  ADD `name_fr` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Fraktion' AFTER `name`,
+  ADD `beschreibung_fr` text DEFAULT NULL COMMENT 'Französische Beschreibung der Fraktion' AFTER `beschreibung`;
+
+ALTER TABLE `interessengruppe`
+  ADD `name_fr` varchar(150) DEFAULT NULL  COMMENT 'Französische Bezeichnung der Interessengruppe' AFTER `name`,
+  ADD `beschreibung_fr` text DEFAULT NULL  COMMENT 'Eingrenzung und Beschreibung zur Interessengruppe auf französisch' AFTER `beschreibung`,
+  ADD `alias_namen_fr` varchar(255) DEFAULT NULL COMMENT 'Strichpunkt-getrennte Aufzählung von alternativen französischen Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `alias_namen`;
+
+ALTER TABLE `interessenraum`
+  ADD `name_fr` varchar(50) DEFAULT NULL  COMMENT 'Französischer Name des Interessenbereiches' AFTER `name`,
+  ADD `beschreibung_fr` text DEFAULT NULL COMMENT 'Französische Beschreibung des Interessenraumes' AFTER `beschreibung`;
+
+ALTER TABLE `kommission`
+  ADD `abkuerzung_fr` varchar(15) DEFAULT NULL  COMMENT 'Französisches Kürzel der Kommission' AFTER `abkuerzung`,
+  ADD `name_fr` varchar(100) DEFAULT NULL  COMMENT 'Ausgeschriebener französischer Name der Kommission' AFTER `name`,
+  ADD `beschreibung_fr` text DEFAULT NULL COMMENT 'Französische Beschreibung der Kommission' AFTER `beschreibung`,
+  ADD `sachbereiche_fr` text DEFAULT NULL COMMENT 'Liste der Sachbereiche der Kommission auf französisch, abgetrennt durch ";".' AFTER `sachbereiche`;
+
+ALTER TABLE `mil_grad`
+  ADD `name_fr` varchar(30) DEFAULT NULL COMMENT 'Französischer Name des militärischen Grades' AFTER `name`,
+  ADD `abkuerzung_fr` varchar(10) DEFAULT NULL  COMMENT 'Französische Abkürzung des militärischen Grades' AFTER `abkuerzung`;
+
+ALTER TABLE `partei`
+  ADD `abkuerzung_fr` varchar(20) DEFAULT NULL  COMMENT 'Französische Parteiabkürzung' AFTER `abkuerzung`,
+  ADD `name_fr` varchar(100) DEFAULT NULL  COMMENT 'Ausgeschriebener französischer Name der Partei' AFTER `name`,
+  ADD `homepage_fr` varchar(255) DEFAULT NULL COMMENT 'Französische Homepage der Partei' AFTER `homepage`,
+  ADD `email_fr` varchar(100) DEFAULT NULL COMMENT 'Französische Kontakt E-Mail-Adresse der Partei' AFTER `email`,
+  ADD `twitter_name_fr` varchar(50) DEFAULT NULL COMMENT 'Französischer Twittername' AFTER `twitter_name`,
+  ADD `beschreibung_fr` text DEFAULT NULL COMMENT 'Französische Beschreibung der Partei' AFTER `beschreibung`;
+
+
+ALTER TABLE `branche_log`
+  ADD `name_fr` varchar(100) DEFAULT NULL COMMENT 'Französischer Name der Branche, z.B. Gesundheit, Energie' AFTER `name`,
+  ADD `beschreibung_fr` text DEFAULT NULL COMMENT 'Französische Beschreibung der Branche' AFTER `beschreibung`,
+  ADD `angaben_fr` text DEFAULT NULL COMMENT 'Angaben zur Branche auf Französisch' AFTER `angaben`;
+
+ALTER TABLE `fraktion_log`
+  ADD `name_fr` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Fraktion' AFTER `name`,
+  ADD `beschreibung_fr` text DEFAULT NULL COMMENT 'Französische Beschreibung der Fraktion' AFTER `beschreibung`;
+
+ALTER TABLE `interessengruppe_log`
+  ADD `name_fr` varchar(150) DEFAULT NULL  COMMENT 'Französische Bezeichnung der Interessengruppe' AFTER `name`,
+  ADD `beschreibung_fr` text DEFAULT NULL  COMMENT 'Eingrenzung und Beschreibung zur Interessengruppe auf französisch' AFTER `beschreibung`,
+  ADD `alias_namen_fr` varchar(255) DEFAULT NULL COMMENT 'Strichpunkt-getrennte Aufzählung von alternativen französischen Namen für die Lobbygruppe; bei der Suche werden für ein einfacheres Finden auch in den Alias-Namen gesucht.' AFTER `alias_namen`;
+
+ALTER TABLE `kommission_log`
+  ADD `abkuerzung_fr` varchar(15) DEFAULT NULL  COMMENT 'Französisches Kürzel der Kommission' AFTER `abkuerzung`,
+  ADD `name_fr` varchar(100) DEFAULT NULL  COMMENT 'Ausgeschriebener französischer Name der Kommission' AFTER `name`,
+  ADD `beschreibung_fr` text DEFAULT NULL COMMENT 'Französische Beschreibung der Kommission' AFTER `beschreibung`,
+  ADD `sachbereiche_fr` text DEFAULT NULL COMMENT 'Liste der Sachbereiche der Kommission auf französisch, abgetrennt durch ";".' AFTER `sachbereiche`;
+
+ALTER TABLE `mil_grad_log`
+  ADD `name_fr` varchar(30) DEFAULT NULL COMMENT 'Französischer Name des militärischen Grades' AFTER `name`,
+  ADD `abkuerzung_fr` varchar(10) DEFAULT NULL  COMMENT 'Französische Abkürzung des militärischen Grades' AFTER `abkuerzung`;
+
+ALTER TABLE `partei_log`
+  ADD `abkuerzung_fr` varchar(20) DEFAULT NULL  COMMENT 'Französische Parteiabkürzung' AFTER `abkuerzung`,
+  ADD `name_fr` varchar(100) DEFAULT NULL  COMMENT 'Ausgeschriebener französischer Name der Partei' AFTER `name`,
+  ADD `homepage_fr` varchar(255) DEFAULT NULL COMMENT 'Französische Homepage der Partei' AFTER `homepage`,
+  ADD `email_fr` varchar(100) DEFAULT NULL COMMENT 'Französische Kontakt E-Mail-Adresse der Partei' AFTER `email`,
+  ADD `twitter_name_fr` varchar(50) DEFAULT NULL COMMENT 'Französischer Twittername' AFTER `twitter_name`,
+  ADD `beschreibung_fr` text DEFAULT NULL COMMENT 'Französische Beschreibung der Partei' AFTER `beschreibung`;
