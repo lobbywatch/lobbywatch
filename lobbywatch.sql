@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.4.1
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 17. Nov 2014 um 10:12
--- Server Version: 5.6.12
--- PHP-Version: 5.5.1
+-- Erstellungszeit: 29. Nov 2014 um 05:32
+-- Server Version: 5.6.21
+-- PHP-Version: 5.5.19
 
 SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -251,12 +251,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `branche`;
 CREATE TABLE IF NOT EXISTS `branche` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Branche',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Branche',
   `name` varchar(100) NOT NULL COMMENT 'Name der Branche, z.B. Gesundheit, Energie',
   `name_fr` varchar(100) DEFAULT NULL COMMENT 'Französischer Name der Branche, z.B. Gesundheit, Energie',
   `kommission_id` int(11) DEFAULT NULL COMMENT 'Zuständige Kommission im Parlament',
@@ -282,11 +282,8 @@ CREATE TABLE IF NOT EXISTS `branche` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `branche_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
-  KEY `idx_kommission_freigabe` (`kommission_id`,`freigabe_datum`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=19 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen';
 
 --
 -- RELATIONEN DER TABELLE `branche`:
@@ -344,7 +341,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `branche_log`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `branche_log`;
@@ -376,15 +373,12 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `kommission_id` (`kommission_id`),
-  KEY `fk_branche_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen' AUTO_INCREMENT=48 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=utf8 COMMENT='Wirtschaftsbranchen';
 
 --
 -- RELATIONEN DER TABELLE `branche_log`:
@@ -397,12 +391,12 @@ CREATE TABLE IF NOT EXISTS `branche_log` (
 --
 -- Tabellenstruktur für Tabelle `country`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `country`;
 CREATE TABLE IF NOT EXISTS `country` (
-  `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',
+`id` int(10) NOT NULL COMMENT 'Primary key',
   `continent` enum('Antarctica','Australia','Africa','North America','South America','Europe','Asia') NOT NULL COMMENT 'Kontinent',
   `name_en` varchar(200) NOT NULL COMMENT 'Name des Landes auf Englisch',
   `official_name_en` varchar(200) NOT NULL COMMENT 'Offizieller Name des Landes (englisch)',
@@ -428,25 +422,20 @@ CREATE TABLE IF NOT EXISTS `country` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_name_de` (`name_de`),
-  UNIQUE KEY `idx_name_en` (`name_en`),
-  KEY `idx_show_level` (`show_level`),
-  KEY `idx_continent` (`continent`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Länder der Welt mit ISO Code (http://countrylist.net)' AUTO_INCREMENT=252 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=252 DEFAULT CHARSET=utf8 COMMENT='Länder der Welt mit ISO Code (http://countrylist.net)';
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `fraktion`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `fraktion`;
 CREATE TABLE IF NOT EXISTS `fraktion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Fraktion',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Fraktion',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Fraktionsabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Fraktion',
   `name_fr` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener französischer Name der Fraktion',
@@ -466,11 +455,8 @@ CREATE TABLE IF NOT EXISTS `fraktion` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `fraktion_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
-  UNIQUE KEY `fraktion_name_unique` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Fraktionen des Parlamentes' AUTO_INCREMENT=8 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='Fraktionen des Parlamentes';
 
 --
 -- Trigger `fraktion`
@@ -522,7 +508,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `fraktion_log`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `fraktion_log`;
@@ -548,14 +534,12 @@ CREATE TABLE IF NOT EXISTS `fraktion_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `fk_fraktion_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Fraktionen des Parlamentes' AUTO_INCREMENT=23 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 COMMENT='Fraktionen des Parlamentes';
 
 --
 -- RELATIONEN DER TABELLE `fraktion_log`:
@@ -568,12 +552,12 @@ CREATE TABLE IF NOT EXISTS `fraktion_log` (
 --
 -- Tabellenstruktur für Tabelle `interessenbindung`
 --
--- Erzeugt am: 13. Sep 2014 um 09:28
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `interessenbindung`;
 CREATE TABLE IF NOT EXISTS `interessenbindung` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessenbindung',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Interessenbindung',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell','gesellschafter') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Interessenbindung',
@@ -600,12 +584,8 @@ CREATE TABLE IF NOT EXISTS `interessenbindung` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `interessenbindung_art_parlamentarier_organisation_unique` (`art`,`parlamentarier_id`,`organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
-  KEY `parlamentarier_id` (`parlamentarier_id`,`organisation_id`),
-  KEY `organisation_id` (`organisation_id`,`parlamentarier_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=700 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=1339 DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern';
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung`:
@@ -665,7 +645,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessenbindung_log`
 --
--- Erzeugt am: 13. Sep 2014 um 09:28
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `interessenbindung_log`;
@@ -698,16 +678,12 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `idx_parlam` (`parlamentarier_id`),
-  KEY `idx_lobbyorg` (`organisation_id`),
-  KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern' AUTO_INCREMENT=3939 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=10001 DEFAULT CHARSET=utf8 COMMENT='Interessenbindungen von Parlamentariern';
 
 --
 -- RELATIONEN DER TABELLE `interessenbindung_log`:
@@ -720,12 +696,12 @@ CREATE TABLE IF NOT EXISTS `interessenbindung_log` (
 --
 -- Tabellenstruktur für Tabelle `interessengruppe`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `interessengruppe`;
 CREATE TABLE IF NOT EXISTS `interessengruppe` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessengruppe',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Interessengruppe',
   `name` varchar(150) NOT NULL COMMENT 'Bezeichnung der Interessengruppe',
   `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französische Bezeichnung der Interessengruppe',
   `branche_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Branche',
@@ -743,11 +719,8 @@ CREATE TABLE IF NOT EXISTS `interessengruppe` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `interessengruppe_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
-  KEY `idx_branche_freigabe` (`branche_id`,`freigabe_datum`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=118 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche';
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe`:
@@ -805,7 +778,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `interessengruppe_log`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `interessengruppe_log`;
@@ -829,15 +802,12 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `idx_lobbytyp` (`branche_id`),
-  KEY `fk_interessengruppe_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche' AUTO_INCREMENT=168 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=578 DEFAULT CHARSET=utf8 COMMENT='Interessengruppen einer Branche';
 
 --
 -- RELATIONEN DER TABELLE `interessengruppe_log`:
@@ -850,12 +820,12 @@ CREATE TABLE IF NOT EXISTS `interessengruppe_log` (
 --
 -- Tabellenstruktur für Tabelle `interessenraum`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `interessenraum`;
 CREATE TABLE IF NOT EXISTS `interessenraum` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Interessenraumes',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel des Interessenraumes',
   `name` varchar(50) NOT NULL COMMENT 'Name des Interessenbereiches',
   `name_fr` varchar(50) DEFAULT NULL COMMENT 'Französischer Name des Interessenbereiches',
   `beschreibung` text COMMENT 'Beschreibung des Interessenraumes',
@@ -871,23 +841,20 @@ CREATE TABLE IF NOT EXISTS `interessenraum` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `interessenraum_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
-  KEY `reihenfolge` (`reihenfolge`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Interessenbereiche (Stammdaten)' AUTO_INCREMENT=12 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='Liste der Interessenbereiche (Stammdaten)';
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `in_kommission`
 --
--- Erzeugt am: 13. Sep 2014 um 09:30
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `in_kommission`;
 CREATE TABLE IF NOT EXISTS `in_kommission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel einer Kommissionszugehörigkeit',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel einer Kommissionszugehörigkeit',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel des Parlamentariers',
   `kommission_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Kommission',
   `funktion` enum('praesident','vizepraesident','mitglied','co-praesident') NOT NULL DEFAULT 'mitglied' COMMENT 'Funktion des Parlamentariers in der Kommission',
@@ -903,14 +870,8 @@ CREATE TABLE IF NOT EXISTS `in_kommission` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `in_kommission_parlamentarier_kommission_funktion_unique` (`funktion`,`parlamentarier_id`,`kommission_id`,`bis`) COMMENT 'Fachlicher unique constraint',
-  KEY `idx_parlam_freigabe` (`parlamentarier_id`,`freigabe_datum`,`bis`,`kommission_id`),
-  KEY `idx_parlam` (`parlamentarier_id`,`bis`,`kommission_id`),
-  KEY `idx_kommission_freigabe` (`kommission_id`,`freigabe_datum`,`bis`,`parlamentarier_id`),
-  KEY `idx_kommission` (`kommission_id`,`bis`,`parlamentarier_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=635 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am'
+) ENGINE=InnoDB AUTO_INCREMENT=637 DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern';
 
 --
 -- RELATIONEN DER TABELLE `in_kommission`:
@@ -1015,7 +976,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `in_kommission_log`
 --
--- Erzeugt am: 13. Sep 2014 um 09:30
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `in_kommission_log`;
@@ -1037,16 +998,12 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `parlamentarier_id` (`parlamentarier_id`),
-  KEY `kommissions_id` (`kommission_id`),
-  KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern' AUTO_INCREMENT=1353 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=3149 DEFAULT CHARSET=utf8 COMMENT='Kommissionszugehörigkeit von Parlamentariern';
 
 --
 -- RELATIONEN DER TABELLE `in_kommission_log`:
@@ -1059,12 +1016,12 @@ CREATE TABLE IF NOT EXISTS `in_kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `kanton`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `kanton`;
 CREATE TABLE IF NOT EXISTS `kanton` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Kantons',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel des Kantons',
   `abkuerzung` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') NOT NULL COMMENT 'Kantonskürzel',
   `kantonsnr` tinyint(4) NOT NULL COMMENT 'Nummer des Kantons gemäss Verfassung',
   `name_de` varchar(50) NOT NULL COMMENT 'Deutscher Name des Kantons',
@@ -1092,11 +1049,8 @@ CREATE TABLE IF NOT EXISTS `kanton` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `abkuerzung` (`abkuerzung`),
-  UNIQUE KEY `kantonsnr` (`kantonsnr`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kantone der Schweiz' AUTO_INCREMENT=27 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='Kantone der Schweiz';
 
 --
 -- Trigger `kanton`
@@ -1148,12 +1102,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kanton_jahr`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `kanton_jahr`;
 CREATE TABLE IF NOT EXISTS `kanton_jahr` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Jahreswerte eines Kantons',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Jahreswerte eines Kantons',
   `kanton_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Kantons',
   `jahr` smallint(6) unsigned NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
   `anzahl_nationalraete` tinyint(4) unsigned NOT NULL COMMENT 'Anzahl Nationalräte des Kantons',
@@ -1175,11 +1129,8 @@ CREATE TABLE IF NOT EXISTS `kanton_jahr` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_kanton_jahr_unique` (`kanton_id`,`jahr`) COMMENT 'Fachlicher unique constraint',
-  KEY `kanton_id` (`kanton_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Kantonen' AUTO_INCREMENT=27 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Kantonen';
 
 --
 -- RELATIONEN DER TABELLE `kanton_jahr`:
@@ -1237,7 +1188,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kanton_jahr_log`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `kanton_jahr_log`;
@@ -1265,14 +1216,12 @@ CREATE TABLE IF NOT EXISTS `kanton_jahr_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `fk_kanton_jahr_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Kantonen' AUTO_INCREMENT=27 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Kantonen';
 
 --
 -- RELATIONEN DER TABELLE `kanton_jahr_log`:
@@ -1285,7 +1234,7 @@ CREATE TABLE IF NOT EXISTS `kanton_jahr_log` (
 --
 -- Tabellenstruktur für Tabelle `kanton_log`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `kanton_log`;
@@ -1319,14 +1268,12 @@ CREATE TABLE IF NOT EXISTS `kanton_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `fk_kanton_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kantone der Schweiz' AUTO_INCREMENT=53 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8 COMMENT='Kantone der Schweiz';
 
 --
 -- RELATIONEN DER TABELLE `kanton_log`:
@@ -1339,12 +1286,12 @@ CREATE TABLE IF NOT EXISTS `kanton_log` (
 --
 -- Tabellenstruktur für Tabelle `kommission`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `kommission`;
 CREATE TABLE IF NOT EXISTS `kommission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Kommission',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Kommission',
   `abkuerzung` varchar(15) NOT NULL COMMENT 'Kürzel der Kommission',
   `abkuerzung_fr` varchar(15) DEFAULT NULL COMMENT 'Französisches Kürzel der Kommission',
   `name` varchar(100) NOT NULL COMMENT 'Ausgeschriebener Name der Kommission',
@@ -1369,12 +1316,8 @@ CREATE TABLE IF NOT EXISTS `kommission` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `kommission_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
-  UNIQUE KEY `kommission_name_unique` (`name`) COMMENT 'Fachlicher unique constraint',
-  KEY `zugehoerige_kommission` (`mutter_kommission_id`,`freigabe_datum`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=47 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen';
 
 --
 -- RELATIONEN DER TABELLE `kommission`:
@@ -1423,6 +1366,24 @@ CREATE TRIGGER `trg_kommission_log_upd` AFTER UPDATE ON `kommission`
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `kommission_log`
     SELECT *, null, 'update', null, NOW(), null FROM `kommission` WHERE id = NEW.id ;
+
+  -- Propagate freigabe from kommission to his interessenbindungen
+  IF OLD.freigabe_datum <> NEW.freigabe_datum
+    OR (OLD.freigabe_datum IS NULL AND NEW.freigabe_datum IS NOT NULL)
+    OR (OLD.freigabe_datum IS NOT NULL AND NEW.freigabe_datum IS NULL) THEN
+	  -- in_kommission
+	  -- Avoid ERROR 1442 (HY000): Cant update table 'in_kommission' in stored function/trigger because it is already used by statement which invoked this stored function/trigger
+	  -- SET @disable_parlamentarier_kommissionen_update = 1;
+	  UPDATE `in_kommission`
+	    SET
+	    freigabe_datum = NEW.freigabe_datum,
+	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+	    updated_date = NEW.updated_date,
+	    updated_visa = CONCAT(NEW.updated_visa, '*')
+	    WHERE
+	    kommission_id=NEW.id AND bis IS NULL;
+	  -- SET @disable_parlamentarier_kommissionen_update = NULL;
+  END IF;
 end
 //
 DELIMITER ;
@@ -1432,7 +1393,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `kommission_log`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `kommission_log`;
@@ -1463,15 +1424,12 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `zugehoerige_kommission` (`mutter_kommission_id`),
-  KEY `fk_kommission_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen' AUTO_INCREMENT=38 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8 COMMENT='Parlamententskommissionen';
 
 --
 -- RELATIONEN DER TABELLE `kommission_log`:
@@ -1484,12 +1442,12 @@ CREATE TABLE IF NOT EXISTS `kommission_log` (
 --
 -- Tabellenstruktur für Tabelle `mandat`
 --
--- Erzeugt am: 13. Sep 2014 um 10:21
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `mandat`;
 CREATE TABLE IF NOT EXISTS `mandat` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `zutrittsberechtigung_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Zutrittsberechtigung.',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation',
   `art` enum('mitglied','geschaeftsfuehrend','vorstand','taetig','beirat','finanziell','gesellschafter') NOT NULL DEFAULT 'mitglied' COMMENT 'Art der Funktion des Mandatsträgers innerhalb der Organisation',
@@ -1513,12 +1471,8 @@ CREATE TABLE IF NOT EXISTS `mandat` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `mandat_zutrittsberechtigung_organisation_art_unique` (`art`,`zutrittsberechtigung_id`,`organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
-  KEY `organisations_id` (`organisation_id`,`zutrittsberechtigung_id`),
-  KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`,`organisation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=363 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am'
+) ENGINE=InnoDB AUTO_INCREMENT=636 DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten';
 
 --
 -- RELATIONEN DER TABELLE `mandat`:
@@ -1578,7 +1532,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mandat_log`
 --
--- Erzeugt am: 13. Sep 2014 um 10:21
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `mandat_log`;
@@ -1608,16 +1562,12 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `organisations_id` (`organisation_id`),
-  KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`),
-  KEY `fk_mandat_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten' AUTO_INCREMENT=1564 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=4725 DEFAULT CHARSET=utf8 COMMENT='Mandate der Zugangsberechtigten';
 
 --
 -- RELATIONEN DER TABELLE `mandat_log`:
@@ -1630,12 +1580,12 @@ CREATE TABLE IF NOT EXISTS `mandat_log` (
 --
 -- Tabellenstruktur für Tabelle `mil_grad`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `mil_grad`;
 CREATE TABLE IF NOT EXISTS `mil_grad` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel Militärischer Grad',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel Militärischer Grad',
   `name` varchar(30) NOT NULL COMMENT 'Name des militärischen Grades',
   `name_fr` varchar(30) DEFAULT NULL COMMENT 'Französischer Name des militärischen Grades',
   `abkuerzung` varchar(10) NOT NULL COMMENT 'Abkürzung des militärischen Grades',
@@ -1646,11 +1596,8 @@ CREATE TABLE IF NOT EXISTS `mil_grad` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name_unique` (`name`),
-  UNIQUE KEY `abkuerzung_unique` (`abkuerzung`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Militärische Grade (Armee XXI)' AUTO_INCREMENT=24 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am'
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='Militärische Grade (Armee XXI)';
 
 --
 -- Trigger `mil_grad`
@@ -1702,7 +1649,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `mil_grad_log`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `mil_grad_log`;
@@ -1719,14 +1666,12 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `fk_mil_grad_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Militärische Grade (Armee XXI)' AUTO_INCREMENT=1 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Militärische Grade (Armee XXI)';
 
 --
 -- RELATIONEN DER TABELLE `mil_grad_log`:
@@ -1739,7 +1684,7 @@ CREATE TABLE IF NOT EXISTS `mil_grad_log` (
 --
 -- Tabellenstruktur für Tabelle `mv_interessenbindung`
 --
--- Erzeugt am: 17. Nov 2014 um 09:12
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `mv_interessenbindung`;
@@ -1781,17 +1726,10 @@ CREATE TABLE IF NOT EXISTS `mv_interessenbindung` (
   `freigabe_datum_unix` bigint(11) DEFAULT NULL,
   `wirksamkeit` varchar(6) NOT NULL DEFAULT '',
   `parlamentarier_im_rat_seit` date NOT NULL COMMENT 'Jahr der Zugehörigkeit zum Parlament',
-  `wirksamkeit_index` int(0) NOT NULL DEFAULT '0',
+  `wirksamkeit_index` int(11) NOT NULL DEFAULT '0',
   `organisation_lobbyeinfluss` varchar(9) DEFAULT NULL,
   `parlamentarier_lobbyfaktor` bigint(25) DEFAULT NULL,
-  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  PRIMARY KEY (`id`),
-  KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`,`freigabe_datum`,`bis`,`organisation_id`),
-  KEY `idx_parlam_bis` (`parlamentarier_id`,`bis`,`organisation_id`),
-  KEY `idx_parlam` (`parlamentarier_id`,`organisation_id`),
-  KEY `idx_org_freigabe_bis` (`organisation_id`,`freigabe_datum`,`bis`,`parlamentarier_id`),
-  KEY `idx_org_bis` (`organisation_id`,`bis`,`parlamentarier_id`),
-  KEY `idx_org` (`organisation_id`,`parlamentarier_id`)
+  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for v_interessenbindung';
 
 -- --------------------------------------------------------
@@ -1799,7 +1737,7 @@ CREATE TABLE IF NOT EXISTS `mv_interessenbindung` (
 --
 -- Tabellenstruktur für Tabelle `mv_mandat`
 --
--- Erzeugt am: 17. Nov 2014 um 09:12
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `mv_mandat`;
@@ -1837,16 +1775,9 @@ CREATE TABLE IF NOT EXISTS `mv_mandat` (
   `kontrolliert_datum_unix` bigint(11) DEFAULT NULL,
   `freigabe_datum_unix` bigint(11) DEFAULT NULL,
   `wirksamkeit` varchar(6) NOT NULL DEFAULT '',
-  `wirksamkeit_index` int(0) NOT NULL DEFAULT '0',
+  `wirksamkeit_index` int(11) NOT NULL DEFAULT '0',
   `organisation_lobbyeinfluss` varchar(9) DEFAULT NULL,
-  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  PRIMARY KEY (`id`),
-  KEY `idx_zutritt_freigabe_bis` (`zutrittsberechtigung_id`,`freigabe_datum`,`bis`,`organisation_id`),
-  KEY `idx_zutritt_bis` (`zutrittsberechtigung_id`,`bis`,`organisation_id`),
-  KEY `idx_zutritt` (`zutrittsberechtigung_id`,`organisation_id`),
-  KEY `idx_org_freigabe_bis` (`organisation_id`,`freigabe_datum`,`bis`,`zutrittsberechtigung_id`),
-  KEY `idx_org_bis` (`organisation_id`,`bis`,`zutrittsberechtigung_id`),
-  KEY `idx_org` (`organisation_id`,`zutrittsberechtigung_id`)
+  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for v_mandat';
 
 -- --------------------------------------------------------
@@ -1854,7 +1785,7 @@ CREATE TABLE IF NOT EXISTS `mv_mandat` (
 --
 -- Tabellenstruktur für Tabelle `mv_organisation`
 --
--- Erzeugt am: 17. Nov 2014 um 09:12
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `mv_organisation`;
@@ -1902,18 +1833,18 @@ CREATE TABLE IF NOT EXISTS `mv_organisation` (
   `branche` varchar(100) DEFAULT NULL,
   `interessengruppe` varchar(150) DEFAULT NULL,
   `interessengruppe_branche` varchar(100) DEFAULT NULL,
-  `interessengruppe_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
+  `interessengruppe_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
   `interessengruppe2` varchar(150) DEFAULT NULL,
   `interessengruppe2_branche` varchar(100) DEFAULT NULL,
-  `interessengruppe2_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
+  `interessengruppe2_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
   `interessengruppe3` varchar(150) DEFAULT NULL,
   `interessengruppe3_branche` varchar(100) DEFAULT NULL,
-  `interessengruppe3_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
+  `interessengruppe3_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
   `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  `land` varchar(200) COMMENT 'Name des Landes auf Deutsch',
-  `interessenraum` varchar(50) COMMENT 'Name des Interessenbereiches',
+  `land` varchar(200) DEFAULT NULL COMMENT 'Name des Landes auf Deutsch',
+  `interessenraum` varchar(50) DEFAULT NULL COMMENT 'Name des Interessenbereiches',
   `organisation_jahr_id` int(11) DEFAULT NULL COMMENT 'Technischer Schlüssel der Jahreswerte einer Organisation',
-  `jahr` smallint(6) unsigned COMMENT 'Jahr auf welche sich die Werte beziehen',
+  `jahr` smallint(6) unsigned DEFAULT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
   `umsatz` bigint(20) DEFAULT NULL COMMENT 'Umsatz der Organisation in Franken',
   `gewinn` bigint(20) DEFAULT NULL COMMENT 'Gewinn der Organisation in Franken',
   `kapital` bigint(20) unsigned DEFAULT NULL COMMENT 'Marktkapitalisierung, Stiftungskapital, … in Franken',
@@ -1931,18 +1862,7 @@ CREATE TABLE IF NOT EXISTS `mv_organisation` (
   `anzahl_mandat_mittel` tinyint(3) unsigned DEFAULT NULL,
   `anzahl_mandat_hoch` tinyint(3) unsigned DEFAULT NULL,
   `lobbyeinfluss` varchar(9) DEFAULT NULL,
-  `lobbyeinfluss_index` int(0) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_freigabe` (`freigabe_datum`),
-  KEY `idx_branche_freigabe` (`branche_id`,`freigabe_datum`),
-  KEY `idx_interessengruppe_freigabe` (`interessengruppe_id`,`freigabe_datum`),
-  KEY `idx_interessengruppe2_freigabe` (`interessengruppe2_id`,`freigabe_datum`),
-  KEY `idx_interessengruppe3_freigabe` (`interessengruppe3_id`,`freigabe_datum`),
-  KEY `idx_interessengruppe_branche_freigabe` (`interessengruppe_branche_id`,`freigabe_datum`),
-  KEY `idx_interessengruppe2_branche_freigabe` (`interessengruppe2_branche_id`,`freigabe_datum`),
-  KEY `idx_interessengruppe3_branche_freigabe` (`interessengruppe3_branche_id`,`freigabe_datum`),
-  KEY `land` (`land_id`,`freigabe_datum`),
-  KEY `interessenraum_id` (`interessenraum_id`,`freigabe_datum`)
+  `lobbyeinfluss_index` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for v_organisation';
 
 -- --------------------------------------------------------
@@ -1950,7 +1870,7 @@ CREATE TABLE IF NOT EXISTS `mv_organisation` (
 --
 -- Tabellenstruktur für Tabelle `mv_parlamentarier`
 --
--- Erzeugt am: 17. Nov 2014 um 09:12
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `mv_parlamentarier`;
@@ -2030,19 +1950,19 @@ CREATE TABLE IF NOT EXISTS `mv_parlamentarier` (
   `von_unix` bigint(11) NOT NULL DEFAULT '0',
   `bis_unix` bigint(11) DEFAULT NULL,
   `vertretene_bevoelkerung` bigint(13) unsigned DEFAULT NULL,
-  `rat` varchar(10) COMMENT 'Kürzel des Rates',
+  `rat` varchar(10) DEFAULT NULL COMMENT 'Kürzel des Rates',
   `ratstyp_BAD` varchar(10) DEFAULT NULL COMMENT 'Not used, duplicate',
   `kanton_abkuerzung_BAD` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') DEFAULT NULL COMMENT 'Not used, duplicate',
-  `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') COMMENT 'Kantonskürzel',
-  `kanton_name_de` varchar(50) COMMENT 'Deutscher Name des Kantons',
+  `kanton` enum('AG','AR','AI','BL','BS','BE','FR','GE','GL','GR','JU','LU','NE','NW','OW','SH','SZ','SO','SG','TI','TG','UR','VD','VS','ZG','ZH') DEFAULT NULL COMMENT 'Kantonskürzel',
+  `kanton_name_de` varchar(50) DEFAULT NULL COMMENT 'Deutscher Name des Kantons',
   `kommissionen_namen` text,
   `kommissionen_abkuerzung` text,
   `kommissionen_anzahl` bigint(21) NOT NULL DEFAULT '0',
-  `partei` varchar(20) COMMENT 'Parteiabkürzung',
+  `partei` varchar(20) DEFAULT NULL COMMENT 'Parteiabkürzung',
   `partei_name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
-  `fraktion` varchar(20) COMMENT 'Fraktionsabkürzung',
-  `militaerischer_grad` varchar(30) COMMENT 'Name des militärischen Grades',
-  `beruf_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
+  `fraktion` varchar(20) DEFAULT NULL COMMENT 'Fraktionsabkürzung',
+  `militaerischer_grad` varchar(30) DEFAULT NULL COMMENT 'Name des militärischen Grades',
+  `beruf_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
   `titel_de` varchar(74) DEFAULT NULL,
   `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
   `anzahl_interessenbindung_tief` tinyint(3) unsigned DEFAULT NULL,
@@ -2056,34 +1976,7 @@ CREATE TABLE IF NOT EXISTS `mv_parlamentarier` (
   `lobbyfaktor_percent_max` decimal(4,3) unsigned DEFAULT NULL,
   `anzahl_interessenbindung_tief_max` tinyint(3) unsigned DEFAULT NULL,
   `anzahl_interessenbindung_mittel_max` tinyint(3) unsigned DEFAULT NULL,
-  `anzahl_interessenbindung_hoch_max` tinyint(3) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_freigabe_bis` (`freigabe_datum`,`im_rat_bis`),
-  KEY `idx_bis` (`im_rat_bis`),
-  KEY `idx_rat_freigabe_bis` (`rat`,`freigabe_datum`,`im_rat_bis`),
-  KEY `idx_rat_bis` (`rat`,`im_rat_bis`),
-  KEY `idx_rat_id_freigabe_bis` (`rat_id`,`freigabe_datum`,`im_rat_bis`),
-  KEY `idx_rat_id_bis` (`rat_id`,`im_rat_bis`),
-  KEY `idx_kanton_freigabe_bis` (`kanton`,`freigabe_datum`,`im_rat_bis`),
-  KEY `idx_kanton_bis` (`kanton`,`im_rat_bis`),
-  KEY `idx_kanton_partei_freigabe_bis` (`kanton`,`partei`,`freigabe_datum`,`im_rat_bis`),
-  KEY `idx_kanton_partei_bis` (`kanton`,`partei`,`im_rat_bis`),
-  KEY `idx_kanton_id_freigabe_bis` (`kanton_id`,`freigabe_datum`,`im_rat_bis`),
-  KEY `idx_kanton_id_bis` (`kanton_id`,`im_rat_bis`),
-  KEY `idx_partei_freigabe_bis` (`partei`,`freigabe_datum`,`im_rat_bis`),
-  KEY `idx_partei_bis` (`partei`,`im_rat_bis`),
-  KEY `idx_partei_id_freigabe_bis` (`partei_id`,`freigabe_datum`,`im_rat_bis`),
-  KEY `idx_partei_id_bis` (`partei_id`,`im_rat_bis`),
-  KEY `beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`,`freigabe_datum`,`im_rat_bis`),
-  KEY `beruf_interessengruppe_id` (`beruf_interessengruppe_id`,`im_rat_bis`),
-  KEY `beruf_branche_id_freigabe` (`beruf_branche_id`,`freigabe_datum`,`im_rat_bis`),
-  KEY `beruf_branche_id` (`beruf_branche_id`,`im_rat_bis`),
-  KEY `militaerischer_grad_freigabe` (`militaerischer_grad_id`,`freigabe_datum`,`im_rat_bis`),
-  KEY `militaerischer_grad` (`militaerischer_grad_id`,`im_rat_bis`),
-  KEY `fraktion_freigabe_bis` (`fraktion`,`im_rat_bis`),
-  KEY `fraktion_bis` (`fraktion`,`freigabe_datum`,`im_rat_bis`),
-  KEY `fraktion_id_freigabe_bis` (`fraktion_id`,`freigabe_datum`,`im_rat_bis`),
-  KEY `fraktion_id_bis` (`fraktion_id`,`im_rat_bis`)
+  `anzahl_interessenbindung_hoch_max` tinyint(3) unsigned DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for v_parlamentarier';
 
 -- --------------------------------------------------------
@@ -2091,7 +1984,7 @@ CREATE TABLE IF NOT EXISTS `mv_parlamentarier` (
 --
 -- Tabellenstruktur für Tabelle `mv_search_table`
 --
--- Erzeugt am: 17. Nov 2014 um 09:12
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `mv_search_table`;
@@ -2105,11 +1998,7 @@ CREATE TABLE IF NOT EXISTS `mv_search_table` (
   `freigabe_datum` timestamp NULL DEFAULT NULL,
   `bis` date DEFAULT NULL,
   `weight` bigint(20) DEFAULT NULL,
-  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  PRIMARY KEY (`id`,`table_name`),
-  KEY `idx_search_str_long` (`freigabe_datum`,`bis`,`table_weight`,`weight`,`name`(255)),
-  KEY `idx_search_str_medium` (`freigabe_datum`,`table_weight`,`weight`,`name`(255)),
-  KEY `idx_search_str_short` (`table_weight`,`weight`,`name`(255))
+  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for parlamentarier, zutrittsberechtigung, branche, interessengruppe, kommission, organisation, partei';
 
 -- --------------------------------------------------------
@@ -2117,7 +2006,7 @@ CREATE TABLE IF NOT EXISTS `mv_search_table` (
 --
 -- Tabellenstruktur für Tabelle `mv_zutrittsberechtigung`
 --
--- Erzeugt am: 17. Nov 2014 um 09:12
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `mv_zutrittsberechtigung`;
@@ -2168,8 +2057,8 @@ CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung` (
   `eingabe_abgeschlossen_datum_unix` bigint(11) DEFAULT NULL,
   `kontrolliert_datum_unix` bigint(11) DEFAULT NULL,
   `freigabe_datum_unix` bigint(11) DEFAULT NULL,
-  `beruf_branche_id` int(11) COMMENT 'Fremdschlüssel Branche',
-  `partei` varchar(20) COMMENT 'Parteiabkürzung',
+  `beruf_branche_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel Branche',
+  `partei` varchar(20) DEFAULT NULL COMMENT 'Parteiabkürzung',
   `parlamentarier_name` varchar(152) DEFAULT NULL,
   `parlamentarier_freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
   `parlamentarier_freigabe_datum_unix` bigint(11) DEFAULT NULL,
@@ -2182,18 +2071,7 @@ CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung` (
   `anzahl_mandat_tief_max` tinyint(3) unsigned DEFAULT NULL,
   `anzahl_mandat_mittel_max` tinyint(3) unsigned DEFAULT NULL,
   `anzahl_mandat_hoch_max` tinyint(3) unsigned DEFAULT NULL,
-  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am',
-  PRIMARY KEY (`id`),
-  KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`,`freigabe_datum`,`bis`),
-  KEY `idx_parlam_bis` (`parlamentarier_id`,`bis`),
-  KEY `idx_partei_freigabe` (`partei`,`freigabe_datum`,`bis`),
-  KEY `idx_partei` (`partei`,`bis`),
-  KEY `idx_partei_id_freigabe` (`partei_id`,`freigabe_datum`,`bis`),
-  KEY `idx_partei_id` (`partei_id`,`bis`),
-  KEY `idx_beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`,`freigabe_datum`,`bis`),
-  KEY `idx_beruf_interessengruppe_id` (`beruf_interessengruppe_id`,`bis`),
-  KEY `idx_beruf_branche_id_freigabe` (`beruf_branche_id`,`freigabe_datum`,`bis`),
-  KEY `idx_beruf_branche_id` (`beruf_branche_id`,`bis`)
+  `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Materialzed view for v_zutrittsberechtigung';
 
 -- --------------------------------------------------------
@@ -2201,12 +2079,12 @@ CREATE TABLE IF NOT EXISTS `mv_zutrittsberechtigung` (
 --
 -- Tabellenstruktur für Tabelle `organisation`
 --
--- Erzeugt am: 16. Nov 2014 um 15:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `organisation`;
 CREATE TABLE IF NOT EXISTS `organisation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Lobbyorganisation',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Lobbyorganisation',
   `name_de` varchar(150) NOT NULL COMMENT 'Name der Organisation. Sollte nur juristischem Namen entsprechen, ohne Zusätze, wie Adresse.',
   `name_fr` varchar(150) DEFAULT NULL COMMENT 'Französischer Name',
   `name_it` varchar(150) DEFAULT NULL COMMENT 'Italienischer Name',
@@ -2238,31 +2116,21 @@ CREATE TABLE IF NOT EXISTS `organisation` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `organisation_name_de_unique` (`name_de`) COMMENT 'Fachlicher unique constraint',
-  UNIQUE KEY `organisation_name_fr_unique` (`name_fr`) COMMENT 'Fachlicher unique constraint',
-  UNIQUE KEY `organisation_name_it_unique` (`name_it`) COMMENT 'Fachlicher unique constraint',
-  KEY `idx_lobbytyp` (`branche_id`),
-  KEY `idx_lobbygroup` (`interessengruppe_id`),
-  KEY `interessengruppe2_id` (`interessengruppe2_id`),
-  KEY `interessengruppe3_id` (`interessengruppe3_id`),
-  KEY `land` (`land_id`),
-  KEY `interessenraum_id` (`interessenraum_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=945 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=1579 DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen';
 
 --
 -- RELATIONEN DER TABELLE `organisation`:
 --   `interessengruppe_id`
 --       `interessengruppe` -> `id`
---   `interessengruppe2_id`
---       `interessengruppe` -> `id`
---   `interessengruppe3_id`
---       `interessengruppe` -> `id`
 --   `land_id`
 --       `country` -> `id`
 --   `interessenraum_id`
 --       `interessenraum` -> `id`
+--   `interessengruppe2_id`
+--       `interessengruppe` -> `id`
+--   `interessengruppe3_id`
+--       `interessengruppe` -> `id`
 --
 
 --
@@ -2337,12 +2205,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_anhang`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `organisation_anhang`;
 CREATE TABLE IF NOT EXISTS `organisation_anhang` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Organisationsanhangs',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel des Organisationsanhangs',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Organisation',
   `datei` varchar(255) NOT NULL COMMENT 'Datei',
   `dateiname` varchar(255) NOT NULL COMMENT 'Dateiname ohne Erweiterung',
@@ -2356,10 +2224,8 @@ CREATE TABLE IF NOT EXISTS `organisation_anhang` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  KEY `organisation_id` (`organisation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen' AUTO_INCREMENT=2 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen';
 
 --
 -- RELATIONEN DER TABELLE `organisation_anhang`:
@@ -2417,7 +2283,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_anhang_log`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `organisation_anhang_log`;
@@ -2437,15 +2303,12 @@ CREATE TABLE IF NOT EXISTS `organisation_anhang_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `organisation_id` (`organisation_id`),
-  KEY `fk_organisation_anhang_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen' AUTO_INCREMENT=2 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Organisationen';
 
 --
 -- RELATIONEN DER TABELLE `organisation_anhang_log`:
@@ -2458,12 +2321,12 @@ CREATE TABLE IF NOT EXISTS `organisation_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung`
 --
--- Erzeugt am: 16. Nov 2014 um 16:01
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung`;
 CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel einer Organisationsbeziehung',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel einer Organisationsbeziehung',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Organisation.',
   `ziel_organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel der Zielorganisation.',
   `art` enum('arbeitet fuer','mitglied von','tochtergesellschaft von','partner von','beteiligt an') NOT NULL COMMENT 'Beschreibt die Beziehung einer Organisation zu einer Zielorgansation',
@@ -2482,16 +2345,8 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `organisation_beziehung_organisation_zielorganisation_art_unique` (`art`,`organisation_id`,`ziel_organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint',
-  KEY `idx_org_freigabe` (`organisation_id`,`freigabe_datum`,`bis`,`ziel_organisation_id`),
-  KEY `idx_org` (`organisation_id`,`bis`,`ziel_organisation_id`),
-  KEY `idx_ziel_freigabe` (`ziel_organisation_id`,`freigabe_datum`,`bis`,`organisation_id`),
-  KEY `idx_ziel` (`ziel_organisation_id`,`bis`,`organisation_id`),
-  KEY `organisation_id` (`organisation_id`,`ziel_organisation_id`),
-  KEY `ziel_organisation_id` (`ziel_organisation_id`,`organisation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=225 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am'
+) ENGINE=InnoDB AUTO_INCREMENT=536 DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander';
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung`:
@@ -2551,7 +2406,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_beziehung_log`
 --
--- Erzeugt am: 16. Nov 2014 um 20:19
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `organisation_beziehung_log`;
@@ -2576,16 +2431,12 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `organisation_id` (`organisation_id`),
-  KEY `ziel_organisation_id` (`ziel_organisation_id`),
-  KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander' AUTO_INCREMENT=431 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=2535 DEFAULT CHARSET=utf8 COMMENT='Beschreibt die Beziehung von Organisationen zueinander';
 
 --
 -- RELATIONEN DER TABELLE `organisation_beziehung_log`:
@@ -2598,12 +2449,12 @@ CREATE TABLE IF NOT EXISTS `organisation_beziehung_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_jahr`
 --
--- Erzeugt am: 21. Jul 2014 um 14:29
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `organisation_jahr`;
 CREATE TABLE IF NOT EXISTS `organisation_jahr` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Jahreswerte einer Organisation',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Jahreswerte einer Organisation',
   `organisation_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Kantons',
   `jahr` smallint(6) unsigned NOT NULL COMMENT 'Jahr auf welche sich die Werte beziehen',
   `umsatz` bigint(20) DEFAULT NULL COMMENT 'Umsatz der Organisation in Franken',
@@ -2625,11 +2476,8 @@ CREATE TABLE IF NOT EXISTS `organisation_jahr` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_organisation_jahr_unique` (`organisation_id`,`jahr`) COMMENT 'Fachlicher unique constraint',
-  KEY `organisation_id` (`organisation_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Organisationen' AUTO_INCREMENT=2 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Organisationen';
 
 --
 -- RELATIONEN DER TABELLE `organisation_jahr`:
@@ -2687,7 +2535,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `organisation_jahr_log`
 --
--- Erzeugt am: 21. Jul 2014 um 14:29
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `organisation_jahr_log`;
@@ -2715,15 +2563,12 @@ CREATE TABLE IF NOT EXISTS `organisation_jahr_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `organisation_id` (`organisation_id`),
-  KEY `fk_organisation_jahr_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Organisationen' AUTO_INCREMENT=2 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Jahresbasierte Angaben zu Organisationen';
 
 --
 -- RELATIONEN DER TABELLE `organisation_jahr_log`:
@@ -2736,7 +2581,7 @@ CREATE TABLE IF NOT EXISTS `organisation_jahr_log` (
 --
 -- Tabellenstruktur für Tabelle `organisation_log`
 --
--- Erzeugt am: 16. Nov 2014 um 20:19
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `organisation_log`;
@@ -2774,18 +2619,12 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `idx_lobbytyp` (`branche_id`),
-  KEY `idx_lobbygroup` (`interessengruppe_id`),
-  KEY `interessengruppe2_id` (`interessengruppe2_id`),
-  KEY `interessengruppe3_id` (`interessengruppe3_id`),
-  KEY `fk_organisation_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen' AUTO_INCREMENT=3709 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=10087 DEFAULT CHARSET=utf8 COMMENT='Liste der Lobbyorganisationen';
 
 --
 -- RELATIONEN DER TABELLE `organisation_log`:
@@ -2798,12 +2637,12 @@ CREATE TABLE IF NOT EXISTS `organisation_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier`
 --
--- Erzeugt am: 13. Sep 2014 um 09:23
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `parlamentarier`;
 CREATE TABLE IF NOT EXISTS `parlamentarier` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Parlamentariers',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel des Parlamentariers',
   `nachname` varchar(100) NOT NULL COMMENT 'Nachname des Parlamentariers',
   `vorname` varchar(50) NOT NULL COMMENT 'Vornahme des Parlamentariers',
   `zweiter_vorname` varchar(50) DEFAULT NULL COMMENT 'Zweiter Vorname des Parlamentariers',
@@ -2862,17 +2701,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `parlamentarier_rat_sitzplatz` (`rat_id`,`sitzplatz`,`im_rat_bis`) COMMENT 'Fachlicher unique constraint',
-  UNIQUE KEY `parlamentarier_nachname_vorname_unique` (`nachname`,`vorname`,`zweiter_vorname`) COMMENT 'Fachlicher unique constraint',
-  KEY `idx_partei` (`partei_id`),
-  KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
-  KEY `militaerischer_grad` (`militaerischer_grad_id`),
-  KEY `fraktion_id` (`fraktion_id`),
-  KEY `rat_id` (`rat_id`),
-  KEY `kanton_id` (`kanton_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=255 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=257 DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier';
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier`:
@@ -2958,7 +2788,10 @@ CREATE TRIGGER `trg_parlamentarier_log_upd` AFTER UPDATE ON `parlamentarier`
 	    updated_visa = CONCAT(NEW.updated_visa, '*')
 	    WHERE
 	    parlamentarier_id=NEW.id AND bis IS NULL;
-	
+
+	  -- TODO organisationen von interessenbindungen?
+	  -- TODO set non-null freigabe_datum only if freigabe_datum IS NULL
+
 	  -- zutrittsberechtigung
 	  UPDATE `zutrittsberechtigung`
 	    SET
@@ -2968,25 +2801,28 @@ CREATE TRIGGER `trg_parlamentarier_log_upd` AFTER UPDATE ON `parlamentarier`
 	    updated_visa = CONCAT(NEW.updated_visa, '*')
 	    WHERE
 	    parlamentarier_id=NEW.id AND bis IS NULL;
-	
+
+	  -- TODO organisationen von zutrittsberechtigten?
+
 	  -- in_kommission
-	  SET @disable_parlamentarier_kommissionen_update = 1;
-	  UPDATE `in_kommission`
-	    SET
-	    freigabe_datum = NEW.freigabe_datum,
-	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
-	    updated_date = NEW.updated_date,
-	    updated_visa = CONCAT(NEW.updated_visa, '*')
-	    WHERE
-	    parlamentarier_id=NEW.id AND bis IS NULL;
-	  SET @disable_parlamentarier_kommissionen_update = NULL;
+	  -- Avoid ERROR 1442 (HY000): Cant update table 'in_kommission' in stored function/trigger because it is already used by statement which invoked this stored function/trigger
+-- 	  SET @disable_parlamentarier_kommissionen_update = 1;
+-- 	  UPDATE `in_kommission`
+-- 	    SET
+-- 	    freigabe_datum = NEW.freigabe_datum,
+-- 	    freigabe_visa = CONCAT(NEW.freigabe_visa, '*'),
+-- 	    updated_date = NEW.updated_date,
+-- 	    updated_visa = CONCAT(NEW.updated_visa, '*')
+-- 	    WHERE
+-- 	    parlamentarier_id=NEW.id AND bis IS NULL;
+-- 	  SET @disable_parlamentarier_kommissionen_update = NULL;
   END IF;
 
     -- Propagate im_rat_bis from parlamentarier to his zutrittsberechtigte, if NULL or SAME date as parlamentarier
   IF OLD.im_rat_bis <> NEW.im_rat_bis
     OR (OLD.im_rat_bis IS NULL AND NEW.im_rat_bis IS NOT NULL)
     OR (OLD.im_rat_bis IS NOT NULL AND NEW.im_rat_bis IS NULL) THEN
-  
+
     -- zutrittsberechtigung
     UPDATE `zutrittsberechtigung`
       SET
@@ -2998,7 +2834,7 @@ CREATE TRIGGER `trg_parlamentarier_log_upd` AFTER UPDATE ON `parlamentarier`
       updated_visa = CONCAT(NEW.updated_visa, '*')
       WHERE
       parlamentarier_id=NEW.id AND (bis IS NULL OR bis = OLD.im_rat_bis);
-  
+
   END IF;
 
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
@@ -3013,12 +2849,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang`;
 CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Parlamentarieranhangs',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel des Parlamentarieranhangs',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Parlamentariers',
   `datei` varchar(255) NOT NULL COMMENT 'Datei',
   `dateiname` varchar(255) NOT NULL COMMENT 'Dateiname ohne Erweiterung',
@@ -3032,10 +2868,8 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
-  PRIMARY KEY (`id`),
-  KEY `parlamentarier_id` (`parlamentarier_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=76 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am'
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern';
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_anhang`:
@@ -3093,7 +2927,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_anhang_log`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `parlamentarier_anhang_log`;
@@ -3113,15 +2947,12 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgäendert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `parlamentarier_id` (`parlamentarier_id`),
-  KEY `fk_parlamentarier_anhang_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern' AUTO_INCREMENT=84 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=364 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Parlamentariern';
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_anhang_log`:
@@ -3134,7 +2965,7 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `parlamentarier_log`
 --
--- Erzeugt am: 13. Sep 2014 um 09:22
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `parlamentarier_log`;
@@ -3199,18 +3030,12 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `idx_partei` (`partei_id`),
-  KEY `beruf_branche_id` (`beruf_interessengruppe_id`),
-  KEY `militaerischer_grad` (`militaerischer_grad_id`),
-  KEY `fraktion_id` (`fraktion_id`),
-  KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier' AUTO_INCREMENT=1973 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=2930 DEFAULT CHARSET=utf8 COMMENT='Liste der Parlamentarier';
 
 --
 -- RELATIONEN DER TABELLE `parlamentarier_log`:
@@ -3223,12 +3048,12 @@ CREATE TABLE IF NOT EXISTS `parlamentarier_log` (
 --
 -- Tabellenstruktur für Tabelle `partei`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `partei`;
 CREATE TABLE IF NOT EXISTS `partei` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Partei',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Partei',
   `abkuerzung` varchar(20) NOT NULL COMMENT 'Parteiabkürzung',
   `abkuerzung_fr` varchar(20) DEFAULT NULL COMMENT 'Französische Parteiabkürzung',
   `name` varchar(100) DEFAULT NULL COMMENT 'Ausgeschriebener Name der Partei',
@@ -3255,12 +3080,8 @@ CREATE TABLE IF NOT EXISTS `partei` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `partei_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
-  UNIQUE KEY `partei_name_unique` (`name`),
-  KEY `fraktion_id` (`fraktion_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=13 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes';
 
 --
 -- RELATIONEN DER TABELLE `partei`:
@@ -3318,7 +3139,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `partei_log`
 --
--- Erzeugt am: 17. Nov 2014 um 08:56
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `partei_log`;
@@ -3351,15 +3172,12 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `fraktion_id` (`fraktion_id`),
-  KEY `fk_partei_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes' AUTO_INCREMENT=25 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8 COMMENT='Politische Parteien des Parlamentes';
 
 --
 -- RELATIONEN DER TABELLE `partei_log`:
@@ -3372,12 +3190,12 @@ CREATE TABLE IF NOT EXISTS `partei_log` (
 --
 -- Tabellenstruktur für Tabelle `rat`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `rat`;
 CREATE TABLE IF NOT EXISTS `rat` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Jahreswerte eines Rates',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Jahreswerte eines Rates',
   `abkuerzung` varchar(10) NOT NULL COMMENT 'Kürzel des Rates',
   `name_de` varchar(50) NOT NULL COMMENT 'Name auf deutsch',
   `name_fr` varchar(50) DEFAULT NULL COMMENT 'Name auf französisch',
@@ -3403,11 +3221,8 @@ CREATE TABLE IF NOT EXISTS `rat` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_rat_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint',
-  KEY `interessenraum_id` (`interessenraum_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Tabelle der Räte von Lobbywatch' AUTO_INCREMENT=4 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Tabelle der Räte von Lobbywatch';
 
 --
 -- RELATIONEN DER TABELLE `rat`:
@@ -3465,7 +3280,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `rat_log`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `rat_log`;
@@ -3497,14 +3312,12 @@ CREATE TABLE IF NOT EXISTS `rat_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `fk_rat_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Tabelle der Räte von Lobbywatch' AUTO_INCREMENT=8 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='Tabelle der Räte von Lobbywatch';
 
 --
 -- RELATIONEN DER TABELLE `rat_log`:
@@ -3517,12 +3330,12 @@ CREATE TABLE IF NOT EXISTS `rat_log` (
 --
 -- Tabellenstruktur für Tabelle `settings`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `settings`;
 CREATE TABLE IF NOT EXISTS `settings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Settings',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Settings',
   `key_name` varchar(100) NOT NULL COMMENT 'Schlüsselname der Einstellung. NICHT VERÄNDERN. Wird vom Programm vorgegeben',
   `value` varchar(5000) DEFAULT NULL COMMENT 'Wert der Einstellung. Dieser Wert ist nach den Bedürfnissen anzupassen.',
   `description` text COMMENT 'Hinweise zur Bedeutung dieser Einstellung. Welche Werte sind möglich',
@@ -3531,11 +3344,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `key` (`key_name`),
-  KEY `category_id` (`category_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=9 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB';
 
 --
 -- RELATIONEN DER TABELLE `settings`:
@@ -3593,21 +3403,20 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `settings_category`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `settings_category`;
 CREATE TABLE IF NOT EXISTS `settings_category` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Settingsateogrie',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Settingsateogrie',
   `name` varchar(50) NOT NULL COMMENT 'Name der Settingskategorie',
   `description` text NOT NULL COMMENT 'Beschreibung der Settingskategorie',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings' AUTO_INCREMENT=3 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings';
 
 --
 -- Trigger `settings_category`
@@ -3659,7 +3468,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `settings_category_log`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `settings_category_log`;
@@ -3672,14 +3481,12 @@ CREATE TABLE IF NOT EXISTS `settings_category_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `fk_settings_category_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings' AUTO_INCREMENT=3 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Kategorie für Settings';
 
 --
 -- RELATIONEN DER TABELLE `settings_category_log`:
@@ -3692,7 +3499,7 @@ CREATE TABLE IF NOT EXISTS `settings_category_log` (
 --
 -- Tabellenstruktur für Tabelle `settings_log`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `settings_log`;
@@ -3707,14 +3514,12 @@ CREATE TABLE IF NOT EXISTS `settings_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `fk_settings_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB' AUTO_INCREMENT=68 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8 COMMENT='Einstellungen zur Lobbywatch-DB';
 
 --
 -- RELATIONEN DER TABELLE `settings_log`:
@@ -3727,52 +3532,90 @@ CREATE TABLE IF NOT EXISTS `settings_log` (
 --
 -- Tabellenstruktur für Tabelle `snapshot`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `snapshot`;
 CREATE TABLE IF NOT EXISTS `snapshot` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Snapshots',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel des Snapshots',
   `beschreibung` varchar(150) NOT NULL COMMENT 'Beschreibung des Snapshots',
   `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Eintrge am besten mit Datum und Visa versehen.',
   `created_visa` varchar(10) NOT NULL COMMENT 'Erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) NOT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Lobbywatch snapshots' AUTO_INCREMENT=2 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Lobbywatch snapshots';
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `translation`
+-- Tabellenstruktur für Tabelle `translation_language`
 --
--- Erzeugt am: 17. Nov 2014 um 07:37
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
-DROP TABLE IF EXISTS `translation`;
-CREATE TABLE IF NOT EXISTS `translation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
-  `lang` enum('de','fr','it','en') NOT NULL COMMENT 'Sprache des Textes',
-  `text_key` varchar(100) NOT NULL,
-  `source_table` varchar(50) DEFAULT NULL COMMENT 'Ort wo der Text vorkommt',
-  `translation` varchar(150) NOT NULL COMMENT 'Übersetzter Text; "-", wenn der lange Text genommen wird.',
-  `translation_long` text COMMENT 'Langer Übersetzungstext',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_lang_key` (`lang`,`text_key`,`translation`) COMMENT 'Fachlicher constraint'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB' AUTO_INCREMENT=1 ;
+DROP TABLE IF EXISTS `translation_language`;
+CREATE TABLE IF NOT EXISTS `translation_language` (
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel',
+  `langcode` varchar(2) NOT NULL COMMENT 'ISO-Code der Sprache',
+  `name` int(11) NOT NULL COMMENT 'Name der Sprache'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Sprachen von Lobbywatch';
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `translation_source`
+--
+-- Erstellt am: 22. Nov 2014 um 10:27
+--
+
+DROP TABLE IF EXISTS `translation_source`;
+CREATE TABLE IF NOT EXISTS `translation_source` (
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel',
+  `source` text NOT NULL COMMENT 'Eindeutiger Schlüssel',
+  `location` varchar(50) DEFAULT NULL COMMENT 'Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion',
+  `field` varchar(50) DEFAULT NULL COMMENT 'Name of the field',
+  `context` varchar(50) DEFAULT NULL COMMENT 'Name des Feldes',
+  `version` varchar(20) DEFAULT NULL COMMENT 'Version of Lobbywatch, where the string was last updated (for translation optimization).'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `translation_target`
+--
+-- Erstellt am: 22. Nov 2014 um 10:28
+--
+
+DROP TABLE IF EXISTS `translation_target`;
+CREATE TABLE IF NOT EXISTS `translation_target` (
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel',
+  `translation_source_id` int(11) NOT NULL COMMENT 'Fremschlüssel auf Übersetzungsquelltext',
+  `lang` enum('de','fr') NOT NULL COMMENT 'Sprache des Textes',
+  `translation` text NOT NULL COMMENT 'Übersetzter Text; "-", wenn der lange Text genommen wird.',
+  `plural_translation_source_id` int(11) DEFAULT NULL,
+  `plural` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Plural index number in case of plural strings.'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
+
+--
+-- RELATIONEN DER TABELLE `translation_target`:
+--   `plural_translation_source_id`
+--       `translation_source` -> `id`
+--   `translation_source_id`
+--       `translation_source` -> `id`
+--
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `user`
 --
--- Erzeugt am: 11. Aug 2014 um 06:05
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel User',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel User',
   `name` varchar(10) NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
   `nachname` varchar(100) DEFAULT NULL COMMENT 'Nachname des Benutzers',
@@ -3785,28 +3628,24 @@ CREATE TABLE IF NOT EXISTS `user` (
   `created_visa` varchar(10) DEFAULT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_name_unique` (`name`) COMMENT 'Fachlicher unique constraint: Name muss einzigartig sein'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator users' AUTO_INCREMENT=19 ;
+  `updated_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COMMENT='PHP Generator users';
 
 -- --------------------------------------------------------
 
 --
 -- Tabellenstruktur für Tabelle `user_permission`
 --
--- Erzeugt am: 11. Aug 2014 um 06:05
+-- Erstellt am: 22. Nov 2014 um 10:27
 --
 
 DROP TABLE IF EXISTS `user_permission`;
 CREATE TABLE IF NOT EXISTS `user_permission` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel User Persmissions',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel User Persmissions',
   `user_id` int(11) NOT NULL,
   `page_name` varchar(500) DEFAULT NULL,
-  `permission_name` varchar(6) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`,`page_name`(255),`permission_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions' AUTO_INCREMENT=260 ;
+  `permission_name` varchar(6) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=340 DEFAULT CHARSET=utf8 COMMENT='PHP Generator user permissions';
 
 -- --------------------------------------------------------
 
@@ -4018,7 +3857,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung` (
 ,`freigabe_datum_unix` bigint(11)
 ,`wirksamkeit` varchar(6)
 ,`parlamentarier_im_rat_seit` date
-,`wirksamkeit_index` int(0)
+,`wirksamkeit_index` int(11)
 ,`organisation_lobbyeinfluss` varchar(9)
 ,`parlamentarier_lobbyfaktor` bigint(25)
 ,`refreshed_date` timestamp
@@ -4124,7 +3963,7 @@ CREATE TABLE IF NOT EXISTS `v_interessenbindung_liste` (
 ,`freigabe_datum_unix` bigint(11)
 ,`wirksamkeit` varchar(6)
 ,`parlamentarier_im_rat_seit` date
-,`wirksamkeit_index` int(0)
+,`wirksamkeit_index` int(11)
 ,`organisation_lobbyeinfluss` varchar(9)
 ,`parlamentarier_lobbyfaktor` bigint(25)
 ,`refreshed_date` timestamp
@@ -5256,7 +5095,7 @@ CREATE TABLE IF NOT EXISTS `v_mandat` (
 ,`kontrolliert_datum_unix` bigint(11)
 ,`freigabe_datum_unix` bigint(11)
 ,`wirksamkeit` varchar(6)
-,`wirksamkeit_index` int(0)
+,`wirksamkeit_index` int(11)
 ,`organisation_lobbyeinfluss` varchar(9)
 ,`refreshed_date` timestamp
 );
@@ -5486,7 +5325,7 @@ CREATE TABLE IF NOT EXISTS `v_organisation` (
 ,`anzahl_mandat_mittel` tinyint(3) unsigned
 ,`anzahl_mandat_hoch` tinyint(3) unsigned
 ,`lobbyeinfluss` varchar(9)
-,`lobbyeinfluss_index` int(0)
+,`lobbyeinfluss_index` int(11)
 );
 -- --------------------------------------------------------
 
@@ -7138,7 +6977,7 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_mandate` (
 ,`kontrolliert_datum_unix` bigint(11)
 ,`freigabe_datum_unix` bigint(11)
 ,`wirksamkeit` varchar(6)
-,`wirksamkeit_index` int(0)
+,`wirksamkeit_index` int(11)
 ,`organisation_lobbyeinfluss` varchar(9)
 ,`refreshed_date` timestamp
 );
@@ -7441,12 +7280,12 @@ CREATE TABLE IF NOT EXISTS `v_zutrittsberechtigung_simple` (
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung`
 --
--- Erzeugt am: 15. Nov 2014 um 07:23
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung`;
 CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Zugangsberechtigung',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel der Zugangsberechtigung',
   `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel zu Parlamentarier',
   `nachname` varchar(100) NOT NULL COMMENT 'Nachname des berechtigten Persion',
   `vorname` varchar(50) NOT NULL COMMENT 'Vorname der berechtigten Person',
@@ -7482,13 +7321,8 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `zutrittsberechtigung_nachname_vorname_unique` (`nachname`,`vorname`,`parlamentarier_id`,`bis`) COMMENT 'Fachlicher unique constraint',
-  KEY `idx_parlam` (`parlamentarier_id`),
-  KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
-  KEY `partei` (`partei_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=434 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am'
+) ENGINE=InnoDB AUTO_INCREMENT=450 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung`:
@@ -7590,12 +7424,12 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_anhang`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_anhang`;
 CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Zutrittsberechtigunganhangs',
+`id` int(11) NOT NULL COMMENT 'Technischer Schlüssel des Zutrittsberechtigunganhangs',
   `zutrittsberechtigung_id` int(11) NOT NULL COMMENT 'Fremdschlüssel eines Zutrittsberechtigung',
   `datei` varchar(255) NOT NULL COMMENT 'Datei',
   `dateiname` varchar(255) NOT NULL COMMENT 'Dateiname ohne Erweiterung',
@@ -7609,10 +7443,8 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang` (
   `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
-  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am',
-  PRIMARY KEY (`id`),
-  KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=53 ;
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgäendert am'
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten';
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_anhang`:
@@ -7670,7 +7502,7 @@ DELIMITER ;
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_anhang_log`
 --
--- Erzeugt am: 25. Mai 2014 um 18:55
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_anhang_log`;
@@ -7690,15 +7522,12 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`),
-  KEY `fk_zutrittsberechtigung_anhang_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten' AUTO_INCREMENT=55 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=244 DEFAULT CHARSET=utf8 COMMENT='Anhänge zu Zutrittsberechtigten';
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_anhang_log`:
@@ -7711,7 +7540,7 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_anhang_log` (
 --
 -- Tabellenstruktur für Tabelle `zutrittsberechtigung_log`
 --
--- Erzeugt am: 15. Nov 2014 um 07:23
+-- Erstellt am: 22. Nov 2014 um 10:28
 --
 
 DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
@@ -7753,17 +7582,12 @@ CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` (
   `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
   `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
-  `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+`log_id` int(11) NOT NULL COMMENT 'Technischer Log-Schlüssel',
   `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
   `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
-  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  PRIMARY KEY (`log_id`),
-  KEY `idx_parlam` (`parlamentarier_id`),
-  KEY `idx_lobbygroup` (`beruf_interessengruppe_id`),
-  KEY `partei` (`partei_id`),
-  KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")' AUTO_INCREMENT=1503 ;
+  `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot'
+) ENGINE=InnoDB AUTO_INCREMENT=3051 DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
 
 --
 -- RELATIONEN DER TABELLE `zutrittsberechtigung_log`:
@@ -8663,6 +8487,622 @@ DROP TABLE IF EXISTS `v_zutrittsberechtigung_simple`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_zutrittsberechtigung_simple` AS select concat(`zutrittsberechtigung`.`nachname`,', ',`zutrittsberechtigung`.`vorname`) AS `anzeige_name`,concat(`zutrittsberechtigung`.`vorname`,' ',`zutrittsberechtigung`.`nachname`) AS `name`,`zutrittsberechtigung`.`id` AS `id`,`zutrittsberechtigung`.`parlamentarier_id` AS `parlamentarier_id`,`zutrittsberechtigung`.`nachname` AS `nachname`,`zutrittsberechtigung`.`vorname` AS `vorname`,`zutrittsberechtigung`.`zweiter_vorname` AS `zweiter_vorname`,`zutrittsberechtigung`.`funktion` AS `funktion`,`zutrittsberechtigung`.`parlamentarier_kommissionen` AS `parlamentarier_kommissionen`,`zutrittsberechtigung`.`beruf` AS `beruf`,`zutrittsberechtigung`.`beruf_interessengruppe_id` AS `beruf_interessengruppe_id`,`zutrittsberechtigung`.`partei_id` AS `partei_id`,`zutrittsberechtigung`.`geschlecht` AS `geschlecht`,`zutrittsberechtigung`.`arbeitssprache` AS `arbeitssprache`,`zutrittsberechtigung`.`email` AS `email`,`zutrittsberechtigung`.`homepage` AS `homepage`,`zutrittsberechtigung`.`twitter_name` AS `twitter_name`,`zutrittsberechtigung`.`linkedin_profil_url` AS `linkedin_profil_url`,`zutrittsberechtigung`.`xing_profil_name` AS `xing_profil_name`,`zutrittsberechtigung`.`facebook_name` AS `facebook_name`,`zutrittsberechtigung`.`telephon_1` AS `telephon_1`,`zutrittsberechtigung`.`telephon_2` AS `telephon_2`,`zutrittsberechtigung`.`von` AS `von`,`zutrittsberechtigung`.`bis` AS `bis`,`zutrittsberechtigung`.`notizen` AS `notizen`,`zutrittsberechtigung`.`eingabe_abgeschlossen_visa` AS `eingabe_abgeschlossen_visa`,`zutrittsberechtigung`.`eingabe_abgeschlossen_datum` AS `eingabe_abgeschlossen_datum`,`zutrittsberechtigung`.`kontrolliert_visa` AS `kontrolliert_visa`,`zutrittsberechtigung`.`kontrolliert_datum` AS `kontrolliert_datum`,`zutrittsberechtigung`.`autorisierung_verschickt_visa` AS `autorisierung_verschickt_visa`,`zutrittsberechtigung`.`autorisierung_verschickt_datum` AS `autorisierung_verschickt_datum`,`zutrittsberechtigung`.`autorisiert_visa` AS `autorisiert_visa`,`zutrittsberechtigung`.`autorisiert_datum` AS `autorisiert_datum`,`zutrittsberechtigung`.`freigabe_visa` AS `freigabe_visa`,`zutrittsberechtigung`.`freigabe_datum` AS `freigabe_datum`,`zutrittsberechtigung`.`created_visa` AS `created_visa`,`zutrittsberechtigung`.`created_date` AS `created_date`,`zutrittsberechtigung`.`updated_visa` AS `updated_visa`,`zutrittsberechtigung`.`updated_date` AS `updated_date`,unix_timestamp(`zutrittsberechtigung`.`bis`) AS `bis_unix`,unix_timestamp(`zutrittsberechtigung`.`von`) AS `von_unix`,unix_timestamp(`zutrittsberechtigung`.`created_date`) AS `created_date_unix`,unix_timestamp(`zutrittsberechtigung`.`updated_date`) AS `updated_date_unix`,unix_timestamp(`zutrittsberechtigung`.`eingabe_abgeschlossen_datum`) AS `eingabe_abgeschlossen_datum_unix`,unix_timestamp(`zutrittsberechtigung`.`kontrolliert_datum`) AS `kontrolliert_datum_unix`,unix_timestamp(`zutrittsberechtigung`.`freigabe_datum`) AS `freigabe_datum_unix` from `zutrittsberechtigung`;
 
 --
+-- Indizes der exportierten Tabellen
+--
+
+--
+-- Indizes für die Tabelle `branche`
+--
+ALTER TABLE `branche`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `branche_name_unique` (`name`) COMMENT 'Fachlicher unique constraint', ADD KEY `idx_kommission_freigabe` (`kommission_id`,`freigabe_datum`);
+
+--
+-- Indizes für die Tabelle `branche_log`
+--
+ALTER TABLE `branche_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `kommission_id` (`kommission_id`), ADD KEY `fk_branche_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `country`
+--
+ALTER TABLE `country`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_name_de` (`name_de`), ADD UNIQUE KEY `idx_name_en` (`name_en`), ADD KEY `idx_show_level` (`show_level`), ADD KEY `idx_continent` (`continent`);
+
+--
+-- Indizes für die Tabelle `fraktion`
+--
+ALTER TABLE `fraktion`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `fraktion_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint', ADD UNIQUE KEY `fraktion_name_unique` (`name`);
+
+--
+-- Indizes für die Tabelle `fraktion_log`
+--
+ALTER TABLE `fraktion_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `fk_fraktion_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `interessenbindung`
+--
+ALTER TABLE `interessenbindung`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `interessenbindung_art_parlamentarier_organisation_unique` (`art`,`parlamentarier_id`,`organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint', ADD KEY `parlamentarier_id` (`parlamentarier_id`,`organisation_id`), ADD KEY `organisation_id` (`organisation_id`,`parlamentarier_id`);
+
+--
+-- Indizes für die Tabelle `interessenbindung_log`
+--
+ALTER TABLE `interessenbindung_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `idx_parlam` (`parlamentarier_id`), ADD KEY `idx_lobbyorg` (`organisation_id`), ADD KEY `fk_interessenbindung_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `interessengruppe`
+--
+ALTER TABLE `interessengruppe`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `interessengruppe_name_unique` (`name`) COMMENT 'Fachlicher unique constraint', ADD KEY `idx_branche_freigabe` (`branche_id`,`freigabe_datum`);
+
+--
+-- Indizes für die Tabelle `interessengruppe_log`
+--
+ALTER TABLE `interessengruppe_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `idx_lobbytyp` (`branche_id`), ADD KEY `fk_interessengruppe_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `interessenraum`
+--
+ALTER TABLE `interessenraum`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `interessenraum_name_unique` (`name`) COMMENT 'Fachlicher unique constraint', ADD KEY `reihenfolge` (`reihenfolge`);
+
+--
+-- Indizes für die Tabelle `in_kommission`
+--
+ALTER TABLE `in_kommission`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `in_kommission_parlamentarier_kommission_funktion_unique` (`funktion`,`parlamentarier_id`,`kommission_id`,`bis`) COMMENT 'Fachlicher unique constraint', ADD KEY `idx_parlam_freigabe` (`parlamentarier_id`,`freigabe_datum`,`bis`,`kommission_id`), ADD KEY `idx_parlam` (`parlamentarier_id`,`bis`,`kommission_id`), ADD KEY `idx_kommission_freigabe` (`kommission_id`,`freigabe_datum`,`bis`,`parlamentarier_id`), ADD KEY `idx_kommission` (`kommission_id`,`bis`,`parlamentarier_id`);
+
+--
+-- Indizes für die Tabelle `in_kommission_log`
+--
+ALTER TABLE `in_kommission_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `parlamentarier_id` (`parlamentarier_id`), ADD KEY `kommissions_id` (`kommission_id`), ADD KEY `fk_in_kommission_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `kanton`
+--
+ALTER TABLE `kanton`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `abkuerzung` (`abkuerzung`), ADD UNIQUE KEY `kantonsnr` (`kantonsnr`);
+
+--
+-- Indizes für die Tabelle `kanton_jahr`
+--
+ALTER TABLE `kanton_jahr`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_kanton_jahr_unique` (`kanton_id`,`jahr`) COMMENT 'Fachlicher unique constraint', ADD KEY `kanton_id` (`kanton_id`);
+
+--
+-- Indizes für die Tabelle `kanton_jahr_log`
+--
+ALTER TABLE `kanton_jahr_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `fk_kanton_jahr_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `kanton_log`
+--
+ALTER TABLE `kanton_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `fk_kanton_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `kommission`
+--
+ALTER TABLE `kommission`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `kommission_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint', ADD UNIQUE KEY `kommission_name_unique` (`name`) COMMENT 'Fachlicher unique constraint', ADD KEY `zugehoerige_kommission` (`mutter_kommission_id`,`freigabe_datum`);
+
+--
+-- Indizes für die Tabelle `kommission_log`
+--
+ALTER TABLE `kommission_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `zugehoerige_kommission` (`mutter_kommission_id`), ADD KEY `fk_kommission_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `mandat`
+--
+ALTER TABLE `mandat`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `mandat_zutrittsberechtigung_organisation_art_unique` (`art`,`zutrittsberechtigung_id`,`organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint', ADD KEY `organisations_id` (`organisation_id`,`zutrittsberechtigung_id`), ADD KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`,`organisation_id`);
+
+--
+-- Indizes für die Tabelle `mandat_log`
+--
+ALTER TABLE `mandat_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `organisations_id` (`organisation_id`), ADD KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`), ADD KEY `fk_mandat_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `mil_grad`
+--
+ALTER TABLE `mil_grad`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name_unique` (`name`), ADD UNIQUE KEY `abkuerzung_unique` (`abkuerzung`);
+
+--
+-- Indizes für die Tabelle `mil_grad_log`
+--
+ALTER TABLE `mil_grad_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `fk_mil_grad_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `mv_interessenbindung`
+--
+ALTER TABLE `mv_interessenbindung`
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`,`freigabe_datum`,`bis`,`organisation_id`), ADD KEY `idx_parlam_bis` (`parlamentarier_id`,`bis`,`organisation_id`), ADD KEY `idx_parlam` (`parlamentarier_id`,`organisation_id`), ADD KEY `idx_org_freigabe_bis` (`organisation_id`,`freigabe_datum`,`bis`,`parlamentarier_id`), ADD KEY `idx_org_bis` (`organisation_id`,`bis`,`parlamentarier_id`), ADD KEY `idx_org` (`organisation_id`,`parlamentarier_id`);
+
+--
+-- Indizes für die Tabelle `mv_mandat`
+--
+ALTER TABLE `mv_mandat`
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_zutritt_freigabe_bis` (`zutrittsberechtigung_id`,`freigabe_datum`,`bis`,`organisation_id`), ADD KEY `idx_zutritt_bis` (`zutrittsberechtigung_id`,`bis`,`organisation_id`), ADD KEY `idx_zutritt` (`zutrittsberechtigung_id`,`organisation_id`), ADD KEY `idx_org_freigabe_bis` (`organisation_id`,`freigabe_datum`,`bis`,`zutrittsberechtigung_id`), ADD KEY `idx_org_bis` (`organisation_id`,`bis`,`zutrittsberechtigung_id`), ADD KEY `idx_org` (`organisation_id`,`zutrittsberechtigung_id`);
+
+--
+-- Indizes für die Tabelle `mv_organisation`
+--
+ALTER TABLE `mv_organisation`
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_freigabe` (`freigabe_datum`), ADD KEY `idx_branche_freigabe` (`branche_id`,`freigabe_datum`), ADD KEY `idx_interessengruppe_freigabe` (`interessengruppe_id`,`freigabe_datum`), ADD KEY `idx_interessengruppe2_freigabe` (`interessengruppe2_id`,`freigabe_datum`), ADD KEY `idx_interessengruppe3_freigabe` (`interessengruppe3_id`,`freigabe_datum`), ADD KEY `idx_interessengruppe_branche_freigabe` (`interessengruppe_branche_id`,`freigabe_datum`), ADD KEY `idx_interessengruppe2_branche_freigabe` (`interessengruppe2_branche_id`,`freigabe_datum`), ADD KEY `idx_interessengruppe3_branche_freigabe` (`interessengruppe3_branche_id`,`freigabe_datum`), ADD KEY `land` (`land_id`,`freigabe_datum`), ADD KEY `interessenraum_id` (`interessenraum_id`,`freigabe_datum`);
+
+--
+-- Indizes für die Tabelle `mv_parlamentarier`
+--
+ALTER TABLE `mv_parlamentarier`
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_freigabe_bis` (`freigabe_datum`,`im_rat_bis`), ADD KEY `idx_bis` (`im_rat_bis`), ADD KEY `idx_rat_freigabe_bis` (`rat`,`freigabe_datum`,`im_rat_bis`), ADD KEY `idx_rat_bis` (`rat`,`im_rat_bis`), ADD KEY `idx_rat_id_freigabe_bis` (`rat_id`,`freigabe_datum`,`im_rat_bis`), ADD KEY `idx_rat_id_bis` (`rat_id`,`im_rat_bis`), ADD KEY `idx_kanton_freigabe_bis` (`kanton`,`freigabe_datum`,`im_rat_bis`), ADD KEY `idx_kanton_bis` (`kanton`,`im_rat_bis`), ADD KEY `idx_kanton_partei_freigabe_bis` (`kanton`,`partei`,`freigabe_datum`,`im_rat_bis`), ADD KEY `idx_kanton_partei_bis` (`kanton`,`partei`,`im_rat_bis`), ADD KEY `idx_kanton_id_freigabe_bis` (`kanton_id`,`freigabe_datum`,`im_rat_bis`), ADD KEY `idx_kanton_id_bis` (`kanton_id`,`im_rat_bis`), ADD KEY `idx_partei_freigabe_bis` (`partei`,`freigabe_datum`,`im_rat_bis`), ADD KEY `idx_partei_bis` (`partei`,`im_rat_bis`), ADD KEY `idx_partei_id_freigabe_bis` (`partei_id`,`freigabe_datum`,`im_rat_bis`), ADD KEY `idx_partei_id_bis` (`partei_id`,`im_rat_bis`), ADD KEY `beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`,`freigabe_datum`,`im_rat_bis`), ADD KEY `beruf_interessengruppe_id` (`beruf_interessengruppe_id`,`im_rat_bis`), ADD KEY `beruf_branche_id_freigabe` (`beruf_branche_id`,`freigabe_datum`,`im_rat_bis`), ADD KEY `beruf_branche_id` (`beruf_branche_id`,`im_rat_bis`), ADD KEY `militaerischer_grad_freigabe` (`militaerischer_grad_id`,`freigabe_datum`,`im_rat_bis`), ADD KEY `militaerischer_grad` (`militaerischer_grad_id`,`im_rat_bis`), ADD KEY `fraktion_freigabe_bis` (`fraktion`,`im_rat_bis`), ADD KEY `fraktion_bis` (`fraktion`,`freigabe_datum`,`im_rat_bis`), ADD KEY `fraktion_id_freigabe_bis` (`fraktion_id`,`freigabe_datum`,`im_rat_bis`), ADD KEY `fraktion_id_bis` (`fraktion_id`,`im_rat_bis`);
+
+--
+-- Indizes für die Tabelle `mv_search_table`
+--
+ALTER TABLE `mv_search_table`
+ ADD PRIMARY KEY (`id`,`table_name`), ADD KEY `idx_search_str_long` (`freigabe_datum`,`bis`,`table_weight`,`weight`,`name`(255)), ADD KEY `idx_search_str_medium` (`freigabe_datum`,`table_weight`,`weight`,`name`(255)), ADD KEY `idx_search_str_short` (`table_weight`,`weight`,`name`(255));
+
+--
+-- Indizes für die Tabelle `mv_zutrittsberechtigung`
+--
+ALTER TABLE `mv_zutrittsberechtigung`
+ ADD PRIMARY KEY (`id`), ADD KEY `idx_parlam_freigabe_bis` (`parlamentarier_id`,`freigabe_datum`,`bis`), ADD KEY `idx_parlam_bis` (`parlamentarier_id`,`bis`), ADD KEY `idx_partei_freigabe` (`partei`,`freigabe_datum`,`bis`), ADD KEY `idx_partei` (`partei`,`bis`), ADD KEY `idx_partei_id_freigabe` (`partei_id`,`freigabe_datum`,`bis`), ADD KEY `idx_partei_id` (`partei_id`,`bis`), ADD KEY `idx_beruf_interessengruppe_id_freigabe` (`beruf_interessengruppe_id`,`freigabe_datum`,`bis`), ADD KEY `idx_beruf_interessengruppe_id` (`beruf_interessengruppe_id`,`bis`), ADD KEY `idx_beruf_branche_id_freigabe` (`beruf_branche_id`,`freigabe_datum`,`bis`), ADD KEY `idx_beruf_branche_id` (`beruf_branche_id`,`bis`);
+
+--
+-- Indizes für die Tabelle `organisation`
+--
+ALTER TABLE `organisation`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `organisation_name_de_unique` (`name_de`) COMMENT 'Fachlicher unique constraint', ADD UNIQUE KEY `organisation_name_fr_unique` (`name_fr`) COMMENT 'Fachlicher unique constraint', ADD UNIQUE KEY `organisation_name_it_unique` (`name_it`) COMMENT 'Fachlicher unique constraint', ADD KEY `idx_lobbytyp` (`branche_id`), ADD KEY `idx_lobbygroup` (`interessengruppe_id`), ADD KEY `interessengruppe2_id` (`interessengruppe2_id`), ADD KEY `interessengruppe3_id` (`interessengruppe3_id`), ADD KEY `land` (`land_id`), ADD KEY `interessenraum_id` (`interessenraum_id`);
+
+--
+-- Indizes für die Tabelle `organisation_anhang`
+--
+ALTER TABLE `organisation_anhang`
+ ADD PRIMARY KEY (`id`), ADD KEY `organisation_id` (`organisation_id`);
+
+--
+-- Indizes für die Tabelle `organisation_anhang_log`
+--
+ALTER TABLE `organisation_anhang_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `organisation_id` (`organisation_id`), ADD KEY `fk_organisation_anhang_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `organisation_beziehung`
+--
+ALTER TABLE `organisation_beziehung`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `organisation_beziehung_organisation_zielorganisation_art_unique` (`art`,`organisation_id`,`ziel_organisation_id`,`bis`) COMMENT 'Fachlicher unique constraint', ADD KEY `idx_org_freigabe` (`organisation_id`,`freigabe_datum`,`bis`,`ziel_organisation_id`), ADD KEY `idx_org` (`organisation_id`,`bis`,`ziel_organisation_id`), ADD KEY `idx_ziel_freigabe` (`ziel_organisation_id`,`freigabe_datum`,`bis`,`organisation_id`), ADD KEY `idx_ziel` (`ziel_organisation_id`,`bis`,`organisation_id`), ADD KEY `organisation_id` (`organisation_id`,`ziel_organisation_id`), ADD KEY `ziel_organisation_id` (`ziel_organisation_id`,`organisation_id`);
+
+--
+-- Indizes für die Tabelle `organisation_beziehung_log`
+--
+ALTER TABLE `organisation_beziehung_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `organisation_id` (`organisation_id`), ADD KEY `ziel_organisation_id` (`ziel_organisation_id`), ADD KEY `fk_organisation_beziehung_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `organisation_jahr`
+--
+ALTER TABLE `organisation_jahr`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_organisation_jahr_unique` (`organisation_id`,`jahr`) COMMENT 'Fachlicher unique constraint', ADD KEY `organisation_id` (`organisation_id`);
+
+--
+-- Indizes für die Tabelle `organisation_jahr_log`
+--
+ALTER TABLE `organisation_jahr_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `organisation_id` (`organisation_id`), ADD KEY `fk_organisation_jahr_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `organisation_log`
+--
+ALTER TABLE `organisation_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `idx_lobbytyp` (`branche_id`), ADD KEY `idx_lobbygroup` (`interessengruppe_id`), ADD KEY `interessengruppe2_id` (`interessengruppe2_id`), ADD KEY `interessengruppe3_id` (`interessengruppe3_id`), ADD KEY `fk_organisation_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `parlamentarier`
+--
+ALTER TABLE `parlamentarier`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `parlamentarier_rat_sitzplatz` (`rat_id`,`sitzplatz`,`im_rat_bis`) COMMENT 'Fachlicher unique constraint', ADD UNIQUE KEY `parlamentarier_nachname_vorname_unique` (`nachname`,`vorname`,`zweiter_vorname`) COMMENT 'Fachlicher unique constraint', ADD KEY `idx_partei` (`partei_id`), ADD KEY `beruf_branche_id` (`beruf_interessengruppe_id`), ADD KEY `militaerischer_grad` (`militaerischer_grad_id`), ADD KEY `fraktion_id` (`fraktion_id`), ADD KEY `rat_id` (`rat_id`), ADD KEY `kanton_id` (`kanton_id`);
+
+--
+-- Indizes für die Tabelle `parlamentarier_anhang`
+--
+ALTER TABLE `parlamentarier_anhang`
+ ADD PRIMARY KEY (`id`), ADD KEY `parlamentarier_id` (`parlamentarier_id`);
+
+--
+-- Indizes für die Tabelle `parlamentarier_anhang_log`
+--
+ALTER TABLE `parlamentarier_anhang_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `parlamentarier_id` (`parlamentarier_id`), ADD KEY `fk_parlamentarier_anhang_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `parlamentarier_log`
+--
+ALTER TABLE `parlamentarier_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `idx_partei` (`partei_id`), ADD KEY `beruf_branche_id` (`beruf_interessengruppe_id`), ADD KEY `militaerischer_grad` (`militaerischer_grad_id`), ADD KEY `fraktion_id` (`fraktion_id`), ADD KEY `fk_parlamentarier_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `partei`
+--
+ALTER TABLE `partei`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `partei_abkuerzung_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint', ADD UNIQUE KEY `partei_name_unique` (`name`), ADD KEY `fraktion_id` (`fraktion_id`);
+
+--
+-- Indizes für die Tabelle `partei_log`
+--
+ALTER TABLE `partei_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `fraktion_id` (`fraktion_id`), ADD KEY `fk_partei_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `rat`
+--
+ALTER TABLE `rat`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_rat_unique` (`abkuerzung`) COMMENT 'Fachlicher unique constraint', ADD KEY `interessenraum_id` (`interessenraum_id`);
+
+--
+-- Indizes für die Tabelle `rat_log`
+--
+ALTER TABLE `rat_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `fk_rat_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `settings`
+--
+ALTER TABLE `settings`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `key` (`key_name`), ADD KEY `category_id` (`category_id`);
+
+--
+-- Indizes für die Tabelle `settings_category`
+--
+ALTER TABLE `settings_category`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `settings_category_log`
+--
+ALTER TABLE `settings_category_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `fk_settings_category_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `settings_log`
+--
+ALTER TABLE `settings_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `fk_settings_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `snapshot`
+--
+ALTER TABLE `snapshot`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indizes für die Tabelle `translation_language`
+--
+ALTER TABLE `translation_language`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `langcode` (`langcode`);
+
+--
+-- Indizes für die Tabelle `translation_source`
+--
+ALTER TABLE `translation_source`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `unique_source_key` (`source`(255)) COMMENT 'Fachlicher constraint';
+
+--
+-- Indizes für die Tabelle `translation_target`
+--
+ALTER TABLE `translation_target`
+ ADD PRIMARY KEY (`id`), ADD KEY `plural_translation_source_id` (`plural_translation_source_id`), ADD KEY `translation_source_id` (`translation_source_id`,`lang`);
+
+--
+-- Indizes für die Tabelle `user`
+--
+ALTER TABLE `user`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `idx_name_unique` (`name`) COMMENT 'Fachlicher unique constraint: Name muss einzigartig sein';
+
+--
+-- Indizes für die Tabelle `user_permission`
+--
+ALTER TABLE `user_permission`
+ ADD PRIMARY KEY (`id`), ADD KEY `user_id` (`user_id`,`page_name`(255),`permission_name`);
+
+--
+-- Indizes für die Tabelle `zutrittsberechtigung`
+--
+ALTER TABLE `zutrittsberechtigung`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `zutrittsberechtigung_nachname_vorname_unique` (`nachname`,`vorname`,`parlamentarier_id`,`bis`) COMMENT 'Fachlicher unique constraint', ADD KEY `idx_parlam` (`parlamentarier_id`), ADD KEY `idx_lobbygroup` (`beruf_interessengruppe_id`), ADD KEY `partei` (`partei_id`);
+
+--
+-- Indizes für die Tabelle `zutrittsberechtigung_anhang`
+--
+ALTER TABLE `zutrittsberechtigung_anhang`
+ ADD PRIMARY KEY (`id`), ADD KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`);
+
+--
+-- Indizes für die Tabelle `zutrittsberechtigung_anhang_log`
+--
+ALTER TABLE `zutrittsberechtigung_anhang_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `zutrittsberechtigung_id` (`zutrittsberechtigung_id`), ADD KEY `fk_zutrittsberechtigung_anhang_log_snapshot_id` (`snapshot_id`);
+
+--
+-- Indizes für die Tabelle `zutrittsberechtigung_log`
+--
+ALTER TABLE `zutrittsberechtigung_log`
+ ADD PRIMARY KEY (`log_id`), ADD KEY `idx_parlam` (`parlamentarier_id`), ADD KEY `idx_lobbygroup` (`beruf_interessengruppe_id`), ADD KEY `partei` (`partei_id`), ADD KEY `fk_zutrittsberechtigung_log_snapshot_id` (`snapshot_id`);
+
+--
+-- AUTO_INCREMENT für exportierte Tabellen
+--
+
+--
+-- AUTO_INCREMENT für Tabelle `branche`
+--
+ALTER TABLE `branche`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Branche',AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT für Tabelle `branche_log`
+--
+ALTER TABLE `branche_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=98;
+--
+-- AUTO_INCREMENT für Tabelle `country`
+--
+ALTER TABLE `country`
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Primary key',AUTO_INCREMENT=252;
+--
+-- AUTO_INCREMENT für Tabelle `fraktion`
+--
+ALTER TABLE `fraktion`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Fraktion',AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT für Tabelle `fraktion_log`
+--
+ALTER TABLE `fraktion_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=52;
+--
+-- AUTO_INCREMENT für Tabelle `interessenbindung`
+--
+ALTER TABLE `interessenbindung`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessenbindung',AUTO_INCREMENT=1339;
+--
+-- AUTO_INCREMENT für Tabelle `interessenbindung_log`
+--
+ALTER TABLE `interessenbindung_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=10001;
+--
+-- AUTO_INCREMENT für Tabelle `interessengruppe`
+--
+ALTER TABLE `interessengruppe`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Interessengruppe',AUTO_INCREMENT=128;
+--
+-- AUTO_INCREMENT für Tabelle `interessengruppe_log`
+--
+ALTER TABLE `interessengruppe_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=578;
+--
+-- AUTO_INCREMENT für Tabelle `interessenraum`
+--
+ALTER TABLE `interessenraum`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Interessenraumes',AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT für Tabelle `in_kommission`
+--
+ALTER TABLE `in_kommission`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel einer Kommissionszugehörigkeit',AUTO_INCREMENT=637;
+--
+-- AUTO_INCREMENT für Tabelle `in_kommission_log`
+--
+ALTER TABLE `in_kommission_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=3149;
+--
+-- AUTO_INCREMENT für Tabelle `kanton`
+--
+ALTER TABLE `kanton`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Kantons',AUTO_INCREMENT=27;
+--
+-- AUTO_INCREMENT für Tabelle `kanton_jahr`
+--
+ALTER TABLE `kanton_jahr`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Jahreswerte eines Kantons',AUTO_INCREMENT=27;
+--
+-- AUTO_INCREMENT für Tabelle `kanton_jahr_log`
+--
+ALTER TABLE `kanton_jahr_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=105;
+--
+-- AUTO_INCREMENT für Tabelle `kanton_log`
+--
+ALTER TABLE `kanton_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=131;
+--
+-- AUTO_INCREMENT für Tabelle `kommission`
+--
+ALTER TABLE `kommission`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Kommission',AUTO_INCREMENT=47;
+--
+-- AUTO_INCREMENT für Tabelle `kommission_log`
+--
+ALTER TABLE `kommission_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=117;
+--
+-- AUTO_INCREMENT für Tabelle `mandat`
+--
+ALTER TABLE `mandat`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=636;
+--
+-- AUTO_INCREMENT für Tabelle `mandat_log`
+--
+ALTER TABLE `mandat_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=4725;
+--
+-- AUTO_INCREMENT für Tabelle `mil_grad`
+--
+ALTER TABLE `mil_grad`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel Militärischer Grad',AUTO_INCREMENT=24;
+--
+-- AUTO_INCREMENT für Tabelle `mil_grad_log`
+--
+ALTER TABLE `mil_grad_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel';
+--
+-- AUTO_INCREMENT für Tabelle `organisation`
+--
+ALTER TABLE `organisation`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Lobbyorganisation',AUTO_INCREMENT=1579;
+--
+-- AUTO_INCREMENT für Tabelle `organisation_anhang`
+--
+ALTER TABLE `organisation_anhang`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Organisationsanhangs',AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT für Tabelle `organisation_anhang_log`
+--
+ALTER TABLE `organisation_anhang_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT für Tabelle `organisation_beziehung`
+--
+ALTER TABLE `organisation_beziehung`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel einer Organisationsbeziehung',AUTO_INCREMENT=536;
+--
+-- AUTO_INCREMENT für Tabelle `organisation_beziehung_log`
+--
+ALTER TABLE `organisation_beziehung_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=2535;
+--
+-- AUTO_INCREMENT für Tabelle `organisation_jahr`
+--
+ALTER TABLE `organisation_jahr`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Jahreswerte einer Organisation',AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT für Tabelle `organisation_jahr_log`
+--
+ALTER TABLE `organisation_jahr_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT für Tabelle `organisation_log`
+--
+ALTER TABLE `organisation_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=10087;
+--
+-- AUTO_INCREMENT für Tabelle `parlamentarier`
+--
+ALTER TABLE `parlamentarier`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Parlamentariers',AUTO_INCREMENT=257;
+--
+-- AUTO_INCREMENT für Tabelle `parlamentarier_anhang`
+--
+ALTER TABLE `parlamentarier_anhang`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Parlamentarieranhangs',AUTO_INCREMENT=119;
+--
+-- AUTO_INCREMENT für Tabelle `parlamentarier_anhang_log`
+--
+ALTER TABLE `parlamentarier_anhang_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=364;
+--
+-- AUTO_INCREMENT für Tabelle `parlamentarier_log`
+--
+ALTER TABLE `parlamentarier_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=2930;
+--
+-- AUTO_INCREMENT für Tabelle `partei`
+--
+ALTER TABLE `partei`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Partei',AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT für Tabelle `partei_log`
+--
+ALTER TABLE `partei_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=79;
+--
+-- AUTO_INCREMENT für Tabelle `rat`
+--
+ALTER TABLE `rat`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Jahreswerte eines Rates',AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT für Tabelle `rat_log`
+--
+ALTER TABLE `rat_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT für Tabelle `settings`
+--
+ALTER TABLE `settings`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Settings',AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT für Tabelle `settings_category`
+--
+ALTER TABLE `settings_category`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Settingsateogrie',AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT für Tabelle `settings_category_log`
+--
+ALTER TABLE `settings_category_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT für Tabelle `settings_log`
+--
+ALTER TABLE `settings_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=137;
+--
+-- AUTO_INCREMENT für Tabelle `snapshot`
+--
+ALTER TABLE `snapshot`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Snapshots',AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT für Tabelle `translation_language`
+--
+ALTER TABLE `translation_language`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel';
+--
+-- AUTO_INCREMENT für Tabelle `translation_source`
+--
+ALTER TABLE `translation_source`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel';
+--
+-- AUTO_INCREMENT für Tabelle `translation_target`
+--
+ALTER TABLE `translation_target`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel';
+--
+-- AUTO_INCREMENT für Tabelle `user`
+--
+ALTER TABLE `user`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel User',AUTO_INCREMENT=39;
+--
+-- AUTO_INCREMENT für Tabelle `user_permission`
+--
+ALTER TABLE `user_permission`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel User Persmissions',AUTO_INCREMENT=340;
+--
+-- AUTO_INCREMENT für Tabelle `zutrittsberechtigung`
+--
+ALTER TABLE `zutrittsberechtigung`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Zugangsberechtigung',AUTO_INCREMENT=450;
+--
+-- AUTO_INCREMENT für Tabelle `zutrittsberechtigung_anhang`
+--
+ALTER TABLE `zutrittsberechtigung_anhang`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel des Zutrittsberechtigunganhangs',AUTO_INCREMENT=92;
+--
+-- AUTO_INCREMENT für Tabelle `zutrittsberechtigung_anhang_log`
+--
+ALTER TABLE `zutrittsberechtigung_anhang_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=244;
+--
+-- AUTO_INCREMENT für Tabelle `zutrittsberechtigung_log`
+--
+ALTER TABLE `zutrittsberechtigung_log`
+MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',AUTO_INCREMENT=3051;
+--
 -- Constraints der exportierten Tabellen
 --
 
@@ -8670,256 +9110,263 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Constraints der Tabelle `branche`
 --
 ALTER TABLE `branche`
-  ADD CONSTRAINT `fk_kommission_id` FOREIGN KEY (`kommission_id`) REFERENCES `kommission` (`id`);
+ADD CONSTRAINT `fk_kommission_id` FOREIGN KEY (`kommission_id`) REFERENCES `kommission` (`id`);
 
 --
 -- Constraints der Tabelle `branche_log`
 --
 ALTER TABLE `branche_log`
-  ADD CONSTRAINT `fk_branche_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_branche_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `fraktion_log`
 --
 ALTER TABLE `fraktion_log`
-  ADD CONSTRAINT `fk_fraktion_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_fraktion_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `interessenbindung`
 --
 ALTER TABLE `interessenbindung`
-  ADD CONSTRAINT `fk_ib_org` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
-  ADD CONSTRAINT `fk_ib_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
+ADD CONSTRAINT `fk_ib_org` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
+ADD CONSTRAINT `fk_ib_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
 
 --
 -- Constraints der Tabelle `interessenbindung_log`
 --
 ALTER TABLE `interessenbindung_log`
-  ADD CONSTRAINT `fk_interessenbindung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_interessenbindung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `interessengruppe`
 --
 ALTER TABLE `interessengruppe`
-  ADD CONSTRAINT `fk_lg_lt` FOREIGN KEY (`branche_id`) REFERENCES `branche` (`id`);
+ADD CONSTRAINT `fk_lg_lt` FOREIGN KEY (`branche_id`) REFERENCES `branche` (`id`);
 
 --
 -- Constraints der Tabelle `interessengruppe_log`
 --
 ALTER TABLE `interessengruppe_log`
-  ADD CONSTRAINT `fk_interessengruppe_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_interessengruppe_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `in_kommission`
 --
 ALTER TABLE `in_kommission`
-  ADD CONSTRAINT `fk_in_kommission_id` FOREIGN KEY (`kommission_id`) REFERENCES `kommission` (`id`),
-  ADD CONSTRAINT `fk_in_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
+ADD CONSTRAINT `fk_in_kommission_id` FOREIGN KEY (`kommission_id`) REFERENCES `kommission` (`id`),
+ADD CONSTRAINT `fk_in_parlamentarier_id` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`);
 
 --
 -- Constraints der Tabelle `in_kommission_log`
 --
 ALTER TABLE `in_kommission_log`
-  ADD CONSTRAINT `fk_in_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_in_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `kanton_jahr`
 --
 ALTER TABLE `kanton_jahr`
-  ADD CONSTRAINT `fk_kanton_jahr_kanton_id` FOREIGN KEY (`kanton_id`) REFERENCES `kanton` (`id`);
+ADD CONSTRAINT `fk_kanton_jahr_kanton_id` FOREIGN KEY (`kanton_id`) REFERENCES `kanton` (`id`);
 
 --
 -- Constraints der Tabelle `kanton_jahr_log`
 --
 ALTER TABLE `kanton_jahr_log`
-  ADD CONSTRAINT `fk_kanton_jahr_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_kanton_jahr_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `kanton_log`
 --
 ALTER TABLE `kanton_log`
-  ADD CONSTRAINT `fk_kanton_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_kanton_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `kommission`
 --
 ALTER TABLE `kommission`
-  ADD CONSTRAINT `fk_parent_kommission_id` FOREIGN KEY (`mutter_kommission_id`) REFERENCES `kommission` (`id`);
+ADD CONSTRAINT `fk_parent_kommission_id` FOREIGN KEY (`mutter_kommission_id`) REFERENCES `kommission` (`id`);
 
 --
 -- Constraints der Tabelle `kommission_log`
 --
 ALTER TABLE `kommission_log`
-  ADD CONSTRAINT `fk_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_kommission_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `mandat`
 --
 ALTER TABLE `mandat`
-  ADD CONSTRAINT `fk_organisations_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
-  ADD CONSTRAINT `fk_zugangsberechtigung_id` FOREIGN KEY (`zutrittsberechtigung_id`) REFERENCES `zutrittsberechtigung` (`id`);
+ADD CONSTRAINT `fk_organisations_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
+ADD CONSTRAINT `fk_zugangsberechtigung_id` FOREIGN KEY (`zutrittsberechtigung_id`) REFERENCES `zutrittsberechtigung` (`id`);
 
 --
 -- Constraints der Tabelle `mandat_log`
 --
 ALTER TABLE `mandat_log`
-  ADD CONSTRAINT `fk_mandat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_mandat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `mil_grad_log`
 --
 ALTER TABLE `mil_grad_log`
-  ADD CONSTRAINT `fk_mil_grad_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_mil_grad_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `organisation`
 --
 ALTER TABLE `organisation`
-  ADD CONSTRAINT `fk_lo_lg` FOREIGN KEY (`interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
-  ADD CONSTRAINT `fk_organisation_interessengruppe2_id` FOREIGN KEY (`interessengruppe2_id`) REFERENCES `interessengruppe` (`id`),
-  ADD CONSTRAINT `fk_organisation_interessengruppe3_id` FOREIGN KEY (`interessengruppe3_id`) REFERENCES `interessengruppe` (`id`),
-  ADD CONSTRAINT `fk_org_country` FOREIGN KEY (`land_id`) REFERENCES `country` (`id`),
-  ADD CONSTRAINT `fk_org_interessenraum` FOREIGN KEY (`interessenraum_id`) REFERENCES `interessenraum` (`id`);
+ADD CONSTRAINT `fk_lo_lg` FOREIGN KEY (`interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
+ADD CONSTRAINT `fk_org_country` FOREIGN KEY (`land_id`) REFERENCES `country` (`id`),
+ADD CONSTRAINT `fk_org_interessenraum` FOREIGN KEY (`interessenraum_id`) REFERENCES `interessenraum` (`id`),
+ADD CONSTRAINT `fk_organisation_interessengruppe2_id` FOREIGN KEY (`interessengruppe2_id`) REFERENCES `interessengruppe` (`id`),
+ADD CONSTRAINT `fk_organisation_interessengruppe3_id` FOREIGN KEY (`interessengruppe3_id`) REFERENCES `interessengruppe` (`id`);
 
 --
 -- Constraints der Tabelle `organisation_anhang`
 --
 ALTER TABLE `organisation_anhang`
-  ADD CONSTRAINT `fk_org_anhang` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `fk_org_anhang` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `organisation_anhang_log`
 --
 ALTER TABLE `organisation_anhang_log`
-  ADD CONSTRAINT `fk_organisation_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_organisation_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `organisation_beziehung`
 --
 ALTER TABLE `organisation_beziehung`
-  ADD CONSTRAINT `fk_quell_organisation_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
-  ADD CONSTRAINT `fk_ziel_organisation_id` FOREIGN KEY (`ziel_organisation_id`) REFERENCES `organisation` (`id`);
+ADD CONSTRAINT `fk_quell_organisation_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`),
+ADD CONSTRAINT `fk_ziel_organisation_id` FOREIGN KEY (`ziel_organisation_id`) REFERENCES `organisation` (`id`);
 
 --
 -- Constraints der Tabelle `organisation_beziehung_log`
 --
 ALTER TABLE `organisation_beziehung_log`
-  ADD CONSTRAINT `fk_organisation_beziehung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_organisation_beziehung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `organisation_jahr`
 --
 ALTER TABLE `organisation_jahr`
-  ADD CONSTRAINT `fk_organisation_jahr_organisation_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`);
+ADD CONSTRAINT `fk_organisation_jahr_organisation_id` FOREIGN KEY (`organisation_id`) REFERENCES `organisation` (`id`);
 
 --
 -- Constraints der Tabelle `organisation_jahr_log`
 --
 ALTER TABLE `organisation_jahr_log`
-  ADD CONSTRAINT `fk_organisation_jahr_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_organisation_jahr_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `organisation_log`
 --
 ALTER TABLE `organisation_log`
-  ADD CONSTRAINT `fk_organisation_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_organisation_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `parlamentarier`
 --
 ALTER TABLE `parlamentarier`
-  ADD CONSTRAINT `fk_beruf_interessengruppe_id` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
-  ADD CONSTRAINT `fk_kanton_id` FOREIGN KEY (`kanton_id`) REFERENCES `kanton` (`id`),
-  ADD CONSTRAINT `fk_mil_grad` FOREIGN KEY (`militaerischer_grad_id`) REFERENCES `mil_grad` (`id`),
-  ADD CONSTRAINT `fk_parlamentarier_fraktion_id` FOREIGN KEY (`fraktion_id`) REFERENCES `fraktion` (`id`),
-  ADD CONSTRAINT `fk_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`),
-  ADD CONSTRAINT `fk_rat_id` FOREIGN KEY (`rat_id`) REFERENCES `rat` (`id`);
+ADD CONSTRAINT `fk_beruf_interessengruppe_id` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
+ADD CONSTRAINT `fk_kanton_id` FOREIGN KEY (`kanton_id`) REFERENCES `kanton` (`id`),
+ADD CONSTRAINT `fk_mil_grad` FOREIGN KEY (`militaerischer_grad_id`) REFERENCES `mil_grad` (`id`),
+ADD CONSTRAINT `fk_parlamentarier_fraktion_id` FOREIGN KEY (`fraktion_id`) REFERENCES `fraktion` (`id`),
+ADD CONSTRAINT `fk_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`),
+ADD CONSTRAINT `fk_rat_id` FOREIGN KEY (`rat_id`) REFERENCES `rat` (`id`);
 
 --
 -- Constraints der Tabelle `parlamentarier_anhang`
 --
 ALTER TABLE `parlamentarier_anhang`
-  ADD CONSTRAINT `fk_parlam_anhang` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `fk_parlam_anhang` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `parlamentarier_anhang_log`
 --
 ALTER TABLE `parlamentarier_anhang_log`
-  ADD CONSTRAINT `fk_parlamentarier_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_parlamentarier_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `parlamentarier_log`
 --
 ALTER TABLE `parlamentarier_log`
-  ADD CONSTRAINT `fk_parlamentarier_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_parlamentarier_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `partei`
 --
 ALTER TABLE `partei`
-  ADD CONSTRAINT `fk_partei_fraktion_id` FOREIGN KEY (`fraktion_id`) REFERENCES `fraktion` (`id`);
+ADD CONSTRAINT `fk_partei_fraktion_id` FOREIGN KEY (`fraktion_id`) REFERENCES `fraktion` (`id`);
 
 --
 -- Constraints der Tabelle `partei_log`
 --
 ALTER TABLE `partei_log`
-  ADD CONSTRAINT `fk_partei_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_partei_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `rat`
 --
 ALTER TABLE `rat`
-  ADD CONSTRAINT `fk_interessenraum_id` FOREIGN KEY (`interessenraum_id`) REFERENCES `interessenraum` (`id`);
+ADD CONSTRAINT `fk_interessenraum_id` FOREIGN KEY (`interessenraum_id`) REFERENCES `interessenraum` (`id`);
 
 --
 -- Constraints der Tabelle `rat_log`
 --
 ALTER TABLE `rat_log`
-  ADD CONSTRAINT `fk_rat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_rat_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `settings`
 --
 ALTER TABLE `settings`
-  ADD CONSTRAINT `fk_settings_category_id` FOREIGN KEY (`category_id`) REFERENCES `settings_category` (`id`);
+ADD CONSTRAINT `fk_settings_category_id` FOREIGN KEY (`category_id`) REFERENCES `settings_category` (`id`);
 
 --
 -- Constraints der Tabelle `settings_category_log`
 --
 ALTER TABLE `settings_category_log`
-  ADD CONSTRAINT `fk_settings_category_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_settings_category_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `settings_log`
 --
 ALTER TABLE `settings_log`
-  ADD CONSTRAINT `fk_settings_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_settings_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+--
+-- Constraints der Tabelle `translation_target`
+--
+ALTER TABLE `translation_target`
+ADD CONSTRAINT `plural_translation_source_id` FOREIGN KEY (`plural_translation_source_id`) REFERENCES `translation_source` (`id`),
+ADD CONSTRAINT `translation_source_id` FOREIGN KEY (`translation_source_id`) REFERENCES `translation_source` (`id`);
 
 --
 -- Constraints der Tabelle `zutrittsberechtigung`
 --
 ALTER TABLE `zutrittsberechtigung`
-  ADD CONSTRAINT `fk_zb_lg` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
-  ADD CONSTRAINT `fk_zb_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`),
-  ADD CONSTRAINT `fk_zutrittsberechtigung_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`);
+ADD CONSTRAINT `fk_zb_lg` FOREIGN KEY (`beruf_interessengruppe_id`) REFERENCES `interessengruppe` (`id`),
+ADD CONSTRAINT `fk_zb_parlam` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`),
+ADD CONSTRAINT `fk_zutrittsberechtigung_partei_id` FOREIGN KEY (`partei_id`) REFERENCES `partei` (`id`);
 
 --
 -- Constraints der Tabelle `zutrittsberechtigung_anhang`
 --
 ALTER TABLE `zutrittsberechtigung_anhang`
-  ADD CONSTRAINT `fk_zutrittsberechtigung_anhang_zutrittsberechtigung_id` FOREIGN KEY (`zutrittsberechtigung_id`) REFERENCES `zutrittsberechtigung` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `fk_zutrittsberechtigung_anhang_zutrittsberechtigung_id` FOREIGN KEY (`zutrittsberechtigung_id`) REFERENCES `zutrittsberechtigung` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints der Tabelle `zutrittsberechtigung_anhang_log`
 --
 ALTER TABLE `zutrittsberechtigung_anhang_log`
-  ADD CONSTRAINT `fk_zutrittsberechtigung_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_zutrittsberechtigung_anhang_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 --
 -- Constraints der Tabelle `zutrittsberechtigung_log`
 --
 ALTER TABLE `zutrittsberechtigung_log`
-  ADD CONSTRAINT `fk_zutrittsberechtigung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+ADD CONSTRAINT `fk_zutrittsberechtigung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 SET FOREIGN_KEY_CHECKS=1;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

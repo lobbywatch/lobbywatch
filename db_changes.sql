@@ -1832,3 +1832,8 @@ UPDATE `zutrittsberechtigung` SET twitter_name = substring(twitter_name, 2), upd
 UPDATE `organisation` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
 UPDATE `partei` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
 UPDATE `partei` SET twitter_name = substring(twitter_name_fr, 2), updated_visa = 'roland*' WHERE twitter_name_fr like '@%';
+
+RENAME TABLE `zutrittsberechtigung` TO `person`;
+RENAME TABLE `zutrittsberechtigung_log` TO `person_log`;
+RENAME TABLE `zutrittsberechtigung_anhang` TO `person_anhang`;
+RENAME TABLE `zutrittsberechtigung_anhang_log` TO `person_anhang_log`;
