@@ -750,9 +750,9 @@ $edit_general_hint        </BeforeGridText>
               </Validators>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
               <Validators>
-                <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
+                <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@)).*$"/>
               </Validators>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true">
@@ -928,9 +928,9 @@ $edit_general_hint        </BeforeGridText>
               </Validators>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
               <Validators>
-                <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
+                <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@)).*$"/>
               </Validators>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true" defaultInsertValue="">
@@ -20701,9 +20701,9 @@ $edit_general_hint        </BeforeGridText>
               </Validators>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
               <Validators>
-                <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
+                <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@)).*$"/>
               </Validators>
             </Column>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true" canSetNull="true">
@@ -20851,9 +20851,9 @@ $edit_general_hint        </BeforeGridText>
               </Validators>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
               <Validators>
-                <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
+                <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@)).*$"/>
               </Validators>
             </Column>
             <Column fieldName="linkedin_profil_url" caption="Linkedin Profil Url" visible="true" canSetNull="true" defaultInsertValue="">
@@ -33062,15 +33062,15 @@ $edit_general_hint        </BeforeGridText>
               </Validators>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
               <Validators>
-                <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
+                <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@)).*$"/>
               </Validators>
             </Column>
             <Column fieldName="twitter_name_fr" caption="Twitter Name Fr" visible="true" canSetNull="true">
-              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
               <Validators>
-                <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
+                <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@)).*$"/>
               </Validators>
             </Column>
             <Column fieldName="fraktion_id" caption="Fraktion" visible="true" canSetNull="true">
@@ -33176,15 +33176,15 @@ $edit_general_hint        </BeforeGridText>
               </Validators>
             </Column>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
               <Validators>
-                <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
+                <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@)).*$"/>
               </Validators>
             </Column>
             <Column fieldName="twitter_name_fr" caption="Twitter Name Fr" visible="true" canSetNull="true" defaultInsertValue="">
-              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="" suffix=""/>
+              <EditProperties type="textBox" size="50" maxLength="50" placeholder="" prefix="@" suffix=""/>
               <Validators>
-                <RegExpClientValidatorInfo enabled="true" expression="^(?!http).*$"/>
+                <RegExpClientValidatorInfo enabled="true" expression="^(?!(http|@)).*$"/>
               </Validators>
             </Column>
             <Column fieldName="fraktion_id" caption="Fraktion" visible="true" canSetNull="true" defaultInsertValue="">
