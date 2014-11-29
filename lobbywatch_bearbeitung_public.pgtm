@@ -10206,7 +10206,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="photo_dateierweiterung" caption="Photo Dateierweiterung" visible="false" headerHint="Erweiterung der Photodatei">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="true" headerHint="Photodateiname mit Erweiterung">
+            <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="false" headerHint="Photodateiname mit Erweiterung">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="photo_mime_type" caption="Photo Mime Type" visible="false" headerHint="MIME Type des Photos">
@@ -10468,7 +10468,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="photo_dateierweiterung" caption="Photo Dateierweiterung" visible="false" canSetNull="true">
               <EditProperties type="textBox" size="15" maxLength="15" placeholder="" prefix="" suffix=""/>
             </Column>
-            <Column fieldName="photo_dateiname_voll" caption="Photodateiname" visible="true" readOnly="true">
+            <Column fieldName="photo_dateiname_voll" caption="Photodateiname" visible="false" readOnly="true">
               <EditProperties type="textBox" size="0" maxLength="0" placeholder="" prefix="" suffix=""/>
             </Column>
             <Column fieldName="photo_mime_type" caption="Photo Mime Type" visible="false" canSetNull="true">
@@ -10882,7 +10882,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="updated_date" caption="Updated Date" visible="true" useComboBox="false"/>
             <Column fieldName="photo_dateiname" caption="Photo Dateiname" visible="false" useComboBox="false"/>
             <Column fieldName="photo_dateierweiterung" caption="Photo Dateierweiterung" visible="false" useComboBox="false"/>
-            <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="true" useComboBox="false"/>
+            <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname" visible="false" useComboBox="false"/>
             <Column fieldName="photo_mime_type" caption="Photo Mime Type" visible="false" useComboBox="false"/>
           </AdvancedSearchColumns>
           <ExportColumns>
@@ -11074,7 +11074,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="photo_dateierweiterung" caption="Photo Dateierweiterung" visible="false" headerHint="Erweiterung der Photodatei">
               <ViewProperties type="text"/>
             </Column>
-            <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname Voll" visible="true" headerHint="Photodateiname mit Erweiterung">
+            <Column fieldName="photo_dateiname_voll" caption="Photo Dateiname Voll" visible="false" headerHint="Photodateiname mit Erweiterung">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="photo_mime_type" caption="Photo Mime Type" visible="false" headerHint="MIME Type des Photos">

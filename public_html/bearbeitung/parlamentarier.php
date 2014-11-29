@@ -21716,7 +21716,6 @@
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('created_date', $this->RenderText('Created Date')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('updated_visa', $this->RenderText('Updated Visa')));
             $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateDateTimeSearchInput('updated_date', $this->RenderText('Updated Date')));
-            $this->AdvancedSearchControl->AddSearchColumn($this->AdvancedSearchControl->CreateStringSearchInput('photo_dateiname_voll', $this->RenderText('Photo Dateiname')));
         }
     
         protected function AddOperationsColumns(Grid $grid)
@@ -22770,15 +22769,6 @@
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
             $column->SetOrderable(true);
-            $grid->AddSingleRecordViewColumn($column);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname', $this->dataset);
-            $column->SetOrderable(true);
-            $column->SetMaxLength(75);
-            $column->SetFullTextWindowHandlerName('parlamentarierGrid_photo_dateiname_voll_handler_view');
             $grid->AddSingleRecordViewColumn($column);
         }
     
@@ -23866,17 +23856,6 @@
             //
             $editor = new DateTimeEdit('updated_date_edit', true, 'd.m.Y H:i:s', GetFirstDayOfWeek());
             $editColumn = new CustomEditColumn('Updated Date', 'updated_date', $editor, $this->dataset);
-            $editColumn->SetReadOnly(true);
-            $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
-            $editor->GetValidatorCollection()->AddValidator($validator);
-            $this->ApplyCommonColumnEditProperties($editColumn);
-            $grid->AddEditColumn($editColumn);
-            
-            //
-            // Edit column for photo_dateiname_voll field
-            //
-            $editor = new TextEdit('photo_dateiname_voll_edit');
-            $editColumn = new CustomEditColumn('Photodateiname', 'photo_dateiname_voll', $editor, $this->dataset);
             $editColumn->SetReadOnly(true);
             $validator = new RequiredValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RequiredValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
@@ -25230,13 +25209,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $grid->AddPrintColumn($column);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $grid->AddPrintColumn($column);
         }
@@ -26597,13 +26569,6 @@
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
             return $result;
         }
         
@@ -27529,13 +27494,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -28467,13 +28425,6 @@
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
             return $result;
         }
         
@@ -29399,13 +29350,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -30337,13 +30281,6 @@
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
             return $result;
         }
         
@@ -31269,13 +31206,6 @@
             //
             $column = new DateTimeViewColumn('updated_date', 'Updated Date', $this->dataset);
             $column->SetDateTimeFormat('d.m.Y H:i:s');
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
@@ -32207,13 +32137,6 @@
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
             return $result;
         }
         
@@ -33142,13 +33065,6 @@
             $column->SetOrderable(true);
             $result->AddPrintColumn($column);
             
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname Voll', $this->dataset);
-            $column->SetOrderable(true);
-            $result->AddPrintColumn($column);
-            
             return $result;
         }
         
@@ -33631,13 +33547,6 @@
             $column->SetOrderable(true);
             $column->SetReplaceLFByBR(true);
             $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_notizen_handler_view', $column);
-            GetApplication()->RegisterHTTPHandler($handler);
-            //
-            // View column for photo_dateiname_voll field
-            //
-            $column = new TextViewColumn('photo_dateiname_voll', 'Photo Dateiname', $this->dataset);
-            $column->SetOrderable(true);
-            $handler = new ShowTextBlobHandler($this->dataset, $this, 'parlamentarierGrid_photo_dateiname_voll_handler_view', $column);
             GetApplication()->RegisterHTTPHandler($handler);
             return $result;
         }
