@@ -1180,6 +1180,7 @@
             // Edit column for verguetung field
             //
             $editor = new TextEdit('verguetung_edit');
+            $editor->SetSuffix($this->RenderText('Fr.'));
             $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
@@ -1644,6 +1645,7 @@
             // Edit column for verguetung field
             //
             $editor = new TextEdit('verguetung_edit');
+            $editor->SetSuffix($this->RenderText('Fr.'));
             $editColumn = new CustomEditColumn('Verguetung', 'verguetung', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
             $validator = new DigitsValidator(StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('DigitsValidationMessage'), $this->RenderText($editColumn->GetCaption())));
