@@ -13,6 +13,7 @@
  * This file was written quick and dirty. ;-)
  */
 
+//phpinfo();
 
 include_once dirname(__FILE__) . '/' . 'components/utils/check_utils.php';
 CheckPHPVersion();
@@ -121,7 +122,7 @@ function fillZutrittsberechtigterEmail($i) {
         'State' =>  $state,
         'Preview' =>  '<p>Zutrittsberechtigung von '. $rowData["parlamentarier_name2"] . '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '</p>' . '<h4>Mandate</h4><ul>' . $zbList[$i]['mandate'] . '</ul>',
         'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoZb[$i]. '" target="_blank">' . $zbList[$i]["zutrittsberechtigung_name"] . '</a>',
-        'EmailText' => '<p>' . $zbList[$i]['anrede'] . '</p>' .  $emailIntroZb[$i] . '<p>' . (isset($zbList[$i]['funktion']) ? '<br><b>Funktion</b>: ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '' : ''). '</p><p><b>Ihre Mandate</b>:</p><ul>' . $zbList[$i]['mandate'] . '</ul>' .
+        'EmailText' => '<p>' . $zbList[$i]['anrede'] . '</p>' .  $emailIntroZb[$i] . '<p>' . (isset($zbList[$i]['funktion']) ? '<br><b>Funktion:</b> ' . $zbList[$i]['funktion'] . '' : '') . (isset($zbList[$i]['beruf']) ? '<br><b>Beruf</b>: ' . $zbList[$i]['beruf'] . '' : ''). '</p><p><b>Ihre Mandate:</b></p><ul>' . $zbList[$i]['mandate'] . '</ul>' .
         $emailEndZb[$i],
         // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
         'MailTo' => $mailtoZb[$i],
@@ -136,6 +137,17 @@ function fillZutrittsberechtigterEmail($i) {
 // Main
 
 SetUpUserAuthorization(GetApplication());
+
+// lobbywatch_set_language('fr');
+
+// df(lt('test'), 'lt-test');
+
+// df(lobbywatch_lang_field('organisation.name'));
+// df(lobbywatch_lang_field('organisation.name_de'));
+
+// lobbywatch_set_language('de');
+// df(lobbywatch_lang_field('organisation.name'));
+// df(lobbywatch_lang_field('organisation.name_de'));
 
 try
 {
@@ -166,18 +178,44 @@ try
       throw new Exception('ID parameter missing');
    }
 
-    $con_factory = new MyPDOConnectionFactory();
-    $options = GetConnectionOptions();
-    $eng_con = $con_factory->CreateConnection($options);
-    try {
-      $eng_con->Connect();
-      $con = $eng_con->GetConnectionHandle();
-//         df($eng_con->Connected(), 'connected');
-//         df($con, 'con');
-      $cmd = $con_factory->CreateEngCommandImp();
+//     $con_factory = new MyPDOConnectionFactory();
+//     $options = GetConnectionOptions();
+//     $eng_con = $con_factory->CreateConnection($options);
+// //     try {
+//       $eng_con->Connect();
+//       $con = $eng_con->GetConnectionHandle();
+// //         df($eng_con->Connected(), 'connected');
+// //         df($con, 'con');
+//       $cmd = $con_factory->CreateEngCommandImp();
 
-      set_db_session_parameters($con);
+    $con = getDBConnectionHandle();
+    set_db_session_parameters($con);
 
+      $sql = "SELECT parlamentarier.arbeitssprache FROM v_parlamentarier_simple parlamentarier
+          WHERE
+  parlamentarier.id=:id;";
+
+//         df($sql);
+//         $eng_con->ExecQueryToArray($sql, $result);
+//          df($eng_con->LastError(), 'last error');
+//         $eng_con->Disconnect();
+//         df($result, 'result');
+//         $preview = $rowData['email_text_html'];
+
+//         $q = $con->query($sql);
+//         $result2 = $q->fetchAll();
+//         df($eng_con->LastError(), 'last error');
+//         df($q, 'q');
+//         df($result2, 'result2');
+
+//       $sth = $con->prepare($sql);
+//       $sth->execute(array(':id' => $id));
+      $obj = lobbywatch_forms_db_query($sql, array(':id' => $id))->fetch();
+      $lang = $obj->arbeitssprache;
+      lobbywatch_set_language($lang);
+      $lang_suffix = get_lang_suffix($lang);
+
+      $result = array();
       $sql = "SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.name as parlamentarier_name2, parlamentarier.email, parlamentarier.geschlecht, parlamentarier.beruf, parlamentarier.eingabe_abgeschlossen_datum, parlamentarier.kontrolliert_datum, parlamentarier.freigabe_datum, parlamentarier.autorisierung_verschickt_datum, parlamentarier.autorisiert_datum, parlamentarier.kontrolliert_visa, parlamentarier.eingabe_abgeschlossen_visa, parlamentarier.im_rat_bis, parlamentarier.sitzplatz, parlamentarier.geburtstag, parlamentarier.im_rat_bis, parlamentarier.kleinbild, parlamentarier.parlament_biografie_id, parlamentarier.arbeitssprache,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li>',
@@ -194,8 +232,8 @@ GROUP_CONCAT(DISTINCT
     SEPARATOR ' '
 ) interessenbindungen,
 GROUP_CONCAT(DISTINCT
-    IF(interessenbindung.bis IS NULL OR interessenbindung.bis > NOW(), CONCAT('<li>', organisation.anzeige_name,
-    IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', '', CONCAT(', ', organisation.rechtsform)),
+    IF(interessenbindung.bis IS NULL OR interessenbindung.bis > NOW(), CONCAT('<li>', " . lobbywatch_lang_field('organisation.name_de') . ",
+    IF(FALSE AND (organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = ''), '', CONCAT(', ', organisation.rechtsform)),
     IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
     " . _lobbywatch_bindungsart('parlamentarier', 'interessenbindung', 'organisation') . ",
     IF(TRUE OR interessenbindung.beschreibung IS NULL OR TRIM(interessenbindung.beschreibung) = '', '', CONCAT(', ',interessenbindung.beschreibung))
@@ -223,9 +261,9 @@ GROUP_CONCAT(DISTINCT
   SEPARATOR ' '
 ) zutrittsberechtigungen_for_email,
 CASE parlamentarier.geschlecht
-  WHEN 'M' THEN CONCAT('Sehr geehrter Herr ', parlamentarier.nachname)
-  WHEN 'F' THEN CONCAT('<p>Sehr geehrte Frau ', parlamentarier.nachname)
-  ELSE CONCAT('Sehr geehrte(r) Herr/Frau ', parlamentarier.nachname)
+  WHEN 'M' THEN CONCAT(" . lts('Sehr geehrter Herr') . ",' ', parlamentarier.nachname)
+  WHEN 'F' THEN CONCAT(" . lts('Sehr geehrte Frau') . ",' ', parlamentarier.nachname)
+  ELSE CONCAT(" . lts('Sehr geehrte(r) Herr/Frau') . ",' ', parlamentarier.nachname)
 END anrede,
 GROUP_CONCAT(DISTINCT
     CONCAT('<li>',
@@ -264,25 +302,25 @@ GROUP BY parlamentarier.id;";
 //         df($q, 'q');
 //         df($result2, 'result2');
 
-      $sth = $con->prepare($sql);
-      $sth->execute(array(':id' => $id));
-      $result = $sth->fetchAll();
+//       $sth = $con->prepare($sql);
+//       $sth->execute(array(':id' => $id));
+      $options = array(
+        'fetch' => PDO::FETCH_BOTH, // for compatibility with existing code
+      );
+        $result = lobbywatch_forms_db_query($sql, array(':id' => $id), $options)->fetchAll();
+//       df($sql, 'sql');
+//       $result = $sth->fetchAll();
 
       if (!$result) {
-        df($eng_con->LastError());
+//         df($eng_con->LastError());
         throw new Exception('ID not found');
       }
-    } finally {
-      $eng_con->Disconnect();
-    }
+//     } finally {
+//       // Connection will automatically be closed at the end of the request.
+// //       $eng_con->Disconnect();
+//     }
 
     $rowData = $result[0];
-
-    if ($rowData['arbeitssprache'] == 'fr') {
-      $lang_suffix = '_fr';
-    } else {
-      $lang_suffix = '_de';
-    }
 
     $emailSubjectParlam = getSettingValue("parlamentarierAutorisierungEmailSubject$lang_suffix", false, 'Interessenbindungen');
     $emailIntroParlam = getSettingValue("parlamentarierAutorisierungEmailEinleitung$lang_suffix", false, '<p>[Einleitung]</p>');
@@ -351,8 +389,8 @@ GROUP BY parlamentarier.id;";
             '<h4>Gäste' . (substr_count($rowData['zutrittsberechtigungen'], '[VALID_Zutrittsberechtigung]') > 2 ? ' <img src="img/icons/warning.gif" alt="Warnung">': '') . '</h4>' . ($rowData['zutrittsberechtigungen'] ? '<ul>' . $rowData['zutrittsberechtigungen'] . '</ul>': '<p>keine</p>') .
             '<h4>Mandate der Gäste</h4>' . $zbRet['gaesteMitMandaten'],
           'EmailTitle' => 'Autorisierungs-E-Mail: ' . '<a href="' . $mailtoParlam. '" target="_blank">' . $rowData["parlamentarier_name"] . '</a>',
-          'EmailText' => '<p>' . $rowData['anrede'] . '</p>' . $emailIntroParlam . (isset($rowData['beruf']) ? '<p><b>Beruf</b>: ' . $rowData['beruf'] . '</p>' : '') . '<p><b>Ihre Interessenbindungen</b>:</p><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
-            '<p><b>Ihre Gäste</b>:</p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<p>keine</p>') .
+          'EmailText' => '<p>' . $rowData['anrede'] . '</p>' . $emailIntroParlam . (isset($rowData['beruf']) ? '<p><b>' . lt('Beruf:') . '</b> ' . $rowData['beruf'] . '</p>' : '') . '<p><b>' . lt('Ihre Interessenbindungen:') .'</b></p><ul>' . $rowData['interessenbindungen_for_email'] . '</ul>' .
+            '<p><b>' . lt('Ihre Gäste:') . '</b></p>' . ($rowData['zutrittsberechtigungen_for_email'] ? '<ul>' . $rowData['zutrittsberechtigungen_for_email'] . '</ul>': '<p>' . lt('keine') . '</p>') .
             $emailEndParlam,
             // '<p><b>Mandate</b> Ihrer Gäste:<p>' . gaesteMitMandaten($con, $id, true)
            'MailTo' => $mailtoParlam

@@ -108,12 +108,14 @@ function js_execute_callback(&$delivery_callback = 'drupal_json_output') {
   }
 
   if (!$module || !drupal_load('module', $module)) {
+//     print '111 JS_MENU_ACCESS_DENIED';
     return JS_MENU_ACCESS_DENIED;
   }
 
   // Get info hook function name.
   $function = $module . '_data';
   if (!function_exists($function)) {
+//     print '118 JS_MENU_NOT_FOUND';
     return JS_MENU_NOT_FOUND;
   }
 
@@ -256,6 +258,7 @@ function js_execute_callback(&$delivery_callback = 'drupal_json_output') {
       }
 
       if (!call_user_func_array($valid_callbacks[$callback]['access callback'], js_replace_callback_args(!empty($valid_callbacks[$callback]['access arguments']) ? $valid_callbacks[$callback]['access arguments'] : array()))) {
+// 		    print 'XXX 259 JS_MENU_ACCESS_DENIED';
         return JS_MENU_ACCESS_DENIED;
       }
     }

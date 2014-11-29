@@ -59,11 +59,12 @@ function _lobbywatch_search_autocomplete($str = '') {
 
   //   dpm($result, 'result');
 
+  $lang_suffix = get_lang_suffix();
     $items = array();
 //     while($record = $result->fetchAssoc()) {
     foreach($result as $record) {
-      $key = common_check_plain($record['name']) . " [" . common_check_plain($record['page']). '=' . common_check_plain($record['id']) . "]";
-      $items[$key] = common_check_plain(ucfirst($record['page']) . ': ' . $record['name']);
+      $key = $record["name$lang_suffix"] . " [" . common_check_plain($record['page']). '=' . common_check_plain($record['id']) . "]";
+      $items[$key] = common_check_plain(ucfirst($record['page']) . ': ' . $record["name$lang_suffix"]);
     }
 
   output_json($items);
@@ -86,12 +87,14 @@ function _lobbywatch_search_keyword_processing($str) {
 }
 
 function _lobbywatch_search_autocomplete_LIKE_search_table($str, $filter_unpublished = true, $filter_historised = true) {
+  $lang_suffix = get_lang_suffix();
+
   $sql = "
-SELECT id, page, name
+SELECT id, page, name$lang_suffix
 -- , freigabe_datum, bis
 FROM v_search_table
 WHERE
-search_keywords LIKE :str ". ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($filter_unpublished ? ' AND freigabe_datum <= NOW()' : '') . "
+search_keywords$lang_suffix LIKE :str ". ($filter_historised ? ' AND (bis IS NULL OR bis > NOW())' : '') . ($filter_unpublished ? ' AND freigabe_datum <= NOW()' : '') . "
 ORDER BY table_weight, weight
 LIMIT 20;";
   //dpm($sql, 'suche');

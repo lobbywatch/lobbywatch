@@ -9,6 +9,11 @@ require_once dirname(__FILE__) . "/../common/utils.php";
 require_once dirname(__FILE__) . '/../bearbeitung/components/grid/grid_state.php';
 require_once dirname(__FILE__) . '/../bearbeitung/components/common.php';
 
+// define('LOBBYWATCH_IS_FORMS', true);
+
+global $lobbywatch_is_forms;
+$lobbywatch_is_forms = true;
+
 define('OPERATION_INPUT_FINISHED_SELECTED', 'finsel');
 define('OPERATION_DE_INPUT_FINISHED_SELECTED', 'definsel');
 define('OPERATION_CONTROLLED_SELECTED', 'consel');
@@ -32,6 +37,8 @@ $edit_header_message = "<div class=\"simplebox\"><b>Stand (Version $version " . 
 */
 
 $edit_general_hint = '<div class="clearfix rbox note"><div class="rbox-title"><img src="' . util_data_uri('img/icons/book_open.png') . '" alt="Hinweis" title="Hinweis" class="icon" width="16" height="16"><span>Hinweis</span></div><div class="rbox-data">Bitte die Bearbeitungsdokumentation (vor einer Bearbeitung) beachten und bei Unklarheiten anpassen, siehe <a href="http://lobbywatch.ch/wiki/tiki-index.php?page=Datenerfassung&structure=Lobbywatch-Wiki" target="_blank">Wiki Datenbearbeitung</a> und <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_simplified.pdf">Vereinfachtes Datenmodell</a> (Komplex: <a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell_1page.pdf">1 Seite</a> /<a href="/sites/lobbywatch.ch/app' . $env_dir . 'lobbywatch_datenmodell.pdf">4 Seiten</a>).</div></div>';
+
+lobbywatch_language_initialize('de');
 
 // $params = session_get_cookie_params();
 // df($params, "Session params");
@@ -939,41 +946,79 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
 }
 
 function zutrittsberechtigteForParlamentarier($con, $parlamentarier_id, $for_email = false) {
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.funktion, zutrittsberechtigung.beruf, zutrittsberechtigung.email, zutrittsberechtigung.arbeitssprache,
-GROUP_CONCAT(DISTINCT
-    CONCAT('<li>', IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), organisation.anzeige_name,
-    IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', " . (!$for_email ? "'<span class=\"preview-missing-data\">, Rechtsform fehlt</span>'" : "''") . ", CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
-    " . _lobbywatch_bindungsart('zutrittsberechtigung', 'mandat', 'organisation') . ",
-    " . (!$for_email ? " IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>'))," : "") . "
-    IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
-    ORDER BY organisation.anzeige_name
-    SEPARATOR ' '
-) mandate,
-CASE zutrittsberechtigung.geschlecht
-    WHEN 'M' THEN CONCAT('Sehr geehrter Herr ', zutrittsberechtigung.nachname)
-    WHEN 'F' THEN CONCAT('Sehr geehrte Frau ', zutrittsberechtigung.nachname)
-    ELSE CONCAT('Sehr geehrte(r) Herr/Frau ', zutrittsberechtigung.nachname)
-END anrede
-FROM v_zutrittsberechtigung_simple zutrittsberechtigung
-LEFT JOIN v_mandat mandat
-  ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
-LEFT JOIN v_organisation_simple organisation
-  ON mandat.organisation_id = organisation.id
-WHERE
+
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.arbeitssprache FROM v_zutrittsberechtigung_simple zutrittsberechtigung
+          WHERE
   (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())
   AND zutrittsberechtigung.parlamentarier_id=:id
 GROUP BY zutrittsberechtigung.id;";
 
-  $res = array();
-  $gaeste = array();
-  $sth = $con->prepare($sql);
-  $sth->execute(array(':id' => $parlamentarier_id));
-  $gaeste = $sth->fetchAll();
+  //         df($sql);
+  //         $eng_con->ExecQueryToArray($sql, $result);
+  //          df($eng_con->LastError(), 'last error');
+  //         $eng_con->Disconnect();
+  //         df($result, 'result');
+  //         $preview = $rowData['email_text_html'];
 
-  $gaesteMitMandaten = '';
+  //         $q = $con->query($sql);
+  //         $result2 = $q->fetchAll();
+  //         df($eng_con->LastError(), 'last error');
+  //         df($q, 'q');
+  //         df($result2, 'result2');
+
+  //       $sth = $con->prepare($sql);
+  //       $sth->execute(array(':id' => $id));
+  $zbs = lobbywatch_forms_db_query($sql, array(':id' => $parlamentarier_id));
+
+  $gaeste = array();
+
+  foreach ($zbs as $zb) {
+    $id = $zb->id;
+    $lang = $zb->arbeitssprache;
+    $oldlang = lobbywatch_set_language($lang);
+    $lang_suffix = get_lang_suffix($lang);
+
+    $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.geschlecht, zutrittsberechtigung.funktion, zutrittsberechtigung.beruf, zutrittsberechtigung.email, zutrittsberechtigung.arbeitssprache,
+  GROUP_CONCAT(DISTINCT
+      CONCAT('<li>', " . (!$for_email ? "IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), '<s>', ''), " : "") . lobbywatch_lang_field('organisation.name_de') . ",
+      IF(organisation.rechtsform IS NULL OR TRIM(organisation.rechtsform) = '', " . (!$for_email ? "'<span class=\"preview-missing-data\">, Rechtsform fehlt</span>'" : "''") . ", CONCAT(', ', organisation.rechtsform)), IF(organisation.ort IS NULL OR TRIM(organisation.ort) = '', '', CONCAT(', ', organisation.ort)), ', ',
+      " . _lobbywatch_bindungsart('zutrittsberechtigung', 'mandat', 'organisation') . ",
+      " . (!$for_email ? " IF(mandat.beschreibung IS NULL OR TRIM(mandat.beschreibung) = '', '', CONCAT('<small class=\"desc\">, &quot;', mandat.beschreibung, '&quot;</small>'))," : "") . "
+      IF(mandat.bis IS NOT NULL AND mandat.bis < NOW(), CONCAT(', bis ', DATE_FORMAT(mandat.bis, '%Y'), '</s>'), ''))
+      ORDER BY organisation.anzeige_name
+      SEPARATOR ' '
+  ) mandate,
+  CASE zutrittsberechtigung.geschlecht
+      WHEN 'M' THEN CONCAT(" . lts('Sehr geehrter Herr') . ",' ', zutrittsberechtigung.nachname)
+      WHEN 'F' THEN CONCAT(" . lts('Sehr geehrte Frau') . ",' ', zutrittsberechtigung.nachname)
+      ELSE CONCAT(" . lts('Sehr geehrte(r) Herr/Frau') . ",' ', zutrittsberechtigung.nachname)
+  END anrede
+  FROM v_zutrittsberechtigung_simple zutrittsberechtigung
+  LEFT JOIN v_mandat mandat
+    ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
+  LEFT JOIN v_organisation_simple organisation
+    ON mandat.organisation_id = organisation.id
+  WHERE
+    zutrittsberechtigung.id=:id
+  GROUP BY zutrittsberechtigung.id;";
+
+//     df($sql, 'sql');
+
+    $res = array();
+    $sth = $con->prepare($sql);
+    $sth->execute(array(':id' => $id));
+    $gast = $sth->fetchAll();
+
+    $gaeste = array_merge($gaeste, $gast);
+
+    $gaesteMitMandaten = '';
+
+    // Reset language
+    lobbywatch_set_language($oldlang);
+  }
 
   if (!$gaeste) {
-    $gaesteMitMandaten = '<p>keine</p>';
+    $gaesteMitMandaten = '<p>' . lt('keine') . '</p>';
     //      throw new Exception('Parlamentarier ID not found');
   } else {
     foreach($gaeste as $gast) {
@@ -1356,10 +1401,12 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
 //       df(in_kommission_anzahl($rowData['id'])['num'], 'in_kommission_anzahl($rowData[id][num]');
       if (!isset($rowData['anzahl_nationalraete']) || !isset($rowData['anzahl_staenderaete'])) {
         $completeness_styles .= 'background-color: #FF1493;';
-      } elseif ((in_kommission_anzahl($rowData['id'], 'NR')['num'] != $rowData['anzahl_nationalraete'] || in_kommission_anzahl($rowData['id'], 'SR')['num'] != $rowData['anzahl_staenderaete']) /*&& $rowData['typ'] == 'kommission'*/) {
+      } elseif ((in_kommission_anzahl($rowData['id'])['NR']['num'] != $rowData['anzahl_nationalraete'] || in_kommission_anzahl($rowData['id'])['SR']['num'] != $rowData['anzahl_staenderaete']) /*&& $rowData['typ'] == 'kommission'*/) {
         $completeness_styles .= 'background-color: red;'; // deep pink
       } elseif (isset($rowData['parlament_url'])) {
         $completeness_styles .= 'background-color: greenyellow;';
+      } else {
+        $completeness_styles .= 'background-color: orange;';
       }
       checkAndMarkColumnNotNull('parlament_url', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('anzahl_nationalraete', $rowData, $rowCellStyles);
@@ -1401,7 +1448,6 @@ function custom_GetConnectionOptions()
   return $result;
 }
 
-
 function getDBConnection() {
   $con_factory = new MyPDOConnectionFactory();
 
@@ -1411,6 +1457,334 @@ function getDBConnection() {
   // TODO close connection
   //$con = $eng_con->GetConnectionHandle();
   return $eng_con;
+}
+
+function getDBConnectionHandle() {
+  return getDBConnection()->GetConnectionHandle();
+}
+
+/**
+ * Executes an arbitrary query string against the active database.
+ *
+ * Copied from Drupal db_query();
+ *
+ * Use this function for SELECT queries if it is just a simple query string.
+ * If the caller or other modules need to change the query, use db_select()
+ * instead.
+ *
+ * Do not use this function for INSERT, UPDATE, or DELETE queries. Those should
+ * be handled via db_insert(), db_update() and db_delete() respectively.
+ *
+ * @param $query
+ *   The prepared statement query to run. Although it will accept both named and
+ *   unnamed placeholders, named placeholders are strongly preferred as they are
+ *   more self-documenting.
+ * @param $args
+ *   An array of values to substitute into the query. If the query uses named
+ *   placeholders, this is an associative array in any order. If the query uses
+ *   unnamed placeholders (?), this is an indexed array and the order must match
+ *   the order of placeholders in the query string.
+ * @param $options
+ *   An array of options to control how the query operates.
+ *
+ * @return DatabaseStatementInterface
+ *   A prepared statement object, already executed.
+ *
+ * @see DatabaseConnection::defaultOptions()
+ */
+function lobbywatch_forms_db_query($query, array $args = array(), array $options = array()) {
+
+//   if (empty($options['target'])) {
+//     $options['target'] = 'default';
+//   }
+
+  $con_factory = new MyPDOConnectionFactory();
+  $con_options = GetConnectionOptions();
+  $eng_con = $con_factory->CreateConnection($con_options);
+  try {
+    $eng_con->Connect();
+    $con = $eng_con->GetConnectionHandle();
+    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+    //         df($eng_con->Connected(), 'connected');
+    //         df($con, 'con');
+    $cmd = $con_factory->CreateEngCommandImp();
+
+    set_db_session_parameters($con);
+
+//   return Database::getConnection($options['target'])->query($query, $args, $options);
+    // Use default values if not already set.
+    $options += lobbywatch_PDO_defaultOptions();
+
+    lobbywatch_DB_expandArguments($query, $args);
+//     $stmt = $this->prepareQuery($query);
+    $query = lobbywatch_prefixTables($query);
+    $stmt = $con->prepare($query);
+
+    if (isset($options['fetch'])) {
+      if (is_string($options['fetch'])) {
+        // Default to an object. Note: db fields will be added to the object
+        // before the constructor is run. If you need to assign fields after
+        // the constructor is run, see http://drupal.org/node/315092.
+        $stmt->setFetchMode(PDO::FETCH_CLASS, $options['fetch']);
+      }
+      else {
+        $stmt->setFetchMode($options['fetch']);
+      }
+    }
+
+    $stmt->execute($args);
+
+    // Depending on the type of query we may need to return a different value.
+    // See DatabaseConnection::defaultOptions() for a description of each
+    // value.
+    switch ($options['return']) {
+      case LW_DB_RETURN_STATEMENT:
+        return $stmt;
+      case LW_DB_RETURN_AFFECTED:
+        return $stmt->rowCount();
+      case LW_DB_RETURN_INSERT_ID:
+//         return $this->lastInsertId();
+        return;
+      case LW_DB_RETURN_NULL:
+        return;
+      default:
+        throw new PDOException('Invalid return directive: ' . $options['return']);
+    }
+    }
+    catch (PDOException $e) {
+      if ($options['throw_exception']) {
+        // Add additional debug information.
+//         if ($query instanceof DatabaseStatementInterface) {
+//           $e->query_string = $stmt->getQueryString();
+//         }
+//         else {
+          $e->query_string = $query;
+//         }
+        $e->args = $args;
+        throw $e;
+      }
+      return NULL;
+//     }
+
+
+//     //         df($sql);
+//     $result = array();
+
+//     $result = $sth->fetchAll();
+
+//     if (!$result) {
+//       df($eng_con->LastError());
+//       throw new Exception('ID not found');
+//     }
+  } finally {
+    // Connection will automatically be closed at the end of the request.
+    //     $eng_con->Disconnect();
+  }
+}
+
+/**
+ * Set the list of prefixes used by this database connection.
+ *
+ * Copied from setPrefix().
+ *
+ * @param $prefix
+ *   The prefixes, in any of the multiple forms documented in
+ *   default.settings.php.
+ */
+function lobbywatch_DB_setPrefix($prefix) {
+  if (is_array($prefix)) {
+    $prefixes = $prefix + array('default' => '');
+  }
+  else {
+    $prefixes = array('default' => $prefix);
+  }
+
+  // Set up variables for use in prefixTables(). Replace table-specific
+  // prefixes first.
+  $prefixSearch = array();
+  $prefixReplace = array();
+  foreach ($prefixes as $key => $val) {
+    if ($key != 'default') {
+      $prefixSearch[] = '{' . $key . '}';
+      $prefixReplace[] = $val . $key;
+    }
+  }
+  // Then replace remaining tables with the default prefix.
+  $prefixSearch[] = '{';
+  $prefixReplace[] = $this->prefixes['default'];
+  $prefixSearch[] = '}';
+  $prefixReplace[] = '';
+}
+
+/**
+ * Appends a database prefix to all tables in a query.
+ *
+ * Copied from prefixTables().
+ *
+ * Queries sent to Drupal should wrap all table names in curly brackets. This
+ * function searches for this syntax and adds Drupal's table prefix to all
+ * tables, allowing Drupal to coexist with other systems in the same database
+ * and/or schema if necessary.
+ *
+ * @param $sql
+ *   A string containing a partial or entire SQL query.
+ *
+ * @return
+ *   The properly-prefixed string.
+ */
+function lobbywatch_prefixTables($sql, $prefix = '') {
+  if (is_array($prefix)) {
+    $prefixes = $prefix + array('default' => '');
+  }
+  else {
+    $prefixes = array('default' => $prefix);
+  }
+
+  // Set up variables for use in prefixTables(). Replace table-specific
+  // prefixes first.
+  $prefixSearch = array();
+  $prefixReplace = array();
+  foreach ($prefixes as $key => $val) {
+    if ($key != 'default') {
+      $prefixSearch[] = '{' . $key . '}';
+      $prefixReplace[] = $val . $key;
+    }
+  }
+  // Then replace remaining tables with the default prefix.
+  $prefixSearch[] = '{';
+  $prefixReplace[] = $prefixes['default'];
+  $prefixSearch[] = '}';
+  $prefixReplace[] = '';
+
+  return str_replace($prefixSearch, $prefixReplace, $sql);
+}
+
+/**
+ * Flag to indicate a query call should simply return NULL.
+ *
+ * This is used for queries that have no reasonable return value anyway, such
+ * as INSERT statements to a table without a serial primary key.
+ */
+define('LW_DB_RETURN_NULL', 0);
+
+/**
+ * Flag to indicate a query call should return the prepared statement.
+ */
+define('LW_DB_RETURN_STATEMENT', 1);
+
+/**
+ * Flag to indicate a query call should return the number of affected rows.
+ */
+define('LW_DB_RETURN_AFFECTED', 2);
+
+/**
+ * Flag to indicate a query call should return the "last insert id".
+ */
+define('LW_DB_RETURN_INSERT_ID', 3);
+
+/**
+ * Returns the default query options for any given query.
+ *
+ * A given query can be customized with a number of option flags in an
+ * associative array:
+ * - target: The database "target" against which to execute a query. Valid
+ *   values are "default" or "slave". The system will first try to open a
+ *   connection to a database specified with the user-supplied key. If one
+ *   is not available, it will silently fall back to the "default" target.
+ *   If multiple databases connections are specified with the same target,
+ *   one will be selected at random for the duration of the request.
+ * - fetch: This element controls how rows from a result set will be
+ *   returned. Legal values include PDO::FETCH_ASSOC, PDO::FETCH_BOTH,
+ *   PDO::FETCH_OBJ, PDO::FETCH_NUM, or a string representing the name of a
+ *   class. If a string is specified, each record will be fetched into a new
+ *   object of that class. The behavior of all other values is defined by PDO.
+ *   See http://php.net/manual/pdostatement.fetch.php
+ * - return: Depending on the type of query, different return values may be
+ *   meaningful. This directive instructs the system which type of return
+ *   value is desired. The system will generally set the correct value
+ *   automatically, so it is extremely rare that a module developer will ever
+ *   need to specify this value. Setting it incorrectly will likely lead to
+ *   unpredictable results or fatal errors. Legal values include:
+ *   - Database::RETURN_STATEMENT: Return the prepared statement object for
+ *     the query. This is usually only meaningful for SELECT queries, where
+ *     the statement object is how one accesses the result set returned by the
+ *     query.
+ *   - Database::RETURN_AFFECTED: Return the number of rows affected by an
+ *     UPDATE or DELETE query. Be aware that means the number of rows actually
+ *     changed, not the number of rows matched by the WHERE clause.
+ *   - Database::RETURN_INSERT_ID: Return the sequence ID (primary key)
+ *     created by an INSERT statement on a table that contains a serial
+ *     column.
+ *   - Database::RETURN_NULL: Do not return anything, as there is no
+ *     meaningful value to return. That is the case for INSERT queries on
+ *     tables that do not contain a serial column.
+ * - throw_exception: By default, the database system will catch any errors
+ *   on a query as an Exception, log it, and then rethrow it so that code
+ *   further up the call chain can take an appropriate action. To suppress
+ *   that behavior and simply return NULL on failure, set this option to
+ *   FALSE.
+ *
+ * @return
+ *   An array of default query options.
+ */
+function lobbywatch_PDO_defaultOptions() {
+  return array(
+      'target' => 'default',
+      'fetch' => PDO::FETCH_OBJ,
+      'return' => LW_DB_RETURN_STATEMENT,
+      'throw_exception' => TRUE,
+  );
+}
+
+/**
+ * Expands out shorthand placeholders.
+ *
+ * Copied from expandArguments()
+ *
+ * Drupal supports an alternate syntax for doing arrays of values. We
+ * therefore need to expand them out into a full, executable query string.
+ *
+ * @param $query
+ *   The query string to modify.
+ * @param $args
+ *   The arguments for the query.
+ *
+ * @return
+ *   TRUE if the query was modified, FALSE otherwise.
+ */
+function lobbywatch_DB_expandArguments(&$query, &$args) {
+  $modified = FALSE;
+
+  // If the placeholder value to insert is an array, assume that we need
+  // to expand it out into a comma-delimited set of placeholders.
+  foreach (array_filter($args, 'is_array') as $key => $data) {
+    $new_keys = array();
+    foreach (array_values($data) as $i => $value) {
+      // This assumes that there are no other placeholders that use the same
+      // name.  For example, if the array placeholder is defined as :example
+      // and there is already an :example_2 placeholder, this will generate
+      // a duplicate key.  We do not account for that as the calling code
+      // is already broken if that happens.
+      $new_keys[$key . '_' . $i] = $value;
+    }
+
+    // Update the query with the new placeholders.
+    // preg_replace is necessary to ensure the replacement does not affect
+    // placeholders that start with the same exact text. For example, if the
+    // query contains the placeholders :foo and :foobar, and :foo has an
+    // array of values, using str_replace would affect both placeholders,
+    // but using the following preg_replace would only affect :foo because
+    // it is followed by a non-word character.
+    $query = preg_replace('#' . $key . '\b#', implode(', ', array_keys($new_keys)), $query);
+
+    // Update the args array with the new placeholders.
+    unset($args[$key]);
+    $args += $new_keys;
+
+    $modified = TRUE;
+  }
+
+  return $modified;
 }
 
 function zutrittsberechtigung_state($parlamentarier_id) {
@@ -1435,7 +1809,8 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     $sth->execute(array(':id' => $parlamentarier_id));
     $zbs = $sth->fetchAll();
 
-    $eng_con->Disconnect();
+    // Connection will automatically be closed at the end of the request.
+//     $eng_con->Disconnect();
 
     foreach($zbs as $zb) {
       $zb_state[$zb['parlamentarier_id']][] = $zb;
@@ -1459,7 +1834,8 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     $sth->execute(array(':id' => $parlamentarier_id));
     $zbs = $sth->fetchAll();
 
-    $eng_con->Disconnect();
+    // Connection will automatically be closed at the end of the request.
+//     $eng_con->Disconnect();
 
     $zb_state[$parlamentarier_id] = $zbs;
 
@@ -1483,24 +1859,27 @@ function in_kommission_anzahl($kommission_id, $rat = null) {
   // Load all zutrittsberechtige on first call
   if (!isset($cache)) {
     // Fetch all the first time
-    $eng_con = getDBConnection();
-    $con = $eng_con->GetConnectionHandle();
+//     $eng_con = getDBConnection();
+//     $con = $eng_con->GetConnectionHandle();
     // TODO close connection
-    $sql = "SELECT in_kommission.kommission_id, count( DISTINCT in_kommission.parlamentarier_id) as num, in_kommission.abkuerzung, in_kommission.kommission_name, in_kommission.kommission_typ
+    $sql = "SELECT in_kommission.kommission_id, count( DISTINCT in_kommission.parlamentarier_id) as num, in_kommission.kommission_abkuerzung, in_kommission.kommission_name, in_kommission.kommission_typ, in_kommission.rat
   FROM v_in_kommission in_kommission
-  WHERE in_kommission.bis IS NULL OR in_kommission.bis > NOW()"
+  WHERE (in_kommission.bis IS NULL OR in_kommission.bis > NOW() )"
 . ( $rat ? " AND in_kommission.rat='$rat'" : '')
-. "  GROUP BY in_kommission.kommission_id;";
+. "  GROUP BY in_kommission.kommission_id, in_kommission.rat;";
 
-    $zbs = array();
-    $sth = $con->prepare($sql);
-    $sth->execute(array());
-    $zbs = $sth->fetchAll();
+//     $zbs = array();
+//     $sth = $con->prepare($sql);
+//     $sth->execute(array());
+//     $zbs = $sth->fetchAll();
 
-    $eng_con->Disconnect();
+    $zbs = lobbywatch_forms_db_query($sql, array(), array('fetch' => PDO::FETCH_ASSOC))->fetchAll();
+
+    // Connection will automatically be closed at the end of the request.
+//     $eng_con->Disconnect();
 
     foreach($zbs as $zb) {
-      $cache[$zb['kommission_id']] = $zb;
+      $cache[$zb['kommission_id']][$zb['rat']] = $zb;
     }
     //     df($cache, '$cache');
   }
@@ -1624,7 +2003,8 @@ function getSettingValue($key, $json = false, $defaultValue = null) {
       $sth->execute(array(':key' => $key));
       $values = $sth->fetchAll();
     } finally {
-      $eng_con->Disconnect();
+      // Connection will automatically be closed at the end of the request.
+//       $eng_con->Disconnect();
     }
 
   //   df($values, '$values');
@@ -1657,7 +2037,8 @@ function getSettingValue($key, $json = false, $defaultValue = null) {
       $sth->execute(array(':key' => $key));
       $values = $sth->fetchAll();
     } finally {
-      $eng_con->Disconnect();
+      // Connection will automatically be closed at the end of the request.
+//       $eng_con->Disconnect();
     }
 
   //   df($values, '$values');
@@ -1710,7 +2091,8 @@ function getSettingCategoryValues($categoryName, $defaultValue = null) {
       $sth->execute(array(':categoryName' => $categoryName));
       $values = $sth->fetchAll();
     } finally {
-      $eng_con->Disconnect();
+      // Connection will automatically be closed at the end of the request.
+//       $eng_con->Disconnect();
     }
 
     if (count($values) == 0) {
@@ -1826,4 +2208,42 @@ function timer_stop($name) {
   }
 
   return $timers[$name];
+}
+
+/**
+ * Copied from language_default in bootstrap.inc.
+ *
+ * @param string $property
+ * @return The
+ */
+function lobbywatch_language_default($property = NULL) {
+  //   $language = variable_get('language_default', (object) array('language' => 'en', 'name' => 'English', 'native' => 'English', 'direction' => 0, 'enabled' => 1, 'plurals' => 0, 'formula' => '', 'domain' => '', 'prefix' => '', 'weight' => 0, 'javascript' => ''));
+  $language = (object) array('language' => 'de', 'name' => 'German', 'native' => 'Deutsch', 'direction' => 0, 'enabled' => 1, 'plurals' => 0, 'formula' => '', 'domain' => '', 'prefix' => '', 'weight' => 0, 'javascript' => '');
+  return $property ? $language->$property : $language;
+}
+
+/**
+ * Initilizes the current language for translations. de is default.
+ * @param unknown $langcode ISO language code, de, fr supported
+ * @return the old language
+ */
+function lobbywatch_language_initialize($langcode = 'de') {
+  global $language;
+  $oldlanguage = $language;
+  if ($langcode == 'fr') {
+    $language = (object) array('language' => 'fr', 'name' => 'French', 'native' => 'Französisch', 'direction' => 0, 'enabled' => 1, 'plurals' => 0, 'formula' => '', 'domain' => '', 'prefix' => '', 'weight' => 0, 'javascript' => '');
+  } else {
+    $language = (object) array('language' => 'de', 'name' => 'German', 'native' => 'Deutsch', 'direction' => 0, 'enabled' => 1, 'plurals' => 0, 'formula' => '', 'domain' => '', 'prefix' => '', 'weight' => 0, 'javascript' => '');
+  }
+  return $oldlanguage;
+}
+
+/**
+ * Sets the current language for translations. de is default.
+ *
+ * @param unknown $langcode ISO language code, de, fr supported
+ * @return the old language
+ */
+function lobbywatch_set_language($langcode = 'de') {
+  return lobbywatch_language_initialize($langcode);
 }

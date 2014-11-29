@@ -40,8 +40,9 @@ NOW_SHORT=$(date +"%d.%m.%Y");
 echo -e "<?php\n\$build_date = '$NOW';\n\$build_date_short = '$NOW_SHORT';" > $root_dir/common/build_date.php;
 
 # Also in deploy.sh
-VERSION=$(git describe --abbrev=0 --tags)
-echo -e "<?php\n\$version = '$VERSION';" >  $root_dir/common/version.php;
+# VERSION=$(git describe --abbrev=0 --tags)
+# echo -e "<?php\n\$version = '$VERSION';" >  $root_dir/common/version.php;
+set_lobbywatch_version.sh $root_dir
 
 rm -rf $dir/templates_c/*
 

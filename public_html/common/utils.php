@@ -358,65 +358,639 @@ function util_data_uri($file, $mime = '') {
 function _lobbywatch_bindungsart($pers, $ib, $org) {
   //   return "'XXX'";
   $art = "CASE $ib.art
-  WHEN 'taetig' THEN 'tätig'
-  WHEN 'geschaeftsfuehrend' THEN 'geschäftsführend'
+  WHEN 'taetig' THEN " . lts('tätig') . "
+  WHEN 'geschaeftsfuehrend' THEN " . lts('geschäftsführend') . "
   ELSE $ib.art
   END";
+
   $funktion_im_gremium = "CASE
-  WHEN $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Präsidentin'
-  WHEN $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Präsident'
-  WHEN $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Vizepräsidentin'
-  WHEN $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vizepräsident'
-  WHEN $ib.funktion_im_gremium = 'mitglied' THEN 'Mitglied'
+  WHEN $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN " . lts('Präsidentin') . "
+  WHEN $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN " . lts('Präsident') . "
+  WHEN $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN " . lts('Vizepräsidentin') . "
+  WHEN $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN " . lts('Vizepräsident') . "
+  WHEN $ib.funktion_im_gremium = 'mitglied' THEN " . lts('Mitglied') . "
   ELSE $ib.funktion_im_gremium
   END";
+
   return "CASE
   -- Stiftung
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Stiftungsratspräsidentin'
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Stiftungsratspräsident'
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Stiftungsratsvizepräsidentin'
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Stiftungsratsvizepräsident'
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'F' THEN 'Stiftungsrätin'
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'M' THEN 'Stiftungsrat'
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Geschäftsführerin'
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Geschäftsführer'
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Vizegeschäftsführerin'
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vizegeschäftsführer'
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN 'Geschäftsleitung'
-    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN 'Geschäftsleitung'
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN " . lts('Stiftungsratspräsidentin') . "
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN " . lts('Stiftungsratspräsident') . "
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN " . lts('Stiftungsratsvizepräsidentin') . "
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN " . lts('Stiftungsratsvizepräsident') . "
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'F' THEN " . lts('Stiftungsrätin') . "
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'M' THEN " . lts('Stiftungsrat') . "
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN " . lts('Geschäftsführerin') . "
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN " . lts('Geschäftsführer') . "
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN " . lts('Vizegeschäftsführerin') . "
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN " . lts('Vizegeschäftsführer') . "
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN " . lts('Geschäftsleitung') . "
+    WHEN $org.rechtsform = 'Stiftung' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN " . lts('Geschäftsleitung') . "
   -- AG
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Verwaltungsratspräsidentin'
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Verwaltungsratspräsident'
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Verwaltungsratsvizepräsidentin'
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Verwaltungsratsvizepräsident'
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $pers.geschlecht = 'F' THEN 'Verwaltungsrätin'
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $pers.geschlecht = 'M' THEN 'Verwaltungsrat'
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Geschäftsführerin (CEO)'
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Geschäftsführer (CEO)'
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Vizegeschäftsführerin'
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vizegeschäftsführer'
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN 'Geschäftsleitung'
-    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN 'Geschäftsleitung'
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN " . lts('Verwaltungsratspräsidentin') . "
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN " . lts('Verwaltungsratspräsident') . "
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN " . lts('Verwaltungsratsvizepräsidentin') . "
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN " . lts('Verwaltungsratsvizepräsident') . "
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $pers.geschlecht = 'F' THEN " . lts('Verwaltungsrätin') . "
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'vorstand' AND $pers.geschlecht = 'M' THEN " . lts('Verwaltungsrat') . "
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN " . lts('Geschäftsführerin (CEO)') . "
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN " . lts('Geschäftsführer (CEO)') . "
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN " . lts('Vizegeschäftsführerin') . "
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN " . lts('Vizegeschäftsführer') . "
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN " . lts('Geschäftsleitung') . "
+    WHEN $org.rechtsform IN ('AG', 'Genossenschaft') AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN " . lts('Geschäftsleitung') . "
   -- Verein
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Vorstandspräsidentin'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Vorstandspräsident'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Vorstandsvizepräsidentin'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vorstandsvizepräsident'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'F' THEN 'Vorstand'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'M' THEN 'Vorstand'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN 'Geschäftsführerin'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN 'Geschäftsführer'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN 'Vizegeschäftsführerin'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN 'Vizegeschäftsführer'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN 'Geschäftsleitung'
-    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN 'Geschäftsleitung'
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN " . lts('Vorstandspräsidentin') . "
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN " . lts('Vorstandspräsident') . "
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN " . lts('Vorstandsvizepräsidentin') . "
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN " . lts('Vorstandsvizepräsident') . "
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'F' THEN " . lts('Vorstand') . "
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'vorstand' AND $pers.geschlecht = 'M' THEN " . lts('Vorstand') . "
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'F' THEN " . lts('Geschäftsführerin') . "
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'praesident' AND $pers.geschlecht = 'M' THEN " . lts('Geschäftsführer') . "
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'F' THEN " . lts('Vizegeschäftsführerin') . "
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $ib.funktion_im_gremium = 'vizepraesident' AND $pers.geschlecht = 'M' THEN " . lts('Vizegeschäftsführer') . "
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'F' THEN " . lts('Geschäftsleitung') . "
+    WHEN $org.rechtsform = 'Verein' AND $ib.art = 'geschaeftsfuehrend' AND $pers.geschlecht = 'M' THEN " . lts('Geschäftsleitung') . "
     -- Beirat/Patronatskomitee/Expertenkommission/Advisory Board
-    WHEN $ib.art = 'beirat' THEN CONCAT('Beirat/Patronatskomitee/Expertenkommission/Advisory Board',
+    WHEN $ib.art = 'beirat' THEN CONCAT(" . lts('Beirat/Patronatskomitee/Expertenkommission/Advisory Board') . ",
     IF($ib.funktion_im_gremium IS NULL OR TRIM($ib.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT($funktion_im_gremium, 1)), SUBSTRING($funktion_im_gremium, 2)))))
   -- Else
     ELSE CONCAT(CONCAT(UCASE(LEFT($art, 1)), SUBSTRING($art, 2)),
     IF($ib.funktion_im_gremium IS NULL OR TRIM($ib.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT($funktion_im_gremium, 1)), SUBSTRING($funktion_im_gremium, 2)))))
     END";
+  // TODO add lts() to funktion_im_gremium
           //   return "CONCAT(UCASE(LEFT(interessenbindung.art, 1)), SUBSTRING(interessenbindung.art, 2)),
 //       IF(interessenbindung.funktion_im_gremium IS NULL OR TRIM(interessenbindung.funktion_im_gremium) IN ('', 'mitglied'), '', CONCAT(', ',CONCAT(UCASE(LEFT(interessenbindung.funktion_im_gremium, 1)), SUBSTRING(interessenbindung.funktion_im_gremium, 2))))";
+}
+
+/**
+ * Set field name for language dependent field, e.g. name_de or name_fr.
+ *
+ * @param string $field the field name of the German field, either name or name_de
+ * @param string $langcode lang ISO code
+ * @return string field name for SQL with fallback
+ */
+function lobbywatch_lang_field($field, $langcode = null) {
+  global $language;
+
+  // Merge in default.
+  if (!isset($langcode)) {
+    $langcode = isset($language->language) ? $language->language : 'de';
+  }
+
+  if ($langcode == 'de') {
+    return $field;
+  } else {
+    // if translation is missing, fallback to default ('de')
+    return 'IFNULL(' . preg_replace('/_de$/u', '', $field) . "_$langcode , $field)";
+  }
+}
+
+/**
+ * Translates a string to the current language or to a given language.
+ *
+ * Copied from Drupal t().
+ *
+ * The t() function serves two purposes. First, at run-time it translates
+ * user-visible text into the appropriate language. Second, various mechanisms
+ * that figure out what text needs to be translated work off t() -- the text
+ * inside t() calls is added to the database of strings to be translated.
+ * These strings are expected to be in English, so the first argument should
+ * always be in English. To enable a fully-translatable site, it is important
+ * that all human-readable text that will be displayed on the site or sent to
+ * a user is passed through the t() function, or a related function. See the
+ * @link http://drupal.org/node/322729 Localization API @endlink pages for
+ * more information, including recommendations on how to break up or not
+ * break up strings for translation.
+ *
+ * @section sec_translating_vars Translating Variables
+ * You should never use t() to translate variables, such as calling
+ * @code t($text); @endcode, unless the text that the variable holds has been
+ * passed through t() elsewhere (e.g., $text is one of several translated
+ * literal strings in an array). It is especially important never to call
+ * @code t($user_text); @endcode, where $user_text is some text that a user
+ * entered - doing that can lead to cross-site scripting and other security
+ * problems. However, you can use variable substitution in your string, to put
+ * variable text such as user names or link URLs into translated text. Variable
+ * substitution looks like this:
+ * @code
+ * $text = t("@name's blog", array('@name' => format_username($account)));
+ * @endcode
+ * Basically, you can put variables like @name into your string, and t() will
+ * substitute their sanitized values at translation time. (See the
+ * Localization API pages referenced above and the documentation of
+ * format_string() for details about how to define variables in your string.)
+ * Translators can then rearrange the string as necessary for the language
+ * (e.g., in Spanish, it might be "blog de @name").
+ *
+ * @section sec_alt_funcs_install Use During Installation Phase
+ * During the Drupal installation phase, some resources used by t() wil not be
+ * available to code that needs localization. See st() and get_t() for
+ * alternatives.
+ *
+ * @param $string
+ *   A string containing the English string to translate.
+ * @param $args
+ *   An associative array of replacements to make after translation. Based
+ *   on the first character of the key, the value is escaped and/or themed.
+ *   See format_string() for details.
+ * @param $options
+ *   An associative array of additional options, with the following elements:
+ *   - 'langcode' (defaults to the current language): The language code to
+ *     translate to a language other than what is used to display the page.
+ *   - 'context' (defaults to the empty context): The context the source string
+ *     belongs to.
+ *
+ * @return
+ *   The translated string.
+ *
+ * @see st()
+ * @see get_t()
+ * @see format_string()
+ * @ingroup sanitization
+ */
+function lt($string, array $args = array(), array $options = array()) {
+  global $language;
+  static $custom_strings;
+
+  // Merge in default.
+  if (empty($options['langcode'])) {
+    $options['langcode'] = isset($language->language) ? $language->language : 'de';
+  }
+  if (empty($options['context'])) {
+    $options['context'] = '';
+  }
+
+//   // First, check for an array of customized strings. If present, use the array
+//   // *instead of* database lookups. This is a high performance way to provide a
+//   // handful of string replacements. See settings.php for examples.
+//   // Cache the $custom_strings variable to improve performance.
+//   if (!isset($custom_strings[$options['langcode']])) {
+//     $custom_strings[$options['langcode']] = variable_get('locale_custom_strings_' . $options['langcode'], array());
+//   }
+//   // Custom strings work for English too, even if locale module is disabled.
+//   if (isset($custom_strings[$options['langcode']][$options['context']][$string])) {
+//     $string = $custom_strings[$options['langcode']][$options['context']][$string];
+//   }
+//   // Translate with locale module if enabled.
+//   elseif ($options['langcode'] != 'en' && function_exists('locale')) {
+//     $string = locale($string, $options['context'], $options['langcode']);
+//   }
+  $string = lobbywatch_translate($string, $options['context'], $options['langcode']);
+  if (empty($args)) {
+    return $string;
+  }
+  else {
+    return lobbywatch_format_string($string, $args);
+  }
+}
+
+/**
+ * Calls lt and encloses with single quotes. This is useful for SQL.
+ *
+ * See lt() function.
+ *
+ * @param unknown $string
+ * @param array $args
+ * @param array $options
+ * @return string
+ */
+function lts($string, array $args = array(), array $options = array()) {
+  return "'" . lt($string, $args, $options) . "'";
+}
+
+/**
+ * Formats a string for HTML display by replacing variable placeholders.
+ *
+ * Copied from format_string()
+ *
+ * This function replaces variable placeholders in a string with the requested
+ * values and escapes the values so they can be safely displayed as HTML. It
+ * should be used on any unknown text that is intended to be printed to an HTML
+ * page (especially text that may have come from untrusted users, since in that
+ * case it prevents cross-site scripting and other security problems).
+ *
+ * In most cases, you should use t() rather than calling this function
+ * directly, since it will translate the text (on non-English-only sites) in
+ * addition to formatting it.
+ *
+ * @param $string
+ *   A string containing placeholders.
+ * @param $args
+ *   An associative array of replacements to make. Occurrences in $string of
+ *   any key in $args are replaced with the corresponding value, after optional
+ *   sanitization and formatting. The type of sanitization and formatting
+ *   depends on the first character of the key:
+ *   - @variable: Escaped to HTML using check_plain(). Use this as the default
+ *     choice for anything displayed on a page on the site.
+ *   - %variable: Escaped to HTML and formatted using drupal_placeholder(),
+ *     which makes it display as <em>emphasized</em> text.
+ *   - !variable: Inserted as is, with no sanitization or formatting. Only use
+ *     this for text that has already been prepared for HTML display (for
+ *     example, user-supplied text that has already been run through
+ *     check_plain() previously, or is expected to contain some limited HTML
+ *     tags and has already been run through filter_xss() previously).
+ *
+ * @see t()
+ * @ingroup sanitization
+ */
+function lobbywatch_format_string($string, array $args = array()) {
+  // Transform arguments before inserting them.
+  foreach ($args as $key => $value) {
+    switch ($key[0]) {
+      case '@':
+        // Escaped only.
+        $args[$key] = check_plain($value);
+        break;
+
+      case '%':
+      default:
+        // Escaped and placeholder.
+        $args[$key] = lobbywatch_placeholder($value);
+        break;
+
+      case '!':
+        // Pass-through.
+    }
+  }
+  return strtr($string, $args);
+}
+
+/**
+ * Formats text for emphasized display in a placeholder inside a sentence.
+ *
+ * Copied from drupal_placeholder()
+ *
+ * Used automatically by format_string().
+ *
+ * @param $text
+ *   The text to format (plain-text).
+ *
+ * @return
+ *   The formatted text (html).
+ */
+function lobbywatch_placeholder($text) {
+  return '<em class="placeholder">' . check_plain($text) . '</em>';
+}
+
+/**
+ * Formats a string containing a count of items.
+ *
+ * Copied from format_plural().
+ *
+ * This function ensures that the string is pluralized correctly. Since t() is
+ * called by this function, make sure not to pass already-localized strings to
+ * it.
+ *
+ * For example:
+ * @code
+ *   $output = format_plural($node->comment_count, '1 comment', '@count comments');
+ * @endcode
+ *
+ * Example with additional replacements:
+ * @code
+ *   $output = format_plural($update_count,
+ *     'Changed the content type of 1 post from %old-type to %new-type.',
+ *     'Changed the content type of @count posts from %old-type to %new-type.',
+ *     array('%old-type' => $info->old_type, '%new-type' => $info->new_type));
+ * @endcode
+ *
+ * @param $count
+ *   The item count to display.
+ * @param $singular
+ *   The string for the singular case. Make sure it is clear this is singular,
+ *   to ease translation (e.g. use "1 new comment" instead of "1 new"). Do not
+ *   use @count in the singular string.
+ * @param $plural
+ *   The string for the plural case. Make sure it is clear this is plural, to
+ *   ease translation. Use @count in place of the item count, as in
+ *   "@count new comments".
+ * @param $args
+ *   An associative array of replacements to make after translation. Instances
+ *   of any key in this array are replaced with the corresponding value.
+ *   Based on the first character of the key, the value is escaped and/or
+ *   themed. See format_string(). Note that you do not need to include @count
+ *   in this array; this replacement is done automatically for the plural case.
+ * @param $options
+ *   An associative array of additional options. See t() for allowed keys.
+ *
+ * @return
+ *   A translated string.
+ *
+ * @see t()
+ * @see format_string()
+ */
+function lobbywatch_format_plural($count, $singular, $plural, array $args = array(), array $options = array()) {
+  $args['@count'] = $count;
+  if ($count == 1) {
+    return lt($singular, $args, $options);
+  }
+
+  // Get the plural index through the gettext formula.
+  $index = (function_exists('lobbywatch_translation_get_plural')) ? lobbywatch_translation_get_plural($count, isset($options['langcode']) ? $options['langcode'] : NULL) : -1;
+  // If the index cannot be computed, use the plural as a fallback (which
+  // allows for most flexiblity with the replaceable @count value).
+  if ($index < 0) {
+    return lt($plural, $args, $options);
+  }
+  else {
+    switch ($index) {
+      case "0":
+        return lt($singular, $args, $options);
+      case "1":
+        return lt($plural, $args, $options);
+      default:
+        unset($args['@count']);
+        $args['@count[' . $index . ']'] = $count;
+        return lt(strtr($plural, array('@count' => '@count[' . $index . ']')), $args, $options);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------------
+// Locale core functionality
+
+/**
+ * Provides interface translation services.
+ *
+ * This function is called from lt() to translate a string if needed.
+ *
+ * Copied from locale() in locale.module.
+ *
+ * @param $string
+ *   A string to look up translation for. If omitted, all the
+ *   cached strings will be returned in all languages already
+ *   used on the page.
+ * @param $context
+ *   The context of this string.
+ * @param $langcode
+ *   Language code to use for the lookup.
+ */
+function lobbywatch_translate($string = NULL, $context = NULL, $langcode = NULL) {
+  global $language;
+
+  // Use the advanced drupal_static() pattern, since this is called very often.
+  static $drupal_static_fast;
+  if (!isset($drupal_static_fast)) {
+//     $drupal_static_fast['locale'] = &drupal_static(__FUNCTION__);
+    $drupal_static_fast['lobbywatch_translate'] = &php_static_cache(__FUNCTION__);
+  }
+  $locale_t = &$drupal_static_fast['lobbywatch_translate'];
+
+
+  if (!isset($string)) {
+    // Return all cached strings if no string was specified
+    return $locale_t;
+  }
+
+  $langcode = isset($langcode) ? $langcode : $language->language;
+
+  // Store database cached translations in a static variable. Only build the
+  // cache after $language has been set to avoid an unnecessary cache rebuild.
+  if (!isset($locale_t[$langcode]) && isset($language)) {
+    $locale_t[$langcode] = array();
+    // Disabling the usage of string caching allows a module to watch for
+    // the exact list of strings used on a page. From a performance
+    // perspective that is a really bad idea, so we have no user
+    // interface for this. Be careful when turning this option off!
+    if (!is_lobbywatch_forms() && variable_get('locale_cache_strings', 1) == 1) {
+      $old_db = db_set_active();
+      try {
+        if ($cache = cache_get('translation:' . $langcode, 'cache')) {
+          $locale_t[$langcode] = $cache->data;
+        }
+        elseif (lock_acquire('translation_cache_' . $langcode)) {
+          db_set_active('lobbywatch');
+          // Refresh database stored cache of translations for given language.
+          // We only store short strings used in current version, to improve
+          // performance and consume less memory.
+          $result = db_query("SELECT s.source, s.context, t.translation, t.lang FROM {translation_source} s LEFT JOIN {translation_target} t ON s.id = t.translation_source_id AND t.lang = :language WHERE LENGTH(s.source) < :length", array(':language' => $langcode, ':length' => variable_get('locale_cache_length', 75)));
+          // ':version' => VERSION,
+          // s.textgroup = 'default' AND s.version = :version AND
+          foreach ($result as $data) {
+            $locale_t[$langcode][$data->context][$data->source] = (empty($data->translation) ? TRUE : $data->translation);
+          }
+          db_set_active();
+          cache_set('translation:' . $langcode, $locale_t[$langcode]);
+          lock_release('translation_cache_' . $langcode);
+        }
+      } finally {
+        db_set_active($old_db);
+      }
+    }
+  }
+
+  // If we have the translation cached, skip checking the database
+  if (!isset($locale_t[$langcode][$context][$string])) {
+
+    $query = "SELECT s.id, t.translation, s.version FROM {translation_source} s LEFT JOIN {translation_target} t ON s.id = t.translation_source_id AND t.lang = :language AND s.context = :context WHERE s.source = :source"; //AND s.textgroup = 'default'
+
+    if (is_lobbywatch_forms()) {
+          // We do not have this translation cached, so get it from the DB.
+          $translation = lobbywatch_forms_db_query($query, array(
+              ':language' => $langcode,
+              ':source' => $string,
+              ':context' => (string) $context,
+          ))->fetchObject();
+    } else {
+      $old_db = db_set_active('lobbywatch');
+      try {
+          // We do not have this translation cached, so get it from the DB.
+          $translation = db_query($query, array(
+              ':language' => $langcode,
+              ':source' => $string,
+              ':context' => (string) $context,
+          ))->fetchObject();
+      } finally {
+        // Go back to the previous database,
+        // otherwise Drupal will not be able to access it's own data later on.
+        db_set_active($old_db);
+      }
+    }
+
+    if ($translation) {
+      // We have the source string at least.
+      // Cache translation string or TRUE if no translation exists.
+      $locale_t[$langcode][$context][$string] = (empty($translation->translation) ? TRUE : $translation->translation);
+
+      if (!is_lobbywatch_forms()) {
+          // i18n write new translation in DB
+          if ($translation->version != LOBBYWATCH_VERSION) {
+            $old_db = db_set_active('lobbywatch_adv');
+            try {
+            // This is the first use of this string under current Drupal version. Save version
+            // and clear cache, to include the string into caching next time. Saved version is
+            // also a string-history information for later pruning of the tables.
+            db_update('translation_source')
+              ->fields(array('version' => LOBBYWATCH_VERSION))
+              ->condition('id', $translation->id)
+              ->execute();
+            db_set_active();  // Switch to Drupal DB for cache clearing
+            cache_clear_all('translation:', 'cache', TRUE);
+          } finally {
+            // Go back to the previous database,
+            // otherwise Drupal will not be able to access it's own data later on.
+            db_set_active($old_db);
+          }
+        }
+      }
+    }
+    else {
+      if (!is_lobbywatch_forms()) {
+        $old_db = db_set_active('lobbywatch_adv');
+        try {
+          // We don't have the source string, cache this as untranslated.
+          db_merge('translation_source')
+          ->insertFields(array(
+            'location' => request_uri(),
+            'version' => LOBBYWATCH_VERSION,
+            'created_visa' => 'drupal',
+            'updated_visa' => 'drupal',
+          ))
+          ->key(array(
+            'source' => $string,
+            'context' => (string) $context,
+    //       'textgroup' => 'default',
+          ))
+          ->execute();
+          $locale_t[$langcode][$context][$string] = TRUE;
+          db_set_active();  // Switch to Drupal DB for cache clearing
+          // Clear locale cache so this string can be added in a later request.
+          cache_clear_all('translation:', 'cache', TRUE);
+        } finally {
+          // Go back to the previous database,
+          // otherwise Drupal will not be able to access it's own data later on.
+          db_set_active($old_db);
+        }
+      } else {
+        $locale_t[$langcode][$context][$string] = TRUE;
+      }
+    }
+  }
+
+  return ($locale_t[$langcode][$context][$string] === TRUE ? $string : $locale_t[$langcode][$context][$string]);
+}
+
+function is_lobbywatch_forms() {
+  global $lobbywatch_is_forms;
+  return isset($lobbywatch_is_forms) && $lobbywatch_is_forms === true;
+}
+/**
+ * Reset static variables used by locale().
+ *
+ * Copied from locale_reset().
+ */
+function lobbywatch_translate_reset() {
+  drupal_static_reset('lobbywatch_translate');
+}
+
+// /**
+//  * Returns plural form index for a specific number.
+//  *
+//  * The index is computed from the formula of this language.
+//  *
+//  * @param $count
+//  *   Number to return plural for.
+//  * @param $langcode
+//  *   Optional language code to translate to a language other than
+//  *   what is used to display the page.
+//  *
+//  * @return
+//  *   The numeric index of the plural variant to use for this $langcode and
+//  *   $count combination or -1 if the language was not found or does not have a
+//  *   plural formula.
+//  */
+// function locale_get_plural($count, $langcode = NULL) {
+//   global $language;
+
+//   // Used to locally cache the plural formulas for all languages.
+//   $plural_formulas = &drupal_static(__FUNCTION__, array());
+
+//   // Used to store precomputed plural indexes corresponding to numbers
+//   // individually for each language.
+//   $plural_indexes = &drupal_static(__FUNCTION__ . ':plurals', array());
+
+//   $langcode = $langcode ? $langcode : $language->language;
+
+//   if (!isset($plural_indexes[$langcode][$count])) {
+//     // Retrieve and statically cache the plural formulas for all languages.
+//     if (empty($plural_formulas)) {
+//       foreach (language_list() as $installed_language) {
+//         $plural_formulas[$installed_language->language] = $installed_language->formula;
+//       }
+//     }
+//     // If there is a plural formula for the language, evaluate it for the given
+//     // $count and statically cache the result for the combination of language
+//     // and count, since the result will always be identical.
+//     if (!empty($plural_formulas[$langcode])) {
+//       // $n is used inside the expression in the eval().
+//       $n = $count;
+//       $plural_indexes[$langcode][$count] = @eval('return intval(' . $plural_formulas[$langcode] . ');');
+//     }
+//     // In case there is no plural formula for English (no imported translation
+//     // for English), use a default formula.
+//     elseif ($langcode == 'en') {
+//       $plural_indexes[$langcode][$count] = (int) ($count != 1);
+//     }
+//     // Otherwise, return -1 (unknown).
+//     else {
+//       $plural_indexes[$langcode][$count] = -1;
+//     }
+//   }
+//   return $plural_indexes[$langcode][$count];
+// }
+
+
+// /**
+//  * Returns a language name
+//  */
+// function locale_language_name($lang) {
+//   $list = &drupal_static(__FUNCTION__);
+//   if (!isset($list)) {
+//     $list = locale_language_list();
+//   }
+//   return ($lang && isset($list[$lang])) ? $list[$lang] : t('All');
+// }
+
+// /**
+//  * Returns array of language names
+//  *
+//  * @param $field
+//  *   'name' => names in current language, localized
+//  *   'native' => native names
+//  * @param $all
+//  *   Boolean to return all languages or only enabled ones
+//  */
+// function locale_language_list($field = 'name', $all = FALSE) {
+//   if ($all) {
+//     $languages = language_list();
+//   }
+//   else {
+//     $languages = language_list('enabled');
+//     $languages = $languages[1];
+//   }
+//   $list = array();
+//   foreach ($languages as $language) {
+//     $list[$language->language] = ($field == 'name') ? t($language->name) : $language->$field;
+//   }
+//   return $list;
+// }
+
+function get_lang_suffix($lang = null) {
+  if ($lang === null) {
+    $lang = get_lang();
+  }
+
+  if ($lang == 'fr') {
+    return '_fr';
+  } else {
+    return '_de';
+  }
+}
+
+function get_lang() {
+  global $language;
+  $langcode = isset($language->language) ? $language->language : 'de';
+  return $langcode;
 }

@@ -1321,7 +1321,7 @@ ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch g
 
 ALTER TABLE `user` ADD
   `farbcode` varchar(15) DEFAULT NULL COMMENT 'HTML-Farbcode, z.B. red oder #23FF23' AFTER `last_access`;
-  
+
 ALTER TABLE `interessenbindung` ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
 
 ALTER TABLE `interessenbindung_log` ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
@@ -1334,11 +1334,11 @@ ALTER TABLE `organisation_beziehung` ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NUL
 
 ALTER TABLE `organisation_beziehung_log` ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
 
-ALTER TABLE `organisation_jahr` 
+ALTER TABLE `organisation_jahr`
 ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?' AFTER `quelle_url`,
 ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
 
-ALTER TABLE `organisation_jahr_log` 
+ALTER TABLE `organisation_jahr_log`
 ADD `quelle_url_gueltig` BOOLEAN NULL DEFAULT NULL COMMENT 'Ist Quell-URL noch gueltig? Funktioniert er noch?' AFTER `quelle_url`,
 ADD `quelle` VARCHAR( 80 ) NULL DEFAULT NULL COMMENT 'Quellenangabe, Format: "[Publikation], DD.MM.YYYY", falls vorhanden bitte die URL im Feld "Quelle URL" auch hinzufügen' AFTER `quelle_url_gueltig`;
 
@@ -1458,7 +1458,7 @@ ADD UNIQUE KEY `parlamentarier_nachname_vorname_unique` (`nachname`,`vorname`,`z
 
 --	ALTER TABLE `fraktion`
 --	ADD KEY `idx_updated` (`updated_date`, `id`);
---	
+--
 --	ALTER TABLE `kanton_jahr`
 --	ADD KEY `idx_updated` (`updated_date`, `id`);
 
@@ -1477,16 +1477,16 @@ ADD UNIQUE KEY `parlamentarier_nachname_vorname_unique` (`nachname`,`vorname`,`z
 
 --	ALTER TABLE `parlamentarier_anhang`
 --	ADD KEY `idx_updated` (`updated_date`, `id`);
---	
+--
 --	ALTER TABLE `organisation_anhang`
 --	ADD KEY `idx_updated` (`updated_date`, `id`);
---	
+--
 --	ALTER TABLE `zutrittsberechtigung_anhang`
 --	ADD KEY `idx_updated` (`updated_date`, `id`);
---	
+--
 --	ALTER TABLE `settings`
 --	ADD KEY `idx_updated` (`updated_date`, `id`);
---	
+--
 --	ALTER TABLE `settings_category`
 --	ADD KEY `idx_updated` (`updated_date`, `id`);
 
@@ -1510,19 +1510,19 @@ DROP TABLE IF EXISTS `mv_zutrittsberechtigung_myisam`;
 -- These indexes seem not to be useful
 --	ALTER TABLE `parlamentarier`
 --	ADD KEY `idx_bis` (`im_rat_bis`, `nachname`);
---	
+--
 --	ALTER TABLE `zutrittsberechtigung`
 --	ADD KEY `idx_bis` (`bis`, `nachname`);
---	
+--
 --	ALTER TABLE `interessenbindung`
 --	ADD KEY `idx_bis` (`bis`);
---	
+--
 --	ALTER TABLE `mandat`
 --	ADD KEY `idx_bis` (`bis`);
---	
+--
 --	ALTER TABLE `in_kommission`
 --	ADD KEY `idx_bis` (`bis`);
---	
+--
 --	ALTER TABLE `organisation_beziehung`
 --	ADD KEY `idx_bis` (`bis`);
 
@@ -1531,7 +1531,7 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `idx_name_unique` (`name`)
   -- COMMENT 'Fachlicher unique constraint: Name muss einzigartig sein'
   ;
-	
+
 ALTER TABLE `user_permission`
 DROP KEY `user_id`,
 ADD KEY `user_id` (`user_id`, `page_name`, `permission_name`);
@@ -1760,3 +1760,71 @@ ALTER TABLE `partei_log`
   ADD `email_fr` varchar(100) DEFAULT NULL COMMENT 'Französische Kontakt E-Mail-Adresse der Partei' AFTER `email`,
   ADD `twitter_name_fr` varchar(50) DEFAULT NULL COMMENT 'Französischer Twittername' AFTER `twitter_name`,
   ADD `beschreibung_fr` text DEFAULT NULL COMMENT 'Französische Beschreibung der Partei' AFTER `beschreibung`;
+
+-- 26.11.2014
+-- Fix index for mv_search_table: it must be
+ALTER TABLE `mv_search_table`
+ADD KEY `idx_search_str_fix_long` (freigabe_datum, bis, table_weight, weight, `search_keywords`),
+ADD KEY `idx_search_str_fix_medium` (freigabe_datum, table_weight, weight, `search_keywords`),
+ADD KEY `idx_search_str_fix_short` (table_weight, weight, `search_keywords`);
+
+-- 22.11.2014
+
+DROP TABLE IF EXISTS `translation_target`;
+
+DROP TABLE IF EXISTS `translation_source`;
+CREATE TABLE IF NOT EXISTS `translation_source` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
+  `source` text NOT NULL COMMENT 'Eindeutiger Schlüssel',
+  `context` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Context der Übersetzung',
+  `location` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Ort wo der Text vorkommt, DB-Tabelle o. Programmfunktion',
+  `field` VARCHAR(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Name of the field',
+  `version` varchar(20) DEFAULT NULL COMMENT 'Version of Lobbywatch, where the string was last updated (for translation optimization).',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  INDEX `source_key` (`source`(255), `context`) COMMENT 'Index for key'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
+
+CREATE TABLE IF NOT EXISTS `translation_target` (
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel',
+  `translation_source_id` int(11) NOT NULL COMMENT 'Fremschlüssel auf Übersetzungsquelltext',
+  `lang` enum('de','fr') NOT NULL COMMENT 'Sprache des Textes',
+  `translation` text NOT NULL COMMENT 'Übersetzter Text; "-", wenn der lange Text genommen wird.',
+  `plural_translation_source_id` int(11) DEFAULT NULL,
+  `plural` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Plural index number in case of plural strings.',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  KEY `plural_translation_source_id` (`plural_translation_source_id`),
+  KEY `translation_source_id` (`translation_source_id`,`lang`),
+  CONSTRAINT `plural_translation_source_id` FOREIGN KEY (`plural_translation_source_id`) REFERENCES `translation_source` (`id`),
+  CONSTRAINT `translation_source_id` FOREIGN KEY (`translation_source_id`) REFERENCES `translation_source` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
+
+-- TODO create log tables and triggers
+
+ALTER TABLE `rat`
+  ADD `abkuerzung_fr` VARCHAR(10) NOT NULL COMMENT 'Französische Abkürzung' AFTER `abkuerzung`,
+  ADD `mitglied_bezeichnung_maennlich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichnung der Männer' AFTER `homepage_en`,
+  ADD `mitglied_bezeichnung_weiblich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_de`,
+  ADD `mitglied_bezeichnung_maennlich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichnung der Männer' AFTER `mitglied_bezeichnung_weiblich_de`,
+  ADD `mitglied_bezeichnung_weiblich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_fr`;
+ALTER TABLE `rat_log`
+  ADD `abkuerzung_fr` VARCHAR(10) NOT NULL COMMENT 'Französische Abkürzung' AFTER `abkuerzung`,
+  ADD `mitglied_bezeichnung_maennlich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichnung der Männer' AFTER `homepage_en`,
+  ADD `mitglied_bezeichnung_weiblich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_de`,
+  ADD `mitglied_bezeichnung_maennlich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichnung der Männer' AFTER `mitglied_bezeichnung_weiblich_de`,
+  ADD `mitglied_bezeichnung_weiblich_fr` VARCHAR(50) NOT NULL COMMENT 'Französische Bezeichung der Frauen' AFTER `mitglied_bezeichnung_maennlich_fr`;
+
+UPDATE `rat` SET `abkuerzung_fr` = 'CN', mitglied_bezeichnung_maennlich_de='Nationalrat', mitglied_bezeichnung_weiblich_de='Nationalrätin', mitglied_bezeichnung_maennlich_fr='Conseiller national', mitglied_bezeichnung_weiblich_fr='Conseillère nationale' WHERE `rat`.`id` = 1;
+UPDATE `rat` SET `abkuerzung_fr` = 'CE', mitglied_bezeichnung_maennlich_de='Ständerat', mitglied_bezeichnung_weiblich_de='Ständerätin', mitglied_bezeichnung_maennlich_fr='Conseiller aux Etats', mitglied_bezeichnung_weiblich_fr='Conseillère aux Etats' WHERE `rat`.`id` = 2;
+UPDATE `rat` SET `abkuerzung_fr` = 'CF', mitglied_bezeichnung_maennlich_de='Bundesrat', mitglied_bezeichnung_weiblich_de='Bundesrätin', mitglied_bezeichnung_maennlich_fr='Conseiller federal', mitglied_bezeichnung_weiblich_fr='Conseillère federal' WHERE `rat`.`id` = 3;
+
+ALTER TABLE `organisation` ADD `beschreibung_fr` TEXT NULL DEFAULT NULL COMMENT 'Französische Beschreibung' AFTER `beschreibung`;
+
+ALTER TABLE `organisation_log` ADD `beschreibung_fr` TEXT NULL DEFAULT NULL COMMENT 'Französische Beschreibung' AFTER `beschreibung`;

@@ -350,12 +350,12 @@ LEFT JOIN `v_settings_category` settings_category
 ON settings.category_id = settings_category.id;
 
 CREATE OR REPLACE VIEW `v_country` AS
-SELECT country.name_de as anzeige_name, country.*,
+SELECT country.name_de as anzeige_name, country.name_de as anzeige_name_de, country.name_fr as anzeige_name_fr, country.*,
 UNIX_TIMESTAMP(created_date) as created_date_unix, UNIX_TIMESTAMP(updated_date) as updated_date_unix
 FROM `country`;
 
 CREATE OR REPLACE VIEW `v_rat` AS
-SELECT rat.name_de as anzeige_name, rat.*,
+SELECT rat.name_de as anzeige_name, rat.name_de as anzeige_name_de, rat.name_de as anzeige_name_fr, rat.*,
 UNIX_TIMESTAMP(rat.created_date) as created_date_unix, UNIX_TIMESTAMP(rat.updated_date) as updated_date_unix, UNIX_TIMESTAMP(rat.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(rat.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(rat.freigabe_datum) as freigabe_datum_unix
 FROM `rat`
 ORDER BY `gewicht` ASC;
@@ -371,13 +371,13 @@ FROM `kanton_jahr`
 GROUP BY kanton_jahr.kanton_id;
 
 CREATE OR REPLACE VIEW `v_kanton_2012` AS
-SELECT kanton.name_de as anzeige_name, kanton.*, kanton_jahr.`id` as kanton_jahr_id, kanton_jahr.`jahr`, kanton_jahr.einwohner, kanton_jahr.auslaenderanteil, kanton_jahr.bevoelkerungsdichte, kanton_jahr.anzahl_gemeinden, kanton_jahr.anzahl_nationalraete
+SELECT kanton.name_de as anzeige_name, kanton.name_de as anzeige_name_de, kanton.name_fr as anzeige_name_fr, kanton.*, kanton_jahr.`id` as kanton_jahr_id, kanton_jahr.`jahr`, kanton_jahr.einwohner, kanton_jahr.auslaenderanteil, kanton_jahr.bevoelkerungsdichte, kanton_jahr.anzahl_gemeinden, kanton_jahr.anzahl_nationalraete
 FROM `kanton`
 LEFT JOIN `v_kanton_jahr` kanton_jahr
 ON kanton_jahr.kanton_id = kanton.id AND kanton_jahr.jahr=2012;
 
 CREATE OR REPLACE VIEW `v_kanton_simple` AS
-SELECT kanton.name_de as anzeige_name, kanton.*
+SELECT kanton.name_de as anzeige_name, kanton.name_de as anzeige_name_de, kanton.name_fr as anzeige_name_fr, kanton.*
 FROM `kanton`;
 
 CREATE OR REPLACE VIEW `v_kanton` AS
@@ -387,23 +387,27 @@ LEFT JOIN `v_kanton_jahr_last` kanton_jahr
 ON kanton_jahr.kanton_id = kanton.id;
 
 CREATE OR REPLACE VIEW `v_interessenraum` AS
-SELECT interessenraum.name as anzeige_name, interessenraum.*,
+SELECT interessenraum.name as anzeige_name, interessenraum.name as anzeige_name_de, interessenraum.name_fr as anzeige_name_fr, interessenraum.*,
+`interessenraum`.name as name_de, `interessenraum`.beschreibung as beschreibung_de,
 UNIX_TIMESTAMP(interessenraum.created_date) as created_date_unix, UNIX_TIMESTAMP(interessenraum.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessenraum.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessenraum.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessenraum.freigabe_datum) as freigabe_datum_unix
 FROM `interessenraum` interessenraum
 ORDER BY interessenraum.`reihenfolge` ASC;
 
 CREATE OR REPLACE VIEW `v_kommission` AS
-SELECT CONCAT(kommission.name, ' (', kommission.abkuerzung, ')') AS anzeige_name, kommission.*,
+SELECT CONCAT(kommission.name, ' (', kommission.abkuerzung, ')') AS anzeige_name, CONCAT(kommission.name, ' (', kommission.abkuerzung, ')') AS anzeige_name_de, CONCAT(kommission.name_fr, ' (', kommission.abkuerzung_fr, ')') AS anzeige_name_fr, kommission.*,
+`kommission`.name as name_de, `kommission`.abkuerzung as abkuerzung_de, `kommission`.beschreibung as beschreibung_de, `kommission`.sachbereiche as sachbereiche_de,
 UNIX_TIMESTAMP(kommission.created_date) as created_date_unix, UNIX_TIMESTAMP(kommission.updated_date) as updated_date_unix, UNIX_TIMESTAMP(kommission.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(kommission.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(kommission.freigabe_datum) as freigabe_datum_unix
 FROM `kommission`;
 
 CREATE OR REPLACE VIEW `v_partei` AS
-SELECT CONCAT(partei.name, ' (', partei.abkuerzung, ')') AS anzeige_name, partei.*,
+SELECT CONCAT(partei.name, ' (', partei.abkuerzung, ')') AS anzeige_name, CONCAT(partei.name, ' (', partei.abkuerzung, ')') AS anzeige_name_de, CONCAT(partei.name_fr, ' (', partei.abkuerzung_fr, ')') AS anzeige_name_fr, partei.*,
+`partei`.name as name_de, `partei`.abkuerzung as abkuerzung_de, `partei`.beschreibung as beschreibung_de, `partei`.homepage as homepage_de, `partei`.twitter_name as twitter_name_de, `partei`.email as email_de,
 UNIX_TIMESTAMP(partei.created_date) as created_date_unix, UNIX_TIMESTAMP(partei.updated_date) as updated_date_unix, UNIX_TIMESTAMP(partei.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(partei.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(partei.freigabe_datum) as freigabe_datum_unix
 FROM `partei`;
 
 CREATE OR REPLACE VIEW `v_fraktion` AS
-SELECT CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name) AS anzeige_name, fraktion.*,
+SELECT CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name) AS anzeige_name, CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name) AS anzeige_name_de, CONCAT_WS(', ', fraktion.abkuerzung, fraktion.name_fr) AS anzeige_name_fr, fraktion.*,
+`fraktion`.name as name_de, `fraktion`.beschreibung as beschreibung_de,
 UNIX_TIMESTAMP(fraktion.created_date) as created_date_unix, UNIX_TIMESTAMP(fraktion.updated_date) as updated_date_unix, UNIX_TIMESTAMP(fraktion.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(fraktion.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(fraktion.freigabe_datum) as freigabe_datum_unix
 FROM `fraktion`;
 
@@ -419,8 +423,9 @@ UNIX_TIMESTAMP(mandat.created_date) as created_date_unix, UNIX_TIMESTAMP(mandat.
 FROM `mandat`;
 
 CREATE OR REPLACE VIEW `v_branche_simple` AS
-SELECT CONCAT(branche.name) AS anzeige_name,
+SELECT CONCAT(branche.name) AS anzeige_name, CONCAT(branche.name) AS anzeige_name_de, CONCAT(branche.name_fr) AS anzeige_name_fr,
 branche.*,
+`branche`.name as name_de, `branche`.beschreibung as beschreibung_de, `branche`.angaben as angaben_de,
 UNIX_TIMESTAMP(branche.created_date) as created_date_unix, UNIX_TIMESTAMP(branche.updated_date) as updated_date_unix, UNIX_TIMESTAMP(branche.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(branche.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(branche.freigabe_datum) as freigabe_datum_unix
 FROM `branche`
 ;
@@ -428,22 +433,25 @@ FROM `branche`
 CREATE OR REPLACE VIEW `v_branche` AS
 SELECT
 branche.*,
-kommission.anzeige_name as kommission
+kommission.anzeige_name as kommission,
+kommission.anzeige_name_de as kommission_de,
+kommission.anzeige_name_fr as kommission_fr
 FROM `v_branche_simple` branche
 LEFT JOIN `v_kommission` kommission
 ON kommission.id = branche.kommission_id
 ;
 
 CREATE OR REPLACE VIEW `v_branche_name_with_null` AS
-SELECT branche.id, CONCAT(branche.name) AS anzeige_name
+SELECT branche.id, CONCAT(branche.name) AS anzeige_name, CONCAT(branche.name) AS anzeige_name_de, CONCAT(branche.name_fr) AS anzeige_name_fr
 FROM `branche`
 UNION
-SELECT NULL as ID, 'NULL' as anzeige_name
+SELECT NULL as ID, 'NULL' as anzeige_name, 'NULL' as anzeige_name_de, 'NULL' as anzeige_name_fr
 ;
 
 CREATE OR REPLACE VIEW `v_interessengruppe_simple` AS
-SELECT CONCAT(interessengruppe.name) AS anzeige_name,
+SELECT CONCAT(interessengruppe.name) AS anzeige_name, CONCAT(interessengruppe.name) AS anzeige_name_de, CONCAT(interessengruppe.name_fr) AS anzeige_name_fr,
 interessengruppe.*,
+`interessengruppe`.name as name_de, `interessengruppe`.beschreibung as beschreibung_de, `interessengruppe`.alias_namen as alias_namen_de,
 UNIX_TIMESTAMP(interessengruppe.created_date) as created_date_unix, UNIX_TIMESTAMP(interessengruppe.updated_date) as updated_date_unix, UNIX_TIMESTAMP(interessengruppe.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(interessengruppe.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(interessengruppe.freigabe_datum) as freigabe_datum_unix
 FROM `interessengruppe`
 ;
@@ -452,8 +460,12 @@ CREATE OR REPLACE VIEW `v_interessengruppe` AS
 SELECT
 interessengruppe.*,
 branche.anzeige_name as branche,
+branche.anzeige_name_de as branche_de,
+branche.anzeige_name_fr as branche_fr,
 branche.kommission_id as kommission_id,
-branche.kommission as kommission
+branche.kommission as kommission,
+branche.kommission_de as kommission_de,
+branche.kommission_fr as kommission_fr
 FROM `v_interessengruppe_simple` interessengruppe
 LEFT JOIN `v_branche` branche
 ON branche.id = interessengruppe.branche_id
@@ -486,7 +498,12 @@ FROM `in_kommission`
 ;
 
 CREATE OR REPLACE VIEW `v_in_kommission` AS
-SELECT in_kommission.*, rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kommission.abkuerzung as kommission_abkuerzung, kommission.name as kommission_name, kommission.art as kommission_art, kommission.typ as kommission_typ, kommission.beschreibung as kommission_beschreibung, kommission.sachbereiche as kommission_sachbereiche, kommission.mutter_kommission_id as kommission_mutter_kommission_id, kommission.parlament_url as kommission_parlament_url
+SELECT in_kommission.*,
+rat.abkuerzung as rat, rat.abkuerzung as rat_de, rat.abkuerzung_fr as rat_fr, rat.abkuerzung as ratstyp,
+kommission.abkuerzung as kommission_abkuerzung, kommission.name as kommission_name,
+kommission.abkuerzung as kommission_abkuerzung_de, kommission.name as kommission_name_de,
+kommission.abkuerzung_fr as kommission_abkuerzung_fr, kommission.name_fr as kommission_name_fr,
+kommission.art as kommission_art, kommission.typ as kommission_typ, kommission.beschreibung as kommission_beschreibung, kommission.sachbereiche as kommission_sachbereiche, kommission.mutter_kommission_id as kommission_mutter_kommission_id, kommission.parlament_url as kommission_parlament_url
 FROM `v_in_kommission_simple` in_kommission
 INNER JOIN `parlamentarier`
 ON in_kommission.parlamentarier_id = parlamentarier.id
@@ -522,12 +539,15 @@ FROM `user_permission` t;
 
 CREATE OR REPLACE VIEW `v_mil_grad` AS
 SELECT mil_grad.*,
+`mil_grad`.name as name_de, `mil_grad`.abkuerzung as abkuerzung_de,
 UNIX_TIMESTAMP(mil_grad.created_date) as created_date_unix, UNIX_TIMESTAMP(mil_grad.updated_date) as updated_date_unix
 FROM `mil_grad`
 ORDER BY `ranghoehe` ASC;
 
 CREATE OR REPLACE VIEW `v_organisation_simple` AS
 SELECT CONCAT_WS('; ', organisation.name_de, organisation.name_fr, organisation.name_it) AS anzeige_name,
+organisation.name_de AS anzeige_name_de,
+organisation.name_fr AS anzeige_name_fr,
 CONCAT_WS('; ', organisation.name_de , organisation.name_fr, organisation.name_it) AS name,
 organisation.*,
 UNIX_TIMESTAMP(organisation.created_date) as created_date_unix, UNIX_TIMESTAMP(organisation.updated_date) as updated_date_unix, UNIX_TIMESTAMP(organisation.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(organisation.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(organisation.freigabe_datum) as freigabe_datum_unix
@@ -538,14 +558,28 @@ CREATE OR REPLACE VIEW `v_organisation_medium_raw` AS
 SELECT
 organisation.*,
 branche.anzeige_name as branche,
+branche.anzeige_name_de as branche_de,
+branche.anzeige_name_de as branche_fr,
 interessengruppe1.anzeige_name as interessengruppe,
+interessengruppe1.anzeige_name_de as interessengruppe_de,
+interessengruppe1.anzeige_name_fr as interessengruppe_fr,
 interessengruppe1.branche as interessengruppe_branche,
+interessengruppe1.branche_de as interessengruppe_branche_de,
+interessengruppe1.branche_fr as interessengruppe_branche_fr,
 interessengruppe1.branche_id as interessengruppe_branche_id,
 interessengruppe2.anzeige_name as interessengruppe2,
+interessengruppe2.anzeige_name_de as interessengruppe2_de,
+interessengruppe2.anzeige_name_fr as interessengruppe2_fr,
 interessengruppe2.branche as interessengruppe2_branche,
+interessengruppe2.branche_de as interessengruppe2_branche_de,
+interessengruppe2.branche_fr as interessengruppe2_branche_fr,
 interessengruppe2.branche_id as interessengruppe2_branche_id,
 interessengruppe3.anzeige_name as interessengruppe3,
+interessengruppe3.anzeige_name_de as interessengruppe3_de,
+interessengruppe3.anzeige_name_fr as interessengruppe3_fr,
 interessengruppe3.branche as interessengruppe3_branche,
+interessengruppe3.branche_de as interessengruppe3_branche_de,
+interessengruppe3.branche_fr as interessengruppe3_branche_fr,
 interessengruppe3.branche_id as interessengruppe3_branche_id,
 NOW() as refreshed_date
 FROM `v_organisation_simple` organisation
@@ -672,6 +706,8 @@ SELECT
 organisation.*,
 country.name_de as land,
 interessenraum.anzeige_name as interessenraum,
+interessenraum.anzeige_name_de as interessenraum_de,
+interessenraum.anzeige_name_fr as interessenraum_fr,
 organisation_jahr.`id` as organisation_jahr_id, organisation_jahr.jahr, organisation_jahr.umsatz, organisation_jahr.gewinn, organisation_jahr.kapital, organisation_jahr.mitarbeiter_weltweit, organisation_jahr.mitarbeiter_schweiz, organisation_jahr.geschaeftsbericht_url, organisation_jahr.quelle_url,
 lobbyeinfluss.anzahl_interessenbindung_tief,
 lobbyeinfluss.anzahl_interessenbindung_mittel,
@@ -774,8 +810,13 @@ CREATE OR REPLACE VIEW `v_organisation` AS
 SELECT * FROM `mv_organisation`;
 
 CREATE OR REPLACE VIEW `v_parlamentarier_simple` AS
-SELECT CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name,
+SELECT
+CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name,
+CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name_de,
+CONCAT(parlamentarier.nachname, ', ', parlamentarier.vorname) AS anzeige_name_fr,
 CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name,
+CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name_de,
+CONCAT_WS(' ', parlamentarier.vorname, parlamentarier.zweiter_vorname, parlamentarier.nachname) AS name_fr,
 parlamentarier.*,
 parlamentarier.im_rat_seit as von, parlamentarier.im_rat_bis as bis,
 UNIX_TIMESTAMP(geburtstag) as geburtstag_unix,
@@ -902,15 +943,25 @@ CAST(
   ELSE NULL
 END)
 AS UNSIGNED INTEGER) AS vertretene_bevoelkerung,
-rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kanton.abkuerzung as kanton_abkuerzung, kanton.abkuerzung as kanton, kanton.name_de as kanton_name_de,
+rat.abkuerzung as rat, rat.abkuerzung as ratstyp, kanton.abkuerzung as kanton_abkuerzung, kanton.abkuerzung as kanton,
+rat.abkuerzung as rat_de, kanton.name_de as kanton_name_de,
+rat.abkuerzung_fr as rat_fr, kanton.name_fr as kanton_name_fr,
 GROUP_CONCAT(DISTINCT CONCAT(kommission.name, '(', kommission.abkuerzung, ')') ORDER BY kommission.abkuerzung SEPARATOR ', ') kommissionen_namen,
+GROUP_CONCAT(DISTINCT CONCAT(kommission.name, '(', kommission.abkuerzung, ')') ORDER BY kommission.abkuerzung SEPARATOR ', ') kommissionen_namen_de,
+GROUP_CONCAT(DISTINCT CONCAT(kommission.name_fr, '(', kommission.abkuerzung_fr, ')') ORDER BY kommission.abkuerzung_fr SEPARATOR ', ') kommissionen_namen_fr,
 GROUP_CONCAT(DISTINCT kommission.abkuerzung ORDER BY kommission.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung,
+GROUP_CONCAT(DISTINCT kommission.abkuerzung ORDER BY kommission.abkuerzung SEPARATOR ', ') kommissionen_abkuerzung_de,
+GROUP_CONCAT(DISTINCT kommission.abkuerzung_fr ORDER BY kommission.abkuerzung_fr SEPARATOR ', ') kommissionen_abkuerzung_fr,
 COUNT(DISTINCT kommission.id) AS kommissionen_anzahl,
 partei.abkuerzung AS partei, partei.name AS partei_name, fraktion.abkuerzung AS fraktion, mil_grad.name as militaerischer_grad,
+partei.abkuerzung AS partei_de, partei.name AS partei_name_de, mil_grad.name as militaerischer_grad_de,
+partei.abkuerzung_fr AS partei_fr, partei.name_fr AS partei_name_fr, mil_grad.name_fr as militaerischer_grad_fr,
 interessengruppe.branche_id as beruf_branche_id,
 -- Workaround: Add  COLLATE utf8_general_ci, otherwise ERROR 1270 (HY000): Illegal mix of collations (latin1_swedish_ci,IMPLICIT), (utf8_general_ci,COERCIBLE), (utf8_general_ci,COERCIBLE) for operation 'concat'
 -- CONCAT(IF(parlamentarier.geschlecht='M', rat.name_de, ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', '') COLLATE utf8_general_ci, IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '') COLLATE utf8_general_ci) titel_de,
-CONCAT(IF(parlamentarier.geschlecht='M', rat.name_de, ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='NR', 'Nationalrätin', ''), IF(parlamentarier.geschlecht='F' AND rat.abkuerzung='SR', 'Ständerätin', '')) titel_de,
+CONCAT(IF(parlamentarier.geschlecht='M', rat.mitglied_bezeichnung_maennlich_de, ''), IF(parlamentarier.geschlecht='F', rat.mitglied_bezeichnung_weiblich_de, '')) titel_de,
+-- i18n in rat tabelle verschieben
+CONCAT(IF(parlamentarier.geschlecht='M', rat.mitglied_bezeichnung_maennlich_fr, ''), IF(parlamentarier.geschlecht='F', rat.mitglied_bezeichnung_weiblich_fr, '')) titel_fr,
 -- GREATEST(MAX(parlamentarier.updated_date_unix), MAX(interessenbindung.updated_date_unix)) as combined_updated_date_unix,
 NOW() as refreshed_date
 FROM `v_parlamentarier_simple` parlamentarier
@@ -1077,7 +1128,13 @@ CREATE OR REPLACE VIEW `v_parlamentarier` AS
 SELECT *, rat as ratstyp, kanton as `kanton_abkuerzung` FROM `mv_parlamentarier`;
 
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_simple` AS
-SELECT CONCAT(zutrittsberechtigung.nachname, ', ', zutrittsberechtigung.vorname) AS anzeige_name, CONCAT(zutrittsberechtigung.vorname, ' ', zutrittsberechtigung.nachname) AS name,
+SELECT
+CONCAT(zutrittsberechtigung.nachname, ', ', zutrittsberechtigung.vorname) AS anzeige_name,
+CONCAT(zutrittsberechtigung.nachname, ', ', zutrittsberechtigung.vorname) AS anzeige_name_de,
+CONCAT(zutrittsberechtigung.nachname, ', ', zutrittsberechtigung.vorname) AS anzeige_name_fr,
+CONCAT(zutrittsberechtigung.vorname, ' ', zutrittsberechtigung.nachname) AS name,
+CONCAT(zutrittsberechtigung.vorname, ' ', zutrittsberechtigung.nachname) AS name_de,
+CONCAT(zutrittsberechtigung.vorname, ' ', zutrittsberechtigung.nachname) AS name_fr,
 zutrittsberechtigung.*,
 UNIX_TIMESTAMP(zutrittsberechtigung.bis) as bis_unix, UNIX_TIMESTAMP(zutrittsberechtigung.von) as von_unix,
 UNIX_TIMESTAMP(zutrittsberechtigung.created_date) as created_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.updated_date) as updated_date_unix, UNIX_TIMESTAMP(zutrittsberechtigung.eingabe_abgeschlossen_datum) as eingabe_abgeschlossen_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.kontrolliert_datum) as kontrolliert_datum_unix, UNIX_TIMESTAMP(zutrittsberechtigung.freigabe_datum) as freigabe_datum_unix
@@ -1304,14 +1361,20 @@ SELECT
 -- , `parlamentarier`.`von_unix`
 -- , `parlamentarier`.`bis_unix`
 , `parlamentarier`.`rat`
+, `parlamentarier`.`rat_de`
+, `parlamentarier`.`rat_fr`
 -- , `parlamentarier`.`ratstyp`
 , `parlamentarier`.`kanton`
 , `parlamentarier`.`vertretene_bevoelkerung`
 , `parlamentarier`.`kommissionen_namen`
 , `parlamentarier`.`kommissionen_abkuerzung`
 , `parlamentarier`.`partei`
+, `parlamentarier`.`partei_de`
+, `parlamentarier`.`partei_fr`
 , `parlamentarier`.`fraktion`
 , `parlamentarier`.`militaerischer_grad`
+, `parlamentarier`.`militaerischer_grad_de`
+, `parlamentarier`.`militaerischer_grad_fr`
 , in_kommission.*
 FROM v_in_kommission_simple in_kommission
 INNER JOIN v_parlamentarier parlamentarier
@@ -1323,6 +1386,8 @@ ORDER BY parlamentarier.anzeige_name;
 CREATE OR REPLACE VIEW `v_interessenbindung_liste` AS
 SELECT
 `organisation`.`anzeige_name` as `organisation_name`
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
 , `organisation`.`name`
 -- , `organisation`.`id`
 , `organisation`.`name_de`
@@ -1377,8 +1442,10 @@ ORDER BY interessenbindung.wirksamkeit, organisation.anzeige_name;
 CREATE OR REPLACE VIEW `v_interessenbindung_liste_indirekt` AS
 SELECT 'direkt' as beziehung, interessenbindung_liste.* FROM v_interessenbindung_liste interessenbindung_liste
 UNION
-SELECT 'indirekt' as beziehung,
-`organisation`.`anzeige_name` as `organisation_name`
+SELECT 'indirekt' as beziehung
+, `organisation`.`anzeige_name` as `organisation_name`
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
 , `organisation`.`name`
 -- , `organisation`.`id`
 , `organisation`.`name_de`
@@ -1435,8 +1502,10 @@ ORDER BY beziehung, organisation_name;
 -- Mandate einer Zutrittsberechtigung (INNER JOIN)
 -- Connector: zutrittsberechtigung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_mandate` AS
-SELECT zutrittsberechtigung.parlamentarier_id,
-`organisation`.`anzeige_name` as `organisation_name`
+SELECT zutrittsberechtigung.parlamentarier_id
+, `organisation`.`anzeige_name` as `organisation_name`
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
 , `organisation`.`name`
 -- , `organisation`.`id`
 , `organisation`.`name_de`
@@ -1495,6 +1564,8 @@ ORDER BY mandat.wirksamkeit, organisation.anzeige_name;
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_mit_mandaten` AS
 SELECT
 `organisation`.`anzeige_name` as `organisation_name`
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
 , `organisation`.`name`
 -- , `organisation`.`id`
 , `organisation`.`name_de`
@@ -1551,8 +1622,10 @@ ORDER BY zutrittsberechtigung.anzeige_name;
 CREATE OR REPLACE VIEW `v_zutrittsberechtigung_mit_mandaten_indirekt` AS
 SELECT 'direkt' as beziehung, zutrittsberechtigung.* FROM v_zutrittsberechtigung_mit_mandaten zutrittsberechtigung
 UNION
-SELECT 'indirekt' as beziehung,
-`organisation`.`anzeige_name` as `organisation_name`
+SELECT 'indirekt' as beziehung
+, `organisation`.`anzeige_name` as `organisation_name`
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
 , `organisation`.`name`
 -- , `organisation`.`id`
 , `organisation`.`name_de`
@@ -1611,7 +1684,10 @@ ORDER BY beziehung, organisation_name;
 -- Organisationen für welche eine PR-Agentur arbeitet.
 -- Connector: organisation_beziehung.organisation_id
 CREATE OR REPLACE VIEW `v_organisation_beziehung_arbeitet_fuer` AS
-SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.ort
+SELECT organisation.anzeige_name as organisation_name
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
+, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.anzeige_name_de, organisation.anzeige_name_fr, organisation.ort
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation_simple organisation
   ON organisation_beziehung.ziel_organisation_id = organisation.id
@@ -1623,7 +1699,10 @@ ORDER BY organisation.anzeige_name;
 -- Connector: organisation_beziehung.ziel_organisation_id
 -- Reverse Beziehung
 CREATE OR REPLACE VIEW `v_organisation_beziehung_auftraggeber_fuer` AS
-SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.ort
+SELECT organisation.anzeige_name as organisation_name
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
+, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.anzeige_name_de, organisation.anzeige_name_fr, organisation.ort
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation_simple organisation
   ON organisation_beziehung.organisation_id = organisation.id
@@ -1634,7 +1713,10 @@ ORDER BY organisation.anzeige_name;
 -- Organisationen, in welcher eine Organisation Mitglied ist.
 -- Connector: organisation_beziehung.organisation_id
 CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglied_von` AS
-SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.ort
+SELECT organisation.anzeige_name as organisation_name
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
+, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.anzeige_name_de, organisation.anzeige_name_fr, organisation.ort
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation_simple organisation
   ON organisation_beziehung.ziel_organisation_id = organisation.id
@@ -1646,7 +1728,10 @@ ORDER BY organisation.anzeige_name;
 -- Connector: organisation_beziehung.ziel_organisation_id
 -- Reverse Beziehung
 CREATE OR REPLACE VIEW `v_organisation_beziehung_mitglieder` AS
-SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.ort
+SELECT organisation.anzeige_name as organisation_name
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
+, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.anzeige_name_de, organisation.anzeige_name_fr, organisation.ort
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation_simple organisation
   ON organisation_beziehung.organisation_id = organisation.id
@@ -1657,7 +1742,10 @@ ORDER BY organisation.anzeige_name;
 -- Muttergesellschaften.
 -- Connector: organisation_beziehung.organisation_id
 CREATE OR REPLACE VIEW `v_organisation_beziehung_muttergesellschaft` AS
-SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.ort
+SELECT organisation.anzeige_name as organisation_name
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
+, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.anzeige_name_de, organisation.anzeige_name_fr, organisation.ort
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation_simple organisation
   ON organisation_beziehung.ziel_organisation_id = organisation.id
@@ -1669,7 +1757,10 @@ ORDER BY organisation.anzeige_name;
 -- Connector: organisation_beziehung.ziel_organisation_id
 -- Reverse Beziehung
 CREATE OR REPLACE VIEW `v_organisation_beziehung_tochtergesellschaften` AS
-SELECT organisation.anzeige_name as organisation_name, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.ort
+SELECT organisation.anzeige_name as organisation_name
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
+, organisation_beziehung.organisation_id, organisation_beziehung.ziel_organisation_id, organisation_beziehung.art, organisation_beziehung.von, organisation_beziehung.bis, organisation_beziehung.freigabe_datum, organisation_beziehung.freigabe_datum_unix, organisation.id, organisation.name_de, organisation.rechtsform, organisation.anzeige_name, organisation.anzeige_name_de, organisation.anzeige_name_fr, organisation.ort
 FROM v_organisation_beziehung organisation_beziehung
 INNER JOIN v_organisation_simple organisation
   ON organisation_beziehung.organisation_id = organisation.id
@@ -1926,7 +2017,10 @@ WHERE
 -- Authorisieurngsemail Interessenbindung für Parlamentarier
 -- Connector: interessenbindung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_interessenbindung_authorisierungs_email` AS
-SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, organisation.anzeige_name as organisation_name, IFNULL(organisation.rechtsform,'') rechtsform, IFNULL(organisation.ort,'') ort, interessenbindung.art, interessenbindung.beschreibung
+SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, organisation.anzeige_name as organisation_name
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
+, IFNULL(organisation.rechtsform,'') rechtsform, IFNULL(organisation.ort,'') ort, interessenbindung.art, interessenbindung.beschreibung
 FROM v_interessenbindung_simple interessenbindung
 INNER JOIN v_organisation organisation
   ON interessenbindung.organisation_id = organisation.id
@@ -1946,7 +2040,10 @@ GROUP BY parlamentarier.id;
 -- Authorisieurngsemail Interessenbindung für Parlamentarier
 -- Connector: interessenbindung.parlamentarier_id
 CREATE OR REPLACE VIEW `v_interessenbindung_authorisierungs_email` AS
-SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, organisation.anzeige_name as organisation_name, IFNULL(organisation.rechtsform,'') rechtsform, IFNULL(organisation.ort,'') ort, interessenbindung.art, interessenbindung.beschreibung
+SELECT parlamentarier.name as parlamentarier_name, IFNULL(parlamentarier.geschlecht, '') geschlecht, organisation.anzeige_name as organisation_name
+, `organisation`.`anzeige_name_de` as `organisation_name_de`
+, `organisation`.`anzeige_name_fr` as `organisation_name_fr`
+, IFNULL(organisation.rechtsform,'') rechtsform, IFNULL(organisation.ort,'') ort, interessenbindung.art, interessenbindung.beschreibung
 FROM v_interessenbindung_simple interessenbindung
 INNER JOIN v_organisation_simple organisation
   ON interessenbindung.organisation_id = organisation.id
@@ -1957,6 +2054,7 @@ ORDER BY organisation.anzeige_name;
 
 -- Authorisieurngsemail Interessenbindung für Parlamentarier
 -- Connector: parlamentarier_id
+-- DEPRECATED
 CREATE OR REPLACE VIEW `v_parlamentarier_authorisierungs_email` AS
 SELECT parlamentarier.id, parlamentarier.anzeige_name as parlamentarier_name, parlamentarier.email,
 CONCAT(
@@ -2040,19 +2138,24 @@ GROUP BY parlamentarier.id;
 
 CREATE OR REPLACE VIEW `v_search_table_raw`
 AS
-  SELECT id, 'parlamentarier' as table_name, 'parlamentarier' as page, -20 as table_weight, CONCAT_WS(', ', anzeige_name, rat, partei, kanton) as name, CONCAT_WS('; ', anzeige_name, CONCAT(vorname, ' ', nachname), CONCAT(vorname, ' ', zweiter_vorname, ' ', nachname)) as search_keywords, freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_parlamentarier
+  SELECT id, 'parlamentarier' as table_name, 'parlamentarier' as page, -20 as table_weight,
+  CONCAT_WS(', ', anzeige_name, rat_de, partei_de, kanton) as name_de,
+  CONCAT_WS(', ', anzeige_name, rat_fr, partei_fr, kanton) as name_fr,
+  CONCAT_WS('; ', anzeige_name, CONCAT(vorname, ' ', nachname), CONCAT(vorname, ' ', zweiter_vorname, ' ', nachname)) as search_keywords_de,
+  CONCAT_WS('; ', anzeige_name, CONCAT(vorname, ' ', nachname), CONCAT(vorname, ' ', zweiter_vorname, ' ', nachname)) as search_keywords_fr,
+  freigabe_datum, im_rat_bis as bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_parlamentarier
    UNION ALL
-  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
+  SELECT id, 'zutrittsberechtigung' as table_name, 'zutrittsberechtigter' as page, -15 as table_weight, anzeige_name as name_de, anzeige_name as name_fr, anzeige_name as search_keywords_de, anzeige_name as search_keywords_fr, freigabe_datum, bis, -lobbyfaktor as weight, NOW() AS `refreshed_date` FROM v_zutrittsberechtigung
    UNION ALL
-  SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_branche
+  SELECT id, 'branche' as table_name, 'branche' as page, -10 as table_weight, anzeige_name_de as name_de, anzeige_name_fr as name_fr, anzeige_name_de as search_keywords_de, anzeige_name_fr as search_keywords_fr, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_branche
    UNION ALL
-  SELECT id, 'interessengruppe' as table_name, 'lobbygruppe' as page, -5 as table_weight, anzeige_name as name, CONCAT_WS('; ', anzeige_name, alias_namen) as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_interessengruppe
+  SELECT id, 'interessengruppe' as table_name, 'lobbygruppe' as page, -5 as table_weight, anzeige_name_de as name_de, anzeige_name_fr as name_fr, CONCAT_WS('; ', anzeige_name_de, alias_namen) as search_keywords_de, CONCAT_WS('; ', anzeige_name_fr, alias_namen_fr) as search_keywords_fr, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_interessengruppe
    UNION ALL
-  SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_kommission
+  SELECT id, 'kommission' as table_name, 'kommission' as page, 0 as table_weight, anzeige_name_de as name_de, anzeige_name_fr as name_fr, anzeige_name_de as search_keywords_de, anzeige_name_fr as search_keywords_fr, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_kommission
    UNION ALL
-  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, -lobbyeinfluss_index as weight, NOW() AS `refreshed_date` FROM v_organisation
+  SELECT id, 'organisation' as table_name, 'organisation' as page, 15 as table_weight, anzeige_name_de as name_de, anzeige_name_fr as name_fr, anzeige_name_de as search_keywords_de, anzeige_name_fr as search_keywords_fr, freigabe_datum, NULL as bis, -lobbyeinfluss_index as weight, NOW() AS `refreshed_date` FROM v_organisation
    UNION ALL
-  SELECT id, 'partei' as table_name, 'partei' as page, 20 as table_weight, anzeige_name as name, anzeige_name as search_keywords, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_partei
+  SELECT id, 'partei' as table_name, 'partei' as page, 20 as table_weight, anzeige_name_de as name_de, anzeige_name_fr as name_fr, anzeige_name_de as search_keywords_de, anzeige_name_fr as search_keywords_fr, freigabe_datum, NULL as bis, 0 as weight, NOW() AS `refreshed_date` FROM v_partei
 ;
 
 DROP TABLE IF EXISTS `mv_search_table`;
@@ -2063,9 +2166,12 @@ COMMENT='Materialzed view for parlamentarier, zutrittsberechtigung, branche, int
 AS SELECT * FROM v_search_table_raw;
 ALTER TABLE `mv_search_table`
 ADD PRIMARY KEY (`id`, `table_name`),
-ADD KEY `idx_search_str_long` (freigabe_datum, bis, table_weight, weight, `name`),
-ADD KEY `idx_search_str_medium` (freigabe_datum, table_weight, weight, `name`),
-ADD KEY `idx_search_str_short` (table_weight, weight, `name`),
+ADD KEY `idx_search_str_de_long` (freigabe_datum, bis, table_weight, weight, `search_keywords_de`),
+ADD KEY `idx_search_str_de_medium` (freigabe_datum, table_weight, weight, `search_keywords_de`),
+ADD KEY `idx_search_str_de_short` (table_weight, weight, `search_keywords_de`),
+ADD KEY `idx_search_str_fr_long` (freigabe_datum, bis, table_weight, weight, `search_keywords_fr`),
+ADD KEY `idx_search_str_fr_medium` (freigabe_datum, table_weight, weight, `search_keywords_fr`),
+ADD KEY `idx_search_str_fr_short` (table_weight, weight, `search_keywords_fr`),
 CHANGE `refreshed_date` `refreshed_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Materialized View aktualisiert am';
 
 --	DROP TABLE IF EXISTS `mv_search_table_myisam`;

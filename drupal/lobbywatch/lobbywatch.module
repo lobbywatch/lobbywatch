@@ -5,6 +5,7 @@ class Constants {
 
   /** Data tables containing the workflow fields.
    */
+  // i18n use getter for access and translate
   public static $workflow_tables = array(
     'branche' => 'Branche',
     'interessenbindung' => 'Interessenbindung',
@@ -162,7 +163,7 @@ function lobbywatch_menu() {
   $items['daten/parlamentarier/%/%'] = array(
 //     'title' => 'Parlamentarier',
     'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array('Parlamentarier: ', '', 'parlamentarier', 2, 3),
+    'title arguments' => array(lt('Parlamentarier:') . ' ', '', 'parlamentarier', 2, 3),
     'page callback' => '_lobbywatch_parlamentarier_id',
     'page arguments' => array(2, 3),
     'access arguments' => array('access lobbywatch general content'),
@@ -173,7 +174,7 @@ function lobbywatch_menu() {
   $items['daten/parlamentarier/%'] = array(
 //     'title' => 'Parlamentarier',
     'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array('Parlamentarier: ', '', 'parlamentarier', 2),
+    'title arguments' => array(lt('Parlamentarier:') . ' ', '', 'parlamentarier', 2),
     // TODO set 'title callback' for adding name
     'page callback' => '_lobbywatch_parlamentarier_id',
     'page arguments' => array(2),
@@ -183,7 +184,7 @@ function lobbywatch_menu() {
     );
 
   $items['daten/organisation'] = array(
-    'title' => 'Organisationen',
+    'title' => lt('Organisationen'),
     'page callback' => '_lobbywatch_organisation_list',
     'access arguments' => array('access lobbywatch general content'),
     'type' => MENU_CALLBACK,
@@ -202,7 +203,7 @@ function lobbywatch_menu() {
   );
 
   $items['daten/partei'] = array(
-    'title' => 'Parteien',
+    'title' => lt('Parteien'),
     'page callback' => '_lobbywatch_partei_list',
     'access arguments' => array('access lobbywatch general content'),
     'type' => MENU_CALLBACK,
@@ -212,7 +213,7 @@ function lobbywatch_menu() {
   $items['daten/partei/%'] = array(
 //     'title' => 'Partei',
     'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array('Partei: ', '', 'partei', 2),
+    'title arguments' => array(lt('Partei:') . ' ', '', 'partei', 2),
     'page callback' => '_lobbywatch_partei_id',
     'page arguments' => array(2),
     'access arguments' => array('access lobbywatch general content'),
@@ -221,7 +222,7 @@ function lobbywatch_menu() {
   );
 
   $items['daten/kommission'] = array(
-    'title' => 'Kommissionen',
+    'title' => lt('Kommissionen'),
     'page callback' => '_lobbywatch_kommission_list',
     'access arguments' => array('access lobbywatch general content'),
     'type' => MENU_CALLBACK,
@@ -231,7 +232,7 @@ function lobbywatch_menu() {
   $items['daten/kommission/%'] = array(
 //     'title' => 'Kommission',
     'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array('', ' des National und des Ständerates', 'kommission', 2),
+    'title arguments' => array('', ' '. lt('des National- und des Ständerates'), 'kommission', 2),
     'page callback' => '_lobbywatch_kommission_id',
     'page arguments' => array(2),
     'access arguments' => array('access lobbywatch general content'),
@@ -240,7 +241,7 @@ function lobbywatch_menu() {
   );
 
   $items['daten/branche'] = array(
-    'title' => 'Branchen',
+    'title' => lt('Branchen'),
     'page callback' => '_lobbywatch_branche_list',
     'access arguments' => array('access lobbywatch general content'),
     'type' => MENU_CALLBACK,
@@ -250,7 +251,7 @@ function lobbywatch_menu() {
   $items['daten/branche/%'] = array(
 //     'title' => 'Branche',
     'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array('Branche: ', '', 'branche', 2),
+    'title arguments' => array(lt('Branche:') . ' ', '', 'branche', 2),
     'page callback' => '_lobbywatch_branche_id',
     'page arguments' => array(2),
     'access arguments' => array('access lobbywatch general content'),
@@ -269,7 +270,7 @@ function lobbywatch_menu() {
   $items['daten/lobbygruppe/%'] = array(
 //     'title' => 'Lobbygruppe',
     'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array('Lobbygruppe: ', '', 'interessengruppe', 2),
+    'title arguments' => array(lt('Lobbygruppe:') . ' ', '', 'interessengruppe', 2),
     'page callback' => '_lobbywatch_interessengruppe_id',
     'page arguments' => array(2),
     'access arguments' => array('access lobbywatch general content'),
@@ -278,7 +279,7 @@ function lobbywatch_menu() {
   );
 
   $items['daten/zutrittsberechtigter'] = array(
-    'title' => 'Zutrittsberechtigte',
+    'title' => lt('Zutrittsberechtigte'),
     'page callback' => '_lobbywatch_zutrittsberechtigung_list',
     'access arguments' => array('access lobbywatch general content'),
     'type' => MENU_CALLBACK,
@@ -288,7 +289,7 @@ function lobbywatch_menu() {
   $items['daten/zutrittsberechtigter/%'] = array(
 //     'title' => 'Zutrittsberechtigte(r)',
     'title callback' => '_lobbywatch_page_title',
-    'title arguments' => array('Zutrittsberechtigte(r): ', '', 'zutrittsberechtigung', 2),
+    'title arguments' => array(lt('Zutrittsberechtigte(r):') . ' ', '', 'zutrittsberechtigung', 2),
     'page callback' => '_lobbywatch_zutrittsberechtigung_id',
     'page arguments' => array(2),
     'access arguments' => array('access lobbywatch general content'),
@@ -297,7 +298,7 @@ function lobbywatch_menu() {
   );
 
   $items['artikel/kategorien'] = array(
-    'title' => 'Artikelkategorien', //Kategorienübersicht
+    'title' => lt('Artikelkategorien'), //Kategorienübersicht
     'page callback' => '_lobbywatch_category_list',
     'page arguments' => array('2'),
     'access arguments' => array('access content'),
@@ -306,7 +307,7 @@ function lobbywatch_menu() {
   );
 
   $items['artikel/lobbygruppen'] = array(
-    'title' => 'Artikel zu Lobbygruppen', //Kategorienübersicht
+    'title' => lt('Artikel zu Lobbygruppen'), //Kategorienübersicht
     'page callback' => '_lobbywatch_category_lobby_group_list',
     'page arguments' => array('3'),
     'access arguments' => array('access content'),
@@ -344,7 +345,7 @@ function lobbywatch_permission() {
  */
 function lobbywatch_block_info() {
   $blocks['lobbywatch_search'] = array(
-    'info' => t('Lobbywatchsuche'),
+    'info' => lt('Lobbywatchsuche'),
     'cache' => DRUPAL_NO_CACHE,
     'weight' => 40,
     );
@@ -360,7 +361,7 @@ function lobbywatch_block_view($delta = '') {
 
   switch ($delta) {
     case 'lobbywatch_search':
-      $block['subject'] = t('Suchen');
+      $block['subject'] = lt('Suchen');
       // Form in a block: http://zerotodrupal.com/content/creating-form-block-drupal-7
       $block['content'] = drupal_get_form('lobbywatch_autocomplete_search_form');
       break;
@@ -405,30 +406,30 @@ function lobbywatch_autocomplete_search_form($form, &$form_state) {
     // we want this field to be required
     '#required' => true,
     // The "label" for this field
-    '#title' => t("Suche Parlamentarier, Organisationen, Lobbygruppen, …"),
+    '#title' => lt("Suche Parlamentarier, Organisationen, Lobbygruppen, …"),
     '#size' => 85,
     '#maxlength' => 300,
     // Optional description
-    '#description' => t('Suchtext eingeben, kurz warten und auswählen'),
+    '#description' => lt('Suchtext eingeben, kurz warten und auswählen'),
 //     '#autocomplete_path' => (user_access('access lobbywatch advanced content') || user_access('access lobbywatch unpublished content') || user_access('access lobbywatch admin') ? 'autocomplete/lobbywatch/search' : $GLOBALS['base_url'] . '/sites/all/modules/lobbywatch/lobbywatch_autocomplete_json.php'),
     '#autocomplete_path' => $auto_path,
     // Autocomplete, autosubmit, ref: https://drupal.org/node/1772490
-    '#attributes' => array('class' => array('auto_submit'), 'placeholder' => t("Suche via Auswahlliste: Suchtext eingeben, eine Sekunde warten und auswählen"),
-      'title' => t("Suchtext eingeben, kurz warten und auswählen")),
+    '#attributes' => array('class' => array('auto_submit'), 'placeholder' => lt("Suche via Auswahlliste: Suchtext eingeben, eine Sekunde warten und auswählen"),
+      'title' => lt("Suchtext eingeben, kurz warten und auswählen")),
 //     '#attributes' =>array()
 //     '#attributes' => array('class' => array('use-ajax-submit')),
   );
 
-  $show_type = array('text' => t('Text'), 'graphic' => t('Graphik'));
+  $show_type = array('text' => lt('Text'), 'graphic' => lt('Graphik'));
   $form['result_type'] = array(
       '#type' => 'radios',
-      '#title' => t('Darstellung:'),
+      '#title' => lt('Darstellung:'),
       '#default_value' => 'text',
       '#options' => $show_type,
 //       '#description' => t(''),
       '#access' => user_access('access lobbywatch visual content'), // TODO permission: not really proper to acccess sub module permission, but for the moment it's OK
       '#attributes' => array('class' => array('admin'),
-          'title' => t("Sollen die Resultate graphisch angezeigt werden?")),
+          'title' => lt("Sollen die Resultate graphisch angezeigt werden?")),
   );
 
   $form['submit'] = array(
@@ -436,7 +437,7 @@ function lobbywatch_autocomplete_search_form($form, &$form_state) {
     // #value is the text to display inside the button
     // ctools, autosubmit, ref: https://drupal.org/node/1110222
 //       '#attributes' => array('class' => array('use-ajax-submit ctools-auto-submit-click')),
-    '#value' => t('Show'),
+    '#value' => lt('Zeige'),
   );
 
 //   dpm($form['search_field'], 'lobbywatch_autocomplete_search_form');
@@ -589,7 +590,7 @@ function _lobbywatch_shutdown() {
 
 function lobbywatch_search_info() {
   return array(
-      'title' => 'Lobbywatch Daten',
+      'title' => lt('Lobbywatch Daten'),
       'path' => 'daten',
 //       'conditions_callback' => '_lobbywatch_callback_search_conditions',
   );
@@ -670,7 +671,7 @@ function lobbywatch_search_execute($keys = NULL, $conditions = NULL) {
           'type' => $record['page'],
           'extra' => '',
           'snippet' => '',
-          'language' => 'de',
+          'language' => get_lang(), // return language of user
       );
       $results[] = $result;
     }
@@ -737,19 +738,19 @@ function lobbywatch_form_search_form_alter(&$form, &$form_state, $form_id) {
   if (isset($form['module']) && $form['module']['#value'] == 'lobbywatch' && user_access('access lobbywatch advanced content')) {
 
     // Add placeholder
-    $form['basic']['keys']['#attributes']['placeholder'] = t("Suche Parlamentarier, Organisationen, Lobbygruppen, …");
+    $form['basic']['keys']['#attributes']['placeholder'] = lt("Suche Parlamentarier, Organisationen, Lobbygruppen, …");
 //     dpm($form, '$form');
 
-    $show_type = array('text' => t('Text'), 'graphic' => t('Graphik'));
+    $show_type = array('text' => t('Text'), 'graphic' => lt('Graphik'));
     $form['result_type'] = array(
         '#type' => 'radios',
-        '#title' => t('Darstellung:'),
+        '#title' => lt('Darstellung:'),
         '#default_value' => 'text',
         '#options' => $show_type,
         //       '#description' => t(''),
         '#access' => user_access('access lobbywatch visual content'), // TODO permission: not really proper to acccess sub module permission, but for the moment it's OK
         '#attributes' => array('class' => array('admin'),
-          'title' => t("Sollen die Resultate graphisch angezeigt werden?")),
+          'title' => lt("Sollen die Resultate graphisch angezeigt werden?")),
     );
   }
 
@@ -771,7 +772,7 @@ function lobbywatch_form_search_block_form_alter(&$form, &$form_state, $form_id)
 //   dpm($form_id, '$form_id2');
 
     // Add placeholder
-  $form[$form_id]['#attributes']['placeholder'] = t("Suche Parlamentarier, Organisationen, Lobbygruppen, …");
+  $form[$form_id]['#attributes']['placeholder'] = lt("Suche Parlamentarier, Organisationen, Lobbygruppen, …");
 //   dpm($form, '$form2');
 
 }
@@ -885,17 +886,21 @@ function lobbywatch_cron() {
 function _lobbywatch_fetch_anzeige_name($table, $id) {
   $url_name = '';
 
+  $lang = get_lang();
+  $lang_suffix = get_lang_suffix();
+
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
   try {
-    $sql = "SELECT id, anzeige_name, name FROM v_$table WHERE id=:id";
+    // i18n
+    $sql = "SELECT id, anzeige_name$lang_suffix, name$lang_suffix FROM v_$table WHERE id=:id";
     $result = db_query($sql, array(':id' => check_plain($id)));
 
     if ($result) {
       $record = $result->fetchAssoc();
-      $url_name = check_plain($record['anzeige_name']);
+      $url_name = $record["anzeige_name$lang_suffix"];
     }
     //     df($record, '$record');
     //     df($url_name, '$url_name');
@@ -910,17 +915,19 @@ function _lobbywatch_fetch_anzeige_name($table, $id) {
 function _lobbywatch_fetch_parlamentarier_title($table, $id) {
   $title = '';
 
+  $lang_suffix = get_lang_suffix();
+
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
   db_set_active('lobbywatch');
 
   try {
-    $sql = "SELECT id, anzeige_name, name, nachname, vorname, geschlecht, rat, titel_de, kanton_abkuerzung, kanton_name_de, partei FROM v_$table WHERE id=:id";
+    $sql = "SELECT id, anzeige_name, name, nachname, vorname, geschlecht, rat$lang_suffix as rat, titel_de, kanton_abkuerzung, kanton_name$lang_suffix, partei FROM v_$table WHERE id=:id";
     $result = db_query($sql, array(':id' => check_plain($id)));
 
     if ($result) {
       $record = $result->fetchAssoc();
-      $title = check_plain($record['titel_de'] . ' ' . $record['name'] . ', ' . ($record['partei'] ? $record['partei'] : 'parteilos') . ', ' . $record['kanton_name_de']);
+      $title = $record['titel_de'] . ' ' . $record['name'] . ', ' . ($record['partei'] ? $record['partei'] : 'parteilos') . ', ' . $record["kanton_name$lang_suffix"];
     }
     //     df($record, '$record');
     //     df($url_name, '$url_name');
@@ -935,24 +942,27 @@ function _lobbywatch_fetch_parlamentarier_title($table, $id) {
 function _lobbywatch_fetch_organisation_title($table, $id) {
   $title = '';
 
+  $lang_suffix = get_lang_suffix();
+
   // Use the database we set up earlier
   // Ref: https://drupal.org/node/18429
-  db_set_active('lobbywatch');
+  $old_db = db_set_active('lobbywatch');
 
   try {
-    $sql = "SELECT id, anzeige_name, ort FROM v_$table WHERE id=:id";
+    // i18n anzeige_name
+    $sql = "SELECT id, anzeige_name as anzeige_name, ort FROM v_$table WHERE id=:id";
     $result = db_query($sql, array(':id' => check_plain($id)));
 
     if ($result) {
       $record = $result->fetchAssoc();
-      $title = check_plain($record['anzeige_name'] . ($record['ort'] ? ', ' . $record['ort'] : ''));
+      $title = $record['anzeige_name'] . ($record['ort'] ? ', ' . $record['ort'] : '');
     }
     //     df($record, '$record');
     //     df($url_name, '$url_name');
   } finally {
     // Go back to the default database,
     // otherwise Drupal will not be able to access it's own data later on.
-    db_set_active();
+    db_set_active($old_db);
   }
   return $title;
 }
