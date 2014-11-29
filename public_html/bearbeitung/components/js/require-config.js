@@ -8,10 +8,12 @@ var require = {
         'underscore': 'libs/underscore',
         'jquery.spinbox': 'jquery/jquery.spinbox',
         'jquery.mousewheel': 'jquery/jquery.mousewheel',
-        'jquery.timeentry': 'jquery/jquery.timeentry'
+        'jquery.timeentry': 'jquery/jquery.timeentry',
+        'jquery.bind-first': 'jquery/jquery.bind-first',
+        'jquery.plugin': 'jquery/jquery.plugin'
     },
     shim: {
-        'jquery.timeentry': [ 'jquery.mousewheel' ],
+        'jquery.timeentry': [ 'jquery.plugin', 'jquery.mousewheel' ],
         'jquery.spinbox': [ 'jquery.mousewheel' ],
         'async': {
             exports: 'async'

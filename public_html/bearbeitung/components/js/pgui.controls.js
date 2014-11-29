@@ -28,16 +28,14 @@ define(function(require, exports) {
                 async.forEach(container.find('input[timeedit=true]').get(), function(item, callback) {
                     var self = $(item);
                     require(['jquery.timeentry'], function() {
-                        var timeEditInput = self;
-                        timeEditInput.wrap($('<span>').addClass('time-edit-wrapper'));
-                        timeEditInput.addClass("time-edit");
-                        timeEditInput.timeEntry({
-                            spinnerImage: 'images/win7_spinners.png',
-                            spinnerSize: [17, 20, 0],
+                        self.timeEntry({
+                            spinnerImage: 'images/spinnerBlue.png',
                             spinnerIncDecOnly: true,
                             showSeconds: true,
                             show24Hours: true
                         });
+                        var timeEdit = new editors.TimeEdit(self);
+                        timeEdit.updateState();
                         callback();
                     });
                 }, callback);
@@ -49,6 +47,8 @@ define(function(require, exports) {
                     var editorContainer = $(item);
                     require(['pgui.wysiwyg'], function(w) {
                         var editor = new w.WYSISYGEditor(editorContainer);
+                        var htmlEdit = new editors.HtmlEditor(editorContainer);
+                        htmlEdit.updateState();
                         callback();
                     });
                 }, callback);
@@ -131,7 +131,6 @@ define(function(require, exports) {
                             optionsPanel.find('.set-to-null-input').val(button.hasClass('active') ? '1' : '0');
                         }, 0);
                     });
-
                     callback();
                 }, callback);
             },
@@ -193,18 +192,37 @@ define(function(require, exports) {
 
             },
 
+            // DateTime editor
             function(callback) {
 
                 async.forEach(container.find('[data-editor-class=DateTimeEdit]').get(), function(item, callback) {
-
                     var editor = $(item);
-
                     require(['pgui.datetimepicker'], function(dtp) {
 
                         var editorView = new dtp.DateTimePicker(editor, editor.siblings('.btn').first());
                         callback();
                     });
+                }, callback)
 
+            },
+
+            // Combobox
+            function(callback) {
+                async.forEach(container.find('[data-editor-class=ComboBox]').get(), function(item, callback) {
+                    var comboBox = new editors.ComboBoxEditor($(item));
+                    comboBox.updateState();
+                    callback();
+                }, callback)
+
+            },
+
+            // Hide invisible editors
+            function(callback) {
+
+                async.forEach(container.find('[data-editor=true][data-editor-visible=false]').get(), function(item, callback) {
+                    var $editor = $(item);
+                    $editor.closest('.control-group').hide();
+                    callback();
                 }, callback)
 
             },
@@ -212,6 +230,13 @@ define(function(require, exports) {
             function(callback) { callback(); }
         ],
         callback);
+
+       /* version without async.js
+        container.find('[data-editor-class=ComboBox]').each(function(index, item) {
+            var comboBox = new editors.ComboBoxEditor($(item));
+            comboBox.updateState();
+        });
+        */
 
     };
 

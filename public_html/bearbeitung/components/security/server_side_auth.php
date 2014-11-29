@@ -7,7 +7,6 @@ include_once dirname(__FILE__) . '/' . 'user_identity_cookie_storage.php';
 class ServerSideUserAuthorization extends AbstractUserAuthorization
 {
     private $rolesSecurityInfo;
-    private $allRoles;
     private $guestUserName;
     private $allowGuestAccess;
     private $guestServerLogin;
@@ -16,7 +15,6 @@ class ServerSideUserAuthorization extends AbstractUserAuthorization
     public function __construct($rolesSecurityInfo, $guestUserName, $allowGuestAccess, $guestServerLogin, $guestServerPassword)
     {
         $this->rolesSecurityInfo = $rolesSecurityInfo;
-        $this->allRoles = new DataSourceSecurityInfo(true, true, true, true);
         $this->guestUserName = $guestUserName;
         $this->allowGuestAccess = $allowGuestAccess;
         $this->guestServerLogin = $guestServerLogin;
@@ -26,11 +24,17 @@ class ServerSideUserAuthorization extends AbstractUserAuthorization
     public function GetCurrentUserId() { return null; }
     
     public function GetCurrentUser() { return GetCurrentUser(); }
+
     public function IsCurrentUserLoggedIn() { return $this->GetCurrentUser() != 'guest'; }
     
     public function GetUserRoles($userName, $dataSourceName)
     {
-        return $this->allRoles;
+        if (($userName == $this->guestUserName) and (!$this->allowGuestAccess))
+            $result = new DataSourceSecurityInfo(false, false, false, false);
+        else
+            $result = new DataSourceSecurityInfo(true, true, true, true);
+
+        return $result;
     }
     
     public function ApplyIdentityToConnectionOptions(&$connectionOptions)
@@ -42,8 +46,6 @@ class ServerSideUserAuthorization extends AbstractUserAuthorization
                 $connectionOptions['username'] = $this->guestServerLogin;
                 $connectionOptions['password'] = $this->guestServerPassword;
             }
-            else
-                RaiseError(GetCaptions()->GetMessageString('GuestAccessDenied'));
         }
         else
         {

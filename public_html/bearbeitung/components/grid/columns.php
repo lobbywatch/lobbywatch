@@ -314,15 +314,18 @@ abstract class CustomDatasetFieldViewColumn extends CustomViewColumn
 
     public function GetGridColumnClass() {
         $result = parent::GetGridColumnClass() ? parent::GetGridColumnClass() : parent::GetGridColumnClass();
-        if ($this->dataset->IsFieldPrimaryKey($this->fieldName)) {
-            StringUtils::AddStr($result, 'primary-key', ' ');
+        if ($this->GetGrid()->GetShowKeyColumnsImagesInHeader()) {
+            if ($this->dataset->IsFieldPrimaryKey($this->fieldName)) {
+                StringUtils::AddStr($result, 'primary-key', ' ');
+            }
+            if ($this->dataset->IsLookupField($this->fieldName)) {
+                if ($this->dataset->IsLookupFieldNameByDisplayFieldName($this->fieldName))
+                    if ($this->dataset->IsFieldPrimaryKey($this->dataset->IsLookupFieldNameByDisplayFieldName($this->fieldName)))
+                        StringUtils::AddStr($result, 'primary-key', ' ');
+                StringUtils::AddStr($result, 'foreign-key', ' ');
+            }
         }
-        if ($this->dataset->IsLookupField($this->fieldName)) {
-            if ($this->dataset->IsLookupFieldNameByDisplayFieldName($this->fieldName))
-                if ($this->dataset->IsFieldPrimaryKey($this->dataset->IsLookupFieldNameByDisplayFieldName($this->fieldName)))
-                    StringUtils::AddStr($result, 'primary-key', ' ');
-            StringUtils::AddStr($result, 'foreign-key', ' ');
-        }
+
         if ($this->ShowOrderingControl()) {
             StringUtils::AddStr($result, 'sortable', ' ');
         }

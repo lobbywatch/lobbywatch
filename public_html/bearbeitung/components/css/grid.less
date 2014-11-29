@@ -441,8 +441,40 @@ table.pgui-grid {
         }
     }
 
+    // TABLE BACKGROUNDS
+    // -----------------
+    // Exact selectors below required to override .table-striped (we don't use it)
 
+    tbody tr  {
+        &.success {
+                background-color: @successBackground;
+            }
+        &.error  {
+                background-color: @errorBackground;
+        }
+        &.warning  {
+                background-color: @warningBackground;
+        }
+        &.info  {
+                background-color: @infoBackground;
+        }
+    }
 
+    // Hover states
+    tbody tr {
+        &.success:hover  {
+                background-color: darken(@successBackground, 5%);
+        }
+        &.error:hover  {
+                background-color: darken(@errorBackground, 5%);
+        }
+        &.warning:hover  {
+                background-color: darken(@warningBackground, 5%);
+        }
+        &.info:hover  {
+                background-color: darken(@infoBackground, 5%);
+        }
+    }
 }
 
 .box_hidden {

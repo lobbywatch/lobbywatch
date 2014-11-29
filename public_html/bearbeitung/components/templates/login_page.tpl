@@ -12,6 +12,7 @@
 
     <script type="text/javascript" src="components/js/require-config.js"></script>
     <script type="text/javascript" src="components/js/require.js"></script>
+    <script type="text/javascript" src="components/js/user.js"></script>
 </head>
 <body>
 

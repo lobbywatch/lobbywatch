@@ -30,6 +30,7 @@ class CommitEditedValuesGridState extends CommitValuesGridState {
 
     public function ProcessMessages() {
         $primaryKeyValues = array();
+        // TODO : this function can extract values from any array
         ExtractPrimaryKeyValues($primaryKeyValues, METHOD_POST);
 
         $action = '';

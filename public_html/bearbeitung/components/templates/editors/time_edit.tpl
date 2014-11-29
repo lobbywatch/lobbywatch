@@ -1,14 +1,5 @@
 <input
-    data-editor="true"
-    data-editor-class="TimeEdit"
-    data-field-name="{$Editor->GetFieldName()}"
-    data-editable="true"
-    {style_block}
-        {$Editor->GetCustomAttributes()}
-    {/style_block}
-    id="{$Editor->GetName()}"
-    name="{$Editor->GetName()}"
-    value="{$Editor->GetValue()}"
+    type="text"
+    {include file="editors/editor_options.tpl" Editor=$TimeEdit}
     timeedit="true"
-    {$Validators.InputAttributes}
->
+    value="{$TimeEdit->GetValue()}">

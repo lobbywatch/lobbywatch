@@ -1068,7 +1068,9 @@
 
       $.support.transition && this.$tip.hasClass('fade') ?
         removeWithAnimation() :
-        $tip.remove()
+        $tip.remove();
+
+      return this;
     }
 
   , fixTitle: function () {
@@ -1229,6 +1231,11 @@
       }
       return this.$tip
     }
+
+  , destroy: function () {
+      var $hidden = this.hide();
+      $hidden.$element.off('.' + this.type).removeData(this.type)
+  }
 
   })
 

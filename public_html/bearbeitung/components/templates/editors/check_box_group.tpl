@@ -1,29 +1,39 @@
 {strip}
-    {if $RenderText}
-        {if !$CheckBoxGroup->GetReadOnly()}
-            <div
-                {n}data-editor="true"
-                {n}data-editor-class="CheckBoxGroup"
-                {n}data-field-name="{$CheckBoxGroup->GetFieldName()}"
-                {n}data-editable="true" xmlns="http://www.w3.org/1999/html">
-                {foreach key=Value item=Name from=$CheckBoxGroup->GetValues()}
-                    <label class="checkbox{if $CheckBoxGroup->IsInlineMode()} inline{/if}" {style_block} {$CheckBoxGroup->GetCustomAttributes()} {/style_block}>
-                        <input
-                            {n}type="checkbox"
-                            {n}name="{$CheckBoxGroup->GetName()}[]"
-                            {n}value="{$Value}"
-                            {if $CheckBoxGroup->IsValueSelected($Value)}
-                                {n}checked="checked"
-                            {/if}
-                            {n}{$Validators.InputAttributes}/>
-                        {$Name}
-                    </label>
-                {/foreach}
-            </div>
-        {else}
-            {foreach key=Value item=Name from=$CheckBoxGroup->GetValues()}
-                {if $CheckBoxGroup->IsValueSelected($Value)}{$Name}&nbsp;&nbsp;{/if}
-            {/foreach}
-        {/if}
+<div
+    {n}data-editor="true"
+    {n}data-editor-class="{$CheckBoxGroup->GetDataEditorClassName()}"
+    {n}data-editor-name="{$CheckBoxGroup->GetName()}"
+    {n}data-field-name="{$CheckBoxGroup->GetFieldName()}"
+    {if not $CheckBoxGroup->getVisible()}
+        {n}data-editor-visible="false"
     {/if}
+    {n}xmlns="http://www.w3.org/1999/html">
+    {if $CheckBoxGroup->getCustomAttributes()}
+        {n}{$CheckBoxGroup->getCustomAttributes()}
+    {/if}
+    {style_block}
+        {n}{$CheckBoxGroup->getInlineStyles()}
+    {/style_block}
+    {foreach key=Value item=Name from=$CheckBoxGroup->GetValues()}
+        <label class="checkbox{if $CheckBoxGroup->IsInlineMode()} inline{/if}">
+            <input
+                {n}type="checkbox"
+                {n}name="{$CheckBoxGroup->GetName()}[]"
+                {n}value="{$Value}"
+                {if $CheckBoxGroup->IsValueSelected($Value)}
+                    {n}checked="checked"
+                {/if}
+                {if not $CheckBoxGroup->getEnabled()}
+                    {n}disabled="disabled"
+                {/if}
+                {if $CheckBoxGroup->GetReadonly()}
+                    {n}readonly="readonly"
+                    {n}onClick="return false"
+                {/if}
+                {n}{$Validators.InputAttributes}
+            />
+            {$Name}
+        </label>
+    {/foreach}
+</div>
 {/strip}

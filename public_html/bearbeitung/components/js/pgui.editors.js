@@ -27,7 +27,6 @@ define(function(require, exports)
         {
             this.rootElement = rootElement;
             this.fieldName = this.rootElement.attr('data-field-name');
-            this.readOnly = this.rootElement.attr('data-editable') == 'false';
         },
 
         doChanged: function()
@@ -59,7 +58,7 @@ define(function(require, exports)
 
         isReadOnly: function()
         {
-            return this.readOnly;
+            return this.readonly();
         },
 
         visible: function(value) {
@@ -82,7 +81,59 @@ define(function(require, exports)
             }
         },
 
-        enabled: function(value) { return true; }
+        enabled: function(value) {
+            if (_.isUndefined(value))
+            {
+                return this.getEnabled();
+            }
+            else
+            {
+                if (this.getEnabled() != value)
+                {
+                    this.setEnabled(value);
+                }
+            }
+        },
+
+        getEnabled: function() {
+            return true;
+        },
+
+        setEnabled: function(value) {
+            // nothing here
+        },
+
+        readonly: function(value) {
+            if (_.isUndefined(value))
+            {
+                return this.getReadonly();
+            }
+            else
+            {
+                if (this.getReadonly() != value)
+                {
+                    this.setReadonly(value);
+                }
+            }
+        },
+
+        getReadonly: function() {
+            return false;
+        },
+
+        setReadonly: function(value) {
+            // nothing here
+        },
+
+        updateState: function() {
+            if (this.rootElement.attr('disabled')) {
+                this.setEnabled(false);
+            }
+            if (this.rootElement.attr('readonly')) {
+                this.setReadonly(true);
+            }
+        }
+
     });
     events.mixin(exports.CustomEditor);
 
@@ -95,6 +146,14 @@ define(function(require, exports)
             );
         },
 
+        _getAttribute: function(attrName) {
+            return this.rootElement.attr(attrName);
+        },
+
+        _setAttribute: function(attrName, value) {
+            this.rootElement.attr(attrName, value);
+        },
+
         getValue: function()
         {
             return this.rootElement.val();
@@ -105,37 +164,38 @@ define(function(require, exports)
             this.rootElement.val(value);
         },
 
-        isReadOnly: function()
-        {
-            return this.rootElement.attr('data-editable') == 'false';
+        getEnabled: function() {
+            return !this.rootElement.hasAttr('disabled');
         },
 
-        enabled: function(value)
-        {
-            if (_.isUndefined(value))
+        setEnabled: function(value) {
+            if (!value)
             {
-                return !this.rootElement.hasAttr('disabled');
+                this.rootElement.attr('disabled', 'true');
             }
             else
             {
-                if (this.enabled() != value)
-                {
-                    if (!value)
-                    {
-                        this.rootElement.addClass('disabled-editor');
-                        this.rootElement.attr('disabled', 'true');
-                    }
-                    else
-                    {
-                        this.rootElement.removeClass('disabled-editor');
-                        this.rootElement.removeAttr('disabled');
-                    }
-                }
+                this.rootElement.removeAttr('disabled');
+            }
+        },
+
+        getReadonly: function() {
+            return this.rootElement.hasAttr('readonly');
+        },
+
+        setReadonly: function(value) {
+            if (value)
+            {
+                this.rootElement.attr('readonly', 'true');
+            }
+            else
+            {
+                this.rootElement.removeAttr('readonly');
             }
         }
     });
 
-    exports.CheckBox =  exports.PlainEditor.extend({
+    var CheckBox = exports.CheckBox =  exports.PlainEditor.extend({
         getValue: function()
         {
             return this.rootElement.is(':checked');
@@ -144,18 +204,65 @@ define(function(require, exports)
         setValue: function(value)
         {
             this.rootElement.attr('checked', value);
+        },
+
+        setReadonly: function(value) {
+            this._super(value);
+            var $editor = this.rootElement;
+            require(['jquery.bind-first'], function() {
+                if (value) {
+                    $editor.onFirst("click.SQLMaestro", function() {
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        return false;
+                    });
+                    $editor.onFirst("change.SQLMaestro", function(event) {
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        return false;
+                    })
+                }
+                else {
+                    $editor.off("click.SQLMaestro");
+                    $editor.off("change.SQLMaestro");
+                }
+            });
         }
     });
 
-    exports.TextEdit =  exports.PlainEditor.extend({  });
+    exports.TextEdit =  exports.PlainEditor.extend({
 
-    exports.TextArea =  exports.PlainEditor.extend({  });
+        getPlaceholder: function() {
+            return this._getAttribute('placeholder');
+        },
+
+        setPlaceholder: function(value) {
+            this._setAttribute('placeholder', value);
+        }
+    });
+
+    exports.TextArea =  exports.PlainEditor.extend({
+
+        getPlaceholder: function() {
+            return this._getAttribute('placeholder');
+        },
+
+        setPlaceholder: function(value) {
+            this._setAttribute('placeholder', value);
+        }
+    });
 
     exports.SpinEdit =  exports.PlainEditor.extend({  });
 
+    exports.MaskEdit =  exports.PlainEditor.extend({  });
+
+    exports.ColorEdit =  exports.PlainEditor.extend({  });
+
+    exports.RangeEdit =  exports.PlainEditor.extend({  });
+
     exports.htmlEditorGlobalNotifier = new exports.EditorsGlobalNotifier();
 
-    exports.HtmlEditor =  exports.CustomEditor.extend({
+    exports.HtmlEditor =  exports.PlainEditor.extend({
         init: function(rootElement)
         {
             this._super(rootElement);
@@ -167,42 +274,36 @@ define(function(require, exports)
                     self.doChanged();
                 });
             }
-            /*exports.htmlEditorGlobalNotifier.onValueChanged(function(fieldName)
-            {
-                if (this.getFieldName() == fieldName)
-                    this.doChanged();
-            }.bind(this));*/
         },
 
-        enabled: function(value)
-        {
-            if (_.isUndefined(value))
-                return this.editor.getDoc().designMode.toLowerCase() == 'on';
-            else
-                this.editor.getDoc().designMode = (value ? 'On' : 'Off');
+        getEditorComponent: function() {
+            return this.rootElement.ckeditorGet();
         },
 
-        finalizeEditor: function()
-        {
-            /*if (tinyMCE)
-                if (tinyMCE.get(this.getRootElement().attr('id')))
-                    tinyMCE.get(this.getRootElement().attr('id')).remove();*/
+        getEnabled: function() {
+            return !this.getEditorComponent().readOnly;
         },
 
-        getValue: function()
-        {
-            return this.editor.getContent();
+        setEnabled: function(value) {
+            this._super(value);
+            this.getEditorComponent().setReadOnly(!value);
         },
 
-        setValue: function(value)
-        {
-            //this.rootElement.html(value);
+        getReadonly: function() {
+            return this.getEditorComponent().readOnly;
+        },
+
+        setReadonly: function(value) {
+            this._super(value);
+            this.setEnabled(!value);
         }
+
     });
 
     exports.dateTimeGlobalNotifier = new exports.EditorsGlobalNotifier();
 
     exports.DateTimeEdit =  exports.PlainEditor.extend({
+
         init: function(rootElement)
         {
             this._super(rootElement);
@@ -211,45 +312,99 @@ define(function(require, exports)
                 if (this.getFieldName() == fieldName)
                     this.doChanged();
             }, this));
+        },
+
+        _enableCalendarButton: function(value) {
+            var $calendarButton =  this._getCalendarButton();
+            if ($calendarButton.length !== 0) {
+                if (!value) {
+                    $calendarButton.attr('disabled', true);
+                }
+                else {
+                    $calendarButton.removeAttr('disabled');
+                }
+            }
+        },
+
+        _getCalendarButton: function() {
+            return this.rootElement.next('button.pgui-date-time-edit-picker');
+        },
+
+        setEnabled: function(value) {
+            this._super(value);
+            this._enableCalendarButton(value);
+        },
+
+        setReadonly: function(value) {
+            this._super(value);
+            this._enableCalendarButton(!value);
         }
+    });
+
+    exports.TimeEdit =  exports.PlainEditor.extend({
+
+        _hideShowSpinner: function(value) {
+            if (value) {
+                this.rootElement.next('.timeEntry-control').hide();
+            }
+            else {
+                this.rootElement.next('.timeEntry-control').show();
+            }
+        },
+
+        setReadonly: function(value) {
+            this._super(value);
+            this._hideShowSpinner(value);
+        },
+
+        setEnabled: function(value) {
+            this._super(value);
+            this._hideShowSpinner(!value);
+        }
+
     });
 
     exports.ComboBoxEditor =  exports.PlainEditor.extend({
 
-        getValue: function()
-        {
-            if (this.isReadOnly())
-                return this.rootElement.text();
-            else
-                return this._super();
-        },
-
         clear: function()
         {
-            if (!this.isReadOnly())
-            {
-                this.rootElement.find("option:enabled[value!='']").remove();
-            }
+            this.rootElement.find("option:enabled[value!='']").remove();
         },
 
         addItem: function(value, caption)
         {
-            if (!this.isReadOnly())
-            {
-                this.rootElement.append($("<option></option>").attr('value', value).html(caption));
-            }
+            this.rootElement.append($("<option></option>").attr('value', value).html(caption));
+        },
+
+        removeItem: function(value) {
+            this.rootElement.find("option[value='" + value + "']").remove();
         },
 
         getItems: function()
         {
-            if (!this.isReadOnly())
+            return this.rootElement.find("option:enabled[value!='']").map(function(i, item) {
+                return { value: $(item).attr('value'), caption: $(item).text() };
+            });
+        },
+
+        getItemCount: function() {
+           return  this.rootElement.find("option[value!='']").length;
+        },
+
+        setReadonly: function(value) {
+            this._super(value);
+            var $editor =  this.rootElement;
+            this.rootElement.find("option").each(function(i, item)
             {
-                return this.rootElement.find("option:enabled[value!='']").map(function(i, item)
-                {
-                    return { value: $(item).attr('value'), caption: $(item).text() };
-                });
-            }
-            return [];
+                if (value) {
+                    if ($(item).attr('value') !== $editor.val()) {
+                        $(item).attr('disabled', true);
+                    }
+                }
+                else {
+                    $(item).removeAttr('disabled');
+                }
+            });
         }
     });
 
@@ -275,43 +430,77 @@ define(function(require, exports)
             });
         },
 
+        getEnabled: function() {
+            return this.rootElement.find("input:enabled").length > 0;
+        },
+
+        setEnabled: function(value) {
+            this.rootElement.find("input").each(function(i, item)
+            {
+                if (!value) {
+                    $(item).attr('disabled', true);
+                }
+                else {
+                    $(item).removeAttr('disabled');
+                }
+            });
+        },
+
+        getReadonly: function() {
+            return this.rootElement.find("input:enabled").length === 1;
+        },
+
+        setReadonly: function(value) {
+            this.rootElement.find("input").each(function(i, item)
+            {
+                if (value) {
+                    if (!($(item).attr('checked'))) {
+                        $(item).attr('disabled', true);
+                    }
+                }
+                else {
+                    $(item).removeAttr('disabled');
+                }
+            });
+        },
+
         clear: function()
         {
-            if (!this.isReadOnly())
-            {
-                this.rootElement.find("label").remove();
-            }
+            this.rootElement.find("label").remove();
         },
 
         addItem: function(value, caption)
         {
-            if (!this.isReadOnly())
-            {
-                this.rootElement.append(
-                    $("<label></label>")
-                        .append(
-                            $("<input>")
-                                .attr('value', value)
-                                .attr('type', 'radio')
-                                .attr('name', this.rootElement.attr('data-editor-name'))
-                        )
-                        .append($('<span></span>').text(caption))
-                );
-            }
+            this.rootElement.append(
+                $("<label></label>")
+                    .append(
+                        $("<input>")
+                            .attr('name', this.rootElement.attr('data-editor-name'))
+                            .attr('value', value)
+                            .attr('type', 'radio')
+                            .attr('data-legacy-field-name', this.getFieldName())
+                            .attr('data-pgui-legacy-validate', true)
+                    )
+                    .addClass('radio')
+                    .append(caption)
+            );
+        },
+
+        removeItem: function(value) {
+            this.rootElement.find("input[value='" + value + "']").parent().remove();
         },
 
         getItems: function()
         {
-            if (!this.isReadOnly())
+            return this.rootElement.find("input").map(function(i, item)
             {
-                return this.rootElement.find("input").map(function(i, item)
-                {
-                    return { value: $(item).attr('value'), caption: $(item).closest('label').text() };
-                });
-            }
-            return [];
-        }
+                return { value: $(item).attr('value'), caption: $(item).closest('label').text() };
+            });
+        },
 
+        getItemCount: function() {
+            return  this.rootElement.find("input").length;
+        }
     });
 
     exports.CheckBoxGroup =  exports.CustomEditor.extend({
@@ -334,61 +523,74 @@ define(function(require, exports)
 
         setValue: function(value)
         {
-            if (_.isString(value))
-            {
-                this.rootElement.find("input").each(function(i, item)
-                {
-                    if ($(item).attr('value') == value)
+            var checkedValues = value.split(',');
+            var index;
+            this.rootElement.find("input").each(function(i, item) {
+                for (index = 0; index < checkedValues.length; ++index) {
+                    if ($(item).attr('value') == checkedValues[index])
                         $(item).attr('checked', true);
-                });
-            }
-            else
-            {
-                this.rootElement.find("input").each(function(i, item)
-                {
-                    if ($(item).attr('value') == value)
-                        $(item).attr('checked', true);
-                });
-            }
+                }
+            });
+        },
 
+        getEnabled: function() {
+            return this.rootElement.find("input:enabled").length > 0;
+        },
+
+        setEnabled: function(value) {
+            this.rootElement.find("input").each(function(i, item) {
+                var $currentCheckbox = new CheckBox($(item));
+                $currentCheckbox.setEnabled(value);
+            });
+        },
+
+        getReadonly: function() {
+            return this.rootElement.find("input:enabled").length === 1;
+        },
+
+        setReadonly: function(value) {
+            this.rootElement.find("input").each(function(i, item) {
+                var $currentCheckbox = new CheckBox($(item));
+                $currentCheckbox.setReadonly(value);
+            });
         },
 
         clear: function()
         {
-            if (!this.isReadOnly())
-            {
-                this.rootElement.find("label").remove();
-            }
+            this.rootElement.find("label").remove();
         },
 
         addItem: function(value, caption)
         {
-            if (!this.isReadOnly())
-            {
-                this.rootElement.append(
-                    $("<label></label>")
-                        .append(
-                            $("<input>")
-                                .attr('value', value)
-                                .attr('type', 'checkbox')
-                                .attr('name', this.rootElement.attr('data-editor-name'))
-                                .attr('id', this.rootElement.attr('data-editor-name'))
-                        )
-                        .append($('<span></span>').text(caption))
-                );
-            }
+            var $editor = this.rootElement;
+            $editor.append(
+                $("<label></label>")
+                    .append(
+                        $("<input>")
+                            .attr('type', 'checkbox')
+                            .attr('name', $editor.attr('data-editor-name') + '[]')
+                            .attr('value', value)
+                            .attr('data-legacy-field-name', this.getFieldName())
+                            .attr('data-pgui-legacy-validate', true)
+                    )
+                    .addClass('checkbox')
+                    .append(caption)
+            );
+        },
+
+        removeItem: function(value) {
+            this.rootElement.find("input[value='" + value + "']").parent().remove();
         },
 
         getItems: function()
         {
-            if (!this.isReadOnly())
+            return this.rootElement.find("input").map(function(i, item)
             {
-                return this.rootElement.find("input").map(function(i, item)
-                {
-                    return { value: $(item).attr('value'), caption: $(item).closest('label').text() };
-                });
-            }
-            return [];
+                return { value: $(item).attr('value'), caption: $(item).closest('label').text() };
+            });
+        },
+        getItemCount: function() {
+            return  this.rootElement.find("input").length;
         }
     });
 
@@ -396,27 +598,13 @@ define(function(require, exports)
 
     exports.AutoComplete =  exports.PlainEditor.extend({
 
-        init: function(rootElement)
-        {
-            this._super(rootElement);
-            /*exports.autoCompleteGlobalNotifier.onValueChanged(function(fieldName)
-             {
-             if (this.getFieldName() == fieldName)
-             this.doChanged();
-
-             }.bind(this));*/
-        },
-
-        getValue: function()
-        {
-            return this._super();
-            /*return this.rootElement.find("input.autocomplete-hidden").attr('value');*/
-        },
-
         setValue: function(value)
-        {
-            this._super(value);
+        { /* undone yet */ },
+
+        setReadonly: function(value) {
+            this.setEnabled(!value);
         }
+
     });
 
     exports.multiLevelAutoCompleteGlobalNotifier = new exports.EditorsGlobalNotifier();
@@ -434,21 +622,40 @@ define(function(require, exports)
             }, this));
         },
 
+        _getMainControl: function() {
+            return this.rootElement.find("[data-multileveledit-main]");
+        },
+
         getValue: function()
         {
-            return this.rootElement.find("[data-multileveledit-main]").val();
+            return this._getMainControl().val();
         },
 
         setValue: function(value)
-        {
+        { /* undone yet */ },
+
+        getEnabled: function() {
+            return !this._getMainControl().attr('disabled');
+        },
+
+        setEnabled: function(value) {
+            this._super(value);
+            if (!value) {
+                this.rootElement.find('select').attr('disabled', true);
+            }
+            else {
+                this.rootElement.find('select').removeAttr('disabled');
+            }
+        },
+
+        getReadonly: function() {
+            return !this.getEnabled();
+        },
+
+        setReadonly: function(value) {
+            this.setEnabled(!value);
         }
     });
-
-
-
-    exports.MaskEdit =  exports.PlainEditor.extend({  });
-
-    exports.TimeEdit =  exports.PlainEditor.extend({  });
 
     exports.EditorsController =  Class.extend({
 
@@ -461,6 +668,8 @@ define(function(require, exports)
                 TextEdit: exports.TextEdit,
                 TextArea: exports.TextArea,
                 SpinEdit: exports.SpinEdit,
+                ColorEdit: exports.ColorEdit,
+                RangeEdit: exports.RangeEdit,
                 HtmlEditor: exports.HtmlEditor,
                 DateTimeEdit: exports.DateTimeEdit,
                 ComboBox: exports.ComboBoxEditor,

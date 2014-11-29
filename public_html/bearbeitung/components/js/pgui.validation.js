@@ -5,20 +5,46 @@ define(function(require, exports, module) {
     
     (function($){
 
-
+        /**
+         * ?????
+         * @class
+         *
+         */
         var methods =
         {
+            /**
+             *
+             * @param {object} options [options = {validate_errorClass: , validate_errorPlacement: undefined, validate_success: undefined}] Initialization options
+             * @param {string} options.validate_errorClass [options.validate_errorClass = 'help-inline']
+             * @param {function} options.validate_errorPlacement [options.validate_errorPlacement = undefined]
+             * @param {function} options.validate_success [options.validate_success = undefined]
+             * @param {function} options.highlight
+             * @param {function} options.unhighlight
+             *
+             */
             init : function(options)
             {
                 var settings = {
                     validate_errorClass:        'help-inline',
                     validate_errorPlacement:    undefined,
-                    validate_success:           undefined
+                    validate_success: function(label) {
+                        $(label).closest('.control-group').removeClass('error');
+                        $(label).remove();
+                    },
+                    highlight: function(label) {
+                        var labelControl =  $(label);
+                        labelControl.closest('.control-group').addClass('error');
+                        var group = labelControl.closest('.control-group').find('.controls');
+                        if  ((group.find('.help-inline').length == 0) && !labelControl.parent().is('.controls')) {
+                            labelControl.appendTo(group);
+                        }
+
+                    },
+                    unhighlight: undefined
                 };
 
                 if (options)
                     $.extend(settings, options);
-
 
                 if (this && this.length > 0)
                 {
@@ -41,22 +67,27 @@ define(function(require, exports, module) {
                                     var validationRule = { };
                                     var errorMessages = { };
 
-                                    function AppendErrorMessage(validatorName) {
+                                    function appendErrorMessage(validatorName) {
                                         if ($(input).hasAttr('data-' + validatorName + '-error-message'))
                                             errorMessages[validatorName] =
                                                 $(input).attr('data-' + validatorName + '-error-message');
                                     }
 
-                                    for(i = 0; i < rules.length; i++) {
+                                    for(var i = 0; i < rules.length; i++) {
                                         if (rules[i] == 'email')
                                         {
                                             validationRule.email = true;
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
+                                        }
+                                        else if (rules[i] == 'url')
+                                        {
+                                            validationRule.url = true;
+                                            appendErrorMessage(rules[i]);
                                         }
                                         else if (rules[i] == 'required')
                                         {
                                             validationRule.required = true;
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
                                         }
                                         else if (rules[i] == 'range')
                                         {
@@ -64,27 +95,27 @@ define(function(require, exports, module) {
                                                 $(input).attr('range-min-value'),
                                                 $(input).attr('range-max-value')
                                             ];
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
                                         }
                                         else if (rules[i] == 'max-value')
                                         {
                                             validationRule.max = $(input).attr('max-value');
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
                                         }
                                         else if (rules[i] == 'min-value')
                                         {
                                             validationRule.min = $(input).attr('min-value');
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
                                         }
                                         else if (rules[i] == 'max-length')
                                         {
                                             validationRule.maxlength = $(input).attr('max-length');
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
                                         }
                                         else if (rules[i] == 'min-length')
                                         {
                                             validationRule.minlength = $(input).attr('min-length');
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
                                         }
                                         else if (rules[i] == 'rangelength')
                                         {
@@ -92,27 +123,27 @@ define(function(require, exports, module) {
                                                 $(input).attr('range-min-length'),
                                                 $(input).attr('range-max-length')
                                             ];
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
                                         }
                                         else if (rules[i] == 'number')
                                         {
                                             validationRule.number = true;
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
                                         }
                                         else if (rules[i] == 'digits')
                                         {
                                             validationRule.digits = true;
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
                                         }
                                         else if (rules[i] == 'creditcard')
                                         {
                                             validationRule.creditcard = true;
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
                                         }
                                         else if (rules[i] == 'regexp')
                                         {
                                             validationRule.regexp = $(input).attr('regexp');
-                                            AppendErrorMessage(rules[i]);
+                                            appendErrorMessage(rules[i]);
                                         }
                                     }
                                     errorMessageMap[$(input).attr('name')] = errorMessages;
@@ -126,24 +157,14 @@ define(function(require, exports, module) {
                                 errorPlacement: settings.validate_errorPlacement,
                                 errorElement: 'span',
                                 ignore: '',
-                                //success:        settings.validate_success,
+                                success:        settings.validate_success,
                                 rules:          validationRules,
                                 messages:       errorMessageMap,
+                                highlight: settings.highlight,
+                                unhighlight: settings.unhighlight
 
-                                highlight: function(label) {
-                                    var labelControl =  $(label);
-                                    labelControl.closest('.control-group').addClass('error');
-                                    var group = labelControl.closest('.control-group').find('.controls');
-                                    if  ((group.find('.help-inline').length == 0) && !labelControl.parent().is('.controls')) {
-                                        labelControl.appendTo(group);
-                                    }
 
-                                },
-                                success: function(label) {
-                                    $(label).closest('.control-group').removeClass('error');
-                                    $(label).remove();
 
-                                }
                             });
                         });
 
@@ -152,14 +173,32 @@ define(function(require, exports, module) {
 
             }
         };
-
+        /**
+         * See (http://jquery.com)
+         * @name jQuery
+         * @class
+         * See the jQuery Library (http://jquery.com) for full details
+         */
+        /**
+         * See (http://jquery.com)
+         * @name fn
+         * @class
+         * See the jQuery Library (http://jquery.com) for full details
+         * @memberOf jQuery
+         */
+        /**
+         * Validation plugin
+         * @name pgui_validate_form
+         * @class
+         * @return {*}
+         * @memberOf jQuery.fn
+         */
         $.fn.pgui_validate_form = function( method )
         {
+
             if (methods[method])
             {
-                return methods[method].apply(this,
-                    Array.prototype.slice.call(arguments, 1)
-                );
+                return methods[method].apply(this,Array.prototype.slice.call(arguments, 1));
             }
             else if (typeof method === 'object' || !method)
             {
@@ -167,7 +206,6 @@ define(function(require, exports, module) {
             }
             else
             {
-
                 $.error('Method ' +  method + ' does not exist on jQuery.pgui_effects');
             }
         };
@@ -187,7 +225,13 @@ define(function(require, exports, module) {
         }
     }
 
-    function Grid_ValidateForm(form, isInsert)
+    /**
+     * @returns {Object} FormValidationResult
+     * @returns {boolean} FormValidationResult.valid
+     * @returns {string} FormValidationResult.message
+     * @type {Grid_ValidateForm}
+     */
+    var Grid_ValidateForm = exports.Grid_ValidateForm = function (form, isInsert)
     {
         var values = [];
         var errorInfo = new ErrorInfo();
@@ -206,7 +250,7 @@ define(function(require, exports, module) {
             return { valid: true, message: '' };
         else
             return { valid: false, message: errorInfo.GetMessage() };
-    }
+    };
 
     function CreateErrorMessage(message) {
         return $('<div class="alert alert-error"><button class="close" data-dismiss="alert"><i class="icon-remove"></i></button>' +

@@ -17,12 +17,18 @@ class PrintRenderer extends Renderer
         $Grid = $this->Render($DetailPage->GetGrid());
         $masterGrid = $this->Render($DetailPage->GetMasterGrid());
 
-        $this->DisplayTemplate('print/detail_page.tpl',
+        $customParams = array();
+        $template = $DetailPage->GetParentPage()->GetCustomTemplate(PagePart::Layout, PageMode::PrintDetailPage, 'print/detail_page.tpl', $customParams);
+
+        $this->DisplayTemplate($template,
             array('Page' => $DetailPage),
-            array(
-                'Grid' => $Grid,
-                'MasterGrid' => $masterGrid
-            ));
+            array_merge($customParams,
+                array(
+                    'Grid' => $Grid,
+                    'MasterGrid' => $masterGrid
+                )
+            )
+        );
     }
 
     function RenderPage(Page $Page)
@@ -30,11 +36,19 @@ class PrintRenderer extends Renderer
         $this->SetHTTPContentTypeByPage($Page);
         $Page->BeforePageRender->Fire(array(&$Page));
         set_time_limit(0);
-
         $Grid = $this->Render($Page->GetGrid());
-        $this->DisplayTemplate('print/page.tpl',
+
+        $customParams = array();
+        $template = $Page->GetCustomTemplate(PagePart::Layout, PageMode::PrintAll, 'print/page.tpl', $customParams);
+
+        $this->DisplayTemplate($template,
             array('Page' => $Page),
-            array('Grid' => $Grid));
+            array_merge($customParams,
+                array(
+                    'Grid' => $Grid
+                )
+            )
+        );
     }
 
     protected function GetCustomRenderedViewColumn(CustomViewColumn $column, $rowValues)
@@ -72,16 +86,21 @@ class PrintRenderer extends Renderer
                     ArrayUtils::GetArrayValueDef($totalValues, $column->GetName(), null));
         }
 
+        $customParams = array();
+        $template = $Grid->GetPage()->GetCustomTemplate(PagePart::Grid, PageMode::PrintAll, 'print/grid.tpl', $customParams);
 
-        $this->DisplayTemplate('print/grid.tpl',
+        $this->DisplayTemplate($template,
             array(
                 'Grid' => $Grid
                 ),
-            array(
-                'Columns' => $Grid->GetPrintColumns(),
-                'Rows' => $Rows,
-                'Totals' => $totals
-            ));
+            array_merge($customParams,
+                array(
+                    'Columns' => $Grid->GetPrintColumns(),
+                    'Rows' => $Rows,
+                    'Totals' => $totals
+                )
+            )
+        );
     }
     
     protected function ChildPagesAvailable() 

@@ -64,6 +64,7 @@ define(function(require, exports) {
                 showTime       : self.showTime,
                 inputField     : this.$container.get(),
                 minuteStep     : 1,
+                weekNumbers    : true,
                 onSelect       : function() {
                     var dateFormat = (this.args.dateFormat == 0) ? self.dateFormat : this.args.dateFormat;
                     this.hide();

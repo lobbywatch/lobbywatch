@@ -150,7 +150,7 @@ $.extend($.fn, {
 			{},
 			$.validator.metadataRules(element),
 			$.validator.classRules(element),
-			$.validator.attributeRules(element),
+			// $.validator.attributeRules(element),
 			$.validator.staticRules(element)
 		), element);
 

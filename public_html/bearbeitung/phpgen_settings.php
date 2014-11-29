@@ -35,29 +35,35 @@ function HasAdminPage()
     return true;
 }
 
+function GetPageGroups()
+{
+    $result = array('Default');
+    return $result;
+}
+
 function GetPageInfos()
 {
     $result = array();
-    $result[] = array('caption' => '<span class="entity important-entity">Organisation</span>', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation');
-    $result[] = array('caption' => '<span class="entity important-entity">Parlamentarier</span>', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier');
-    $result[] = array('caption' => '<span class="entity">Zutrittsberechtigter</span>', 'short_caption' => 'Zutrittsberechtigter', 'filename' => 'zutrittsberechtigung.php', 'name' => 'zutrittsberechtigung');
-    $result[] = array('caption' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. (von NR/SR)</span>', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung');
-    $result[] = array('caption' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate (von Zutrittsber.)</span>', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat');
-    $result[] = array('caption' => '<span class="relation">In Kommission</span>', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission');
-    $result[] = array('caption' => '<span class="relation">Organisation Beziehung</span>', 'short_caption' => 'Organisation Beziehung', 'filename' => 'organisation_beziehung.php', 'name' => 'organisation_beziehung');
-    $result[] = array('caption' => '<span class="entity">Branche</span>', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche');
-    $result[] = array('caption' => '<span class="entity">Lobbygruppe</span>', 'short_caption' => 'Lobbygruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe');
-    $result[] = array('caption' => '<span class="entity">Kommission</span>', 'short_caption' => 'Kommission', 'filename' => 'kommission.php', 'name' => 'kommission');
-    $result[] = array('caption' => '<span class="entity">Partei</span>', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei');
-    $result[] = array('caption' => '<span class="entity">Fraktion</span>', 'short_caption' => 'Fraktion', 'filename' => 'fraktion.php', 'name' => 'fraktion');
-    $result[] = array('caption' => '<span class="entity">Kanton</span>', 'short_caption' => 'Kanton', 'filename' => 'kanton.php', 'name' => 'kanton');
-    $result[] = array('caption' => '<span class="settings">Settings</span>', 'short_caption' => 'Settings', 'filename' => 'settings.php', 'name' => 'settings');
-    $result[] = array('caption' => '<span class="settings">Settings Category</span>', 'short_caption' => 'Settings Category', 'filename' => 'settings_category.php', 'name' => 'settings_category');
-    $result[] = array('caption' => '<span class="settings">User</span>', 'short_caption' => 'User', 'filename' => 'user.php', 'name' => 'user');
-    $result[] = array('caption' => '<span class="view">Unvollständige Parlamentarier</span>', 'short_caption' => 'Unvollständige Parlamentarier', 'filename' => 'q_unvollstaendige_parlamentarier.php', 'name' => 'q_unvollstaendige_parlamentarier');
-    $result[] = array('caption' => '<span class="view">Unvollständige Zutrittsberechtigte</span>', 'short_caption' => 'Unvollständige Zutrittsberechtigte', 'filename' => 'q_unvollstaendige_zutrittsberechtigte.php', 'name' => 'q_unvollstaendige_zutrittsberechtigte');
-    $result[] = array('caption' => '<span class="view">Unvollständige Organisationen</span>', 'short_caption' => 'Unvollständige Organisationen', 'filename' => 'q_unvollstaendige_organisationen.php', 'name' => 'q_unvollstaendige_organisationen');
-    $result[] = array('caption' => '<span class="view">Tabellenstand</span>', 'short_caption' => 'Tabellenstand', 'filename' => 'tabellenstand.php', 'name' => 'q_last_updated_tables');
+    $result[] = array('caption' => '<span class="entity important-entity">Organisation</span>', 'short_caption' => 'Organisation', 'filename' => 'organisation.php', 'name' => 'organisation', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="entity important-entity">Parlamentarier</span>', 'short_caption' => 'Parlamentarier', 'filename' => 'parlamentarier.php', 'name' => 'parlamentarier', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="entity">Zutrittsberechtigter</span>', 'short_caption' => 'Zutrittsberechtigter', 'filename' => 'zutrittsberechtigung.php', 'name' => 'zutrittsberechtigung', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="relation" title="Interessenbindungen der Parlamentarier">Intereressenbind. (von NR/SR)</span>', 'short_caption' => 'Interessenbindung', 'filename' => 'interessenbindung.php', 'name' => 'interessenbindung', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="relation" title="Mandate der Zutrittsberechtigten">Mandate (von Zutrittsber.)</span>', 'short_caption' => 'Mandat', 'filename' => 'mandat.php', 'name' => 'mandat', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="relation">In Kommission</span>', 'short_caption' => 'In Kommission', 'filename' => 'in_kommission.php', 'name' => 'in_kommission', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="relation">Organisation Beziehung</span>', 'short_caption' => 'Organisation Beziehung', 'filename' => 'organisation_beziehung.php', 'name' => 'organisation_beziehung', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="entity">Branche</span>', 'short_caption' => 'Branche', 'filename' => 'branche.php', 'name' => 'branche', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="entity">Lobbygruppe</span>', 'short_caption' => 'Lobbygruppe', 'filename' => 'interessengruppe.php', 'name' => 'interessengruppe', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="entity">Kommission</span>', 'short_caption' => 'Kommission', 'filename' => 'kommission.php', 'name' => 'kommission', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="entity">Partei</span>', 'short_caption' => 'Partei', 'filename' => 'partei.php', 'name' => 'partei', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="entity">Fraktion</span>', 'short_caption' => 'Fraktion', 'filename' => 'fraktion.php', 'name' => 'fraktion', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="entity">Kanton</span>', 'short_caption' => 'Kanton', 'filename' => 'kanton.php', 'name' => 'kanton', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="settings">Settings</span>', 'short_caption' => 'Settings', 'filename' => 'settings.php', 'name' => 'settings', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="settings">Settings Category</span>', 'short_caption' => 'Settings Category', 'filename' => 'settings_category.php', 'name' => 'settings_category', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="settings">User</span>', 'short_caption' => 'User', 'filename' => 'user.php', 'name' => 'user', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="view">Unvollständige Parlamentarier</span>', 'short_caption' => 'Unvollständige Parlamentarier', 'filename' => 'q_unvollstaendige_parlamentarier.php', 'name' => 'q_unvollstaendige_parlamentarier', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="view">Unvollständige Zutrittsberechtigte</span>', 'short_caption' => 'Unvollständige Zutrittsberechtigte', 'filename' => 'q_unvollstaendige_zutrittsberechtigte.php', 'name' => 'q_unvollstaendige_zutrittsberechtigte', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="view">Unvollständige Organisationen</span>', 'short_caption' => 'Unvollständige Organisationen', 'filename' => 'q_unvollstaendige_organisationen.php', 'name' => 'q_unvollstaendige_organisationen', 'group_name' => 'Default', 'add_separator' => false);
+    $result[] = array('caption' => '<span class="view">Tabellenstand</span>', 'short_caption' => 'Tabellenstand', 'filename' => 'tabellenstand.php', 'name' => 'q_last_updated_tables', 'group_name' => 'Default', 'add_separator' => false);
     return $result;
 }
 
@@ -77,6 +83,8 @@ Mode: ' . $GLOBALS["env"] /*afterburner*/  . ' / Version: ' . $GLOBALS["version"
 function ApplyCommonPageSettings(Page $page, Grid $grid)
 {
     $page->SetShowUserAuthBar(true);
+    $page->OnCustomHTMLHeader->AddListener('Global_CustomHTMLHeaderHandler');
+    $page->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
     $grid->BeforeUpdateRecord->AddListener('Global_BeforeUpdateHandler');
     $grid->BeforeDeleteRecord->AddListener('Global_BeforeDeleteHandler');
     $grid->BeforeInsertRecord->AddListener('Global_BeforeInsertHandler');
@@ -86,6 +94,16 @@ function ApplyCommonPageSettings(Page $page, Grid $grid)
   Default code page: 1252
 */
 function GetAnsiEncoding() { return 'windows-1252'; }
+
+function Global_CustomHTMLHeaderHandler($page, &$customHtmlHeaderText)
+{
+
+}
+
+function Global_GetCustomTemplateHandler($part, $mode, &$result, &$params)
+{
+
+}
 
 function Global_BeforeUpdateHandler($page, &$rowData, &$cancel, &$message, $tableName)
 {

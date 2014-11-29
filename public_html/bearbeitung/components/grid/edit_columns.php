@@ -101,7 +101,8 @@ class CustomEditColumn
     private $commitOperations = array(OPERATION_COMMIT, OPERATION_COMMIT_INSERT, OPERATION_AJAX_REQUERT_INLINE_EDIT_COMMIT, OPERATION_AJAX_REQUERT_INLINE_INSERT_COMMIT);
     private $editOperations = array(OPERATION_EDIT, OPERATION_INSERT, OPERATION_COPY, OPERATION_AJAX_REQUERT_INLINE_EDIT, OPERATION_AJAX_REQUERT_INLINE_INSERT);
     private $fieldIsReadOnly;
-    private $showSetToNullCheckBox;
+    private $displaySetToNullCheckBox;
+    private $displaySetToDefaultCheckBox;
     private $readOnly;
     private $variableContainer;
 
@@ -128,9 +129,12 @@ class CustomEditColumn
         $this->dataset = $dataset;
         $this->SetAllowSetToNull($allowSetToNull);
         $this->allowSetToDefault = $allowSetToDefault;
-        $this->showSetToNullCheckBox = true;
+        $this->displaySetToNullCheckBox = false;
+        $this->displaySetToDefaultCheckBox = false;
         $this->readOnly = false;
         $this->SetVariableContainer(null);
+        $this->setVisible(true);
+        $this->setEnabled(true);
     }
 
     /**
@@ -193,16 +197,26 @@ class CustomEditColumn
             $this->variableContainer = $variableContainer;
     }
 
-    public function GetShowSetToNullCheckBox()
+    public function GetDisplaySetToNullCheckBox()
     { 
         if ($this->GetEditControl()->CanSetupNullValues())
             return false;
         else
-            return  $this->GetAllowSetToNull() && $this->showSetToNullCheckBox;
+            return  $this->GetAllowSetToNull() && $this->displaySetToNullCheckBox;
     }
     
-    public function SetShowSetToNullCheckBox($value)
-    { $this->showSetToNullCheckBox = $value; }
+    public function SetDisplaySetToNullCheckBox($value)
+    { $this->displaySetToNullCheckBox = $value; }
+
+    public function GetDisplaySetToDefaultCheckBox()
+    {
+        return  $this->GetAllowSetToDefault() && $this->displaySetToDefaultCheckBox;
+    }
+
+    public function SetDisplaySetToDefaultCheckBox($value)
+    {
+        $this->displaySetToDefaultCheckBox = $value;
+    }
 
     public function GetGrid()
     { 
@@ -267,29 +281,14 @@ class CustomEditColumn
         
         $this->CheckValueIsCorrect($value);
 
-        if (!$this->readOnly)
+        if ($valueChanged)
         {
-            if ($valueChanged)
-            {
-                if ($this->GetSetToNullFromPost())
-                    $this->dataset->SetFieldValueByName($this->GetFieldName(), null);
-                elseif ($this->GetSetToDefaultFromPost())
-                    $this->dataset->SetFieldValueByName($this->GetFieldName(), null, true);
-                else
-                    $this->DoSetDatasetValuesFromPost($value);
-            }
-        }
-        else
-        {
-            if (in_array(GetOperation(), array(OPERATION_COMMIT_INSERT, OPERATION_AJAX_REQUERT_INLINE_INSERT_COMMIT)))
-            {
-                if ($this->GetInsertDefaultValue() != '')
-                {
-                    $insertValue = $this->GetInsertDefaultValue();
-                    $insertValue = EnvVariablesUtils::EvaluateVariableTemplate($this->variableContainer, $insertValue);
-                    $this->DoSetDatasetValuesFromPost($insertValue);
-                }
-            }
+            if ($this->GetSetToNullFromPost())
+                $this->dataset->SetFieldValueByName($this->GetFieldName(), null);
+            elseif ($this->GetSetToDefaultFromPost())
+                $this->dataset->SetFieldValueByName($this->GetFieldName(), null, true);
+            else
+                $this->DoSetDatasetValuesFromPost($value);
         }
     }
 
@@ -321,7 +320,7 @@ class CustomEditColumn
     }
 
     public function SetReadOnly($value)
-    { 
+    {
         $this->readOnly = $value;
         $this->GetEditControl()->SetReadOnly($value || $this->fieldIsReadOnly);
     }
@@ -377,6 +376,36 @@ class CustomEditColumn
 
     public function AfterSetAllDatasetValues()
     { }
+
+    /**
+     * @return bool
+     */
+    public function getVisible() {
+        return $this->GetEditControl()->getVisible();
+    }
+
+    /**
+     * @param bool $value
+     * @return void
+     */
+    public function setVisible($value) {
+        $this->GetEditControl()->setVisible($value);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getEnabled() {
+        return $this->GetEditControl()->getEnabled();
+    }
+
+    /**
+     * @param bool $value
+     * @return void
+     */
+    public function setEnabled($value) {
+        $this->GetEditControl()->setEnabled($value);
+    }
 }
 
 class LookUpEditColumn extends CustomEditColumn
@@ -831,6 +860,11 @@ class UploadFileToFolderColumn extends CustomEditColumn
 
         $value = $this->GetEditControl()->ExtractsValueFromPost($valueChanged);
 
+        if ($valueChanged && $value === null) {
+            $this->clearImageAndThumbnail();
+            return;
+        }
+
         $original_file_extension = $this->GetEditControl()->ExtractFileTypeFromPost($valueChanged);
         $original_file_name = $this->GetEditControl()->ExtractFileNameFromPost($valueChanged);
         $file_size = $this->GetEditControl()->ExtractFileSizeFromPost($valueChanged);
@@ -843,9 +877,7 @@ class UploadFileToFolderColumn extends CustomEditColumn
 
             if ($this->GetSetToNullFromPost())
             {
-                $this->GetDataset()->SetFieldValueByName($this->GetFieldName(), null);
-                if ($this->useThumbnailGeneration)
-                   $this->GetDataset()->SetFieldValueByName($this->fieldNameToSaveThumbnailPath, null);
+                $this->clearImageAndThumbnail();
             }
             elseif ($this->GetSetToDefaultFromPost())
             {
@@ -867,6 +899,12 @@ class UploadFileToFolderColumn extends CustomEditColumn
                 }
             }
         }
+    }
+
+    private function clearImageAndThumbnail() {
+        $this->GetDataset()->SetFieldValueByName($this->GetFieldName(), null);
+        if ($this->useThumbnailGeneration)
+            $this->GetDataset()->SetFieldValueByName($this->fieldNameToSaveThumbnailPath, null);
     }
 
     public function SetDatasetValuesFromPost()

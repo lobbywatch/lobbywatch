@@ -63,11 +63,17 @@ class PrintOneRecordRenderer extends ViewRenderer
         $this->SetHTTPContentTypeByPage($Page);
         $Page->BeforePageRender->Fire(array(&$Page));
 
-        $this->DisplayTemplate('view/print_page.tpl',
+        $customParams = array();
+        $template = $Page->GetCustomTemplate(PagePart::Layout, PageMode::PrintOneRecord, 'view/print_page.tpl', $customParams);
+
+        $this->DisplayTemplate($template,
             array('Page' => $Page),
-            array(
-            'Grid' => $this->Render($Page->GetGrid())
-        ));
+            array_merge($customParams,
+                array(
+                    'Grid' => $this->Render($Page->GetGrid())
+                )
+            )
+        );
     }
 
     function RenderGrid(Grid $Grid)
@@ -83,16 +89,22 @@ class PrintOneRecordRenderer extends ViewRenderer
                 $Row[] = $this->Render($Column);
         }
 
-        $this->DisplayTemplate('view/print_grid.tpl',
+        $customParams = array();
+        $template = $Grid->GetPage()->GetCustomTemplate(PagePart::Grid, PageMode::PrintOneRecord, 'view/print_grid.tpl', $customParams);
+
+        $this->DisplayTemplate($template,
             array(
             'Grid' => $Grid,
             'Columns' => $Grid->GetSingleRecordViewColumns()),
-            array(
-            'Title' => $Grid->GetPage()->GetShortCaption(),
-            'PrimaryKeyMap' => $primaryKeyMap,
-            'ColumnCount' => count($Grid->GetSingleRecordViewColumns()),
-            'Row' => $Row,
-        ));
+            array_merge($customParams,
+                array(
+                'Title' => $Grid->GetPage()->GetShortCaption(),
+                'PrimaryKeyMap' => $primaryKeyMap,
+                'ColumnCount' => count($Grid->GetSingleRecordViewColumns()),
+                'Row' => $Row
+                )
+            )
+        );
     }
 
     protected function ChildPagesAvailable() 

@@ -98,18 +98,18 @@ function SetUpUserAuthorization()
     global $appGrants;
     global $dataSourceRecordPermissions;
     $hardCodedGrantsManager = new HardCodedUserGrantsManager($grants, $appGrants);
-$tableBasedGrantsManager = CreateTableBasedGrantsManager();
-$grantsManager = new CompositeGrantsManager();
-$grantsManager->AddGrantsManager($hardCodedGrantsManager);
-if (!is_null($tableBasedGrantsManager)) {
-    $grantsManager->AddGrantsManager($tableBasedGrantsManager);
-    GetApplication()->SetUserManager($tableBasedGrantsManager);
-}
-$userAuthorizationStrategy = new TableBasedUserAuthorization(new MyPDOConnectionFactory(), GetGlobalConnectionOptions(), 'user', 'name', 'id', $grantsManager);
+    $tableBasedGrantsManager = CreateTableBasedGrantsManager();
+    $grantsManager = new CompositeGrantsManager();
+    $grantsManager->AddGrantsManager($hardCodedGrantsManager);
+    if (!is_null($tableBasedGrantsManager)) {
+        $grantsManager->AddGrantsManager($tableBasedGrantsManager);
+        GetApplication()->SetUserManager($tableBasedGrantsManager);
+    }
+    $userAuthorizationStrategy = new TableBasedUserAuthorization(new MyPDOConnectionFactory(), GetGlobalConnectionOptions(), 'user', 'name', 'id', $grantsManager);
     GetApplication()->SetUserAuthorizationStrategy($userAuthorizationStrategy);
 
-GetApplication()->SetDataSourceRecordPermissionRetrieveStrategy(
-    new HardCodedDataSourceRecordPermissionRetrieveStrategy($dataSourceRecordPermissions));
+    GetApplication()->SetDataSourceRecordPermissionRetrieveStrategy(
+        new HardCodedDataSourceRecordPermissionRetrieveStrategy($dataSourceRecordPermissions));
 }
 
 function GetIdentityCheckStrategy()

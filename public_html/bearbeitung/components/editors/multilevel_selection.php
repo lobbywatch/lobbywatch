@@ -194,6 +194,10 @@ class MultiLevelComboBoxEditor extends CustomEditor
         $this->value = $value;
     }
 
+    public function GetDataEditorClassName() {
+        return 'MultiLevelAutocomplete';
+    }
+
     /**
      * @return MultiLevelComboBoxLevelInfo[]
      */

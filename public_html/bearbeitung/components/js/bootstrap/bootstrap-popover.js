@@ -71,7 +71,13 @@
       return this.$tip
     }
 
-  })
+  , destroy: function () {
+      var $hidden = this.hide();
+      $hidden.$element.off('.' + this.type).removeData(this.type)
+  }
+
+
+  });
 
 
  /* POPOVER PLUGIN DEFINITION

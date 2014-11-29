@@ -20,8 +20,18 @@ abstract class CustomEditor extends Component {
     /** @var null|string */
     private $customAttributes;
 
+    /** @var null|string */
+    private $inlineStyles;
+
     /** @var boolean */
     private $readOnly;
+
+    /** @var boolean */
+    private $visible;
+
+    /** @var boolean */
+    private $enabled;
+
 
     /** @var \SuperGlobals */
     private $superGlobals;
@@ -39,7 +49,10 @@ abstract class CustomEditor extends Component {
     public function __construct($name, $customAttributes = null) {
         parent::__construct($name);
         $this->customAttributes = $customAttributes;
+        $this->inlineStyles = null;
         $this->readOnly = false;
+        $this->visible = true;
+        $this->enabled = true;
         $this->superGlobals = GetApplication()->GetSuperGlobals();
         $this->validators = new ValidatorCollection();
         $this->fieldName = null;
@@ -101,6 +114,13 @@ abstract class CustomEditor extends Component {
     public abstract function SetValue($value);
 
     /**
+     * @return null|string
+     */
+    public function GetDataEditorClassName() {
+        return null;
+    }
+
+    /**
      * @return string
      */
     public function GetFieldName() {
@@ -134,31 +154,30 @@ abstract class CustomEditor extends Component {
      * @param string $value
      * @return void
      */
-    public function SetCustomAttributes($value) {
+    public function setCustomAttributes($value) {
         $this->customAttributes = $value;
     }
 
     /**
      * @return null|string
      */
-    public function GetCustomAttributes() {
+    public function getCustomAttributes() {
         return $this->customAttributes;
     }
 
     /**
-     * @return array
+     * @param string $value
+     * @return void
      */
-    public final function GetViewData() {
-        return ArrayUtils::Merge(
-            array(
-                'ReadOnly' => $this->GetReadOnly()
-            ),
-            $this->DoGetViewData()
-        );
+    public function setInlineStyles($value) {
+        $this->inlineStyles = $value;
     }
 
-    protected function DoGetViewData() {
-        return array();
+    /**
+     * @return null|string
+     */
+    public function getInlineStyles() {
+        return $this->inlineStyles;
     }
 
     /**
@@ -168,6 +187,38 @@ abstract class CustomEditor extends Component {
     public function prepareValueForDataset($value) {
         return $value;
     }
+
+    /**
+     * @return bool
+     */
+    public function getVisible() {
+        return $this->visible;
+    }
+
+    /**
+     * @param bool $value
+     * @return $this
+     */
+    public function setVisible($value) {
+        $this->visible = $value;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getEnabled() {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $value
+     * @return $this
+     */
+    public function setEnabled($value) {
+        $this->enabled = $value;
+        return $this;
+    }
 }
 
 class TextAreaEdit extends CustomEditor {
@@ -175,6 +226,8 @@ class TextAreaEdit extends CustomEditor {
     private $columnCount;
     private $rowCount;
     private $allowHtmlCharacters = true;
+    /** @var string */
+    private $placeholder = null;
 
     public function __construct($name, $columnCount = null, $rowCount = null, $customAttributes = null) {
         parent::__construct($name, $customAttributes);
@@ -188,6 +241,10 @@ class TextAreaEdit extends CustomEditor {
 
     public function SetValue($value) {
         $this->value = $value;
+    }
+
+    public function GetDataEditorClassName() {
+        return 'TextArea';
     }
 
     #region Editor options
@@ -216,6 +273,15 @@ class TextAreaEdit extends CustomEditor {
         $this->allowHtmlCharacters = $value;
     }
 
+    public function getPlaceholder() {
+        return $this->placeholder;
+    }
+
+    public function setPlaceholder($value) {
+        $this->placeholder = $value;
+        return $this;
+    }
+
     #endregion
 
     public function ExtractsValueFromPost(&$valueChanged) {
@@ -242,6 +308,12 @@ class TextEdit extends CustomEditor {
     private $maxLength = null;
     private $allowHtmlCharacters = true;
     private $passwordMode;
+    /** @var string */
+    private $placeholder = null;
+    /** @var string */
+    private $prefix = null;
+    /** @var string */
+    private $suffix = null;
 
     public function __construct($name, $size = null, $maxLength = null, $customAttributes = null) {
         parent::__construct($name, $customAttributes);
@@ -274,6 +346,10 @@ class TextEdit extends CustomEditor {
         $this->value = $value;
     }
 
+    public function GetDataEditorClassName() {
+        return 'TextEdit';
+    }
+
     public function GetPasswordMode() {
         return $this->passwordMode;
     }
@@ -294,6 +370,33 @@ class TextEdit extends CustomEditor {
         $this->allowHtmlCharacters = $value;
     }
 
+    public function getPlaceholder() {
+        return $this->placeholder;
+    }
+
+    public function setPlaceholder($value) {
+        $this->placeholder = $value;
+        return $this;
+    }
+
+    public function getPrefix() {
+        return $this->prefix;
+    }
+
+    public function setPrefix($value) {
+        $this->prefix = $value;
+        return $this;
+    }
+
+    public function getSuffix() {
+        return $this->suffix;
+    }
+
+    public function setSuffix($value) {
+        $this->suffix = $value;
+        return $this;
+    }
+
     public function ExtractsValueFromPost(&$valueChanged) {
         if (GetApplication()->IsPOSTValueSet($this->GetName())) {
             $valueChanged = true;
@@ -310,40 +413,6 @@ class TextEdit extends CustomEditor {
     public function Accept(Renderer $Renderer) {
         $Renderer->RenderTextEdit($this);
     }
-
-    private function GetControllerAttributes() {
-        $result = new AttributesBuilder();
-
-        $result->AddAttrValue('data-editor', 'true');
-        $result->AddAttrValue('data-editor-class', 'TextEdit');
-        $result->AddAttrValue('data-field-name', $this->GetFieldName());
-        $result->AddAttrValue('data-editable', 'true');
-
-        return $result->GetAsString();
-
-    }
-
-    private function GetAdditionalAttributes() {
-        $result = new AttributesBuilder();
-        $result->AddAttrValue('type', $this->GetPasswordMode() ? 'password' : 'text');
-        if ($this->GetMaxLength() != null)
-            $result->AddAttrValue('maxlength', $this->GetMaxLength());
-        if ($this->GetSize() != null)
-            $result->AddAttrValue('size', $this->GetSize());
-        return $result->GetAsString();
-    }
-
-    public function DoGetViewData() {
-        return array(
-            'ControllerAttributes' => $this->GetControllerAttributes(),
-            'AdditionalAttributes' => $this->GetAdditionalAttributes(),
-            'Name' => $this->GetName(),
-            'DisplayValue' => $this->GetHTMLValue(),
-            'Value' => $this->GetValue(),
-            'CustomStyle' => $this->GetCustomAttributes(),
-            'PasswordMode' => $this->GetPasswordMode()
-        );
-    }
 }
 
 class TimeEdit extends CustomEditor {
@@ -359,6 +428,10 @@ class TimeEdit extends CustomEditor {
 
     public function SetValue($value) {
         $this->value = $value;
+    }
+
+    public function GetDataEditorClassName() {
+        return 'TimeEdit';
     }
 
     public function Accept(Renderer $Renderer) {
@@ -402,6 +475,10 @@ class MaskedEdit extends CustomEditor {
 
     public function SetValue($value) {
         $this->value = $value;
+    }
+
+    public function GetDataEditorClassName() {
+        return 'MaskEdit';
     }
 
     public function Accept(Renderer $Renderer) {
@@ -457,6 +534,10 @@ class SpinEdit extends CustomEditor {
         $this->value = $value;
     }
 
+    public function GetDataEditorClassName() {
+        return 'SpinEdit';
+    }
+
     public function SetUseConstraints($value) {
         $this->useConstraints = $value;
     }
@@ -480,6 +561,17 @@ class SpinEdit extends CustomEditor {
     }
 }
 
+class RangeEdit extends SpinEdit {
+
+    public function GetDataEditorClassName() {
+        return 'RangeEdit';
+    }
+
+    public function Accept(Renderer $Renderer) {
+        $Renderer->RenderRangeEdit($this);
+    }
+}
+
 class CheckBox extends CustomEditor {
     private $value;
 
@@ -489,6 +581,10 @@ class CheckBox extends CustomEditor {
 
     public function SetValue($value) {
         $this->value = $value;
+    }
+
+    public function GetDataEditorClassName() {
+        return 'CheckBox';
     }
 
     protected function SuppressRequiredValidation() {
@@ -511,6 +607,36 @@ class CheckBox extends CustomEditor {
 
     public function Checked() {
         return (isset($this->value) && !empty($this->value));
+    }
+}
+
+class ColorEdit extends CustomEditor {
+    private $value;
+
+    public function GetValue() {
+        return $this->value;
+    }
+
+    public function SetValue($value) {
+        $this->value = $value;
+    }
+
+    public function GetDataEditorClassName() {
+        return 'ColorEdit';
+    }
+
+    public function ExtractsValueFromPost(&$valueChanged) {
+        if (GetApplication()->IsPOSTValueSet($this->GetName())) {
+            $valueChanged = true;
+            return GetApplication()->GetPOSTValue($this->GetName());
+        } else {
+            $valueChanged = false;
+            return null;
+        }
+    }
+
+    public function Accept(Renderer $renderer) {
+        $renderer->RenderColorEdit($this);
     }
 }
 
@@ -548,6 +674,10 @@ class DateTimeEdit extends CustomEditor {
             $this->value = SMDateTime::Parse($value, $this->format);
         else
             $this->value = null;
+    }
+
+    public function GetDataEditorClassName() {
+        return 'DateTimeEdit';
     }
 
     public function GetFormat() {
@@ -680,6 +810,10 @@ class ComboBox extends CustomEditor {
         $this->selectedValue = $value;
     }
 
+    public function GetDataEditorClassName() {
+        return 'ComboBox';
+    }
+
     protected function DoSetAllowNullValue($value) {
         if ($value) {
             $this->values[''] = $this->emptyValue;
@@ -771,6 +905,10 @@ class AutocomleteComboBox extends CustomEditor {
      */
     public function SetValue($value) {
         $this->value = $value;
+    }
+
+    public function GetDataEditorClassName() {
+        return 'Autocomplete';
     }
 
     #region Options
@@ -893,6 +1031,10 @@ class RadioEdit extends CustomEditor {
         $this->selectedValue = $value;
     }
 
+    public function GetDataEditorClassName() {
+        return 'RadioGroup';
+    }
+
     public function GetDisplayMode() {
         return $this->displayMode;
     }
@@ -979,6 +1121,10 @@ class CheckBoxGroup extends CustomEditor {
      */
     public function SetValue($value) {
         $this->selectedValues = explode(',', $value);
+    }
+
+    public function GetDataEditorClassName() {
+        return 'CheckBoxGroup';
     }
 
     public function GetDisplayMode() {
@@ -1130,6 +1276,10 @@ class HtmlWysiwygEditor extends CustomEditor {
 
     public function SetValue($value) {
         $this->value = $value;
+    }
+
+    public function GetDataEditorClassName() {
+        return 'HtmlEditor';
     }
 
     public function SetColumnCount($value) {

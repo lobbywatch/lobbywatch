@@ -47,6 +47,10 @@
          */
         private $userIdentityStorage;
 
+        #region Events
+        public $OnGetCustomTemplate;
+        #endregion
+
         public function __construct($identityCheckStrategy, $urlToRedirectAfterLogin, Captions $captions)
         {
             $this->identityCheckStrategy = $identityCheckStrategy;
@@ -55,6 +59,7 @@
             $this->captions = $captions;
             $this->lastSaveidentity = false;
             $this->userIdentityStorage = new UserIdentityCookieStorage($identityCheckStrategy);
+            $this->OnGetCustomTemplate = new Event();
         }
 
         public function Accept(Renderer $renderer)
@@ -175,6 +180,19 @@
                 }
             }
         }
+
+        public function GetCustomTemplate($part, $defaultValue, &$params = null) {
+            $result = null;
+
+            if (!$params)
+                $params = array();
+
+            $this->OnGetCustomTemplate->Fire(array($part, null, &$result, &$params));
+            if ($result)
+                return Path::Combine('custom_templates', $result);
+            else
+                return $defaultValue;
+        }
     }
 
     class LoginPage extends CustomLoginPage
@@ -223,6 +241,11 @@
         {
             echo $this->renderer->Render($this);
         }
+
+        public function addListeners() {
+            $this->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
+            $this->loginControl->OnGetCustomTemplate->AddListener('Global_GetCustomTemplateHandler');
+        }
     }
 
     $loginPage = new LoginPage(
@@ -232,6 +255,8 @@
             GetCaptions('UTF-8')));
 
     SetUpUserAuthorization();
+
+    $loginPage->addListeners();
 
     $loginPage->SetHeader(GetPagesHeader());
     $loginPage->SetFooter(GetPagesFooter());

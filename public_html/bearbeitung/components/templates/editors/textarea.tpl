@@ -1,25 +1,12 @@
-{if not $TextArea->GetReadOnly()}
 <textarea
-    data-editor="true"
-    data-editor-class="TextArea"
-    data-field-name="{$TextArea->GetFieldName()}"
-    data-editable="true"
+    {include file="editors/editor_options.tpl" Editor=$TextArea}
     class="input-xxlarge"
-    {style_block}
-        {$TextArea->GetCustomAttributes()}
-    {/style_block}
-    id="{$TextArea->GetName()}"
-    name="{$TextArea->GetName()}"
-    {if $TextArea->GetColumnCount() != null}
-    cols="{$TextArea->GetColumnCount()}"{/if}
-    {if $TextArea->GetRowCount() != null}
-    rows="{$TextArea->GetRowCount()}"{/if}
-    {$Validators.InputAttributes}>{$TextArea->GetValue()}</textarea>
-{else}
-<span
-    data-editor="true"
-    data-editor-class="TextArea"
-    data-field-name="{$TextArea->GetFieldName()}"
-    data-editable="false">{$TextArea->GetValue()}
-</span>
-{/if}
+    {if $TextArea->getPlaceholder()}
+        placeholder="{$TextArea->getPlaceholder()}"
+    {/if}
+    {if $TextArea->GetColumnCount()}
+        cols="{$TextArea->GetColumnCount()}"
+    {/if}
+    {if $TextArea->GetRowCount()}
+        rows="{$TextArea->GetRowCount()}"
+    {/if}>{$TextArea->GetValue()}</textarea>

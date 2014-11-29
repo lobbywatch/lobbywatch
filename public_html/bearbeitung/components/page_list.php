@@ -6,13 +6,19 @@ class PageLink {
     private $hint;
     private $showAsText;
     private $beginNewGroup;
+    private $groupName;
 
-    public function __construct($caption, $link, $hint = '', $showAsText = false, $beginNewGroup = false) {
+    public function __construct($caption, $link, $hint = '', $showAsText = false, $beginNewGroup = false, $groupName = '') {
         $this->caption = $caption;
         $this->link = $link;
         $this->hint = $hint;
         $this->showAsText = $showAsText;
         $this->beginNewGroup = $beginNewGroup;
+        $this->groupName = $groupName;
+    }
+
+    public function GetGroupName() {
+        return $this->groupName;
     }
 
     public function GetBeginNewGroup() {
@@ -41,7 +47,8 @@ class PageLink {
             'Hint' => $this->GetHint(),
             'IsCurrent' => $this->GetShowAsText(),
             'Href' => $this->GetLink(),
-            'BeginNewGroup' => $this->GetBeginNewGroup()
+            'BeginNewGroup' => $this->GetBeginNewGroup(),
+            'GroupName' => $this->GetGroupName()
         );
     }
 }
@@ -50,12 +57,14 @@ class PageList {
     private $pages;
     private $currentPageOptions;
     private $currentPageRss;
+    private $groups;
 
     public function __construct($parentPage) {
         $this->parentPage = $parentPage;
         $this->pages = array();
         $this->currentPageOptions = array();
         $this->currentPageRss = null;
+        $this->groups = array();
     }
 
     /**
@@ -77,6 +86,14 @@ class PageList {
      */
     public function GetPages() {
         return $this->pages;
+    }
+
+    public function AddGroup($group) {
+        $this->groups[] = $group;
+    }
+
+    public function GetGroups() {
+        return $this->groups;
     }
 
     public function Accept(Renderer $renderer) {
@@ -109,7 +126,8 @@ class PageList {
     public function GetViewData() {
         return array(
             'Pages' => $this->GetPagesViewData(),
-            'RSSLink' => $this->currentPageRss
+            'RSSLink' => $this->currentPageRss,
+            'Groups' => $this->GetGroups()
         );
     }
 }

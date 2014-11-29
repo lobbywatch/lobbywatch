@@ -13,12 +13,13 @@ $desc=array (
 );
 $up=-63;
 $ut=44;
-$ttffile='D:/USBWebserver8/root/devs/13_12/libs/mpdf/ttfonts/DejaVuSerifCondensed.ttf';
+$ttffile='D:/Webservers/WWWRoot/Demos/PostgreSQL/Software/14_10/libs/mpdf/ttfonts/DejaVuSerifCondensed.ttf';
 $TTCfontID='0';
 $originalsize=296976;
 $sip=false;
 $smp=false;
 $BMPselected=true;
 $fontkey='dejavuserifcondensed';
-$panose='0 0 2 6 6 6 5 6 5 2 2 4';
+$panose=' 0 0 2 6 6 6 5 6 5 2 2 4';
 $haskerninfo=false;
+$unAGlyphs=false;

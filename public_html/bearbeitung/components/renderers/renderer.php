@@ -130,8 +130,7 @@ abstract class Renderer
             array($nameInTemplate => $editor),
             array_merge(
                 array(
-                    'Validators' => $validatorsInfo,
-                    ($nameInTemplate == 'Editor' ?  'EditControl' : 'Editor') => $editor->GetViewData()
+                    'Validators' => $validatorsInfo
                 ),
                 $additionalParams
             ));
@@ -139,12 +138,12 @@ abstract class Renderer
 
     public function RenderTimeEdit(TimeEdit $editor)
     {
-        $this->RenderEditor($editor, 'Editor', 'time_edit.tpl');
+        $this->RenderEditor($editor, 'TimeEdit', 'time_edit.tpl');
     }
 
     public function RenderMaskedEdit(MaskedEdit $editor)
     {
-        $this->RenderEditor($editor, 'Editor', 'masked_edit.tpl');
+        $this->RenderEditor($editor, 'MaskedEdit', 'masked_edit.tpl');
     }
 
     public function RenderMultiLevelComboBoxEditor(MultiLevelComboBoxEditor $editor)
@@ -170,7 +169,7 @@ abstract class Renderer
 
     public final function RenderAutocompleteComboBox(AutocomleteComboBox $comboBox) 
     {
-        $this->RenderEditor($comboBox, 'ComboBox', 'autocomplete_combo_box.tpl');
+        $this->RenderEditor($comboBox, 'AutocompleteComboBox', 'autocomplete_combo_box.tpl');
     }
 
     public final function RenderCheckBox(CheckBox $checkBox) 
@@ -178,7 +177,12 @@ abstract class Renderer
         $this->RenderEditor($checkBox, 'CheckBox', 'check_box.tpl');
     }
 
-    public final function RenderCheckBoxGroup(CheckBoxGroup $checkBoxGroup) 
+    public final function RenderColorEdit(ColorEdit $colorEdit)
+    {
+        $this->RenderEditor($colorEdit, 'ColorEdit', 'color_edit.tpl');
+    }
+
+    public final function RenderCheckBoxGroup(CheckBoxGroup $checkBoxGroup)
     {
         $this->RenderEditor($checkBoxGroup, 'CheckBoxGroup', 'check_box_group.tpl');
     }
@@ -195,7 +199,7 @@ abstract class Renderer
 
     public final function RenderHtmlWysiwygEditor(HtmlWysiwygEditor $editor)
     {
-        $this->RenderEditor($editor, 'Editor', 'html_wysiwyg_editor.tpl');
+        $this->RenderEditor($editor, 'HTMLWysiwygEditor', 'html_wysiwyg_editor.tpl');
     }
 
     protected function ForceHideImageUploaderImage()
@@ -217,6 +221,11 @@ abstract class Renderer
     public final function RenderSpinEdit(SpinEdit $spinEdit) 
     {
         $this->RenderEditor($spinEdit, 'SpinEdit', 'spin_edit.tpl');
+    }
+
+    public final function RenderRangeEdit(RangeEdit $rangeEdit)
+    {
+        $this->RenderEditor($rangeEdit, 'RangeEdit', 'range_edit.tpl');
     }
 
     public final function RenderTextEdit(TextEdit $textEdit) 
@@ -607,15 +616,23 @@ abstract class Renderer
 
 
     //TODO: introduce ILoginPage and change the generated code accordingly
+    /**
+     * @param LoginPage $loginPage
+     */
     public function RenderLoginPage($loginPage)  {
         $this->SetHTTPContentTypeByPage($loginPage);
 
-        $this->DisplayTemplate('login_page.tpl',
+        $customParams = array();
+        $template = $loginPage->GetCustomTemplate(PagePart::LoginPage, 'login_page.tpl', $customParams);
+
+        $this->DisplayTemplate($template,
             array(
                 'Page' => $loginPage,
                 'LoginControl' => $loginPage->GetLoginControl()),
-            array(
-                'Title' => $loginPage->GetCaption()
+            array_merge($customParams,
+                array(
+                    'Title' => $loginPage->GetCaption()
+                )
             )
         );
     }
@@ -783,10 +800,15 @@ abstract class Renderer
         );
     }
 
+    /**
+     * @param LoginControl $loginControl
+     */
     public function RenderLoginControl($loginControl)  {
-        $this->DisplayTemplate('login_control.tpl',
+        $customParams = array();
+        $template = $loginControl->GetCustomTemplate(PagePart::LoginControl, 'login_control.tpl', $customParams);
+        $this->DisplayTemplate($template,
             array('LoginControl' => $loginControl),
-            array());
+            $customParams);
     }
 
     public function RenderSimpleSearch($searchControl)  {

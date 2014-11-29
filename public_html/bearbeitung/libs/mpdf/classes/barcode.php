@@ -262,6 +262,8 @@ class PDFBarcode {
 			case 'C39E+': {	// CODE 39 EXTENDED + CHECKSUM
 				if ($pr > 0) { $this->print_ratio = $pr; }
 				else { $this->print_ratio = 2.5; }	// spec: Pr= 1:2 - 1:3 (>2.2 if X<0.50)
+				$code = str_replace(chr(194).chr(160), ' ', $code);	// mPDF 5.3.95  (for utf-8 encoded)
+				$code = str_replace(chr(160), ' ', $code);	// mPDF 5.3.95	(for win-1252)
 				if (strtoupper($type)=='C39') { $arrcode = $this->barcode_code39($code, false, false); }
 				if (strtoupper($type)=='C39+') { $arrcode = $this->barcode_code39($code, false, true); }
 				if (strtoupper($type)=='C39E') { $arrcode = $this->barcode_code39($code, true, false); }
@@ -869,6 +871,7 @@ class PDFBarcode {
 	 * Very capable code, excellent density, high reliability; in very wide use world-wide
 	 */
 	protected function barcode_c128($code, $type='B', $ean=false) {
+		$code = strcode2utf($code);	// mPDF 5.7.1	Allows e.g. <barcode code="5432&#013;1068" type="C128A" />
 		$chr = array(
 			'212222', /* 00 */
 			'222122', /* 01 */

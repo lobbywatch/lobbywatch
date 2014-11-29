@@ -79,7 +79,7 @@ $cFirst='First';
 $cLast='Last';
 
 $cequals='equals';
-$cdoesNotEquals='does not equals';
+$cdoesNotEquals='does not equal';
 $cisLessThan='is less than';
 $cisLessThanOrEqualsTo='is less than or equals to';
 $cisGreaterThan='is greater than'; 
@@ -105,7 +105,7 @@ $cErrorsDuringDeleteProcess='An error occurs during delete:';
 $cErrorsDuringDataRetrieving='Data retrieval errors:';
 
 $cFileSizeExceedMaxSizeForField='Maximum file size exceeded for field %s (actual file size: %s, maximum file size: %s) ';
-$cImageSizeExceedMaxSizeForField='Maximum image size exceeded for field %s (actual image size: %dx%d, maximum file size: %dx%d) ';
+$cImageSizeExceedMaxSizeForField='Maximum image size exceeded for field %s (actual image size: %dx%d, maximum image size: %dx%d) ';
 
 $cActions='Actions';
 $cPleaseSelect='Please select...';
