@@ -23565,9 +23565,10 @@
             $editor = new TextEdit('twitter_name_edit');
             $editor->SetSize(50);
             $editor->SetMaxLength(50);
+            $editor->SetPrefix($this->RenderText('@'));
             $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new CustomRegExpValidator('^(?!(http|@)).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddEditColumn($editColumn);
@@ -24655,9 +24656,10 @@
             $editor = new TextEdit('twitter_name_edit');
             $editor->SetSize(50);
             $editor->SetMaxLength(50);
+            $editor->SetPrefix($this->RenderText('@'));
             $editColumn = new CustomEditColumn('Twitter Name', 'twitter_name', $editor, $this->dataset);
             $editColumn->SetAllowSetToNull(true);
-            $validator = new CustomRegExpValidator('^(?!http).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
+            $validator = new CustomRegExpValidator('^(?!(http|@)).*$', StringUtils::Format($this->GetLocalizerCaptions()->GetMessageString('RegExpValidationMessage'), $this->RenderText($editColumn->GetCaption())));
             $editor->GetValidatorCollection()->AddValidator($validator);
             $this->ApplyCommonColumnEditProperties($editColumn);
             $grid->AddInsertColumn($editColumn);
