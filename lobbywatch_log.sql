@@ -3048,3 +3048,228 @@ end
 //
 delimiter ;
 
+-- 29.11.2014
+
+DROP PROCEDURE IF EXISTS takeSnapshot;
+delimiter //
+CREATE PROCEDURE takeSnapshot(aVisa VARCHAR(10), aBeschreibung VARCHAR(150)) MODIFIES SQL DATA
+COMMENT 'Speichert einen Snapshot in die _log Tabellen.'
+BEGIN
+  DECLARE ts TIMESTAMP DEFAULT NOW();
+  DECLARE sid int(11);
+  INSERT INTO `snapshot` (`id`, `beschreibung`, `notizen`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) VALUES (NULL, aBeschreibung, NULL, aVisa, ts, aVisa, ts);
+  SELECT LAST_INSERT_ID() INTO sid;
+
+   INSERT INTO `branche_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `branche`;
+
+   INSERT INTO `interessenbindung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessenbindung`;
+
+   INSERT INTO `interessengruppe_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `interessengruppe`;
+
+   INSERT INTO `in_kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `in_kommission`;
+
+   INSERT INTO `kommission_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kommission`;
+
+   INSERT INTO `mandat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `mandat`;
+
+   INSERT INTO `organisation_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation`;
+
+   INSERT INTO `organisation_beziehung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_beziehung`;
+
+   INSERT INTO `organisation_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_anhang`;
+
+   INSERT INTO `organisation_jahr_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `organisation_jahr`;
+
+   INSERT INTO `parlamentarier_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier`;
+
+   INSERT INTO `parlamentarier_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `parlamentarier_anhang`;
+
+   INSERT INTO `partei_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `partei`;
+
+   INSERT INTO `fraktion_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `fraktion`;
+
+   INSERT INTO `rat_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `rat`;
+
+   INSERT INTO `kanton_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kanton`;
+
+   INSERT INTO `kanton_jahr_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `kanton_jahr`;
+
+   INSERT INTO `settings_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `settings`;
+
+   INSERT INTO `settings_category_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `settings_category`;
+
+   INSERT INTO `zutrittsberechtigung_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung`;
+
+   INSERT INTO `zutrittsberechtigung_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung_anhang`;
+
+   INSERT INTO `translation_source_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `translation_source`;
+
+   INSERT INTO `translation_target_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `translation_target`;
+
+END
+//
+delimiter ;
+
+-- translation_source
+
+DROP TABLE IF EXISTS `translation_source_log`;
+CREATE TABLE IF NOT EXISTS `translation_source_log` LIKE `translation_source`;
+ALTER TABLE `translation_source_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_translation_source_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- translation_source triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_translation_source_log_ins`;
+delimiter //
+create trigger `trg_translation_source_log_ins` after insert on `translation_source`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_source_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `translation_source` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_translation_source_log_upd`;
+delimiter //
+create trigger `trg_translation_source_log_upd` after update on `translation_source`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_source_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `translation_source` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_translation_source_log_del_before`;
+delimiter //
+create trigger `trg_translation_source_log_del_before` before delete on `translation_source`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_source_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `translation_source` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_translation_source_log_del_after`;
+delimiter //
+create trigger `trg_translation_source_log_del_after` after delete on `translation_source`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `translation_source_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+
+-- translation_source
+
+DROP TABLE IF EXISTS `translation_source_log`;
+CREATE TABLE IF NOT EXISTS `translation_source_log` LIKE `translation_source`;
+ALTER TABLE `translation_source_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_translation_source_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- translation_target triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_translation_target_log_ins`;
+delimiter //
+create trigger `trg_translation_target_log_ins` after insert on `translation_target`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_target_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `translation_target` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_translation_target_log_upd`;
+delimiter //
+create trigger `trg_translation_target_log_upd` after update on `translation_target`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_target_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `translation_target` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_translation_target_log_del_before`;
+delimiter //
+create trigger `trg_translation_target_log_del_before` before delete on `translation_target`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `translation_target_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `translation_target` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_translation_target_log_del_after`;
+delimiter //
+create trigger `trg_translation_target_log_del_after` after delete on `translation_target`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `translation_target_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
