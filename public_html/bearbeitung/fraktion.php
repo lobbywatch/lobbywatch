@@ -524,6 +524,10 @@
                 '`v_fraktion`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -570,6 +574,10 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_de');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
@@ -1029,6 +1037,10 @@
                 '`v_fraktion`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1075,6 +1087,10 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_de');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);
@@ -1307,6 +1323,10 @@
                 '`v_fraktion`');
             $field = new StringField('anzeige_name');
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_fr');
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1353,6 +1373,10 @@
             $lookupDataset->AddField($field, false);
             $field = new DateTimeField('updated_date');
             $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('name_de');
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('beschreibung_de');
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('created_date_unix');
             $field->SetIsNotNull(true);

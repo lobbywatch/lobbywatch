@@ -9,6 +9,8 @@
 
 -- Docu on indexes: http://www.percona.com/files/presentations/percona-live/london-2011/PLUK2011-practical-mysql-indexing-guidelines.pdf
 
+SET NAMES 'utf8' COLLATE 'utf8_general_ci';
+
 -- VIEWS ------------------
 
 -- Last updated views

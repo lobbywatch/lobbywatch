@@ -496,6 +496,12 @@
             $field = new StringField('anzeige_name');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_fr');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
@@ -1304,6 +1310,12 @@
                 GetConnectionOptions(),
                 '`v_kanton`');
             $field = new StringField('anzeige_name');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_de');
+            $field->SetIsNotNull(true);
+            $lookupDataset->AddField($field, false);
+            $field = new StringField('anzeige_name_fr');
             $field->SetIsNotNull(true);
             $lookupDataset->AddField($field, false);
             $field = new IntegerField('id');
