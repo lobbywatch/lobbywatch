@@ -1806,8 +1806,6 @@ CREATE TABLE IF NOT EXISTS `translation_target` (
   CONSTRAINT `translation_source_id` FOREIGN KEY (`translation_source_id`) REFERENCES `translation_source` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Translations for lobbywatch DB';
 
--- TODO create log tables and triggers
-
 ALTER TABLE `rat`
   ADD `abkuerzung_fr` VARCHAR(10) NOT NULL COMMENT 'Französische Abkürzung' AFTER `abkuerzung`,
   ADD `mitglied_bezeichnung_maennlich_de` VARCHAR(50) NOT NULL COMMENT 'Deutsche Bezeichnung der Männer' AFTER `homepage_en`,
@@ -1828,3 +1826,9 @@ UPDATE `rat` SET `abkuerzung_fr` = 'CF', mitglied_bezeichnung_maennlich_de='Bund
 ALTER TABLE `organisation` ADD `beschreibung_fr` TEXT NULL DEFAULT NULL COMMENT 'Französische Beschreibung' AFTER `beschreibung`;
 
 ALTER TABLE `organisation_log` ADD `beschreibung_fr` TEXT NULL DEFAULT NULL COMMENT 'Französische Beschreibung' AFTER `beschreibung`;
+
+UPDATE `parlamentarier` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
+UPDATE `zutrittsberechtigung` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
+UPDATE `organisation` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
+UPDATE `partei` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
+UPDATE `partei` SET twitter_name = substring(twitter_name_fr, 2), updated_visa = 'roland*' WHERE twitter_name_fr like '@%';
