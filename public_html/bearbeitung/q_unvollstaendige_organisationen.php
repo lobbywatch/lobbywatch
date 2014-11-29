@@ -93,6 +93,8 @@
             $this->dataset->AddField($field, false);
             $field = new StringField('beschreibung');
             $this->dataset->AddField($field, false);
+            $field = new StringField('beschreibung_fr');
+            $this->dataset->AddField($field, false);
             $field = new StringField('adresse_strasse');
             $this->dataset->AddField($field, false);
             $field = new StringField('adresse_zusatz');

@@ -463,6 +463,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten." totalFunction="0">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
             </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung" totalFunction="0">
+              <ViewProperties type="text" maxLength="75"/>
+            </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation" totalFunction="0">
               <ViewProperties type="text" maxLength="75"/>
             </Column>
@@ -579,6 +582,9 @@ $edit_general_hint        </BeforeGridText>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Lobbyorganisation. Zweck gemäss Handelsregister oder Statuten.">
               <ViewProperties type="text" maxLength="75" replaceLFByBR="true"/>
+            </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung">
+              <ViewProperties type="text" maxLength="75"/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation">
               <ViewProperties type="text" maxLength="75"/>
@@ -756,6 +762,9 @@ $edit_general_hint        </BeforeGridText>
               </Validators>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true">
+              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" canSetNull="true">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" canSetNull="true">
@@ -936,6 +945,9 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
             </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" canSetNull="true" defaultInsertValue="">
+              <EditProperties type="textArea" columnCount="50" rowCount="8" placeholder=""/>
+            </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" canSetNull="true" defaultInsertValue="">
               <EditProperties type="textBox" size="100" maxLength="100" placeholder="" prefix="" suffix=""/>
             </Column>
@@ -1011,6 +1023,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true"/>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true"/>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true"/>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true"/>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true"/>
             <Column fieldName="adresse_plz" caption="Adresse Plz" visible="true"/>
@@ -1058,6 +1071,7 @@ $edit_general_hint        </BeforeGridText>
             <Column fieldName="handelsregister_url" caption="Handelsregister Url" visible="true" useComboBox="false"/>
             <Column fieldName="twitter_name" caption="Twitter Name" visible="true" useComboBox="false"/>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" useComboBox="false"/>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_zusatz" caption="Adresse Zusatz" visible="true" useComboBox="false"/>
             <Column fieldName="adresse_plz" caption="Adresse Plz" visible="true" useComboBox="false"/>
@@ -1141,6 +1155,9 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="https://twitter.com/%twitter_name%"/>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Lobbyorganisation">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation">
@@ -1254,6 +1271,9 @@ $edit_general_hint        </BeforeGridText>
               <Hyperlink template="https://twitter.com/%twitter_name%"/>
             </Column>
             <Column fieldName="beschreibung" caption="Beschreibung" visible="true" headerHint="Beschreibung der Lobbyorganisation">
+              <ViewProperties type="text"/>
+            </Column>
+            <Column fieldName="beschreibung_fr" caption="Beschreibung Fr" visible="true" headerHint="Französische Beschreibung">
               <ViewProperties type="text"/>
             </Column>
             <Column fieldName="adresse_strasse" caption="Adresse Strasse" visible="true" headerHint="Adresse der Organisation">

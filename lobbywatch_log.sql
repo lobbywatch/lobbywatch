@@ -3117,11 +3117,14 @@ BEGIN
    INSERT INTO `settings_category_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `settings_category`;
 
+   INSERT INTO `person_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `person`;
+
+   INSERT INTO `person_anhang_log`
+     SELECT *, null, 'snapshot', null, ts, sid FROM `person_anhang`;
+
    INSERT INTO `zutrittsberechtigung_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung`;
-
-   INSERT INTO `zutrittsberechtigung_anhang_log`
-     SELECT *, null, 'snapshot', null, ts, sid FROM `zutrittsberechtigung_anhang`;
 
    INSERT INTO `translation_source_log`
      SELECT *, null, 'snapshot', null, ts, sid FROM `translation_source`;
@@ -3204,11 +3207,11 @@ end
 delimiter ;
 
 
--- translation_source
+-- translation_target
 
-DROP TABLE IF EXISTS `translation_source_log`;
-CREATE TABLE IF NOT EXISTS `translation_source_log` LIKE `translation_source`;
-ALTER TABLE `translation_source_log`
+DROP TABLE IF EXISTS `translation_target_log`;
+CREATE TABLE IF NOT EXISTS `translation_target_log` LIKE `translation_target`;
+ALTER TABLE `translation_target_log`
   CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
   CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
   CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
@@ -3219,7 +3222,7 @@ ALTER TABLE `translation_source_log`
   ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
   ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
   ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
-  ADD CONSTRAINT `fk_translation_source_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+  ADD CONSTRAINT `fk_translation_target_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
 
 -- translation_target triggers
 
@@ -3268,6 +3271,201 @@ for each row
 thisTrigger: begin
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   UPDATE `translation_target_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- person triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_person_log_ins`;
+delimiter //
+create trigger `trg_person_log_ins` after insert on `person`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `person` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_person_log_upd`;
+delimiter //
+create trigger `trg_person_log_upd` after update on `person`
+for each row
+thisTrigger: begin
+
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
+  -- Propagate authorization from person to his mandate
+  IF OLD.autorisiert_datum <> NEW.autorisiert_datum
+    OR (OLD.autorisiert_datum IS NULL AND NEW.autorisiert_datum IS NOT NULL)
+    OR (OLD.autorisiert_datum IS NOT NULL AND NEW.autorisiert_datum IS NULL) THEN
+    UPDATE `mandat`
+      SET
+        autorisiert_datum = NEW.autorisiert_datum,
+        autorisiert_visa = CONCAT(NEW.autorisiert_visa, '*'),
+        updated_date = NEW.updated_date,
+        updated_visa = CONCAT(NEW.updated_visa, '*')
+      WHERE
+        person_id=NEW.id AND bis IS NULL;
+  END IF;
+
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `person` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_person_log_del_before`;
+delimiter //
+create trigger `trg_person_log_del_before` before delete on `person`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `person` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_person_log_del_after`;
+delimiter //
+create trigger `trg_person_log_del_after` after delete on `person`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `person_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- person_anhang  triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_person_anhang_log_ins`;
+delimiter //
+create trigger `trg_person_anhang_log_ins` after insert on `person_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_anhang_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `person_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_person_anhang_log_upd`;
+delimiter //
+create trigger `trg_person_anhang_log_upd` after update on `person_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_anhang_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `person_anhang` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_person_anhang_log_del_before`;
+delimiter //
+create trigger `trg_person_anhang_log_del_before` before delete on `person_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `person_anhang_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `person_anhang` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_person_anhang_log_del_after`;
+delimiter //
+create trigger `trg_person_anhang_log_del_after` after delete on `person_anhang`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `person_anhang_log`
+    SET `state` = 'OK'
+    WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
+end
+//
+delimiter ;
+
+-- zutrittsberechtigung
+
+DROP TABLE IF EXISTS `zutrittsberechtigung_log`;
+CREATE TABLE IF NOT EXISTS `zutrittsberechtigung_log` LIKE `zutrittsberechtigung`;
+ALTER TABLE `zutrittsberechtigung_log`
+  CHANGE `id` `id` INT( 11 ) NOT NULL COMMENT 'Technischer Schlüssel der Live-Daten',
+  CHANGE `created_date` `created_date` timestamp NULL DEFAULT NULL COMMENT 'Erstellt am',
+  CHANGE `updated_date` `updated_date` timestamp NULL DEFAULT NULL COMMENT 'Abgeändert am',
+  DROP KEY `parlamentarier_person_unique`,
+  DROP KEY `person_id`,
+  DROP PRIMARY KEY,
+  ADD `log_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Log-Schlüssel',
+  ADD PRIMARY KEY (`log_id`),
+  ADD `action` enum('insert','update','delete','snapshot') NOT NULL COMMENT 'Aktionstyp',
+  ADD `state` varchar(20) DEFAULT NULL COMMENT 'Status der Aktion',
+  ADD `action_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Datum der Aktion',
+  ADD `snapshot_id` int(11) DEFAULT NULL COMMENT 'Fremdschlüssel zu einem Snapshot',
+  ADD CONSTRAINT `fk_zutrittsberechtigung_log_snapshot_id` FOREIGN KEY (`snapshot_id`) REFERENCES `snapshot` (`id`);
+
+-- zutrittsberechtigung triggers
+
+-- Ref: http://stackoverflow.com/questions/6787794/how-to-log-all-changes-in-a-mysql-table-to-a-second-one
+drop trigger if exists `trg_zutrittsberechtigung_log_ins`;
+delimiter //
+create trigger `trg_zutrittsberechtigung_log_ins` after insert on `zutrittsberechtigung`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zutrittsberechtigung_log`
+    SELECT *, null, 'insert', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_zutrittsberechtigung_log_upd`;
+delimiter //
+create trigger `trg_zutrittsberechtigung_log_upd` after update on `zutrittsberechtigung`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zutrittsberechtigung_log`
+    SELECT *, null, 'update', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = NEW.id ;
+end
+//
+delimiter ;
+
+drop trigger if exists `trg_zutrittsberechtigung_log_del_before`;
+delimiter //
+create trigger `trg_zutrittsberechtigung_log_del_before` before delete on `zutrittsberechtigung`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  INSERT INTO `zutrittsberechtigung_log`
+    SELECT *, null, 'delete', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = OLD.id ;
+end
+//
+delimiter ;
+
+-- id and action = 'delete' are unique
+drop trigger if exists `trg_zutrittsberechtigung_log_del_after`;
+delimiter //
+create trigger `trg_zutrittsberechtigung_log_del_after` after delete on `zutrittsberechtigung`
+for each row
+thisTrigger: begin
+  IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  UPDATE `zutrittsberechtigung_log`
     SET `state` = 'OK'
     WHERE `id` = OLD.`id` AND `created_date` = OLD.`created_date` AND action = 'delete';
 end

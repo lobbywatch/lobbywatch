@@ -1833,7 +1833,69 @@ UPDATE `organisation` SET twitter_name = substring(twitter_name, 2), updated_vis
 UPDATE `partei` SET twitter_name = substring(twitter_name, 2), updated_visa = 'roland*' WHERE twitter_name like '@%';
 UPDATE `partei` SET twitter_name = substring(twitter_name_fr, 2), updated_visa = 'roland*' WHERE twitter_name_fr like '@%';
 
+
+-- Zwischentabelle Zutrittsberechtigung auf Person
 RENAME TABLE `zutrittsberechtigung` TO `person`;
 RENAME TABLE `zutrittsberechtigung_log` TO `person_log`;
 RENAME TABLE `zutrittsberechtigung_anhang` TO `person_anhang`;
 RENAME TABLE `zutrittsberechtigung_anhang_log` TO `person_anhang_log`;
+
+ALTER TABLE `person` COMMENT = 'Lobbyist';
+ALTER TABLE `person_log` COMMENT = 'Lobbyist';
+
+ALTER TABLE `person` DROP FOREIGN KEY `fk_zb_parlam`;
+ALTER TABLE `person` CHANGE `parlamentarier_id` `parlamentarier_id` INT(11) NULL COMMENT 'VERALTET: Fremdschlüssel zu Parlamentarier';
+
+-- DROP TABLE IF EXISTS `zutrittsberechtigung`;
+CREATE TABLE IF NOT EXISTS `zutrittsberechtigung` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Technischer Schlüssel der Zutrittsberechtigung',
+  `parlamentarier_id` int(11) NOT NULL COMMENT 'Fremdschlüssel Parlamentarier',
+  `person_id` int(11) NOT NULL COMMENT 'Fremdschlüssel zur zutrittsberechtigten Person',
+  `von` date DEFAULT NULL COMMENT 'Beginn der Zutrittsberechtigung, leer (NULL) = unbekannt',
+  `bis` date DEFAULT NULL COMMENT 'Ende der Zutrittsberechtigung, leer (NULL) = aktuell gültig, nicht leer = historischer Eintrag',
+  `notizen` text COMMENT 'Interne Notizen zu diesem Eintrag. Einträge am besten mit Datum und Visa versehen.',
+  `eingabe_abgeschlossen_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe abgeschlossen hat.',
+  `eingabe_abgeschlossen_datum` timestamp NULL DEFAULT NULL COMMENT 'Die Eingabe ist für den Ersteller der Einträge abgeschlossen und bereit für die Kontrolle. (Leer/NULL bedeutet, dass die Eingabe noch im Gange ist.)',
+  `kontrolliert_visa` varchar(10) DEFAULT NULL COMMENT 'Kürzel der Person, welche die Eingabe kontrolliert hat.',
+  `kontrolliert_datum` timestamp NULL DEFAULT NULL COMMENT 'Der Eintrag wurde durch eine zweite Person am angegebenen Datum kontrolliert. (Leer/NULL bedeutet noch nicht kontrolliert.)',
+  `autorisiert_visa` varchar(10) DEFAULT NULL COMMENT 'Autorisiert durch. Sonstige Angaben als Notiz erfassen.',
+  `autorisiert_datum` date DEFAULT NULL COMMENT 'Autorisiert am. Leer/NULL bedeutet noch nicht autorisiert. Ein Datum bedeutet, dass der Eintrag vom Parlamentarier autorisiert wurde.',
+  `freigabe_visa` varchar(10) DEFAULT NULL COMMENT 'Freigabe von wem? (Freigabe = Daten sind fertig)',
+  `freigabe_datum` timestamp NULL DEFAULT NULL COMMENT 'Freigabedatum (Freigabe = Daten sind fertig)',
+  `created_visa` varchar(10) NOT NULL COMMENT 'Datensatz erstellt von',
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Erstellt am',
+  `updated_visa` varchar(10) DEFAULT NULL COMMENT 'Abgeändert von',
+  `updated_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Abgeändert am',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `parlamentarier_person_unique` (`parlamentarier_id`,`person_id`,`bis`) COMMENT 'Fachlicher unique constraint',
+  KEY `person_id` (`person_id`,`parlamentarier_id`),
+  CONSTRAINT `fk_person` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`),
+  CONSTRAINT `fk_parlamentarier` FOREIGN KEY (`parlamentarier_id`) REFERENCES `parlamentarier` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Dauerhafter Badge für einen Gast ("Götti")';
+
+INSERT INTO `zutrittsberechtigung` VALUES (`parlamentarier_id`, `person_id`, `von`, `bis`, `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `kontrolliert_visa`, `kontrolliert_datum`, `autorisiert_visa`, `autorisiert_datum`, `freigabe_visa`, `freigabe_datum`, `created_visa`, `created_date`, `updated_visa`, `updated_date`) SELECT `parlamentarier_id`, `person`.`id`, `person`.`von`, `person`.`bis`, '29.11.2014/roland: Migriert von alter Zutrittsberechtigungtabelle' as `notizen`, `eingabe_abgeschlossen_visa`, `eingabe_abgeschlossen_datum`, `kontrolliert_visa`, `kontrolliert_datum`, `autorisiert_visa`, `autorisiert_datum`, `freigabe_visa`, `freigabe_datum`, `created_visa`, `created_date`, `updated_visa`, `updated_date` FROM `person`;
+
+ALTER TABLE `mandat` DROP FOREIGN KEY `fk_zugangsberechtigung_id`;
+ALTER TABLE `mandat` CHANGE `zutrittsberechtigung_id` `person_id` INT(11) NOT NULL COMMENT 'Fremdschlüssel Person';
+ALTER TABLE `mandat` ADD CONSTRAINT `fk_person_id` FOREIGN KEY (`person_id`) REFERENCES `person`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `mandat_log` CHANGE `zutrittsberechtigung_id` `person_id` INT(11) NOT NULL COMMENT 'Fremdschlüssel Person';
+
+ALTER TABLE `mandat`
+DROP INDEX `mandat_zutrittsberechtigung_organisation_art_unique`,
+ADD UNIQUE `mandat_person_organisation_art_unique` (`art`, `person_id`, `organisation_id`, `bis`) COMMENT 'Fachlicher unique constraint',
+DROP INDEX `zutrittsberechtigung_id`,
+ADD INDEX `person_id` (`person_id`, `organisation_id`) COMMENT 'person_id';
+
+ALTER TABLE `person_anhang` DROP FOREIGN KEY `fk_zugangsberechtigung_id`;
+ALTER TABLE `person_anhang` CHANGE `zutrittsberechtigung_id` `person_id` INT(11) NOT NULL COMMENT 'Fremdschlüssel Person.';
+ALTER TABLE `person_anhang` ADD CONSTRAINT `fk_person_id` FOREIGN KEY (`person_id`) REFERENCES `person`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE `person_anhang_log` CHANGE `zutrittsberechtigung_id` `person_id` INT(11) NOT NULL COMMENT 'Fremdschlüssel Person';
+
+ALTER TABLE `mandat`
+DROP INDEX `zutrittsberechtigung_id`,
+ADD INDEX `person_id` (`person_id`) COMMENT 'person_id';
+
+-- ALTER TABLE `person` DROP `parlamentarier_id`;
+-- ALTER TABLE `person_log` DROP `parlamentarier_id`;
