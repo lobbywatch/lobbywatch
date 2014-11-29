@@ -60,8 +60,8 @@ function GetPageList() {
         $result->AddPage(new PageLink(('<span class="entity important-entity">Organisation</span>'), 'organisation.php', ('Organisation'), $currentPageCaption == ('<span class="entity important-entity">Organisation</span>')));
     if (GetCurrentUserGrantForDataSource('parlamentarier')->HasViewGrant())
         $result->AddPage(new PageLink(('<span class="entity important-entity">Parlamentarier</span>'), 'parlamentarier.php', ('Parlamentarier'), $currentPageCaption == ('<span class="entity important-entity">Parlamentarier</span>')));
-    if (GetCurrentUserGrantForDataSource('zutrittsberechtigung')->HasViewGrant())
-        $result->AddPage(new PageLink(('<span class="entity">Zutrittsberechtigter</span>'), 'zutrittsberechtigung.php', ('Zutrittsberechtigter'), $currentPageCaption == ('<span class="entity">Zutrittsberechtigter</span>')));
+    if (GetCurrentUserGrantForDataSource('person')->HasViewGrant())
+        $result->AddPage(new PageLink(('<span class="entity">Zutrittsberechtigter</span>'), 'person.php', ('Zutrittsberechtigter'), $currentPageCaption == ('<span class="entity">Zutrittsberechtigter</span>')));
     if (GetCurrentUserGrantForDataSource('interessenbindung')->HasViewGrant())
         $result->AddPage(new PageLink(('<span class="relation">Interessenbindung</span>'), 'interessenbindung.php', ('Interessenbindung'), $currentPageCaption == ('<span class="relation">Interessenbindung</span>')));
     if (GetCurrentUserGrantForDataSource('mandat')->HasViewGrant())
@@ -280,7 +280,7 @@ LEFT JOIN v_interessenbindung_simple interessenbindung
   ON interessenbindung.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL
 LEFT JOIN v_organisation_simple organisation
   ON interessenbindung.organisation_id = organisation.id
-LEFT JOIN v_zutrittsberechtigung_simple zutrittsberechtigung
+LEFT JOIN v_zutrittsberechtigung_simple_compat zutrittsberechtigung
   ON zutrittsberechtigung.parlamentarier_id = parlamentarier.id -- AND zutrittsberechtigung.bis IS NULL
 LEFT JOIN v_in_kommission_liste in_kommission
   ON in_kommission.parlamentarier_id = parlamentarier.id -- AND interessenbindung.bis IS NULL

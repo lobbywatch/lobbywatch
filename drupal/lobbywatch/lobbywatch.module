@@ -23,6 +23,8 @@ class Constants {
     'kanton' => 'Kanton',
     'kanton_jahr' => 'Kantonjahr',
     'zutrittsberechtigung' => 'Zutrittsberechtigter',
+//     'zutrittsberechtigung' => 'Zutrittsberechtigung',
+//     'person' => 'Person',
   );
 
   /**
@@ -100,6 +102,7 @@ class Constants {
 
   /** Parlamentarier, Zutrittsberechtigung
    * table name => website alias */
+// TODO check zutrittsberechtigung or person
   public static $entities_special_web = array('parlamentarier' => 'parlamentarier', 'zutrittsberechtigung' => 'zutrittsberechtigter',);
 
   public static function getAllEntities() {

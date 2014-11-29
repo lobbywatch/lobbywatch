@@ -77,8 +77,8 @@ function setupRSS($page, $dataset) {
       $rss_title = 'Partei %abkuerzung% changed by %updated_visa% at %updated_date%';
       $rss_body = 'Name: %name%<br>Gründung: %gruendung%<br>Position: %position%';
       break;
-    case 'zugangsberechtigung' :
-      $rss_title = 'Zutrittsberechtigung %vorname% %nachname% changed by %updated_visa% at %updated_date%';
+    case 'person' :
+      $rss_title = 'Person %vorname% %nachname% changed by %updated_visa% at %updated_date%';
       $rss_body = 'Funktion: %funktion%';
       break;
     case 'organisation' :
@@ -180,7 +180,7 @@ function is_minimal_field($table, $field) {
         default:
           return false;
       }
-    case 'zutrittsberechtigung':
+    case 'person':
       switch ($field) {
         case 'email':
         case 'geburtstag':
@@ -849,6 +849,7 @@ function add_more_navigation_links(&$result) {
   $result->AddPage(new PageLink('<span class="auswertung">Auswertung</span>', $GLOBALS['env_dir'] . 'auswertung', 'Auswertung ' . $GLOBALS['env'] , false, false));
   $result->AddPage(new PageLink('<span class="state">Stand SGK</span>', 'auswertung/anteil.php?option=kommission&id=1', 'Stand SGK', false, true));
   $result->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'auswertung/anteil.php?option=kommission&id=3', 'Stand UREK', false, false));
+  $result->AddPage(new PageLink('<span class="state">Stand UREK</span>', 'auswertung/anteil.php?option=kommission&id=11', 'Stand WAK', false, false));
   $result->AddPage(new PageLink('<span class="state">Erstellungsanteil</span>', 'auswertung/anteil.php?option=erstellungsanteil', 'Wer hat wieviele Datens&auml;tze erstellt?', false, false));
   $result->AddPage(new PageLink('<span class="state">Bearbeitungsanteil</span>', 'auswertung/anteil.php?option=bearbeitungsanteil', 'Wer hat wieviele Datens&auml;tze abgeschlossen?', false, false));
 }
@@ -947,7 +948,7 @@ function DisplayTemplateSimple($TemplateName, $InputObjects, $InputValues, $disp
 
 function zutrittsberechtigteForParlamentarier($con, $parlamentarier_id, $for_email = false) {
 
-  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.arbeitssprache FROM v_zutrittsberechtigung_simple zutrittsberechtigung
+  $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.arbeitssprache FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
           WHERE
   (zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW())
   AND zutrittsberechtigung.parlamentarier_id=:id
@@ -993,7 +994,7 @@ GROUP BY zutrittsberechtigung.id;";
       WHEN 'F' THEN CONCAT(" . lts('Sehr geehrte Frau') . ",' ', zutrittsberechtigung.nachname)
       ELSE CONCAT(" . lts('Sehr geehrte(r) Herr/Frau') . ",' ', zutrittsberechtigung.nachname)
   END anrede
-  FROM v_zutrittsberechtigung_simple zutrittsberechtigung
+  FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
   LEFT JOIN v_mandat mandat
     ON mandat.zutrittsberechtigung_id = zutrittsberechtigung.id " . ($for_email ? 'AND mandat.bis IS NULL' : '') . "
   LEFT JOIN v_organisation_simple organisation
@@ -1147,7 +1148,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
   $update_threshold_ts = $update_threshold->GetTimestamp();
   $now_ts = time();
 
-  if ($table_name === 'parlamentarier' || $table_name === 'zutrittsberechtigung') {
+  if ($table_name === 'parlamentarier' || $table_name === 'person') {
     //df($rowData, '$rowData');
 
     //df(getTimestamp($rowData['freigabe_datum']), 'getTimestamp($rowData[freigabe_datum])');
@@ -1247,7 +1248,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
     }
 
     if ($table_name === 'parlamentarier') {
-      // Check zutrittsberechtigung workflow state
+      // Check person workflow state
       $zb_list = zutrittsberechtigung_state($rowData['id']);
       $zb_state = count($zb_list) <= 2;
       $zb_controlled = true;
@@ -1277,7 +1278,7 @@ function customDrawRow($table_name, $rowData, &$rowCellStyles, &$rowStyles) {
       checkAndMarkColumnNotNull('parlament_biografie_id', $rowData, $rowCellStyles);
       checkAndMarkColumnNotNull('beruf', $rowData, $rowCellStyles);
 
-   } elseif ($table_name === 'zutrittsberechtigung') {
+   } elseif ($table_name === 'person') {
      if (isset($rowData['email']) && isset($rowData['geschlecht']) && isset($rowData['beruf']) && isset($rowData['funktion'])) {
        $completeness_styles .= 'background-color: greenyellow;';
      } elseif (isset($rowData['email']) || isset($rowData['geschlecht']) || isset($rowData['beruf']) || isset($rowData['funktion'])) {
@@ -1797,7 +1798,7 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     $con = $eng_con->GetConnectionHandle();
     // TODO close connection
     $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum, zutrittsberechtigung.parlamentarier_id
-  FROM v_zutrittsberechtigung_simple zutrittsberechtigung
+  FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
   WHERE
     -- zutrittsberechtigung.parlamentarier_id=:id AND
     zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW()
@@ -1824,7 +1825,7 @@ function zutrittsberechtigung_state($parlamentarier_id) {
     $con = $eng_con->GetConnectionHandle();
     // TODO close connection
     $sql = "SELECT zutrittsberechtigung.id, zutrittsberechtigung.anzeige_name as zutrittsberechtigung_name, zutrittsberechtigung.eingabe_abgeschlossen_datum, zutrittsberechtigung.kontrolliert_datum, zutrittsberechtigung.autorisiert_datum, zutrittsberechtigung.freigabe_datum
-  FROM v_zutrittsberechtigung_simple zutrittsberechtigung
+  FROM v_zutrittsberechtigung_simple_compat zutrittsberechtigung
   WHERE
     zutrittsberechtigung.parlamentarier_id=:id
     AND zutrittsberechtigung.bis IS NULL OR zutrittsberechtigung.bis > NOW();";

@@ -107,6 +107,7 @@ UPDATE rat SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, up
 UPDATE kanton SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
 UPDATE kanton_jahr SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL;
 -- UPDATE zutrittsberechtigung SET freigabe_datum = @freigabe_date, freigabe_visa=@freigabe_name, updated_date = @freigabe_date, updated_visa= @freigabe_name WHERE freigabe_datum IS NULL; -- triggered by parlamentarier
+-- person  -- triggered by zutrittsberechtigung
 
 CALL takeSnapshot('roland', 'UREK published in_kommission_fixed');
 

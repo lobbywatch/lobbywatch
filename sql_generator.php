@@ -33,13 +33,14 @@ $workflow_tables = array(
     'rat' => 'Rat',
     'kanton' => 'Kanton',
     'kanton_jahr' => 'Kantonjahr',
-    'zutrittsberechtigung' => 'Zutrittsberechtigter',
+    'zutrittsberechtigung' => 'Zutrittsberechtigung',
+    'person' => 'Person',
 );
 
 $meta_tables = array(
     'parlamentarier_anhang' => 'Parlamentarieranhang',
     'organisation_anhang' => 'Organisationsanhang',
-    'zutrittsberechtigung_anhang' => 'Zutrittsberechtigunganhang',
+    'person_anhang' => 'Personenanhang',
     'settings' => 'Einstellungen',
     'settings_category' => 'Einstellungskategorien',
 );
