@@ -61,6 +61,7 @@ $snapshots = array();
 $worker = array();
 foreach ($tables as $table => $name) {
   //$table_queries2[] = preg_replace('\$table', $table, $table_query);
+  // verbose $table_queries version, seems to be generating a too big result for PHP Generator for MySQL
 //   $table_queries[] = "(SELECT
 //   '$table' table_name,
 //   GROUP_CONCAT(t.`updated_visa` SEPARATOR ', ') AS visa,
@@ -69,19 +70,21 @@ foreach ($tables as $table => $name) {
 //   `$table` t
 //   GROUP BY t.`updated_date`
 //   )";
+//   $table_queries[] =
+//   "(SELECT
+//   '$table' table_name,
+//   '$name' name,
+//   (select count(*) from `$table`) anzahl_eintraege,
+//   t.`updated_visa` AS last_visa,
+//   t.`updated_date` last_updated,
+//   t.id last_updated_id
+//   FROM
+//   `$table` t
+//   ORDER BY t.`updated_date` DESC
+//   LIMIT 1
+//   )";
   $table_queries[] =
-  "(SELECT
-  '$table' table_name,
-  '$name' name,
-  (select count(*) from `$table`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `$table` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )";
+  "(SELECT '$table' tn, '$name' n, (select count(*) from `$table`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `$table` t ORDER BY t.`updated_date` DESC LIMIT 1)";
   $table_views[] =
   "CREATE OR REPLACE VIEW `v_last_updated_$table` AS
   (SELECT
@@ -128,11 +131,15 @@ foreach ($workflow_tables as $table => $name) {
   $entFreigaben[] = "UPDATE $table SET freigabe_datum = NULL, freigabe_visa=NULL, updated_date = NOW(), updated_visa= '*';";
 }
 
-$master_query = "SELECT * FROM (
-SELECT *
-FROM (\n" . implode("\nUNION\n", $table_queries) . "\n) union_query
-) complete
-ORDER BY complete.last_updated DESC;\n";
+// verbose $master_query version, seems to be generating a too big result for PHP Generator for MySQL
+// $master_query = "SELECT * FROM (
+// SELECT *
+// FROM (\n" . implode("\nUNION\n", $table_queries) . "\n) union_query
+// ) complete
+// ORDER BY complete.last_updated DESC;\n";
+
+$master_query = "SELECT tn as table_name, n as name, ne as anzahl_eintraege, lv as last_visa, ld as last_updated, lid as last_updated_id
+FROM (SELECT * FROM (\n" . implode("\nUNION ", $table_queries) . "\n) uq) c ORDER BY c.lid DESC\n";
 
 $unordered_views = "CREATE OR REPLACE VIEW `v_last_updated_tables_unordered` AS\n"
 . implode("\nUNION\n", $view_queries) . ";\n";

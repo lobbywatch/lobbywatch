@@ -34,284 +34,31 @@ beruf is null      </SelectStatement>
     </Query>
     <Query name="q_last_updated_tables">
       <SelectStatement>
-SELECT * FROM (
-SELECT *
-FROM (
-(SELECT
-  'branche' table_name,
-  'Branche' name,
-  (select count(*) from `branche`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `branche` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'interessenbindung' table_name,
-  'Interessenbindung' name,
-  (select count(*) from `interessenbindung`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `interessenbindung` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'interessengruppe' table_name,
-  'Lobbygruppe' name,
-  (select count(*) from `interessengruppe`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `interessengruppe` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'in_kommission' table_name,
-  'In Kommission' name,
-  (select count(*) from `in_kommission`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `in_kommission` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'kommission' table_name,
-  'Kommission' name,
-  (select count(*) from `kommission`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `kommission` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'mandat' table_name,
-  'Mandat' name,
-  (select count(*) from `mandat`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `mandat` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'organisation' table_name,
-  'Organisation' name,
-  (select count(*) from `organisation`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `organisation` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'organisation_anhang' table_name,
-  'Organisationsanhang' name,
-  (select count(*) from `organisation_anhang`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `organisation_anhang` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'organisation_beziehung' table_name,
-  'Organisation Beziehung' name,
-  (select count(*) from `organisation_beziehung`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `organisation_beziehung` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'organisation_jahr' table_name,
-  'Organisationsjahr' name,
-  (select count(*) from `organisation_jahr`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `organisation_jahr` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'parlamentarier' table_name,
-  'Parlamentarier' name,
-  (select count(*) from `parlamentarier`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `parlamentarier` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'parlamentarier_anhang' table_name,
-  'Parlamentarieranhang' name,
-  (select count(*) from `parlamentarier_anhang`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `parlamentarier_anhang` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'partei' table_name,
-  'Partei' name,
-  (select count(*) from `partei`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `partei` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'fraktion' table_name,
-  'Fraktion' name,
-  (select count(*) from `fraktion`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `fraktion` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'rat' table_name,
-  'Rat' name,
-  (select count(*) from `rat`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `rat` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'kanton' table_name,
-  'Kanton' name,
-  (select count(*) from `kanton`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `kanton` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'kanton_jahr' table_name,
-  'Kantonjahr' name,
-  (select count(*) from `kanton_jahr`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `kanton_jahr` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'settings' table_name,
-  'Einstellungen' name,
-  (select count(*) from `settings`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `settings` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'settings_category' table_name,
-  'Einstellungskategorien' name,
-  (select count(*) from `settings_category`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `settings_category` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'person' table_name,
-  'Zutrittsberechtigter' name,
-  (select count(*) from `person`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `person` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-UNION
-(SELECT
-  'person_anhang' table_name,
-  'personanhang' name,
-  (select count(*) from `person_anhang`) anzahl_eintraege,
-  t.`updated_visa` AS last_visa,
-  t.`updated_date` last_updated,
-  t.id last_updated_id
-  FROM
-  `person_anhang` t
-  ORDER BY t.`updated_date` DESC
-  LIMIT 1
-  )
-) union_query
-) complete
-ORDER BY complete.last_updated DESC      </SelectStatement>
+SELECT tn as table_name, n as name, ne as anzahl_eintraege, lv as last_visa, ld as last_updated, lid as last_updated_id
+FROM (SELECT * FROM (
+(SELECT 'branche' tn, 'Branche' n, (select count(*) from `branche`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `branche` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'interessenbindung' tn, 'Interessenbindung' n, (select count(*) from `interessenbindung`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `interessenbindung` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'interessengruppe' tn, 'Lobbygruppe' n, (select count(*) from `interessengruppe`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `interessengruppe` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'in_kommission' tn, 'In Kommission' n, (select count(*) from `in_kommission`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `in_kommission` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'kommission' tn, 'Kommission' n, (select count(*) from `kommission`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `kommission` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'mandat' tn, 'Mandat' n, (select count(*) from `mandat`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `mandat` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'organisation' tn, 'Organisation' n, (select count(*) from `organisation`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `organisation` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'organisation_beziehung' tn, 'Organisation Beziehung' n, (select count(*) from `organisation_beziehung`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `organisation_beziehung` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'organisation_jahr' tn, 'Organisationsjahr' n, (select count(*) from `organisation_jahr`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `organisation_jahr` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'parlamentarier' tn, 'Parlamentarier' n, (select count(*) from `parlamentarier`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `parlamentarier` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'partei' tn, 'Partei' n, (select count(*) from `partei`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `partei` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'fraktion' tn, 'Fraktion' n, (select count(*) from `fraktion`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `fraktion` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'rat' tn, 'Rat' n, (select count(*) from `rat`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `rat` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'kanton' tn, 'Kanton' n, (select count(*) from `kanton`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `kanton` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'kanton_jahr' tn, 'Kantonjahr' n, (select count(*) from `kanton_jahr`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `kanton_jahr` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'zutrittsberechtigung' tn, 'Zutrittsberechtigung' n, (select count(*) from `zutrittsberechtigung`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `zutrittsberechtigung` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'person' tn, 'Person' n, (select count(*) from `person`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `person` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'parlamentarier_anhang' tn, 'Parlamentarieranhang' n, (select count(*) from `parlamentarier_anhang`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `parlamentarier_anhang` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'organisation_anhang' tn, 'Organisationsanhang' n, (select count(*) from `organisation_anhang`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `organisation_anhang` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'person_anhang' tn, 'Personenanhang' n, (select count(*) from `person_anhang`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `person_anhang` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'settings' tn, 'Einstellungen' n, (select count(*) from `settings`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `settings` t ORDER BY t.`updated_date` DESC LIMIT 1)
+UNION (SELECT 'settings_category' tn, 'Einstellungskategorien' n, (select count(*) from `settings_category`) ne, t.`updated_visa` AS lv, t.`updated_date` ld, t.id lid FROM  `settings_category` t ORDER BY t.`updated_date` DESC LIMIT 1)
+) uq) c ORDER BY c.lid DESC      </SelectStatement>
       <InsertStatements/>
       <UpdateStatements/>
       <DeleteStatements/>
