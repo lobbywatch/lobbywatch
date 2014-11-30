@@ -108,7 +108,7 @@ zutrittsberechtigung.funktion is null OR trim(zutrittsberechtigung.funktion)='' 
   </FieldContainers>
   <Presentation disableMagicQuotesRuntime="false" showEnvironmentVariables="false" showExecutedQueries="false" showPHPErrorsAndWarnings="false">
     <Pages>
-      <Page type="table" tableName="organisation" fileName="organisation" caption="Organisation" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Organisation&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="name_de" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="organisation" fileName="organisation" caption="Organisation" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Organisation&lt;/span&gt;" groupName="Subjekte" addSeparator="false" defaultSorting="name_de" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -9543,7 +9543,7 @@ $condition = &quot;left(organisation.name_de, 1) = '$partitionKey'&quot;;       
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="parlamentarier" fileName="parlamentarier" caption="Parlamentarier" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Parlamentarier&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="parlamentarier" fileName="parlamentarier" caption="Parlamentarier" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Parlamentarier&lt;/span&gt;" groupName="Subjekte" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -20138,7 +20138,7 @@ $condition = &quot;left(parlamentarier.nachname, 1) = '$partitionKey'&quot;;    
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="person" fileName="person" caption="Person" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Person&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="person" fileName="person" caption="Person" shortCaption="&lt;span class=&quot;entity important-entity&quot;&gt;Person&lt;/span&gt;" groupName="Subjekte" addSeparator="false" defaultSorting="nachname" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -23676,7 +23676,7 @@ $condition = &quot;left(person.nachname, 1) = '$partitionKey'&quot;;            
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="interessenbindung" fileName="interessenbindung" caption="Interessenbindung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Interessenbindungen der Parlamentarier&quot;&gt;Intereressenbind. (von NR/SR)&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="parlamentarier_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="interessenbindung" fileName="interessenbindung" caption="Interessenbindung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Interessenbindungen der Parlamentarier&quot;&gt;Intereressenbind. (von NR/SR)&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" defaultSorting="parlamentarier_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -24427,7 +24427,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="zutrittsberechtigung" fileName="zutrittsberechtigung" caption="Zutrittsberechtigung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Zutrittsberechtigungen für Gäse ins Bundeshaus&quot;&gt;Zutrittsberechtigung&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="zutrittsberechtigung" fileName="zutrittsberechtigung" caption="Zutrittsberechtigung" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Zutrittsberechtigungen für Gäse ins Bundeshaus&quot;&gt;Zutrittsberechtigung&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" defaultSorting="" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText/>
         <Columns>
           <ViewColumns>
@@ -24879,7 +24879,7 @@ $condition = &quot;interessenbindung.parlamentarier_id IN (SELECT `id` FROM `par
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="mandat" fileName="mandat" caption="Mandat" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Mandate der Zutrittsberechtigten&quot;&gt;Mandate (von Zutrittsber.)&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="person_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="mandat" fileName="mandat" caption="Mandat" shortCaption="&lt;span class=&quot;relation&quot; title=&quot;Mandate der Zutrittsberechtigten&quot;&gt;Mandate (von Zutrittsber.)&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" defaultSorting="person_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -25537,7 +25537,7 @@ $condition = &quot;mandat.person_id IN (SELECT `id` FROM `person` s WHERE left(s
           </PartitionNavigator>
         </PartitionNavigators>
       </Page>
-      <Page type="table" tableName="in_kommission" fileName="in_kommission" caption="In Kommission" shortCaption="&lt;span class=&quot;relation&quot;&gt;In Kommission&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="parlamentarier_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="in_kommission" fileName="in_kommission" caption="In Kommission" shortCaption="&lt;span class=&quot;relation&quot;&gt;In Kommission&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" defaultSorting="parlamentarier_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -25967,7 +25967,7 @@ defaultOnGetCustomTemplate($this, $part, $mode, $result, $params);          </On
         <RecordPermissions useRecordPermissions="false"/>
         <PartitionNavigators/>
       </Page>
-      <Page type="table" tableName="organisation_beziehung" fileName="organisation_beziehung" caption="Organisation Beziehung" shortCaption="&lt;span class=&quot;relation&quot;&gt;Organisation Beziehung&lt;/span&gt;" groupName="Default" addSeparator="false" defaultSorting="organisation_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
+      <Page type="table" tableName="organisation_beziehung" fileName="organisation_beziehung" caption="Organisation Beziehung" shortCaption="&lt;span class=&quot;relation&quot;&gt;Organisation Beziehung&lt;/span&gt;" groupName="Verbindungen" addSeparator="false" defaultSorting="organisation_id" defaultSortingOrder="0" horizontalFilterCondition="" openAdvancedSearchAtFirst="false" recordsPerPage="5" NavigatorPosition="3" insertAbilityMode="1" deleteAbilityMode="3" deleteSelectedAbilityMode="3" contentEncoding="UTF-8" exportToPdfAvailable="false" useActionImages="true" useFixedGridHeader="true" showLineNumbers="true">
         <BeforeGridText>
 $edit_header_message
 
@@ -45672,6 +45672,12 @@ Mode: $env / Version: $version / Deploy date: $deploy_date:$ / Build date: $buil
     <Groups>
       <Group>
 Default      </Group>
+      <Group>
+Subjekte      </Group>
+      <Group>
+Verbindungen      </Group>
+      <Group>
+Stammdaten      </Group>
     </Groups>
   </Presentation>
   <UserCSS>
