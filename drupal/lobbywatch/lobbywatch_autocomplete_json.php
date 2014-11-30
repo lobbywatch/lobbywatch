@@ -122,8 +122,8 @@ function get_translation_table() {
     $translation_table['fr']['branche'] = 'Branche FR';
     $translation_table['de']['parlamentarier'] = 'Parlamentarier';
     $translation_table['fr']['parlamentarier'] = 'Parlamentarier FR';
-    $translation_table['de']['zutrittsberechtigung'] = 'Zutrittsberechtigter';
-    $translation_table['fr']['zutrittsberechtigung'] = 'Zutrittsberechtigter FR';
+    $translation_table['de']['zutrittsberechtigter'] = 'Zutrittsberechtigter';
+    $translation_table['fr']['zutrittsberechtigter'] = 'Zutrittsberechtigter FR';
     $translation_table['de']['interessengruppe'] = 'Interessengruppe';
     $translation_table['fr']['interessengruppe'] = 'Interessengruppe FR';
     $translation_table['de']['kommission'] = 'Kommission';
