@@ -3346,9 +3346,19 @@ delimiter //
 create trigger `trg_zutrittsberechtigung_log_del_before` before delete on `zutrittsberechtigung`
 for each row
 thisTrigger: begin
+  IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
+
   IF @disable_table_logging IS NOT NULL OR @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   INSERT INTO `zutrittsberechtigung_log`
     SELECT *, null, 'delete', null, NOW(), null FROM `zutrittsberechtigung` WHERE id = OLD.id ;
+
+  IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
+  -- propagate parlamentarier_kommissionen to person
+   UPDATE person
+	SET
+	parlamentarier_kommissionen = NULL,
+	zutrittsberechtigung_von = NULL
+	WHERE person.id = OLD.person_id;
 end
 //
 delimiter ;
@@ -3383,11 +3393,16 @@ thisTrigger: begin
   SET NEW.parlamentarier_kommissionen = (SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id = NEW.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id);
 
   -- propagate parlamentarier_kommissionen to person
-  UPDATE person
+   UPDATE person
 	SET
 	parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
 	zutrittsberechtigung_von = (SELECT parlamentarier.anzeige_name FROM v_parlamentarier_simple parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
-	WHERE person.id = NEW.person_id;
+	WHERE person.id = NEW.person_id AND (NEW.bis IS NULL OR NEW.bis > NOW());
+   UPDATE person
+	SET
+	parlamentarier_kommissionen = NULL,
+	zutrittsberechtigung_von = NULL
+	WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
 end
 //
 delimiter ;
@@ -3400,7 +3415,7 @@ thisTrigger: begin
 
   IF @disable_triggers IS NOT NULL THEN LEAVE thisTrigger; END IF;
   IF @disable_parlamentarier_kommissionen_update IS NOT NULL THEN LEAVE thisTrigger; END IF;
-  
+
   -- Fill parlamentarier.kommissionen on change
   -- Other triggers are trg_in_kommission_log_* trigger
   SET NEW.parlamentarier_kommissionen = (SELECT GROUP_CONCAT(DISTINCT k.abkuerzung ORDER BY k.abkuerzung SEPARATOR ', ') FROM in_kommission ik  LEFT JOIN kommission k ON ik.kommission_id=k.id WHERE ik.parlamentarier_id = NEW.parlamentarier_id AND ik.bis IS NULL GROUP BY ik.parlamentarier_id);
@@ -3410,7 +3425,12 @@ thisTrigger: begin
 	SET
 	parlamentarier_kommissionen = NEW.parlamentarier_kommissionen,
 	zutrittsberechtigung_von = (SELECT parlamentarier.anzeige_name FROM v_parlamentarier_simple parlamentarier WHERE parlamentarier.id = NEW.parlamentarier_id)
-	WHERE person.id = NEW.person_id;
+	WHERE person.id = NEW.person_id AND (NEW.bis IS NULL OR NEW.bis > NOW());
+   UPDATE person
+	SET
+	parlamentarier_kommissionen = NULL,
+	zutrittsberechtigung_von = NULL
+	WHERE person.id = NEW.person_id AND (NEW.bis < NOW());
 end
 //
 delimiter ;
